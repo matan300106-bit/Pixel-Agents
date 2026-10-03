@@ -1,0 +1,16 @@
+# Every PETME2 ASIN. Filled during the first run, approved by the owner.
+# break_even_acos = (price - product_cost - shipping_per_unit - amazon_fees) / price
+status: suggested           # suggested | approved
+products: []
+# Example entry:
+#  - asin: B0XXXXXXXX
+#    sku: XXXX
+#    title: "PETME2 Cat Water Fountain"
+#    price: 39.99
+#    product_cost: TBD          # per unit, from supplier invoice or owner
+#    shipping_per_unit: TBD     # to Amazon warehouse
+#    amazon_fees: TBD           # referral + FBA fee per unit (SP-API)
+#    break_even_acos: TBD
+#    goal: TBD                  # launch | growth | profit
+#    target_acos: TBD
+#    status: suggested

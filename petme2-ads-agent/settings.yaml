@@ -1,0 +1,13 @@
+# PETME2 Ads Team settings. Only the owner approves these. Only the owner changes `mode`.
+status: suggested           # suggested | approved (owner sets "approved")
+mode: audit                 # audit | supervised | auto
+ads_source: browser         # browser (now) | ads_api (later)
+daily_spend_cap: TBD        # total $ per day, all campaigns
+max_bid: TBD                # highest $ per click allowed
+max_budget_increase_without_approval: 25%
+max_bid_change_per_day: 20%
+max_changes_per_day: 50
+experiment_budget_share: 15%
+max_running_experiments: 3
+min_stock_days_for_ads: 10
+report_email: TBD
