@@ -84,9 +84,9 @@
             s.image
             | image_url: width: 1000
             | image_tag:
-              loading: 'lazy',
+              loading: 'eager',
               widths: '360, 540, 720, 1000',
-              sizes: '(min-width: 990px) 26vw, 55vw',
+              sizes: '(min-width: 990px) 26vw, 92vw',
               alt: s.image.alt
           }}
         </div>
@@ -246,6 +246,7 @@
   .pm2-hero .pm2-hero__btn { gap: 10px; min-height: 52px; padding: 0 28px; font-size: 16px; font-weight: 600; letter-spacing: 0; border-radius: 999px; }
   .pm2-hero .pm2-hero__btn::before, .pm2-hero .pm2-hero__btn::after { border-radius: 999px; }
   .pm2-hero__btn:not(.button--secondary) { box-shadow: 0 10px 24px -14px rgba(var(--pm2-accent), .9); }
+  .pm2-hero .pm2-hero__btn:not(.button--secondary) { min-height: 58px; padding: 0 36px; font-size: 17px; font-weight: 700; }
   .pm2-hero__btn-arrow { transition: transform .25s ease; }
   .pm2-hero__btn:hover .pm2-hero__btn-arrow { transform: translateX(3px); }
   .pm2-hero__btn--ghost { background: rgba(var(--color-foreground), .04); }
@@ -354,6 +355,14 @@
       max-width: 520px;
     }
     .pm2-hero__photo { display: none; }
+    /* with a lifestyle photo: the pet photo is the hero visual on phones */
+    .pm2-hero__visual--has-photo .pm2-hero__photo {
+      display: block; position: relative; top: auto; right: auto;
+      flex: 0 0 100%; width: 100%; aspect-ratio: 4 / 3; max-height: 52vh;
+      transform: none; border-radius: 24px;
+    }
+    .pm2-hero__visual--has-photo .pm2-hero__card,
+    .pm2-hero__visual--has-photo .pm2-hero__badge { display: none; }
     .pm2-hero__card,
     .pm2-hero__visual--has-photo .pm2-hero__card {
       position: relative; inset: auto;

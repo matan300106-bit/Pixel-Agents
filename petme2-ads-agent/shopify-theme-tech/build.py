@@ -50,7 +50,8 @@ def scheme(bg, text, button, label, secondary):
 
 
 current = {
-    "logo": IMG + "01-08-Photoroom_1.png", "logo_width": 110, "favicon": IMG + "p2_1.png",
+    "logo": IMG + "01-08-Photoroom_1_1.png", "logo_width": 130,  # 565px file: sharp on retina (the 199px one was blurry at 2x)
+    "favicon": IMG + "p2_1.png",
     "color_schemes": {
         "scheme-1": scheme(WHITE, INK, ACTION, WHITE, INK),       # white (Dawn's default scheme, kept safe)
         "scheme-2": scheme(ACTION, WHITE, WHITE, ACTION, WHITE),  # action blue (sale badge only)

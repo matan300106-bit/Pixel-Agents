@@ -240,10 +240,16 @@
     .pm2-tabs__list { display: flex; width: calc(100% + 3rem); max-width: none; margin: 0 -1.5rem; padding: 4px 1.5rem; border-radius: 0; background: transparent; scroll-padding-inline: 1.5rem; }
     .pm2-tabs__tab { padding: 0 18px; background: rgba(var(--color-foreground), .05); }
     .pm2-tabs__intro { margin: -6px 0 16px; }
-    /* product cards: scroll-snap row, ~80% wide so the next card always peeks */
-    .pm2-tabs__row { display: flex; gap: 12px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-padding-inline: 1.5rem; margin: 0 -1.5rem; padding: 4px 1.5rem 18px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
-    .pm2-tabs__row::-webkit-scrollbar { display: none; }
-    .pm2-card { flex: 0 0 min(78%, 300px); scroll-snap-align: start; border-radius: 22px; }
+    /* product cards: clean 2-column grid, every product, photo and price visible without swiping */
+    .pm2-tabs__row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .pm2-card { padding: 6px; border-radius: 20px; }
+    .pm2-card__media { border-radius: 15px; }
+    .pm2-card__body { padding: 10px 4px 2px; gap: 4px; }
+    .pm2-card__chips { display: none; }
+    .pm2-card__title { font-size: 14px; }
+    .pm2-card__price { font-size: 16px; gap: 6px; }
+    .pm2-card__was { font-size: 13px; }
+    .pm2-tabs .pm2-card__btn { min-height: 44px; padding: 0 8px; font-size: 14px; }
     .pm2-tabs__more { margin-top: 12px; }
     .pm2-tabs .pm2-tabs__view-all { width: 100%; }
   }

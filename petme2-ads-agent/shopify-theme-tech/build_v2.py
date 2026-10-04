@@ -26,12 +26,13 @@ OFFER = "Free U.S. shipping · 30-day money-back guarantee"
 S = {}
 S["hero"] = sec("pm2-hero", {
     "color_scheme": "scheme-4", "show_grid": False, "eyebrow_tag": "Sale", "eyebrow": "Save up to 33% · for cats & small dogs",
-    "heading_line_1": "Meals on time.", "heading_highlight": "Fresh water all day.",
-    "subtext": "Smart feeders you run from your phone, and quiet water fountains that are easy to clean.",
-    "button_label_1": "Shop feeders", "button_link_1": "shopify://collections/feeders",
-    "button_label_2": "Shop fountains", "button_link_2": "shopify://collections/water-fountains",
+    "heading_line_1": "Easy everyday", "heading_highlight": "pet care.",
+    "subtext": "Meals on time from an automatic feeder. Fresh, moving water from a quiet fountain. Set it up once and enjoy more time together.",
+    "button_label_1": "Shop now", "button_link_1": "shopify://collections/all",
+    "button_label_2": "", "button_link_2": "",
     "chip_1": OFFER, "chip_2": "", "chip_3": "",
-    "product": "smart-feeder", "link_product": True, "image": "",
+    # pet photo (the old theme's mobile hero banner): shown on phones instead of the product card
+    "product": "smart-feeder", "link_product": True, "image": IMG + "image_846.jpg",
     "badge_1": "1080P live view", "badge_2": "2-way audio", "badge_3": "",
     "padding_top": 40, "padding_bottom": 56})
 S["ticker"] = sec("pm2-marquee", {"color_scheme": "scheme-3", "duration": 40, "size": "small",
@@ -41,7 +42,7 @@ S["ticker"] = sec("pm2-marquee", {"color_scheme": "scheme-3", "duration": 40, "s
     ("item", {"text": "30-day money-back guarantee", "icon": "sparkle"}),
     ("item", {"text": "10% off your first order", "icon": "sparkle"}),
     ("item", {"text": "For cats & small dogs", "icon": "paw"})])
-S["shop"] = sec("pm2-product-tabs", {"eyebrow": "Shop", "heading": "Find their new favorite",
+S["shop"] = sec("pm2-product-tabs", {"eyebrow": "Shop", "heading": "Feeders & water fountains",
                                      "color_scheme": "scheme-3", "products_per_tab": 4, "show_view_all": True,
                                      "padding_top": 56, "padding_bottom": 56}, [
     ("tab", {"label": "Feeders", "collection": "feeders", "text": "Meals on time, set from your phone."}),
