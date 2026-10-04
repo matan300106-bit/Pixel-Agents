@@ -1,0 +1,296 @@
+{%- comment -%}
+  PETME2 free-shipping progress bar.
+  - "inline": shows the bar where the section is placed (e.g. top of the cart page).
+  - "drawer": puts a copy inside Dawn's cart drawer (under its header) on every page
+    where this section is present (place it in the header group for site-wide).
+  - "both": both of the above.
+  Updates live: Dawn PUB_SUB 'cart-update' (pubsub.js), 'cart:updated' / 'cart:refresh'
+  DOM events, and bfcache restores. When the event has no full cart, it re-reads /cart.js.
+  Threshold is in the store currency. With "USD only" on, it hides for other currencies.
+{%- endcomment -%}
+{%- liquid
+  assign s = section.settings
+  assign sid = section.id
+  assign threshold_cents = s.threshold | times: 100
+  if threshold_cents < 1
+    assign threshold_cents = 1
+  endif
+  assign show_for_currency = true
+  if s.usd_only and cart.currency.iso_code != 'USD'
+    assign show_for_currency = false
+  endif
+  assign remaining = threshold_cents | minus: cart.total_price
+  if remaining < 0
+    assign remaining = 0
+  endif
+  assign pct = cart.total_price | times: 100 | divided_by: threshold_cents
+  if pct > 100
+    assign pct = 100
+  endif
+  assign is_free = false
+  if remaining == 0 and cart.item_count > 0
+    assign is_free = true
+  endif
+  if cart.item_count == 0
+    assign amount_html = threshold_cents | money_without_trailing_zeros | strip_html | prepend: '<strong>' | append: '</strong>'
+    assign initial_msg = s.message_empty | escape | replace: '[amount]', amount_html
+  elsif is_free
+    assign initial_msg = s.message_free | escape
+  else
+    assign amount_html = remaining | money_without_trailing_zeros | strip_html | prepend: '<strong>' | append: '</strong>'
+    assign initial_msg = s.message_away | escape | replace: '[amount]', amount_html
+  endif
+  assign show_inline = true
+  if s.placement == 'drawer'
+    assign show_inline = false
+  endif
+-%}
+{%- capture bar_inner -%}
+  <span class="pm2-fsb__icon" aria-hidden="true">
+    <svg class="pm2-fsb__truck" viewBox="0 0 24 24" width="20" height="20"><path d="M2.5 6.5h11v9h-11zM13.5 9.5h4l3 3.2v2.8h-7" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><circle cx="6.5" cy="17" r="1.9" fill="rgb(var(--color-background))" stroke="currentColor" stroke-width="1.9"/><circle cx="17" cy="17" r="1.9" fill="rgb(var(--color-background))" stroke="currentColor" stroke-width="1.9"/></svg>
+    <svg class="pm2-fsb__check" viewBox="0 0 24 24" width="20" height="20"><path d="M5.5 12.5l4.2 4.2L18.5 8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </span>
+  <div class="pm2-fsb__body">
+    <p class="pm2-fsb__msg" data-pm2-fsb-msg role="status" aria-live="polite">{{ initial_msg }}</p>
+    <div
+      class="pm2-fsb__track"
+      role="progressbar"
+      aria-label="{{ s.progress_label | escape }}"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-valuenow="{{ pct }}"
+      data-pm2-fsb-track
+    >
+      <span class="pm2-fsb__fill" style="width: {{ pct }}%;" data-pm2-fsb-fill></span>
+    </div>
+  </div>
+{%- endcapture -%}
+
+{%- if show_for_currency -%}
+  {%- if show_inline -%}
+    <div class="pm2-fsb-wrap color-{{ s.color_scheme }} gradient">
+      <div
+        class="page-width pm2-fsb-outer"
+        style="--pm2-pt: {{ s.padding_top }}px; --pm2-pb: {{ s.padding_bottom }}px;"
+      >
+        <div class="pm2-fsb{% if is_free %} is-free{% endif %}" data-pm2-fsb{% if s.hide_when_empty and cart.item_count == 0 %} hidden{% endif %}>
+          {{ bar_inner }}
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  <template id="pm2-fsb-tpl-{{ sid }}">
+    <div class="pm2-fsb pm2-fsb--drawer" data-pm2-fsb data-pm2-fsb-mirror>{{ bar_inner }}</div>
+  </template>
+
+  <style>
+    .pm2-fsb-outer { padding-top: var(--pm2-pt); padding-bottom: var(--pm2-pb); }
+    .pm2-fsb {
+      display: flex; align-items: center; gap: 1.2rem; max-width: 64rem; margin: 0 auto;
+      padding: 1.2rem 1.6rem; border-radius: 20px;
+      background: rgba(var(--color-button), .07);
+      border: 1px solid rgba(var(--color-button), .14);
+      color: rgb(var(--color-foreground));
+    }
+    .pm2-fsb[hidden] { display: none; }
+    .pm2-fsb__icon {
+      flex: 0 0 auto; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 14px;
+      background: rgb(var(--color-background)); color: rgb(var(--color-button));
+      box-shadow: 0 4px 12px -6px rgba(var(--color-foreground), .3);
+    }
+    .pm2-fsb__check { display: none; }
+    .pm2-fsb.is-free .pm2-fsb__truck { display: none; }
+    .pm2-fsb.is-free .pm2-fsb__check { display: block; }
+    .pm2-fsb.is-free .pm2-fsb__icon { background: rgb(var(--color-button)); color: rgb(var(--color-button-text)); }
+    .pm2-fsb__body { flex: 1 1 auto; min-width: 0; }
+    .pm2-fsb__msg { margin: 0 0 .7rem; font-size: 1.4rem; line-height: 1.4; letter-spacing: normal; }
+    .pm2-fsb__msg strong { font-weight: 700; }
+    .pm2-fsb__track { position: relative; height: 8px; border-radius: 999px; overflow: hidden; background: rgba(var(--color-foreground), .1); }
+    .pm2-fsb__fill {
+      position: absolute; inset: 0 auto 0 0; border-radius: inherit; background: rgb(var(--color-button));
+      transition: width .5s cubic-bezier(.2,.7,.2,1);
+    }
+    .pm2-fsb--drawer { margin: 0 0 1.2rem; max-width: none; padding: 1rem 1.2rem; border-radius: 16px; }
+    .pm2-fsb--drawer .pm2-fsb__icon { width: 34px; height: 34px; border-radius: 12px; }
+    .pm2-fsb--drawer .pm2-fsb__msg { font-size: 1.3rem; margin-bottom: .5rem; }
+    @media (prefers-reduced-motion: reduce) { .pm2-fsb__fill { transition: none; } }
+  </style>
+
+  <script>
+    (function () {
+      var cfg = {
+        sid: {{ sid | json }},
+        threshold: {{ threshold_cents | json }},
+        placement: {{ s.placement | json }},
+        moneyFormat: {{ shop.money_format | json }},
+        cartUrl: {{ routes.cart_url | json }},
+        msgAway: {{ s.message_away | json }},
+        msgFree: {{ s.message_free | json }},
+        msgEmpty: {{ s.message_empty | json }},
+        hideEmpty: {{ s.hide_when_empty | json }}
+      };
+      var state = { total: {{ cart.total_price | json }}, count: {{ cart.item_count | json }} };
+      window.PM2FSB = window.PM2FSB || { instances: [], drawerOwner: null };
+      var registry = window.PM2FSB;
+
+      function esc(str) {
+        return String(str).replace(/[&<>"']/g, function (c) {
+          return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+        });
+      }
+      function formatMoney(cents) {
+        var fmt = cfg.moneyFormat || ('$' + '{' + '{amount}}');
+        function delim(n, prec, thou, dec) {
+          var parts = (n / 100).toFixed(prec).split('.');
+          return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thou) + (parts[1] ? dec + parts[1] : '');
+        }
+        var m = fmt.match(/\{\{\s*(\w+)\s*\}\}/);
+        var val;
+        switch (m ? m[1] : 'amount') {
+          case 'amount_no_decimals': val = delim(cents, 0, ',', '.'); break;
+          case 'amount_with_comma_separator': val = delim(cents, 2, '.', ','); break;
+          case 'amount_no_decimals_with_comma_separator': val = delim(cents, 0, '.', ','); break;
+          case 'amount_with_apostrophe_separator': val = delim(cents, 2, "'", '.'); break;
+          default: val = delim(cents, 2, ',', '.');
+        }
+        // Drop ".00" for a friendlier "$12" when the amount is whole.
+        val = val.replace(/[.,]00$/, '');
+        return m ? fmt.replace(m[0], val) : '$' + val;
+      }
+      function stripTags(html) {
+        var d = document.createElement('div'); d.innerHTML = html; return d.textContent || '';
+      }
+
+      function paint(el) {
+        var left = Math.max(cfg.threshold - state.total, 0);
+        var pct = cfg.threshold > 0 ? Math.min(100, Math.round((state.total / cfg.threshold) * 100)) : 100;
+        var free = state.count > 0 && left === 0;
+        var msg;
+        if (state.count === 0) msg = esc(cfg.msgEmpty).replace('[amount]', '<strong>' + esc(stripTags(formatMoney(cfg.threshold))) + '</strong>');
+        else if (free) msg = esc(cfg.msgFree);
+        else msg = esc(cfg.msgAway).replace('[amount]', '<strong>' + esc(stripTags(formatMoney(left))) + '</strong>');
+        el.classList.toggle('is-free', free);
+        el.hidden = cfg.hideEmpty && state.count === 0;
+        var msgEl = el.querySelector('[data-pm2-fsb-msg]');
+        if (msgEl && msgEl.innerHTML !== msg) msgEl.innerHTML = msg;
+        var fill = el.querySelector('[data-pm2-fsb-fill]');
+        if (fill) fill.style.width = pct + '%';
+        var track = el.querySelector('[data-pm2-fsb-track]');
+        if (track) track.setAttribute('aria-valuenow', String(pct));
+      }
+
+      function paintAll() {
+        document.querySelectorAll('[data-pm2-fsb]').forEach(paint);
+      }
+
+      // Cart drawer mirror: Dawn re-renders the drawer HTML after each change,
+      // so re-insert the copy whenever it disappears.
+      function ensureDrawer() {
+        if (registry.drawerOwner !== cfg.sid) return;
+        var drawer = document.querySelector('cart-drawer');
+        if (!drawer) return;
+        var header = drawer.querySelector('.drawer__header');
+        if (!header || drawer.querySelector('[data-pm2-fsb-mirror]')) return;
+        var tpl = document.getElementById('pm2-fsb-tpl-' + cfg.sid);
+        if (!tpl) return;
+        var node = tpl.content.firstElementChild.cloneNode(true);
+        node.querySelectorAll('[aria-live]').forEach(function (n) { n.removeAttribute('aria-live'); });
+        header.insertAdjacentElement('afterend', node);
+        paint(node);
+      }
+
+      var fetching = null;
+      function refresh() {
+        if (fetching) return fetching;
+        fetching = fetch(cfg.cartUrl + '.js', { credentials: 'same-origin', headers: { Accept: 'application/json' } })
+          .then(function (r) { return r.ok ? r.json() : null; })
+          .then(function (cart) { if (cart) setCart(cart); })
+          .catch(function () {})
+          .then(function () { fetching = null; });
+        return fetching;
+      }
+      function setCart(cart) {
+        if (!cart || typeof cart.total_price !== 'number') return;
+        state.total = cart.total_price;
+        state.count = typeof cart.item_count === 'number' ? cart.item_count : state.count;
+        paintAll();
+      }
+      function onCartEvent(data) {
+        var c = data && (data.cartData || data.cart || data);
+        // /cart/change.js returns a full cart (has items + total_price); /cart/add.js returns a line item.
+        if (c && typeof c.total_price === 'number' && Array.isArray(c.items)) setCart(c);
+        else refresh();
+        setTimeout(ensureDrawer, 0);
+      }
+
+      function init() {
+        if (cfg.placement !== 'inline' && !registry.drawerOwner) registry.drawerOwner = cfg.sid;
+        if (registry.instances.indexOf(cfg.sid) !== -1) { paintAll(); ensureDrawer(); return; }
+        registry.instances.push(cfg.sid);
+        paintAll();
+        ensureDrawer();
+
+        if (typeof subscribe === 'function' && typeof PUB_SUB_EVENTS !== 'undefined') {
+          subscribe(PUB_SUB_EVENTS.cartUpdate, onCartEvent);
+        }
+        ['cart:updated', 'cart:refresh', 'cart:change'].forEach(function (name) {
+          document.addEventListener(name, function (e) { onCartEvent(e && e.detail); });
+        });
+        window.addEventListener('pageshow', function (e) { if (e.persisted) refresh(); });
+
+        var drawer = document.querySelector('cart-drawer');
+        if (drawer && registry.drawerOwner === cfg.sid && 'MutationObserver' in window) {
+          var queued = false;
+          new MutationObserver(function () {
+            if (queued) return;
+            queued = true;
+            requestAnimationFrame(function () { queued = false; ensureDrawer(); });
+          }).observe(drawer, { childList: true, subtree: true });
+        }
+      }
+
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+      else init();
+
+      document.addEventListener('shopify:section:load', function (e) {
+        if (e.detail && e.detail.sectionId === cfg.sid) { paintAll(); }
+      });
+    })();
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "PM2 Free shipping bar",
+  "tag": "section",
+  "class": "section pm2-fsb-section",
+  "settings": [
+    { "type": "number", "id": "threshold", "label": "Free shipping from (store currency, whole amount)", "default": 50, "info": "Match your Shopify shipping rate. 50 = $50.00" },
+    {
+      "type": "select",
+      "id": "placement",
+      "label": "Show bar",
+      "options": [
+        { "value": "inline", "label": "Here (where the section is)" },
+        { "value": "drawer", "label": "In the cart drawer only" },
+        { "value": "both", "label": "Here and in the cart drawer" }
+      ],
+      "default": "both",
+      "info": "Cart drawer copy works on every page that has this section. Add it to the header to show it site-wide."
+    },
+    { "type": "checkbox", "id": "usd_only", "label": "Only show when the cart is in USD", "default": true },
+    { "type": "checkbox", "id": "hide_when_empty", "label": "Hide when the cart is empty", "default": false },
+    { "type": "text", "id": "message_away", "label": "Message: not there yet", "default": "You're [amount] away from free U.S. shipping", "info": "[amount] = what is left to spend" },
+    { "type": "text", "id": "message_free", "label": "Message: reached", "default": "You've got free U.S. shipping!" },
+    { "type": "text", "id": "message_empty", "label": "Message: empty cart", "default": "Free U.S. shipping on orders [amount]+", "info": "[amount] = the threshold" },
+    { "type": "text", "id": "progress_label", "label": "Progress bar label (screen readers)", "default": "Progress to free shipping" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-3" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 16 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 0 }
+  ],
+  "presets": [
+    { "name": "PM2 Free shipping bar" }
+  ]
+}
+{% endschema %}

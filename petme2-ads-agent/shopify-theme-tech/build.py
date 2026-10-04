@@ -1,4 +1,5 @@
-"""Builds the 'PETME2 — Smart Tech' design for a fresh Dawn theme.
+"""Builds the 'PETME2 — Friendly Minimal' design system for a fresh Dawn theme (light-first, soft blue,
+rounded Nunito headings, big radii, airy spacing; mobile first).
 Writes templates/index.json, templates/product.json, sections/header-group.json,
 sections/footer-group.json and config/settings_data.json. Same photos as the old store,
 everything else new. Only true claims (from research/seo facts)."""
@@ -7,7 +8,11 @@ from pathlib import Path
 
 HERE = Path(__file__).parent
 IMG = "shopify://shop_images/"
-NAVY, NAVY2, BLUE, INK, WHITE = "#0B1220", "#121C33", "#1F6BEB", "#E6ECF5", "#FFFFFF"  # blue darkened for 4.5:1 contrast
+# Friendly-minimal palette. Contrast (WCAG): white on BLUE 5.02:1, BLUE on SKY 4.55:1, BLUE on CREAM 4.61:1,
+# INK on white 15.2:1, INK on CREAM 13.9:1, SNOW on NIGHT 14.4:1 -> every button label/body text >= 4.5:1.
+INK, NIGHT, BLUE, SNOW, WHITE = "#1B2540", "#1E2846", "#3366E6", "#F5F7FC", "#FFFFFF"
+CREAM, SKY = "#F7F5F2", "#EEF4FF"
+NAVY = INK  # used by the reviews app block colours below
 
 
 def w(path, obj):
@@ -41,39 +46,40 @@ def scheme(bg, text, button, label, secondary):
 current = {
     "logo": IMG + "01-08-Photoroom_1.png", "logo_width": 110, "favicon": IMG + "p2_1.png",
     "color_schemes": {
-        "scheme-1": scheme(NAVY, INK, BLUE, WHITE, INK),           # main dark
-        "scheme-2": scheme(NAVY2, INK, BLUE, WHITE, INK),          # dark card / alternate band
-        "scheme-3": scheme(WHITE, NAVY, BLUE, WHITE, NAVY),        # light (header, product info, cards)
-        "scheme-4": scheme(BLUE, WHITE, WHITE, NAVY, WHITE),       # electric blue band
-        "scheme-5": scheme("#F2F5FA", NAVY, BLUE, WHITE, NAVY),    # light grey-blue
+        "scheme-1": scheme(NIGHT, SNOW, WHITE, NIGHT, SNOW),       # soft night: the ONE dark accent (CTA band)
+        "scheme-2": scheme(BLUE, WHITE, WHITE, BLUE, WHITE),       # friendly blue (sale badge, small accents)
+        "scheme-3": scheme(WHITE, INK, BLUE, WHITE, INK),          # white (header, product info, most sections)
+        "scheme-4": scheme(SKY, INK, BLUE, WHITE, INK),            # soft sky (announcement, ticker, quiz, compare)
+        "scheme-5": scheme(CREAM, INK, BLUE, WHITE, INK),          # warm cream (hero, cards, alternate bands)
     },
-    "type_header_font": "inter_n7", "heading_scale": 110, "type_body_font": "inter_n4", "body_scale": 100,
-    "page_width": 1300, "spacing_sections": 0, "spacing_grid_horizontal": 16, "spacing_grid_vertical": 16,
+    # Nunito (rounded, friendly) for headings + Nunito Sans for body; both verified in Shopify's font library.
+    "type_header_font": "nunito_n8", "heading_scale": 110, "type_body_font": "nunito_sans_n4", "body_scale": 100,
+    "page_width": 1300, "spacing_sections": 0, "spacing_grid_horizontal": 20, "spacing_grid_vertical": 24,
     "animations_reveal_on_scroll": True, "animations_hover_elements": "vertical-lift",
     "buttons_border_thickness": 1, "buttons_border_opacity": 100, "buttons_radius": 40,
     "buttons_shadow_opacity": 0, "buttons_shadow_horizontal_offset": 0, "buttons_shadow_vertical_offset": 0, "buttons_shadow_blur": 0,
     "variant_pills_border_thickness": 1, "variant_pills_border_opacity": 30, "variant_pills_radius": 40,
     "variant_pills_shadow_opacity": 0, "variant_pills_shadow_horizontal_offset": 0, "variant_pills_shadow_vertical_offset": 0, "variant_pills_shadow_blur": 0,
-    "inputs_border_thickness": 1, "inputs_border_opacity": 40, "inputs_radius": 10,
+    "inputs_border_thickness": 1, "inputs_border_opacity": 25, "inputs_radius": 14,
     "inputs_shadow_opacity": 0, "inputs_shadow_horizontal_offset": 0, "inputs_shadow_vertical_offset": 0, "inputs_shadow_blur": 0,
     "card_style": "card", "card_image_padding": 12, "card_text_alignment": "left", "card_color_scheme": "scheme-5",
-    "card_border_thickness": 0, "card_border_opacity": 0, "card_corner_radius": 16,
+    "card_border_thickness": 0, "card_border_opacity": 0, "card_corner_radius": 24,
     "card_shadow_opacity": 0, "card_shadow_horizontal_offset": 0, "card_shadow_vertical_offset": 0, "card_shadow_blur": 0,
     "collection_card_style": "card", "collection_card_image_padding": 0, "collection_card_text_alignment": "left",
     "collection_card_color_scheme": "scheme-5", "collection_card_border_thickness": 0, "collection_card_border_opacity": 0,
-    "collection_card_corner_radius": 16, "collection_card_shadow_opacity": 0,
+    "collection_card_corner_radius": 24, "collection_card_shadow_opacity": 0,
     "collection_card_shadow_horizontal_offset": 0, "collection_card_shadow_vertical_offset": 0, "collection_card_shadow_blur": 0,
-    "text_boxes_border_thickness": 0, "text_boxes_border_opacity": 0, "text_boxes_radius": 16,
+    "text_boxes_border_thickness": 0, "text_boxes_border_opacity": 0, "text_boxes_radius": 24,
     "text_boxes_shadow_opacity": 0, "text_boxes_shadow_horizontal_offset": 0, "text_boxes_shadow_vertical_offset": 0, "text_boxes_shadow_blur": 0,
-    "media_border_thickness": 0, "media_border_opacity": 0, "media_radius": 16,
+    "media_border_thickness": 0, "media_border_opacity": 0, "media_radius": 24,
     "media_shadow_opacity": 0, "media_shadow_horizontal_offset": 0, "media_shadow_vertical_offset": 0, "media_shadow_blur": 0,
-    "popup_border_thickness": 1, "popup_border_opacity": 10, "popup_corner_radius": 16,
-    "popup_shadow_opacity": 20, "popup_shadow_horizontal_offset": 0, "popup_shadow_vertical_offset": 8, "popup_shadow_blur": 25,
+    "popup_border_thickness": 1, "popup_border_opacity": 10, "popup_corner_radius": 24,
+    "popup_shadow_opacity": 10, "popup_shadow_horizontal_offset": 0, "popup_shadow_vertical_offset": 8, "popup_shadow_blur": 30,
     "drawer_border_thickness": 1, "drawer_border_opacity": 10,
     "drawer_shadow_opacity": 0, "drawer_shadow_horizontal_offset": 0, "drawer_shadow_vertical_offset": 0, "drawer_shadow_blur": 0,
-    "badge_position": "top left", "badge_corner_radius": 40, "sale_badge_color_scheme": "scheme-4", "sold_out_badge_color_scheme": "scheme-2",
-    "brand_headline": "Smart care for cats and small dogs.",
-    "brand_description": "<p>PETME2 makes app-controlled feeders and quiet water fountains. Also sold on Amazon.</p>",
+    "badge_position": "top left", "badge_corner_radius": 40, "sale_badge_color_scheme": "scheme-2", "sold_out_badge_color_scheme": "scheme-5",
+    "brand_headline": "Easy, happy care for cats and small dogs.",
+    "brand_description": "<p>PETME2 makes smart feeders and quiet water fountains. Also sold on Amazon.</p>",
     "predictive_search_enabled": True, "predictive_search_show_vendor": False, "predictive_search_show_price": True,
     "currency_code_enabled": False,
     "cart_type": "drawer", "show_vendor": False, "show_cart_note": False, "cart_color_scheme": "scheme-3",
@@ -90,7 +96,7 @@ w("sections/header-group.json", {
             {"color_scheme": "scheme-4", "show_line_separator": False, "show_social": False, "auto_rotate": True,
              "change_slides_speed": 5, "enable_country_selector": False, "enable_language_selector": False},
             ("a1", "announcement", {"text": "Free U.S. shipping on orders $50+", "link": ""}),
-            ("a2", "announcement", {"text": "Compare our feeders side by side →", "link": "/#compare-feeders"})),
+            ("a2", "announcement", {"text": "Not sure which feeder? Compare them →", "link": "/#compare-feeders"})),
         "header": section("header",
             {"color_scheme": "scheme-3", "menu_color_scheme": "scheme-3", "logo_position": "middle-left",
              "menu": "main-menu", "menu_type_desktop": "dropdown", "sticky_header_type": "always",
@@ -163,8 +169,8 @@ S["video"] = section("video",
      "full_width": True, "color_scheme": "scheme-1", "padding_top": 72, "padding_bottom": 0})
 S["cmp_feeders"] = section("pm2-compare",
     {"color_scheme": "scheme-3", "anchor": "compare-feeders", "eyebrow": "Compare feeders",
-     "heading": "Which feeder is right for you?",
-     "text": "All PETME2 feeders work with dry food, run on a schedule from the app, and are for cats and small dogs.",
+     "heading": "Which feeder fits your pet?",
+     "text": "Every PETME2 feeder runs on a schedule from the app. Made for dry food, cats and small dogs.",
      "row1": "Capacity", "row2": "Bowls", "row3": "Control", "row4": "Camera", "row5": "Audio", "button_text": "View details"},
     ("m1", "model", model("2-in-1-smart-feeder", "3L Dual Bowl", ["3L", "2 stainless steel", "App", "—", "2-way audio"], "Most popular")),
     ("m2", "model", model("2-in-1-feeder-1", "5L Elevated WiFi", ["5L", "2 stainless steel", "WiFi app", "—", "Voice recording"])),
@@ -175,7 +181,7 @@ S["two_pets"] = section("image-with-text",
      "desktop_content_alignment": "left", "mobile_content_alignment": "left", "section_color_scheme": "scheme-5",
      "color_scheme": "scheme-5", "padding_top": 72, "padding_bottom": 72},
     ("c", "caption", {"caption": "DUAL BOWL", "text_style": "caption-with-letter-spacing", "text_size": "medium"}),
-    ("h", "heading", {"heading": "Two pets. One routine.", "heading_size": "h1"}),
+    ("h", "heading", {"heading": "Two pets, one easy routine.", "heading_size": "h1"}),
     ("t", "text", {"text": "<p>Even portions in two stainless steel bowls, so both pets eat at the same time. A sealed container and desiccant box help keep dry food fresh.</p>", "text_style": "body"}),
     ("b", "button", {"button_label": "Shop dual feeders", "button_link": "shopify://products/2-in-1-smart-feeder", "button_style_secondary": False}))
 S["fountains"] = section("featured-collection",
@@ -191,7 +197,7 @@ S["water"] = section("image-with-text",
     ("b", "button", {"button_label": "Shop fountains", "button_link": "shopify://collections/water-fountains", "button_style_secondary": False}))
 S["cmp_fountains"] = section("pm2-compare",
     {"color_scheme": "scheme-3", "anchor": "compare-fountains", "eyebrow": "Compare fountains",
-     "heading": "Which fountain is right for you?",
+     "heading": "Which fountain fits your home?",
      "text": "Every PETME2 fountain has a quiet pump and comes apart for easy cleaning.",
      "row1": "Capacity", "row2": "Material", "row3": "Filter", "row4": "Water level", "row5": "Best for", "button_text": "View details"},
     ("w1", "model", model("water-fountain", "Stainless 3.2L", ["3.2L / 108oz", "Stainless steel", "4-layer filter", "LED light", "Big drinkers, cats & dogs"], "Premium")),
@@ -205,7 +211,7 @@ S["life"] = section("collage",
     ("i2", "image", {"image": IMG + "Rectangle_67_1.jpg"}),
     ("i3", "image", {"image": IMG + "image_830.jpg"}))
 S["faq"] = section("collapsible-content",
-    {"caption": "FAQ", "heading": "Questions, answered", "heading_size": "h1", "heading_alignment": "center",
+    {"caption": "FAQ", "heading": "Good questions", "heading_size": "h1", "heading_alignment": "center",
      "layout": "none", "container_color_scheme": "scheme-3", "color_scheme": "scheme-5",
      "open_first_collapsible_row": True, "image_ratio": "adapt", "desktop_layout": "image_second",
      "padding_top": 72, "padding_bottom": 72},
@@ -213,7 +219,9 @@ S["faq"] = section("collapsible-content",
     ("q2", "collapsible_row", {"heading": "Which feeder is best for 2 pets?", "icon": "check_mark", "row_content": "<p>The 3L Dual Bowl or the 5L Elevated WiFi. Both split food into two stainless steel bowls.</p>"}),
     ("q3", "collapsible_row", {"heading": "Do I need WiFi?", "icon": "check_mark", "row_content": "<p>WiFi is needed for the app: schedules, portions and alerts.</p>"}),
     ("q4", "collapsible_row", {"heading": "Are the fountains loud?", "icon": "check_mark", "row_content": "<p>No. Every PETME2 fountain uses a quiet pump made for use inside the home.</p>"}),
-    ("q5", "collapsible_row", {"heading": "Is PETME2 on Amazon?", "icon": "check_mark", "row_content": "<p>Yes. All PETME2 products are also sold on Amazon, where you can read buyer reviews.</p>"}))
+    ("q5", "collapsible_row", {"heading": "Are the fountains easy to clean?", "icon": "check_mark", "row_content": "<p>Yes. Every PETME2 fountain comes apart for cleaning.</p>"}),
+    ("q6", "collapsible_row", {"heading": "Is shipping free?", "icon": "check_mark", "row_content": "<p>Shipping is free in the U.S. on orders of $50 or more.</p>"}),
+    ("q7", "collapsible_row", {"heading": "Is PETME2 on Amazon?", "icon": "check_mark", "row_content": "<p>Yes. PETME2 products are also sold on Amazon.</p>"}))
 S["newsletter"] = section("newsletter",
     {"color_scheme": "scheme-3", "full_width": True, "padding_top": 56, "padding_bottom": 64},
     ("h", "heading", {"heading": "Get new products and deals first", "heading_size": "h1"}),

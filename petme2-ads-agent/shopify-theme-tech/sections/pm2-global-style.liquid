@@ -1,9 +1,11 @@
 {%- comment -%}
-  PETME2 global style. Place in the header group. Renders no visible markup: only CSS + a tiny
-  scroll script that toggles html.pm2-scrolled. Every rule targets Dawn 15 classes
-  (.section-header, .header-wrapper, .button, .card-wrapper, .card--card, .card__inner,
-  .card__media .media, .rich-text__caption, .image-with-text__text--caption) and avoids
-  layout properties (no display/position/size changes on Dawn elements).
+  PETME2 global style: friendly-minimal, mobile first. Place in the header group. Renders no visible
+  markup: only CSS + a tiny scroll script that toggles html.pm2-scrolled. Every rule targets Dawn 15
+  classes (.section-header, .header-wrapper, .header__icon, .announcement-bar__message, .button,
+  .card-wrapper, .card--card, .card__inner, .card__media .media, .accordion summary,
+  .rich-text__caption, .image-with-text__text--caption) and avoids layout properties on Dawn elements
+  (no display/position/grid changes), so nothing can break the theme's own layout.
+  Brand colours: blue #3366E6 (51,102,230), ink #1B2540 (27,37,64).
 {%- endcomment -%}
 {%- liquid
   assign s = section.settings
@@ -12,20 +14,48 @@
   /* PETME2 global style */
   .pm2-global-style-section { display: none; }
 
+  {%- if s.enable_typography %}
+  /* Readable, friendly type: 16px body on phones, soft rounded headings */
+  body {
+    font-size: 1.6rem;
+    letter-spacing: 0.01em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  @media screen and (min-width: 750px) {
+    body { font-size: 1.7rem; }
+  }
+  h1, h2, .h0, .h1, .h2 {
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+  }
+  h3, .h3, h4, .h4 {
+    letter-spacing: -0.005em;
+  }
+  h1, h2, .h0, .h1, .h2, h3, .h3 {
+    text-wrap: balance;
+  }
+  p, .rte {
+    text-wrap: pretty;
+  }
+  {%- endif %}
+
   {%- if s.enable_glass_header %}
-  /* Glass sticky header: a pseudo layer carries the blur, so Dawn's fixed/absolute
-     children (menu drawer, search modal) keep their containing block. */
+  /* Clean header: soft frosted glass once the page scrolls (a pseudo layer carries the blur, so
+     Dawn's fixed/absolute children such as the menu drawer keep their containing block). */
   .section-header .header-wrapper {
     transition: background-color .25s ease, box-shadow .25s ease;
   }
   .pm2-scrolled .section-header.shopify-section-header-sticky:not(.shopify-section-header-hidden) .header-wrapper {
     {%- if s.glass_tint == 'light' %}
     --color-background: 255, 255, 255;
-    --color-foreground: 11, 18, 32;
-    --color-link: 11, 18, 32;
+    --color-foreground: 27, 37, 64;
+    --color-link: 27, 37, 64;
     {%- endif %}
     background: transparent;
-    box-shadow: 0 1px 0 rgba(var(--color-foreground), .08), 0 10px 30px -18px rgba(11, 18, 32, .35);
+    border-bottom-color: transparent;
+    box-shadow: 0 1px 0 rgba(27, 37, 64, .06), 0 8px 24px -18px rgba(27, 37, 64, .25);
   }
   .pm2-scrolled .section-header.shopify-section-header-sticky .header-wrapper::before {
     content: '';
@@ -34,24 +64,44 @@
     z-index: -1;
     pointer-events: none;
     background: rgba(var(--color-background), {{ s.glass_opacity | divided_by: 100.0 }});
-    -webkit-backdrop-filter: blur(18px) saturate(180%);
-    backdrop-filter: blur(18px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    backdrop-filter: blur(16px) saturate(160%);
   }
   @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
     .pm2-scrolled .section-header.shopify-section-header-sticky .header-wrapper::before {
       background: rgb(var(--color-background));
     }
   }
+  /* Header icons: calm, consistent 44px tap targets with a soft round hover */
+  .header__icon {
+    border-radius: 999px;
+    transition: background-color .2s ease;
+  }
+  .header__icon:hover {
+    background-color: rgba(var(--color-foreground), .05);
+  }
+  .header__icon:hover .icon {
+    transform: none;
+  }
+  /* Announcement bar: friendly, readable, not shouty */
+  .announcement-bar__message {
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
   {%- endif %}
 
   {%- if s.enable_buttons %}
-  /* Pill buttons with lift + glow from the scheme's button color */
+  /* Pill buttons: comfy 48px tap height, bold label, gentle lift + soft brand glow on hover */
   .button,
   .shopify-challenge__button,
   .customer button {
     --buttons-radius: 999px;
     --buttons-radius-outset: 999px;
-    font-weight: 600;
+    min-height: 4.8rem;
+    padding-left: 2.8rem;
+    padding-right: 2.8rem;
+    font-weight: 700;
     letter-spacing: .01em;
     transition: transform .2s cubic-bezier(.2, .7, .2, 1), box-shadow .25s ease, background-color .2s ease;
   }
@@ -59,90 +109,90 @@
   .shopify-challenge__button:hover,
   .customer button:hover {
     transform: translateY(-1px);
-    box-shadow: 0 12px 28px -12px rgba(var(--color-button), .85), 0 0 0 1px rgba(var(--color-button), .25);
+    box-shadow: 0 10px 22px -12px rgba(var(--color-button), .55);
   }
   .button--secondary:not([disabled]):hover {
     transform: translateY(-1px);
-    box-shadow: 0 10px 24px -14px rgba(var(--color-foreground), .45);
+    box-shadow: 0 8px 20px -14px rgba(var(--color-foreground), .35);
   }
-  .button:not([disabled]):active { transform: translateY(0); }
+  .button:not([disabled]):active { transform: translateY(0) scale(.98); }
+  /* Bigger, friendlier FAQ / accordion rows (>= 52px tap target) */
+  .accordion summary {
+    padding-top: 1.9rem;
+    padding-bottom: 1.9rem;
+  }
+  .accordion__title {
+    font-weight: 700;
+  }
   {%- endif %}
 
   {%- if s.enable_cards %}
-  /* Card hover: soft shadow; Dawn's own hover lift (theme setting) keeps doing the transform */
+  /* Cards: soft, airy shadow on hover; Dawn's own hover lift (theme setting) keeps the transform */
   .card-wrapper .card--card,
   .card-wrapper .card--standard .card__inner {
     transition: transform .35s cubic-bezier(.2, .7, .2, 1), box-shadow .35s ease;
   }
-  .card-wrapper:hover .card--card,
-  .card-wrapper:hover .card--standard .card__inner {
-    box-shadow: 0 24px 48px -24px rgba(11, 18, 32, .28), 0 2px 8px -2px rgba(11, 18, 32, .06);
+  @media (hover: hover) {
+    .card-wrapper:hover .card--card,
+    .card-wrapper:hover .card--standard .card__inner {
+      box-shadow: 0 18px 40px -24px rgba(27, 37, 64, .22), 0 2px 6px -2px rgba(27, 37, 64, .05);
+    }
   }
   body:not(.animate--hover-vertical-lift):not(.animate--hover-3d-lift) .card-wrapper:hover .card--card,
   body:not(.animate--hover-vertical-lift):not(.animate--hover-3d-lift) .card-wrapper:hover .card--standard .card__inner {
-    transform: translateY(-4px);
+    transform: translateY(-3px);
   }
   {%- endif %}
 
   {%- if s.enable_image_zoom %}
-  /* Product/collection card image zoom (only single-image cards; Dawn swaps 2nd image itself) */
+  /* Gentle card image zoom (single-image cards only; Dawn swaps the 2nd image itself) */
   .card-wrapper .card__media .media > img:only-child {
     transition: transform .7s cubic-bezier(.2, .7, .2, 1);
   }
-  .card-wrapper:hover .card__media .media > img:only-child {
-    transform: scale(1.05);
-  }
-  {%- endif %}
-
-  {%- if s.enable_typography %}
-  /* Tighter, more confident headings */
-  h1, h2, .h0, .h1, .h2 {
-    letter-spacing: -0.02em;
-  }
-  h3, .h3 {
-    letter-spacing: -0.01em;
-  }
-  h1, h2, .h0, .h1, .h2, h3, .h3 {
-    text-wrap: balance;
+  @media (hover: hover) {
+    .card-wrapper:hover .card__media .media > img:only-child {
+      transform: scale(1.03);
+    }
   }
   {%- endif %}
 
   {%- if s.enable_eyebrow %}
-  /* Section heading eyebrows (Dawn caption blocks) */
+  /* Section eyebrows (Dawn caption blocks): friendly blue, sentence-like spacing */
   .rich-text__caption.caption-with-letter-spacing,
   .image-with-text__text--caption.caption-with-letter-spacing {
-    font-weight: 600;
-    letter-spacing: .14em;
-    color: rgb(47, 124, 255);
+    font-weight: 700;
+    letter-spacing: .08em;
+    color: rgb(51, 102, 230);
   }
   .color-scheme-1 .rich-text__caption.caption-with-letter-spacing,
-  .color-scheme-1 .image-with-text__text--caption.caption-with-letter-spacing,
+  .color-scheme-1 .image-with-text__text--caption.caption-with-letter-spacing {
+    color: rgb(169, 193, 255);
+  }
   .color-scheme-2 .rich-text__caption.caption-with-letter-spacing,
   .color-scheme-2 .image-with-text__text--caption.caption-with-letter-spacing {
-    color: rgb(127, 176, 255);
-  }
-  .color-scheme-4 .rich-text__caption.caption-with-letter-spacing,
-  .color-scheme-4 .image-with-text__text--caption.caption-with-letter-spacing {
-    color: rgba(var(--color-foreground), .85);
+    color: rgba(var(--color-foreground), .9);
   }
   {%- endif %}
 
   {%- if s.enable_focus %}
   /* Clear, on-brand focus rings */
   html:root {
-    --focused-base-outline: 0.2rem solid rgb(47, 124, 255);
+    --focused-base-outline: 0.2rem solid rgb(51, 102, 230);
     --focused-base-outline-offset: 0.3rem;
-    --focused-base-box-shadow: 0 0 0 0.6rem rgba(47, 124, 255, .22);
+    --focused-base-box-shadow: 0 0 0 0.6rem rgba(51, 102, 230, .2);
   }
   .button:focus-visible,
   .shopify-payment-button__button--unbranded:focus-visible {
-    box-shadow: 0 0 0 0.3rem rgb(var(--color-background)), 0 0 0 0.55rem rgb(47, 124, 255);
+    box-shadow: 0 0 0 0.3rem rgb(var(--color-background)), 0 0 0 0.55rem rgb(51, 102, 230);
   }
   {%- endif %}
 
   {%- if s.enable_selection %}
   ::selection {
-    background-color: rgba(47, 124, 255, .28);
+    background-color: rgba(51, 102, 230, .22);
+  }
+  html {
+    -webkit-tap-highlight-color: rgba(51, 102, 230, .12);
   }
   {%- endif %}
 
@@ -155,14 +205,21 @@
   }
   {%- endif %}
 
+  /* Mobile safety net: never let a wide child cause sideways page scroll
+     (overflow-x: clip does not create a scroll container, so the sticky header keeps working). */
+  body { overflow-x: clip; }
+
   @media (prefers-reduced-motion: reduce) {
     .button,
+    .header__icon,
     .card-wrapper .card--card,
     .card-wrapper .card--standard .card__inner,
     .card-wrapper .card__media .media > img:only-child {
       transition: none !important;
     }
     .button:hover,
+    .button:active,
+    .card-wrapper:hover .card--card,
     .card-wrapper:hover .card__media .media > img:only-child {
       transform: none !important;
     }
@@ -194,10 +251,10 @@
   "settings": [
     {
       "type": "paragraph",
-      "content": "Adds the PETME2 modern look to the whole store. Nothing visible is rendered by this section."
+      "content": "Adds the PETME2 friendly, minimal look to the whole store. Nothing visible is rendered by this section."
     },
     { "type": "header", "content": "Header" },
-    { "type": "checkbox", "id": "enable_glass_header", "label": "Glass sticky header on scroll", "default": true },
+    { "type": "checkbox", "id": "enable_glass_header", "label": "Frosted sticky header, round icon hover, softer announcement bar", "default": true },
     {
       "type": "select",
       "id": "glass_tint",
@@ -206,7 +263,7 @@
         { "value": "scheme", "label": "Header color scheme" },
         { "value": "light", "label": "Light (white glass, dark text)" }
       ],
-      "default": "scheme",
+      "default": "light",
       "info": "Light only works well with a dark logo."
     },
     {
@@ -217,18 +274,18 @@
       "max": 95,
       "step": 5,
       "unit": "%",
-      "default": 70
+      "default": 80
     },
     { "type": "header", "content": "Components" },
-    { "type": "checkbox", "id": "enable_buttons", "label": "Pill buttons with hover lift and glow", "default": true },
-    { "type": "checkbox", "id": "enable_cards", "label": "Card hover shadow / lift", "default": true },
-    { "type": "checkbox", "id": "enable_image_zoom", "label": "Card image zoom on hover", "default": true },
+    { "type": "checkbox", "id": "enable_buttons", "label": "Pill buttons (48px) and roomy FAQ rows", "default": true },
+    { "type": "checkbox", "id": "enable_cards", "label": "Soft card hover shadow", "default": true },
+    { "type": "checkbox", "id": "enable_image_zoom", "label": "Gentle card image zoom on hover", "default": true },
     { "type": "header", "content": "Typography" },
-    { "type": "checkbox", "id": "enable_typography", "label": "Tighter heading letter spacing", "default": true },
+    { "type": "checkbox", "id": "enable_typography", "label": "16px body on phones, friendly heading spacing", "default": true },
     { "type": "checkbox", "id": "enable_eyebrow", "label": "Blue caption (eyebrow) style", "default": true },
     { "type": "header", "content": "Details" },
     { "type": "checkbox", "id": "enable_focus", "label": "Blue focus rings", "default": true },
-    { "type": "checkbox", "id": "enable_selection", "label": "Blue text selection", "default": true },
+    { "type": "checkbox", "id": "enable_selection", "label": "Blue text selection and tap highlight", "default": true },
     { "type": "checkbox", "id": "enable_smooth_scroll", "label": "Smooth scroll for #anchor links", "default": true }
   ],
   "presets": [

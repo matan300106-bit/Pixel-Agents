@@ -24,7 +24,7 @@
         "a2": {
           "type": "announcement",
           "settings": {
-            "text": "Compare our feeders side by side →",
+            "text": "Not sure which feeder? Compare them →",
             "link": "/#compare-feeders"
           }
         }
@@ -57,7 +57,7 @@
       "settings": {
         "enable_glass_header": true,
         "glass_tint": "light",
-        "glass_opacity": 70,
+        "glass_opacity": 80,
         "enable_buttons": true,
         "enable_cards": true,
         "enable_image_zoom": true,

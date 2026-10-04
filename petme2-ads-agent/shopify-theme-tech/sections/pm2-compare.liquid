@@ -1,21 +1,26 @@
-{%- comment -%} PETME2 comparison chart. One block = one model. Price/photo/link are live from the product. {%- endcomment -%}
+{%- comment -%}
+  PETME2 comparison chart. One block = one model. Price/photo/link are live from the product.
+  Desktop/tablet: table with a sticky first column. Phones: swipeable model cards (or the table, via "Phone layout").
+{%- endcomment -%}
 {%- assign labels = section.settings.row1 | append: '|' | append: section.settings.row2 | append: '|' | append: section.settings.row3 | append: '|' | append: section.settings.row4 | append: '|' | append: section.settings.row5 | split: '|' -%}
-<div class="color-{{ section.settings.color_scheme }} gradient pm2-cmp" id="{{ section.settings.anchor | default: section.id }}">
+{%- assign mobile_layout = section.settings.mobile_layout | default: 'cards' -%}
+<div class="color-{{ section.settings.color_scheme }} gradient pm2-cmp pm2-cmp--m-{{ mobile_layout }}" id="{{ section.settings.anchor | default: section.id }}">
   <div class="page-width">
     <div class="pm2-cmp__head">
       {%- if section.settings.eyebrow != blank -%}<p class="pm2-cmp__eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
       <h2 class="h1">{{ section.settings.heading }}</h2>
       {%- if section.settings.text != blank -%}<p class="pm2-cmp__sub">{{ section.settings.text }}</p>{%- endif -%}
     </div>
-    <div class="pm2-cmp__scroll">
+
+    <div class="pm2-cmp__scroll" tabindex="0" role="region" aria-label="{{ section.settings.heading | escape }}">
       <table class="pm2-cmp__table">
         <thead><tr>
-          <th scope="col" class="pm2-cmp__sticky"></th>
+          <th scope="col" class="pm2-cmp__sticky"><span class="visually-hidden">Feature</span></th>
           {%- for block in section.blocks -%}
             {%- assign p = block.settings.product -%}
             <th scope="col" {{ block.shopify_attributes }}>
               {%- if block.settings.badge != blank -%}<span class="pm2-cmp__badge">{{ block.settings.badge }}</span>{%- endif -%}
-              {%- if p != blank and p.featured_image -%}<a href="{{ p.url }}" class="pm2-cmp__img">{{ p.featured_image | image_url: width: 400 | image_tag: loading: 'lazy', alt: block.settings.name }}</a>{%- endif -%}
+              {%- if p != blank and p.featured_image -%}<a href="{{ p.url }}" class="pm2-cmp__img" tabindex="-1" aria-hidden="true">{{ p.featured_image | image_url: width: 400 | image_tag: loading: 'lazy', alt: block.settings.name, widths: '200, 300, 400', sizes: '150px' }}</a>{%- endif -%}
               <a href="{{ p.url | default: '#' }}" class="pm2-cmp__name">{{ block.settings.name }}</a>
               {%- if p != blank -%}<span class="pm2-cmp__price">{{ p.price | money }}</span>{%- endif -%}
             </th>
@@ -28,39 +33,131 @@
             <tr><th scope="row" class="pm2-cmp__sticky">{{ label }}</th>
               {%- for block in section.blocks -%}
                 {%- assign v = block.settings[key] -%}
-                <td>{%- if v == blank or v == '—' -%}<span class="pm2-cmp__no">—</span>{%- else -%}{{ v }}{%- endif -%}</td>
+                <td>{%- if v == blank or v == '—' -%}<span class="pm2-cmp__no" aria-label="No">—</span>{%- else -%}{{ v }}{%- endif -%}</td>
               {%- endfor -%}
             </tr>
           {%- endfor -%}
-          <tr class="pm2-cmp__cta"><th class="pm2-cmp__sticky"></th>
+          <tr class="pm2-cmp__cta"><th class="pm2-cmp__sticky"><span class="visually-hidden">Link</span></th>
             {%- for block in section.blocks -%}<td>{%- if block.settings.product != blank -%}<a class="button" href="{{ block.settings.product.url }}">{{ section.settings.button_text }}</a>{%- endif -%}</td>{%- endfor -%}
           </tr>
         </tbody>
       </table>
     </div>
+
+    {%- if mobile_layout == 'cards' -%}
+      <ul class="pm2-cmp__cards" role="list">
+        {%- for block in section.blocks -%}
+          {%- assign p = block.settings.product -%}
+          <li class="pm2-cmp__card{% if block.settings.badge != blank %} pm2-cmp__card--badge{% endif %}">
+            <div class="pm2-cmp__card-top">
+              {%- if p != blank and p.featured_image -%}
+                <a href="{{ p.url }}" class="pm2-cmp__cimg" tabindex="-1" aria-hidden="true">{{ p.featured_image | image_url: width: 300 | image_tag: loading: 'lazy', alt: '', widths: '150, 225, 300', sizes: '96px' }}</a>
+              {%- endif -%}
+              <div class="pm2-cmp__cinfo">
+                {%- if block.settings.badge != blank -%}<span class="pm2-cmp__cbadge">{{ block.settings.badge }}</span>{%- endif -%}
+                <a href="{{ p.url | default: '#' }}" class="pm2-cmp__cname">{{ block.settings.name }}</a>
+                {%- if p != blank -%}<span class="pm2-cmp__cprice">{{ p.price | money }}</span>{%- endif -%}
+              </div>
+            </div>
+            <dl class="pm2-cmp__dl">
+              {%- for label in labels -%}
+                {%- if label == blank -%}{%- continue -%}{%- endif -%}
+                {%- assign key = 'v' | append: forloop.index -%}
+                {%- assign v = block.settings[key] -%}
+                <div class="pm2-cmp__dl-row">
+                  <dt>{{ label }}</dt>
+                  <dd>{%- if v == blank or v == '—' -%}<span class="pm2-cmp__no" aria-label="No">—</span>{%- else -%}{{ v }}{%- endif -%}</dd>
+                </div>
+              {%- endfor -%}
+            </dl>
+            {%- if p != blank -%}<a class="button pm2-cmp__cbtn" href="{{ p.url }}">{{ section.settings.button_text }}</a>{%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+    {%- if section.blocks.size > 1 and section.settings.swipe_hint != blank -%}
+      <p class="pm2-cmp__hint" aria-hidden="true">{{ section.settings.swipe_hint | escape }} <span>&rarr;</span></p>
+    {%- endif -%}
   </div>
 </div>
 <style>
   .pm2-cmp { padding: 88px 0; scroll-margin-top: 100px; }
-  .pm2-cmp__head { text-align: center; max-width: 680px; margin: 0 auto 44px; }
-  .pm2-cmp__eyebrow { text-transform: uppercase; letter-spacing: .18em; font-size: 12px; color: rgb(var(--color-button)); margin: 0 0 12px; font-weight: 600; }
-  .pm2-cmp__head h2 { margin: 0 0 14px; }
-  .pm2-cmp__sub { color: rgba(var(--color-foreground), .7); margin: 0; }
-  .pm2-cmp__scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid rgba(var(--color-foreground), .1); border-radius: 16px; }
+  .pm2-cmp__head { text-align: center; max-width: 680px; margin: 0 auto 40px; }
+  .pm2-cmp__eyebrow { text-transform: uppercase; letter-spacing: .14em; font-size: 13px; color: rgb(var(--color-button)); margin: 0 0 12px; font-weight: 600; }
+  .pm2-cmp__head h2 { margin: 0 0 14px; text-wrap: balance; }
+  .pm2-cmp__sub { color: rgba(var(--color-foreground), .72); margin: 0; font-size: 16px; line-height: 1.6; }
+
+  /* table (desktop / tablet, and phones when "Scrollable table" is chosen) */
+  .pm2-cmp__scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; border: 1px solid rgba(var(--color-foreground), .08); border-radius: 24px; background: rgb(var(--color-background)); box-shadow: 0 16px 40px -32px rgba(var(--color-shadow, 0, 0, 0), .35); }
+  .pm2-cmp__scroll:focus-visible { outline: 2px solid rgb(var(--color-button)); outline-offset: 3px; }
   .pm2-cmp__table { width: 100%; border-collapse: collapse; min-width: 660px; }
-  .pm2-cmp__table th, .pm2-cmp__table td { padding: 16px 18px; text-align: center; border-bottom: 1px solid rgba(var(--color-foreground), .08); font-size: 1.4rem; vertical-align: middle; }
-  .pm2-cmp__table tbody th { text-align: left; font-weight: 600; white-space: nowrap; color: rgba(var(--color-foreground), .75); }
-  .pm2-cmp__sticky { position: sticky; left: 0; z-index: 1; background: rgb(var(--color-background)); }
-  .pm2-cmp__table thead th { vertical-align: top; padding-top: 30px; position: relative; font-weight: 400; }
+  .pm2-cmp__table th, .pm2-cmp__table td { padding: 16px 18px; text-align: center; border-bottom: 1px solid rgba(var(--color-foreground), .07); font-size: 15px; line-height: 1.45; vertical-align: middle; color: rgb(var(--color-foreground)); }
+  .pm2-cmp__table tbody th { text-align: left; font-weight: 600; white-space: nowrap; color: rgba(var(--color-foreground), .7); }
+  .pm2-cmp__table tbody tr:nth-child(even) td { background: rgba(var(--color-foreground), .02); }
+  .pm2-cmp__sticky { position: sticky; left: 0; z-index: 1; background: rgb(var(--color-background)); box-shadow: 1px 0 0 rgba(var(--color-foreground), .07); }
+  .pm2-cmp__table thead th { vertical-align: top; padding-top: 36px; position: relative; font-weight: 400; }
   .pm2-cmp__table thead th.pm2-cmp__sticky { position: sticky; }
-  .pm2-cmp__img { display: block; aspect-ratio: 1; margin: 0 auto 14px; max-width: 150px; background: #fff; border-radius: 12px; overflow: hidden; }
-  .pm2-cmp__img img { width: 100%; height: 100%; object-fit: contain; }
-  .pm2-cmp__name { display: block; color: rgb(var(--color-foreground)); text-decoration: none; font-weight: 600; font-size: 1.6rem; }
-  .pm2-cmp__price { display: block; margin-top: 4px; color: rgb(var(--color-button)); font-weight: 600; }
-  .pm2-cmp__badge { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); background: rgb(var(--color-button)); color: rgb(var(--color-button-text)); font-size: 1.15rem; letter-spacing: .12em; text-transform: uppercase; padding: 3px 10px; border-radius: 99px; white-space: nowrap; font-weight: 600; }
+  .pm2-cmp__img { display: block; aspect-ratio: 1; margin: 0 auto 14px; max-width: 150px; background: linear-gradient(160deg, #F8FAFD, #EDF2F8); border-radius: 18px; overflow: hidden; }
+  .pm2-cmp__img img { width: 100%; height: 100%; object-fit: contain; padding: 6%; }
+  .pm2-cmp__name { display: flex; align-items: center; justify-content: center; min-height: 44px; color: rgb(var(--color-foreground)); text-decoration: none; font-weight: 600; font-size: 16px; line-height: 1.3; }
+  .pm2-cmp__price { display: block; margin-top: 2px; color: rgb(var(--color-foreground)); font-weight: 700; font-size: 17px; }
+  .pm2-cmp__badge { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); background: rgb(var(--color-button)); color: rgb(var(--color-button-text)); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; padding: 4px 11px; border-radius: 99px; white-space: nowrap; font-weight: 600; }
   .pm2-cmp__no { opacity: .35; }
   .pm2-cmp__cta td, .pm2-cmp__cta th { border-bottom: 0; padding: 22px 12px 26px; }
-  @media (max-width: 749px) { .pm2-cmp { padding: 56px 0; } .pm2-cmp__table th, .pm2-cmp__table td { padding: 12px 10px; font-size: 1.3rem; } }
+  .pm2-cmp .pm2-cmp__table .button, .pm2-cmp .pm2-cmp__cbtn { min-height: 48px; border-radius: 999px; }
+  .pm2-cmp .pm2-cmp__table .button::before, .pm2-cmp .pm2-cmp__table .button::after,
+  .pm2-cmp .pm2-cmp__cbtn::before, .pm2-cmp .pm2-cmp__cbtn::after { border-radius: 999px; }
+
+  /* phone cards (hidden above 749px) */
+  .pm2-cmp__cards, .pm2-cmp__hint { display: none; }
+
+  @media (max-width: 749px) {
+    .pm2-cmp { padding: 48px 0; }
+    .pm2-cmp__head { margin-bottom: 24px; }
+    .pm2-cmp__hint { display: flex; justify-content: center; align-items: center; gap: 6px; margin: 4px 0 0; font-size: 14px; color: rgba(var(--color-foreground), .6); }
+
+    /* table mode: obvious swipe affordance + sticky first column */
+    .pm2-cmp--m-table .pm2-cmp__table th, .pm2-cmp--m-table .pm2-cmp__table td { padding: 12px 12px; font-size: 15px; }
+    .pm2-cmp--m-table .pm2-cmp__table { min-width: 560px; }
+    .pm2-cmp--m-table .pm2-cmp__table tbody th { white-space: normal; min-width: 104px; max-width: 120px; }
+    .pm2-cmp--m-table .pm2-cmp__img { max-width: 96px; }
+
+    /* cards mode */
+    .pm2-cmp--m-cards .pm2-cmp__scroll { display: none; }
+    .pm2-cmp--m-cards .pm2-cmp__cards {
+      display: flex; gap: 12px; list-style: none;
+      margin: 0 -1.5rem; padding: 4px 1.5rem 16px;
+      overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-padding-inline: 1.5rem;
+      scrollbar-width: none; -webkit-overflow-scrolling: touch;
+    }
+    .pm2-cmp__cards::-webkit-scrollbar { display: none; }
+    .pm2-cmp__card {
+      flex: 0 0 min(84%, 320px); scroll-snap-align: start;
+      display: flex; flex-direction: column; gap: 14px;
+      padding: 16px; border-radius: 22px;
+      background: rgb(var(--color-background));
+      border: 1px solid rgba(var(--color-foreground), .09);
+      box-shadow: 0 12px 30px -24px rgba(var(--color-shadow, 0, 0, 0), .4);
+      color: rgb(var(--color-foreground));
+    }
+    .pm2-cmp__card--badge { border-color: rgba(var(--color-button), .45); }
+    .pm2-cmp__card-top { display: flex; align-items: center; gap: 14px; }
+    .pm2-cmp__cimg { flex: none; width: 88px; height: 88px; border-radius: 16px; overflow: hidden; background: linear-gradient(160deg, #F8FAFD, #EDF2F8); }
+    .pm2-cmp__cimg img { width: 100%; height: 100%; object-fit: contain; padding: 8%; display: block; }
+    .pm2-cmp__cinfo { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; }
+    .pm2-cmp__cbadge { margin-bottom: 4px; padding: 3px 10px; border-radius: 99px; font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; background: rgb(var(--color-button)); color: rgb(var(--color-button-text)); }
+    .pm2-cmp__cname { display: flex; align-items: center; min-height: 44px; font-size: 17px; font-weight: 600; line-height: 1.25; color: inherit; text-decoration: none; overflow-wrap: anywhere; }
+    .pm2-cmp__cprice { font-size: 18px; font-weight: 700; }
+    .pm2-cmp__dl { margin: 0; flex: 1; }
+    .pm2-cmp__dl-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 10px 0; border-top: 1px solid rgba(var(--color-foreground), .07); }
+    .pm2-cmp__dl dt { font-size: 15px; color: rgba(var(--color-foreground), .65); }
+    .pm2-cmp__dl dd { margin: 0; font-size: 16px; font-weight: 600; text-align: right; overflow-wrap: anywhere; }
+    .pm2-cmp .pm2-cmp__cbtn { width: 100%; }
+  }
+  @media (max-width: 749px) and (prefers-reduced-motion: no-preference) {
+    .pm2-cmp__hint span { display: inline-block; animation: pm2-cmp-nudge 2.4s ease-in-out 3; }
+    @keyframes pm2-cmp-nudge { 0%, 60%, 100% { transform: none; } 30% { transform: translateX(4px); } }
+  }
 </style>
 {% schema %}
 {
@@ -76,7 +173,12 @@
     { "type": "text", "id": "row3", "label": "Row 3 label" },
     { "type": "text", "id": "row4", "label": "Row 4 label" },
     { "type": "text", "id": "row5", "label": "Row 5 label" },
-    { "type": "text", "id": "button_text", "label": "Button text", "default": "View details" }
+    { "type": "text", "id": "button_text", "label": "Button text", "default": "View details" },
+    { "type": "header", "content": "Phones" },
+    { "type": "select", "id": "mobile_layout", "label": "Phone layout", "default": "cards", "options": [
+      { "value": "cards", "label": "Swipeable model cards" },
+      { "value": "table", "label": "Scrollable table" } ] },
+    { "type": "text", "id": "swipe_hint", "label": "Swipe hint (phones)", "default": "Swipe to compare" }
   ],
   "blocks": [{ "type": "model", "name": "Model", "settings": [
     { "type": "product", "id": "product", "label": "Product" },
