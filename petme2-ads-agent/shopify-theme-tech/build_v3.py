@@ -1,6 +1,7 @@
 """V3 conversion layer: runs after build.py, build_v2.py and build_pages.py.
 Adds the welcome popup (header group), trust badges (product + cart) and the
-30-day money-back guarantee band (homepage + product page)."""
+30-day money-back guarantee band (homepage + product page),
+the product story (pm2-product-story) and the real-life highlights strip that replaces reviews."""
 import json
 from pathlib import Path
 
@@ -36,6 +37,27 @@ insert_after(P, "main", "trust_badges", {"type": "pm2-trust-badges", "blocks": B
                  "padding_top": 0, "padding_bottom": 0}})
 insert_after(P, "extras", "guarantee", {"type": "pm2-guarantee", "settings": {
     "style": "card", "icon": "shield", "color_scheme": "scheme-4", "padding_top": 24, "padding_bottom": 24}})
+# Story-telling product page: product photos as story chapters (metafield custom.story), then an honest
+# "Made for real life" day strip in place of the reviews app block (no ratings, no quotes).
+P["sections"].pop("reviews", None)
+if "reviews" in P["order"]:
+    P["order"].remove("reviews")
+insert_after(P, "specs", "story", {"type": "pm2-product-story", "settings": {
+    "eyebrow": "See it in action", "heading": "What it does for you",
+    "subheading": "Scroll through the photos. One idea at a time.", "max_chapters": 6,
+    "show_cta": True, "cta_label": "Add to cart", "cta_note": "Free U.S. shipping. 30-day money-back guarantee.",
+    "color_scheme": "scheme-3", "padding_top": 40, "padding_bottom": 56}})
+insert_after(P, "story", "highlights", {"type": "pm2-product-highlights", "settings": {
+    "eyebrow": "Made for real life", "heading": "A normal day, made easier",
+    "feeder_moments": "Morning :: Breakfast, on time :: The feeder serves the meal times and portions you set in the app.\n"
+                      "At work :: Change plans from your phone :: Running late? Edit the meal schedule in the app.\n"
+                      "Evening :: Dinner, even when you are out :: Meals keep coming on the schedule you set.\n"
+                      "Once in a while :: Refill and wipe :: Top up the dry food. Stainless steel wipes clean.",
+    "fountain_moments": "Morning :: Fresh, moving water :: The pump keeps the water moving all day.\n"
+                        "All day :: Calm at home :: A quiet pump, made for use inside the home.\n"
+                        "Night :: Quiet enough for bedtime :: Low noise, day and night.\n"
+                        "Cleaning day :: Comes apart to clean :: Take it apart, rinse, put it back together.",
+    "color_scheme": "scheme-4", "padding_top": 48, "padding_bottom": 48}})
 save("templates/product.json", P)
 
 I = load("templates/index.json")

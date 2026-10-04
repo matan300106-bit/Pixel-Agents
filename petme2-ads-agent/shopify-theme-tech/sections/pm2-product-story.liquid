@@ -15,9 +15,7 @@
   assign sizes_stage = '(min-width: 1200px) 560px, (min-width: 990px) 46vw, 1px'
   assign sizes_card = '(max-width: 989px) calc(100vw - 32px), 1px'
 
-  comment
-    Build parallel lists (separator "|~|") of media index, title and text.
-  endcomment
+  # Build parallel lists (separator "|~|") of media index, title and text.
   assign sep = '|~|'
   assign idx_list = ''
   assign title_list = ''
@@ -55,7 +53,11 @@
         continue
       endif
       assign i = forloop.index
-      assign t = m.alt | default: product.title | split: ' – ' | last | strip
+      # Generic SEO alts ("... – detail image 2 of 6") make poor titles: show the image only.
+      assign t = m.alt | default: ' ' | strip
+      if t contains 'detail image' or t contains 'main product photo'
+        assign t = ' '
+      endif
       assign idx_list = idx_list | append: i | append: sep
       assign title_list = title_list | append: t | append: sep
       assign text_list = text_list | append: ' ' | append: sep
@@ -102,21 +104,23 @@
         </div>
       </div>
 
-      <ol class="pm2-story__chapters" role="list" style="--pm2-progress: 0;">
-        <span class="pm2-story__rail" aria-hidden="true"><span class="pm2-story__fill"></span></span>
+      <div class="pm2-story__track" style="--pm2-progress: 0;">
+      <span class="pm2-story__rail" aria-hidden="true"><span class="pm2-story__fill"></span></span>
+      <ol class="pm2-story__chapters" role="list">
         {%- for n in idxs -%}
           {%- assign i = n | plus: 0 -%}
           {%- assign k = forloop.index0 -%}
           {%- assign img = product.media[i].preview_image -%}
           {%- assign t = titles[k] | strip -%}
           {%- assign x = texts[k] | strip -%}
+          {%- assign alt_text = img.alt | default: t -%}
           <li class="pm2-story__ch{% if forloop.first %} is-active{% endif %}" data-chapter="{{ k }}">
             <figure class="pm2-story__card">
               {{ img | image_url: width: 1000 | image_tag:
                 widths: '360, 480, 640, 800, 1000',
                 sizes: sizes_card,
                 loading: 'lazy',
-                alt: img.alt | default: t | escape,
+                alt: alt_text,
                 class: 'pm2-story__img'
               }}
             </figure>
@@ -128,6 +132,7 @@
           </li>
         {%- endfor -%}
       </ol>
+      </div>
     </div>
 
     {%- if s.show_cta -%}
@@ -153,7 +158,8 @@
   .pm2-story__title { margin: 0; font-size: clamp(28px, 4vw, 44px); line-height: 1.1; letter-spacing: -.02em; }
   .pm2-story__sub { margin: 10px 0 0; font-size: 16px; line-height: 1.5; color: rgba(var(--color-foreground), .7); }
 
-  .pm2-story__chapters { position: relative; list-style: none; margin: 0; padding: 0; display: grid; gap: 22px; }
+  .pm2-story__track { position: relative; }
+  .pm2-story__chapters { list-style: none; margin: 0; padding: 0; display: grid; gap: 22px; }
   .pm2-story__card { margin: 0 0 14px; aspect-ratio: 1 / 1; border-radius: 24px; overflow: hidden; background: rgba(var(--color-foreground), .04); }
   .pm2-story__img { display: block; width: 100%; height: 100%; object-fit: contain; }
   .pm2-story__copy { padding: 0 4px; }
@@ -183,13 +189,15 @@
     .pm2-story__counter { position: absolute; left: 16px; bottom: 16px; padding: 6px 12px; border-radius: 999px; font-size: 13px; font-weight: 700; background: rgba(var(--color-background), .9); color: rgba(var(--color-foreground), .7); box-shadow: 0 4px 14px rgba(0,0,0,.06); }
     .pm2-story__counter b { color: rgb(var(--color-foreground)); }
     .pm2-story__card { display: none; }
-    .pm2-story__chapters { gap: 0; padding-left: 36px; }
+    .pm2-story__track { padding-left: 36px; }
+    .pm2-story__chapters { gap: 0; }
     .pm2-story__rail { display: block; position: absolute; left: 0; top: 12vh; bottom: 12vh; width: 2px; border-radius: 2px; background: rgba(var(--color-foreground), .1); }
     .pm2-story__fill { position: absolute; inset: 0; border-radius: 2px; background: rgb(var(--color-button)); transform-origin: top; transform: scaleY(var(--pm2-progress, 0)); transition: transform .2s linear; }
-    .pm2-story__ch { min-height: 62vh; display: flex; align-items: center; opacity: .28; transition: opacity .5s ease; }
+    .pm2-story__ch { min-height: 56vh; display: flex; align-items: center; opacity: .28; transition: opacity .5s ease; }
     .pm2-story__ch:first-of-type { min-height: 48vh; }
     .pm2-story__ch:last-of-type { min-height: 56vh; }
     .pm2-story__ch.is-active { opacity: 1; }
+    .pm2-story__ch-title { font-size: clamp(28px, 2.6vw, 36px); }
     .pm2-story__ch-text { font-size: 18px; }
     .pm2-story__end { margin-top: 8px; }
   }
@@ -206,7 +214,7 @@
     root.dataset.ready = '1';
     var chapters = Array.prototype.slice.call(root.querySelectorAll('[data-chapter]'));
     var slides = root.querySelectorAll('[data-slide]');
-    var list = root.querySelector('.pm2-story__chapters');
+    var list = root.querySelector('.pm2-story__track');
     var counter = root.querySelector('[data-counter]');
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var current = 0;

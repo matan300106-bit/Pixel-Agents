@@ -116,26 +116,6 @@
         "color_scheme": "scheme-4"
       }
     },
-    "reviews": {
-      "type": "apps",
-      "settings": {
-        "include_margins": true
-      },
-      "blocks": {
-        "ag_product_reviews_app_block_review_list_gzk3fG": {
-          "type": "shopify://apps/ag-product-reviews/blocks/app-block-review-list/c4e1e9ca-4d46-4e76-bc39-7e42417cb327",
-          "settings": {
-            "air_blockreviews_summaryHeading": "Reviews",
-            "air_blockreviews_layout": "list",
-            "air_blockreviews_singleStarColor": "#2F5FE0",
-            "air_blockreviews_primaryColor": "#1B2540"
-          }
-        }
-      },
-      "block_order": [
-        "ag_product_reviews_app_block_review_list_gzk3fG"
-      ]
-    },
     "related-products": {
       "type": "related-products",
       "settings": {
@@ -221,15 +201,43 @@
         "padding_top": 24,
         "padding_bottom": 24
       }
+    },
+    "story": {
+      "type": "pm2-product-story",
+      "settings": {
+        "eyebrow": "See it in action",
+        "heading": "What it does for you",
+        "subheading": "Scroll through the photos. One idea at a time.",
+        "max_chapters": 6,
+        "show_cta": true,
+        "cta_label": "Add to cart",
+        "cta_note": "Free U.S. shipping. 30-day money-back guarantee.",
+        "color_scheme": "scheme-3",
+        "padding_top": 40,
+        "padding_bottom": 56
+      }
+    },
+    "highlights": {
+      "type": "pm2-product-highlights",
+      "settings": {
+        "eyebrow": "Made for real life",
+        "heading": "A normal day, made easier",
+        "feeder_moments": "Morning :: Breakfast, on time :: The feeder serves the meal times and portions you set in the app.\nAt work :: Change plans from your phone :: Running late? Edit the meal schedule in the app.\nEvening :: Dinner, even when you are out :: Meals keep coming on the schedule you set.\nOnce in a while :: Refill and wipe :: Top up the dry food. Stainless steel wipes clean.",
+        "fountain_moments": "Morning :: Fresh, moving water :: The pump keeps the water moving all day.\nAll day :: Calm at home :: A quiet pump, made for use inside the home.\nNight :: Quiet enough for bedtime :: Low noise, day and night.\nCleaning day :: Comes apart to clean :: Take it apart, rinse, put it back together.",
+        "color_scheme": "scheme-4",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
     }
   },
   "order": [
     "main",
     "trust_badges",
     "specs",
+    "story",
+    "highlights",
     "extras",
     "guarantee",
-    "reviews",
     "related-products",
     "sticky_atc"
   ]
