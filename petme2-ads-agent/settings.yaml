@@ -6,7 +6,7 @@ daily_spend_cap: 60         # total $ per day, all campaigns - owner raised in c
 max_bid: 1.50           # highest $ per click allowed - owner raised in chat 2026-10-04
 max_budget_increase_without_approval: 25%
 max_bid_change_per_day: 20%
-max_changes_per_day: 300    # owner: "no limits, do whatever you need" (chat 2026-10-04); needed for the one-file keyword test upload
+max_changes_per_day: 500    # owner: "no limits, do whatever you need" + "make me something to upload 1 time" (chat 2026-10-04); V2 rebuild is one 417-row file
 experiment_budget_share: 15%
 max_running_experiments: 3
 min_stock_days_for_ads: 10
