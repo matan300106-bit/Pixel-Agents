@@ -73,7 +73,7 @@
         class="page-width pm2-fsb-outer"
         style="--pm2-pt: {{ s.padding_top }}px; --pm2-pb: {{ s.padding_bottom }}px;"
       >
-        <div class="pm2-fsb{% if is_free %} is-free{% endif %}" data-pm2-fsb{% if s.hide_when_empty and cart.item_count == 0 %} hidden{% endif %}>
+        <div class="pm2-fsb{% if is_free %} is-free{% endif %}" data-pm2-fsb="{{ sid }}"{% if s.hide_when_empty and cart.item_count == 0 %} hidden{% endif %}>
           {{ bar_inner }}
         </div>
       </div>
@@ -81,7 +81,7 @@
   {%- endif -%}
 
   <template id="pm2-fsb-tpl-{{ sid }}">
-    <div class="pm2-fsb pm2-fsb--drawer" data-pm2-fsb data-pm2-fsb-mirror>{{ bar_inner }}</div>
+    <div class="pm2-fsb pm2-fsb--drawer" data-pm2-fsb="{{ sid }}" data-pm2-fsb-mirror>{{ bar_inner }}</div>
   </template>
 
   <style>
@@ -181,7 +181,7 @@
       }
 
       function paintAll() {
-        document.querySelectorAll('[data-pm2-fsb]').forEach(paint);
+        document.querySelectorAll('[data-pm2-fsb="' + cfg.sid + '"]').forEach(paint);
       }
 
       // Cart drawer mirror: Dawn re-renders the drawer HTML after each change,

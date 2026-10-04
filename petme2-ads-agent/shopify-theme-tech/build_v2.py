@@ -29,13 +29,13 @@ S["hero"] = sec("pm2-hero", {
     "subtext": "Smart feeders and quiet fountains that make pet care easy, even on busy days.",
     "button_label_1": "Shop feeders", "button_link_1": "shopify://collections/feeders",
     "button_label_2": "Shop fountains", "button_link_2": "shopify://collections/water-fountains",
-    "chip_1": "Free U.S. shipping $50+", "chip_2": "App control", "chip_3": "Quiet pumps",
+    "chip_1": "Free U.S. shipping", "chip_2": "App control", "chip_3": "Quiet pumps",
     "product": "smart-feeder", "link_product": True, "image": IMG + "main-banner.jpg",
     "badge_1": "1080P live view", "badge_2": "2-way audio", "badge_3": "WiFi app",
     "padding_top": 56, "padding_bottom": 72})
 S["ticker"] = sec("pm2-marquee", {"color_scheme": "scheme-3", "duration": 48, "size": "small",
                                    "show_divider": True, "show_borders": True, "reverse": False}, [
-    ("item", {"text": "Free U.S. shipping on orders $50+", "icon": "truck"}),
+    ("item", {"text": "Free U.S. shipping on every order", "icon": "truck"}),
     ("item", {"text": "Made for cats & small dogs", "icon": "paw"}),
     ("item", {"text": "Easy app control", "icon": "wifi"}),
     ("item", {"text": "Quiet fountain pumps", "icon": "drop"}),
@@ -49,7 +49,10 @@ S["shop"] = sec("pm2-product-tabs", {"eyebrow": "Shop", "heading": "Find their n
 # Reserved slot: the feeder finder quiz (built by another agent). Only added when the section exists,
 # so the template never references a missing section type.
 if (HERE / "sections" / "pm2-quiz.liquid").exists():
-    S["quiz"] = {"type": "pm2-quiz", "settings": {"color_scheme": "scheme-4"}}
+    S["quiz"] = {"type": "pm2-quiz", "settings": {
+        "color_scheme": "scheme-4",
+        "note_feeder": "For dry food · cats & small dogs · free U.S. shipping",
+        "note_fountain": "Quiet pump · comes apart for cleaning · free U.S. shipping"}}
 S["bento"] = sec("pm2-bento", {"eyebrow": "Why pets (and people) like it", "heading": "Simple care, done for you.",
                                "subheading": "<p>Feeders and fountains that just work, so you can relax.</p>",
                                "color_scheme": "scheme-5", "padding_top": 72, "padding_bottom": 72}, [
@@ -84,7 +87,7 @@ S["cta"] = sec("pm2-cta-band", {"eyebrow": "Ready when you are", "heading": "Eas
                                 "button_label_1": "Shop feeders", "button_link_1": "shopify://collections/feeders",
                                 "button_label_2": "Shop fountains", "button_link_2": "shopify://collections/water-fountains",
                                 "color_scheme": "scheme-1", "padding_top": 88, "padding_bottom": 88}, [
-    ("chip", {"text": "Free U.S. shipping $50+"}), ("chip", {"text": "Also on Amazon"})])
+    ("chip", {"text": "Free U.S. shipping"}), ("chip", {"text": "Also on Amazon"})])
 save("templates/index.json", {"sections": S, "order": list(S)})
 
 # product page: spec chips under main, sticky add-to-cart

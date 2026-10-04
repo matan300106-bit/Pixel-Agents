@@ -36,7 +36,7 @@
         "ship": {
           "type": "text",
           "settings": {
-            "text": "Free U.S. shipping on orders $50+",
+            "text": "Free U.S. shipping on every order",
             "text_style": "subtitle"
           }
         },
@@ -67,7 +67,7 @@
           "settings": {
             "heading": "Shipping",
             "icon": "truck",
-            "content": "<p>Free U.S. shipping on orders $50+. You get an email with tracking when your order ships.</p>"
+            "content": "<p>Free U.S. shipping on every order. You get an email with tracking when your order ships.</p>"
           }
         },
         "share": {

@@ -74,7 +74,7 @@ Q_TWO = ("Which feeder is best for 2 pets?", "<p>The 3L Dual Bowl or the 5L Elev
 Q_WIFI = ("Do I need WiFi?", "<p>WiFi is needed for the app: schedules, portions and alerts.</p>", "lightning_bolt")
 Q_QUIET = ("Are the fountains loud?", "<p>No. Every PETME2 fountain uses a quiet pump made for use inside the "
            "home.</p>", "bottle")
-Q_SHIP = ("Do you offer free shipping?", "<p>Yes. Shipping is free on U.S. orders of $50 or more.</p>", "truck")
+Q_SHIP = ("Do you offer free shipping?", "<p>Yes. Shipping is free on every U.S. order.</p>", "truck")
 Q_AMZ = ("Is PETME2 on Amazon?", "<p>Yes. All PETME2 products are also sold on Amazon, where you can read buyer "
          "reviews.</p>", "chat_bubble")
 
@@ -102,7 +102,7 @@ w("list-collections.json", template(
     ("main", section("main-list-collections", {"title": "Shop by category", "sort": "products_high",
                                                "image_ratio": "square", "columns_desktop": 3,
                                                "columns_mobile": "2"})),
-    ("shipping", rich_text("scheme-5", "", "Free U.S. shipping on orders $50+",
+    ("shipping", rich_text("scheme-5", "", "Free U.S. shipping on every order",
                            "<p>Smart feeders and quiet water fountains for cats and small dogs.</p>",
                            (("Shop feeders", FEEDERS), ("Shop fountains", FOUNTAINS)), pad=(56, 64), size="h2")),
 ))
@@ -112,7 +112,7 @@ w("cart.json", template(
     ("cart-items", section("main-cart-items", {"color_scheme": "scheme-3", "padding_top": 40, "padding_bottom": 24})),
     ("cart-footer", section("main-cart-footer", {"color_scheme": "scheme-3", "padding_top": 16, "padding_bottom": 56},
                             ("subtotal", "subtotal", {}), ("buttons", "buttons", {}))),
-    ("shipping", rich_text("scheme-5", "", "Free U.S. shipping on orders $50+", "", pad=(32, 32), size="h2")),
+    ("shipping", rich_text("scheme-5", "", "Free U.S. shipping on every order", "", pad=(32, 32), size="h2")),
     ("upsell", featured("water-fountains", "You may also like", "scheme-3", pad=(56, 72))),
 ))
 
@@ -142,7 +142,7 @@ w("404.json", template(
 w("page.json", template(
     ("main", section("main-page", {"padding_top": 48, "padding_bottom": 56})),
     ("shop", rich_text("scheme-5", "", "Smart feeding. Fresh water.",
-                       "<p>Free U.S. shipping on orders $50+.</p>",
+                       "<p>Free U.S. shipping on every order.</p>",
                        (("Shop feeders", FEEDERS), ("Shop fountains", FOUNTAINS)), pad=(56, 64), size="h2")),
 ))
 

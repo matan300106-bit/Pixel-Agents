@@ -14,7 +14,7 @@
         "button_link_1": "shopify://collections/feeders",
         "button_label_2": "Shop fountains",
         "button_link_2": "shopify://collections/water-fountains",
-        "chip_1": "Free U.S. shipping $50+",
+        "chip_1": "Free U.S. shipping",
         "chip_2": "App control",
         "chip_3": "Quiet pumps",
         "product": "smart-feeder",
@@ -41,7 +41,7 @@
         "b1": {
           "type": "item",
           "settings": {
-            "text": "Free U.S. shipping on orders $50+",
+            "text": "Free U.S. shipping on every order",
             "icon": "truck"
           }
         },
@@ -127,7 +127,9 @@
     "quiz": {
       "type": "pm2-quiz",
       "settings": {
-        "color_scheme": "scheme-4"
+        "color_scheme": "scheme-4",
+        "note_feeder": "For dry food · cats & small dogs · free U.S. shipping",
+        "note_fountain": "Quiet pump · comes apart for cleaning · free U.S. shipping"
       }
     },
     "bento": {
@@ -463,7 +465,7 @@
           "settings": {
             "heading": "Is shipping free?",
             "icon": "check_mark",
-            "row_content": "<p>Shipping is free in the U.S. on orders of $50 or more.</p>"
+            "row_content": "<p>Yes. Shipping is free on every U.S. order.</p>"
           }
         },
         "q7": {
@@ -503,7 +505,7 @@
         "b1": {
           "type": "chip",
           "settings": {
-            "text": "Free U.S. shipping $50+"
+            "text": "Free U.S. shipping"
           }
         },
         "b2": {
