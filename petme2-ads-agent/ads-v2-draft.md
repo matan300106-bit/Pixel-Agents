@@ -1,6 +1,6 @@
 # PETME2 Ads – V2 (one file, everything new)
 
-**File:** `PETME2-ALL-CAMPAIGNS-V2.xlsx` (421 rows). All campaigns are created **PAUSED**.
+**File:** `PETME2-ALL-CAMPAIGNS-V2.xlsx` (427 rows). All campaigns are created **PAUSED**.
 
 **Before upload:** archive ALL old PETME2 campaigns (Campaign manager → select → Archive).
 
@@ -10,7 +10,7 @@ Checked by: Guardian (every row), Analyst + Experiment Lab (keywords, structure,
 |---|---|---|---|
 | 1 | PETME2 \| Feeders \| Exact | Main feeder searches (exact) | $12 |
 | 2 | PETME2 \| Fountains \| Exact | Main fountain searches (exact) | $8 |
-| 3 | PETME2 \| Competitors \| ASIN | Your products on 24 competitor pages | $15 |
+| 3 | PETME2 \| Competitors \| ASIN | All 8 products on 24 competitor pages | $15 |
 | 4 | PETME2 \| Brand \| Exact | People who search "petme2" | $3 |
 | 5 | PETME2 \| Keyword Test \| Phrase | Wide test, Helium 10 keywords (phrase) | $13 |
 | 6 | PETME2 \| Discovery \| Auto | Amazon finds new searches (auto) | $5 |
@@ -125,6 +125,15 @@ Blocked words: filters, replacement, pump, feeder, wireless, ceramic, pumpless, 
 | competitor B0FN7FQ7RJ | product page | – | $0.24 |
 | competitor B0BF5CQMKX | product page | – | $0.24 |
 | competitor B0FP56XQJG | product page | – | $0.24 |
+
+**Competitors - 5L WiFi Feeder (low bids)** — 5L WiFi feeder (default bid $0.25)
+
+| Target | Type | Searches/mo | Bid |
+|---|---|---|---|
+| competitor B0D44QYZ7Z (PETLIBRO WiFi, $99.99) | product page | – | $0.25 |
+| competitor B09S8WMJY9 (PETLIBRO WiFi, $78.99) | product page | – | $0.25 |
+| competitor B0C5X4N132 (oneisall WiFi, $69.99) | product page | – | $0.25 |
+| competitor B0GTXN5MJK (HoneyGuaridan 5L WiFi, $69.99) | product page | – | $0.25 |
 
 ## PETME2 | Brand | Exact — $3/day
 

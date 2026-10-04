@@ -1166,6 +1166,77 @@
   "before": "none"
  },
  {
+  "entity": "Ad Group",
+  "operation": "Create",
+  "campaign_id": "V2-Competitors",
+  "ad_group_id": "V2-Comp-WiFi",
+  "ad_group_name": "Competitors - 5L WiFi Feeder (low bids)",
+  "state": "enabled",
+  "ad_group_default_bid": 0.25,
+  "reason": "V2 one-time rebuild: owner archives old campaigns and uploads one organized file (2026-10-04)",
+  "agent": "guardian",
+  "before": "none"
+ },
+ {
+  "entity": "Product Ad",
+  "operation": "Create",
+  "campaign_id": "V2-Competitors",
+  "ad_group_id": "V2-Comp-WiFi",
+  "state": "enabled",
+  "sku": "QO-7VBS-CVT4",
+  "reason": "V2 one-time rebuild: owner archives old campaigns and uploads one organized file (2026-10-04)",
+  "agent": "guardian",
+  "before": "none"
+ },
+ {
+  "entity": "Product Targeting",
+  "operation": "Create",
+  "campaign_id": "V2-Competitors",
+  "ad_group_id": "V2-Comp-WiFi",
+  "state": "enabled",
+  "bid": 0.25,
+  "product_targeting_expression": "asin=\"B0D44QYZ7Z\"",
+  "reason": "V2 one-time rebuild: owner archives old campaigns and uploads one organized file (2026-10-04)",
+  "agent": "guardian",
+  "before": "none"
+ },
+ {
+  "entity": "Product Targeting",
+  "operation": "Create",
+  "campaign_id": "V2-Competitors",
+  "ad_group_id": "V2-Comp-WiFi",
+  "state": "enabled",
+  "bid": 0.25,
+  "product_targeting_expression": "asin=\"B09S8WMJY9\"",
+  "reason": "V2 one-time rebuild: owner archives old campaigns and uploads one organized file (2026-10-04)",
+  "agent": "guardian",
+  "before": "none"
+ },
+ {
+  "entity": "Product Targeting",
+  "operation": "Create",
+  "campaign_id": "V2-Competitors",
+  "ad_group_id": "V2-Comp-WiFi",
+  "state": "enabled",
+  "bid": 0.25,
+  "product_targeting_expression": "asin=\"B0C5X4N132\"",
+  "reason": "V2 one-time rebuild: owner archives old campaigns and uploads one organized file (2026-10-04)",
+  "agent": "guardian",
+  "before": "none"
+ },
+ {
+  "entity": "Product Targeting",
+  "operation": "Create",
+  "campaign_id": "V2-Competitors",
+  "ad_group_id": "V2-Comp-WiFi",
+  "state": "enabled",
+  "bid": 0.25,
+  "product_targeting_expression": "asin=\"B0GTXN5MJK\"",
+  "reason": "V2 one-time rebuild: owner archives old campaigns and uploads one organized file (2026-10-04)",
+  "agent": "guardian",
+  "before": "none"
+ },
+ {
   "entity": "Campaign",
   "operation": "Create",
   "campaign_id": "V2-Brand",
