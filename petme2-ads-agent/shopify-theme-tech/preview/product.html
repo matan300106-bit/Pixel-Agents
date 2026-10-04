@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PETME2 product page – design preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>.color-scheme-1{--color-background:11,18,32;--color-foreground:230,236,245;--color-button:47,124,255;--color-button-text:255,255,255;--color-secondary-button-text:230,236,245;background:rgb(11,18,32);color:rgb(230,236,245);}
+.color-scheme-2{--color-background:18,28,51;--color-foreground:230,236,245;--color-button:47,124,255;--color-button-text:255,255,255;--color-secondary-button-text:230,236,245;background:rgb(18,28,51);color:rgb(230,236,245);}
+.color-scheme-3{--color-background:255,255,255;--color-foreground:11,18,32;--color-button:47,124,255;--color-button-text:255,255,255;--color-secondary-button-text:11,18,32;background:rgb(255,255,255);color:rgb(11,18,32);}
+.color-scheme-4{--color-background:47,124,255;--color-foreground:255,255,255;--color-button:255,255,255;--color-button-text:11,18,32;--color-secondary-button-text:255,255,255;background:rgb(47,124,255);color:rgb(255,255,255);}
+.color-scheme-5{--color-background:242,245,250;--color-foreground:11,18,32;--color-button:11,18,32;--color-button-text:255,255,255;--color-secondary-button-text:11,18,32;background:rgb(242,245,250);color:rgb(11,18,32);}
+
+:root{--font-heading-scale:1.1;--page-width:130rem}
+*,*::before,*::after{box-sizing:border-box}
+html{font-size:62.5%;-webkit-text-size-adjust:100%}
+body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:1.5rem;letter-spacing:.06rem;line-height:1.73;
+  background:#fff;color:rgb(11,18,32);-webkit-font-smoothing:antialiased}
+@media (min-width:750px){body{font-size:1.6rem}}
+a{color:inherit}
+img{max-width:100%;display:block}
+.page-width{max-width:var(--page-width);margin:0 auto;padding:0 1.5rem}
+@media (min-width:750px){.page-width{padding:0 5rem}}
+h1,h2,h3,h4,.h0,.h1,.h2,.h3{font-weight:700;letter-spacing:calc(var(--font-heading-scale)*.06rem);color:rgb(var(--color-foreground));
+  line-height:1.27;margin:0;word-break:break-word}
+.h0{font-size:calc(var(--font-heading-scale)*4rem);line-height:1.12}
+.h1{font-size:calc(var(--font-heading-scale)*3rem)}
+.h2{font-size:calc(var(--font-heading-scale)*2rem)}
+.h3,h3{font-size:calc(var(--font-heading-scale)*1.7rem)}
+@media (min-width:750px){.h0{font-size:calc(var(--font-heading-scale)*5.2rem)}.h1{font-size:calc(var(--font-heading-scale)*4rem)}
+  .h2{font-size:calc(var(--font-heading-scale)*2.4rem)}.h3,h3{font-size:calc(var(--font-heading-scale)*1.8rem)}}
+.rte p,.body-text{color:rgba(var(--color-foreground),.75)}
+.subtitle{font-size:1.8rem;line-height:1.5;letter-spacing:.06rem;color:rgba(var(--color-foreground),.8)}
+.caption-ls{font-size:1.3rem;letter-spacing:.13rem;text-transform:uppercase;line-height:1.7;margin:0;font-weight:600;color:rgb(var(--color-button))}
+.color-scheme-5 .caption-ls{color:rgba(var(--color-foreground),.7)}
+.section{padding:54px 0}
+@media (min-width:750px){.section{padding:72px 0}}
+.button{display:inline-flex;align-items:center;justify-content:center;min-height:4.7rem;min-width:12rem;padding:0 3rem;border-radius:40px;border:1px solid rgb(var(--color-button));
+  background:rgb(var(--color-button));color:rgb(var(--color-button-text));font:inherit;font-size:1.5rem;letter-spacing:.1rem;line-height:1.2;text-decoration:none;cursor:pointer;font-weight:500;white-space:nowrap}
+.button--secondary{background:transparent;color:rgb(var(--color-secondary-button-text));border-color:rgb(var(--color-secondary-button-text))}
+.button--full{width:100%}
+.btns{display:flex;flex-wrap:wrap;gap:1rem}
+.link-arrow{font-weight:600;text-decoration:none;display:inline-flex;gap:.6rem;align-items:center;font-size:1.5rem;color:rgb(var(--color-foreground))}
+.link-arrow::after{content:"\2192";transition:transform .2s}
+/* photo placeholders for unknown shop_images */
+.ph{position:relative;overflow:hidden;border-radius:16px;
+  background:radial-gradient(120% 90% at 20% 15%,#2a3a5c 0%,#16223b 45%,#0d1528 100%)}
+.ph--light{background:radial-gradient(120% 90% at 25% 20%,#e9edf3 0%,#dde3ec 50%,#cfd6e1 100%)}
+.ph::before{content:"";position:absolute;inset:0;opacity:.18;
+  background-image:linear-gradient(rgba(255,255,255,.35) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.35) 1px,transparent 1px);background-size:44px 44px;
+  mask-image:radial-gradient(80% 70% at 50% 50%,#000 20%,transparent 75%);-webkit-mask-image:radial-gradient(80% 70% at 50% 50%,#000 20%,transparent 75%)}
+.ph--light::before{opacity:.5;background-image:linear-gradient(rgba(255,255,255,.8) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.8) 1px,transparent 1px)}
+.ph__tag{position:absolute;right:14px;bottom:14px;display:inline-flex;gap:.7rem;align-items:center;max-width:calc(100% - 28px);
+  font-size:1.2rem;letter-spacing:.03rem;line-height:1.3;padding:.6rem 1.2rem;border-radius:99px;background:rgba(0,0,0,.45);color:#fff;backdrop-filter:blur(4px);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ph--light .ph__tag{background:rgba(255,255,255,.75);color:#33405a}
+.ph__tag svg{flex:none;width:14px;height:14px}
+/* announcement + header */
+.announce{text-align:center;font-size:1.3rem;letter-spacing:.1rem;padding:1rem 4.4rem;position:relative;line-height:1.5}
+.announce__arr{position:absolute;top:50%;transform:translateY(-50%);opacity:.8;font-size:1.4rem}
+.announce__arr--l{left:max(1.5rem,calc(50% - 22rem))}.announce__arr--r{right:max(1.5rem,calc(50% - 22rem))}
+.header-wrap{border-bottom:1px solid rgba(11,18,32,.08);position:sticky;top:0;z-index:5}
+.header{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:3rem;padding-top:12px;padding-bottom:12px;min-height:6.8rem}
+.logo{font-weight:800;font-size:2.4rem;letter-spacing:.04em;text-decoration:none;display:flex;align-items:center;gap:.8rem}
+.logo i{display:inline-block;width:10px;height:10px;border-radius:50%;background:rgb(47,124,255);margin-left:-.5rem;transform:translateY(-.7rem)}
+.nav{display:flex;gap:.4rem;flex-wrap:wrap}
+.nav a{text-decoration:none;padding:1.2rem;font-size:1.4rem;color:rgba(11,18,32,.75);display:inline-flex;align-items:center;gap:.4rem}
+.nav a:first-child{color:rgb(11,18,32);text-decoration:underline;text-underline-offset:.3rem}
+.nav .caret{width:10px;height:6px}
+.icons{display:flex;gap:.4rem;align-items:center}
+.icons span{width:4.4rem;height:4.4rem;display:inline-flex;align-items:center;justify-content:center}
+.icons svg{width:2rem;height:2rem}
+.burger{display:none}
+@media (max-width:989px){
+  .header{grid-template-columns:1fr auto 1fr;gap:0}
+  .nav,.icons .acct{display:none}.burger{display:inline-flex;width:4.4rem;height:4.4rem;align-items:center}
+  .logo{justify-self:center;font-size:2.1rem}.icons{justify-self:end}
+}
+/* hero */
+.banner{position:relative;min-height:39rem;display:flex;align-items:center;overflow:hidden}
+@media (min-width:750px){.banner{min-height:72rem}}
+.banner .ph{position:absolute;inset:0;border-radius:0}
+.banner .ph::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.5)}
+.banner .ph__tag{z-index:2}
+.banner__content{position:relative;z-index:1;width:100%;padding-top:5rem;padding-bottom:5rem}
+.banner__box{max-width:71rem}
+.banner__box h2{margin-bottom:1.6rem;color:#fff}
+.banner__box .subtitle{margin:0 0 3rem;color:rgba(230,236,245,.85);max-width:56rem}
+/* specs (pm2-specs.liquid) */
+.pm2-specs{padding:44px 0;border-top:1px solid rgba(var(--color-foreground),.08);border-bottom:1px solid rgba(var(--color-foreground),.08)}
+.pm2-specs__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.pm2-specs__item{display:flex;flex-direction:column;gap:6px;padding-left:18px;border-left:2px solid rgb(var(--color-button))}
+.pm2-specs__big{font-weight:700;font-size:clamp(28px,3.2vw,44px);line-height:1;letter-spacing:-.02em;color:rgb(var(--color-foreground))}
+.pm2-specs__label{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:rgba(var(--color-foreground),.65);line-height:1.4}
+@media (max-width:749px){.pm2-specs__grid{grid-template-columns:repeat(2,1fr);row-gap:28px}}
+/* multicolumn */
+.sec-title{margin-bottom:3rem}
+.multicol{display:grid;grid-template-columns:1fr;gap:4rem 1.6rem}
+@media (min-width:750px){.multicol{grid-template-columns:1fr 1fr}}
+.multicol .ph{aspect-ratio:4/5}
+.multicol h3{margin:2rem 0 .6rem}
+.multicol p{margin:0 0 1.4rem;color:rgba(var(--color-foreground),.75)}
+.sec-categories{padding-bottom:27px}@media(min-width:750px){.sec-categories{padding-bottom:36px}}
+/* product cards (Dawn card style "card", scheme-5) */
+.coll-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3rem;gap:2rem}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:1.6rem}
+.card{background:rgb(242,245,250);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;height:100%;color:rgb(11,18,32)}
+.card__media{padding:12px 12px 0}
+.card__media div{aspect-ratio:1;border-radius:12px;overflow:hidden;background:#fff}
+.card__media img{width:100%;height:100%;object-fit:contain}
+.card__content{padding:1.4rem 1.6rem 1.6rem;display:flex;flex-direction:column;gap:.6rem;flex:1}
+.card__title{font-size:1.5rem;font-weight:600;line-height:1.4;letter-spacing:.06rem;margin:0;text-decoration:none}
+.price{font-size:1.6rem;letter-spacing:.1rem;margin:0}
+.card .button{margin-top:auto;min-height:4.2rem;font-size:1.4rem;padding:0 1.5rem;--color-secondary-button-text:11,18,32}
+.card__content .spacer{flex:1}
+.view-all{text-align:center;margin-top:3.6rem}
+.slider-ctl{display:none}
+@media (max-width:749px){
+  .grid4.swipe{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;margin-right:-1.5rem;padding-right:1.5rem;scrollbar-width:none}
+  .grid4.swipe>*{flex:0 0 calc(50% - 2.4rem);scroll-snap-align:start}
+  .grid4.two{grid-template-columns:1fr 1fr;gap:1rem}
+  .slider-ctl{display:flex;justify-content:center;align-items:center;gap:1.6rem;margin-top:1.2rem;font-size:1.3rem;color:rgba(11,18,32,.7)}
+  .card__title{font-size:1.35rem}.price{font-size:1.4rem}
+  .card__content{padding:1.2rem}
+  .card .button{font-size:1.25rem;min-height:3.8rem;min-width:0;padding:0 .8rem}
+}
+/* image with text */
+.iwt{display:grid;grid-template-columns:1fr 1fr;align-items:stretch}
+.iwt .ph{min-height:69.5rem;height:100%}
+.iwt__text{display:flex;align-items:center;padding:4rem 7rem}
+.iwt__text .inner{max-width:52rem}
+.iwt__text h2{margin:.8rem 0 1.8rem}
+.iwt__text p{margin:0 0 3rem;color:rgba(var(--color-foreground),.75)}
+.iwt--rev .iwt__media{order:2}
+@media (max-width:749px){.iwt{grid-template-columns:1fr}.iwt .ph{min-height:0;aspect-ratio:1/1}.iwt--rev .iwt__media{order:0}.iwt__text{padding:4rem 0 0}}
+/* video */
+.video-sec h2{margin-bottom:3rem}
+.video{position:relative;aspect-ratio:16/9;border-radius:0}
+.video .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:6.4rem;height:6.4rem;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;z-index:2;box-shadow:0 8px 30px rgba(0,0,0,.35)}
+.video .play::after{content:"";border-style:solid;border-width:10px 0 10px 16px;border-color:transparent transparent transparent #0B1220;margin-left:4px}
+.video-sec{padding-bottom:0!important}
+/* compare (pm2-compare.liquid) */
+.pm2-cmp{padding:88px 0}
+.pm2-cmp__head{text-align:center;max-width:680px;margin:0 auto 44px}
+.pm2-cmp__eyebrow{text-transform:uppercase;letter-spacing:.18em;font-size:12px;color:rgb(var(--color-button));margin:0 0 12px;font-weight:600}
+.pm2-cmp__head h2{margin:0 0 14px}
+.pm2-cmp__sub{color:rgba(var(--color-foreground),.7);margin:0}
+.pm2-cmp__scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid rgba(var(--color-foreground),.1);border-radius:16px}
+.pm2-cmp__table{width:100%;border-collapse:collapse;min-width:660px}
+.pm2-cmp__table th,.pm2-cmp__table td{padding:16px 18px;text-align:center;border-bottom:1px solid rgba(var(--color-foreground),.08);font-size:1.4rem;vertical-align:middle;line-height:1.45}
+.pm2-cmp__table tbody th{text-align:left;font-weight:600;white-space:nowrap;color:rgba(var(--color-foreground),.75)}
+.pm2-cmp__sticky{position:sticky;left:0;z-index:1;background:rgb(var(--color-background))}
+.pm2-cmp__table thead th{vertical-align:top;padding-top:30px;position:relative;font-weight:400}
+.pm2-cmp__img{display:block;aspect-ratio:1;margin:0 auto 14px;max-width:150px;background:#fff;border-radius:12px;overflow:hidden}
+.pm2-cmp__img img{width:100%;height:100%;object-fit:contain}
+.pm2-cmp__name{display:block;color:rgb(var(--color-foreground));text-decoration:none;font-weight:600;font-size:1.6rem}
+.pm2-cmp__price{display:block;margin-top:4px;color:rgb(var(--color-button));font-weight:600}
+.pm2-cmp__badge{position:absolute;top:8px;left:50%;transform:translateX(-50%);background:rgb(var(--color-button));color:rgb(var(--color-button-text));font-size:1rem;letter-spacing:.12em;text-transform:uppercase;padding:3px 10px;border-radius:99px;white-space:nowrap;font-weight:600;line-height:1.5}
+.pm2-cmp__no{opacity:.35}
+.pm2-cmp__cta td,.pm2-cmp__cta th{border-bottom:0;padding:22px 12px 26px}
+@media (max-width:749px){.pm2-cmp{padding:56px 0}.pm2-cmp__table th,.pm2-cmp__table td{padding:12px 10px;font-size:1.3rem}}
+/* collage */
+.collage{display:grid;grid-template-columns:1.25fr 1fr;grid-template-rows:1fr 1fr;gap:1.6rem;height:64rem}
+.collage .ph:first-child{grid-row:span 2}
+@media (max-width:749px){.collage{height:auto;grid-template-columns:1fr 1fr;grid-template-rows:auto auto;gap:.8rem}
+  .collage .ph:first-child{grid-row:auto;grid-column:span 2;aspect-ratio:1}.collage .ph{aspect-ratio:1}}
+/* faq (collapsible-content) */
+.faq-head{text-align:center;margin-bottom:3.4rem}
+.faq-head h2{margin-top:.6rem}
+.faq{max-width:73.4rem;margin:0 auto}
+.faq details{border-top:1px solid rgba(11,18,32,.08)}
+.faq details:last-child{border-bottom:1px solid rgba(11,18,32,.08)}
+.faq summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:1.4rem;padding:1.6rem 0;font-weight:600;font-size:1.6rem;line-height:1.4}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary svg{flex:none;width:2rem;height:2rem;color:rgb(47,124,255)}
+.faq summary .car{margin-left:auto;width:1.2rem;height:.8rem;color:rgb(11,18,32);transition:transform .2s}
+.faq details[open] summary .car{transform:rotate(180deg)}
+.faq details p{margin:0 0 1.8rem 3.4rem;color:rgba(11,18,32,.75)}
+/* newsletter */
+.nl{text-align:center;padding:42px 0 48px}@media(min-width:750px){.nl{padding:56px 0 64px}}
+.nl h2{margin-bottom:1rem}.nl p{margin:0 0 2.4rem;color:rgba(var(--color-foreground),.75)}
+.field{position:relative;max-width:36rem;margin:0 auto;display:flex;border:1px solid rgba(var(--color-foreground),.4);border-radius:10px;height:4.8rem;align-items:center;padding:0 1.5rem;text-align:left}
+.field span{flex:1;color:rgba(var(--color-foreground),.6);font-size:1.5rem}
+.field svg{width:1.6rem;height:1.6rem}
+/* footer */
+.footer{padding:42px 0 30px}@media(min-width:750px){.footer{padding:56px 0 40px}}
+.footer__top{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr 1.6fr;gap:4rem}
+.footer h2.h4{font-size:1.6rem;font-weight:600;margin:0 0 1.6rem}
+.footer ul{list-style:none;margin:0;padding:0}
+.footer li a{display:block;padding:.4rem 0;text-decoration:none;font-size:1.4rem;color:rgba(var(--color-foreground),.75)}
+.footer .brand-h{font-size:2rem;margin:0 0 1rem}
+.footer .brand-p{font-size:1.4rem;color:rgba(var(--color-foreground),.75);margin:0 0 1.8rem}
+.socials{display:flex;gap:1.6rem}.socials svg{width:1.8rem;height:1.8rem;opacity:.85}
+.footer .field{margin:0;max-width:none}
+.shop-follow{margin-top:1.6rem;display:inline-flex;align-items:center;gap:.6rem;background:#5a31f4;color:#fff;border-radius:40px;padding:.9rem 1.8rem;font-size:1.3rem;font-weight:600}
+.footer__bottom{border-top:1px solid rgba(var(--color-foreground),.1);margin-top:4.8rem;padding-top:3rem;display:flex;flex-direction:column;align-items:center;gap:1.4rem}
+.pay{display:flex;gap:.8rem;flex-wrap:wrap;justify-content:center}
+.pay span{width:3.8rem;height:2.4rem;border-radius:4px;background:#fff;color:#0B1220;font-size:.8rem;font-weight:800;display:flex;align-items:center;justify-content:center;letter-spacing:0}
+.copy{font-size:1.1rem;color:rgba(var(--color-foreground),.6);text-align:center;letter-spacing:.06rem}
+.copy a{text-decoration:none;margin:0 .6rem}
+@media (max-width:989px){.footer__top{grid-template-columns:1fr 1fr}.footer__brand,.footer__nl{grid-column:span 2}}
+/* product page */
+.product{display:grid;grid-template-columns:65% 35%;align-items:start}
+.product__media{position:relative}
+.product__media .main{aspect-ratio:1;border-radius:16px;overflow:hidden;background:#fff;max-height:calc(100vh - 14rem);margin:0 auto}
+.product__media .main img{width:100%;height:100%;object-fit:contain}
+.product__info{padding-left:5rem;position:sticky;top:10rem}
+.product__info>*+*{margin-top:1.5rem}
+.uc{text-transform:uppercase;font-size:1.3rem;letter-spacing:.13rem;color:rgba(11,18,32,.75);margin:0}
+.product__info h1{margin-top:.6rem}
+.p-price{font-size:1.8rem;letter-spacing:.13rem;margin:0}
+.p-price small{display:block;font-size:1.2rem;letter-spacing:.06rem;color:rgba(11,18,32,.6);margin-top:.2rem}
+.qty-l{font-size:1.3rem;color:rgba(11,18,32,.75);margin:0 0 .6rem!important}
+.qty{display:inline-grid;grid-template-columns:4.5rem 5rem 4.5rem;height:4.7rem;border:1px solid rgba(11,18,32,.55);border-radius:10px;align-items:center;text-align:center;font-size:1.6rem}
+.qty span:first-child,.qty span:last-child{opacity:.7;font-size:1.8rem}
+.buy{display:flex;flex-direction:column;gap:1rem;max-width:44rem}
+.shoppay{display:flex;align-items:center;justify-content:center;gap:.6rem;min-height:4.7rem;border-radius:40px;background:#5a31f4;color:#fff;font-weight:600;font-size:1.6rem;letter-spacing:.02rem}
+.shoppay b{font-style:italic;font-weight:800;letter-spacing:-.02rem}
+.more-pay{text-align:center;font-size:1.3rem;text-decoration:underline;color:rgba(11,18,32,.75)}
+.desc{color:rgba(11,18,32,.75)}
+.desc p{margin:0 0 1.2rem}
+.desc ul{margin:0;padding-left:2rem}
+.acc{border-top:1px solid rgba(11,18,32,.08);border-bottom:1px solid rgba(11,18,32,.08)}
+.acc summary{list-style:none;display:flex;gap:1rem;align-items:center;padding:1.5rem 0;font-size:1.6rem;cursor:pointer}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary svg{width:2rem;height:2rem}
+.acc summary .car{margin-left:auto;width:1.2rem;height:.8rem}
+.share{display:inline-flex;gap:1rem;align-items:center;font-size:1.4rem;color:rgba(11,18,32,.75)}
+.share svg{width:1.6rem;height:1.6rem}
+@media (max-width:749px){
+  .product{grid-template-columns:1fr}.product__info{padding:3rem 0 0;position:static}
+  .product__media .main{max-height:none}
+  .buy{max-width:none}
+}
+@media (min-width:750px) and (max-width:989px){.product{grid-template-columns:1fr 1fr}.product__info{padding-left:3rem}}
+/* pm2-product-extras.liquid */
+.pm2-px{padding:80px 0}
+.pm2-px__feats{list-style:none;margin:0 0 56px;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.pm2-px__feats li{background:rgba(var(--color-foreground),.04);border:1px solid rgba(var(--color-foreground),.1);border-radius:16px;padding:26px 22px}
+.pm2-px__feats strong{display:block;font-weight:600;font-size:1.6rem;margin-top:14px;color:rgb(var(--color-foreground));line-height:1.4}
+.pm2-px__feats small{display:block;color:rgba(var(--color-foreground),.65);font-size:1.3rem;line-height:1.5;margin-top:4px}
+.pm2-px__dot{display:block;width:28px;height:4px;background:rgb(var(--color-button));border-radius:4px}
+.pm2-px__cols{display:grid;grid-template-columns:1fr 1.6fr;gap:56px}
+.pm2-px__cols h3{margin:0 0 18px}
+.pm2-px__box ul{margin:0;padding:0;list-style:none}
+.pm2-px__box li{padding:11px 0 11px 22px;border-bottom:1px solid rgba(var(--color-foreground),.1);position:relative}
+.pm2-px__box li::before{content:'';position:absolute;left:0;top:50%;width:8px;height:8px;margin-top:-4px;border-radius:50%;background:rgb(var(--color-button))}
+.pm2-px__faq details{border-bottom:1px solid rgba(var(--color-foreground),.1)}
+.pm2-px__faq summary{cursor:pointer;padding:18px 32px 18px 0;list-style:none;position:relative;font-weight:600;line-height:1.45}
+.pm2-px__faq summary::-webkit-details-marker{display:none}
+.pm2-px__faq summary::after{content:'+';position:absolute;right:4px;top:12px;font-size:2.2rem;font-weight:300;color:rgb(var(--color-button))}
+.pm2-px__faq details[open] summary::after{content:'\2013'}
+.pm2-px__faq details div{padding:0 0 20px;color:rgba(var(--color-foreground),.72);line-height:1.6}
+.pm2-px__pair{margin-top:56px;display:grid;grid-template-columns:110px 1fr auto;gap:24px;align-items:center;border:1px solid rgba(var(--color-foreground),.12);border-radius:16px;padding:20px 24px}
+.pm2-px__pairimg{display:block;aspect-ratio:1;background:#fff;border-radius:12px;overflow:hidden}
+.pm2-px__pairimg img{width:100%;height:100%;object-fit:contain}
+.pm2-px__eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:1.1rem;color:rgb(var(--color-button));margin:0 0 6px;font-weight:600}
+.pm2-px__pairname{color:rgb(var(--color-foreground));text-decoration:none;font-weight:600}
+.pm2-px__pairprice{margin:4px 0 0;color:rgba(var(--color-foreground),.7)}
+@media (max-width:899px){.pm2-px{padding:56px 0}.pm2-px__feats{grid-template-columns:repeat(2,1fr)}
+  .pm2-px__cols{grid-template-columns:1fr;gap:40px}.pm2-px__pair{grid-template-columns:80px 1fr}.pm2-px__pair .button{grid-column:1/-1}}
+@media (max-width:749px){.pm2-px__feats li{padding:20px 16px}}
+/* reviews app mock */
+.reviews{padding:48px 0}
+.rv{display:flex;justify-content:space-between;align-items:center;gap:2rem;flex-wrap:wrap;border:1px solid rgba(11,18,32,.1);border-radius:16px;padding:2.8rem 3rem}
+.stars{color:#2F7CFF;font-size:2.2rem;letter-spacing:.3rem}
+.rv p{margin:.4rem 0 0;color:rgba(11,18,32,.7);font-size:1.4rem}
+.rv .button{background:#0B1220;border-color:#0B1220}
+.mock-note{display:inline-block;margin-top:1rem;font-size:1.1rem;color:rgba(11,18,32,.45)}
+.related{padding:42px 0}@media(min-width:750px){.related{padding:56px 0}}
+.related h2{margin-bottom:3rem}
+</style></head><body>
+<!-- Static design mockup of the PETME2 'Smart Tech' Dawn theme. Product photos load from cdn.shopify.com; lifestyle/banner photos are placeholders. -->
+
+<div class="color-scheme-4 announce"><span class="announce__arr announce__arr--l">&#8249;</span>Free U.S. shipping on orders $50+<span class="announce__arr announce__arr--r">&#8250;</span></div>
+<div class="color-scheme-3 header-wrap"><header class="page-width header">
+  <span class="burger"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M3 12h18M3 18h18"/></svg></span>
+  <a class="logo" href="home.html">PETME2<i></i></a>
+  <nav class="nav"><a href="home.html">Home</a><a href="#">Feeders <svg class="car caret" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></a><a href="#">Water fountains <svg class="car caret" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></a><a href="home.html#compare-feeders">Compare</a><a href="#">Contact</a></nav>
+  <div class="icons"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></span><span class="acct"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 5-6 8-6s6.5 2 8 6"/></svg></span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 8h14l-1.5 12h-11z"/><path d="M9 8V6a3 3 0 016 0v2"/></svg></span></div>
+</header></div>
+
+<main>
+<section class="color-scheme-3" style="padding:27px 0 42px"><div class="page-width">
+ <div class="product">
+  <div class="product__media"><div class="main"><img class="" src="https://cdn.shopify.com/s/files/1/0792/1716/4500/files/Dual-Bowl_Automatic_Feeder_Black.png" alt="PETME2 3L Dual Bowl Automatic Cat Feeder" loading="eager"></div></div>
+  <div class="product__info">
+    <p class="uc">PETME2</p>
+    <h1 class="h1">PETME2 3L Dual Bowl Automatic Cat Feeder</h1>
+    <p class="p-price">$65.99 USD<small>Shipping calculated at checkout.</small></p>
+    <p class="subtitle" style="font-size:1.6rem">Free U.S. shipping on orders $50+</p>
+    <div><p class="qty-l">Quantity</p><div class="qty"><span>&minus;</span><span>1</span><span>+</span></div></div>
+    <div class="buy"><span class="button button--secondary button--full">Add to cart</span>
+      <span class="shoppay">Buy with <b>shop</b><b style="background:#fff;color:#5a31f4;border-radius:4px;padding:0 .4rem;font-style:normal">Pay</b></span>
+      <span class="more-pay">More payment options</span></div>
+    <div class="desc"><p><em>(Product description from Shopify admin shows here.)</em> Feed two pets on one schedule. Set meal times and portions in the app, and food is split evenly into two stainless steel bowls.</p>
+      <ul><li>3L sealed food container with desiccant box</li><li>Two stainless steel bowls</li><li>For dry food, cats and small dogs</li></ul></div>
+    <details class="acc"><summary><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 6h12v10H2zM14 9h4l4 4v3h-8z"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg>Shipping<svg class="car caret" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></summary><p style="margin:0 0 1.6rem;color:rgba(11,18,32,.75)">Free U.S. shipping on orders $50+. You get an email with tracking when your order ships.</p></details>
+    <span class="share"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v13M7 8l5-5 5 5M5 14v6h14v-6"/></svg>Share</span>
+  </div>
+ </div>
+</div></section>
+<div class="color-scheme-5 pm2-px"><div class="page-width">
+  <ul class="pm2-px__feats"><li><span class="pm2-px__dot"></span><strong>Scheduled meals</strong><small>Set feeding times and portions in the app</small></li><li><span class="pm2-px__dot"></span><strong>Stainless steel bowls</strong><small>Food-safe steel that washes easily</small></li><li><span class="pm2-px__dot"></span><strong>Anti-jam design</strong><small>Helps kibble flow smoothly</small></li><li><span class="pm2-px__dot"></span><strong>Easy to clean</strong><small>Bowls and food container come apart</small></li></ul>
+  <div class="pm2-px__cols">
+    <div class="pm2-px__box"><h3>What's in the box</h3><ul><li>Main unit</li><li>Dual bowl base</li><li>2 stainless steel bowls</li><li>3L food container</li><li>Desiccant box</li><li>Power adapter</li><li>User manual</li></ul></div>
+    <div class="pm2-px__faq"><h3>Questions</h3><details open><summary>Can I use wet food?</summary><div>No. PETME2 feeders are made for dry food (kibble).</div></details><details><summary>Can it feed two pets?</summary><div>Yes, the 3L Dual Bowl and the 5L Elevated feeders split food into two bowls. The 3L Camera Feeder has one bowl.</div></details><details><summary>Do I need WiFi?</summary><div>WiFi is needed for the app: schedules, portions and alerts. Setup steps are in the manual.</div></details><details><summary>How do I clean it?</summary><div>Take off the bowls and the food container and wash them. The manual shows which parts are dishwasher safe.</div></details><details><summary>Is PETME2 also on Amazon?</summary><div>Yes. PETME2 feeders are also sold on Amazon, where you can read buyer reviews.</div></details></div>
+  </div>
+  <div class="pm2-px__pair"><a href="#" class="pm2-px__pairimg"><img class="" src="https://cdn.shopify.com/s/files/1/0792/1716/4500/files/Luxury_Stainless_Steel_Pet_Fountain-3l.png" alt="PETME2 Stainless Steel Pet Fountain 3.2L" loading="eager"></a>
+    <div><p class="pm2-px__eyebrow">Complete the setup</p><a href="#" class="pm2-px__pairname">PETME2 Stainless Steel Pet Fountain 3.2L</a><p class="pm2-px__pairprice">$39.99</p></div>
+    <a class="button" href="#">View</a></div>
+</div></div>
+<section class="color-scheme-3 reviews"><div class="page-width">
+  <h2 class="h2" style="margin-bottom:2rem">Reviews</h2>
+  <div class="rv"><div><span class="stars">&#9734;&#9734;&#9734;&#9734;&#9734;</span><p>Be the first to write a review</p></div><span class="button">Write a review</span></div>
+  <span class="mock-note">Reviews app block (AG Product Reviews) – the app renders its own layout here.</span>
+</div></section>
+<section class="color-scheme-3 related"><div class="page-width">
+  <h2 class="h2">You may also like</h2>
+  <div class="grid4 two"><div class="card"><div class="card__media"><div><img class="" src="https://cdn.shopify.com/s/files/1/0792/1716/4500/files/3L_Dual-Bowl_Smart_Feeder.png" alt="PETME2 3L Dual Bowl Smart Feeder, White" loading="eager"></div></div>
+<div class="card__content"><a class="card__title" href="product.html">PETME2 3L Dual Bowl Smart Feeder, White</a><p class="price">$65.99</p><span class="spacer"></span>
+<span class="button button--secondary button--full">Add to cart</span></div></div><div class="card"><div class="card__media"><div><img class="" src="https://cdn.shopify.com/s/files/1/0792/1716/4500/files/Dual_Bowl_Automatic_Pet_Feeder_5L.png" alt="PETME2 5L Elevated WiFi Dual Bowl Feeder" loading="eager"></div></div>
+<div class="card__content"><a class="card__title" href="product.html">PETME2 5L Elevated WiFi Dual Bowl Feeder</a><p class="price">$54.99</p><span class="spacer"></span>
+<span class="button button--secondary button--full">Add to cart</span></div></div><div class="card"><div class="card__media"><div><img class="" src="https://cdn.shopify.com/s/files/1/0792/1716/4500/files/Automatic_Cat_Feeder_with_Camera_App_Control_2-Way_Audio.png" alt="PETME2 3L Automatic Cat Feeder with Camera" loading="eager"></div></div>
+<div class="card__content"><a class="card__title" href="product.html">PETME2 3L Automatic Cat Feeder with Camera</a><p class="price">$59.99</p><span class="spacer"></span>
+<span class="button button--secondary button--full">Add to cart</span></div></div><div class="card"><div class="card__media"><div><img class="" src="https://cdn.shopify.com/s/files/1/0792/1716/4500/files/Luxury_Stainless_Steel_Pet_Fountain-3l.png" alt="PETME2 Stainless Steel Pet Fountain 3.2L" loading="eager"></div></div>
+<div class="card__content"><a class="card__title" href="product.html">PETME2 Stainless Steel Pet Fountain 3.2L</a><p class="price">$39.99</p><span class="spacer"></span>
+<span class="button button--secondary button--full">Add to cart</span></div></div></div>
+</div></section>
+</main>
+
+<footer class="color-scheme-1 footer"><div class="page-width">
+  <div class="footer__top">
+    <div class="footer__brand"><p class="h2 brand-h">Smart care for cats and small dogs.</p>
+      <p class="brand-p">PETME2 makes app-controlled feeders and quiet water fountains. Also sold on Amazon.</p>
+      <div class="socials"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 8V6c0-.8.5-1 1-1h2V2h-3c-3 0-4 2-4 4v2H8v3h2v11h4V11h3l.5-3z"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 3c.5 2.5 2 4 4.5 4.2V11c-1.7 0-3.2-.5-4.5-1.4V16a6 6 0 11-6-6v3.6a2.4 2.4 0 102.4 2.4V3z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 8s-.2-1.6-.9-2.3c-.8-.9-1.8-.9-2.2-1C15.8 4.5 12 4.5 12 4.5s-3.8 0-6.9.2c-.4.1-1.4.1-2.2 1C2.2 6.4 2 8 2 8s-.2 1.9-.2 3.8v1.7c0 1.9.2 3.8.2 3.8s.2 1.6.9 2.3c.8.9 1.9.9 2.4 1 1.7.2 7.1.2 7.1.2s3.8 0 6.9-.2c.4-.1 1.4-.1 2.2-1 .7-.7.9-2.3.9-2.3s.2-1.9.2-3.8v-1.7C22.2 9.9 22 8 22 8zM10 15.2V8.8l5.6 3.2z"/></svg></div></div>
+    <div><h2 class="h4">Products</h2><ul><li><a href="#">Automatic feeders</a></li><li><a href="#">Water fountains</a></li><li><a href="#">Compare feeders</a></li><li><a href="#">Compare fountains</a></li></ul></div>
+    <div><h2 class="h4">Quick links</h2><ul><li><a href="#">Search</a></li><li><a href="#">About us</a></li><li><a href="#">Contact</a></li></ul></div>
+    <div><h2 class="h4">Information</h2><ul><li><a href="#">Shipping policy</a></li><li><a href="#">Refund policy</a></li><li><a href="#">Privacy policy</a></li><li><a href="#">Terms of service</a></li></ul></div>
+    <div class="footer__nl"><h2 class="h4">Get new products and deals first</h2>
+      <div class="field"><span>Email</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M14 6l6 6-6 6"/></svg></div>
+      <span class="shop-follow">Follow on <b>shop</b></span></div>
+  </div>
+  <div class="footer__bottom">
+    <div class="pay"><span>VISA</span><span>MC</span><span>AMEX</span><span>PayPal</span><span>Pay</span><span>G Pay</span><span style="background:#5a31f4;color:#fff">shop</span></div>
+    <p class="copy">&copy; 2026, PETME2 &middot; Powered by Shopify<br><a href="#">Refund policy</a><a href="#">Privacy policy</a><a href="#">Terms of service</a><a href="#">Shipping policy</a></p>
+  </div>
+</div></footer>
+</body></html>
