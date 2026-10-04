@@ -179,7 +179,7 @@ S["cmp_feeders"] = section("pm2-compare",
      "heading": "Which feeder fits your pet?",
      "text": "Every PETME2 feeder runs on a schedule from the app. Made for dry food, cats and small dogs.",
      "row1": "Capacity", "row2": "Bowls", "row3": "Control", "row4": "Camera", "row5": "Audio", "button_text": "View details"},
-    ("m1", "model", model("2-in-1-smart-feeder", "3L Dual Bowl", ["3L", "2 stainless steel", "App", "—", "2-way audio"], "Most popular")),
+    ("m1", "model", model("2-in-1-smart-feeder", "3L Dual Bowl", ["3L", "2 stainless steel", "App", "—", "2-way audio"])),
     ("m2", "model", model("2-in-1-feeder-1", "5L Elevated WiFi", ["5L", "2 stainless steel", "WiFi app", "—", "Voice recording"])),
     ("m3", "model", model("smart-feeder", "3L Camera Feeder", ["3L", "1 stainless steel", "WiFi app", "1080P HD, live view", "2-way audio"])))
 S["two_pets"] = section("image-with-text",
@@ -210,7 +210,7 @@ S["cmp_fountains"] = section("pm2-compare",
     ("w1", "model", model("water-fountain", "Stainless 3.2L", ["3.2L / 108oz", "Stainless steel", "4-layer filter", "LED light", "Big drinkers, cats & dogs"], "Premium")),
     ("w2", "model", model("water-fountain-4", "Steel Tray 2.2L", ["2.2L", "Plastic + steel tray", "4-layer filter", "Window + low-water light", "A steel drinking surface"])),
     ("w3", "model", model("water-fountain-2", "Transparent 2.2L", ["2.2L", "Clear plastic", "Filter cartridge", "See-through body", "Seeing water at a glance"])),
-    ("w4", "model", model("water-fountain-simple", "Classic 2L", ["2L", "Plastic", "—", "Window + low-water light", "Small spaces"], "Best seller")))
+    ("w4", "model", model("water-fountain-simple", "Classic 2L", ["2L", "Plastic", "—", "Window + low-water light", "Small spaces"])))
 S["life"] = section("collage",
     {"heading": "Life with PETME2", "heading_size": "h1", "desktop_layout": "left", "mobile_layout": "collage",
      "card_styles": "none", "color_scheme": "scheme-3", "padding_top": 72, "padding_bottom": 72},
@@ -226,7 +226,7 @@ S["faq"] = section("collapsible-content",
     ("q2", "collapsible_row", {"heading": "How fast is shipping?", "icon": "check_mark", "row_content": "<p>Shipping is free on every U.S. order. Orders are fulfilled by Amazon.</p>"}),
     ("q3", "collapsible_row", {"heading": "Do the feeders work with wet food?", "icon": "check_mark", "row_content": "<p>No. PETME2 feeders are made for dry food (kibble).</p>"}),
     ("q4", "collapsible_row", {"heading": "Which feeder is best for 2 pets?", "icon": "check_mark", "row_content": "<p>The 3L Dual Bowl or the 5L Elevated WiFi. Both split food into two stainless steel bowls.</p>"}),
-    ("q5", "collapsible_row", {"heading": "Do I need WiFi?", "icon": "check_mark", "row_content": "<p>WiFi is needed for the app: schedules, portions and alerts.</p>"}),
+    ("q5", "collapsible_row", {"heading": "Do I need WiFi?", "icon": "check_mark", "row_content": "<p>WiFi is needed for the app: schedules and portions.</p>"}),
     ("q6", "collapsible_row", {"heading": "Are the fountains loud?", "icon": "check_mark", "row_content": "<p>No. Every PETME2 fountain uses a quiet pump made for use inside the home.</p>"}),
     ("q7", "collapsible_row", {"heading": "Are the fountains easy to clean?", "icon": "check_mark", "row_content": "<p>Yes. Every PETME2 fountain comes apart for cleaning.</p>"}))
 S["newsletter"] = section("newsletter",
@@ -244,7 +244,13 @@ extras.update(
     dq5="What if my pet doesn't like it?",
     da5="Every order comes with a 30-day money-back guarantee. If it's not a fit, contact us within 30 days and we'll give you your money back.",
     fq5="What if my pet doesn't like it?",
-    fa5="Every order comes with a 30-day money-back guarantee. If it's not a fit, contact us within 30 days and we'll give you your money back.")
+    fa5="Every order comes with a 30-day money-back guarantee. If it's not a fit, contact us within 30 days and we'll give you your money back.",
+    # Verifier: keep feature/FAQ copy to facts true for every model in the group.
+    feeder_features="Scheduled meals :: Set meal times and portions in the app\nStainless steel bowls :: Easy to wipe clean\nMade for dry food :: For cats & small dogs\nFree U.S. shipping :: 30-day money-back guarantee",
+    fountain_features="Quiet pump :: Made for use inside the home\nComes apart :: Easy to clean\nFresh, moving water :: For cats & small dogs\nFree U.S. shipping :: 30-day money-back guarantee",
+    da3="WiFi is needed for the app: schedules and portions. Setup steps are in the manual.",
+    da4="Take off the bowls and wash them. The manual has the full cleaning steps.",
+    fa4="Yes. PETME2 fountains work for cats and small dogs. The Stainless 3.2L holds the most water.")
 reviews_block = old["sections"]["1786715348a590fb22"]["blocks"]
 for _b in reviews_block.values():
     _b["settings"].update(air_blockreviews_singleStarColor=BLUE, air_blockreviews_primaryColor=NAVY)

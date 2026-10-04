@@ -31,8 +31,8 @@ save("sections/header-group.json", H)
 
 P = load("templates/product.json")
 insert_after(P, "main", "trust_badges", {"type": "pm2-trust-badges", "blocks": BADGES, "block_order": list(BADGES),
-    "settings": {"product_position": "under_buy_buttons", "style": "card", "show_savings": True, "show_low_stock": True,
-                 "low_stock_threshold": 5, "delivery_note": "Ships fast from Amazon's U.S. network", "color_scheme": "scheme-3",
+    "settings": {"product_position": "under_buy_buttons", "style": "card", "show_savings": True, "show_low_stock": False,
+                 "low_stock_threshold": 5, "delivery_note": "Orders are fulfilled by Amazon", "color_scheme": "scheme-3",
                  "padding_top": 0, "padding_bottom": 0}})
 insert_after(P, "extras", "guarantee", {"type": "pm2-guarantee", "settings": {
     "style": "card", "icon": "shield", "color_scheme": "scheme-4", "padding_top": 24, "padding_bottom": 24}})

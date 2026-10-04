@@ -63,7 +63,7 @@
           "settings": {
             "heading": "Do I need WiFi?",
             "icon": "lightning_bolt",
-            "row_content": "<p>WiFi is needed for the app: schedules, portions and alerts.</p>"
+            "row_content": "<p>WiFi is needed for the app: schedules and portions.</p>"
           }
         },
         "row_5": {

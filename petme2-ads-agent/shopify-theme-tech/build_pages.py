@@ -72,7 +72,7 @@ def faq(scheme, container, heading, rows, caption="FAQ", pad=(64, 72)):
 Q_DRY = ("Do the feeders work with wet food?", "<p>No. PETME2 feeders are made for dry food (kibble).</p>", "serving_dish")
 Q_TWO = ("Which feeder is best for 2 pets?", "<p>The 3L Dual Bowl or the 5L Elevated WiFi. Both split food into two "
          "stainless steel bowls.</p>", "paw_print")
-Q_WIFI = ("Do I need WiFi?", "<p>WiFi is needed for the app: schedules, portions and alerts.</p>", "lightning_bolt")
+Q_WIFI = ("Do I need WiFi?", "<p>WiFi is needed for the app: schedules and portions.</p>", "lightning_bolt")
 Q_QUIET = ("Are the fountains loud?", "<p>No. Every PETME2 fountain uses a quiet pump made for use inside the "
            "home.</p>", "bottle")
 Q_SHIP = ("How fast is shipping?", "<p>Shipping is free on every U.S. order. Orders are fulfilled by Amazon.</p>", "truck")

@@ -206,7 +206,7 @@
           "settings": {
             "product": "2-in-1-smart-feeder",
             "name": "3L Dual Bowl",
-            "badge": "Most popular",
+            "badge": "",
             "v1": "3L",
             "v2": "2 stainless steel",
             "v3": "App",
@@ -307,7 +307,7 @@
           "settings": {
             "product": "water-fountain-simple",
             "name": "Classic 2L",
-            "badge": "Best seller",
+            "badge": "",
             "v1": "2L",
             "v2": "Plastic",
             "v3": "—",
@@ -377,7 +377,7 @@
           "settings": {
             "heading": "Do I need WiFi?",
             "icon": "check_mark",
-            "row_content": "<p>WiFi is needed for the app: schedules, portions and alerts.</p>"
+            "row_content": "<p>WiFi is needed for the app: schedules and portions.</p>"
           }
         },
         "q6": {
@@ -446,7 +446,7 @@
           "type": "faq",
           "settings": {
             "question": "Do I need WiFi?",
-            "answer": "<p>WiFi is needed for the app: schedules, portions and alerts.</p>"
+            "answer": "<p>WiFi is needed for the app: schedules and portions.</p>"
           }
         },
         "b6": {
