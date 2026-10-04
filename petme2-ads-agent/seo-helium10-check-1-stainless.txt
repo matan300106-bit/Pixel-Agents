@@ -1,0 +1,33 @@
+Use Helium 10 (already logged in). READ ONLY in Amazon: do not change anything on Amazon. Inside Helium 10 you may create a DRAFT in Listing Builder (that is safe). Do not buy or upgrade anything. If asked to log in, pay, or solve a captcha, stop and tell me.
+
+GOAL: Score my NEW listing text vs my CURRENT listing and vs the top competitors, for ASIN B0DR7FCLZR (PETME2 3.2L stainless steel cat water fountain), marketplace Amazon.com (US).
+
+STEP 1 - Keywords: Open Listing Builder -> New listing (marketplace US). Import keywords with Cerebro for these ASINs:
+B0DR7FCLZR, B0FPFZ3C5K, B0FDKQGRCK, B0GDCZCXMY, B0C8MHHVPC, B0G6ZMT8T3
+(use the default filters; keep the top keywords by search volume).
+
+STEP 2 - Score the CURRENT listing: use "Import from Amazon" / ASIN B0DR7FCLZR (or Listing Analyzer) and write down: Listing Score, % of search volume indexed, and which of the top 10 keywords are missing.
+
+STEP 3 - Score the NEW listing: in the Listing Builder draft, paste exactly:
+
+TITLE:
+PETME2 Stainless Steel Cat Water Fountain 108oz/3.2L, Dog Water Fountain for Cats & Dogs Indoor, LED Light, Quiet Pump, Faucet & Bubbling Dual Flow Modes, 4-Layer Filter, Dishwasher Safe
+
+BULLETS:
+TWO FLOW MODES FOR PICKY DRINKERS: Switch between a running faucet stream and a gentle bubbling flow to match how your pet likes to drink. Moving water invites cats and dogs to drink more often than a still bowl, so this pet water fountain suits every drinking style in the house.
+STAINLESS STEEL, NOT PLASTIC: This cat fountain stainless steel design gives pets a durable drinking surface instead of a plastic bowl. The rust-resistant, non-porous steel base wipes clean easily and adds a sleek silver look to any room in your home.
+4-LAYER FILTER PLUS SPONGE: Cotton mesh, activated carbon, ion-exchange resin and a fine filter pad, backed by a high-density sponge, trap hair and debris and reduce odors so this cat water dispenser serves fresher water. Replace the filter every 2 to 3 weeks to keep water fresh.
+QUIET PUMP AND LED LIGHT: Made for homes shopping water fountains for cats indoor, the low-voltage DC 5V pump runs quietly day and night on the included AC adapter and USB cable. The LED light shows the water level in a dark room and switches off at the cable.
+108OZ CAPACITY, EASY TO CLEAN: The 3.2L reservoir holds plenty of water for multi-pet homes and works as a dog water dispenser for small to medium dogs, so you refill less often. A 360-degree raised rim helps stop splashes, and the detachable parts are dishwasher safe.
+
+DESCRIPTION:
+Give your cats and dogs fresh, moving water all day with the PETME2 Stainless Steel Cat Water Fountain. It holds 108oz (3.2L), enough for households with more than one pet, and doubles as a water fountain for dogs. Choose between two flow modes: a running faucet stream for pets that like to drink from the tap, or a gentle bubbling flow for pets that prefer a calm surface. Flowing water attracts pets and encourages them to drink more often than a still bowl. The rust-resistant stainless steel base is non-porous stainless steel that wipes clean easily, with a modern silver look that fits any room. Inside, a 4-layer filter (cotton mesh, activated carbon, ion-exchange resin and a fine pad) plus a high-density sponge catches hair and debris and reduces odors. Replace the filter every 2 to 3 weeks. The low-voltage DC 5V pump runs quietly, powered by the included AC adapter and USB cable, and is suitable for indoor or outdoor use. An LED light lets you see the water level at night, and a switch on the cable turns it off. A 360-degree raised rim helps keep floors dry, and the detachable parts are dishwasher safe. In the box: stainless steel fountain base, pump, 4-layer filter cartridge with sponge, LED light module, power adapter, USB cable and instruction manual. Covered by a 1-year limited warranty.
+
+SEARCH TERMS (backend):
+pet dispenser automatic drinking waterer bowl kitty kitten metal filtration large capacity running flowing circulating inside multi hydration drinker spill proof silver fuente agua gatos bebedero perros acero inoxidable filtered animal
+
+Write down: Listing Score, % search volume indexed (title / bullets / backend), and the top 10 keywords by search volume that are still MISSING or only partly used.
+
+STEP 4 - Competitors: in Listing Analyzer, check B0FPFZ3C5K (Veken) and B0FDKQGRCK (PETLIBRO) and write down their Listing Score.
+
+FINAL: Show me a table: CURRENT vs NEW vs Veken vs PETLIBRO (Listing Score, % volume indexed), plus the list of missing keywords with their search volume. Do not change my Amazon listing.
