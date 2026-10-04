@@ -82,6 +82,11 @@ S["cmp_fountains"] = cmp_w
 S["faq"] = old["faq"]
 S["faq"]["settings"].update(color_scheme="scheme-3", container_color_scheme="scheme-5", caption="FAQ",
                             padding_top=72, padding_bottom=72)
+# Google FAQ structured data, mirroring the visible FAQ above (hidden, schema only)
+if (HERE / "sections" / "pm2-faq-schema.liquid").exists():
+    _rows = [S["faq"]["blocks"][k]["settings"] for k in S["faq"]["block_order"]]
+    S["faq_schema"] = sec("pm2-faq-schema", {"output_schema": True, "show_visible": False}, [
+        ("faq", {"question": r["heading"], "answer": r["row_content"]}) for r in _rows])
 S["cta"] = sec("pm2-cta-band", {"eyebrow": "Ready when you are", "heading": "Easy care starts here.",
                                 "text": "<p>Smart feeders and quiet fountains for cats and small dogs.</p>",
                                 "button_label_1": "Shop feeders", "button_link_1": "shopify://collections/feeders",

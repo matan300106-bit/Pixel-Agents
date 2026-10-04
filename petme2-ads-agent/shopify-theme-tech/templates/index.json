@@ -487,6 +487,73 @@
         "q7"
       ]
     },
+    "faq_schema": {
+      "type": "pm2-faq-schema",
+      "settings": {
+        "output_schema": true,
+        "show_visible": false
+      },
+      "blocks": {
+        "b1": {
+          "type": "faq",
+          "settings": {
+            "question": "Do the feeders work with wet food?",
+            "answer": "<p>No. PETME2 feeders are made for dry food (kibble).</p>"
+          }
+        },
+        "b2": {
+          "type": "faq",
+          "settings": {
+            "question": "Which feeder is best for 2 pets?",
+            "answer": "<p>The 3L Dual Bowl or the 5L Elevated WiFi. Both split food into two stainless steel bowls.</p>"
+          }
+        },
+        "b3": {
+          "type": "faq",
+          "settings": {
+            "question": "Do I need WiFi?",
+            "answer": "<p>WiFi is needed for the app: schedules, portions and alerts.</p>"
+          }
+        },
+        "b4": {
+          "type": "faq",
+          "settings": {
+            "question": "Are the fountains loud?",
+            "answer": "<p>No. Every PETME2 fountain uses a quiet pump made for use inside the home.</p>"
+          }
+        },
+        "b5": {
+          "type": "faq",
+          "settings": {
+            "question": "Are the fountains easy to clean?",
+            "answer": "<p>Yes. Every PETME2 fountain comes apart for cleaning.</p>"
+          }
+        },
+        "b6": {
+          "type": "faq",
+          "settings": {
+            "question": "Is shipping free?",
+            "answer": "<p>Yes. Shipping is free on every U.S. order.</p>"
+          }
+        },
+        "b7": {
+          "type": "faq",
+          "settings": {
+            "question": "Is PETME2 on Amazon?",
+            "answer": "<p>Yes. PETME2 products are also sold on Amazon.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "b5",
+        "b6",
+        "b7"
+      ]
+    },
     "cta": {
       "type": "pm2-cta-band",
       "settings": {
@@ -531,6 +598,7 @@
     "cmp_feeders",
     "cmp_fountains",
     "faq",
+    "faq_schema",
     "cta"
   ]
 }
