@@ -134,6 +134,13 @@
     .pm2-marquee__viewport { -webkit-mask-image: none; mask-image: none; }
     .pm2-marquee__track { animation: none; width: auto; justify-content: center; }
     .pm2-marquee__group { flex-wrap: wrap; justify-content: center; row-gap: 10px; padding: 0 16px; flex: 1 1 auto; }
+    /* phones: one calm, swipeable row instead of a tall wrapped stack */
+    @media (max-width: 749px) {
+      .pm2-marquee__viewport { overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+      .pm2-marquee__viewport::-webkit-scrollbar { display: none; }
+      .pm2-marquee__track { justify-content: flex-start; width: max-content; }
+      .pm2-marquee__group { flex-wrap: nowrap; justify-content: flex-start; }
+    }
     .pm2-marquee__group[aria-hidden='true'],
     .pm2-marquee__item[aria-hidden='true'] { display: none; }
   }

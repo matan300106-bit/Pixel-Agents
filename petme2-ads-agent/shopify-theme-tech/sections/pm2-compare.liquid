@@ -121,6 +121,7 @@
     .pm2-cmp--m-table .pm2-cmp__table { min-width: 560px; }
     .pm2-cmp--m-table .pm2-cmp__table tbody th { white-space: normal; min-width: 104px; max-width: 120px; }
     .pm2-cmp--m-table .pm2-cmp__img { max-width: 96px; }
+    .pm2-cmp--m-table .pm2-cmp__table .button { min-width: 0; padding: 0 16px; white-space: nowrap; }
 
     /* cards mode */
     .pm2-cmp--m-cards .pm2-cmp__scroll { display: none; }
@@ -150,8 +151,8 @@
     .pm2-cmp__cprice { font-size: 18px; font-weight: 700; }
     .pm2-cmp__dl { margin: 0; flex: 1; }
     .pm2-cmp__dl-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 10px 0; border-top: 1px solid rgba(var(--color-foreground), .07); }
-    .pm2-cmp__dl dt { font-size: 15px; color: rgba(var(--color-foreground), .65); }
-    .pm2-cmp__dl dd { margin: 0; font-size: 16px; font-weight: 600; text-align: right; overflow-wrap: anywhere; }
+    .pm2-cmp__dl dt { flex: 0 0 auto; max-width: 48%; font-size: 15px; color: rgba(var(--color-foreground), .65); }
+    .pm2-cmp__dl dd { flex: 1 1 auto; min-width: 0; margin: 0; font-size: 16px; font-weight: 600; text-align: right; overflow-wrap: anywhere; }
     .pm2-cmp .pm2-cmp__cbtn { width: 100%; }
   }
   @media (max-width: 749px) and (prefers-reduced-motion: no-preference) {
