@@ -1,0 +1,328 @@
+{%- comment -%}
+  PETME2 tabbed product showcase.
+  Each block = one tab (label + collection). Cards: soft image tile with hover image swap,
+  title, price (+ compare-at), product.type chip, real product form add-to-cart.
+{%- endcomment -%}
+{%- liquid
+  assign sid = section.id
+  assign limit = section.settings.products_per_tab
+-%}
+<div
+  class="color-{{ section.settings.color_scheme }} gradient pm2-tabs"
+  id="pm2-tabs-{{ sid }}"
+  style="--pm2-pt: {{ section.settings.padding_top }}px; --pm2-pb: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="page-width">
+    <div class="pm2-tabs__head">
+      <div class="pm2-tabs__titles">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="pm2-tabs__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="pm2-tabs__heading">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+      </div>
+
+      {%- if section.blocks.size > 1 -%}
+        <div class="pm2-tabs__list" role="tablist" aria-label="{{ section.settings.heading | default: 'Products' | escape }}">
+          {%- for block in section.blocks -%}
+            <button
+              type="button"
+              class="pm2-tabs__tab"
+              role="tab"
+              id="pm2-tab-{{ sid }}-{{ forloop.index }}"
+              aria-controls="pm2-panel-{{ sid }}-{{ forloop.index }}"
+              aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+              tabindex="{% if forloop.first %}0{% else %}-1{% endif %}"
+              data-block-id="{{ block.id }}"
+              {{ block.shopify_attributes }}
+            >
+              {{ block.settings.label | default: block.settings.collection.title | default: 'Tab' | escape }}
+            </button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- for block in section.blocks -%}
+      {%- assign collection = block.settings.collection -%}
+      <div
+        class="pm2-tabs__panel"
+        role="{% if section.blocks.size > 1 %}tabpanel{% else %}region{% endif %}"
+        id="pm2-panel-{{ sid }}-{{ forloop.index }}"
+        aria-labelledby="pm2-tab-{{ sid }}-{{ forloop.index }}"
+        data-block-id="{{ block.id }}"
+        {% unless forloop.first %}hidden{% endunless %}
+      >
+        {%- if block.settings.text != blank -%}
+          <p class="pm2-tabs__intro">{{ block.settings.text | escape }}</p>
+        {%- endif -%}
+
+        <ul class="pm2-tabs__row" role="list">
+          {%- if collection != blank and collection.products_count > 0 -%}
+            {%- for product in collection.products limit: limit -%}
+              {%- liquid
+                assign variant = product.selected_or_first_available_variant
+                assign second = product.media[1]
+                assign on_sale = false
+                if product.compare_at_price > product.price
+                  assign on_sale = true
+                endif
+              -%}
+              <li class="pm2-card{% if second and second.media_type == 'image' %} pm2-card--swap{% endif %}">
+                <a href="{{ product.url }}" class="pm2-card__media" aria-label="{{ product.title | escape }}" tabindex="-1">
+                  {%- if product.featured_media -%}
+                    {{
+                      product.featured_media
+                      | image_url: width: 900
+                      | image_tag:
+                        loading: 'lazy',
+                        widths: '300, 450, 600, 900',
+                        sizes: '(min-width: 990px) 25vw, (min-width: 750px) 33vw, 72vw',
+                        class: 'pm2-card__img pm2-card__img--1',
+                        alt: product.featured_media.alt
+                    }}
+                    {%- if second and second.media_type == 'image' -%}
+                      {{
+                        second
+                        | image_url: width: 900
+                        | image_tag:
+                          loading: 'lazy',
+                          widths: '300, 450, 600, 900',
+                          sizes: '(min-width: 990px) 25vw, (min-width: 750px) 33vw, 72vw',
+                          class: 'pm2-card__img pm2-card__img--2',
+                          alt: ''
+                      }}
+                    {%- endif -%}
+                  {%- else -%}
+                    {{ 'product-1' | placeholder_svg_tag: 'pm2-card__img pm2-card__placeholder' }}
+                  {%- endif -%}
+                  {%- if product.available == false -%}
+                    <span class="pm2-card__badge pm2-card__badge--muted">{{ 'products.product.sold_out' | t }}</span>
+                  {%- elsif on_sale -%}
+                    <span class="pm2-card__badge">{{ 'products.product.on_sale' | t }}</span>
+                  {%- endif -%}
+                </a>
+
+                <div class="pm2-card__body">
+                  {%- if product.type != blank -%}
+                    <div class="pm2-card__chips">
+                      <span class="pm2-chip">{{ product.type | escape }}</span>
+                    </div>
+                  {%- endif -%}
+                  <h3 class="pm2-card__title">
+                    <a href="{{ product.url }}">{{ product.title | escape }}</a>
+                  </h3>
+                  <div class="pm2-card__price">
+                    {%- if product.price_varies -%}
+                      <span class="pm2-card__from">{{ 'products.product.price.from_price_html' | t: price: '' | strip_html | strip }}</span>
+                    {%- endif -%}
+                    <span class="pm2-card__now">{{ product.price | money }}</span>
+                    {%- if on_sale -%}
+                      <s class="pm2-card__was">
+                        <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
+                        {{ product.compare_at_price | money }}
+                      </s>
+                    {%- endif -%}
+                  </div>
+
+                  <div class="pm2-card__actions">
+                    {%- if product.available == false -%}
+                      <button type="button" class="button button--secondary pm2-card__btn" disabled>
+                        {{ 'products.product.sold_out' | t }}
+                      </button>
+                    {%- elsif product.has_only_default_variant -%}
+                      {%- form 'product', product, class: 'pm2-card__form', data-type: 'add-to-cart-form' -%}
+                        <input type="hidden" name="id" value="{{ variant.id }}">
+                        <button type="submit" name="add" class="button button--primary pm2-card__btn">
+                          {{ 'products.product.add_to_cart' | t }}
+                        </button>
+                      {%- endform -%}
+                    {%- else -%}
+                      <a href="{{ product.url }}" class="button button--secondary pm2-card__btn">
+                        {{ 'products.product.choose_options' | t }}
+                      </a>
+                    {%- endif -%}
+                  </div>
+                </div>
+              </li>
+            {%- endfor -%}
+          {%- else -%}
+            {%- for i in (1..limit) -%}
+              <li class="pm2-card pm2-card--placeholder">
+                <div class="pm2-card__media">
+                  {{ 'product-1' | placeholder_svg_tag: 'pm2-card__img pm2-card__placeholder' }}
+                </div>
+                <div class="pm2-card__body">
+                  <h3 class="pm2-card__title">Product title</h3>
+                  <div class="pm2-card__price"><span class="pm2-card__now">{{ 1999 | money }}</span></div>
+                </div>
+              </li>
+            {%- endfor -%}
+          {%- endif -%}
+        </ul>
+
+        {%- if section.settings.show_view_all and collection != blank -%}
+          <div class="pm2-tabs__more">
+            <a href="{{ collection.url }}" class="button button--secondary pm2-tabs__view-all">
+              {{ 'sections.featured_collection.view_all' | t }}
+              <span class="visually-hidden">: {{ collection.title | escape }}</span>
+              <span class="pm2-tabs__arrow" aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+<style>
+  .pm2-tabs { padding: var(--pm2-pt, 72px) 0 var(--pm2-pb, 72px); }
+  .pm2-tabs__head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 20px 32px; margin-bottom: 32px; }
+  .pm2-tabs__eyebrow { margin: 0 0 10px; font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: rgb(var(--color-button)); }
+  .color-scheme-1 .pm2-tabs__eyebrow, .color-scheme-2 .pm2-tabs__eyebrow { color: #7FB0FF; }
+  .pm2-tabs__heading { margin: 0; font-size: clamp(30px, 3.6vw, 48px); line-height: 1.05; letter-spacing: -.025em; }
+  .pm2-tabs__list { display: inline-flex; gap: 4px; padding: 5px; border-radius: 999px; background: rgba(var(--color-foreground), .06); border: 1px solid rgba(var(--color-foreground), .08); max-width: 100%; overflow-x: auto; scrollbar-width: none; }
+  .pm2-tabs__list::-webkit-scrollbar { display: none; }
+  .pm2-tabs__tab { appearance: none; border: 0; background: transparent; color: rgba(var(--color-foreground), .7); font: inherit; font-size: 14px; font-weight: 600; letter-spacing: .01em; white-space: nowrap; padding: 10px 18px; min-height: 40px; border-radius: 999px; cursor: pointer; transition: background-color .25s ease, color .25s ease, box-shadow .25s ease; }
+  .pm2-tabs__tab:hover { color: rgb(var(--color-foreground)); }
+  .pm2-tabs__tab[aria-selected="true"] { background: rgb(var(--color-button)); color: rgb(var(--color-button-text)); box-shadow: 0 6px 18px -8px rgba(var(--color-button), .8); }
+  .pm2-tabs__tab:focus-visible { outline: 2px solid rgb(var(--color-button)); outline-offset: 2px; }
+  .pm2-tabs__intro { margin: -12px 0 24px; max-width: 60ch; font-size: 15px; color: rgba(var(--color-foreground), .7); }
+  .pm2-tabs__panel[hidden] { display: none; }
+  .pm2-tabs__panel { animation: pm2-tabs-in .45s cubic-bezier(.2,.7,.2,1); }
+  @keyframes pm2-tabs-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  .pm2-tabs__row { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+  .pm2-card { display: flex; flex-direction: column; border-radius: 24px; padding: 10px; background: rgba(var(--color-foreground), .03); border: 1px solid rgba(var(--color-foreground), .08); transition: transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s ease, border-color .35s ease; }
+  .pm2-card:hover { transform: translateY(-4px); border-color: rgba(var(--color-foreground), .14); box-shadow: 0 24px 48px -28px rgba(11, 18, 32, .45); }
+  .pm2-card__media { position: relative; display: block; aspect-ratio: 1 / 1; border-radius: 18px; overflow: hidden; background: linear-gradient(160deg, #F7F9FC 0%, #E9EEF6 100%); }
+  .pm2-card__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; padding: 8%; transition: opacity .45s ease, transform .6s cubic-bezier(.2,.7,.2,1); }
+  .pm2-card__placeholder { padding: 0; fill: rgba(11, 18, 32, .25); }
+  .pm2-card__img--2 { opacity: 0; }
+  .pm2-card:hover .pm2-card__img--1 { transform: scale(1.04); }
+  .pm2-card--swap:hover .pm2-card__img--1 { opacity: 0; }
+  .pm2-card--swap:hover .pm2-card__img--2 { opacity: 1; transform: scale(1.04); }
+  .pm2-card__badge { position: absolute; top: 12px; left: 12px; padding: 5px 11px; border-radius: 999px; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; background: #2F7CFF; color: #fff; }
+  .pm2-card__badge--muted { background: rgba(11, 18, 32, .78); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+  .pm2-card__body { display: flex; flex-direction: column; gap: 8px; padding: 14px 8px 6px; flex: 1; }
+  .pm2-card__chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .pm2-chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: 11px; font-weight: 600; letter-spacing: .04em; color: rgba(var(--color-foreground), .75); background: rgba(var(--color-foreground), .06); }
+  .pm2-chip::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #22D3EE; }
+  .pm2-card__title { margin: 0; font-size: 16px; line-height: 1.3; font-weight: 600; letter-spacing: -.01em; }
+  .pm2-card__title a { color: inherit; text-decoration: none; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .pm2-card__title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .pm2-card__price { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; font-size: 16px; }
+  .pm2-card__now { font-weight: 700; }
+  .pm2-card__from { font-size: 13px; color: rgba(var(--color-foreground), .6); }
+  .pm2-card__was { font-size: 14px; color: rgba(var(--color-foreground), .5); }
+  .pm2-card__actions { margin-top: auto; padding-top: 8px; }
+  .pm2-card__form { margin: 0; }
+  .pm2-tabs .pm2-card__btn { width: 100%; min-height: 44px; min-width: 0; padding: 0 18px; font-size: 14px; font-weight: 600; letter-spacing: .02em; border-radius: 999px; }
+  .pm2-tabs .pm2-card__btn::before, .pm2-tabs .pm2-card__btn::after { border-radius: 999px; }
+  .pm2-tabs__more { display: flex; justify-content: center; margin-top: 36px; }
+  .pm2-tabs .pm2-tabs__view-all { gap: 8px; border-radius: 999px; }
+  .pm2-tabs__arrow { transition: transform .25s ease; }
+  .pm2-tabs__view-all:hover .pm2-tabs__arrow { transform: translateX(3px); }
+
+  @media (max-width: 989px) {
+    .pm2-tabs__row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+  @media (max-width: 749px) {
+    .pm2-tabs { padding: calc(var(--pm2-pt, 72px) * .75) 0 calc(var(--pm2-pb, 72px) * .75); }
+    .pm2-tabs__head { margin-bottom: 24px; }
+    .pm2-tabs__list { width: 100%; }
+    .pm2-tabs__tab { flex: 1 0 auto; padding: 10px 14px; }
+    .pm2-tabs__row { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-left: 1.5rem; margin: 0 -1.5rem; padding: 4px 1.5rem 16px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+    .pm2-tabs__row::-webkit-scrollbar { display: none; }
+    .pm2-card { flex: 0 0 74%; scroll-snap-align: start; border-radius: 22px; }
+    .pm2-card:hover { transform: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pm2-tabs__panel { animation: none; }
+    .pm2-card, .pm2-card__img, .pm2-tabs__tab, .pm2-tabs__arrow { transition: none; }
+    .pm2-card:hover, .pm2-card:hover .pm2-card__img--1, .pm2-card--swap:hover .pm2-card__img--2 { transform: none; }
+  }
+</style>
+
+<script>
+  (function () {
+    var root = document.getElementById('pm2-tabs-{{ sid }}');
+    if (!root || root.dataset.pm2Ready) return;
+    root.dataset.pm2Ready = '1';
+    var tabs = Array.prototype.slice.call(root.querySelectorAll('[role="tab"]'));
+    if (!tabs.length) return;
+
+    function select(tab, focus) {
+      tabs.forEach(function (t) {
+        var on = t === tab;
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.tabIndex = on ? 0 : -1;
+        var panel = document.getElementById(t.getAttribute('aria-controls'));
+        if (panel) panel.hidden = !on;
+      });
+      if (focus) tab.focus();
+      if (tab.scrollIntoView && tab.parentNode.scrollWidth > tab.parentNode.clientWidth) {
+        tab.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+      }
+    }
+
+    tabs.forEach(function (tab, i) {
+      tab.addEventListener('click', function () { select(tab, false); });
+      tab.addEventListener('keydown', function (e) {
+        var next = null;
+        if (e.key === 'ArrowRight') next = tabs[(i + 1) % tabs.length];
+        else if (e.key === 'ArrowLeft') next = tabs[(i - 1 + tabs.length) % tabs.length];
+        else if (e.key === 'Home') next = tabs[0];
+        else if (e.key === 'End') next = tabs[tabs.length - 1];
+        if (next) { e.preventDefault(); select(next, true); }
+      });
+    });
+
+    if (window.Shopify && Shopify.designMode) {
+      document.addEventListener('shopify:block:select', function (e) {
+        var t = root.querySelector('[role="tab"][data-block-id="' + e.detail.blockId + '"]');
+        if (t) select(t, false);
+      });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "PETME2 product tabs",
+  "tag": "section",
+  "class": "section pm2-tabs-section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Shop PETME2" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Smart feeders and quiet fountains" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-3" },
+    { "type": "range", "id": "products_per_tab", "label": "Products per tab", "min": 2, "max": 12, "step": 1, "default": 4 },
+    { "type": "checkbox", "id": "show_view_all", "label": "Show \"View all\" button", "default": true },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 72 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 72 }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Tab",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Tab label", "default": "Feeders" },
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "text", "id": "text", "label": "Short text", "info": "Optional line shown above the products." }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "PETME2 product tabs",
+      "blocks": [
+        { "type": "tab", "settings": { "label": "Feeders" } },
+        { "type": "tab", "settings": { "label": "Fountains" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

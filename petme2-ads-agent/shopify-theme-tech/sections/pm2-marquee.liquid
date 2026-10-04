@@ -1,0 +1,205 @@
+{%- comment -%}
+  PETME2 marquee: infinite ticker band. Two identical groups inside one track move by -50%
+  for a seamless loop. Each group repeats the blocks so it is wider than the viewport.
+  Hover pauses; reduced motion shows one static, wrapped row.
+{%- endcomment -%}
+{%- liquid
+  assign s = section.settings
+  assign repeats = 4
+  if section.blocks.size > 4
+    assign repeats = 2
+  endif
+-%}
+{%- if section.blocks.size > 0 -%}
+  <div
+    class="pm2-marquee pm2-marquee--{{ s.size }} color-{{ s.color_scheme }} gradient{% if s.show_borders %} pm2-marquee--borders{% endif %}{% if s.reverse %} pm2-marquee--reverse{% endif %}"
+    style="--pm2-mq-duration: {{ s.duration }}s;"
+  >
+    <div class="pm2-marquee__viewport">
+      <div class="pm2-marquee__track">
+        {%- for g in (1..2) -%}
+          <ul class="pm2-marquee__group" role="list"{% if g == 2 %} aria-hidden="true"{% endif %}>
+            {%- for r in (1..repeats) -%}
+              {%- for block in section.blocks -%}
+                <li
+                  class="pm2-marquee__item"
+                  {% if g == 1 and r == 1 %}{{ block.shopify_attributes }}{% else %}aria-hidden="true"{% endif %}
+                >
+                  {%- case block.settings.icon -%}
+                    {%- when 'sparkle' -%}
+                      <svg class="pm2-marquee__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 2.5l1.9 5.6 5.6 1.9-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.9zM18.5 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z" fill="currentColor"/></svg>
+                    {%- when 'truck' -%}
+                      <svg class="pm2-marquee__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="7" cy="17.5" r="1.7" fill="currentColor"/><circle cx="17" cy="17.5" r="1.7" fill="currentColor"/></svg>
+                    {%- when 'wifi' -%}
+                      <svg class="pm2-marquee__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M2.5 9a14 14 0 0 1 19 0M5.5 12.5a9.5 9.5 0 0 1 13 0M8.7 16a5 5 0 0 1 6.6 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="19.3" r="1.4" fill="currentColor"/></svg>
+                    {%- when 'camera' -%}
+                      <svg class="pm2-marquee__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M3 8a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="currentColor" stroke-width="1.8"/><path d="M16 10.5l5-3v9l-5-3" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+                    {%- when 'drop' -%}
+                      <svg class="pm2-marquee__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 3s6 6.4 6 11a6 6 0 0 1-12 0c0-4.6 6-11 6-11z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+                    {%- when 'paw' -%}
+                      <svg class="pm2-marquee__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><ellipse cx="6" cy="10" rx="2" ry="2.6"/><ellipse cx="10" cy="6.2" rx="2" ry="2.6"/><ellipse cx="14" cy="6.2" rx="2" ry="2.6"/><ellipse cx="18" cy="10" rx="2" ry="2.6"/><path d="M12 11.5c2.8 0 5.5 3.6 5.5 6 0 1.8-1.5 2.5-3 2.5-1 0-1.6-.5-2.5-.5s-1.5.5-2.5.5c-1.5 0-3-.7-3-2.5 0-2.4 2.7-6 5.5-6z"/></svg>
+                  {%- endcase -%}
+                  <span class="pm2-marquee__text">{{ block.settings.text | escape }}</span>
+                  {%- if s.show_divider -%}<span class="pm2-marquee__sep" aria-hidden="true"></span>{%- endif -%}
+                </li>
+              {%- endfor -%}
+            {%- endfor -%}
+          </ul>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+<style>
+  .pm2-marquee {
+    --pm2-mq-gap: 40px;
+    --pm2-mq-font: 15px;
+    --pm2-mq-pad: 18px;
+    --pm2-mq-icon: 18px;
+    position: relative;
+    overflow: hidden;
+    padding: var(--pm2-mq-pad) 0;
+    color: rgb(var(--color-foreground));
+  }
+  .pm2-marquee--small { --pm2-mq-gap: 28px; --pm2-mq-font: 13px; --pm2-mq-pad: 12px; --pm2-mq-icon: 15px; }
+  .pm2-marquee--large { --pm2-mq-gap: 56px; --pm2-mq-font: clamp(22px, 3vw, 34px); --pm2-mq-pad: clamp(22px, 3vw, 34px); --pm2-mq-icon: clamp(20px, 2.4vw, 28px); }
+  .pm2-marquee--borders {
+    border-top: 1px solid rgba(var(--color-foreground), .1);
+    border-bottom: 1px solid rgba(var(--color-foreground), .1);
+  }
+  .pm2-marquee__viewport {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  .pm2-marquee__track {
+    display: flex;
+    width: max-content;
+    animation: pm2-marquee-scroll var(--pm2-mq-duration, 36s) linear infinite;
+    will-change: transform;
+  }
+  .pm2-marquee--reverse .pm2-marquee__track { animation-direction: reverse; }
+  .pm2-marquee:hover .pm2-marquee__track,
+  .pm2-marquee:focus-within .pm2-marquee__track { animation-play-state: paused; }
+  .pm2-marquee__group {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: var(--pm2-mq-gap);
+    margin: 0;
+    padding: 0 calc(var(--pm2-mq-gap) / 2);
+    list-style: none;
+  }
+  .pm2-marquee__item {
+    display: inline-flex;
+    align-items: center;
+    gap: calc(var(--pm2-mq-gap) / 2.6);
+    white-space: nowrap;
+    font-size: var(--pm2-mq-font);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  .pm2-marquee--small .pm2-marquee__item { font-weight: 500; letter-spacing: .02em; }
+  .pm2-marquee--large .pm2-marquee__item { font-weight: 700; letter-spacing: -0.03em; }
+  .pm2-marquee__icon {
+    flex: none;
+    width: var(--pm2-mq-icon);
+    height: var(--pm2-mq-icon);
+    color: rgb(var(--color-button));
+  }
+  .pm2-marquee__sep {
+    width: 5px; height: 5px;
+    margin-left: calc(var(--pm2-mq-gap) / 2);
+    border-radius: 50%;
+    background: rgba(var(--color-foreground), .35);
+  }
+  .pm2-marquee--large .pm2-marquee__sep { width: 8px; height: 8px; }
+
+  @keyframes pm2-marquee-scroll {
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(-50%, 0, 0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pm2-marquee__viewport { -webkit-mask-image: none; mask-image: none; }
+    .pm2-marquee__track { animation: none; width: auto; justify-content: center; }
+    .pm2-marquee__group { flex-wrap: wrap; justify-content: center; row-gap: 10px; padding: 0 16px; flex: 1 1 auto; }
+    .pm2-marquee__group[aria-hidden='true'],
+    .pm2-marquee__item[aria-hidden='true'] { display: none; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "PETME2 marquee",
+  "tag": "section",
+  "class": "pm2-marquee-section",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-4" },
+    {
+      "type": "range",
+      "id": "duration",
+      "label": "Speed (seconds per loop, lower = faster)",
+      "min": 10,
+      "max": 90,
+      "step": 2,
+      "unit": "s",
+      "default": 36
+    },
+    {
+      "type": "select",
+      "id": "size",
+      "label": "Size",
+      "options": [
+        { "value": "small", "label": "Small" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "large", "label": "Large" }
+      ],
+      "default": "medium"
+    },
+    { "type": "checkbox", "id": "show_divider", "label": "Show dot dividers", "default": true },
+    { "type": "checkbox", "id": "show_borders", "label": "Show top/bottom hairlines", "default": false },
+    { "type": "checkbox", "id": "reverse", "label": "Scroll left to right", "default": false }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "Free U.S. shipping on orders $50+" },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "sparkle", "label": "Sparkle" },
+            { "value": "truck", "label": "Truck" },
+            { "value": "wifi", "label": "WiFi" },
+            { "value": "camera", "label": "Camera" },
+            { "value": "drop", "label": "Water drop" },
+            { "value": "paw", "label": "Paw" }
+          ],
+          "default": "sparkle"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 10,
+  "presets": [
+    {
+      "name": "PETME2 marquee",
+      "blocks": [
+        { "type": "item", "settings": { "text": "Free U.S. shipping on orders $50+", "icon": "truck" } },
+        { "type": "item", "settings": { "text": "1080P HD live view", "icon": "camera" } },
+        { "type": "item", "settings": { "text": "WiFi app control", "icon": "wifi" } },
+        { "type": "item", "settings": { "text": "Quiet fountain pumps", "icon": "drop" } },
+        { "type": "item", "settings": { "text": "For cats & small dogs", "icon": "paw" } },
+        { "type": "item", "settings": { "text": "Stainless steel bowls", "icon": "sparkle" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
