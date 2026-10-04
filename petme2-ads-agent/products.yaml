@@ -88,12 +88,12 @@ products:
     price: 19.99
     product_cost: 7
     shipping_per_unit: 0.72
-    amazon_fees: 9.76   # referral 3.0 + FBA 6.76
-    profit_before_ads: 2.51
-    break_even_acos: 0.126
+    amazon_fees: 9.9   # referral 3.0 + FBA 6.9 (real fee, most orders)
+    profit_before_ads: 2.37
+    break_even_acos: 0.119
     goal: profit
-    target_acos: 0.1   # 80% of break-even (honeymoon: may run up to break-even)
-    max_profitable_cpc_at_10pct_cvr: 0.25
+    target_acos: 0.095   # 80% of break-even (honeymoon: may run up to break-even)
+    max_profitable_cpc_at_10pct_cvr: 0.24
     status: approved
   - asin: B0GHKRYV6W
     sku: JE-LQEW-9EHL
@@ -101,10 +101,10 @@ products:
     price: 19.99
     product_cost: 7
     shipping_per_unit: 0.72
-    amazon_fees: 9.76   # referral 3.0 + FBA 6.76
-    profit_before_ads: 2.51
-    break_even_acos: 0.126
+    amazon_fees: 9.31   # referral 3.0 + FBA 6.31 (real fee, most orders)
+    profit_before_ads: 2.96
+    break_even_acos: 0.148
     goal: profit
-    target_acos: 0.1   # 80% of break-even (honeymoon: may run up to break-even)
-    max_profitable_cpc_at_10pct_cvr: 0.25
+    target_acos: 0.118   # 80% of break-even (honeymoon: may run up to break-even)
+    max_profitable_cpc_at_10pct_cvr: 0.3
     status: approved
