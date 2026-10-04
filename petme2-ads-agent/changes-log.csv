@@ -590,3 +590,4 @@ date,item,before,after,reason,agent
 2026-10-04,Shopify pages about-us/faq/contact,"empty body, no SEO title/description; faq templateSuffix=faq (lorem ipsum template)","new body + SEO title/description; faq templateSuffix=default so real Q&As show","owner: fill all pages (backup research/pages-backup-2026-10-04.json)",content-writer
 2026-10-04,Shopify pages shipping/returns/how-to-choose,none,"created + published with SEO title/description","owner: fill all pages",content-writer
 2026-10-04,Shopify menu information,"FAQ, Privacy Policy, Term of Service, Accessibility","added Shipping, Returns & 30-Day Guarantee, How to Choose after FAQ; kept all old items","link new pages in footer",content-writer
+2026-10-04,Shopify product 2-in-1-smart-feeder-white media,"8 photos, no video","added owner video (2 cats eating) cropped to square 1080x1080 H.264 as media #2 (Video/46335394054356)","owner asked to add video and fit it to the square gallery",manager
