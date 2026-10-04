@@ -89,3 +89,31 @@ if "description" in main["blocks"]:
         '.pm2-details[open] summary::after{content:"\\2013"}.pm2-details__body{padding:0 0 18px;font-size:15px;line-height:1.6}</style>')}}
     save("templates/product.json", P)
 print("product main blocks:", P["sections"]["main"]["block_order"])
+
+# Dual Bowl feeder comes in 2 colors, sold as 2 linked products (black / white).
+# Show a "Color" swatch picker under the price on both pages; the other color links to its page.
+P = load("templates/product.json")
+main = P["sections"]["main"]
+main["blocks"]["colors"] = {"type": "custom_liquid", "settings": {"custom_liquid": (
+    "{%- assign pm2_black = '2-in-1-smart-feeder' -%}{%- assign pm2_white = '2-in-1-smart-feeder-white' -%}"
+    "{%- if product.handle == pm2_black or product.handle == pm2_white -%}"
+    "<div class=\"pm2-colors\" role=\"group\" aria-label=\"Color\">"
+    "<p class=\"pm2-colors__label\">Color: <strong>{% if product.handle == pm2_black %}Black{% else %}White{% endif %}</strong></p>"
+    "<div class=\"pm2-colors__row\">"
+    "<a href=\"{{ routes.root_url | append: 'products/' | replace: '//', '/' }}{{ pm2_black }}\" class=\"pm2-colors__swatch{% if product.handle == pm2_black %} is-active{% endif %}\" "
+    "{% if product.handle == pm2_black %}aria-current=\"true\"{% endif %} aria-label=\"Black\"><span style=\"background:#1d1f24\"></span>Black</a>"
+    "<a href=\"{{ routes.root_url | append: 'products/' | replace: '//', '/' }}{{ pm2_white }}\" class=\"pm2-colors__swatch{% if product.handle == pm2_white %} is-active{% endif %}\" "
+    "{% if product.handle == pm2_white %}aria-current=\"true\"{% endif %} aria-label=\"White\"><span style=\"background:#f4f4f2\"></span>White</a>"
+    "</div></div>"
+    "<style>.pm2-colors__label{margin:0 0 10px;font-size:15px}"
+    ".pm2-colors__row{display:flex;gap:10px;flex-wrap:wrap}"
+    ".pm2-colors__swatch{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:6px 18px 6px 8px;border-radius:999px;"
+    "border:1.5px solid rgba(var(--color-foreground),.18);text-decoration:none;color:rgb(var(--color-foreground));font-weight:600}"
+    ".pm2-colors__swatch span{width:30px;height:30px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.15)}"
+    ".pm2-colors__swatch.is-active{border-color:rgb(var(--color-button));box-shadow:0 0 0 1px rgb(var(--color-button))}"
+    ".pm2-colors__swatch:hover{border-color:rgb(var(--color-foreground))}</style>"
+    "{%- endif -%}")}}
+if "colors" not in main["block_order"]:
+    main["block_order"].insert(main["block_order"].index("price") + 1, "colors")
+save("templates/product.json", P)
+print("main blocks:", main["block_order"])
