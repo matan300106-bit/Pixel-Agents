@@ -161,12 +161,74 @@
         "show_thumbnail": true,
         "hide_on_desktop": false
       }
+    },
+    "trust_badges": {
+      "type": "pm2-trust-badges",
+      "blocks": {
+        "b1": {
+          "type": "badge",
+          "settings": {
+            "icon": "truck",
+            "text": "Free U.S. shipping"
+          }
+        },
+        "b2": {
+          "type": "badge",
+          "settings": {
+            "icon": "money_back",
+            "text": "30-day money-back guarantee"
+          }
+        },
+        "b3": {
+          "type": "badge",
+          "settings": {
+            "icon": "lock",
+            "text": "Secure checkout"
+          }
+        },
+        "b4": {
+          "type": "badge",
+          "settings": {
+            "icon": "box",
+            "text": "Fulfilled by Amazon"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ],
+      "settings": {
+        "product_position": "under_buy_buttons",
+        "style": "card",
+        "show_savings": true,
+        "show_low_stock": true,
+        "low_stock_threshold": 5,
+        "delivery_note": "Ships fast from Amazon's U.S. network",
+        "color_scheme": "scheme-3",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "guarantee": {
+      "type": "pm2-guarantee",
+      "settings": {
+        "style": "card",
+        "icon": "shield",
+        "color_scheme": "scheme-4",
+        "padding_top": 24,
+        "padding_bottom": 24
+      }
     }
   },
   "order": [
     "main",
+    "trust_badges",
     "specs",
     "extras",
+    "guarantee",
     "reviews",
     "related-products",
     "sticky_atc"

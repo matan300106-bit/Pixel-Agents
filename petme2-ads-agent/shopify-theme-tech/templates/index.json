@@ -513,6 +513,16 @@
         "b2",
         "b3"
       ]
+    },
+    "guarantee": {
+      "type": "pm2-guarantee",
+      "settings": {
+        "style": "card",
+        "icon": "shield",
+        "color_scheme": "scheme-4",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
     }
   },
   "order": [
@@ -523,6 +533,7 @@
     "bento",
     "cmp_feeders",
     "cmp_fountains",
+    "guarantee",
     "faq",
     "faq_schema",
     "cta"

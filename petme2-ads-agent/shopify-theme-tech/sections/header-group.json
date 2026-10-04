@@ -79,11 +79,27 @@
         "enable_selection": true,
         "enable_smooth_scroll": true
       }
+    },
+    "pm2-popup": {
+      "type": "pm2-popup",
+      "settings": {
+        "enabled": true,
+        "code": "WELCOME10",
+        "delay_seconds": 12,
+        "scroll_percent": 40,
+        "desktop_delay_seconds": 20,
+        "cap_days": 14,
+        "show_on_mobile": true,
+        "auto_apply": true,
+        "show_code_without_email": false,
+        "color_scheme": "scheme-3"
+      }
     }
   },
   "order": [
     "announcement-bar",
     "header",
-    "pm2-global-style"
+    "pm2-global-style",
+    "pm2-popup"
   ]
 }

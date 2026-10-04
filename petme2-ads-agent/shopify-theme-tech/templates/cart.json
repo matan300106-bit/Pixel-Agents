@@ -87,11 +87,60 @@
         "padding_top": 56,
         "padding_bottom": 72
       }
+    },
+    "trust_badges": {
+      "type": "pm2-trust-badges",
+      "blocks": {
+        "b1": {
+          "type": "badge",
+          "settings": {
+            "icon": "truck",
+            "text": "Free U.S. shipping"
+          }
+        },
+        "b2": {
+          "type": "badge",
+          "settings": {
+            "icon": "money_back",
+            "text": "30-day money-back guarantee"
+          }
+        },
+        "b3": {
+          "type": "badge",
+          "settings": {
+            "icon": "lock",
+            "text": "Secure checkout"
+          }
+        },
+        "b4": {
+          "type": "badge",
+          "settings": {
+            "icon": "box",
+            "text": "Fulfilled by Amazon"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ],
+      "settings": {
+        "style": "plain",
+        "show_savings": false,
+        "show_low_stock": false,
+        "delivery_note": "",
+        "color_scheme": "scheme-3",
+        "padding_top": 8,
+        "padding_bottom": 24
+      }
     }
   },
   "order": [
     "cart-items",
     "cart-footer",
+    "trust_badges",
     "shipping",
     "upsell"
   ]
