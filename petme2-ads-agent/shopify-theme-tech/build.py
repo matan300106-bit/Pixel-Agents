@@ -117,7 +117,6 @@ S["hero"] = section("image-banner",
      "image_behavior": "none", "desktop_content_position": "middle-left", "desktop_content_alignment": "left",
      "show_text_box": False, "color_scheme": "scheme-1", "stack_images_on_mobile": False,
      "mobile_content_alignment": "left", "show_text_below": False},
-    ("cap", "text", {"text": "SMART FEEDERS · WATER FOUNTAINS", "text_style": "caption-with-letter-spacing"}),
     ("h", "heading", {"heading": "Smart feeding. Fresh water. Zero guesswork.", "heading_size": "h0"}),
     ("t", "text", {"text": "App-controlled feeders and quiet fountains for cats and small dogs.", "text_style": "subtitle"}),
     ("b", "buttons", {"button_label_1": "Shop feeders", "button_link_1": "shopify://collections/feeders", "button_style_secondary_1": False,
@@ -155,6 +154,11 @@ S["app"] = section("image-with-text",
     ("h", "heading", {"heading": "Meals on schedule. From anywhere.", "heading_size": "h1"}),
     ("t", "text", {"text": "<p>Set feeding times and portions from your phone. The camera model adds 1080P live view and 2-way audio, so you can see and talk to your pet when you're away.</p>", "text_style": "body"}),
     ("b", "button", {"button_label": "Shop feeders", "button_link": "shopify://collections/feeders", "button_style_secondary": False}))
+S["video"] = section("video",
+    {"heading": "See PETME2 in action", "heading_size": "h1", "enable_video_looping": True,
+     "video": "shopify://files/videos/44d805d5a3a14767ba6d3e4964b89523.HD-1080p-7.2Mbps-54726534.mp4",
+     "video_url": "", "cover_image": IMG + "Rectangle_34626129.jpg", "description": "PETME2 product video",
+     "full_width": True, "color_scheme": "scheme-1", "padding_top": 72, "padding_bottom": 0})
 S["cmp_feeders"] = section("pm2-compare",
     {"color_scheme": "scheme-3", "anchor": "compare-feeders", "eyebrow": "Compare feeders",
      "heading": "Which feeder is right for you?",
@@ -192,6 +196,12 @@ S["cmp_fountains"] = section("pm2-compare",
     ("w2", "model", model("water-fountain-4", "Steel Tray 2.2L", ["2.2L", "Plastic + steel tray", "4-layer filter", "Window + low-water light", "A steel drinking surface"])),
     ("w3", "model", model("water-fountain-2", "Transparent 2.2L", ["2.2L", "Clear plastic", "Filter cartridge", "See-through body", "Seeing water at a glance"])),
     ("w4", "model", model("water-fountain-simple", "Classic 2L", ["2L", "Plastic", "—", "Window + low-water light", "Small spaces"], "Best seller")))
+S["life"] = section("collage",
+    {"heading": "Life with PETME2", "heading_size": "h1", "desktop_layout": "left", "mobile_layout": "collage",
+     "card_styles": "none", "color_scheme": "scheme-3", "padding_top": 72, "padding_bottom": 72},
+    ("i1", "image", {"image": IMG + "Two_pets_One_easier_feeding_routine.jpg"}),
+    ("i2", "image", {"image": IMG + "Rectangle_67_1.jpg"}),
+    ("i3", "image", {"image": IMG + "image_830.jpg"}))
 S["faq"] = section("collapsible-content",
     {"caption": "FAQ", "heading": "Questions, answered", "heading_size": "h1", "heading_alignment": "center",
      "layout": "none", "container_color_scheme": "scheme-3", "color_scheme": "scheme-5",
@@ -214,6 +224,8 @@ old = json.loads((HERE.parent / "shopify-theme" / "product.json").read_text())
 extras = old["sections"]["pm2_extras"]["settings"]
 extras["color_scheme"] = "scheme-5"
 reviews_block = old["sections"]["1786715348a590fb22"]["blocks"]
+for _b in reviews_block.values():
+    _b["settings"].update(air_blockreviews_singleStarColor=BLUE, air_blockreviews_primaryColor=NAVY)
 P = {
     "main": section("main-product",
         {"enable_sticky_info": True, "color_scheme": "scheme-3", "media_size": "large", "constrain_to_viewport": True,

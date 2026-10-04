@@ -17,13 +17,6 @@
         "show_text_below": false
       },
       "blocks": {
-        "cap": {
-          "type": "text",
-          "settings": {
-            "text": "SMART FEEDERS · WATER FOUNTAINS",
-            "text_style": "caption-with-letter-spacing"
-          }
-        },
         "h": {
           "type": "heading",
           "settings": {
@@ -51,7 +44,6 @@
         }
       },
       "block_order": [
-        "cap",
         "h",
         "t",
         "b"
@@ -227,6 +219,22 @@
         "t",
         "b"
       ]
+    },
+    "video": {
+      "type": "video",
+      "settings": {
+        "heading": "See PETME2 in action",
+        "heading_size": "h1",
+        "enable_video_looping": true,
+        "video": "shopify://files/videos/44d805d5a3a14767ba6d3e4964b89523.HD-1080p-7.2Mbps-54726534.mp4",
+        "video_url": "",
+        "cover_image": "shopify://shop_images/Rectangle_34626129.jpg",
+        "description": "PETME2 product video",
+        "full_width": true,
+        "color_scheme": "scheme-1",
+        "padding_top": 72,
+        "padding_bottom": 0
+      }
     },
     "cmp_feeders": {
       "type": "pm2-compare",
@@ -506,6 +514,44 @@
         "w4"
       ]
     },
+    "life": {
+      "type": "collage",
+      "settings": {
+        "heading": "Life with PETME2",
+        "heading_size": "h1",
+        "desktop_layout": "left",
+        "mobile_layout": "collage",
+        "card_styles": "none",
+        "color_scheme": "scheme-3",
+        "padding_top": 72,
+        "padding_bottom": 72
+      },
+      "blocks": {
+        "i1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Two_pets_One_easier_feeding_routine.jpg"
+          }
+        },
+        "i2": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_67_1.jpg"
+          }
+        },
+        "i3": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/image_830.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "i1",
+        "i2",
+        "i3"
+      ]
+    },
     "faq": {
       "type": "collapsible-content",
       "settings": {
@@ -612,11 +658,13 @@
     "categories",
     "feeders",
     "app",
+    "video",
     "cmp_feeders",
     "two_pets",
     "fountains",
     "water",
     "cmp_fountains",
+    "life",
     "faq",
     "newsletter"
   ]
