@@ -48,12 +48,13 @@ products:
     price: 45.99
     product_cost: 22
     shipping_per_unit: 2.26
-    amazon_fees: 16.4   # referral 6.9 + FBA 9.5
-    profit_before_ads: 5.33
-    break_even_acos: 0.116
+    amazon_fees: 19.15   # referral 6.9 + FBA 12.25 (real fee on 30 of 42 recent orders)
+    profit_before_ads: 2.58
+    break_even_acos: 0.056
     goal: profit
-    target_acos: 0.093   # 80% of break-even (honeymoon: may run up to break-even)
-    max_profitable_cpc_at_10pct_cvr: 0.53
+    target_acos: 0.045
+    max_profitable_cpc_at_10pct_cvr: 0.26
+    note: "Sold at $65.99 / $54.99 before; at $54.99 profit is about $10.23"
     status: approved
   - asin: B0DR7FCLZR
     sku: QY-HHE8-0H1B
