@@ -18,3 +18,5 @@ Upload file ready: `outbox/2026-10-04/bulk-upload.xlsx` (48 rows). UPLOADED by o
 6. **Live campaign fixes** (Part C of `ads-draft-2026-10-04.md`): higher honeymoon bids, new keywords, negatives. Needs your bulk file download first. →
 
 Upload file for 3+4+5: `outbox/2026-10-04/bulk-upload-2-new-campaigns.xlsx` (83 rows). UPLOADED by owner 2026-10-04: 77 OK, 6 failed (out-of-stock product ads, expected). Campaigns created PAUSED. Full draft: `ads-draft-2026-10-04.md`.
+
+7. **New campaigns: Keyword Test | Phrase ($10/day, 119 keywords) + Discovery | Auto ($5/day)** (PAUSED). Upload **2026-10-05**. File: `outbox/2026-10-05/bulk-upload-3-test-campaigns.xlsx` (160 rows). Draft: `test-campaigns-draft.md`. →
