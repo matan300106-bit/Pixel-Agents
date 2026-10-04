@@ -5,14 +5,110 @@
   .card-wrapper, .card--card, .card__inner, .card__media .media, .accordion summary,
   .rich-text__caption, .image-with-text__text--caption) and avoids layout properties on Dawn elements
   (no display/position/grid changes), so nothing can break the theme's own layout.
-  Brand colours: blue #3366E6 (51,102,230), ink #1B2540 (27,37,64).
+  Built to sell: ONE action colour (setting, default PETME2 blue #2F5FE0) is reserved for buy buttons;
+  eyebrows go quiet ink, trust checkmarks go green. Ink #1B2540 (27,37,64).
 {%- endcomment -%}
 {%- liquid
   assign s = section.settings
+  assign act = s.action_color | default: '#2F5FE0'
+  assign act_label = s.action_label | default: '#FFFFFF'
+  assign chk = s.check_color | default: '#1E7B4F'
 -%}
 <style>
   /* PETME2 global style */
   .pm2-global-style-section { display: none; }
+  :root {
+    --pm2-action: {{ act | color_extract: 'red' }}, {{ act | color_extract: 'green' }}, {{ act | color_extract: 'blue' }};
+    --pm2-action-label: {{ act_label | color_extract: 'red' }}, {{ act_label | color_extract: 'green' }}, {{ act_label | color_extract: 'blue' }};
+    --pm2-check: {{ chk | color_extract: 'red' }}, {{ chk | color_extract: 'green' }}, {{ chk | color_extract: 'blue' }};
+  }
+
+  {%- if s.enable_sell %}
+  /* ---- Built to sell: every buy button is filled with the one action colour ---- */
+  /* Dawn turns Add to cart into an outline button when dynamic checkout is on; make it the hero again. */
+  .product-form__submit.button,
+  .quick-add__submit.button,
+  .pm2-card__btn.button:not([disabled]),
+  .cart__checkout-button.button,
+  #CartDrawer-Checkout.button {
+    --color-button: var(--pm2-action);
+    --color-button-text: var(--pm2-action-label);
+    --alpha-button-background: 1;
+    --border-opacity: 0;
+  }
+  .product-form__submit.button {
+    min-height: 5.6rem;
+    font-size: 1.7rem;
+    font-weight: 800;
+    box-shadow: 0 12px 26px -14px rgba(var(--pm2-action), .75);
+  }
+  .product-form__submit.button[disabled] { box-shadow: none; }
+  /* Unbranded "Buy it now" stays a calm outline so Add to cart (or Shop Pay) leads */
+  .shopify-payment-button__button--unbranded {
+    background-color: transparent !important;
+    color: rgb(var(--color-foreground)) !important;
+    box-shadow: inset 0 0 0 1.5px rgba(var(--color-foreground), .35) !important;
+    border-radius: 999px !important;
+    min-height: 5.2rem;
+    font-weight: 700 !important;
+  }
+  .shopify-payment-button__button--unbranded:hover:not([disabled]) {
+    box-shadow: inset 0 0 0 2px rgb(var(--color-foreground)) !important;
+  }
+  .product-form__buttons { max-width: 48rem; }
+  /* Sale badge + prices: bold sale price, quiet strike-through, action-colour pill */
+  .badge {
+    font-weight: 800;
+    letter-spacing: .02em;
+    padding: .5rem 1.2rem;
+  }
+  .price--on-sale .price-item--sale {
+    font-weight: 800;
+    color: rgb(var(--color-foreground));
+  }
+  .price--on-sale .price-item--regular {
+    color: rgba(var(--color-foreground), .55);
+    text-decoration-thickness: 1.5px;
+  }
+  .product .price--large .price-item--sale,
+  .product .price--large .price-item--regular:only-child { font-size: 2.6rem; }
+  .product .price--large .price-item--regular { font-size: 1.8rem; }
+  /* Product page trust line under the price ("Free U.S. shipping · 30-day money-back guarantee") */
+  .product__info-container .product__text.subtitle {
+    display: inline-flex;
+    align-items: center;
+    gap: .8rem;
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: rgb(var(--pm2-check));
+    margin-top: .4rem;
+  }
+  .product__info-container .product__text.subtitle::before {
+    content: '';
+    flex: none;
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 50%;
+    background: rgb(var(--pm2-check)) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12.5l4 4 8-9'/%3E%3C/svg%3E") center / 1.2rem no-repeat;
+  }
+  .product__title h1 { font-size: clamp(2.6rem, 6vw, 3.6rem); }
+  /* Trust checkmarks go green, so blue only means "tap to buy" */
+  .pm2-hero__chip svg,
+  .pm2-cta__chip svg { color: rgb(var(--pm2-check)); }
+  .pm2-hero__chip { font-weight: 700; }
+  /* Quiet eyebrows (were blue): they label sections without competing with buttons */
+  .pm2-tabs__eyebrow,
+  .pm2-cmp__eyebrow,
+  .pm2-bento__eyebrow,
+  .pm2-quiz__eyebrow,
+  .pm2-faq__eyebrow,
+  .pm2-cta__eyebrow,
+  .pm2-px__eyebrow {
+    color: rgba(var(--color-foreground), .62) !important;
+  }
+  .pm2-bento__dot,
+  .pm2-cta__dot { background: rgb(var(--pm2-check)) !important; box-shadow: 0 0 0 4px rgba(var(--pm2-check), .16) !important; }
+  {%- endif %}
 
   {%- if s.enable_typography %}
   /* Readable, friendly type: 16px body on phones, soft rounded headings */
@@ -157,42 +253,35 @@
   {%- endif %}
 
   {%- if s.enable_eyebrow %}
-  /* Section eyebrows (Dawn caption blocks): friendly blue, sentence-like spacing */
+  /* Section eyebrows (Dawn caption blocks): quiet ink, sentence-like spacing (blue is kept for buttons) */
   .rich-text__caption.caption-with-letter-spacing,
-  .image-with-text__text--caption.caption-with-letter-spacing {
+  .image-with-text__text--caption.caption-with-letter-spacing,
+  .collapsible-content .caption-with-letter-spacing {
     font-weight: 700;
     letter-spacing: .08em;
-    color: rgb(51, 102, 230);
-  }
-  .color-scheme-1 .rich-text__caption.caption-with-letter-spacing,
-  .color-scheme-1 .image-with-text__text--caption.caption-with-letter-spacing {
-    color: rgb(169, 193, 255);
-  }
-  .color-scheme-2 .rich-text__caption.caption-with-letter-spacing,
-  .color-scheme-2 .image-with-text__text--caption.caption-with-letter-spacing {
-    color: rgba(var(--color-foreground), .9);
+    color: rgba(var(--color-foreground), .62);
   }
   {%- endif %}
 
   {%- if s.enable_focus %}
   /* Clear, on-brand focus rings */
   html:root {
-    --focused-base-outline: 0.2rem solid rgb(51, 102, 230);
+    --focused-base-outline: 0.2rem solid rgb(var(--pm2-action));
     --focused-base-outline-offset: 0.3rem;
-    --focused-base-box-shadow: 0 0 0 0.6rem rgba(51, 102, 230, .2);
+    --focused-base-box-shadow: 0 0 0 0.6rem rgba(var(--pm2-action), .2);
   }
   .button:focus-visible,
   .shopify-payment-button__button--unbranded:focus-visible {
-    box-shadow: 0 0 0 0.3rem rgb(var(--color-background)), 0 0 0 0.55rem rgb(51, 102, 230);
+    box-shadow: 0 0 0 0.3rem rgb(var(--color-background)), 0 0 0 0.55rem rgb(var(--pm2-action));
   }
   {%- endif %}
 
   {%- if s.enable_selection %}
   ::selection {
-    background-color: rgba(51, 102, 230, .22);
+    background-color: rgba(var(--pm2-action), .22);
   }
   html {
-    -webkit-tap-highlight-color: rgba(51, 102, 230, .12);
+    -webkit-tap-highlight-color: rgba(var(--pm2-action), .12);
   }
   {%- endif %}
 
@@ -253,6 +342,11 @@
       "type": "paragraph",
       "content": "Adds the PETME2 friendly, minimal look to the whole store. Nothing visible is rendered by this section."
     },
+    { "type": "header", "content": "Built to sell" },
+    { "type": "checkbox", "id": "enable_sell", "label": "Fill every buy button with the action color, bold sale prices, green trust checks, quiet eyebrows", "default": true },
+    { "type": "color", "id": "action_color", "label": "Action color (Add to cart, checkout)", "default": "#2F5FE0" },
+    { "type": "color", "id": "action_label", "label": "Action button label", "default": "#FFFFFF", "info": "Keep label contrast at 4.5:1 or more." },
+    { "type": "color", "id": "check_color", "label": "Trust checkmark color", "default": "#1E7B4F" },
     { "type": "header", "content": "Header" },
     { "type": "checkbox", "id": "enable_glass_header", "label": "Frosted sticky header, round icon hover, softer announcement bar", "default": true },
     {
@@ -282,10 +376,10 @@
     { "type": "checkbox", "id": "enable_image_zoom", "label": "Gentle card image zoom on hover", "default": true },
     { "type": "header", "content": "Typography" },
     { "type": "checkbox", "id": "enable_typography", "label": "16px body on phones, friendly heading spacing", "default": true },
-    { "type": "checkbox", "id": "enable_eyebrow", "label": "Blue caption (eyebrow) style", "default": true },
+    { "type": "checkbox", "id": "enable_eyebrow", "label": "Quiet caption (eyebrow) style", "default": true },
     { "type": "header", "content": "Details" },
-    { "type": "checkbox", "id": "enable_focus", "label": "Blue focus rings", "default": true },
-    { "type": "checkbox", "id": "enable_selection", "label": "Blue text selection and tap highlight", "default": true },
+    { "type": "checkbox", "id": "enable_focus", "label": "Action-color focus rings", "default": true },
+    { "type": "checkbox", "id": "enable_selection", "label": "Action-color text selection and tap highlight", "default": true },
     { "type": "checkbox", "id": "enable_smooth_scroll", "label": "Smooth scroll for #anchor links", "default": true }
   ],
   "presets": [

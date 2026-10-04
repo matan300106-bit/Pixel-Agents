@@ -5,7 +5,7 @@
     "announcement-bar": {
       "type": "announcement-bar",
       "settings": {
-        "color_scheme": "scheme-4",
+        "color_scheme": "scheme-5",
         "show_line_separator": false,
         "show_social": false,
         "auto_rotate": true,
@@ -24,14 +24,22 @@
         "a2": {
           "type": "announcement",
           "settings": {
-            "text": "Not sure which feeder? Compare them →",
-            "link": "/#compare-feeders"
+            "text": "30-day money-back guarantee",
+            "link": ""
+          }
+        },
+        "a3": {
+          "type": "announcement",
+          "settings": {
+            "text": "10% off your first order when you join our emails",
+            "link": ""
           }
         }
       },
       "block_order": [
         "a1",
-        "a2"
+        "a2",
+        "a3"
       ]
     },
     "header": {
@@ -55,6 +63,10 @@
     "pm2-global-style": {
       "type": "pm2-global-style",
       "settings": {
+        "action_color": "#2F5FE0",
+        "action_label": "#FFFFFF",
+        "check_color": "#1E7B4F",
+        "enable_sell": true,
         "enable_glass_header": true,
         "glass_tint": "light",
         "glass_opacity": 80,

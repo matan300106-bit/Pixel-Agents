@@ -26,7 +26,7 @@
         "heading_alignment": "center",
         "layout": "row",
         "container_color_scheme": "scheme-3",
-        "color_scheme": "scheme-5",
+        "color_scheme": "scheme-4",
         "open_first_collapsible_row": true,
         "image_ratio": "adapt",
         "desktop_layout": "image_second",
@@ -37,12 +37,28 @@
         "row_1": {
           "type": "collapsible_row",
           "settings": {
+            "heading": "What if my pet doesn't like it?",
+            "icon": "heart",
+            "row_content": "<p>No worries. Every order comes with a 30-day money-back guarantee. If it's not a fit, contact us within 30 days and we'll give you your money back.</p>"
+          }
+        },
+        "row_2": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How fast is shipping?",
+            "icon": "truck",
+            "row_content": "<p>Shipping is free on every U.S. order. Orders are fulfilled by Amazon.</p>"
+          }
+        },
+        "row_3": {
+          "type": "collapsible_row",
+          "settings": {
             "heading": "Do the feeders work with wet food?",
             "icon": "serving_dish",
             "row_content": "<p>No. PETME2 feeders are made for dry food (kibble).</p>"
           }
         },
-        "row_2": {
+        "row_4": {
           "type": "collapsible_row",
           "settings": {
             "heading": "Do I need WiFi?",
@@ -50,15 +66,7 @@
             "row_content": "<p>WiFi is needed for the app: schedules, portions and alerts.</p>"
           }
         },
-        "row_3": {
-          "type": "collapsible_row",
-          "settings": {
-            "heading": "Do you offer free shipping?",
-            "icon": "truck",
-            "row_content": "<p>Yes. Shipping is free on every U.S. order.</p>"
-          }
-        },
-        "row_4": {
+        "row_5": {
           "type": "collapsible_row",
           "settings": {
             "heading": "Is PETME2 on Amazon?",
@@ -71,7 +79,8 @@
         "row_1",
         "row_2",
         "row_3",
-        "row_4"
+        "row_4",
+        "row_5"
       ]
     }
   },

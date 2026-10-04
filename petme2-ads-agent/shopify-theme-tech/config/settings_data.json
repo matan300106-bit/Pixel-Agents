@@ -6,22 +6,22 @@
     "color_schemes": {
       "scheme-1": {
         "settings": {
-          "background": "#1E2846",
+          "background": "#FFFFFF",
           "background_gradient": "",
-          "text": "#F5F7FC",
-          "button": "#FFFFFF",
-          "button_label": "#1E2846",
-          "secondary_button_label": "#F5F7FC",
+          "text": "#1B2540",
+          "button": "#2F5FE0",
+          "button_label": "#FFFFFF",
+          "secondary_button_label": "#1B2540",
           "shadow": "#000000"
         }
       },
       "scheme-2": {
         "settings": {
-          "background": "#3366E6",
+          "background": "#2F5FE0",
           "background_gradient": "",
           "text": "#FFFFFF",
           "button": "#FFFFFF",
-          "button_label": "#3366E6",
+          "button_label": "#2F5FE0",
           "secondary_button_label": "#FFFFFF",
           "shadow": "#000000"
         }
@@ -31,7 +31,7 @@
           "background": "#FFFFFF",
           "background_gradient": "",
           "text": "#1B2540",
-          "button": "#3366E6",
+          "button": "#2F5FE0",
           "button_label": "#FFFFFF",
           "secondary_button_label": "#1B2540",
           "shadow": "#000000"
@@ -39,10 +39,10 @@
       },
       "scheme-4": {
         "settings": {
-          "background": "#EEF4FF",
+          "background": "#F4F6FA",
           "background_gradient": "",
           "text": "#1B2540",
-          "button": "#3366E6",
+          "button": "#2F5FE0",
           "button_label": "#FFFFFF",
           "secondary_button_label": "#1B2540",
           "shadow": "#000000"
@@ -50,10 +50,10 @@
       },
       "scheme-5": {
         "settings": {
-          "background": "#F7F5F2",
+          "background": "#E9F6EF",
           "background_gradient": "",
           "text": "#1B2540",
-          "button": "#3366E6",
+          "button": "#2F5FE0",
           "button_label": "#FFFFFF",
           "secondary_button_label": "#1B2540",
           "shadow": "#000000"
@@ -94,7 +94,7 @@
     "card_style": "card",
     "card_image_padding": 12,
     "card_text_alignment": "left",
-    "card_color_scheme": "scheme-5",
+    "card_color_scheme": "scheme-4",
     "card_border_thickness": 0,
     "card_border_opacity": 0,
     "card_corner_radius": 24,
@@ -105,7 +105,7 @@
     "collection_card_style": "card",
     "collection_card_image_padding": 0,
     "collection_card_text_alignment": "left",
-    "collection_card_color_scheme": "scheme-5",
+    "collection_card_color_scheme": "scheme-4",
     "collection_card_border_thickness": 0,
     "collection_card_border_opacity": 0,
     "collection_card_corner_radius": 24,
@@ -143,9 +143,9 @@
     "badge_position": "top left",
     "badge_corner_radius": 40,
     "sale_badge_color_scheme": "scheme-2",
-    "sold_out_badge_color_scheme": "scheme-5",
+    "sold_out_badge_color_scheme": "scheme-4",
     "brand_headline": "Easy, happy care for cats and small dogs.",
-    "brand_description": "<p>PETME2 makes smart feeders and quiet water fountains. Also sold on Amazon.</p>",
+    "brand_description": "<p>Smart feeders and quiet water fountains. Free U.S. shipping and a 30-day money-back guarantee on every order.</p>",
     "predictive_search_enabled": true,
     "predictive_search_show_vendor": false,
     "predictive_search_show_price": true,

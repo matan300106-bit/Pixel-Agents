@@ -14,17 +14,10 @@
         "image_zoom": "lightbox",
         "hide_variants": false,
         "enable_video_looping": false,
-        "padding_top": 36,
-        "padding_bottom": 56
+        "padding_top": 20,
+        "padding_bottom": 48
       },
       "blocks": {
-        "brand": {
-          "type": "text",
-          "settings": {
-            "text": "PETME2",
-            "text_style": "uppercase"
-          }
-        },
         "title": {
           "type": "title",
           "settings": {}
@@ -36,7 +29,7 @@
         "ship": {
           "type": "text",
           "settings": {
-            "text": "Free U.S. shipping on every order",
+            "text": "Free U.S. shipping · 30-day money-back guarantee",
             "text_style": "subtitle"
           }
         },
@@ -65,20 +58,13 @@
         "shipping": {
           "type": "collapsible_tab",
           "settings": {
-            "heading": "Shipping",
+            "heading": "Free shipping & 30-day guarantee",
             "icon": "truck",
-            "content": "<p>Free U.S. shipping on every order. You get an email with tracking when your order ships.</p>"
-          }
-        },
-        "share": {
-          "type": "share",
-          "settings": {
-            "share_label": "Share"
+            "content": "<p>Free U.S. shipping on every order. Orders are fulfilled by Amazon.</p><p>30-day money-back guarantee: if your pet doesn't like it, contact us within 30 days and we'll give you your money back.</p>"
           }
         }
       },
       "block_order": [
-        "brand",
         "title",
         "price",
         "ship",
@@ -86,8 +72,7 @@
         "quantity_selector",
         "buy_buttons",
         "description",
-        "shipping",
-        "share"
+        "shipping"
       ]
     },
     "specs": {
@@ -112,8 +97,8 @@
         "da3": "WiFi is needed for the app: schedules, portions and alerts. Setup steps are in the manual.",
         "dq4": "How do I clean it?",
         "da4": "Take off the bowls and the food container and wash them. The manual shows which parts are dishwasher safe.",
-        "dq5": "Is PETME2 also on Amazon?",
-        "da5": "Yes. PETME2 feeders are also sold on Amazon, where you can read buyer reviews.",
+        "dq5": "What if my pet doesn't like it?",
+        "da5": "Every order comes with a 30-day money-back guarantee. If it's not a fit, contact us within 30 days and we'll give you your money back.",
         "fq1": "Is the pump loud?",
         "fa1": "No. Every PETME2 fountain uses a quiet pump made for use inside the home.",
         "fq2": "How often should I clean it?",
@@ -122,13 +107,13 @@
         "fa3": "The Stainless 3.2L and the Steel Tray 2.2L have a 4-layer filter. The Transparent 2.2L has a filter cartridge. Details are in the manual.",
         "fq4": "Is it good for dogs too?",
         "fa4": "Yes. PETME2 fountains work for cats and dogs. For bigger dogs, the Stainless 3.2L holds the most water.",
-        "fq5": "Is PETME2 also on Amazon?",
-        "fa5": "Yes. PETME2 fountains are also sold on Amazon, where you can read buyer reviews.",
+        "fq5": "What if my pet doesn't like it?",
+        "fa5": "Every order comes with a 30-day money-back guarantee. If it's not a fit, contact us within 30 days and we'll give you your money back.",
         "pair_eyebrow": "Complete the setup",
         "pair_button": "View",
         "pair_for_feeder": "water-fountain",
         "pair_for_fountain": "2-in-1-smart-feeder",
-        "color_scheme": "scheme-5"
+        "color_scheme": "scheme-4"
       }
     },
     "reviews": {
@@ -142,7 +127,7 @@
           "settings": {
             "air_blockreviews_summaryHeading": "Reviews",
             "air_blockreviews_layout": "list",
-            "air_blockreviews_singleStarColor": "#3366E6",
+            "air_blockreviews_singleStarColor": "#2F5FE0",
             "air_blockreviews_primaryColor": "#1B2540"
           }
         }

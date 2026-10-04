@@ -25,7 +25,7 @@ old = load("templates/index.json")["sections"]
 OFFER = "Free U.S. shipping · 30-day money-back guarantee"
 S = {}
 S["hero"] = sec("pm2-hero", {
-    "color_scheme": "scheme-4", "show_grid": False, "eyebrow_tag": "New", "eyebrow": "For cats & small dogs",
+    "color_scheme": "scheme-4", "show_grid": False, "eyebrow_tag": "Sale", "eyebrow": "Save up to 33% · for cats & small dogs",
     "heading_line_1": "Meals on time.", "heading_highlight": "Fresh water all day.",
     "subtext": "Smart feeders you run from your phone, and quiet water fountains that are easy to clean.",
     "button_label_1": "Shop feeders", "button_link_1": "shopify://collections/feeders",
@@ -36,6 +36,7 @@ S["hero"] = sec("pm2-hero", {
     "padding_top": 40, "padding_bottom": 56})
 S["ticker"] = sec("pm2-marquee", {"color_scheme": "scheme-3", "duration": 40, "size": "small",
                                    "show_divider": True, "show_borders": True, "reverse": False}, [
+    ("item", {"text": "Sale: save up to 33%", "icon": "sparkle"}),
     ("item", {"text": "Free U.S. shipping", "icon": "truck"}),
     ("item", {"text": "30-day money-back guarantee", "icon": "sparkle"}),
     ("item", {"text": "10% off your first order", "icon": "sparkle"}),

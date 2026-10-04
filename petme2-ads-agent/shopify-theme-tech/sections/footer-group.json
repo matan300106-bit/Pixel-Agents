@@ -5,9 +5,9 @@
     "footer": {
       "type": "footer",
       "settings": {
-        "color_scheme": "scheme-5",
+        "color_scheme": "scheme-4",
         "newsletter_enable": true,
-        "newsletter_heading": "Get new products and deals first",
+        "newsletter_heading": "Get 10% off your first order",
         "enable_follow_on_shop": true,
         "show_social": false,
         "enable_country_selector": false,

@@ -44,13 +44,20 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Free U.S. shipping on every order",
+            "heading": "Free U.S. shipping · 30-day money-back guarantee",
             "heading_size": "h2"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Not happy? Contact us within 30 days and we'll give you your money back.</p>"
           }
         }
       },
       "block_order": [
-        "heading"
+        "heading",
+        "text"
       ]
     },
     "upsell": {
