@@ -1,0 +1,133 @@
+{
+  "sections": {
+    "intro": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "<div class=\"pm2-shop page-width\"><h1 class=\"pm2-shop__title\">Shop</h1><p class=\"pm2-shop__sub\">Free U.S. shipping on every order · 30-day money-back guarantee</p><nav class=\"pm2-shop__nav\" aria-label=\"Shop by category\"><a href=\"#fountains\">Water Fountains</a><a href=\"#feeders\">Feeders</a><a href=\"#supplements\">Supplements <span class=\"pm2-shop__soon\">Coming soon</span></a></nav></div><style>.pm2-shop{text-align:center}.pm2-shop__title{margin:0 0 6px}.pm2-shop__sub{margin:0 0 18px;color:rgba(var(--color-foreground),.7)}.pm2-shop__nav{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}.pm2-shop__nav a{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 18px;border-radius:999px;border:1.5px solid rgba(var(--color-foreground),.14);text-decoration:none;color:rgb(var(--color-foreground));font-weight:700;font-size:15px;background:rgb(var(--color-background))}.pm2-shop__nav a:hover{border-color:rgb(var(--color-button));color:rgb(var(--color-button))}.pm2-shop__soon{padding:2px 8px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;background:rgb(var(--color-button));color:rgb(var(--color-button-text))}.pm2-anchor{position:relative;top:calc(-1 * var(--header-height, 64px) - 12px)}</style>",
+        "color_scheme": "scheme-4",
+        "padding_top": 36,
+        "padding_bottom": 32
+      }
+    },
+    "a_fountains": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "<div id=\"fountains\" class=\"pm2-anchor\"></div>",
+        "color_scheme": "scheme-3",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "fountains": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "water-fountains",
+        "products_to_show": 12,
+        "title": "Water Fountains",
+        "heading_size": "h1",
+        "description": "<p>Fresh, moving water all day. Quiet pumps, easy to clean.</p>",
+        "show_description": true,
+        "description_style": "body",
+        "columns_desktop": 4,
+        "enable_desktop_slider": false,
+        "full_width": false,
+        "show_view_all": false,
+        "view_all_style": "outline",
+        "color_scheme": "scheme-3",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "standard",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 28,
+        "padding_bottom": 44
+      }
+    },
+    "a_feeders": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "<div id=\"feeders\" class=\"pm2-anchor\"></div>",
+        "color_scheme": "scheme-3",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "feeders": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "feeders",
+        "products_to_show": 12,
+        "title": "Automatic Feeders",
+        "heading_size": "h1",
+        "description": "<p>Meals on time, set from your phone. For 1 or 2 cats.</p>",
+        "show_description": true,
+        "description_style": "body",
+        "columns_desktop": 4,
+        "enable_desktop_slider": false,
+        "full_width": false,
+        "show_view_all": false,
+        "view_all_style": "outline",
+        "color_scheme": "scheme-4",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "standard",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 28,
+        "padding_bottom": 44
+      }
+    },
+    "a_supplements": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "<div id=\"supplements\" class=\"pm2-anchor\"></div>",
+        "color_scheme": "scheme-3",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "supplements": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "supplements",
+        "products_to_show": 12,
+        "title": "Supplements · Coming soon",
+        "heading_size": "h1",
+        "description": "<p>Daily soft chews for cats and dogs, launching soon. Open a product and tap Notify me to get an email on launch day.</p>",
+        "show_description": true,
+        "description_style": "body",
+        "columns_desktop": 4,
+        "enable_desktop_slider": false,
+        "full_width": false,
+        "show_view_all": false,
+        "view_all_style": "outline",
+        "color_scheme": "scheme-3",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "none",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 28,
+        "padding_bottom": 44
+      }
+    }
+  },
+  "order": [
+    "intro",
+    "a_fountains",
+    "fountains",
+    "a_feeders",
+    "feeders",
+    "a_supplements",
+    "supplements"
+  ]
+}
