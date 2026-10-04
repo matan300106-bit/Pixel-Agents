@@ -45,7 +45,7 @@
     </div>
 
     {%- for block in section.blocks -%}
-      {%- assign collection = block.settings.collection -%}
+      {%- assign tab_collection = block.settings.collection -%}
       <div
         class="pm2-tabs__panel"
         role="{% if section.blocks.size > 1 %}tabpanel{% else %}region{% endif %}"
@@ -59,8 +59,8 @@
         {%- endif -%}
 
         <ul class="pm2-tabs__row" role="list">
-          {%- if collection != blank and collection.products_count > 0 -%}
-            {%- for product in collection.products limit: limit -%}
+          {%- if tab_collection != blank and tab_collection.products_count > 0 -%}
+            {%- for product in tab_collection.products limit: limit -%}
               {%- liquid
                 assign variant = product.selected_or_first_available_variant
                 assign second = product.media[1]
@@ -162,11 +162,11 @@
           {%- endif -%}
         </ul>
 
-        {%- if section.settings.show_view_all and collection != blank -%}
+        {%- if section.settings.show_view_all and tab_collection != blank -%}
           <div class="pm2-tabs__more">
-            <a href="{{ collection.url }}" class="button button--secondary pm2-tabs__view-all">
+            <a href="{{ tab_collection.url }}" class="button button--secondary pm2-tabs__view-all">
               {{ 'sections.featured_collection.view_all' | t }}
-              <span class="visually-hidden">: {{ collection.title | escape }}</span>
+              <span class="visually-hidden">: {{ tab_collection.title | escape }}</span>
               <span class="pm2-tabs__arrow" aria-hidden="true">&rarr;</span>
             </a>
           </div>

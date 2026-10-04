@@ -13,7 +13,7 @@
   class="color-{{ section.settings.color_scheme }} gradient pm2-bento"
   style="--pm2-pt: {{ section.settings.padding_top }}px; --pm2-pb: {{ section.settings.padding_bottom }}px;"
 >
-  <div class="pm2-bento__glow" aria-hidden="true"></div>
+  <span class="pm2-bento__glow" aria-hidden="true"></span>
   <div class="page-width pm2-bento__inner">
     {%- if section.settings.eyebrow != blank or section.settings.heading != blank or section.settings.subheading != blank -%}
       <div class="pm2-bento__head{{ anim }}">
@@ -71,7 +71,7 @@
                   {{ 'lifestyle-1' | placeholder_svg_tag: 'pm2-bento__img pm2-bento__ph' }}
                 {%- endif -%}
               </div>
-              <div class="pm2-bento__shade" aria-hidden="true"></div>
+              <span class="pm2-bento__shade" aria-hidden="true"></span>
               <div class="pm2-bento__overlay">
                 {%- if block.settings.eyebrow != blank -%}
                   <p class="pm2-bento__chip">{{ block.settings.eyebrow | escape }}</p>
@@ -157,6 +157,7 @@
               <div class="pm2-bento__pmedia">
                 <span class="pm2-bento__halo" aria-hidden="true"></span>
                 {%- if p != blank and p.featured_media != blank -%}
+                  {%- assign p_alt = p.featured_media.alt | default: p.title | escape -%}
                   {{
                     p.featured_media
                     | image_url: width: 900
@@ -165,7 +166,7 @@
                       sizes: '(min-width: 990px) 420px, (min-width: 750px) 50vw, 90vw',
                       widths: '300, 450, 600, 900',
                       class: 'pm2-bento__pimg',
-                      alt: p.featured_media.alt | default: p.title
+                      alt: p_alt
                   }}
                 {%- else -%}
                   {{ 'product-1' | placeholder_svg_tag: 'pm2-bento__pimg pm2-bento__ph' }}
@@ -207,7 +208,7 @@
 <style>
   .pm2-bento { position: relative; overflow: hidden; padding-top: calc(var(--pm2-pt, 96px) * .7); padding-bottom: calc(var(--pm2-pb, 96px) * .7); }
   @media (min-width: 750px) { .pm2-bento { padding-top: var(--pm2-pt, 96px); padding-bottom: var(--pm2-pb, 96px); } }
-  .pm2-bento__glow { position: absolute; inset: -20% -10% auto; height: 70%; pointer-events: none;
+  .pm2-bento__glow { display: block; position: absolute; inset: -20% -10% auto; height: 70%; pointer-events: none;
     background: radial-gradient(50% 60% at 50% 0%, rgba(var(--color-button), .22), transparent 70%); }
   .pm2-bento__inner { position: relative; }
 
@@ -229,6 +230,8 @@
     .pm2-bento__grid { grid-template-columns: repeat(2, 1fr); }
     .pm2-bento__tile { grid-column: span 2; }
     .pm2-bento__tile--stat.pm2-bento__tile--small { grid-column: span 1; }
+    /* a small stat with no small-stat neighbour would sit alone at half width: give it the full row */
+    .pm2-bento__tile--stat.pm2-bento__tile--small:not(.pm2-bento__tile--stat.pm2-bento__tile--small + .pm2-bento__tile--stat.pm2-bento__tile--small):not(:has(+ .pm2-bento__tile--stat.pm2-bento__tile--small)) { grid-column: span 2; }
     .pm2-bento__tile--image { min-height: 300px; }
     .pm2-bento__tile--image.pm2-bento__tile--large, .pm2-bento__tile--image.pm2-bento__tile--tall { min-height: 420px; }
   }
@@ -256,7 +259,7 @@
   .pm2-bento__media { position: absolute; inset: 0; z-index: -2; }
   .pm2-bento__img { width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.001); transition: transform 1s cubic-bezier(.2, .7, .2, 1); }
   .pm2-bento__tile:hover .pm2-bento__img { transform: scale(1.05); }
-  .pm2-bento__shade { position: absolute; inset: 0; z-index: -1;
+  .pm2-bento__shade { display: block; position: absolute; inset: 0; z-index: -1;
     background: linear-gradient(180deg, rgba(11, 18, 32, 0) 35%, rgba(11, 18, 32, .55) 65%, rgba(11, 18, 32, .92) 100%); }
   .pm2-bento__overlay { padding: 28px; }
   .pm2-bento__tile--large .pm2-bento__overlay { padding: 36px; }
@@ -279,9 +282,10 @@
   .pm2-bento__orb { position: absolute; z-index: -1; width: 220px; height: 220px; right: -70px; top: -90px; border-radius: 50%;
     background: radial-gradient(circle, rgba(var(--color-button), .55), transparent 65%); filter: blur(10px); opacity: .8; transition: opacity .45s ease, transform .6s ease; }
   .pm2-bento__tile--stat:hover .pm2-bento__orb { opacity: 1; transform: scale(1.1); }
-  .pm2-bento__value { margin: 0; font-family: var(--font-heading-family); font-weight: 700; font-size: clamp(48px, 5vw, 76px); line-height: .95; letter-spacing: -.045em;
+  .pm2-bento__value { margin: 0; font-family: var(--font-heading-family); font-weight: 700; font-size: clamp(44px, 4vw, 60px); line-height: .95; letter-spacing: -.045em; padding-bottom: .04em;
     background: linear-gradient(180deg, rgb(var(--color-foreground)) 30%, rgba(var(--color-foreground), .55)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .pm2-bento__tile--large .pm2-bento__value, .pm2-bento__tile--tall .pm2-bento__value { font-size: clamp(64px, 8vw, 120px); }
+  .pm2-bento__tile--wide .pm2-bento__value { font-size: clamp(52px, 6vw, 84px); }
+  .pm2-bento__tile--large .pm2-bento__value, .pm2-bento__tile--tall .pm2-bento__value { font-size: clamp(64px, 7vw, 112px); }
   .pm2-bento__tile--stat .pm2-bento__label { color: rgb(var(--color-foreground)); font-size: 13px; }
   .pm2-bento__small { margin: 8px 0 0; font-size: 14px; line-height: 1.5; color: rgba(var(--color-foreground), .62); }
   @media (max-width: 749px) {

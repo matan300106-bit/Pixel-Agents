@@ -1,0 +1,151 @@
+{%- comment -%}
+  PETME2 full-width CTA band: mesh gradient (scheme background -> button blue) with glow + faint grid.
+  Works with any scheme; best on scheme-1 (navy). CSS below contains no Liquid on purpose.
+{%- endcomment -%}
+{%- liquid
+  assign anim = ''
+  if settings.animations_reveal_on_scroll
+    assign anim = ' scroll-trigger animate--slide-in'
+  endif
+-%}
+<div
+  class="color-{{ section.settings.color_scheme }} gradient pm2-cta"
+  style="--pm2-pt: {{ section.settings.padding_top }}px; --pm2-pb: {{ section.settings.padding_bottom }}px;"
+>
+  <span class="pm2-cta__mesh" aria-hidden="true"></span>
+  <span class="pm2-cta__grid" aria-hidden="true"></span>
+  <span class="pm2-cta__beam" aria-hidden="true"></span>
+  <div class="page-width pm2-cta__inner{{ anim }}">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="pm2-cta__eyebrow"><span class="pm2-cta__dot" aria-hidden="true"></span>{{ section.settings.eyebrow | escape }}</p>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h2 class="pm2-cta__heading">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+    {%- if section.settings.text != blank -%}
+      <div class="pm2-cta__text">{{ section.settings.text }}</div>
+    {%- endif -%}
+
+    {%- if section.settings.button_label_1 != blank or section.settings.button_label_2 != blank -%}
+      <div class="pm2-cta__buttons">
+        {%- if section.settings.button_label_1 != blank -%}
+          <a class="button button--primary pm2-cta__btn" {% if section.settings.button_link_1 != blank %}href="{{ section.settings.button_link_1 }}"{% else %}role="link" aria-disabled="true"{% endif %}>
+            {{- section.settings.button_label_1 | escape -}}
+          </a>
+        {%- endif -%}
+        {%- if section.settings.button_label_2 != blank -%}
+          <a class="button button--secondary pm2-cta__btn pm2-cta__btn--ghost" {% if section.settings.button_link_2 != blank %}href="{{ section.settings.button_link_2 }}"{% else %}role="link" aria-disabled="true"{% endif %}>
+            {{- section.settings.button_label_2 | escape -}}
+          </a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <ul class="pm2-cta__chips" role="list">
+        {%- for block in section.blocks -%}
+          {%- if block.settings.text != blank -%}
+            <li class="pm2-cta__chip" {{ block.shopify_attributes }}>
+              <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="m3.5 8.5 3 3 6-7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              {{- block.settings.text | escape -}}
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</div>
+
+<style>
+  .pm2-cta { position: relative; overflow: hidden; isolation: isolate; text-align: center;
+    padding-top: calc(var(--pm2-pt, 120px) * .7); padding-bottom: calc(var(--pm2-pb, 120px) * .7); }
+  @media (min-width: 750px) { .pm2-cta { padding-top: var(--pm2-pt, 120px); padding-bottom: var(--pm2-pb, 120px); } }
+
+  .pm2-cta__mesh { display: block; position: absolute; inset: 0; z-index: -3;
+    background:
+      radial-gradient(60% 80% at 15% 0%, rgba(var(--color-button), .55), transparent 60%),
+      radial-gradient(45% 70% at 90% 100%, rgba(34, 211, 238, .22), transparent 65%),
+      radial-gradient(50% 60% at 70% 20%, rgba(127, 176, 255, .22), transparent 70%),
+      linear-gradient(135deg, rgb(var(--color-background)) 20%, rgba(var(--color-button), .55) 100%); }
+  .pm2-cta__grid { display: block; position: absolute; inset: 0; z-index: -2; opacity: .9;
+    background-image:
+      linear-gradient(rgba(var(--color-foreground), .07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(var(--color-foreground), .07) 1px, transparent 1px);
+    background-size: 56px 56px; background-position: center center;
+    -webkit-mask-image: radial-gradient(70% 70% at 50% 50%, #000 20%, transparent 80%); mask-image: radial-gradient(70% 70% at 50% 50%, #000 20%, transparent 80%); }
+  .pm2-cta__beam { display: block; position: absolute; z-index: -1; left: 50%; top: 50%; width: min(900px, 120vw); height: 420px; transform: translate(-50%, -50%);
+    background: radial-gradient(closest-side, rgba(var(--color-button), .45), transparent); filter: blur(40px); opacity: .7;
+    animation: pm2-cta-breathe 9s ease-in-out infinite; }
+  @keyframes pm2-cta-breathe { 0%, 100% { opacity: .55; transform: translate(-50%, -50%) scale(1); } 50% { opacity: .85; transform: translate(-50%, -50%) scale(1.08); } }
+
+  .pm2-cta__inner { position: relative; max-width: 900px; margin: 0 auto; }
+  .pm2-cta__eyebrow { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 22px; padding: 6px 14px 6px 10px; border-radius: 999px;
+    border: 1px solid rgba(var(--color-foreground), .16); background: rgba(var(--color-foreground), .06); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+    font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: rgba(var(--color-foreground), .85); }
+  .pm2-cta__dot { width: 7px; height: 7px; border-radius: 50%; background: #22D3EE; box-shadow: 0 0 0 4px rgba(34, 211, 238, .2), 0 0 12px rgba(34, 211, 238, .9); }
+  .pm2-cta__heading { margin: 0; font-family: var(--font-heading-family); font-weight: 700; font-size: clamp(38px, 6.4vw, 80px); line-height: 1.02; letter-spacing: -.04em;
+    color: rgb(var(--color-foreground)); text-wrap: balance; }
+  .pm2-cta__text { margin: 22px auto 0; max-width: 600px; font-size: clamp(16px, 1.5vw, 20px); line-height: 1.55; color: rgba(var(--color-foreground), .75); text-wrap: pretty; }
+  .pm2-cta__text p { margin: 0; }
+
+  .pm2-cta__buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 36px; }
+  .pm2-cta__btn { min-height: 52px; padding: 0 30px; font-size: 16px; font-weight: 600; letter-spacing: 0; transition: transform .3s ease, box-shadow .3s ease; }
+  .pm2-cta__btn.button--primary { box-shadow: 0 12px 34px -10px rgba(var(--color-button), .9); }
+  .pm2-cta__btn:hover { transform: translateY(-2px); }
+  .pm2-cta__btn--ghost { background: rgba(var(--color-foreground), .06); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+  @media (max-width: 749px) { .pm2-cta__buttons { flex-direction: column; align-items: stretch; max-width: 360px; margin-left: auto; margin-right: auto; } }
+
+  .pm2-cta__chips { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 40px 0 0; padding: 0; }
+  .pm2-cta__chip { display: inline-flex; align-items: center; gap: 7px; padding: 8px 14px; border-radius: 999px; font-size: 13px; font-weight: 500;
+    color: rgba(var(--color-foreground), .88); background: rgba(var(--color-foreground), .06); border: 1px solid rgba(var(--color-foreground), .14);
+    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+  .pm2-cta__chip svg { color: #22D3EE; flex: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pm2-cta__beam { animation: none; }
+    .pm2-cta__btn { transition: none; }
+    .pm2-cta__btn:hover { transform: none; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "PETME2 CTA band",
+  "tag": "section",
+  "class": "section pm2-cta-section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Free U.S. shipping on orders $50+" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Smarter feeding starts today." },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Automatic feeders and quiet fountains, controlled from your phone.</p>" },
+    { "type": "text", "id": "button_label_1", "label": "First button label", "default": "Shop feeders" },
+    { "type": "url", "id": "button_link_1", "label": "First button link" },
+    { "type": "text", "id": "button_label_2", "label": "Second button label", "default": "Shop fountains" },
+    { "type": "url", "id": "button_link_2", "label": "Second button link" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1", "info": "Mesh blends the scheme background into the button color. Navy (scheme-1) looks best." },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 120 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 120 }
+  ],
+  "blocks": [
+    {
+      "type": "chip",
+      "name": "Chip",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Chip text", "default": "Free U.S. shipping $50+" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "PETME2 CTA band",
+      "blocks": [
+        { "type": "chip", "settings": { "text": "Free U.S. shipping $50+" } },
+        { "type": "chip", "settings": { "text": "WiFi app control" } },
+        { "type": "chip", "settings": { "text": "Also on Amazon" } }
+      ]
+    }
+  ],
+  "disabled_on": { "groups": ["header", "footer"] }
+}
+{% endschema %}

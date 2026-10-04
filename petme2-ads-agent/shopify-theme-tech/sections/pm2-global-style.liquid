@@ -1,0 +1,238 @@
+{%- comment -%}
+  PETME2 global style. Place in the header group. Renders no visible markup: only CSS + a tiny
+  scroll script that toggles html.pm2-scrolled. Every rule targets Dawn 15 classes
+  (.section-header, .header-wrapper, .button, .card-wrapper, .card--card, .card__inner,
+  .card__media .media, .rich-text__caption, .image-with-text__text--caption) and avoids
+  layout properties (no display/position/size changes on Dawn elements).
+{%- endcomment -%}
+{%- liquid
+  assign s = section.settings
+-%}
+<style>
+  /* PETME2 global style */
+  .pm2-global-style-section { display: none; }
+
+  {%- if s.enable_glass_header %}
+  /* Glass sticky header: a pseudo layer carries the blur, so Dawn's fixed/absolute
+     children (menu drawer, search modal) keep their containing block. */
+  .section-header .header-wrapper {
+    transition: background-color .25s ease, box-shadow .25s ease;
+  }
+  .pm2-scrolled .section-header.shopify-section-header-sticky:not(.shopify-section-header-hidden) .header-wrapper {
+    {%- if s.glass_tint == 'light' %}
+    --color-background: 255, 255, 255;
+    --color-foreground: 11, 18, 32;
+    --color-link: 11, 18, 32;
+    {%- endif %}
+    background: transparent;
+    box-shadow: 0 1px 0 rgba(var(--color-foreground), .08), 0 10px 30px -18px rgba(11, 18, 32, .35);
+  }
+  .pm2-scrolled .section-header.shopify-section-header-sticky .header-wrapper::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: rgba(var(--color-background), {{ s.glass_opacity | divided_by: 100.0 }});
+    -webkit-backdrop-filter: blur(18px) saturate(180%);
+    backdrop-filter: blur(18px) saturate(180%);
+  }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .pm2-scrolled .section-header.shopify-section-header-sticky .header-wrapper::before {
+      background: rgb(var(--color-background));
+    }
+  }
+  {%- endif %}
+
+  {%- if s.enable_buttons %}
+  /* Pill buttons with lift + glow from the scheme's button color */
+  .button,
+  .shopify-challenge__button,
+  .customer button {
+    --buttons-radius: 999px;
+    --buttons-radius-outset: 999px;
+    font-weight: 600;
+    letter-spacing: .01em;
+    transition: transform .2s cubic-bezier(.2, .7, .2, 1), box-shadow .25s ease, background-color .2s ease;
+  }
+  .button:not([disabled]):not(.button--secondary):not(.button--tertiary):hover,
+  .shopify-challenge__button:hover,
+  .customer button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 28px -12px rgba(var(--color-button), .85), 0 0 0 1px rgba(var(--color-button), .25);
+  }
+  .button--secondary:not([disabled]):hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px -14px rgba(var(--color-foreground), .45);
+  }
+  .button:not([disabled]):active { transform: translateY(0); }
+  {%- endif %}
+
+  {%- if s.enable_cards %}
+  /* Card hover: soft shadow; Dawn's own hover lift (theme setting) keeps doing the transform */
+  .card-wrapper .card--card,
+  .card-wrapper .card--standard .card__inner {
+    transition: transform .35s cubic-bezier(.2, .7, .2, 1), box-shadow .35s ease;
+  }
+  .card-wrapper:hover .card--card,
+  .card-wrapper:hover .card--standard .card__inner {
+    box-shadow: 0 24px 48px -24px rgba(11, 18, 32, .28), 0 2px 8px -2px rgba(11, 18, 32, .06);
+  }
+  body:not(.animate--hover-vertical-lift):not(.animate--hover-3d-lift) .card-wrapper:hover .card--card,
+  body:not(.animate--hover-vertical-lift):not(.animate--hover-3d-lift) .card-wrapper:hover .card--standard .card__inner {
+    transform: translateY(-4px);
+  }
+  {%- endif %}
+
+  {%- if s.enable_image_zoom %}
+  /* Product/collection card image zoom (only single-image cards; Dawn swaps 2nd image itself) */
+  .card-wrapper .card__media .media > img:only-child {
+    transition: transform .7s cubic-bezier(.2, .7, .2, 1);
+  }
+  .card-wrapper:hover .card__media .media > img:only-child {
+    transform: scale(1.05);
+  }
+  {%- endif %}
+
+  {%- if s.enable_typography %}
+  /* Tighter, more confident headings */
+  h1, h2, .h0, .h1, .h2 {
+    letter-spacing: -0.02em;
+  }
+  h3, .h3 {
+    letter-spacing: -0.01em;
+  }
+  h1, h2, .h0, .h1, .h2, h3, .h3 {
+    text-wrap: balance;
+  }
+  {%- endif %}
+
+  {%- if s.enable_eyebrow %}
+  /* Section heading eyebrows (Dawn caption blocks) */
+  .rich-text__caption.caption-with-letter-spacing,
+  .image-with-text__text--caption.caption-with-letter-spacing {
+    font-weight: 600;
+    letter-spacing: .14em;
+    color: rgb(47, 124, 255);
+  }
+  .color-scheme-1 .rich-text__caption.caption-with-letter-spacing,
+  .color-scheme-1 .image-with-text__text--caption.caption-with-letter-spacing,
+  .color-scheme-2 .rich-text__caption.caption-with-letter-spacing,
+  .color-scheme-2 .image-with-text__text--caption.caption-with-letter-spacing {
+    color: rgb(127, 176, 255);
+  }
+  .color-scheme-4 .rich-text__caption.caption-with-letter-spacing,
+  .color-scheme-4 .image-with-text__text--caption.caption-with-letter-spacing {
+    color: rgba(var(--color-foreground), .85);
+  }
+  {%- endif %}
+
+  {%- if s.enable_focus %}
+  /* Clear, on-brand focus rings */
+  html:root {
+    --focused-base-outline: 0.2rem solid rgb(47, 124, 255);
+    --focused-base-outline-offset: 0.3rem;
+    --focused-base-box-shadow: 0 0 0 0.6rem rgba(47, 124, 255, .22);
+  }
+  .button:focus-visible,
+  .shopify-payment-button__button--unbranded:focus-visible {
+    box-shadow: 0 0 0 0.3rem rgb(var(--color-background)), 0 0 0 0.55rem rgb(47, 124, 255);
+  }
+  {%- endif %}
+
+  {%- if s.enable_selection %}
+  ::selection {
+    background-color: rgba(47, 124, 255, .28);
+  }
+  {%- endif %}
+
+  {%- if s.enable_smooth_scroll %}
+  html {
+    scroll-padding-top: calc(var(--header-height, 0px) + 16px);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+  }
+  {%- endif %}
+
+  @media (prefers-reduced-motion: reduce) {
+    .button,
+    .card-wrapper .card--card,
+    .card-wrapper .card--standard .card__inner,
+    .card-wrapper .card__media .media > img:only-child {
+      transition: none !important;
+    }
+    .button:hover,
+    .card-wrapper:hover .card__media .media > img:only-child {
+      transform: none !important;
+    }
+  }
+</style>
+{%- if s.enable_glass_header -%}
+  <script>
+    (function () {
+      var root = document.documentElement, ticking = false;
+      function update() {
+        root.classList.toggle('pm2-scrolled', (window.pageYOffset || root.scrollTop) > 8);
+        ticking = false;
+      }
+      window.addEventListener('scroll', function () {
+        if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
+      }, { passive: true });
+      update();
+    })();
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "PETME2 global style",
+  "class": "pm2-global-style-section",
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Adds the PETME2 modern look to the whole store. Nothing visible is rendered by this section."
+    },
+    { "type": "header", "content": "Header" },
+    { "type": "checkbox", "id": "enable_glass_header", "label": "Glass sticky header on scroll", "default": true },
+    {
+      "type": "select",
+      "id": "glass_tint",
+      "label": "Glass tint",
+      "options": [
+        { "value": "scheme", "label": "Header color scheme" },
+        { "value": "light", "label": "Light (white glass, dark text)" }
+      ],
+      "default": "scheme",
+      "info": "Light only works well with a dark logo."
+    },
+    {
+      "type": "range",
+      "id": "glass_opacity",
+      "label": "Glass opacity",
+      "min": 40,
+      "max": 95,
+      "step": 5,
+      "unit": "%",
+      "default": 70
+    },
+    { "type": "header", "content": "Components" },
+    { "type": "checkbox", "id": "enable_buttons", "label": "Pill buttons with hover lift and glow", "default": true },
+    { "type": "checkbox", "id": "enable_cards", "label": "Card hover shadow / lift", "default": true },
+    { "type": "checkbox", "id": "enable_image_zoom", "label": "Card image zoom on hover", "default": true },
+    { "type": "header", "content": "Typography" },
+    { "type": "checkbox", "id": "enable_typography", "label": "Tighter heading letter spacing", "default": true },
+    { "type": "checkbox", "id": "enable_eyebrow", "label": "Blue caption (eyebrow) style", "default": true },
+    { "type": "header", "content": "Details" },
+    { "type": "checkbox", "id": "enable_focus", "label": "Blue focus rings", "default": true },
+    { "type": "checkbox", "id": "enable_selection", "label": "Blue text selection", "default": true },
+    { "type": "checkbox", "id": "enable_smooth_scroll", "label": "Smooth scroll for #anchor links", "default": true }
+  ],
+  "presets": [
+    { "name": "PETME2 global style" }
+  ]
+}
+{% endschema %}

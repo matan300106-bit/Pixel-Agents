@@ -74,7 +74,7 @@
   <style>
     .pm2-satc { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; padding: 0 12px calc(12px + env(safe-area-inset-bottom)); pointer-events: none; background: transparent; transform: translateY(calc(100% + 16px)); opacity: 0; transition: transform .45s cubic-bezier(.2,.7,.2,1), opacity .3s ease; }
     .pm2-satc.is-visible { transform: none; opacity: 1; }
-    .pm2-satc__inner { pointer-events: auto; max-width: 880px; margin: 0 auto; display: flex; align-items: center; gap: 14px; padding: 8px 8px 8px 10px; border-radius: 22px; color: rgb(var(--color-foreground)); background: rgba(var(--color-background), .78); -webkit-backdrop-filter: saturate(180%) blur(18px); backdrop-filter: saturate(180%) blur(18px); border: 1px solid rgba(var(--color-foreground), .1); box-shadow: 0 18px 48px -18px rgba(11, 18, 32, .45), 0 1px 0 rgba(255, 255, 255, .06) inset; }
+    .pm2-satc__inner { pointer-events: auto; max-width: 880px; margin: 0 auto; display: flex; align-items: center; gap: 14px; padding: 8px 8px 8px 10px; border-radius: 22px; color: rgb(var(--color-foreground)); background: rgba(var(--color-background), .86); -webkit-backdrop-filter: saturate(180%) blur(18px); backdrop-filter: saturate(180%) blur(18px); border: 1px solid rgba(var(--color-foreground), .1); box-shadow: 0 18px 48px -18px rgba(11, 18, 32, .45), 0 1px 0 rgba(255, 255, 255, .06) inset; }
     .pm2-satc__thumb { flex: 0 0 auto; width: 52px; height: 52px; border-radius: 14px; overflow: hidden; background: linear-gradient(160deg, #F7F9FC, #E9EEF6); }
     .pm2-satc__img { width: 100%; height: 100%; object-fit: contain; padding: 4px; }
     .pm2-satc__info { flex: 1 1 auto; min-width: 0; }
@@ -145,14 +145,28 @@
         if (observer) observer.disconnect();
         watched = target;
         if (!target) { setVisible(false); return; }
-        if (!('IntersectionObserver' in window)) return;
-        observer = new IntersectionObserver(function (entries) {
-          var e = entries[0];
-          // Show only once the buy button has scrolled ABOVE the viewport.
-          setVisible(!e.isIntersecting && e.boundingClientRect.top < 0);
-        });
-        observer.observe(target);
+        if ('IntersectionObserver' in window) {
+          observer = new IntersectionObserver(function (entries) {
+            var e = entries[0];
+            // Show only once the buy button has scrolled ABOVE the viewport.
+            setVisible(!e.isIntersecting && e.boundingClientRect.bottom < 0);
+          });
+          observer.observe(target);
+        }
+        check();
       }
+
+      // Scroll fallback: IntersectionObserver does not fire when a jump (anchor, scroll restore)
+      // skips straight past the button without it ever intersecting.
+      var ticking = false;
+      function check() {
+        ticking = false;
+        if (!watched || !watched.isConnected) return;
+        setVisible(watched.getBoundingClientRect().bottom < 0);
+      }
+      window.addEventListener('scroll', function () {
+        if (!ticking) { ticking = true; requestAnimationFrame(check); }
+      }, { passive: true });
 
       if (btn) {
         btn.addEventListener('click', function (e) {
