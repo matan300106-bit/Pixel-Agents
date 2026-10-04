@@ -8,3 +8,6 @@ inbox/
 # Python cache
 __pycache__/
 *.pyc
+
+# Raw Helium 10 exports (paid data, keep local)
+research/helium10/*.csv
