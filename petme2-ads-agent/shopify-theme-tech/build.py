@@ -56,11 +56,11 @@ current = {
     "variant_pills_shadow_opacity": 0, "variant_pills_shadow_horizontal_offset": 0, "variant_pills_shadow_vertical_offset": 0, "variant_pills_shadow_blur": 0,
     "inputs_border_thickness": 1, "inputs_border_opacity": 40, "inputs_radius": 10,
     "inputs_shadow_opacity": 0, "inputs_shadow_horizontal_offset": 0, "inputs_shadow_vertical_offset": 0, "inputs_shadow_blur": 0,
-    "card_style": "card", "card_image_padding": 12, "card_text_alignment": "left", "card_color_scheme": "scheme-3",
+    "card_style": "card", "card_image_padding": 12, "card_text_alignment": "left", "card_color_scheme": "scheme-5",
     "card_border_thickness": 0, "card_border_opacity": 0, "card_corner_radius": 16,
     "card_shadow_opacity": 0, "card_shadow_horizontal_offset": 0, "card_shadow_vertical_offset": 0, "card_shadow_blur": 0,
     "collection_card_style": "card", "collection_card_image_padding": 0, "collection_card_text_alignment": "left",
-    "collection_card_color_scheme": "scheme-2", "collection_card_border_thickness": 0, "collection_card_border_opacity": 0,
+    "collection_card_color_scheme": "scheme-5", "collection_card_border_thickness": 0, "collection_card_border_opacity": 0,
     "collection_card_corner_radius": 16, "collection_card_shadow_opacity": 0,
     "collection_card_shadow_horizontal_offset": 0, "collection_card_shadow_vertical_offset": 0, "collection_card_shadow_blur": 0,
     "text_boxes_border_thickness": 0, "text_boxes_border_opacity": 0, "text_boxes_radius": 16,
@@ -100,7 +100,7 @@ w("sections/header-group.json", {
 w("sections/footer-group.json", {
     "name": "t:sections.footer.name", "type": "footer",
     "sections": {"footer": section("footer",
-        {"color_scheme": "scheme-2", "newsletter_enable": True, "newsletter_heading": "Get new products and deals first",
+        {"color_scheme": "scheme-1", "newsletter_enable": True, "newsletter_heading": "Get new products and deals first",
          "enable_follow_on_shop": True, "show_social": True, "enable_country_selector": False,
          "enable_language_selector": False, "payment_enable": True, "show_policy": True,
          "margin_top": 0, "padding_top": 56, "padding_bottom": 40},
@@ -130,7 +130,7 @@ S["specs"] = section("pm2-specs", {"color_scheme": "scheme-1"},
 S["categories"] = section("multicolumn",
     {"title": "Shop by category", "heading_size": "h1", "image_width": "full", "image_ratio": "portrait",
      "button_label": "", "button_link": "", "columns_desktop": 2, "column_alignment": "left",
-     "background_style": "none", "color_scheme": "scheme-1", "columns_mobile": "1", "swipe_on_mobile": False,
+     "background_style": "none", "color_scheme": "scheme-3", "columns_mobile": "1", "swipe_on_mobile": False,
      "padding_top": 72, "padding_bottom": 36},
     ("c1", "column", {"image": IMG + "homepage-feeder.png", "title": "Automatic feeders",
                       "text": "<p>App scheduling, two-bowl models for 2 pets, and a 1080P camera model.</p>",
@@ -142,7 +142,7 @@ S["feeders"] = section("featured-collection",
     {"collection": "feeders", "products_to_show": 4, "title": "Smart feeders", "heading_size": "h1",
      "description": "", "show_description": False, "description_style": "body", "columns_desktop": 4,
      "enable_desktop_slider": False, "full_width": False, "show_view_all": True, "view_all_style": "solid",
-     "color_scheme": "scheme-2", "image_ratio": "square", "image_shape": "default", "show_secondary_image": True,
+     "color_scheme": "scheme-3", "image_ratio": "square", "image_shape": "default", "show_secondary_image": True,
      "show_vendor": False, "show_rating": False, "quick_add": "standard", "columns_mobile": "2",
      "swipe_on_mobile": True, "padding_top": 72, "padding_bottom": 72})
 S["app"] = section("image-with-text",
@@ -156,7 +156,7 @@ S["app"] = section("image-with-text",
     ("t", "text", {"text": "<p>Set feeding times and portions from your phone. The camera model adds 1080P live view and 2-way audio, so you can see and talk to your pet when you're away.</p>", "text_style": "body"}),
     ("b", "button", {"button_label": "Shop feeders", "button_link": "shopify://collections/feeders", "button_style_secondary": False}))
 S["cmp_feeders"] = section("pm2-compare",
-    {"color_scheme": "scheme-1", "anchor": "compare-feeders", "eyebrow": "Compare feeders",
+    {"color_scheme": "scheme-3", "anchor": "compare-feeders", "eyebrow": "Compare feeders",
      "heading": "Which feeder is right for you?",
      "text": "All PETME2 feeders work with dry food, run on a schedule from the app, and are for cats and small dogs.",
      "row1": "Capacity", "row2": "Bowls", "row3": "Control", "row4": "Camera", "row5": "Audio", "button_text": "View details"},
@@ -166,25 +166,25 @@ S["cmp_feeders"] = section("pm2-compare",
 S["two_pets"] = section("image-with-text",
     {"image": IMG + "image_42_1.jpg", "height": "large", "desktop_image_width": "medium", "layout": "text_first",
      "image_behavior": "none", "content_layout": "no-overlap", "desktop_content_position": "middle",
-     "desktop_content_alignment": "left", "mobile_content_alignment": "left", "section_color_scheme": "scheme-2",
-     "color_scheme": "scheme-2", "padding_top": 72, "padding_bottom": 72},
+     "desktop_content_alignment": "left", "mobile_content_alignment": "left", "section_color_scheme": "scheme-5",
+     "color_scheme": "scheme-5", "padding_top": 72, "padding_bottom": 72},
     ("c", "caption", {"caption": "DUAL BOWL", "text_style": "caption-with-letter-spacing", "text_size": "medium"}),
     ("h", "heading", {"heading": "Two pets. One routine.", "heading_size": "h1"}),
     ("t", "text", {"text": "<p>Even portions in two stainless steel bowls, so both pets eat at the same time. A sealed container and desiccant box help keep dry food fresh.</p>", "text_style": "body"}),
     ("b", "button", {"button_label": "Shop dual feeders", "button_link": "shopify://products/2-in-1-smart-feeder", "button_style_secondary": False}))
 S["fountains"] = section("featured-collection",
-    dict(S["feeders"]["settings"], collection="water-fountains", title="Water fountains", color_scheme="scheme-1"))
+    dict(S["feeders"]["settings"], collection="water-fountains", title="Water fountains", color_scheme="scheme-3"))
 S["water"] = section("image-with-text",
     {"image": IMG + "Homepage-Water-Fountains_79d73496-2084-410b-bd2e-dc1ea0e329a5.png", "height": "large",
      "desktop_image_width": "medium", "layout": "image_first", "image_behavior": "none", "content_layout": "no-overlap",
      "desktop_content_position": "middle", "desktop_content_alignment": "left", "mobile_content_alignment": "left",
-     "section_color_scheme": "scheme-2", "color_scheme": "scheme-2", "padding_top": 72, "padding_bottom": 72},
+     "section_color_scheme": "scheme-5", "color_scheme": "scheme-5", "padding_top": 72, "padding_bottom": 72},
     ("c", "caption", {"caption": "WATER FOUNTAINS", "text_style": "caption-with-letter-spacing", "text_size": "medium"}),
     ("h", "heading", {"heading": "Fresh, moving water. Quiet pump.", "heading_size": "h1"}),
     ("t", "text", {"text": "<p>Every PETME2 fountain has a quiet pump and comes apart for easy cleaning. Choose stainless steel, a steel drinking tray, or a see-through body.</p>", "text_style": "body"}),
     ("b", "button", {"button_label": "Shop fountains", "button_link": "shopify://collections/water-fountains", "button_style_secondary": False}))
 S["cmp_fountains"] = section("pm2-compare",
-    {"color_scheme": "scheme-1", "anchor": "compare-fountains", "eyebrow": "Compare fountains",
+    {"color_scheme": "scheme-3", "anchor": "compare-fountains", "eyebrow": "Compare fountains",
      "heading": "Which fountain is right for you?",
      "text": "Every PETME2 fountain has a quiet pump and comes apart for easy cleaning.",
      "row1": "Capacity", "row2": "Material", "row3": "Filter", "row4": "Water level", "row5": "Best for", "button_text": "View details"},
@@ -194,7 +194,7 @@ S["cmp_fountains"] = section("pm2-compare",
     ("w4", "model", model("water-fountain-simple", "Classic 2L", ["2L", "Plastic", "—", "Window + low-water light", "Small spaces"], "Best seller")))
 S["faq"] = section("collapsible-content",
     {"caption": "FAQ", "heading": "Questions, answered", "heading_size": "h1", "heading_alignment": "center",
-     "layout": "none", "container_color_scheme": "scheme-2", "color_scheme": "scheme-1",
+     "layout": "none", "container_color_scheme": "scheme-3", "color_scheme": "scheme-5",
      "open_first_collapsible_row": True, "image_ratio": "adapt", "desktop_layout": "image_second",
      "padding_top": 72, "padding_bottom": 72},
     ("q1", "collapsible_row", {"heading": "Do the feeders work with wet food?", "icon": "check_mark", "row_content": "<p>No. PETME2 feeders are made for dry food (kibble).</p>"}),
@@ -203,7 +203,7 @@ S["faq"] = section("collapsible-content",
     ("q4", "collapsible_row", {"heading": "Are the fountains loud?", "icon": "check_mark", "row_content": "<p>No. Every PETME2 fountain uses a quiet pump made for use inside the home.</p>"}),
     ("q5", "collapsible_row", {"heading": "Is PETME2 on Amazon?", "icon": "check_mark", "row_content": "<p>Yes. All PETME2 products are also sold on Amazon, where you can read buyer reviews.</p>"}))
 S["newsletter"] = section("newsletter",
-    {"color_scheme": "scheme-4", "full_width": True, "padding_top": 56, "padding_bottom": 64},
+    {"color_scheme": "scheme-3", "full_width": True, "padding_top": 56, "padding_bottom": 64},
     ("h", "heading", {"heading": "Get new products and deals first", "heading_size": "h1"}),
     ("p", "paragraph", {"text": "<p>No spam. Just launches and member-only offers.</p>"}),
     ("f", "email_form", {}))
@@ -212,7 +212,7 @@ w("templates/index.json", {"sections": S, "order": list(S)})
 # ---------- product page ----------
 old = json.loads((HERE.parent / "shopify-theme" / "product.json").read_text())
 extras = old["sections"]["pm2_extras"]["settings"]
-extras["color_scheme"] = "scheme-1"
+extras["color_scheme"] = "scheme-5"
 reviews_block = old["sections"]["1786715348a590fb22"]["blocks"]
 P = {
     "main": section("main-product",
@@ -236,7 +236,7 @@ P = {
                 "block_order": list(reviews_block)},
     "related-products": section("related-products",
         {"heading": "You may also like", "heading_size": "h2", "products_to_show": 4, "columns_desktop": 4,
-         "columns_mobile": "2", "color_scheme": "scheme-2", "image_ratio": "square", "image_shape": "default",
+         "columns_mobile": "2", "color_scheme": "scheme-3", "image_ratio": "square", "image_shape": "default",
          "show_secondary_image": True, "show_vendor": False, "show_rating": False, "padding_top": 56, "padding_bottom": 56}),
 }
 w("templates/product.json", {"sections": P, "order": list(P)})
