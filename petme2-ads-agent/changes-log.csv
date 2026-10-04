@@ -1,1 +1,51 @@
 date,item,before,after,reason,agent
+2026-10-04,Campaign PETME2 | SP | Feeders | Manual,none,"created paused, budget $10/day, Dynamic bids - down only",Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Negative 'water' negativePhrase (PETME2-SP-Feeders),none,created,Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Negative 'fountain' negativePhrase (PETME2-SP-Feeders),none,created,Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Negative 'bird' negativePhrase (PETME2-SP-Feeders),none,created,Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Negative 'fish' negativePhrase (PETME2-SP-Feeders),none,created,Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Negative 'slow feeder' negativePhrase (PETME2-SP-Feeders),none,created,Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Negative 'replacement' negativePhrase (PETME2-SP-Feeders),none,created,Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Ad group Feeders - Exact (PETME2-SP-Feeders),none,"created, default bid $0.60",Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Product ad SKU QO-7VBS-CVT4 (PETME2-SP-Feeders/Feeders-Exact),none,created,Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Product ad SKU LW-EZAJ-KKZD (PETME2-SP-Feeders/Feeders-Exact),none,created,Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Product ad SKU 93-E8EG-20UY (PETME2-SP-Feeders/Feeders-Exact),none,created,Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Keyword 'automatic cat feeder' exact (PETME2-SP-Feeders/Feeders-Exact),none,"created, bid $0.60",Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Keyword 'automatic pet feeder' exact (PETME2-SP-Feeders/Feeders-Exact),none,"created, bid $0.60",Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Keyword 'timed cat feeder' exact (PETME2-SP-Feeders/Feeders-Exact),none,"created, bid $0.60",Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Keyword 'wifi cat feeder' exact (PETME2-SP-Feeders/Feeders-Exact),none,"created, bid $0.60",Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Ad group Camera Feeder - Exact (PETME2-SP-Feeders),none,"created, default bid $0.65",Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Product ad SKU 2H-2T1T-CJC3 (PETME2-SP-Feeders/CameraFeeder-Exact),none,created,Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Keyword 'automatic cat feeder with camera' exact (PETME2-SP-Feeders/CameraFeeder-Exact),none,"created, bid $0.65",Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Keyword 'cat feeder with camera' exact (PETME2-SP-Feeders/CameraFeeder-Exact),none,"created, bid $0.65",Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Keyword 'pet feeder with camera' exact (PETME2-SP-Feeders/CameraFeeder-Exact),none,"created, bid $0.65",Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Ad group Feeders - Broad (PETME2-SP-Feeders),none,"created, default bid $0.40",Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Product ad SKU QO-7VBS-CVT4 (PETME2-SP-Feeders/Feeders-Broad),none,created,Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Product ad SKU LW-EZAJ-KKZD (PETME2-SP-Feeders/Feeders-Broad),none,created,Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Product ad SKU 93-E8EG-20UY (PETME2-SP-Feeders/Feeders-Broad),none,created,Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Product ad SKU 2H-2T1T-CJC3 (PETME2-SP-Feeders/Feeders-Broad),none,created,Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Keyword 'automatic cat feeder' broad (PETME2-SP-Feeders/Feeders-Broad),none,"created, bid $0.40",Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Keyword 'pet feeder' broad (PETME2-SP-Feeders/Feeders-Broad),none,"created, bid $0.40",Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Campaign PETME2 | SP | Fountains | Manual,none,"created paused, budget $8/day, Dynamic bids - down only",Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Negative 'filter' negativePhrase (PETME2-SP-Fountains),none,created,Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Negative 'replacement' negativePhrase (PETME2-SP-Fountains),none,created,Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Negative 'pump' negativePhrase (PETME2-SP-Fountains),none,created,Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Negative 'feeder' negativePhrase (PETME2-SP-Fountains),none,created,Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Negative 'outdoor' negativePhrase (PETME2-SP-Fountains),none,created,Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Ad group Stainless Fountain - Exact (PETME2-SP-Fountains),none,"created, default bid $0.55",Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Product ad SKU QY-HHE8-0H1B (PETME2-SP-Fountains/Stainless-Exact),none,created,Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Keyword 'stainless steel cat water fountain' exact (PETME2-SP-Fountains/Stainless-Exact),none,"created, bid $0.55",Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Keyword 'cat water fountain stainless steel' exact (PETME2-SP-Fountains/Stainless-Exact),none,"created, bid $0.55",Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Keyword 'metal cat water fountain' exact (PETME2-SP-Fountains/Stainless-Exact),none,"created, bid $0.55",Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Ad group Fountains - Exact (PETME2-SP-Fountains),none,"created, default bid $0.35",Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Product ad SKU L6-L3S1-I7Q6 (PETME2-SP-Fountains/Fountains-Exact),none,created,Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Keyword 'cat water fountain' exact (PETME2-SP-Fountains/Fountains-Exact),none,"created, bid $0.35",Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Keyword 'pet water fountain' exact (PETME2-SP-Fountains/Fountains-Exact),none,"created, bid $0.35",Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Keyword 'water fountain for cats' exact (PETME2-SP-Fountains/Fountains-Exact),none,"created, bid $0.35",Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Ad group Fountains - Broad (PETME2-SP-Fountains),none,"created, default bid $0.30",Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Product ad SKU QY-HHE8-0H1B (PETME2-SP-Fountains/Fountains-Broad),none,created,Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Product ad SKU L6-L3S1-I7Q6 (PETME2-SP-Fountains/Fountains-Broad),none,created,Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Keyword 'cat water fountain' broad (PETME2-SP-Fountains/Fountains-Broad),none,"created, bid $0.30",Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Keyword 'pet water fountain' broad (PETME2-SP-Fountains/Fountains-Broad),none,"created, bid $0.30",Owner APPROVED in chat; uploaded by owner (bulk file),guardian
+2026-10-04,Campaign PETME2 | SP | Feeders | Manual,paused,"enabled (by owner, as instructed)",Owner turned on after upload,owner
+2026-10-04,Campaign PETME2 | SP | Fountains | Manual,paused,"enabled (by owner, as instructed)",Owner turned on after upload,owner

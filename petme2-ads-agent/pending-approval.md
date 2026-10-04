@@ -10,4 +10,4 @@ Items with no answer after 7 days expire.
 
 Ready rows (48, under the 50/day limit): `outbox/2026-10-03/proposed-changes.json`. Before upload I still need: mode change to `supervised` + `max_bid` and `daily_spend_cap` in settings.yaml (only you). Owner said START on 2026-10-03.
 
-Upload file ready: `outbox/2026-10-04/bulk-upload.xlsx` (48 rows). Waiting for the owner to upload it in the Ads console.
+Upload file ready: `outbox/2026-10-04/bulk-upload.xlsx` (48 rows). UPLOADED by owner 2026-10-04. Logged in `changes-log.csv`.
