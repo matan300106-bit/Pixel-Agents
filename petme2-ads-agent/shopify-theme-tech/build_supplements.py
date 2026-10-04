@@ -25,7 +25,7 @@ grid["settings"].update(columns_desktop=4, enable_filtering=False, products_per_
 S["product-grid"] = grid
 cb, co = blocks([
     ("column", {"title": "Tasty soft chews", "text": "<p>Chicken-flavored chews pets see as a treat. No pills, no mess.</p>"}),
-    ("column", {"title": "Made for cats and dogs", "text": "<p>Skin & coat, cat grass digestion, hips & joints and tear stains. Pick what your pet needs.</p>"}),
+    ("column", {"title": "Made for cats and dogs", "text": "<p>4 for cats, 4 for dogs: skin & coat, immune, gut, joints, multivitamin and more. Pick what your pet needs.</p>"}),
     ("column", {"title": "Clear dosing", "text": "<p>Simple amounts by weight on every jar. Start with half and slowly increase.</p>"}),
 ])
 S["why"] = {"type": "multicolumn", "blocks": cb, "block_order": co, "settings": {
