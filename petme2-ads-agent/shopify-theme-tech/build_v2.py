@@ -50,6 +50,8 @@ S["shop"] = sec("pm2-product-tabs", {"eyebrow": "Shop", "heading": "Fountains, f
     ("tab", {"label": "Fountains", "collection": "water-fountains", "text": "Fresh, moving water with a quiet pump."}),
     ("tab", {"label": "Feeders", "collection": "feeders", "text": "Meals on time, set from your phone."}),
     ("tab", {"label": "Supplements", "collection": "supplements", "text": "Daily soft chews for cats and dogs. Coming soon."})])
+# Supplements teaser (coming soon): dark green + gold like the supplement boxes.
+S["soon_supplements"] = {"type": "pm2-soon-supplements", "settings": {"image": "shopify://shop_images/petme2-supplements-banner.png", "ribbon": "Coming soon", "eyebrow": "New from PETME2", "heading": "Daily supplements for cats & dogs", "text": "8 tasty soft chews for everyday care, from the team behind PETME2 feeders and fountains. Launching soon.", "cats": "Skin & Coat\nImmune Support\nL-Lysine\nCat Grass", "dogs": "Hip & Joint\nProbiotic\nMultivitamin 25-in-1\nTear Stain", "signup_title": "Be first to know when they launch", "button_label": "Notify me", "success_text": "You're on the list! We'll email you on launch day.", "link_label": "See the line-up", "link_url": "shopify://collections/supplements", "trust_1": "Full ingredient list on every jar", "trust_2": "Clear daily dose by weight", "trust_3": "Chicken-flavored soft chews, no pills", "trust_4": "30-day money-back guarantee", "padding_top": 48, "padding_bottom": 48}}
 # Feeder finder quiz (another agent's section): only added when the section exists.
 if (HERE / "sections" / "pm2-quiz.liquid").exists():
     S["quiz"] = {"type": "pm2-quiz", "settings": {
