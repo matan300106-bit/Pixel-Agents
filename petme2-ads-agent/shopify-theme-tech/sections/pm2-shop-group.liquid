@@ -1,0 +1,146 @@
+{%- comment -%}
+  PETME2 shop group: one category on the Shop all page.
+  Desktop: category card (photo, number, title, text, count) on the left, sticky; product grid on the right.
+  Phones: short photo banner with the title on it, then a 2-column grid.
+  Product cards are Dawn's card-product (shows "Coming soon" for products tagged coming-soon).
+{%- endcomment -%}
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{%- if section.settings.quick_add -%}
+  {{ 'quick-add.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+{%- liquid
+  assign s = section.settings
+  assign c = s.collection
+  assign count = 0
+  if c != blank
+    assign count = c.products_count
+  endif
+  assign qa = 'none'
+  if s.quick_add
+    assign qa = 'standard'
+  endif
+-%}
+<section
+  class="pm2-sg color-{{ s.color_scheme }} gradient"
+  {% if s.anchor != blank %}id="{{ s.anchor | handleize }}"{% endif %}
+  style="--pm2-pt: {{ s.padding_top }}px; --pm2-pb: {{ s.padding_bottom }}px;"
+  aria-labelledby="Pm2SgTitle-{{ section.id }}"
+>
+  <div class="page-width pm2-sg__inner">
+    <header class="pm2-sg__intro">
+      <div class="pm2-sg__media">
+        {%- if s.image != blank -%}
+          {{ s.image | image_url: width: 900 | image_tag: class: 'pm2-sg__img', loading: 'lazy', widths: '360, 540, 720, 900', sizes: '(min-width: 990px) 340px, 100vw', alt: '' }}
+        {%- elsif c != blank and c.image != blank -%}
+          {{ c.image | image_url: width: 900 | image_tag: class: 'pm2-sg__img', loading: 'lazy', widths: '360, 540, 720, 900', sizes: '(min-width: 990px) 340px, 100vw', alt: '' }}
+        {%- endif -%}
+        <span class="pm2-sg__fade" aria-hidden="true"></span>
+        <div class="pm2-sg__label">
+          {%- if s.number != blank -%}<span class="pm2-sg__num">{{ s.number | escape }}</span>{%- endif -%}
+          <h2 id="Pm2SgTitle-{{ section.id }}" class="pm2-sg__title">{{ s.title | default: c.title | escape }}</h2>
+          {%- if s.badge != blank -%}<span class="pm2-sg__badge">{{ s.badge | escape }}</span>{%- endif -%}
+        </div>
+      </div>
+      <div class="pm2-sg__text">
+        {%- if s.text != blank -%}<p>{{ s.text | escape }}</p>{%- endif -%}
+        <p class="pm2-sg__count">{{ count }} {% if count == 1 %}product{% else %}products{% endif %}</p>
+        {%- if c != blank and s.show_link -%}
+          <a class="pm2-sg__link" href="{{ c.url }}">View {{ s.title | default: c.title | downcase | escape }}
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true" focusable="false"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        {%- endif -%}
+      </div>
+    </header>
+
+    <ul class="pm2-sg__grid grid product-grid" role="list">
+      {%- if c != blank -%}
+        {%- for product in c.products limit: 24 -%}
+          <li class="grid__item">
+            {% render 'card-product',
+              card_product: product,
+              media_aspect_ratio: 'square',
+              image_shape: 'default',
+              show_secondary_image: true,
+              show_vendor: false,
+              show_rating: false,
+              lazy_load: true,
+              section_id: section.id,
+              quick_add: qa,
+              product_view_context: 'collection'
+            %}
+          </li>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..4) -%}
+          <li class="grid__item">{% render 'card-product', show_vendor: false %}</li>
+        {%- endfor -%}
+      {%- endif -%}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .pm2-sg { padding: 28px 0 36px; }
+  .pm2-sg__inner { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .pm2-sg__media { position: relative; overflow: hidden; border-radius: 22px; height: 170px; background: linear-gradient(160deg, #F8FAFD, #E7EDF7); }
+  .pm2-sg__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .pm2-sg__fade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(12, 18, 34, .72) 0%, rgba(12, 18, 34, .35) 55%, rgba(12, 18, 34, 0) 100%); }
+  .pm2-sg__label { position: absolute; left: 18px; right: 18px; bottom: 16px; color: #fff; }
+  .pm2-sg__num { display: block; font-size: 12px; font-weight: 800; letter-spacing: .14em; opacity: .85; margin-bottom: 4px; }
+  .pm2-sg__title { margin: 0; color: #fff; font-size: 28px; line-height: 1.1; letter-spacing: -.02em; }
+  .pm2-sg__badge { display: inline-block; margin-top: 8px; padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: rgb(var(--color-button-text)); background: rgb(var(--color-button)); }
+  .pm2-sg__text p { margin: 0; font-size: 15px; line-height: 1.55; color: rgba(var(--color-foreground), .75); }
+  .pm2-sg__text { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; margin-top: 12px; }
+  .pm2-sg__text p:first-child { flex-basis: 100%; }
+  .pm2-sg__count { font-size: 14px !important; font-weight: 700; color: rgb(var(--color-foreground)) !important; }
+  .pm2-sg__link { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; font-weight: 700; font-size: 15px; color: rgb(var(--color-button)); text-decoration: none; }
+  .pm2-sg__link:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .pm2-sg__grid { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .pm2-sg__grid > .grid__item { width: auto; max-width: none; padding: 0; }
+
+  @media screen and (min-width: 750px) {
+    .pm2-sg { padding: var(--pm2-pt, 48px) 0 var(--pm2-pb, 48px); }
+    .pm2-sg__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+    .pm2-sg__media { height: 220px; }
+  }
+  @media screen and (min-width: 990px) {
+    .pm2-sg__inner { grid-template-columns: 300px minmax(0, 1fr); gap: 36px; align-items: start; }
+    .pm2-sg__intro { position: sticky; top: calc(var(--header-height, 64px) + 20px); }
+    .pm2-sg__media { height: auto; aspect-ratio: 4 / 5; border-radius: 26px; }
+    .pm2-sg__fade { background: linear-gradient(180deg, rgba(12, 18, 34, 0) 40%, rgba(12, 18, 34, .78) 100%); }
+    .pm2-sg__label { left: 22px; right: 22px; bottom: 22px; }
+    .pm2-sg__title { font-size: 32px; }
+    .pm2-sg__text { margin-top: 16px; flex-direction: column; align-items: flex-start; }
+    .pm2-sg__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+  }
+  @media screen and (min-width: 1200px) {
+    .pm2-sg__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "PETME2 shop group",
+  "tag": "div",
+  "class": "pm2-shop-group-section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "text", "id": "anchor", "label": "Anchor id (for jump links)", "info": "e.g. fountains" },
+    { "type": "text", "id": "number", "label": "Small number", "default": "01" },
+    { "type": "text", "id": "title", "label": "Title" },
+    { "type": "text", "id": "badge", "label": "Badge (e.g. Coming soon)" },
+    { "type": "textarea", "id": "text", "label": "Short text" },
+    { "type": "image_picker", "id": "image", "label": "Category photo" },
+    { "type": "checkbox", "id": "show_link", "label": "Show link to the category page", "default": true },
+    { "type": "checkbox", "id": "quick_add", "label": "Show quick add buttons", "default": true },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-3" },
+    { "type": "range", "id": "padding_top", "label": "Top padding (desktop)", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding (desktop)", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 }
+  ],
+  "presets": [{ "name": "PETME2 shop group" }]
+}
+{% endschema %}
