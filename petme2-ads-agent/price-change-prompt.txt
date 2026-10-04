@@ -1,25 +1,20 @@
 You are working in my Amazon Seller Central (sellercentral.amazon.com), US marketplace.
-GOAL: Change the selling price of 7 products. Do NOT save anything until I say "submit".
-RULES: Change ONLY "Your Price" (and the List Price as described below). Do not change anything else (no titles, images, stock, coupons, deals, business price). If asked to log in, enter a code or solve a captcha: stop and tell me. If Amazon shows a warning (for example "price is outside the expected range" or a Buy Box warning), stop and show me the exact message.
+GOAL: Change the selling price of 4 products. Do NOT save anything until I say "submit".
+RULES: Change ONLY "Your Price" (and the List Price only if I approve, see step 2). Do not change anything else. Do not touch any other SKU. If asked to log in, enter a code or solve a captcha: stop and tell me. If Amazon shows a warning (for example "price outside expected range"), stop and show me the exact message.
 
-STEP 1 - BACKUP (read only): Catalog -> Manage All Inventory. For each SKU below, write down the CURRENT "Your Price", "List Price" (if any), any active Sale Price, and if there is an active coupon or deal.
+STEP 1 - BACKUP (read only): Catalog -> Manage All Inventory. For each SKU below write the CURRENT "Your Price", "List Price", any active Sale Price, coupon or deal.
 
 | SKU | Product | New "Your Price" |
 |---|---|---|
-| LW-EZAJ-KKZD | 3L dual feeder WHITE (B0GHLSQMJ9) | 51.99 |
-| 93-E8EG-20UY | 3L dual feeder BLACK (B0GHMCG8Q9) | 51.99 |
-| 2H-2T1T-CJC3 | Camera feeder (B0GTCGYZDM) | 57.99 |
 | QO-7VBS-CVT4 | 5L WiFi feeder (B0GHH8L59K) | 49.99 |
-| L6-L3S1-I7Q6 | Cat water fountain 2L (B0GHKN9DBR) | 24.99 |
-| SD-85ET-IOZ3 | 2.2L transparent fountain (B0GHLBGCP3) | 24.99 |
-| JE-LQEW-9EHL | Fountain with stainless tray (B0GHKRYV6W) | 24.99 |
+| L6-L3S1-I7Q6 | Cat water fountain 2L (B0GHKN9DBR) | 21.99 |
+| SD-85ET-IOZ3 | 2.2L transparent fountain (B0GHLBGCP3) | 21.99 |
+| JE-LQEW-9EHL | Fountain with stainless tray (B0GHKRYV6W) | 21.99 |
 
-DO NOT change: QY-HHE8-0H1B (stainless fountain) - it stays at 39.99. Also do not touch any other SKU.
+STEP 2 - LIST PRICE: if any of these 4 has a List Price more than 30% above the new price (for example $65.99), show it and suggest removing it. Do not remove until I say so.
 
-STEP 2 - LIST PRICE: for each SKU above, if the List Price is MORE than 30% above the new price (for example $65.99), show it to me and suggest removing it. Do not remove it until I say so.
+STEP 3 - Show me a table: SKU | old price | new price | list price | sale price/coupon/deal | warnings. Then STOP and wait for "submit".
 
-STEP 3 - Show me a table: SKU | old price | new price | list price | active sale price/coupon/deal | any warning. Then STOP and wait for "submit".
+STEP 4 - After I say "submit": change "Your Price" for each SKU, save, and report any error. If a SKU has an active Sale Price or deal, tell me first instead of changing it.
 
-STEP 4 - After I say "submit": change "Your Price" for each SKU (inline edit in Manage All Inventory is fine), save each one, and tell me if Amazon showed any error. If a SKU has an active Sale Price or deal, tell me first instead of changing it.
-
-FINAL: show the table again with the NEW live prices.
+FINAL: show the table with the NEW live prices.

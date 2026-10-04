@@ -6,46 +6,46 @@ products:
   - asin: B0GTCGYZDM
     sku: 2H-2T1T-CJC3
     title: "3L camera feeder"
-    price: 57.99   # owner approved new price 2026-10-04
+    price: 52.99   # launch price plan 2026-10-04 (step-up every ~2 weeks)
     product_cost: 22
     shipping_per_unit: 2.26
-    amazon_fees: 17.09   # referral 8.7 + FBA 8.39
-    profit_before_ads: 16.64
-    break_even_acos: 0.287
+    amazon_fees: 16.34   # referral 7.95 + FBA 8.39
+    profit_before_ads: 12.39
+    break_even_acos: 0.234
     goal: growth
-    target_acos: 0.23   # 80% of break-even (honeymoon: may run up to break-even)
-    max_profitable_cpc_at_10pct_cvr: 1.66
+    target_acos: 0.187   # 80% of break-even (honeymoon: may run up to break-even)
+    max_profitable_cpc_at_10pct_cvr: 1.24
     status: approved
   - asin: B0GHMCG8Q9
     sku: 93-E8EG-20UY
     title: "3L dual feeder BLACK"
-    price: 51.99   # owner approved new price 2026-10-04
+    price: 49.99   # launch price plan 2026-10-04 (step-up every ~2 weeks)
     product_cost: 21
     shipping_per_unit: 2.16
-    amazon_fees: 15.86   # referral 7.8 + FBA 8.06
-    profit_before_ads: 12.97
-    break_even_acos: 0.249
+    amazon_fees: 15.56   # referral 7.5 + FBA 8.06
+    profit_before_ads: 11.27
+    break_even_acos: 0.225
     goal: growth
-    target_acos: 0.2   # 80% of break-even (honeymoon: may run up to break-even)
-    max_profitable_cpc_at_10pct_cvr: 1.3
+    target_acos: 0.18   # 80% of break-even (honeymoon: may run up to break-even)
+    max_profitable_cpc_at_10pct_cvr: 1.13
     status: approved
   - asin: B0GHLSQMJ9
     sku: LW-EZAJ-KKZD
     title: "3L dual feeder WHITE"
-    price: 51.99   # owner approved new price 2026-10-04
+    price: 49.99   # launch price plan 2026-10-04 (step-up every ~2 weeks)
     product_cost: 21
     shipping_per_unit: 2.16
-    amazon_fees: 15.86   # referral 7.8 + FBA 8.06
-    profit_before_ads: 12.97
-    break_even_acos: 0.249
+    amazon_fees: 15.56   # referral 7.5 + FBA 8.06
+    profit_before_ads: 11.27
+    break_even_acos: 0.225
     goal: growth
-    target_acos: 0.2   # 80% of break-even (honeymoon: may run up to break-even)
-    max_profitable_cpc_at_10pct_cvr: 1.3
+    target_acos: 0.18   # 80% of break-even (honeymoon: may run up to break-even)
+    max_profitable_cpc_at_10pct_cvr: 1.13
     status: approved
   - asin: B0GHH8L59K
     sku: QO-7VBS-CVT4
     title: "5L WiFi dual feeder"
-    price: 49.99   # owner approved new price 2026-10-04
+    price: 49.99   # launch price plan 2026-10-04 (step-up every ~2 weeks)
     product_cost: 22
     shipping_per_unit: 2.26
     amazon_fees: 19.75   # referral 7.5 + FBA 12.25
@@ -59,7 +59,7 @@ products:
   - asin: B0DR7FCLZR
     sku: QY-HHE8-0H1B
     title: "3.2L stainless fountain"
-    price: 39.99   # owner approved new price 2026-10-04
+    price: 39.99   # launch price plan 2026-10-04 (step-up every ~2 weeks)
     product_cost: 12
     shipping_per_unit: 1.23
     amazon_fees: 12.9   # referral 6.0 + FBA 6.9
@@ -72,39 +72,39 @@ products:
   - asin: B0GHKN9DBR
     sku: L6-L3S1-I7Q6
     title: "fountain"
-    price: 24.99   # owner approved new price 2026-10-04
+    price: 21.99   # launch price plan 2026-10-04 (step-up every ~2 weeks)
     product_cost: 7
     shipping_per_unit: 0.72
-    amazon_fees: 10.51   # referral 3.75 + FBA 6.76
-    profit_before_ads: 6.76
-    break_even_acos: 0.271
+    amazon_fees: 10.06   # referral 3.3 + FBA 6.76
+    profit_before_ads: 4.21
+    break_even_acos: 0.191
     goal: profit
-    target_acos: 0.216   # 80% of break-even (honeymoon: may run up to break-even)
-    max_profitable_cpc_at_10pct_cvr: 0.68
+    target_acos: 0.153   # 80% of break-even (honeymoon: may run up to break-even)
+    max_profitable_cpc_at_10pct_cvr: 0.42
     status: approved
   - asin: B0GHLBGCP3
     sku: SD-85ET-IOZ3
     title: "2.2L smart fountain"
-    price: 24.99   # owner approved new price 2026-10-04
+    price: 21.99   # launch price plan 2026-10-04 (step-up every ~2 weeks)
     product_cost: 7
     shipping_per_unit: 0.72
-    amazon_fees: 10.65   # referral 3.75 + FBA 6.9
-    profit_before_ads: 6.62
-    break_even_acos: 0.265
+    amazon_fees: 10.2   # referral 3.3 + FBA 6.9
+    profit_before_ads: 4.07
+    break_even_acos: 0.185
     goal: profit
-    target_acos: 0.212   # 80% of break-even (honeymoon: may run up to break-even)
-    max_profitable_cpc_at_10pct_cvr: 0.66
+    target_acos: 0.148   # 80% of break-even (honeymoon: may run up to break-even)
+    max_profitable_cpc_at_10pct_cvr: 0.41
     status: approved
   - asin: B0GHKRYV6W
     sku: JE-LQEW-9EHL
     title: "fountain with filters"
-    price: 24.99   # owner approved new price 2026-10-04
+    price: 21.99   # launch price plan 2026-10-04 (step-up every ~2 weeks)
     product_cost: 7
     shipping_per_unit: 0.72
-    amazon_fees: 10.06   # referral 3.75 + FBA 6.31
-    profit_before_ads: 7.21
-    break_even_acos: 0.289
+    amazon_fees: 9.61   # referral 3.3 + FBA 6.31
+    profit_before_ads: 4.66
+    break_even_acos: 0.212
     goal: profit
-    target_acos: 0.231   # 80% of break-even (honeymoon: may run up to break-even)
-    max_profitable_cpc_at_10pct_cvr: 0.72
+    target_acos: 0.17   # 80% of break-even (honeymoon: may run up to break-even)
+    max_profitable_cpc_at_10pct_cvr: 0.47
     status: approved
