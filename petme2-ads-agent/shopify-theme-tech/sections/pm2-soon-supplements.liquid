@@ -28,14 +28,14 @@
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 4l3 4h8l3-4v9a7 7 0 0 1-14 0z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="9.5" cy="12.5" r="1" fill="currentColor"/><circle cx="14.5" cy="12.5" r="1" fill="currentColor"/></svg>
               For cats
             </p>
-            <ul role="list">{%- for item in s.cats | newline_to_br | split: '<br />' -%}{%- assign t = item | strip -%}{%- if t != blank -%}<li>{{ t | escape }}</li>{%- endif -%}{%- endfor -%}</ul>
+            <ul role="list">{%- assign cats_items = s.cats | newline_to_br | split: '<br />' -%}{%- for item in cats_items -%}{%- assign t = item | strip -%}{%- if t != blank -%}<li>{{ t | escape }}</li>{%- endif -%}{%- endfor -%}</ul>
           </div>
           <div class="pm2-soon-h__list">
             <p class="pm2-soon-h__who">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M6 9c-1.5 0-3-1-3-3l2-1 2 2M18 9c1.5 0 3-1 3-3l-2-1-2 2M7 8h10l1 6a6 6 0 0 1-12 0z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="10" cy="12.5" r="1" fill="currentColor"/><circle cx="14" cy="12.5" r="1" fill="currentColor"/></svg>
               For dogs
             </p>
-            <ul role="list">{%- for item in s.dogs | newline_to_br | split: '<br />' -%}{%- assign t = item | strip -%}{%- if t != blank -%}<li>{{ t | escape }}</li>{%- endif -%}{%- endfor -%}</ul>
+            <ul role="list">{%- assign dogs_items = s.dogs | newline_to_br | split: '<br />' -%}{%- for item in dogs_items -%}{%- assign t = item | strip -%}{%- if t != blank -%}<li>{{ t | escape }}</li>{%- endif -%}{%- endfor -%}</ul>
           </div>
         </div>
 
