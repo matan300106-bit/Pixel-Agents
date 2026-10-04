@@ -15,6 +15,14 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 FOUNTAINS = ["B0DR7FCLZR", "B0GHKN9DBR", "B0GHLBGCP3", "B0GHKRYV6W"]
+# Keywords intentionally kept out of the copy (not true for the product / promo words).
+EXCLUDED = {
+    "B0DR7FCLZR": ["304 stainless steel cat fountain", "large dog water fountain",
+                   "large dog water dispenser", "dog water fountain for large dogs"],
+    "B0GHKN9DBR": ["best cat water fountain"],
+    "B0GHLBGCP3": ["best cat water fountain"],
+    "B0GHKRYV6W": ["best cat water fountain"],
+}
 
 
 def norm(s):
@@ -59,8 +67,14 @@ def main():
         s = score(listings[asin], banks[asin]["top60"])
         print(f"== {asin} {listings[asin].get('product','')}")
         print(f"   weighted {s['weighted']:.1f}%  exact(T+B+D) {s['exact']:.1f}%  indexed {s['indexed']:.1f}%")
+        top = banks[asin]["top60"]
+        ex = set(EXCLUDED.get(asin, []))
+        pool = sum(k["sv"] for k in top if k["kw"] not in ex) or 1
+        miss_ok = sum(sv for sv, kw in s["missing"] if kw not in ex)
+        print(f"   exact excl. intentionally excluded kws: {100 * (1 - miss_ok / pool):.1f}%")
         for sv, kw in s["missing"][:n]:
-            print(f"     not exact: {sv:>7}  {kw}")
+            tag = " (intentionally excluded)" if kw in ex else ""
+            print(f"     not exact: {sv:>7}  {kw}{tag}")
         for sv, kw in s["unindexed"]:
             print(f"     NOT INDEXED: {sv:>7}  {kw}")
 
