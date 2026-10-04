@@ -1,0 +1,623 @@
+{
+  "sections": {
+    "hero": {
+      "type": "image-banner",
+      "settings": {
+        "image": "shopify://shop_images/main-banner.jpg",
+        "image_2": "",
+        "image_overlay_opacity": 50,
+        "image_height": "large",
+        "image_behavior": "none",
+        "desktop_content_position": "middle-left",
+        "desktop_content_alignment": "left",
+        "show_text_box": false,
+        "color_scheme": "scheme-1",
+        "stack_images_on_mobile": false,
+        "mobile_content_alignment": "left",
+        "show_text_below": false
+      },
+      "blocks": {
+        "cap": {
+          "type": "text",
+          "settings": {
+            "text": "SMART FEEDERS · WATER FOUNTAINS",
+            "text_style": "caption-with-letter-spacing"
+          }
+        },
+        "h": {
+          "type": "heading",
+          "settings": {
+            "heading": "Smart feeding. Fresh water. Zero guesswork.",
+            "heading_size": "h0"
+          }
+        },
+        "t": {
+          "type": "text",
+          "settings": {
+            "text": "App-controlled feeders and quiet fountains for cats and small dogs.",
+            "text_style": "subtitle"
+          }
+        },
+        "b": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Shop feeders",
+            "button_link_1": "shopify://collections/feeders",
+            "button_style_secondary_1": false,
+            "button_label_2": "Shop fountains",
+            "button_link_2": "shopify://collections/water-fountains",
+            "button_style_secondary_2": true
+          }
+        }
+      },
+      "block_order": [
+        "cap",
+        "h",
+        "t",
+        "b"
+      ]
+    },
+    "specs": {
+      "type": "pm2-specs",
+      "settings": {
+        "color_scheme": "scheme-1"
+      },
+      "blocks": {
+        "s1": {
+          "type": "spec",
+          "settings": {
+            "big": "1080P",
+            "label": "HD camera feeder"
+          }
+        },
+        "s2": {
+          "type": "spec",
+          "settings": {
+            "big": "5L",
+            "label": "Largest feeder"
+          }
+        },
+        "s3": {
+          "type": "spec",
+          "settings": {
+            "big": "2",
+            "label": "Stainless steel bowls"
+          }
+        },
+        "s4": {
+          "type": "spec",
+          "settings": {
+            "big": "3.2L",
+            "label": "Stainless fountain"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ]
+    },
+    "categories": {
+      "type": "multicolumn",
+      "settings": {
+        "title": "Shop by category",
+        "heading_size": "h1",
+        "image_width": "full",
+        "image_ratio": "portrait",
+        "button_label": "",
+        "button_link": "",
+        "columns_desktop": 2,
+        "column_alignment": "left",
+        "background_style": "none",
+        "color_scheme": "scheme-1",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 72,
+        "padding_bottom": 36
+      },
+      "blocks": {
+        "c1": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/homepage-feeder.png",
+            "title": "Automatic feeders",
+            "text": "<p>App scheduling, two-bowl models for 2 pets, and a 1080P camera model.</p>",
+            "link_label": "Shop feeders",
+            "link": "shopify://collections/feeders"
+          }
+        },
+        "c2": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/Homepage-Water-Fountains_79d73496-2084-410b-bd2e-dc1ea0e329a5.png",
+            "title": "Water fountains",
+            "text": "<p>Quiet fountains from 2L to 3.2L, including a stainless steel model.</p>",
+            "link_label": "Shop fountains",
+            "link": "shopify://collections/water-fountains"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2"
+      ]
+    },
+    "feeders": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "feeders",
+        "products_to_show": 4,
+        "title": "Smart feeders",
+        "heading_size": "h1",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 4,
+        "enable_desktop_slider": false,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "color_scheme": "scheme-2",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "standard",
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "app": {
+      "type": "image-with-text",
+      "settings": {
+        "image": "shopify://shop_images/Your_pets_meals_managed_from_your_phone_3d0ac522-2f46-4a7b-a1d9-e2b48f76d5bb.jpg",
+        "height": "large",
+        "desktop_image_width": "medium",
+        "layout": "image_first",
+        "image_behavior": "none",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "scheme-1",
+        "color_scheme": "scheme-1",
+        "padding_top": 72,
+        "padding_bottom": 72
+      },
+      "blocks": {
+        "c": {
+          "type": "caption",
+          "settings": {
+            "caption": "THE APP",
+            "text_style": "caption-with-letter-spacing",
+            "text_size": "medium"
+          }
+        },
+        "h": {
+          "type": "heading",
+          "settings": {
+            "heading": "Meals on schedule. From anywhere.",
+            "heading_size": "h1"
+          }
+        },
+        "t": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Set feeding times and portions from your phone. The camera model adds 1080P live view and 2-way audio, so you can see and talk to your pet when you're away.</p>",
+            "text_style": "body"
+          }
+        },
+        "b": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop feeders",
+            "button_link": "shopify://collections/feeders",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "c",
+        "h",
+        "t",
+        "b"
+      ]
+    },
+    "cmp_feeders": {
+      "type": "pm2-compare",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "anchor": "compare-feeders",
+        "eyebrow": "Compare feeders",
+        "heading": "Which feeder is right for you?",
+        "text": "All PETME2 feeders work with dry food, run on a schedule from the app, and are for cats and small dogs.",
+        "row1": "Capacity",
+        "row2": "Bowls",
+        "row3": "Control",
+        "row4": "Camera",
+        "row5": "Audio",
+        "button_text": "View details"
+      },
+      "blocks": {
+        "m1": {
+          "type": "model",
+          "settings": {
+            "product": "2-in-1-smart-feeder",
+            "name": "3L Dual Bowl",
+            "badge": "Most popular",
+            "v1": "3L",
+            "v2": "2 stainless steel",
+            "v3": "App",
+            "v4": "—",
+            "v5": "2-way audio"
+          }
+        },
+        "m2": {
+          "type": "model",
+          "settings": {
+            "product": "2-in-1-feeder-1",
+            "name": "5L Elevated WiFi",
+            "badge": "",
+            "v1": "5L",
+            "v2": "2 stainless steel",
+            "v3": "WiFi app",
+            "v4": "—",
+            "v5": "Voice recording"
+          }
+        },
+        "m3": {
+          "type": "model",
+          "settings": {
+            "product": "smart-feeder",
+            "name": "3L Camera Feeder",
+            "badge": "",
+            "v1": "3L",
+            "v2": "1 stainless steel",
+            "v3": "WiFi app",
+            "v4": "1080P HD, live view",
+            "v5": "2-way audio"
+          }
+        }
+      },
+      "block_order": [
+        "m1",
+        "m2",
+        "m3"
+      ]
+    },
+    "two_pets": {
+      "type": "image-with-text",
+      "settings": {
+        "image": "shopify://shop_images/image_42_1.jpg",
+        "height": "large",
+        "desktop_image_width": "medium",
+        "layout": "text_first",
+        "image_behavior": "none",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "scheme-2",
+        "color_scheme": "scheme-2",
+        "padding_top": 72,
+        "padding_bottom": 72
+      },
+      "blocks": {
+        "c": {
+          "type": "caption",
+          "settings": {
+            "caption": "DUAL BOWL",
+            "text_style": "caption-with-letter-spacing",
+            "text_size": "medium"
+          }
+        },
+        "h": {
+          "type": "heading",
+          "settings": {
+            "heading": "Two pets. One routine.",
+            "heading_size": "h1"
+          }
+        },
+        "t": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Even portions in two stainless steel bowls, so both pets eat at the same time. A sealed container and desiccant box help keep dry food fresh.</p>",
+            "text_style": "body"
+          }
+        },
+        "b": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop dual feeders",
+            "button_link": "shopify://products/2-in-1-smart-feeder",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "c",
+        "h",
+        "t",
+        "b"
+      ]
+    },
+    "fountains": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "water-fountains",
+        "products_to_show": 4,
+        "title": "Water fountains",
+        "heading_size": "h1",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 4,
+        "enable_desktop_slider": false,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "standard",
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "water": {
+      "type": "image-with-text",
+      "settings": {
+        "image": "shopify://shop_images/Homepage-Water-Fountains_79d73496-2084-410b-bd2e-dc1ea0e329a5.png",
+        "height": "large",
+        "desktop_image_width": "medium",
+        "layout": "image_first",
+        "image_behavior": "none",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "scheme-2",
+        "color_scheme": "scheme-2",
+        "padding_top": 72,
+        "padding_bottom": 72
+      },
+      "blocks": {
+        "c": {
+          "type": "caption",
+          "settings": {
+            "caption": "WATER FOUNTAINS",
+            "text_style": "caption-with-letter-spacing",
+            "text_size": "medium"
+          }
+        },
+        "h": {
+          "type": "heading",
+          "settings": {
+            "heading": "Fresh, moving water. Quiet pump.",
+            "heading_size": "h1"
+          }
+        },
+        "t": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Every PETME2 fountain has a quiet pump and comes apart for easy cleaning. Choose stainless steel, a steel drinking tray, or a see-through body.</p>",
+            "text_style": "body"
+          }
+        },
+        "b": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop fountains",
+            "button_link": "shopify://collections/water-fountains",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "c",
+        "h",
+        "t",
+        "b"
+      ]
+    },
+    "cmp_fountains": {
+      "type": "pm2-compare",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "anchor": "compare-fountains",
+        "eyebrow": "Compare fountains",
+        "heading": "Which fountain is right for you?",
+        "text": "Every PETME2 fountain has a quiet pump and comes apart for easy cleaning.",
+        "row1": "Capacity",
+        "row2": "Material",
+        "row3": "Filter",
+        "row4": "Water level",
+        "row5": "Best for",
+        "button_text": "View details"
+      },
+      "blocks": {
+        "w1": {
+          "type": "model",
+          "settings": {
+            "product": "water-fountain",
+            "name": "Stainless 3.2L",
+            "badge": "Premium",
+            "v1": "3.2L / 108oz",
+            "v2": "Stainless steel",
+            "v3": "4-layer filter",
+            "v4": "LED light",
+            "v5": "Big drinkers, cats & dogs"
+          }
+        },
+        "w2": {
+          "type": "model",
+          "settings": {
+            "product": "water-fountain-4",
+            "name": "Steel Tray 2.2L",
+            "badge": "",
+            "v1": "2.2L",
+            "v2": "Plastic + steel tray",
+            "v3": "4-layer filter",
+            "v4": "Window + low-water light",
+            "v5": "A steel drinking surface"
+          }
+        },
+        "w3": {
+          "type": "model",
+          "settings": {
+            "product": "water-fountain-2",
+            "name": "Transparent 2.2L",
+            "badge": "",
+            "v1": "2.2L",
+            "v2": "Clear plastic",
+            "v3": "Filter cartridge",
+            "v4": "See-through body",
+            "v5": "Seeing water at a glance"
+          }
+        },
+        "w4": {
+          "type": "model",
+          "settings": {
+            "product": "water-fountain-simple",
+            "name": "Classic 2L",
+            "badge": "Best seller",
+            "v1": "2L",
+            "v2": "Plastic",
+            "v3": "—",
+            "v4": "Window + low-water light",
+            "v5": "Small spaces"
+          }
+        }
+      },
+      "block_order": [
+        "w1",
+        "w2",
+        "w3",
+        "w4"
+      ]
+    },
+    "faq": {
+      "type": "collapsible-content",
+      "settings": {
+        "caption": "FAQ",
+        "heading": "Questions, answered",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "layout": "none",
+        "container_color_scheme": "scheme-2",
+        "color_scheme": "scheme-1",
+        "open_first_collapsible_row": true,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 72,
+        "padding_bottom": 72
+      },
+      "blocks": {
+        "q1": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Do the feeders work with wet food?",
+            "icon": "check_mark",
+            "row_content": "<p>No. PETME2 feeders are made for dry food (kibble).</p>"
+          }
+        },
+        "q2": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Which feeder is best for 2 pets?",
+            "icon": "check_mark",
+            "row_content": "<p>The 3L Dual Bowl or the 5L Elevated WiFi. Both split food into two stainless steel bowls.</p>"
+          }
+        },
+        "q3": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Do I need WiFi?",
+            "icon": "check_mark",
+            "row_content": "<p>WiFi is needed for the app: schedules, portions and alerts.</p>"
+          }
+        },
+        "q4": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Are the fountains loud?",
+            "icon": "check_mark",
+            "row_content": "<p>No. Every PETME2 fountain uses a quiet pump made for use inside the home.</p>"
+          }
+        },
+        "q5": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Is PETME2 on Amazon?",
+            "icon": "check_mark",
+            "row_content": "<p>Yes. All PETME2 products are also sold on Amazon, where you can read buyer reviews.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5"
+      ]
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "color_scheme": "scheme-4",
+        "full_width": true,
+        "padding_top": 56,
+        "padding_bottom": 64
+      },
+      "blocks": {
+        "h": {
+          "type": "heading",
+          "settings": {
+            "heading": "Get new products and deals first",
+            "heading_size": "h1"
+          }
+        },
+        "p": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>No spam. Just launches and member-only offers.</p>"
+          }
+        },
+        "f": {
+          "type": "email_form",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "h",
+        "p",
+        "f"
+      ]
+    }
+  },
+  "order": [
+    "hero",
+    "specs",
+    "categories",
+    "feeders",
+    "app",
+    "cmp_feeders",
+    "two_pets",
+    "fountains",
+    "water",
+    "cmp_fountains",
+    "faq",
+    "newsletter"
+  ]
+}
