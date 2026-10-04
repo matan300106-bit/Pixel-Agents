@@ -251,7 +251,7 @@ for _b in reviews_block.values():
 P = {
     "main": section("main-product",
         {"enable_sticky_info": True, "color_scheme": "scheme-3", "media_size": "large", "constrain_to_viewport": True,
-         "media_fit": "contain", "gallery_layout": "thumbnail_slider", "mobile_thumbnails": "show",
+         "media_fit": "contain", "gallery_layout": "thumbnail_slider", "mobile_thumbnails": "hide",
          "media_position": "left", "image_zoom": "lightbox", "hide_variants": False, "enable_video_looping": False,
          "padding_top": 20, "padding_bottom": 48},
         ("title", "title", {}),
