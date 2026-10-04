@@ -18,7 +18,7 @@ and cut fast where we pay and do not sell. These rules follow CLAUDE.md section 
 - **Day 1** = the first day the campaign is enabled. Count days per campaign.
 - We are in `audit` mode: every rule below makes a **proposal** only. Nothing changes without the owner.
 - One keyword: max **one change every 3 days** (check `changes-log.csv`). Max **±20% per day** for bid raises.
-- Max **$1.00** bid during ramp-up (owner cap). If `max_bid` in `settings.yaml` is set lower, use the lower one.
+- Max bid = `max_bid` in settings.yaml (now **$1.50**, owner raised 2026-10-04 for the honeymoon test). If `max_bid` in `settings.yaml` is set lower, use the lower one.
 - Max **50 changes** per run. Every change goes to `changes-log.csv` with the old value.
 - Product under **21 days of stock**: no bid raises (lower 30%). Under **10 days**: pause its ads, tell the owner.
 - **Emergency stop**: spend yesterday > 1.5 × `daily_spend_cap`, or ACOS doubled vs the 7-day average → no changes, report, wait.
@@ -37,7 +37,7 @@ Words used below:
 Raise a keyword bid by **+15%** only when ALL are true:
 1. Fewer than **50 impressions** in the last 3 days.
 2. No change on this keyword in the last 3 days.
-3. New bid stays at or below **$1.00** (round down to the cent; if +15% passes $1.00, set exactly $1.00).
+3. New bid stays at or below `max_bid` (**$1.50**) (round down to the cent; if +15% passes max_bid, set exactly max_bid).
 4. Product has 21+ days of stock.
 5. The campaign did **not** run out of budget in the last 3 days.
 6. The keyword is not in a running test (`experiments/`).
@@ -49,8 +49,8 @@ One step every 3 days, so a keyword needs about 27 days to reach $1.00. That is 
 
 Stop raising a keyword (keep the bid as it is) when ANY is true:
 - It has **50+ impressions** in the last 3 days (it now gets traffic — let it collect data).
-- It reached **$1.00** (or `max_bid`). If it still has < 50 impressions at $1.00 after 6 more days:
-  mark it "no traffic at max bid" and ask the owner (keep, or pause). Do not go above $1.00 without owner OK.
+- It reached `max_bid` (**$1.50**). If it still has < 50 impressions at max_bid after 6 more days:
+  mark it "no traffic at max bid" and ask the owner (keep, or pause). Do not go above max_bid without owner OK.
 - It has **10+ clicks** (now the ACOS rules in section 3 decide).
 - It has clicks but **0 orders** and spend ≥ 1 × target cost per sale (do not pay more for traffic that does not buy).
 - The campaign **runs out of budget** (see section 6) — more bid only burns the budget sooner.
@@ -79,7 +79,7 @@ Check the search term report every run (Broad ad groups give most of the terms).
 
 - Search term from a **Broad** ad group with **≥ 2 orders** and **ACOS below target** →
   1. add it as an **exact** keyword in the matching Exact ad group (same campaign, right product),
-     start bid = its average cost per click, max $1.00;
+     start bid = its average cost per click, max = max_bid;
   2. add it as **negative exact** in the Broad ad group it came from, so the two do not compete.
 - Before day 14, harvest only if it is very clear (≥ 2 orders). Do not harvest on 1 order.
 
@@ -105,5 +105,10 @@ Check the search term report every run (Broad ad groups give most of the terms).
 
 ## 8. Open items for the owner
 
-- `max_bid` and `daily_spend_cap` in `settings.yaml` (suggested: max bid $1.00 during ramp-up, cap $18/day).
+- `max_bid` and `daily_spend_cap` in `settings.yaml` (now: max bid $1.50, cap $60/day, owner 2026-10-04).
 - Product cost per ASIN, so we can replace the temporary target ACOS (25% / 30%).
+
+## Update 2026-10-04 (owner): honeymoon test, per-target bids
+- Every keyword and competitor has its OWN start bid (low end of its range): head terms and pricier competitors higher; long-tail, same-price competitors and brand terms lower.
+- Raise step by step from there (+15% per 3 days for targets with < 50 impressions), never above `max_bid`.
+- $19.99 fountains: stay at or below **$0.50** until the owner gives the product cost.
