@@ -35,6 +35,8 @@ S["hero"] = sec("pm2-hero", {
     "product": "smart-feeder", "link_product": True, "image": IMG + "image_846.jpg",
     "badge_1": "1080P live view", "badge_2": "2-way audio", "badge_3": "",
     "padding_top": 40, "padding_bottom": 56})
+# Entrance: real video of 2 cats at the white dual feeder (owner video), copy on the video on phones.
+S["hero"] = {"type": "pm2-entrance", "settings": {"color_scheme": "scheme-1", "video_url": "https://cdn.shopify.com/videos/c/vp/95b6d8af127243cfa743349a46393a78/95b6d8af127243cfa743349a46393a78.HD-720p-1.6Mbps-96389653.mp4", "poster": "shopify://shop_images/petme2-hero-2-cats-poster.jpg", "video_alt": "Two cats waiting at the PETME2 dual bowl feeder, then eating together", "badge": "Feeds 2 cats at once", "product": "2-in-1-smart-feeder-white", "chip_title": "", "eyebrow_tag": "Sale", "eyebrow": "Save up to 33% · for cats & small dogs", "heading_1": "Easy everyday", "heading_2": "pet care.", "subtext": "Meals on time and fresh water all day. Set it up once, enjoy more time together.", "button_label": "Shop now", "button_link": "shopify://collections/all", "link_label": "Find the right feeder", "link_url": "shopify://pages/how-to-choose", "trust_1": "Free U.S. shipping", "trust_2": "30-day money back", "trust_3": "Easy app control", "padding_top": 56, "padding_bottom": 56}}
 S["ticker"] = sec("pm2-marquee", {"color_scheme": "scheme-3", "duration": 40, "size": "small",
                                    "show_divider": True, "show_borders": True, "reverse": False}, [
     ("item", {"text": "Sale: save up to 33%", "icon": "sparkle"}),
