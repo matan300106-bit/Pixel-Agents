@@ -1,5 +1,6 @@
-"""Builds the 'PETME2 — Friendly Minimal' design system for a fresh Dawn theme (light-first, soft blue,
-rounded Nunito headings, big radii, airy spacing; mobile first).
+"""Builds the 'PETME2 — Friendly Minimal / built to sell' design system for a fresh Dawn theme (white base,
+one soft neutral, ONE action blue reserved for buy buttons, soft mint for trust; rounded Nunito headings,
+big radii, airy spacing; mobile first).
 Writes templates/index.json, templates/product.json, sections/header-group.json,
 sections/footer-group.json and config/settings_data.json. Same photos as the old store,
 everything else new. Only true claims (from research/seo facts)."""
@@ -8,10 +9,15 @@ from pathlib import Path
 
 HERE = Path(__file__).parent
 IMG = "shopify://shop_images/"
-# Friendly-minimal palette. Contrast (WCAG): white on BLUE 5.02:1, BLUE on SKY 4.55:1, BLUE on CREAM 4.61:1,
-# INK on white 15.2:1, INK on CREAM 13.9:1, SNOW on NIGHT 14.4:1 -> every button label/body text >= 4.5:1.
-INK, NIGHT, BLUE, SNOW, WHITE = "#1B2540", "#1E2846", "#3366E6", "#F5F7FC", "#FFFFFF"
-CREAM, SKY = "#F7F5F2", "#EEF4FF"
+# Sell palette (WCAG): white label on ACTION 5.48:1, INK on WHITE 15.2:1, INK on CLOUD 14.0:1, INK on MINT 13.6:1,
+# ACTION on CLOUD 5.0:1, GREEN (checkmarks) on MINT 4.7:1 -> every button label / body text >= 4.5:1.
+# ACTION is the one strong colour and is used for buy/add-to-cart buttons in every scheme.
+INK, WHITE = "#1B2540", "#FFFFFF"
+ACTION = "#2F5FE0"   # PETME2 blue, a touch deeper for punch + contrast
+CLOUD = "#F4F6FA"    # the one soft neutral background
+MINT = "#E9F6EF"     # subtle success tint for guarantee / shipping bands
+GREEN = "#1E7B4F"    # checkmark colour (global style)
+BLUE = ACTION
 NAVY = INK  # used by the reviews app block colours below
 
 
@@ -46,11 +52,11 @@ def scheme(bg, text, button, label, secondary):
 current = {
     "logo": IMG + "01-08-Photoroom_1.png", "logo_width": 110, "favicon": IMG + "p2_1.png",
     "color_schemes": {
-        "scheme-1": scheme(NIGHT, SNOW, WHITE, NIGHT, SNOW),       # soft night: the ONE dark accent (CTA band)
-        "scheme-2": scheme(BLUE, WHITE, WHITE, BLUE, WHITE),       # friendly blue (sale badge, small accents)
-        "scheme-3": scheme(WHITE, INK, BLUE, WHITE, INK),          # white (header, product info, most sections)
-        "scheme-4": scheme(SKY, INK, BLUE, WHITE, INK),            # soft sky (announcement, ticker, quiz, compare)
-        "scheme-5": scheme(CREAM, INK, BLUE, WHITE, INK),          # warm cream (hero, cards, alternate bands)
+        "scheme-1": scheme(WHITE, INK, ACTION, WHITE, INK),       # white (Dawn's default scheme, kept safe)
+        "scheme-2": scheme(ACTION, WHITE, WHITE, ACTION, WHITE),  # action blue (sale badge only)
+        "scheme-3": scheme(WHITE, INK, ACTION, WHITE, INK),       # white (header, product info, most sections)
+        "scheme-4": scheme(CLOUD, INK, ACTION, WHITE, INK),       # cloud: the one soft neutral (hero, quiz, compare, cards, footer)
+        "scheme-5": scheme(MINT, INK, ACTION, WHITE, INK),        # mint: trust / guarantee / shipping bands
     },
     # Nunito (rounded, friendly) for headings + Nunito Sans for body; both verified in Shopify's font library.
     "type_header_font": "nunito_n8", "heading_scale": 110, "type_body_font": "nunito_sans_n4", "body_scale": 100,
@@ -62,11 +68,11 @@ current = {
     "variant_pills_shadow_opacity": 0, "variant_pills_shadow_horizontal_offset": 0, "variant_pills_shadow_vertical_offset": 0, "variant_pills_shadow_blur": 0,
     "inputs_border_thickness": 1, "inputs_border_opacity": 25, "inputs_radius": 14,
     "inputs_shadow_opacity": 0, "inputs_shadow_horizontal_offset": 0, "inputs_shadow_vertical_offset": 0, "inputs_shadow_blur": 0,
-    "card_style": "card", "card_image_padding": 12, "card_text_alignment": "left", "card_color_scheme": "scheme-5",
+    "card_style": "card", "card_image_padding": 12, "card_text_alignment": "left", "card_color_scheme": "scheme-4",
     "card_border_thickness": 0, "card_border_opacity": 0, "card_corner_radius": 24,
     "card_shadow_opacity": 0, "card_shadow_horizontal_offset": 0, "card_shadow_vertical_offset": 0, "card_shadow_blur": 0,
     "collection_card_style": "card", "collection_card_image_padding": 0, "collection_card_text_alignment": "left",
-    "collection_card_color_scheme": "scheme-5", "collection_card_border_thickness": 0, "collection_card_border_opacity": 0,
+    "collection_card_color_scheme": "scheme-4", "collection_card_border_thickness": 0, "collection_card_border_opacity": 0,
     "collection_card_corner_radius": 24, "collection_card_shadow_opacity": 0,
     "collection_card_shadow_horizontal_offset": 0, "collection_card_shadow_vertical_offset": 0, "collection_card_shadow_blur": 0,
     "text_boxes_border_thickness": 0, "text_boxes_border_opacity": 0, "text_boxes_radius": 24,
@@ -77,9 +83,9 @@ current = {
     "popup_shadow_opacity": 10, "popup_shadow_horizontal_offset": 0, "popup_shadow_vertical_offset": 8, "popup_shadow_blur": 30,
     "drawer_border_thickness": 1, "drawer_border_opacity": 10,
     "drawer_shadow_opacity": 0, "drawer_shadow_horizontal_offset": 0, "drawer_shadow_vertical_offset": 0, "drawer_shadow_blur": 0,
-    "badge_position": "top left", "badge_corner_radius": 40, "sale_badge_color_scheme": "scheme-2", "sold_out_badge_color_scheme": "scheme-5",
+    "badge_position": "top left", "badge_corner_radius": 40, "sale_badge_color_scheme": "scheme-2", "sold_out_badge_color_scheme": "scheme-4",
     "brand_headline": "Easy, happy care for cats and small dogs.",
-    "brand_description": "<p>PETME2 makes smart feeders and quiet water fountains. Also sold on Amazon.</p>",
+    "brand_description": "<p>Smart feeders and quiet water fountains. Free U.S. shipping and a 30-day money-back guarantee on every order.</p>",
     "predictive_search_enabled": True, "predictive_search_show_vendor": False, "predictive_search_show_price": True,
     "currency_code_enabled": False,
     "cart_type": "drawer", "show_vendor": False, "show_cart_note": False, "cart_color_scheme": "scheme-3",
@@ -93,10 +99,11 @@ w("sections/header-group.json", {
     "name": "t:sections.header.name", "type": "header",
     "sections": {
         "announcement-bar": section("announcement-bar",
-            {"color_scheme": "scheme-4", "show_line_separator": False, "show_social": False, "auto_rotate": True,
+            {"color_scheme": "scheme-5", "show_line_separator": False, "show_social": False, "auto_rotate": True,
              "change_slides_speed": 5, "enable_country_selector": False, "enable_language_selector": False},
             ("a1", "announcement", {"text": "Free U.S. shipping on every order", "link": ""}),
-            ("a2", "announcement", {"text": "Not sure which feeder? Compare them →", "link": "/#compare-feeders"})),
+            ("a2", "announcement", {"text": "30-day money-back guarantee", "link": ""}),
+            ("a3", "announcement", {"text": "10% off your first order when you join our emails", "link": ""})),
         "header": section("header",
             {"color_scheme": "scheme-3", "menu_color_scheme": "scheme-3", "logo_position": "middle-left",
              "menu": "main-menu", "menu_type_desktop": "dropdown", "sticky_header_type": "always",
@@ -108,7 +115,7 @@ w("sections/header-group.json", {
 w("sections/footer-group.json", {
     "name": "t:sections.footer.name", "type": "footer",
     "sections": {"footer": section("footer",
-        {"color_scheme": "scheme-1", "newsletter_enable": False, "newsletter_heading": "Get new products and deals first",
+        {"color_scheme": "scheme-4", "newsletter_enable": True, "newsletter_heading": "Get 10% off your first order",
          "enable_follow_on_shop": True, "show_social": False, "enable_country_selector": False,
          "enable_language_selector": False, "payment_enable": True, "show_policy": True,
          "margin_top": 0, "padding_top": 56, "padding_bottom": 40},
@@ -215,13 +222,13 @@ S["faq"] = section("collapsible-content",
      "layout": "none", "container_color_scheme": "scheme-3", "color_scheme": "scheme-5",
      "open_first_collapsible_row": True, "image_ratio": "adapt", "desktop_layout": "image_second",
      "padding_top": 72, "padding_bottom": 72},
-    ("q1", "collapsible_row", {"heading": "Do the feeders work with wet food?", "icon": "check_mark", "row_content": "<p>No. PETME2 feeders are made for dry food (kibble).</p>"}),
-    ("q2", "collapsible_row", {"heading": "Which feeder is best for 2 pets?", "icon": "check_mark", "row_content": "<p>The 3L Dual Bowl or the 5L Elevated WiFi. Both split food into two stainless steel bowls.</p>"}),
-    ("q3", "collapsible_row", {"heading": "Do I need WiFi?", "icon": "check_mark", "row_content": "<p>WiFi is needed for the app: schedules, portions and alerts.</p>"}),
-    ("q4", "collapsible_row", {"heading": "Are the fountains loud?", "icon": "check_mark", "row_content": "<p>No. Every PETME2 fountain uses a quiet pump made for use inside the home.</p>"}),
-    ("q5", "collapsible_row", {"heading": "Are the fountains easy to clean?", "icon": "check_mark", "row_content": "<p>Yes. Every PETME2 fountain comes apart for cleaning.</p>"}),
-    ("q6", "collapsible_row", {"heading": "Is shipping free?", "icon": "check_mark", "row_content": "<p>Yes. Shipping is free on every U.S. order.</p>"}),
-    ("q7", "collapsible_row", {"heading": "Is PETME2 on Amazon?", "icon": "check_mark", "row_content": "<p>Yes. PETME2 products are also sold on Amazon.</p>"}))
+    ("q1", "collapsible_row", {"heading": "What if my pet doesn't like it?", "icon": "check_mark", "row_content": "<p>No worries. Every order comes with a 30-day money-back guarantee. If it's not a fit, contact us within 30 days and we'll give you your money back.</p>"}),
+    ("q2", "collapsible_row", {"heading": "How fast is shipping?", "icon": "check_mark", "row_content": "<p>Shipping is free on every U.S. order. Orders are fulfilled by Amazon.</p>"}),
+    ("q3", "collapsible_row", {"heading": "Do the feeders work with wet food?", "icon": "check_mark", "row_content": "<p>No. PETME2 feeders are made for dry food (kibble).</p>"}),
+    ("q4", "collapsible_row", {"heading": "Which feeder is best for 2 pets?", "icon": "check_mark", "row_content": "<p>The 3L Dual Bowl or the 5L Elevated WiFi. Both split food into two stainless steel bowls.</p>"}),
+    ("q5", "collapsible_row", {"heading": "Do I need WiFi?", "icon": "check_mark", "row_content": "<p>WiFi is needed for the app: schedules, portions and alerts.</p>"}),
+    ("q6", "collapsible_row", {"heading": "Are the fountains loud?", "icon": "check_mark", "row_content": "<p>No. Every PETME2 fountain uses a quiet pump made for use inside the home.</p>"}),
+    ("q7", "collapsible_row", {"heading": "Are the fountains easy to clean?", "icon": "check_mark", "row_content": "<p>Yes. Every PETME2 fountain comes apart for cleaning.</p>"}))
 S["newsletter"] = section("newsletter",
     {"color_scheme": "scheme-3", "full_width": True, "padding_top": 56, "padding_bottom": 64},
     ("h", "heading", {"heading": "Get new products and deals first", "heading_size": "h1"}),
@@ -232,7 +239,12 @@ w("templates/index.json", {"sections": S, "order": list(S)})
 # ---------- product page ----------
 old = json.loads((HERE.parent / "shopify-theme" / "product.json").read_text())
 extras = old["sections"]["pm2_extras"]["settings"]
-extras["color_scheme"] = "scheme-5"
+extras["color_scheme"] = "scheme-4"
+extras.update(
+    dq5="What if my pet doesn't like it?",
+    da5="Every order comes with a 30-day money-back guarantee. If it's not a fit, contact us within 30 days and we'll give you your money back.",
+    fq5="What if my pet doesn't like it?",
+    fa5="Every order comes with a 30-day money-back guarantee. If it's not a fit, contact us within 30 days and we'll give you your money back.")
 reviews_block = old["sections"]["1786715348a590fb22"]["blocks"]
 for _b in reviews_block.values():
     _b["settings"].update(air_blockreviews_singleStarColor=BLUE, air_blockreviews_primaryColor=NAVY)
@@ -241,18 +253,17 @@ P = {
         {"enable_sticky_info": True, "color_scheme": "scheme-3", "media_size": "large", "constrain_to_viewport": True,
          "media_fit": "contain", "gallery_layout": "thumbnail_slider", "mobile_thumbnails": "show",
          "media_position": "left", "image_zoom": "lightbox", "hide_variants": False, "enable_video_looping": False,
-         "padding_top": 36, "padding_bottom": 56},
-        ("brand", "text", {"text": "PETME2", "text_style": "uppercase"}),
+         "padding_top": 20, "padding_bottom": 48},
         ("title", "title", {}),
         ("price", "price", {}),
-        ("ship", "text", {"text": "Free U.S. shipping on every order", "text_style": "subtitle"}),
+        ("ship", "text", {"text": "Free U.S. shipping · 30-day money-back guarantee", "text_style": "subtitle"}),
         ("variant_picker", "variant_picker", {"picker_type": "button", "swatch_shape": "circle"}),
         ("quantity_selector", "quantity_selector", {}),
         ("buy_buttons", "buy_buttons", {"show_dynamic_checkout": True, "show_gift_card_recipient": False}),
         ("description", "description", {}),
-        ("shipping", "collapsible_tab", {"heading": "Shipping", "icon": "truck",
-            "content": "<p>Free U.S. shipping on every order. You get an email with tracking when your order ships.</p>"}),
-        ("share", "share", {"share_label": "Share"})),
+        ("shipping", "collapsible_tab", {"heading": "Free shipping & 30-day guarantee", "icon": "truck",
+            "content": "<p>Free U.S. shipping on every order. Orders are fulfilled by Amazon.</p>"
+                       "<p>30-day money-back guarantee: if your pet doesn't like it, contact us within 30 days and we'll give you your money back.</p>"})),
     "extras": {"type": "pm2-product-extras", "settings": extras},
     "reviews": {"type": "apps", "settings": {"include_margins": True}, "blocks": reviews_block,
                 "block_order": list(reviews_block)},

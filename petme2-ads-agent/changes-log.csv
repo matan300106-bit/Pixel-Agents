@@ -585,3 +585,5 @@ date,item,before,after,reason,agent
 2026-10-04,SHOPIFY 2L fountain: title + description + SKU,old Shopify text (wrong descriptions on 3L white and 5L),new SEO text from research (cleaned for website),Owner asked to build Shopify store from research,manager
 2026-10-04,SHOPIFY 2.2L transparent: title + description + SKU,old Shopify text (wrong descriptions on 3L white and 5L),new SEO text from research (cleaned for website),Owner asked to build Shopify store from research,manager
 2026-10-04,SHOPIFY Fountain w tray: title + description + SKU,old Shopify text (wrong descriptions on 3L white and 5L),new SEO text from research (cleaned for website),Owner asked to build Shopify store from research,manager
+2026-10-04,Shopify prices,"65.99/65.99/59.99/54.99/39.99/29.99/29.99/21.99","matched Amazon: 49.99/49.99/52.99/45.99/39.99/19.99/19.99/19.99 with compare-at = previous Shopify price","owner: match Amazon pricing + show discount",manager
+2026-10-04,Shopify discounts,none,"WELCOME10 10% once per customer; automatic free U.S. shipping all orders","owner: 10% popup + free shipping every U.S. order",manager
