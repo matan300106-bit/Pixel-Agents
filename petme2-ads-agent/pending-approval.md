@@ -21,4 +21,4 @@ Upload file for 3+4+5: `outbox/2026-10-04/bulk-upload-2-new-campaigns.xlsx` (83 
 
 7. **New campaigns: Keyword Test | Phrase ($13/day, 184 keywords incl. Helium 10) + Discovery | Auto ($5/day)** (PAUSED). Upload **2026-10-05**. File: `outbox/2026-10-05/bulk-upload-3-test-campaigns.xlsx` (240 rows). Draft: `test-campaigns-draft.md`. →
 
-8. **V2 REBUILD (replaces 1–7):** owner archives all old campaigns and uploads ONE file `outbox/2026-10-04-v2/PETME2-ALL-CAMPAIGNS-V2.xlsx` (427 rows, 7 campaigns, $58/day, all PAUSED). Draft: `ads-v2-draft.md`. → **APPROVED** (owner: "make me something to upload 1 time", chat 2026-10-04)
+8. **V2 REBUILD (replaces 1–7):** owner archives all old campaigns and uploads ONE file `outbox/2026-10-04-v2/PETME2-ALL-CAMPAIGNS-V2.xlsx` (427 rows, 7 campaigns, $58/day, all PAUSED). Draft: `ads-v2-draft.md`. → **APPROVED** (owner: "make me something to upload 1 time", chat 2026-10-04). UPLOADED and campaigns 1–6 turned ON by owner 2026-10-04. Items 1–7 replaced by V2.

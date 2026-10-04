@@ -132,3 +132,436 @@ date,item,before,after,reason,agent
 2026-10-04,Product ad SKU 2.2Litre-Filter-Transparent (PETME2-SP-Brand/Brand-Filters),none,created,Owner APPROVED; uploaded by owner (bulk file 2),guardian
 2026-10-04,Keyword 'petme2 filter' exact (PETME2-SP-Brand/Brand-Filters),none,FAILED: Product is ineligible for advertising (0 stock / no offer),Owner APPROVED; uploaded by owner (bulk file 2),guardian
 2026-10-04,Keyword 'petme2 fountain filter' exact (PETME2-SP-Brand/Brand-Filters),none,"created, bid $0.25",Owner APPROVED; uploaded by owner (bulk file 2),guardian
+2026-10-04,V2 Campaign PETME2 | Feeders | Exact,none,"created paused, $12/day",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'water' negativePhrase (V2-Feeders),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'fountain' negativePhrase (V2-Feeders),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'bird' negativePhrase (V2-Feeders),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'fish' negativePhrase (V2-Feeders),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'slow feeder' negativePhrase (V2-Feeders),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'replacement' negativePhrase (V2-Feeders),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'gravity' negativePhrase (V2-Feeders),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'wet food' negativePhrase (V2-Feeders),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'petme2' negativePhrase (V2-Feeders),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Ad group Dual Feeders (white+black) - Exact (V2-Feeders),none,"created enabled, default $0.60",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad LW-EZAJ-KKZD (V2-Feeders/V2-Feeders-Dual),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad 93-E8EG-20UY (V2-Feeders/V2-Feeders-Dual),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'automatic cat feeder' exact (V2-Feeders/V2-Feeders-Dual),none,"created, bid $0.80",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'cat feeder automatic' exact (V2-Feeders/V2-Feeders-Dual),none,"created, bid $0.70",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'cat automatic feeders' exact (V2-Feeders/V2-Feeders-Dual),none,"created, bid $0.70",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'automatic pet feeder' exact (V2-Feeders/V2-Feeders-Dual),none,"created, bid $0.70",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'automatic cat feeder 2 cats' exact (V2-Feeders/V2-Feeders-Dual),none,"created, bid $0.70",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'automatic cat feeder for 2 cats' exact (V2-Feeders/V2-Feeders-Dual),none,"created, bid $0.68",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'timed cat feeder' exact (V2-Feeders/V2-Feeders-Dual),none,"created, bid $0.60",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'dual cat feeder' exact (V2-Feeders/V2-Feeders-Dual),none,"created, bid $0.60",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Ad group Camera Feeder - Exact (V2-Feeders),none,"created enabled, default $0.60",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad 2H-2T1T-CJC3 (V2-Feeders/V2-Feeders-Camera),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'automatic cat feeder with camera' exact (V2-Feeders/V2-Feeders-Camera),none,"created, bid $0.80",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'cat feeder with camera' exact (V2-Feeders/V2-Feeders-Camera),none,"created, bid $0.75",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'pet feeder with camera' exact (V2-Feeders/V2-Feeders-Camera),none,"created, bid $0.70",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'automatic dog feeder with camera' exact (V2-Feeders/V2-Feeders-Camera),none,"created, bid $0.60",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'wifi cat feeder' exact (V2-Feeders/V2-Feeders-Camera),none,"created, bid $0.60",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'automatic cat feeder wifi' exact (V2-Feeders/V2-Feeders-Camera),none,"created, bid $0.60",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Campaign PETME2 | Fountains | Exact,none,"created paused, $8/day",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'filters' negativePhrase (V2-Fountains),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'replacement' negativePhrase (V2-Fountains),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'pump' negativePhrase (V2-Fountains),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'feeder' negativePhrase (V2-Fountains),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'wireless' negativePhrase (V2-Fountains),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'ceramic' negativePhrase (V2-Fountains),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'pumpless' negativePhrase (V2-Fountains),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'outdoor' negativePhrase (V2-Fountains),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'gravity' negativePhrase (V2-Fountains),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'petme2' negativePhrase (V2-Fountains),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Ad group Stainless Fountain 3.2L - Exact (V2-Fountains),none,"created enabled, default $0.50",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad QY-HHE8-0H1B (V2-Fountains/V2-Fountains-Stainless),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'cat water fountain' exact (V2-Fountains/V2-Fountains-Stainless),none,"created, bid $0.80",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'stainless steel cat water fountain' exact (V2-Fountains/V2-Fountains-Stainless),none,"created, bid $0.83",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'cat water fountain stainless steel' exact (V2-Fountains/V2-Fountains-Stainless),none,"created, bid $0.80",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'cat fountain stainless steel' exact (V2-Fountains/V2-Fountains-Stainless),none,"created, bid $0.80",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'cat fountain' exact (V2-Fountains/V2-Fountains-Stainless),none,"created, bid $0.75",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'water fountains for cats indoor' exact (V2-Fountains/V2-Fountains-Stainless),none,"created, bid $0.70",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'pet water fountain' exact (V2-Fountains/V2-Fountains-Stainless),none,"created, bid $0.60",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'metal cat water fountain' exact (V2-Fountains/V2-Fountains-Stainless),none,"created, bid $0.55",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'stainless steel pet water fountain' exact (V2-Fountains/V2-Fountains-Stainless),none,"created, bid $0.55",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'stainless steel dog water fountain' exact (V2-Fountains/V2-Fountains-Stainless),none,"created, bid $0.50",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Ad group $19.99 Fountains - Exact (low margin) (V2-Fountains),none,"created enabled, default $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad L6-L3S1-I7Q6 (V2-Fountains/V2-Fountains-Basic),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad SD-85ET-IOZ3 (V2-Fountains/V2-Fountains-Basic),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad JE-LQEW-9EHL (V2-Fountains/V2-Fountains-Basic),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'water fountain for cats' exact (V2-Fountains/V2-Fountains-Basic),none,"created, bid $0.24",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'automatic cat water fountain' exact (V2-Fountains/V2-Fountains-Basic),none,"created, bid $0.24",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'cat water fountain with filter' exact (V2-Fountains/V2-Fountains-Basic),none,"created, bid $0.22",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'quiet cat water fountain' exact (V2-Fountains/V2-Fountains-Basic),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'small cat water fountain' exact (V2-Fountains/V2-Fountains-Basic),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Campaign PETME2 | Competitors | ASIN,none,"created paused, $15/day",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Ad group Competitors - Dual Feeders (V2-Competitors),none,"created enabled, default $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad LW-EZAJ-KKZD (V2-Competitors/V2-Comp-Feeders),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad 93-E8EG-20UY (V2-Competitors/V2-Comp-Feeders),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,"V2 Target asin=""B0953SDCRG"" (V2-Competitors/V2-Comp-Feeders)",none,"created, bid $0.50",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,"V2 Target asin=""B09S8WMJY9"" (V2-Competitors/V2-Comp-Feeders)",none,"created, bid $0.50",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,"V2 Target asin=""B0C5X2G933"" (V2-Competitors/V2-Comp-Feeders)",none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,"V2 Target asin=""B0C5X4N132"" (V2-Competitors/V2-Comp-Feeders)",none,"created, bid $0.50",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,"V2 Target asin=""B0D44QYZ7Z"" (V2-Competitors/V2-Comp-Feeders)",none,"created, bid $0.50",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,"V2 Target asin=""B0GTXN5MJK"" (V2-Competitors/V2-Comp-Feeders)",none,"created, bid $0.50",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Ad group Competitors - Camera Feeder (V2-Competitors),none,"created enabled, default $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad 2H-2T1T-CJC3 (V2-Competitors/V2-Comp-Camera),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,"V2 Target asin=""B0B5ZGGWBQ"" (V2-Competitors/V2-Comp-Camera)",none,"created, bid $0.65",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,"V2 Target asin=""B0CNNM1WRB"" (V2-Competitors/V2-Comp-Camera)",none,"created, bid $0.55",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,"V2 Target asin=""B0DCNNN5FC"" (V2-Competitors/V2-Comp-Camera)",none,"created, bid $0.45",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,"V2 Target asin=""B0FCBCS9HR"" (V2-Competitors/V2-Comp-Camera)",none,"created, bid $0.60",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,"V2 Target asin=""B0GSR1GTHW"" (V2-Competitors/V2-Comp-Camera)",none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,"V2 Target asin=""B0GHP7LHPP"" (V2-Competitors/V2-Comp-Camera)",none,"created, bid $0.55",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Ad group Competitors - Stainless Fountain (V2-Competitors),none,"created enabled, default $0.30",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad QY-HHE8-0H1B (V2-Competitors/V2-Comp-Stainless),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,"V2 Target asin=""B0FDKQGRCK"" (V2-Competitors/V2-Comp-Stainless)",none,"created, bid $0.55",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,"V2 Target asin=""B0GDCZCXMY"" (V2-Competitors/V2-Comp-Stainless)",none,"created, bid $0.30",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,"V2 Target asin=""B0G6ZMT8T3"" (V2-Competitors/V2-Comp-Stainless)",none,"created, bid $0.45",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,"V2 Target asin=""B0DQC6H9FB"" (V2-Competitors/V2-Comp-Stainless)",none,"created, bid $0.50",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,"V2 Target asin=""B0FDKVJNXB"" (V2-Competitors/V2-Comp-Stainless)",none,"created, bid $0.55",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,"V2 Target asin=""B0F2MZ4QW2"" (V2-Competitors/V2-Comp-Stainless)",none,"created, bid $0.45",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Ad group Competitors - $19.99 Fountains (V2-Competitors),none,"created enabled, default $0.24",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad L6-L3S1-I7Q6 (V2-Competitors/V2-Comp-Basic),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad SD-85ET-IOZ3 (V2-Competitors/V2-Comp-Basic),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad JE-LQEW-9EHL (V2-Competitors/V2-Comp-Basic),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,"V2 Target asin=""B0FJMBNZQ1"" (V2-Competitors/V2-Comp-Basic)",none,"created, bid $0.24",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,"V2 Target asin=""B0DDPYHHFX"" (V2-Competitors/V2-Comp-Basic)",none,"created, bid $0.24",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,"V2 Target asin=""B0F5BF98CW"" (V2-Competitors/V2-Comp-Basic)",none,"created, bid $0.24",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,"V2 Target asin=""B0FN7FQ7RJ"" (V2-Competitors/V2-Comp-Basic)",none,"created, bid $0.24",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,"V2 Target asin=""B0BF5CQMKX"" (V2-Competitors/V2-Comp-Basic)",none,"created, bid $0.24",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,"V2 Target asin=""B0FP56XQJG"" (V2-Competitors/V2-Comp-Basic)",none,"created, bid $0.24",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Ad group Competitors - 5L WiFi Feeder (low bids) (V2-Competitors),none,"created enabled, default $0.25",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad QO-7VBS-CVT4 (V2-Competitors/V2-Comp-WiFi),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,"V2 Target asin=""B0D44QYZ7Z"" (V2-Competitors/V2-Comp-WiFi)",none,"created, bid $0.25",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,"V2 Target asin=""B09S8WMJY9"" (V2-Competitors/V2-Comp-WiFi)",none,"created, bid $0.25",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,"V2 Target asin=""B0C5X4N132"" (V2-Competitors/V2-Comp-WiFi)",none,"created, bid $0.25",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,"V2 Target asin=""B0GTXN5MJK"" (V2-Competitors/V2-Comp-WiFi)",none,"created, bid $0.25",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Campaign PETME2 | Brand | Exact,none,"created paused, $3/day",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Ad group PETME2 Brand - Exact (V2-Brand),none,"created enabled, default $0.24",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad LW-EZAJ-KKZD (V2-Brand/V2-Brand-All),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad 93-E8EG-20UY (V2-Brand/V2-Brand-All),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad QO-7VBS-CVT4 (V2-Brand/V2-Brand-All),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad 2H-2T1T-CJC3 (V2-Brand/V2-Brand-All),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad QY-HHE8-0H1B (V2-Brand/V2-Brand-All),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad L6-L3S1-I7Q6 (V2-Brand/V2-Brand-All),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad SD-85ET-IOZ3 (V2-Brand/V2-Brand-All),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad JE-LQEW-9EHL (V2-Brand/V2-Brand-All),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'petme2' exact (V2-Brand/V2-Brand-All),none,"created, bid $0.24",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'petme2 cat feeder' exact (V2-Brand/V2-Brand-All),none,"created, bid $0.24",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'petme2 cat water fountain' exact (V2-Brand/V2-Brand-All),none,"created, bid $0.24",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Campaign PETME2 | Keyword Test | Phrase,none,"created paused, $13/day",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'petme2' negativePhrase (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'gravity' negativePhrase (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'replacement' negativePhrase (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'pump' negativePhrase (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'bird' negativePhrase (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'fish' negativePhrase (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'slow feeder' negativePhrase (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'filter' negativePhrase (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'wireless' negativePhrase (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'ceramic' negativePhrase (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'outdoor' negativePhrase (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'heated' negativePhrase (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'large dog' negativePhrase (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'wet food' negativePhrase (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'automatic cat feeder' negativeExact (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'cat feeder automatic' negativeExact (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'cat automatic feeders' negativeExact (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'automatic pet feeder' negativeExact (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'automatic cat feeder 2 cats' negativeExact (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'automatic cat feeder for 2 cats' negativeExact (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'timed cat feeder' negativeExact (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'dual cat feeder' negativeExact (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'automatic cat feeder with camera' negativeExact (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'cat feeder with camera' negativeExact (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'pet feeder with camera' negativeExact (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'automatic dog feeder with camera' negativeExact (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'wifi cat feeder' negativeExact (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'automatic cat feeder wifi' negativeExact (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'cat water fountain' negativeExact (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'stainless steel cat water fountain' negativeExact (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'cat water fountain stainless steel' negativeExact (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'cat fountain stainless steel' negativeExact (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'cat fountain' negativeExact (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'water fountains for cats indoor' negativeExact (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'pet water fountain' negativeExact (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'metal cat water fountain' negativeExact (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'stainless steel pet water fountain' negativeExact (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'stainless steel dog water fountain' negativeExact (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'water fountain for cats' negativeExact (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'automatic cat water fountain' negativeExact (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'cat water fountain with filter' negativeExact (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'quiet cat water fountain' negativeExact (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'small cat water fountain' negativeExact (V2-KeywordTest),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Ad group Test - Dual Feeders (V2-KeywordTest),none,"created enabled, default $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad LW-EZAJ-KKZD (V2-KeywordTest/V2-Test-DualFeeders),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad 93-E8EG-20UY (V2-KeywordTest/V2-Test-DualFeeders),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'dual cat feeder' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.68",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'dual pet feeder' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.35",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'auto cat feeder' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.68",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'cat food dispenser' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'automatic dog feeder' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'timed pet feeder' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.55",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'cat feeder for 2 cats' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'automatic cat feeder 2 cats' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.68",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'automatic cat feeder for two cats' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'automatic feeder for 2 cats' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'dual automatic cat feeder' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'dual bowl automatic cat feeder' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'automatic cat feeder with 2 bowls' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'automatic cat feeder with stainless steel bowls' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'automatic pet feeder for 2 cats' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'automatic cat feeder dry food' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'cat feeder with timer' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'automatic cat feeder 2 way audio' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'quiet automatic cat feeder' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'automatic dog feeder for small dogs' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'pet food dispenser automatic' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword '3l automatic cat feeder' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'cat feeder automatic' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.45",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'cat automatic feeders' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.45",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'dog feeder automatic' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.68",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'dog automatic feeders' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.68",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'auto dog feeder' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.68",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'automatic feeder cat dry food' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.68",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'auto feeder cat food' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.68",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'cat auto feeder' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.68",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'dog food dispenser automatic' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.68",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'pet feeder automatic' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.68",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'automatic dog food dispenser' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.68",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'automatic food dispenser for cats' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.68",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'timed cat feeders for dry food' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.68",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'cat food automatic feeder' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.68",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'timed dog feeder' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.68",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'double cat feeder' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.35",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'auto pet feeder' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.68",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'auto feeder dog food' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.68",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'automatic cat feeder programmable' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.68",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'automatic feeder dog dry food' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.68",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'double automatic cat feeder' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.68",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'dog food automatic feeder' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.68",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'automatic food dispenser for dogs' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.68",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'timed feeder for cats' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.68",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'automatic pet feeder for dogs' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.68",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword '2 cat automatic feeder' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.68",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'two cat automatic feeder' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.68",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'timed dog food dispenser' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.68",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'autofeeder cat food' phrase (V2-KeywordTest/V2-Test-DualFeeders),none,"created, bid $0.68",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Ad group Test - WiFi Feeder (V2-KeywordTest),none,"created enabled, default $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad QO-7VBS-CVT4 (V2-KeywordTest/V2-Test-WiFiFeeder),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'wifi automatic cat feeder' phrase (V2-KeywordTest/V2-Test-WiFiFeeder),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'smart automatic cat feeder' phrase (V2-KeywordTest/V2-Test-WiFiFeeder),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'wifi cat feeder for 2 cats' phrase (V2-KeywordTest/V2-Test-WiFiFeeder),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'wifi automatic dog feeder' phrase (V2-KeywordTest/V2-Test-WiFiFeeder),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'automatic pet feeder wifi' phrase (V2-KeywordTest/V2-Test-WiFiFeeder),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'cat feeder app control' phrase (V2-KeywordTest/V2-Test-WiFiFeeder),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'pet feeder with app' phrase (V2-KeywordTest/V2-Test-WiFiFeeder),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'cat feeder with voice recorder' phrase (V2-KeywordTest/V2-Test-WiFiFeeder),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'automatic cat feeder with voice recording' phrase (V2-KeywordTest/V2-Test-WiFiFeeder),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword '5l automatic cat feeder' phrase (V2-KeywordTest/V2-Test-WiFiFeeder),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'automatic cat feeder 5l' phrase (V2-KeywordTest/V2-Test-WiFiFeeder),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'large capacity automatic cat feeder' phrase (V2-KeywordTest/V2-Test-WiFiFeeder),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'elevated automatic cat feeder' phrase (V2-KeywordTest/V2-Test-WiFiFeeder),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'automatic dog feeder wifi' phrase (V2-KeywordTest/V2-Test-WiFiFeeder),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'wifi automatic pet feeder for 2 cats' phrase (V2-KeywordTest/V2-Test-WiFiFeeder),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'smart dual bowl cat feeder' phrase (V2-KeywordTest/V2-Test-WiFiFeeder),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'large capacity automatic dog feeder' phrase (V2-KeywordTest/V2-Test-WiFiFeeder),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'cat feeder with app' phrase (V2-KeywordTest/V2-Test-WiFiFeeder),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'elevated automatic dog feeder' phrase (V2-KeywordTest/V2-Test-WiFiFeeder),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Ad group Test - Camera Feeder (V2-KeywordTest),none,"created enabled, default $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad 2H-2T1T-CJC3 (V2-KeywordTest/V2-Test-CameraFeeder),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'camera cat feeder' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.35",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'camera pet feeder' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.55",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'camera dog feeder' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.55",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'pet camera feeder' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.55",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'dog feeder with camera' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.74",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'automatic pet feeder with camera' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'cat food dispenser with camera' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.74",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'dog food dispenser with camera' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'wifi cat feeder with camera' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'smart pet feeder with camera' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'smart cat feeder with camera' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'automatic feeder with camera' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.74",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'auto cat feeder with camera' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'automatic cat feeder with camera and audio' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'cat feeder with camera 2 way audio' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'pet feeder camera 2 way audio' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'pet feeder with camera and app' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'automatic cat feeder 1080p camera' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'cat feeder with hd camera' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'automatic cat feeder with video' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'camera feeder for cats' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'automatic cat feeder with camera wifi' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'cat feeder with camera for small dogs' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'wifi automatic cat feeder app control' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.74",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'smart cat feeder' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.74",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'smart pet feeder' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.74",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'smart automatic dog feeder wifi app control' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.74",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'automatic cat feeder wifi' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.74",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'smart feeder for cats' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.74",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'smart dog feeder' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.74",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'wifi dog feeder' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.74",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'automatic cat feeder with camera 1080p' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.74",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'wifi cat feeder app control' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.35",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'automatic cat feeder battery backup' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.35",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'wi-fi enabled automatic cat feeder with app control' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.35",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'automatic dog feeder with wifi' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.35",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'wifi pet feeder' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.74",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'smart feeder with camera' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.74",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'smart cat food dispensers' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.35",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'smart cam feeder' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.35",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'wifi enabled automatic cat feeder' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.74",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'smart petfeeder' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.35",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'wifi cat food dispenser' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.35",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'smart dog food dispenser' phrase (V2-KeywordTest/V2-Test-CameraFeeder),none,"created, bid $0.35",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Ad group Test - Stainless Fountain (V2-KeywordTest),none,"created enabled, default $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad QY-HHE8-0H1B (V2-KeywordTest/V2-Test-StainlessFountain),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'metal pet fountain' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.55",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'metal dog fountain' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.55",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'steel cat fountain' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.55",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'stainless steel dog water fountain' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.80",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'stainless steel pet water fountain' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.83",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'stainless steel pet fountain' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.83",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'stainless steel cat fountain' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.83",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'dog water fountain stainless steel' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.77",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'pet water fountain stainless steel' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.83",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'stainless steel water fountain for cats' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.83",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'stainless steel water fountain for dogs' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.83",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'metal dog water fountain' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'metal pet water fountain' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword '108oz cat water fountain' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword '3.2l cat water fountain' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword '108 oz pet water fountain' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'large cat water fountain stainless steel' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'cat water fountain with led light' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'pet water fountain with led light' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'faucet cat water fountain' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'cat water fountain dishwasher safe' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'cat water fountain for multiple cats' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'quiet stainless steel cat water fountain' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'large capacity cat water fountain' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'dog water fountain for small dogs' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.83",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'water fountains for cats indoor' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'cat fountain stainless steel' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.50",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'cat fountains' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'water fountain for dogs' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'dog fountain stainless steel' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.83",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'cat stainless steel water fountain' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.83",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'dog drinking fountain' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.50",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'cat drinking fountain stainless steel' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.83",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'stainless cat water fountain' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.83",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'metal water fountain for cats' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.83",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'metal cat fountain' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.83",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'large capacity dog water fountain' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'large capacity pet water fountain' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.74",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'cat water fountain with led indicator' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.83",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'cat waterer' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.50",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'large pet water fountain' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'easy to clean cat water fountain' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.83",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'dishwasher safe cat water fountain' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.83",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'steel cat water fountain' phrase (V2-KeywordTest/V2-Test-StainlessFountain),none,"created, bid $0.83",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Ad group Test - Basic Fountains (V2-KeywordTest),none,"created enabled, default $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'battery' negativePhrase (V2-KeywordTest/V2-Test-BasicFountains),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad L6-L3S1-I7Q6 (V2-KeywordTest/V2-Test-BasicFountains),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad SD-85ET-IOZ3 (V2-KeywordTest/V2-Test-BasicFountains),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad JE-LQEW-9EHL (V2-KeywordTest/V2-Test-BasicFountains),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'pet fountain' phrase (V2-KeywordTest/V2-Test-BasicFountains),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'cat water dispenser' phrase (V2-KeywordTest/V2-Test-BasicFountains),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'cat drinking fountain' phrase (V2-KeywordTest/V2-Test-BasicFountains),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'pet water dispenser' phrase (V2-KeywordTest/V2-Test-BasicFountains),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'kitty water fountain' phrase (V2-KeywordTest/V2-Test-BasicFountains),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'pet drinking fountain' phrase (V2-KeywordTest/V2-Test-BasicFountains),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'quiet cat water fountain' phrase (V2-KeywordTest/V2-Test-BasicFountains),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'cat water fountain quiet' phrase (V2-KeywordTest/V2-Test-BasicFountains),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'silent cat water fountain' phrase (V2-KeywordTest/V2-Test-BasicFountains),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'pet water fountain for cats' phrase (V2-KeywordTest/V2-Test-BasicFountains),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'cat water fountain for indoor cats' phrase (V2-KeywordTest/V2-Test-BasicFountains),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'water fountain for cats indoor' phrase (V2-KeywordTest/V2-Test-BasicFountains),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'plastic cat water fountain' phrase (V2-KeywordTest/V2-Test-BasicFountains),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'cat water fountain with water level window' phrase (V2-KeywordTest/V2-Test-BasicFountains),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'pet water fountain for small dogs' phrase (V2-KeywordTest/V2-Test-BasicFountains),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'kitten water fountain' phrase (V2-KeywordTest/V2-Test-BasicFountains),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'water bowl fountain for cats' phrase (V2-KeywordTest/V2-Test-BasicFountains),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'small dog water fountain' phrase (V2-KeywordTest/V2-Test-BasicFountains),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'water dispenser for cats' phrase (V2-KeywordTest/V2-Test-BasicFountains),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'kitty fountain' phrase (V2-KeywordTest/V2-Test-BasicFountains),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'quiet pet water fountain' phrase (V2-KeywordTest/V2-Test-BasicFountains),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'small pet water fountain' phrase (V2-KeywordTest/V2-Test-BasicFountains),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'small water fountain for cats' phrase (V2-KeywordTest/V2-Test-BasicFountains),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'kitten fountain' phrase (V2-KeywordTest/V2-Test-BasicFountains),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'water fountain for small dogs' phrase (V2-KeywordTest/V2-Test-BasicFountains),none,"created, bid $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Campaign PETME2 | Discovery | Auto,none,"created paused, $5/day",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'replacement' negativePhrase (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'pump' negativePhrase (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'bird' negativePhrase (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'fish' negativePhrase (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'slow feeder' negativePhrase (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'petme2' negativePhrase (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'gravity' negativePhrase (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'filter' negativePhrase (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'wireless' negativePhrase (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'ceramic' negativePhrase (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'outdoor' negativePhrase (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'heated' negativePhrase (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'large dog' negativePhrase (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'wet food' negativePhrase (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'automatic cat feeder' negativeExact (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'cat feeder automatic' negativeExact (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'cat automatic feeders' negativeExact (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'automatic pet feeder' negativeExact (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'automatic cat feeder 2 cats' negativeExact (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'automatic cat feeder for 2 cats' negativeExact (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'timed cat feeder' negativeExact (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'dual cat feeder' negativeExact (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'automatic cat feeder with camera' negativeExact (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'cat feeder with camera' negativeExact (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'pet feeder with camera' negativeExact (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'automatic dog feeder with camera' negativeExact (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'wifi cat feeder' negativeExact (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'automatic cat feeder wifi' negativeExact (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'cat water fountain' negativeExact (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'stainless steel cat water fountain' negativeExact (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'cat water fountain stainless steel' negativeExact (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'cat fountain stainless steel' negativeExact (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'cat fountain' negativeExact (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'water fountains for cats indoor' negativeExact (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'pet water fountain' negativeExact (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'metal cat water fountain' negativeExact (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'stainless steel pet water fountain' negativeExact (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'stainless steel dog water fountain' negativeExact (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'water fountain for cats' negativeExact (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'automatic cat water fountain' negativeExact (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'cat water fountain with filter' negativeExact (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'quiet cat water fountain' negativeExact (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Negative 'small cat water fountain' negativeExact (V2-Discovery),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Ad group Auto - Dual Feeders (V2-Discovery),none,"created enabled, default $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad LW-EZAJ-KKZD (V2-Discovery/V2-Auto-Dual),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad 93-E8EG-20UY (V2-Discovery/V2-Auto-Dual),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Ad group Auto - Camera Feeder (V2-Discovery),none,"created enabled, default $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad 2H-2T1T-CJC3 (V2-Discovery/V2-Auto-Camera),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Ad group Auto - 5L WiFi Feeder (V2-Discovery),none,"created enabled, default $0.20",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad QO-7VBS-CVT4 (V2-Discovery/V2-Auto-WiFi),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Ad group Auto - Stainless Fountain (V2-Discovery),none,"created enabled, default $0.40",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad QY-HHE8-0H1B (V2-Discovery/V2-Auto-Stainless),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Ad group Auto - $19.99 Fountains (V2-Discovery),none,"created enabled, default $0.22",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad L6-L3S1-I7Q6 (V2-Discovery/V2-Auto-Basic),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad SD-85ET-IOZ3 (V2-Discovery/V2-Auto-Basic),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad JE-LQEW-9EHL (V2-Discovery/V2-Auto-Basic),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Campaign PETME2 | Waiting For Stock | Paused,none,"created paused, $2/day",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Ad group Filters (out of stock) (V2-Waiting),none,"created paused, default $0.25",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad 2L-Filter (V2-Waiting/V2-Wait-Filters),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad 2.2Ltr-Filter-Transparent (V2-Waiting/V2-Wait-Filters),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad 2.2L-Filter (V2-Waiting/V2-Wait-Filters),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad 3.2L-Stainless-Steel-Filter (V2-Waiting/V2-Wait-Filters),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'petme2 filter' exact (V2-Waiting/V2-Wait-Filters),none,"created, bid $0.25",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'petme2 fountain filter' exact (V2-Waiting/V2-Wait-Filters),none,"created, bid $0.25",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Ad group Supplement (out of stock) (V2-Waiting),none,"created paused, default $0.30",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Product ad Cat-Skin-&-Coat-Supplement (V2-Waiting/V2-Wait-Supplement),none,created,Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'cat skin and coat supplement' exact (V2-Waiting/V2-Wait-Supplement),none,"created, bid $0.35",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'cat vitamins for skin and coat' exact (V2-Waiting/V2-Wait-Supplement),none,"created, bid $0.30",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Keyword 'cat shedding supplement' exact (V2-Waiting/V2-Wait-Supplement),none,"created, bid $0.30",Owner APPROVED V2 one-time upload; uploaded by owner (results file pending),guardian
+2026-10-04,V2 Campaign PETME2 | Feeders | Exact,paused,enabled,Owner turned on (chat 2026-10-04),owner
+2026-10-04,V2 Campaign PETME2 | Fountains | Exact,paused,enabled,Owner turned on (chat 2026-10-04),owner
+2026-10-04,V2 Campaign PETME2 | Competitors | ASIN,paused,enabled,Owner turned on (chat 2026-10-04),owner
+2026-10-04,V2 Campaign PETME2 | Brand | Exact,paused,enabled,Owner turned on (chat 2026-10-04),owner
+2026-10-04,V2 Campaign PETME2 | Keyword Test | Phrase,paused,enabled,Owner turned on (chat 2026-10-04),owner
+2026-10-04,V2 Campaign PETME2 | Discovery | Auto,paused,enabled,Owner turned on (chat 2026-10-04),owner
