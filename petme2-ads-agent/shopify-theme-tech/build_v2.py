@@ -1,5 +1,5 @@
-"""V2 'friendly minimal' layout: runs after build.py. Rebuilds the homepage around the new pm2-* sections
-(hero, marquee, product tabs, bento, steps, CTA band), adds spec chips + sticky add-to-cart to the
+"""V2 'friendly minimal, built to sell' layout: runs after build.py. Rebuilds the homepage around the pm2-*
+sections (hero, ticker, product tabs, quiz, short bento, compare, FAQ, CTA band), adds spec chips + sticky add-to-cart to the
 product page, and the global style section to the header group. True claims only."""
 import json
 from pathlib import Path
@@ -19,80 +19,70 @@ def sec(type_, settings, blocks=()):
 
 
 old = load("templates/index.json")["sections"]
-# Friendly-minimal homepage: light, calm, one dark accent (the closing CTA). Schemes:
-# 3 white, 5 warm cream, 4 soft sky, 1 soft night (CTA only). Backgrounds alternate so no two
-# neighbouring bands share a tint (compare feeders + fountains read as one sky-blue chapter).
+# Built-to-sell homepage: white base, ONE soft neutral (scheme-4 cloud), mint (scheme-5) only for trust.
+# The action blue is reserved for buttons, so the buy/shop buttons are the most visible thing on each screen.
+# Order: hero -> ticker -> shop tabs -> quiz -> short bento -> compare feeders -> compare fountains -> FAQ -> CTA.
+OFFER = "Free U.S. shipping · 30-day money-back guarantee"
 S = {}
 S["hero"] = sec("pm2-hero", {
-    "color_scheme": "scheme-5", "show_grid": False, "eyebrow_tag": "Hi!", "eyebrow": "For cats & small dogs",
-    "heading_line_1": "Happy meals.", "heading_highlight": "Fresh water.",
-    "subtext": "Smart feeders and quiet fountains that make pet care easy, even on busy days.",
+    "color_scheme": "scheme-4", "show_grid": False, "eyebrow_tag": "New", "eyebrow": "For cats & small dogs",
+    "heading_line_1": "Meals on time.", "heading_highlight": "Fresh water all day.",
+    "subtext": "Smart feeders you run from your phone, and quiet water fountains that are easy to clean.",
     "button_label_1": "Shop feeders", "button_link_1": "shopify://collections/feeders",
     "button_label_2": "Shop fountains", "button_link_2": "shopify://collections/water-fountains",
-    "chip_1": "Free U.S. shipping", "chip_2": "App control", "chip_3": "Quiet pumps",
-    "product": "smart-feeder", "link_product": True, "image": IMG + "main-banner.jpg",
-    "badge_1": "1080P live view", "badge_2": "2-way audio", "badge_3": "WiFi app",
-    "padding_top": 56, "padding_bottom": 72})
-S["ticker"] = sec("pm2-marquee", {"color_scheme": "scheme-3", "duration": 48, "size": "small",
+    "chip_1": OFFER, "chip_2": "", "chip_3": "",
+    "product": "smart-feeder", "link_product": True, "image": "",
+    "badge_1": "1080P live view", "badge_2": "2-way audio", "badge_3": "",
+    "padding_top": 40, "padding_bottom": 56})
+S["ticker"] = sec("pm2-marquee", {"color_scheme": "scheme-3", "duration": 40, "size": "small",
                                    "show_divider": True, "show_borders": True, "reverse": False}, [
-    ("item", {"text": "Free U.S. shipping on every order", "icon": "truck"}),
-    ("item", {"text": "Made for cats & small dogs", "icon": "paw"}),
-    ("item", {"text": "Easy app control", "icon": "wifi"}),
-    ("item", {"text": "Quiet fountain pumps", "icon": "drop"}),
-    ("item", {"text": "Stainless steel bowls", "icon": "sparkle"}),
-    ("item", {"text": "Also sold on Amazon", "icon": "sparkle"})])
+    ("item", {"text": "Free U.S. shipping", "icon": "truck"}),
+    ("item", {"text": "30-day money-back guarantee", "icon": "sparkle"}),
+    ("item", {"text": "10% off your first order", "icon": "sparkle"}),
+    ("item", {"text": "For cats & small dogs", "icon": "paw"})])
 S["shop"] = sec("pm2-product-tabs", {"eyebrow": "Shop", "heading": "Find their new favorite",
                                      "color_scheme": "scheme-3", "products_per_tab": 4, "show_view_all": True,
-                                     "padding_top": 64, "padding_bottom": 64}, [
+                                     "padding_top": 56, "padding_bottom": 56}, [
     ("tab", {"label": "Feeders", "collection": "feeders", "text": "Meals on time, set from your phone."}),
     ("tab", {"label": "Fountains", "collection": "water-fountains", "text": "Fresh, moving water with a quiet pump."})])
-# Reserved slot: the feeder finder quiz (built by another agent). Only added when the section exists,
-# so the template never references a missing section type.
+# Feeder finder quiz (another agent's section): only added when the section exists.
 if (HERE / "sections" / "pm2-quiz.liquid").exists():
     S["quiz"] = {"type": "pm2-quiz", "settings": {
         "color_scheme": "scheme-4",
-        "note_feeder": "For dry food · cats & small dogs · free U.S. shipping",
-        "note_fountain": "Quiet pump · comes apart for cleaning · free U.S. shipping"}}
-S["bento"] = sec("pm2-bento", {"eyebrow": "Why pets (and people) like it", "heading": "Simple care, done for you.",
-                               "subheading": "<p>Feeders and fountains that just work, so you can relax.</p>",
-                               "color_scheme": "scheme-5", "padding_top": 72, "padding_bottom": 72}, [
+        "note_feeder": "For dry food · cats & small dogs · " + OFFER,
+        "note_fountain": "Quiet pump · comes apart for cleaning · " + OFFER}}
+# Short bento: 4 tiles (large + 2 small + wide fills a clean 4x2 grid on desktop, 2 cols on phones).
+S["bento"] = sec("pm2-bento", {"eyebrow": "Why pet parents pick PETME2", "heading": "Simple care, done for you.",
+                               "subheading": "<p>Set it up once. They eat on time and drink fresh water.</p>",
+                               "color_scheme": "scheme-3", "padding_top": 56, "padding_bottom": 56}, [
     ("image_tile", {"size": "large", "image": IMG + "Your_pets_meals_managed_from_your_phone_3d0ac522-2f46-4a7b-a1d9-e2b48f76d5bb.jpg",
                     "eyebrow": "App control", "title": "Meals on time, from your phone",
                     "text": "Set meal times and portions in the app.", "link": "shopify://collections/feeders", "link_label": "Shop feeders"}),
-    ("stat_tile", {"size": "small", "value": "1080P", "label": "Live view", "text": "See your pet on the 3L Camera feeder."}),
-    ("text_tile", {"size": "small", "icon": "mic", "title": "Say hello", "text": "2-way audio lets you talk to your pet."}),
-    ("text_tile", {"size": "wide", "icon": "bowl", "title": "Two bowls for two pets",
-                   "text": "Our dual-bowl feeders fill two stainless steel bowls. Dry food only."}),
+    ("stat_tile", {"size": "small", "value": "1080P", "label": "Live view", "text": "See and talk to your pet with the 3L Camera feeder."}),
+    ("text_tile", {"size": "small", "icon": "bowl", "title": "Two bowls, two pets",
+                   "text": "Dual-bowl feeders fill two stainless steel bowls. Dry food only."}),
     ("image_tile", {"size": "wide", "image": IMG + "Homepage-Water-Fountains_79d73496-2084-410b-bd2e-dc1ea0e329a5.png",
                     "eyebrow": "Fountains", "title": "Fresh water they'll love",
-                    "text": "Quiet pumps. Every model comes apart for cleaning.", "link": "shopify://collections/water-fountains", "link_label": "Shop fountains"}),
-    ("stat_tile", {"size": "small", "value": "3.2L", "label": "Stainless fountain", "text": "108 oz, with an LED light."}),
-    ("text_tile", {"size": "small", "icon": "filter", "title": "4-layer filter", "text": "On the stainless and steel-tray fountains."})])
-S["steps"] = sec("pm2-steps", {"eyebrow": "How it works", "heading": "Set up in minutes. Relax for months.",
-                               "image": IMG + "Smart_Feeding.png", "color_scheme": "scheme-3",
-                               "padding_top": 72, "padding_bottom": 72}, [
-    ("step", {"icon": "bowl", "title": "Fill it up", "text": "Pour dry food into the container."}),
-    ("step", {"icon": "wifi", "title": "Connect the app", "text": "Pair the feeder with your WiFi in a few taps."}),
-    ("step", {"icon": "clock", "title": "Pick meal times", "text": "Choose times and portions. That's it."})])
+                    "text": "Quiet pumps. Every model comes apart for cleaning.", "link": "shopify://collections/water-fountains", "link_label": "Shop fountains"})])
 cmp_f = old["cmp_feeders"]; cmp_f["settings"]["color_scheme"] = "scheme-4"
 S["cmp_feeders"] = cmp_f
-cmp_w = old["cmp_fountains"]; cmp_w["settings"]["color_scheme"] = "scheme-4"
+cmp_w = old["cmp_fountains"]; cmp_w["settings"]["color_scheme"] = "scheme-3"
 S["cmp_fountains"] = cmp_w
-# Lifestyle: video, two_pets and the collage are dropped; the bento already carries the lifestyle photos.
 S["faq"] = old["faq"]
-S["faq"]["settings"].update(color_scheme="scheme-3", container_color_scheme="scheme-5", caption="FAQ",
-                            padding_top=72, padding_bottom=72)
-# Google FAQ structured data, mirroring the visible FAQ above (hidden, schema only)
+S["faq"]["settings"].update(color_scheme="scheme-4", container_color_scheme="scheme-3", caption="FAQ",
+                            heading="Questions? We've got you.", padding_top=56, padding_bottom=56)
+# Google FAQ structured data, built from the visible FAQ rows above so the two never drift (schema only)
 if (HERE / "sections" / "pm2-faq-schema.liquid").exists():
     _rows = [S["faq"]["blocks"][k]["settings"] for k in S["faq"]["block_order"]]
     S["faq_schema"] = sec("pm2-faq-schema", {"output_schema": True, "show_visible": False}, [
         ("faq", {"question": r["heading"], "answer": r["row_content"]}) for r in _rows])
 S["cta"] = sec("pm2-cta-band", {"eyebrow": "Ready when you are", "heading": "Easy care starts here.",
-                                "text": "<p>Smart feeders and quiet fountains for cats and small dogs.</p>",
+                                "text": "<p>Try it for 30 days. If your pet doesn't love it, get your money back.</p>",
                                 "button_label_1": "Shop feeders", "button_link_1": "shopify://collections/feeders",
                                 "button_label_2": "Shop fountains", "button_link_2": "shopify://collections/water-fountains",
-                                "color_scheme": "scheme-1", "padding_top": 88, "padding_bottom": 88}, [
-    ("chip", {"text": "Free U.S. shipping"}), ("chip", {"text": "Also on Amazon"})])
+                                "color_scheme": "scheme-5", "padding_top": 64, "padding_bottom": 64}, [
+    ("chip", {"text": "Free U.S. shipping"}), ("chip", {"text": "30-day money-back guarantee"}),
+    ("chip", {"text": "10% off your first order"})])
 save("templates/index.json", {"sections": S, "order": list(S)})
 
 # product page: spec chips under main, sticky add-to-cart
@@ -103,12 +93,14 @@ new = {"main": ps["main"],
 for k in P["order"]:
     if k != "main":
         new[k] = ps[k]
+new["related-products"]["settings"]["color_scheme"] = "scheme-3"
 new["sticky_atc"] = {"type": "pm2-sticky-atc", "settings": {"color_scheme": "scheme-3", "show_thumbnail": True, "hide_on_desktop": False}}
 save("templates/product.json", {"sections": new, "order": list(new)})
 
 # header group: global friendly-minimal style (frosted header, pill buttons, 16px body on phones)
 H = load("sections/header-group.json")
 H["sections"]["pm2-global-style"] = {"type": "pm2-global-style", "settings": {
+    "action_color": "#2F5FE0", "action_label": "#FFFFFF", "check_color": "#1E7B4F", "enable_sell": True,
     "enable_glass_header": True, "glass_tint": "light", "glass_opacity": 80, "enable_buttons": True, "enable_cards": True,
     "enable_image_zoom": True, "enable_typography": True, "enable_eyebrow": True, "enable_focus": True,
     "enable_selection": True, "enable_smooth_scroll": True}}
@@ -116,9 +108,10 @@ if "pm2-global-style" not in H["order"]:
     H["order"].append("pm2-global-style")
 save("sections/header-group.json", H)
 
-# footer: newsletter back on (homepage newsletter section was replaced by the CTA band)
+# footer: newsletter on (10% off first order, code sent by email), soft neutral background
 F = load("sections/footer-group.json")
-F["sections"]["footer"]["settings"].update(newsletter_enable=True, color_scheme="scheme-5")
+F["sections"]["footer"]["settings"].update(newsletter_enable=True, color_scheme="scheme-4",
+                                           newsletter_heading="Get 10% off your first order")
 save("sections/footer-group.json", F)
 print("homepage:", list(S))
 print("product:", list(new))
