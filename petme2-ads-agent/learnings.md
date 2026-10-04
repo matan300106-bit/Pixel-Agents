@@ -11,3 +11,8 @@ What worked and what did not. Newest at the top.
 - Each search has one owner: Test and Auto block the main exact keywords (negative exact).
 - Bids follow real profit (products.yaml). $19.99 fountains max $0.24. 5L WiFi feeder = launch (reviews first), $0.20-0.25.
 - Day 3 check: 2026-10-07. Day 14 review: 2026-10-18.
+
+## 2026-10-04 — SEO rewrite published
+- Owner published new titles/bullets/descriptions/backend for 8 listings at once (verified live via SP-API except B0GHKN9DBR, still old).
+- Baseline ranks saved in research/seo/rank-baseline-2026-10-04.md. Check ranks ~2026-10-11 (7 days) with a new Helium 10 Cerebro export.
+- Because all changed on the same day, we can't attribute rank moves to one listing — compare per product vs baseline.
