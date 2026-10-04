@@ -47,7 +47,7 @@ TWO FLOW MODES FOR PICKY DRINKERS: Switch between a running faucet stream and a 
 Bullet 2 (278 chars):
 
 ```
-STAINLESS STEEL, NOT PLASTIC: This cat fountain, stainless steel at the base, gives pets a durable drinking surface instead of a plastic bowl. The rust-resistant stainless steel base is non-porous stainless steel that wipes clean easily and adds a sleek silver look to any room.
+STAINLESS STEEL, NOT PLASTIC: This cat fountain stainless steel design gives pets a durable drinking surface instead of a plastic bowl. The rust-resistant, non-porous steel base wipes clean easily and adds a sleek silver look to any room in your home.
 ```
 
 Bullet 3 (280 chars):
