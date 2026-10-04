@@ -1,0 +1,31 @@
+You are working in my Amazon Seller Central (sellercentral.amazon.com), US marketplace.
+GOAL: Update the listing text of ONE product. Do NOT click Submit/Save until I say "submit".
+RULES: Change only the fields below. Do not change price, images, variations, stock, or any other product. If asked to log in, enter a code, or solve a captcha: stop and tell me. If a field is locked or shows an error, stop and tell me exactly what it says.
+
+Product: SKU 2H-2T1T-CJC3 / ASIN B0GTCGYZDM (3L Camera Feeder (1080P, 2-Way Audio)).
+
+TITLE (Item Name):
+PETME2 Automatic Cat Feeder with Camera, 3L WiFi Cat Food Dispenser with 1080P HD Video and 2-Way Audio, App Control, Automatic Dog Feeder for Small Dogs, Timed Portions, Anti-Jam, Dual Power
+
+BULLET POINTS (5 boxes, one per box; delete any extra old bullet boxes 6-10):
+WATCH EVERY MEAL IN 1080P: This automatic cat feeder with camera streams live 1080p HD video to your phone, so you can see when and how much your pet eats. Many cat automatic feeders have no camera. This cat feeder with camera also works as an automatic dog feeder with camera for small dogs. A smart cat feeder and electric cat feeder in one compact unit, it makes a tidy cat feeding station in any corner.
+TALK WITH 2-WAY AUDIO: Hear your pet and talk back through the app to calm an anxious kitty or call your dog to dinner, so you stay close while you work or travel. With WiFi automatic cat feeder app control, live view and meal settings sit in one app. It is an automatic cat feeder with app control for busy owners, an auto cat feeder and automatic pet feeder for cats and small dogs.
+APP SCHEDULING, PORTION CONTROL: Set meal times and portions in the companion smart app over WiFi, or tap once to serve a meal on demand. Once set, the cat feeder automatic schedule runs every day, and this automatic cat feeder programmable from your phone keeps a steady routine. A timed cat feeder and timed dog feeder in one, it is also an automatic dog feeder with timer, and like other timed cat feeders for dry food it keeps portions consistent.
+ANTI-JAM 3L STORAGE, FRESH FOOD: The 3L container holds dry kibble for fewer refills. The anti-jam system detects and reverses kibble blockages, so food keeps flowing. Moisture seals with a desiccant box help keep food fresh, making this a cat dry food dispenser and self feeding cat food dispenser you refill less often. For a small dog, it works as a dog food dispenser, and a dog feeder automatic schedule keeps meals on time.
+DUAL POWER, EASY CLEAN: Runs on the power adapter and switches to backup batteries during a power outage (batteries not included). The stainless steel bowl is dishwasher safe. It fits a small dog feeding station or pet feeding station too, and serves as a cat food feeder, dog food feeder and puppy feeder for small breeds. Like other cat and dog automatic feeders, it is a cat automatic feeder and dog automatic feeder in one.
+
+PRODUCT DESCRIPTION:
+See, hear and feed your pet from anywhere. The PETME2 3L automatic cat feeder with camera combines a 1080p HD camera, 2-way audio and app scheduling in one compact feeder for cats and small dogs. Open the companion smart app to watch a live view of mealtime and check that your pet is eating. Talk through the 2-way audio to calm a nervous kitty or call your dog to dinner. Set meal times and portion sizes in the app, or tap once to serve an extra meal on demand. Turn on the cat food dispenser automatic schedule, and portions stay the same every day. The 3L container means fewer refills. The anti-jam system detects and reverses kibble blockages, so food keeps flowing, and moisture seals with a desiccant box help keep dry food fresh and crunchy. The stainless steel bowl wipes clean easily and is dishwasher safe. Dual power keeps meals on schedule. The feeder runs on the power adapter and switches to backup batteries during a power outage (batteries not included). Like other automatic cat feeders, it works on a timer, and this cat auto feeder adds a camera. As an automatic cat food dispenser, it measures each portion for you. It is also an automatic food dispenser for cats and small dogs, so one pet feeder and pet food dispenser covers both. Use it as a cat self feeder on busy days, or as a self feeder for cats when you travel overnight. This automatic cat food feeder is a cat food automatic feeder and auto pet feeder in one. For a small dog, it is an auto dog feeder and automatic dog food dispenser, and the dog food dispenser automatic schedule keeps meals on time. The pet feeder automatic schedule keeps a steady routine. To set up, place it on a flat, stable indoor surface, fill it with dry food, connect power and pair it with the app over WiFi.
+
+SEARCH TERMS / Generic Keywords (backend, one box):
+pet auto self monitor cam live view talk two schedule timer programmable smart electric kitty kitten puppy dry kibble meal feeding station backup battery remote phone comedero automatico gatos dispensador comida perros alimentador
+
+ATTRIBUTES (only if the field exists; replace long sentences with these short values):
+- Special Feature: 1080p HD camera with live view, 2-way audio, WiFi app scheduling and portion control, Anti-jam that detects and reverses blockages, Moisture seals and desiccant box, Dual power: adapter plus backup batteries
+
+STEPS:
+1. Catalog -> Manage All Inventory -> search SKU 2H-2T1T-CJC3 -> Edit.
+2. FIRST: copy the CURRENT values of these fields into your reply, so I have a backup.
+3. Replace the fields with the text above EXACTLY (copy, do not rewrite).
+4. STOP before saving. Show me a short summary of what you changed and wait for me to say "submit".
+5. After I say "submit": Save and finish, then tell me if Amazon shows any error or warning.

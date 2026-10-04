@@ -1,0 +1,32 @@
+You are working in my Amazon Seller Central (sellercentral.amazon.com), US marketplace.
+GOAL: Update the listing text of ONE product. Do NOT click Submit/Save until I say "submit".
+RULES: Change only the fields below. Do not change price, images, variations, stock, or any other product. If asked to log in, enter a code, or solve a captcha: stop and tell me. If a field is locked or shows an error, stop and tell me exactly what it says.
+
+Product: SKU QO-7VBS-CVT4 / ASIN B0GHH8L59K (5L WiFi Dual Bowl Elevated Feeder (Voice Recording)).
+
+TITLE (Item Name):
+PETME2 Automatic Cat Feeder for 2 Cats, 5L Elevated Feeding Station with WiFi App and Voice Recording, Automatic Dog Feeder, Stainless Steel Dual Bowls, Timed Pet Food Dispenser, Dual Power
+
+BULLET POINTS (5 boxes, one per box; delete any extra old bullet boxes 6-10):
+FEEDS 2 CATS EQUALLY: This automatic cat feeder for 2 cats splits every meal evenly between two stainless steel bowls, so each pet gets a fair share and food stealing stops. It is an automatic cat feeder 2 cats can share, a dual automatic cat feeder and double cat feeder in one. Many cat automatic feeders have a single bowl, while this automatic pet feeder for cats serves both pets at once, including a cat and a small dog.
+WIFI APP SCHEDULING: Plan meal times and custom portions from your phone in the companion smart app. With WiFi automatic cat feeder app control, you can adjust meals from the office or on vacation. Once set, the cat feeder automatic schedule runs every day. This automatic cat feeder with app scheduling is an auto cat feeder and cat food dispenser that keeps a steady routine while you work or travel.
+VOICE RECORDING AT MEALTIME: Record your own short message and the feeder plays it to call your pets to every meal, so they hear a familiar voice while you are away. It is a recorded mealtime call, not live 2-way audio. This timed cat feeder also suits small dogs as a timed dog feeder or an automatic dog feeder with timer. Set a dog feeder automatic schedule once, and a small breed gets the same portion at the same times every day.
+5L ELEVATED CAT FEEDING STATION: The 5L container means fewer refills, and the raised bowls give cats a comfortable eating height. An anti-jam chute and motor help dry kibble dispense smoothly to both bowls. Like other timed cat feeders for dry food, it keeps portions consistent, and it doubles as a cat dry food dispenser and a dog food dispenser for small breeds. It also works as a dog feeding station or pet feeding station for a cat and a small dog.
+DUAL POWER, EASY TO CLEAN: Run it on the power adapter, with backup batteries for outages (batteries not included), so this self feeding cat food dispenser keeps meals on schedule. The stainless steel bowls wipe clean easily, and the bowls and food container detach for washing. One unit serves as a cat food feeder and dog food feeder, a cat automatic feeder and dog automatic feeder in one.
+
+PRODUCT DESCRIPTION:
+Feed two pets at once without the fights. The PETME2 5L WiFi automatic cat feeder for 2 cats splits each meal evenly between two stainless steel bowls on an elevated feeding station. Every cat, or a cat and a small dog, gets the same portion at the same time. This double automatic cat feeder takes the guesswork out of shared mealtimes. Use the companion smart app to plan meal times and custom portions from anywhere, and keep feeding on schedule while you work or travel. Turn on the cat food dispenser automatic schedule, and portions stay the same every day. Record your own voice message, and the feeder plays it at mealtime to call your pets to eat. It is a recorded call, not live 2-way audio. The large 5L food container means fewer refills, and an anti-jam chute and motor keep kibble moving smoothly to both bowls. Dual power keeps meals coming. Run it on the power adapter, with backup batteries for power outages (batteries not included). Made from food-grade materials, the feeder has stainless steel bowls that wipe clean easily, and the bowls and food container detach for quick washing. Most cat and dog automatic feeders fill one bowl. Like other automatic cat feeders, this one works on a timer, but this cat auto feeder serves two bowls. As an automatic cat food dispenser, it measures each portion for you. It is also an automatic food dispenser for cats and a small dog, so one pet feeder covers both. Use it as a cat self feeder on busy days, or as a self feeder for cats when you travel overnight. This automatic cat food feeder is a cat food automatic feeder and auto pet feeder in one. For a small dog, it is an auto dog feeder and automatic dog food dispenser, and the dog food dispenser automatic schedule keeps meals on time. The pet feeder automatic schedule keeps a steady routine for every pet. In the box: main unit, 2 feeding bowls, food storage container, power adapter and user manual.
+
+SEARCH TERMS / Generic Keywords (backend, one box):
+auto self double two timer schedule programmable smart large capacity kibble dry kitty kitten puppy multiple meal portion control raised tall backup battery remote electric comedero automatico gatos dispensador comida perros alimentador
+
+ATTRIBUTES (only if the field exists; replace long sentences with these short values):
+- Special Feature: Dual bowl even split for 2 pets, WiFi app scheduling, Voice recording mealtime call, Elevated feeding station, Anti-jam chute, Dual power (adapter plus battery backup)
+- Included Components: Main unit, 2 feeding bowls, Food storage container, Power adapter, User manual
+
+STEPS:
+1. Catalog -> Manage All Inventory -> search SKU QO-7VBS-CVT4 -> Edit.
+2. FIRST: copy the CURRENT values of these fields into your reply, so I have a backup.
+3. Replace the fields with the text above EXACTLY (copy, do not rewrite).
+4. STOP before saving. Show me a short summary of what you changed and wait for me to say "submit".
+5. After I say "submit": Save and finish, then tell me if Amazon shows any error or warning.
