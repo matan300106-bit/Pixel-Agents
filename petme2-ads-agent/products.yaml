@@ -51,7 +51,7 @@ products:
     amazon_fees: 19.15   # referral 6.9 + FBA 12.25 (real fee on 30 of 42 recent orders)
     profit_before_ads: 2.58
     break_even_acos: 0.056
-    goal: profit
+    goal: launch   # owner 2026-10-04: keep $45.99 for now to get reviews; raise price later
     target_acos: 0.045
     max_profitable_cpc_at_10pct_cvr: 0.26
     note: "Sold at $65.99 / $54.99 before; at $54.99 profit is about $10.23"
