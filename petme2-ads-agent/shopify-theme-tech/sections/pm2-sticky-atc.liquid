@@ -53,7 +53,7 @@
             {% unless variant.available %}disabled{% endunless %}
           >
             <span data-pm2-satc-label>
-              {%- if variant.available -%}{{ 'products.product.add_to_cart' | t }}{%- else -%}{{ 'products.product.sold_out' | t }}{%- endif -%}
+              {%- if variant.available -%}{{ 'products.product.add_to_cart' | t }}{%- else -%}{% if product.tags contains 'coming-soon' %}Coming soon{% else %}{{ 'products.product.sold_out' | t }}{% endif %}{%- endif -%}
             </span>
           </button>
         {%- endform -%}
@@ -66,7 +66,7 @@
           {% unless variant.available %}disabled{% endunless %}
         >
           <span data-pm2-satc-label>
-            {%- if variant.available -%}{{ 'products.product.add_to_cart' | t }}{%- else -%}{{ 'products.product.sold_out' | t }}{%- endif -%}
+            {%- if variant.available -%}{{ 'products.product.add_to_cart' | t }}{%- else -%}{% if product.tags contains 'coming-soon' %}Coming soon{% else %}{{ 'products.product.sold_out' | t }}{% endif %}{%- endif -%}
           </span>
         </button>
       {%- endif -%}

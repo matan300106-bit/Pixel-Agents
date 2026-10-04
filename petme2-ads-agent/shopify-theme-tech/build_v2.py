@@ -42,11 +42,12 @@ S["ticker"] = sec("pm2-marquee", {"color_scheme": "scheme-3", "duration": 40, "s
     ("item", {"text": "30-day money-back guarantee", "icon": "sparkle"}),
     ("item", {"text": "10% off your first order", "icon": "sparkle"}),
     ("item", {"text": "For cats & small dogs", "icon": "paw"})])
-S["shop"] = sec("pm2-product-tabs", {"eyebrow": "Shop", "heading": "Feeders & water fountains",
+S["shop"] = sec("pm2-product-tabs", {"eyebrow": "Shop", "heading": "Feeders, fountains & supplements",
                                      "color_scheme": "scheme-3", "products_per_tab": 4, "show_view_all": True,
                                      "padding_top": 56, "padding_bottom": 56}, [
     ("tab", {"label": "Feeders", "collection": "feeders", "text": "Meals on time, set from your phone."}),
-    ("tab", {"label": "Fountains", "collection": "water-fountains", "text": "Fresh, moving water with a quiet pump."})])
+    ("tab", {"label": "Fountains", "collection": "water-fountains", "text": "Fresh, moving water with a quiet pump."}),
+    ("tab", {"label": "Supplements", "collection": "supplements", "text": "Daily soft chews for cats and dogs. Coming soon."})])
 # Feeder finder quiz (another agent's section): only added when the section exists.
 if (HERE / "sections" / "pm2-quiz.liquid").exists():
     S["quiz"] = {"type": "pm2-quiz", "settings": {

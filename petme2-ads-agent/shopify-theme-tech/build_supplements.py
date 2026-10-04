@@ -54,3 +54,30 @@ PS = {k: P["sections"][k] for k in keep}
 PS["story"]["settings"].update(eyebrow="Why it works", heading="Good care, made simple", subheading="One small chew a day.")
 (HERE / "templates/product.supplement.json").write_text(json.dumps({"sections": PS, "order": keep}, indent=2, ensure_ascii=False) + "\n")
 print("product.supplement:", keep)
+
+# "Coming soon" products (tag coming-soon): email sign-up under the disabled button.
+# Shopify customer form -> the shopper is saved as a customer with tags newsletter + coming-soon-<handle>.
+SOON = (
+    "{%- if product.tags contains 'coming-soon' -%}<div class=\"pm2-soon\">"
+    "<p class=\"pm2-soon__title\"><strong>Coming soon.</strong> Get an email the day it launches.</p>"
+    "{%- form 'customer', id: 'Pm2SoonForm', class: 'pm2-soon__form' -%}"
+    "<input type=\"hidden\" name=\"contact[tags]\" value=\"newsletter,coming-soon,coming-soon-{{ product.handle }}\">"
+    "{%- if form.posted_successfully? -%}<p class=\"pm2-soon__ok\" role=\"status\">Thanks! We'll email you when it launches.</p>"
+    "{%- else -%}<label class=\"visually-hidden\" for=\"Pm2SoonEmail\">Email</label>"
+    "<input id=\"Pm2SoonEmail\" class=\"pm2-soon__input\" type=\"email\" name=\"contact[email]\" required autocomplete=\"email\" placeholder=\"Your email\">"
+    "<button type=\"submit\" class=\"button pm2-soon__btn\">Notify me</button>"
+    "{%- if form.errors -%}<p class=\"pm2-soon__err\">{{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}</p>{%- endif -%}"
+    "{%- endif -%}{%- endform -%}</div>"
+    "<style>.pm2-soon{margin:4px 0 8px;padding:16px;border-radius:20px;background:rgba(var(--color-button),.06);border:1px solid rgba(var(--color-button),.18)}"
+    ".pm2-soon__title{margin:0 0 10px;font-size:15px}.pm2-soon__form{display:flex;gap:8px;flex-wrap:wrap}"
+    ".pm2-soon__input{flex:1 1 180px;min-height:48px;padding:0 16px;border-radius:999px;border:1px solid rgba(var(--color-foreground),.25);font-size:16px;background:rgb(var(--color-background));color:rgb(var(--color-foreground))}"
+    ".pm2-soon__btn{min-height:48px;border-radius:999px;flex:0 0 auto}.pm2-soon__ok{margin:0;font-weight:600;color:rgb(var(--color-button))}"
+    ".pm2-soon__err{flex-basis:100%;margin:0;font-size:14px;color:#b42318}</style>{%- endif -%}"
+)
+m = PS["main"]
+m["blocks"]["soon"] = {"type": "custom_liquid", "settings": {"custom_liquid": SOON}}
+bo = [b for b in m["block_order"] if b != "soon"]
+bo.insert(bo.index("buy_buttons") + 1, "soon")
+m["block_order"] = bo
+(HERE / "templates/product.supplement.json").write_text(json.dumps({"sections": PS, "order": keep}, indent=2, ensure_ascii=False) + "\n")
+print("product.supplement main:", bo)

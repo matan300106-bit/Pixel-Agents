@@ -98,7 +98,7 @@
                     {{ 'product-1' | placeholder_svg_tag: 'pm2-card__img pm2-card__placeholder' }}
                   {%- endif -%}
                   {%- if product.available == false -%}
-                    <span class="pm2-card__badge pm2-card__badge--muted">{{ 'products.product.sold_out' | t }}</span>
+                    <span class="pm2-card__badge pm2-card__badge--muted">{% if product.tags contains 'coming-soon' %}Coming soon{% else %}{{ 'products.product.sold_out' | t }}{% endif %}</span>
                   {%- elsif on_sale -%}
                     <span class="pm2-card__badge">{{ 'products.product.on_sale' | t }}</span>
                   {%- endif -%}
@@ -129,7 +129,7 @@
                   <div class="pm2-card__actions">
                     {%- if product.available == false -%}
                       <button type="button" class="button button--secondary pm2-card__btn" disabled>
-                        {{ 'products.product.sold_out' | t }}
+                        {% if product.tags contains 'coming-soon' %}Coming soon{% else %}{{ 'products.product.sold_out' | t }}{% endif %}
                       </button>
                     {%- elsif product.has_only_default_variant -%}
                       {%- form 'product', product, class: 'pm2-card__form', data-type: 'add-to-cart-form' -%}
