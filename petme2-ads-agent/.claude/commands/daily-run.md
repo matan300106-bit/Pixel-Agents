@@ -9,7 +9,8 @@ You are the **Manager**. Follow `CLAUDE.md` section 7. Run each step with its su
 4. **optimizer**: daily proposals.
 5. **experiment-lab**: running tests, end finished ones, new proposals.
 6. **guardian**: review all proposals → approve / block / send to owner. Apply items the owner marked APPROVED (bulk file only).
-7. **reporter**: daily report (+ weekly on Mondays).
-8. Update `changes-log.csv` and `learnings.md`.
+7. **review-requester**: `python3 -m sp_api.reviews --send` (Amazon "Request a Review" for orders 5-30 days old).
+8. **reporter**: daily report (+ weekly on Mondays).
+9. Update `changes-log.csv` and `learnings.md`.
 
 End with a 5-line summary for the owner in simple English and the list of things waiting for approval.
