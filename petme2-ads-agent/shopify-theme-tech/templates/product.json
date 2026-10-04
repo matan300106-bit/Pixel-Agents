@@ -90,6 +90,15 @@
         "share"
       ]
     },
+    "specs": {
+      "type": "pm2-spec-chips",
+      "settings": {
+        "heading": "Key specs",
+        "color_scheme": "scheme-3",
+        "padding_top": 8,
+        "padding_bottom": 40
+      }
+    },
     "extras": {
       "type": "pm2-product-extras",
       "settings": {
@@ -159,12 +168,22 @@
         "padding_top": 56,
         "padding_bottom": 56
       }
+    },
+    "sticky_atc": {
+      "type": "pm2-sticky-atc",
+      "settings": {
+        "color_scheme": "scheme-3",
+        "show_thumbnail": true,
+        "hide_on_desktop": false
+      }
     }
   },
   "order": [
     "main",
+    "specs",
     "extras",
     "reviews",
-    "related-products"
+    "related-products",
+    "sticky_atc"
   ]
 }

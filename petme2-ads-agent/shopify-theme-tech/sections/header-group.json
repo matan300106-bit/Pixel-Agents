@@ -51,10 +51,27 @@
         "padding_top": 12,
         "padding_bottom": 12
       }
+    },
+    "pm2-global-style": {
+      "type": "pm2-global-style",
+      "settings": {
+        "enable_glass_header": true,
+        "glass_tint": "light",
+        "glass_opacity": 70,
+        "enable_buttons": true,
+        "enable_cards": true,
+        "enable_image_zoom": true,
+        "enable_typography": true,
+        "enable_eyebrow": true,
+        "enable_focus": true,
+        "enable_selection": true,
+        "enable_smooth_scroll": true
+      }
     }
   },
   "order": [
     "announcement-bar",
-    "header"
+    "header",
+    "pm2-global-style"
   ]
 }
