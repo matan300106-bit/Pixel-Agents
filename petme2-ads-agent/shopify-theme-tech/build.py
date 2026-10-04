@@ -7,7 +7,7 @@ from pathlib import Path
 
 HERE = Path(__file__).parent
 IMG = "shopify://shop_images/"
-NAVY, NAVY2, BLUE, INK, WHITE = "#0B1220", "#121C33", "#2F7CFF", "#E6ECF5", "#FFFFFF"
+NAVY, NAVY2, BLUE, INK, WHITE = "#0B1220", "#121C33", "#1F6BEB", "#E6ECF5", "#FFFFFF"  # blue darkened for 4.5:1 contrast
 
 
 def w(path, obj):
@@ -45,7 +45,7 @@ current = {
         "scheme-2": scheme(NAVY2, INK, BLUE, WHITE, INK),          # dark card / alternate band
         "scheme-3": scheme(WHITE, NAVY, BLUE, WHITE, NAVY),        # light (header, product info, cards)
         "scheme-4": scheme(BLUE, WHITE, WHITE, NAVY, WHITE),       # electric blue band
-        "scheme-5": scheme("#F2F5FA", NAVY, NAVY, WHITE, NAVY),    # light grey-blue
+        "scheme-5": scheme("#F2F5FA", NAVY, BLUE, WHITE, NAVY),    # light grey-blue
     },
     "type_header_font": "inter_n7", "heading_scale": 110, "type_body_font": "inter_n4", "body_scale": 100,
     "page_width": 1300, "spacing_sections": 0, "spacing_grid_horizontal": 16, "spacing_grid_vertical": 16,
@@ -78,6 +78,8 @@ current = {
     "currency_code_enabled": False,
     "cart_type": "drawer", "show_vendor": False, "show_cart_note": False, "cart_color_scheme": "scheme-3",
 }
+_live = json.loads((HERE.parent / "shopify-theme" / "settings_data.json").read_text())["current"]["blocks"]
+current["blocks"] = {k: v for k, v in _live.items() if "ag-product-reviews" in v["type"]}  # keep reviews app embed on
 w("config/settings_data.json", {"current": current})
 
 # ---------- header / footer ----------
@@ -100,11 +102,11 @@ w("sections/header-group.json", {
 w("sections/footer-group.json", {
     "name": "t:sections.footer.name", "type": "footer",
     "sections": {"footer": section("footer",
-        {"color_scheme": "scheme-1", "newsletter_enable": True, "newsletter_heading": "Get new products and deals first",
-         "enable_follow_on_shop": True, "show_social": True, "enable_country_selector": False,
+        {"color_scheme": "scheme-1", "newsletter_enable": False, "newsletter_heading": "Get new products and deals first",
+         "enable_follow_on_shop": True, "show_social": False, "enable_country_selector": False,
          "enable_language_selector": False, "payment_enable": True, "show_policy": True,
          "margin_top": 0, "padding_top": 56, "padding_bottom": 40},
-        ("brand", "brand_information", {"show_social": True}),
+        ("brand", "brand_information", {"show_social": False}),
         ("l1", "link_list", {"heading": "Products", "menu": "products"}),
         ("l2", "link_list", {"heading": "Quick links", "menu": "quick-links"}),
         ("l3", "link_list", {"heading": "Information", "menu": "information"}))},
@@ -127,7 +129,7 @@ S["specs"] = section("pm2-specs", {"color_scheme": "scheme-1"},
     ("s3", "spec", {"big": "2", "label": "Stainless steel bowls"}),
     ("s4", "spec", {"big": "3.2L", "label": "Stainless fountain"}))
 S["categories"] = section("multicolumn",
-    {"title": "Shop by category", "heading_size": "h1", "image_width": "full", "image_ratio": "portrait",
+    {"title": "Shop by category", "heading_size": "h1", "image_width": "full", "image_ratio": "square",
      "button_label": "", "button_link": "", "columns_desktop": 2, "column_alignment": "left",
      "background_style": "none", "color_scheme": "scheme-3", "columns_mobile": "1", "swipe_on_mobile": False,
      "padding_top": 72, "padding_bottom": 36},

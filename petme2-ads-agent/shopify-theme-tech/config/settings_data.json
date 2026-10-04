@@ -9,7 +9,7 @@
           "background": "#0B1220",
           "background_gradient": "",
           "text": "#E6ECF5",
-          "button": "#2F7CFF",
+          "button": "#1F6BEB",
           "button_label": "#FFFFFF",
           "secondary_button_label": "#E6ECF5",
           "shadow": "#000000"
@@ -20,7 +20,7 @@
           "background": "#121C33",
           "background_gradient": "",
           "text": "#E6ECF5",
-          "button": "#2F7CFF",
+          "button": "#1F6BEB",
           "button_label": "#FFFFFF",
           "secondary_button_label": "#E6ECF5",
           "shadow": "#000000"
@@ -31,7 +31,7 @@
           "background": "#FFFFFF",
           "background_gradient": "",
           "text": "#0B1220",
-          "button": "#2F7CFF",
+          "button": "#1F6BEB",
           "button_label": "#FFFFFF",
           "secondary_button_label": "#0B1220",
           "shadow": "#000000"
@@ -39,7 +39,7 @@
       },
       "scheme-4": {
         "settings": {
-          "background": "#2F7CFF",
+          "background": "#1F6BEB",
           "background_gradient": "",
           "text": "#FFFFFF",
           "button": "#FFFFFF",
@@ -53,7 +53,7 @@
           "background": "#F2F5FA",
           "background_gradient": "",
           "text": "#0B1220",
-          "button": "#0B1220",
+          "button": "#1F6BEB",
           "button_label": "#FFFFFF",
           "secondary_button_label": "#0B1220",
           "shadow": "#000000"
@@ -153,6 +153,15 @@
     "cart_type": "drawer",
     "show_vendor": false,
     "show_cart_note": false,
-    "cart_color_scheme": "scheme-3"
+    "cart_color_scheme": "scheme-3",
+    "blocks": {
+      "14710238943034738919": {
+        "type": "shopify://apps/ag-product-reviews/blocks/app-embed/c4e1e9ca-4d46-4e76-bc39-7e42417cb327",
+        "disabled": false,
+        "settings": {
+          "air_reviews_json_ld_v2": "{% assign productTitle = product.title | default: '' %}{% assign productDesc = product.description | strip_html | default: '' | truncate: 150 %}{% assign productImage = product.featured_image | default: '' %}{% assign productUrl = product.url | prepend: request.origin %}{% assign ratingValue = product.metafields.reviews.rating.value.rating | default: product.metafields.air_reviews_product.review_avg | default: 0 %}{% assign bestRating = product.metafields.reviews.rating.value.scale_max | default: 5 %}{% assign reviewCount = product.metafields.air_reviews_product.review_count | default: 0 %}{% assign worstRating = product.metafields.reviews.rating.value.scale_min | default: 1 %}{\n\"@context\": \"http://schema.org\",\n\"@type\": \"Product\",\n\"@id\": {{ productUrl | append: '#product' | json }},\n\"url\": {{ productUrl | json }},\n\"name\": {{ productTitle | json }},\n\"description\": {{ productDesc | json }},\n\"image\": {{ productImage | json }},\n\"aggregateRating\": {\n  \"@type\": \"AggregateRating\",\n  \"ratingValue\": {{ ratingValue }},\n  \"bestRating\": {{ bestRating }},\n  \"reviewCount\": {{ reviewCount }}\n }{% if shop.metafields.air_reviews_has_ugc_content.data.value == true and product.metafields.air_reviews_product.data.value.reviews %}, \n  \"review\":[{% assign reviewsData = product.metafields.air_reviews_product.data.value.reviews %}\n  {% for review in reviewsData limit: 10 %}\n    {\n      \"@type\": \"Review\",\n      \"author\": {\n        \"@type\": \"Person\",\n        \"name\": {% if review.firstName %}{{ review.firstName | json }}{% elsif review.lastName %}{{ review.lastName | json }}{% else %}{{ 'Anonymous' | json }}{% endif %}\n      },\n      \"reviewRating\": {\n          \"@type\": \"Rating\",\n          \"bestRating\": {{ bestRating }},\n          \"ratingValue\": {{ review.rate | default: 0 }},\n          \"worstRating\": {{ worstRating }}\n      },\n      \"reviewBody\": {{ review.content | strip_html | default: '' | json }},\n      \"datePublished\": {{ review.createdAt | date: '%Y-%m-%d' | json }}\n    }{% unless forloop.last %},{% endunless %} \n  {% endfor %}]{% endif %}\n}"
+        }
+      }
+    }
   }
 }

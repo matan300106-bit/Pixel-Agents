@@ -1,0 +1,91 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-404"
+    },
+    "help": {
+      "type": "rich-text",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-5",
+        "full_width": true,
+        "padding_top": 56,
+        "padding_bottom": 64
+      },
+      "blocks": {
+        "caption": {
+          "type": "caption",
+          "settings": {
+            "caption": "LOST?",
+            "text_style": "caption-with-letter-spacing",
+            "text_size": "medium"
+          }
+        },
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "This page wandered off",
+            "heading_size": "h1"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>The link may be old or mistyped. Let's get you back to feeding time.</p>"
+          }
+        },
+        "button": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop feeders",
+            "button_link": "shopify://collections/feeders",
+            "button_style_secondary": false,
+            "button_label_2": "Shop fountains",
+            "button_link_2": "shopify://collections/water-fountains",
+            "button_style_secondary_2": true
+          }
+        }
+      },
+      "block_order": [
+        "caption",
+        "heading",
+        "text",
+        "button"
+      ]
+    },
+    "feeders": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "feeders",
+        "products_to_show": 3,
+        "title": "Smart feeders",
+        "heading_size": "h1",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 4,
+        "enable_desktop_slider": false,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "color_scheme": "scheme-3",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "standard",
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 64,
+        "padding_bottom": 72
+      }
+    }
+  },
+  "order": [
+    "main",
+    "help",
+    "feeders"
+  ]
+}

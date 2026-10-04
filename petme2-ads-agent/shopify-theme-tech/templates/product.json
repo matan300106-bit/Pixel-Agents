@@ -133,7 +133,7 @@
           "settings": {
             "air_blockreviews_summaryHeading": "Reviews",
             "air_blockreviews_layout": "list",
-            "air_blockreviews_singleStarColor": "#2F7CFF",
+            "air_blockreviews_singleStarColor": "#1F6BEB",
             "air_blockreviews_primaryColor": "#0B1220"
           }
         }
