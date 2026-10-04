@@ -1,16 +1,109 @@
-# Every PETME2 ASIN. Filled during the first run, approved by the owner.
+# Every PETME2 ASIN. Costs from owner 2026-10-04 (factory price per unit; $3,000 shipping for all, split by cost value = +10.3%).
 # break_even_acos = (price - product_cost - shipping_per_unit - amazon_fees) / price
-status: suggested           # suggested | approved
-products: []
-# Example entry:
-#  - asin: B0XXXXXXXX
-#    sku: XXXX
-#    title: "PETME2 Cat Water Fountain"
-#    price: 39.99
-#    product_cost: TBD          # per unit, from supplier invoice or owner
-#    shipping_per_unit: TBD     # to Amazon warehouse
-#    amazon_fees: TBD           # referral + FBA fee per unit (SP-API)
-#    break_even_acos: TBD
-#    goal: TBD                  # launch | growth | profit
-#    target_acos: TBD
-#    status: suggested
+# FBA fee = real fee charged on recent orders (Finances API), referral = 15% of price.
+status: approved
+products:
+  - asin: B0GTCGYZDM
+    sku: 2H-2T1T-CJC3
+    title: "3L camera feeder"
+    price: 52.99
+    product_cost: 22
+    shipping_per_unit: 2.26
+    amazon_fees: 16.34   # referral 7.95 + FBA 8.39
+    profit_before_ads: 12.39
+    break_even_acos: 0.234
+    goal: growth
+    target_acos: 0.187   # 80% of break-even (honeymoon: may run up to break-even)
+    max_profitable_cpc_at_10pct_cvr: 1.24
+    status: approved
+  - asin: B0GHMCG8Q9
+    sku: 93-E8EG-20UY
+    title: "3L dual feeder BLACK"
+    price: 49.99
+    product_cost: 21
+    shipping_per_unit: 2.16
+    amazon_fees: 15.56   # referral 7.5 + FBA 8.06
+    profit_before_ads: 11.27
+    break_even_acos: 0.225
+    goal: growth
+    target_acos: 0.18   # 80% of break-even (honeymoon: may run up to break-even)
+    max_profitable_cpc_at_10pct_cvr: 1.13
+    status: approved
+  - asin: B0GHLSQMJ9
+    sku: LW-EZAJ-KKZD
+    title: "3L dual feeder WHITE"
+    price: 49.99
+    product_cost: 21
+    shipping_per_unit: 2.16
+    amazon_fees: 15.56   # referral 7.5 + FBA 8.06
+    profit_before_ads: 11.27
+    break_even_acos: 0.225
+    goal: growth
+    target_acos: 0.18   # 80% of break-even (honeymoon: may run up to break-even)
+    max_profitable_cpc_at_10pct_cvr: 1.13
+    status: approved
+  - asin: B0GHH8L59K
+    sku: QO-7VBS-CVT4
+    title: "5L WiFi dual feeder"
+    price: 45.99
+    product_cost: 22
+    shipping_per_unit: 2.26
+    amazon_fees: 16.4   # referral 6.9 + FBA 9.5
+    profit_before_ads: 5.33
+    break_even_acos: 0.116
+    goal: profit
+    target_acos: 0.093   # 80% of break-even (honeymoon: may run up to break-even)
+    max_profitable_cpc_at_10pct_cvr: 0.53
+    status: approved
+  - asin: B0DR7FCLZR
+    sku: QY-HHE8-0H1B
+    title: "3.2L stainless fountain"
+    price: 39.99
+    product_cost: 12
+    shipping_per_unit: 1.23
+    amazon_fees: 12.9   # referral 6.0 + FBA 6.9
+    profit_before_ads: 13.86
+    break_even_acos: 0.347
+    goal: growth
+    target_acos: 0.277   # 80% of break-even (honeymoon: may run up to break-even)
+    max_profitable_cpc_at_10pct_cvr: 1.39
+    status: approved
+  - asin: B0GHKN9DBR
+    sku: L6-L3S1-I7Q6
+    title: "fountain"
+    price: 19.99
+    product_cost: 7
+    shipping_per_unit: 0.72
+    amazon_fees: 9.76   # referral 3.0 + FBA 6.76
+    profit_before_ads: 2.51
+    break_even_acos: 0.126
+    goal: profit
+    target_acos: 0.1   # 80% of break-even (honeymoon: may run up to break-even)
+    max_profitable_cpc_at_10pct_cvr: 0.25
+    status: approved
+  - asin: B0GHLBGCP3
+    sku: SD-85ET-IOZ3
+    title: "2.2L smart fountain"
+    price: 19.99
+    product_cost: 7
+    shipping_per_unit: 0.72
+    amazon_fees: 9.76   # referral 3.0 + FBA 6.76
+    profit_before_ads: 2.51
+    break_even_acos: 0.126
+    goal: profit
+    target_acos: 0.1   # 80% of break-even (honeymoon: may run up to break-even)
+    max_profitable_cpc_at_10pct_cvr: 0.25
+    status: approved
+  - asin: B0GHKRYV6W
+    sku: JE-LQEW-9EHL
+    title: "fountain with filters"
+    price: 19.99
+    product_cost: 7
+    shipping_per_unit: 0.72
+    amazon_fees: 9.76   # referral 3.0 + FBA 6.76
+    profit_before_ads: 2.51
+    break_even_acos: 0.126
+    goal: profit
+    target_acos: 0.1   # 80% of break-even (honeymoon: may run up to break-even)
+    max_profitable_cpc_at_10pct_cvr: 0.25
+    status: approved

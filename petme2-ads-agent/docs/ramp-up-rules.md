@@ -111,4 +111,4 @@ Check the search term report every run (Broad ad groups give most of the terms).
 ## Update 2026-10-04 (owner): honeymoon test, per-target bids
 - Every keyword and competitor has its OWN start bid (low end of its range): head terms and pricier competitors higher; long-tail, same-price competitors and brand terms lower.
 - Raise step by step from there (+15% per 3 days for targets with < 50 impressions), never above `max_bid`.
-- $19.99 fountains: stay at or below **$0.50** until the owner gives the product cost.
+- $19.99 fountains: stay at or below **$0.30** (profit $2.51/sale). 5L WiFi feeder: max **$0.50** (profit $5.33/sale). Costs in products.yaml.
