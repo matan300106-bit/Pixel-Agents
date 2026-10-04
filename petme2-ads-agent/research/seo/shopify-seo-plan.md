@@ -66,3 +66,9 @@ Tips: each post should be 900 to 1,500 words, with an H1 that matches the title,
 - Add internal links: homepage sections linking to /collections/feeders and /collections/water-fountains, and a "related products" block on product pages.
 - Footer: links to Shipping policy and Contact pages.
 - Review the "Feeder 2-in-1" collection (handle `frontpage`). It has no description or SEO. Hide it from search or give it its own meta if it is public.
+
+## Homepage title/meta update (2026-10-04, Ahrefs US)
+- Old: "PETME2 – Automatic Cat Feeders & Cat Water Fountains" (plural forms, brand first; "petme2" has 0 searches).
+- New title (50 chars): "Automatic Cat Feeder & Cat Water Fountain | PETME2" — exact head terms: cat water fountain 45K/KD10, automatic cat feeder 30K/KD20.
+- New meta (151 chars): "Automatic cat feeders with app control or a 1080P camera, plus quiet cat water fountains. For cats & small dogs. Free U.S. shipping, 30-day money back."
+- Set as shop metafields global.title_tag / description_tag. The owner must paste the same text in Online Store → Preferences (fields show empty there).
