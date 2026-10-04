@@ -11,3 +11,9 @@ Items with no answer after 7 days expire.
 Ready rows (48, under the 50/day limit): `outbox/2026-10-03/proposed-changes.json`. Before upload I still need: mode change to `supervised` + `max_bid` and `daily_spend_cap` in settings.yaml (only you). Owner said START on 2026-10-03.
 
 Upload file ready: `outbox/2026-10-04/bulk-upload.xlsx` (48 rows). UPLOADED by owner 2026-10-04. Logged in `changes-log.csv`.
+
+3. **New campaign: PETME2 | SP | Competitors | Manual** (PAUSED). $10/day, 4 ad groups, 24 competitor products, bids $0.25–$0.55. Draft: `ads-draft-2026-10-04.md`. →
+4. **New campaign: PETME2 | SP | All Products | Keywords** (PAUSED). $8/day, 6 ad groups, all 19 products (11 out of stock), 16 keywords. →
+5. **Changes to live campaigns** (Part C in the draft). Needs your bulk file download first. →
+
+Upload file for 3+4: `outbox/2026-10-04/bulk-upload-2-new-campaigns.xlsx` (81 rows).
