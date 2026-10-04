@@ -5,16 +5,16 @@
  },
  "B0GHLSQMJ9": {
   "product": "3L Dual Bowl App Feeder (White)",
-  "relevant_keyword_count": 659,
-  "total_relevant_sv": 629867,
+  "relevant_keyword_count": 655,
+  "total_relevant_sv": 628830,
   "top60": [
    {
     "kw": "automatic cat feeder",
     "sv": 187032,
-    "iq": 163.0,
-    "title_density": 0.0,
+    "iq": 46758.0,
+    "title_density": 42.0,
     "competing": "4000",
-    "bid": 1.96,
+    "bid": 1.39,
     "our_rank": {
      "B0GHLSQMJ9": 304
     },
@@ -23,10 +23,10 @@
    {
     "kw": "automatic dog feeder",
     "sv": 32356,
-    "iq": 89.0,
-    "title_density": 0.0,
+    "iq": 8089.0,
+    "title_density": 24.0,
     "competing": "4000",
-    "bid": null,
+    "bid": 1.34,
     "our_rank": {
      "B0GHLSQMJ9": 249
     },
@@ -709,10 +709,10 @@
    {
     "kw": "automatic cat feeder",
     "sv": 187032,
-    "iq": 163.0,
-    "title_density": 0.0,
+    "iq": 46758.0,
+    "title_density": 42.0,
     "competing": "4000",
-    "bid": 1.96,
+    "bid": 1.39,
     "our_rank": {
      "B0GHLSQMJ9": 304
     },
@@ -721,10 +721,10 @@
    {
     "kw": "automatic dog feeder",
     "sv": 32356,
-    "iq": 89.0,
-    "title_density": 0.0,
+    "iq": 8089.0,
+    "title_density": 24.0,
     "competing": "4000",
-    "bid": null,
+    "bid": 1.34,
     "our_rank": {
      "B0GHLSQMJ9": 249
     },
@@ -1875,15 +1875,15 @@
   "root_words": [
    {
     "word": "feeder",
-    "sv": 476944
+    "sv": 475953
    },
    {
     "word": "cat",
-    "sv": 442418
+    "sv": 441708
    },
    {
     "word": "automatic",
-    "sv": 382475
+    "sv": 381765
    },
    {
     "word": "dog",
@@ -1899,11 +1899,11 @@
    },
    {
     "word": "feeders",
-    "sv": 34883
+    "sv": 34837
    },
    {
     "word": "pet",
-    "sv": 31663
+    "sv": 31336
    },
    {
     "word": "auto",
@@ -1957,16 +1957,16 @@
  },
  "B0GHH8L59K": {
   "product": "5L WiFi Dual Bowl Elevated Feeder",
-  "relevant_keyword_count": 659,
-  "total_relevant_sv": 629867,
+  "relevant_keyword_count": 655,
+  "total_relevant_sv": 628830,
   "top60": [
    {
     "kw": "automatic cat feeder",
     "sv": 187032,
-    "iq": 163.0,
-    "title_density": 0.0,
+    "iq": 46758.0,
+    "title_density": 42.0,
     "competing": "4000",
-    "bid": 1.96,
+    "bid": 1.39,
     "our_rank": {
      "B0GHH8L59K": 268
     },
@@ -1975,10 +1975,10 @@
    {
     "kw": "automatic dog feeder",
     "sv": 32356,
-    "iq": 89.0,
-    "title_density": 0.0,
+    "iq": 8089.0,
+    "title_density": 24.0,
     "competing": "4000",
-    "bid": null,
+    "bid": 1.34,
     "our_rank": null,
     "spanish": false
    },
@@ -2619,10 +2619,10 @@
    {
     "kw": "automatic cat feeder",
     "sv": 187032,
-    "iq": 163.0,
-    "title_density": 0.0,
+    "iq": 46758.0,
+    "title_density": 42.0,
     "competing": "4000",
-    "bid": 1.96,
+    "bid": 1.39,
     "our_rank": {
      "B0GHH8L59K": 268
     },
@@ -2631,10 +2631,10 @@
    {
     "kw": "automatic dog feeder",
     "sv": 32356,
-    "iq": 89.0,
-    "title_density": 0.0,
+    "iq": 8089.0,
+    "title_density": 24.0,
     "competing": "4000",
-    "bid": null,
+    "bid": 1.34,
     "our_rank": null,
     "spanish": false
    },
@@ -3721,15 +3721,15 @@
   "root_words": [
    {
     "word": "feeder",
-    "sv": 476944
+    "sv": 475953
    },
    {
     "word": "cat",
-    "sv": 442418
+    "sv": 441708
    },
    {
     "word": "automatic",
-    "sv": 382475
+    "sv": 381765
    },
    {
     "word": "dog",
@@ -3745,11 +3745,11 @@
    },
    {
     "word": "feeders",
-    "sv": 34883
+    "sv": 34837
    },
    {
     "word": "pet",
-    "sv": 31663
+    "sv": 31336
    },
    {
     "word": "auto",
@@ -3803,16 +3803,16 @@
  },
  "B0GTCGYZDM": {
   "product": "3L Camera Feeder",
-  "relevant_keyword_count": 604,
-  "total_relevant_sv": 608632,
+  "relevant_keyword_count": 600,
+  "total_relevant_sv": 607595,
   "top60": [
    {
     "kw": "automatic cat feeder",
     "sv": 187032,
-    "iq": 163.0,
-    "title_density": 0.0,
+    "iq": 46758.0,
+    "title_density": 42.0,
     "competing": "4000",
-    "bid": 1.96,
+    "bid": 1.39,
     "our_rank": {
      "B0GTCGYZDM": 271
     },
@@ -3821,10 +3821,10 @@
    {
     "kw": "automatic dog feeder",
     "sv": 32356,
-    "iq": 89.0,
-    "title_density": 0.0,
+    "iq": 8089.0,
+    "title_density": 24.0,
     "competing": "4000",
-    "bid": null,
+    "bid": 1.34,
     "our_rank": {
      "B0GTCGYZDM": 291
     },
@@ -4489,10 +4489,10 @@
    {
     "kw": "automatic cat feeder",
     "sv": 187032,
-    "iq": 163.0,
-    "title_density": 0.0,
+    "iq": 46758.0,
+    "title_density": 42.0,
     "competing": "4000",
-    "bid": 1.96,
+    "bid": 1.39,
     "our_rank": {
      "B0GTCGYZDM": 271
     },
@@ -4501,10 +4501,10 @@
    {
     "kw": "automatic dog feeder",
     "sv": 32356,
-    "iq": 89.0,
-    "title_density": 0.0,
+    "iq": 8089.0,
+    "title_density": 24.0,
     "competing": "4000",
-    "bid": null,
+    "bid": 1.34,
     "our_rank": {
      "B0GTCGYZDM": 291
     },
@@ -5604,16 +5604,6 @@
      "spanish": false
     },
     {
-     "kw": "papifeed automatic cat feeder",
-     "sv": 620,
-     "iq": 1378.0,
-     "title_density": 0.0,
-     "competing": "450",
-     "bid": 1.53,
-     "our_rank": null,
-     "spanish": false
-    },
-    {
      "kw": "self feeding dog food dispenser",
      "sv": 620,
      "iq": 766.0,
@@ -5622,22 +5612,34 @@
      "bid": 1.63,
      "our_rank": null,
      "spanish": false
+    },
+    {
+     "kw": "automatic cat feeder portion control",
+     "sv": 620,
+     "iq": 904.0,
+     "title_density": 0.0,
+     "competing": "686",
+     "bid": 2.03,
+     "our_rank": {
+      "B0GTCGYZDM": 244
+     },
+     "spanish": false
     }
    ],
-   "suggested_backend_string_249b": "cats pet feeding station feeders dry self auto wifi control timer programmable electric smart puppy comedero automatico gatos dispensador comida perros comederos alimentador comedor automático large capacity dogs small papifeed"
+   "suggested_backend_string_249b": "cats pet feeding station feeders dry self auto wifi control timer programmable electric smart puppy comedero automatico gatos dispensador comida perros comederos alimentador comedor automático large capacity dogs small portion"
   },
   "root_words": [
    {
     "word": "feeder",
-    "sv": 460114
+    "sv": 459123
    },
    {
     "word": "cat",
-    "sv": 420453
+    "sv": 419743
    },
    {
     "word": "automatic",
-    "sv": 368215
+    "sv": 367505
    },
    {
     "word": "dog",
@@ -5653,11 +5655,11 @@
    },
    {
     "word": "feeders",
-    "sv": 34256
+    "sv": 34210
    },
    {
     "word": "pet",
-    "sv": 32483
+    "sv": 32156
    },
    {
     "word": "auto",
@@ -5711,26 +5713,26 @@
  },
  "B0DR7FCLZR": {
   "product": "3.2L/108oz Stainless Steel Fountain",
-  "relevant_keyword_count": 935,
-  "total_relevant_sv": 1322548,
+  "relevant_keyword_count": 934,
+  "total_relevant_sv": 1322445,
   "top60": [
    {
     "kw": "cat water fountain",
     "sv": 319141,
-    "iq": 121.0,
-    "title_density": 0.0,
+    "iq": 63828.0,
+    "title_density": 46.0,
     "competing": "5000",
-    "bid": 1.51,
+    "bid": 0.86,
     "our_rank": null,
     "spanish": false
    },
    {
     "kw": "dog water fountain",
     "sv": 97595,
-    "iq": 62.0,
-    "title_density": 0.0,
-    "competing": "5000",
-    "bid": null,
+    "iq": 24399.0,
+    "title_density": 31.0,
+    "competing": "4000",
+    "bid": 0.88,
     "our_rank": null,
     "spanish": false
    },
@@ -5757,10 +5759,10 @@
    {
     "kw": "stainless steel cat water fountain",
     "sv": 70227,
-    "iq": 1.0,
-    "title_density": 0.0,
-    "competing": "10000",
-    "bid": null,
+    "iq": 35114.0,
+    "title_density": 15.0,
+    "competing": "2000",
+    "bid": 1.05,
     "our_rank": {
      "B0DR7FCLZR": 279
     },
@@ -6377,10 +6379,10 @@
    {
     "kw": "cat water fountain",
     "sv": 319141,
-    "iq": 121.0,
-    "title_density": 0.0,
+    "iq": 63828.0,
+    "title_density": 46.0,
     "competing": "5000",
-    "bid": 1.51,
+    "bid": 0.86,
     "our_rank": null,
     "spanish": false
    },
@@ -6417,10 +6419,10 @@
    {
     "kw": "dog water fountain",
     "sv": 97595,
-    "iq": 62.0,
-    "title_density": 0.0,
-    "competing": "5000",
-    "bid": null,
+    "iq": 24399.0,
+    "title_density": 31.0,
+    "competing": "4000",
+    "bid": 0.88,
     "our_rank": null,
     "spanish": false
    },
@@ -6437,10 +6439,10 @@
    {
     "kw": "stainless steel cat water fountain",
     "sv": 70227,
-    "iq": 1.0,
-    "title_density": 0.0,
-    "competing": "10000",
-    "bid": null,
+    "iq": 35114.0,
+    "title_density": 15.0,
+    "competing": "2000",
+    "bid": 1.05,
     "our_rank": {
      "B0DR7FCLZR": 279
     },
@@ -7541,15 +7543,15 @@
   "root_words": [
    {
     "word": "water",
-    "sv": 1084324
+    "sv": 1084221
    },
    {
     "word": "fountain",
-    "sv": 1067942
+    "sv": 1067839
    },
    {
     "word": "cat",
-    "sv": 759333
+    "sv": 759230
    },
    {
     "word": "stainless",
@@ -7623,26 +7625,26 @@
  },
  "B0GHKN9DBR": {
   "product": "2L Plastic Fountain (no filter listed)",
-  "relevant_keyword_count": 755,
-  "total_relevant_sv": 1027345,
+  "relevant_keyword_count": 754,
+  "total_relevant_sv": 1027242,
   "top60": [
    {
     "kw": "cat water fountain",
     "sv": 319141,
-    "iq": 121.0,
-    "title_density": 0.0,
+    "iq": 63828.0,
+    "title_density": 46.0,
     "competing": "5000",
-    "bid": 1.51,
+    "bid": 0.86,
     "our_rank": null,
     "spanish": false
    },
    {
     "kw": "dog water fountain",
     "sv": 97595,
-    "iq": 62.0,
-    "title_density": 0.0,
-    "competing": "5000",
-    "bid": null,
+    "iq": 24399.0,
+    "title_density": 31.0,
+    "competing": "4000",
+    "bid": 0.88,
     "our_rank": null,
     "spanish": false
    },
@@ -8283,20 +8285,20 @@
    {
     "kw": "cat water fountain",
     "sv": 319141,
-    "iq": 121.0,
-    "title_density": 0.0,
+    "iq": 63828.0,
+    "title_density": 46.0,
     "competing": "5000",
-    "bid": 1.51,
+    "bid": 0.86,
     "our_rank": null,
     "spanish": false
    },
    {
     "kw": "dog water fountain",
     "sv": 97595,
-    "iq": 62.0,
-    "title_density": 0.0,
-    "competing": "5000",
-    "bid": null,
+    "iq": 24399.0,
+    "title_density": 31.0,
+    "competing": "4000",
+    "bid": 0.88,
     "our_rank": null,
     "spanish": false
    },
@@ -9397,15 +9399,15 @@
   "root_words": [
    {
     "word": "water",
-    "sv": 833752
+    "sv": 833649
    },
    {
     "word": "fountain",
-    "sv": 795294
+    "sv": 795191
    },
    {
     "word": "cat",
-    "sv": 541867
+    "sv": 541764
    },
    {
     "word": "dog",
@@ -9479,16 +9481,16 @@
  },
  "B0GHLBGCP3": {
   "product": "2.2L Clear Plastic Fountain w/ Filter",
-  "relevant_keyword_count": 793,
-  "total_relevant_sv": 1052507,
+  "relevant_keyword_count": 792,
+  "total_relevant_sv": 1052404,
   "top60": [
    {
     "kw": "cat water fountain",
     "sv": 319141,
-    "iq": 121.0,
-    "title_density": 0.0,
+    "iq": 63828.0,
+    "title_density": 46.0,
     "competing": "5000",
-    "bid": 1.51,
+    "bid": 0.86,
     "our_rank": {
      "B0GHLBGCP3": 293
     },
@@ -9497,10 +9499,10 @@
    {
     "kw": "dog water fountain",
     "sv": 97595,
-    "iq": 62.0,
-    "title_density": 0.0,
-    "competing": "5000",
-    "bid": null,
+    "iq": 24399.0,
+    "title_density": 31.0,
+    "competing": "4000",
+    "bid": 0.88,
     "our_rank": {
      "B0GHLBGCP3": 269
     },
@@ -10127,10 +10129,10 @@
    {
     "kw": "cat water fountain",
     "sv": 319141,
-    "iq": 121.0,
-    "title_density": 0.0,
+    "iq": 63828.0,
+    "title_density": 46.0,
     "competing": "5000",
-    "bid": 1.51,
+    "bid": 0.86,
     "our_rank": {
      "B0GHLBGCP3": 293
     },
@@ -10139,10 +10141,10 @@
    {
     "kw": "dog water fountain",
     "sv": 97595,
-    "iq": 62.0,
-    "title_density": 0.0,
-    "competing": "5000",
-    "bid": null,
+    "iq": 24399.0,
+    "title_density": 31.0,
+    "competing": "4000",
+    "bid": 0.88,
     "our_rank": {
      "B0GHLBGCP3": 269
     },
@@ -11239,15 +11241,15 @@
   "root_words": [
    {
     "word": "water",
-    "sv": 858074
+    "sv": 857971
    },
    {
     "word": "fountain",
-    "sv": 810854
+    "sv": 810751
    },
    {
     "word": "cat",
-    "sv": 551609
+    "sv": 551506
    },
    {
     "word": "dog",
@@ -11321,26 +11323,26 @@
  },
  "B0GHKRYV6W": {
   "product": "2.2L Fountain w/ Stainless Tray + Filters",
-  "relevant_keyword_count": 922,
-  "total_relevant_sv": 1303147,
+  "relevant_keyword_count": 921,
+  "total_relevant_sv": 1303044,
   "top60": [
    {
     "kw": "cat water fountain",
     "sv": 319141,
-    "iq": 121.0,
-    "title_density": 0.0,
+    "iq": 63828.0,
+    "title_density": 46.0,
     "competing": "5000",
-    "bid": 1.51,
+    "bid": 0.86,
     "our_rank": null,
     "spanish": false
    },
    {
     "kw": "dog water fountain",
     "sv": 97595,
-    "iq": 62.0,
-    "title_density": 0.0,
-    "competing": "5000",
-    "bid": null,
+    "iq": 24399.0,
+    "title_density": 31.0,
+    "competing": "4000",
+    "bid": 0.88,
     "our_rank": null,
     "spanish": false
    },
@@ -11367,10 +11369,10 @@
    {
     "kw": "stainless steel cat water fountain",
     "sv": 70227,
-    "iq": 1.0,
-    "title_density": 0.0,
-    "competing": "10000",
-    "bid": null,
+    "iq": 35114.0,
+    "title_density": 15.0,
+    "competing": "2000",
+    "bid": 1.05,
     "our_rank": null,
     "spanish": false
    },
@@ -11929,20 +11931,20 @@
    {
     "kw": "cat water fountain",
     "sv": 319141,
-    "iq": 121.0,
-    "title_density": 0.0,
+    "iq": 63828.0,
+    "title_density": 46.0,
     "competing": "5000",
-    "bid": 1.51,
+    "bid": 0.86,
     "our_rank": null,
     "spanish": false
    },
    {
     "kw": "dog water fountain",
     "sv": 97595,
-    "iq": 62.0,
-    "title_density": 0.0,
-    "competing": "5000",
-    "bid": null,
+    "iq": 24399.0,
+    "title_density": 31.0,
+    "competing": "4000",
+    "bid": 0.88,
     "our_rank": null,
     "spanish": false
    },
@@ -11979,10 +11981,10 @@
    {
     "kw": "stainless steel cat water fountain",
     "sv": 70227,
-    "iq": 1.0,
-    "title_density": 0.0,
-    "competing": "10000",
-    "bid": null,
+    "iq": 35114.0,
+    "title_density": 15.0,
+    "competing": "2000",
+    "bid": 1.05,
     "our_rank": null,
     "spanish": false
    },
@@ -12983,15 +12985,15 @@
   "root_words": [
    {
     "word": "water",
-    "sv": 1072572
+    "sv": 1072469
    },
    {
     "word": "fountain",
-    "sv": 1050432
+    "sv": 1050329
    },
    {
     "word": "cat",
-    "sv": 747379
+    "sv": 747276
    },
    {
     "word": "stainless",

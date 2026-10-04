@@ -47,7 +47,7 @@
     ]
    }
   ],
-  "image_count": 27,
+  "image_count": 9,
   "image_variants": [
    "MAIN",
    "PT01",
@@ -217,6 +217,21 @@
     {
      "name": "COLOR"
     }
+   ],
+   "item_type_keyword": [
+    "pet-self-feeders"
+   ],
+   "operation_mode": [
+    "Automatic"
+   ],
+   "dog_breed_size": [
+    "all"
+   ],
+   "target_audience_keyword": [
+    "house-cats"
+   ],
+   "directions": [
+    "Placement: Set feeder on a flat, stable indoor surface"
    ]
   },
   "other_attribute_keys": [
@@ -232,7 +247,8 @@
    "supplier_declared_has_product_identifier_exemption",
    "target_audience_keyword",
    "unspsc_code"
-  ]
+  ],
+  "note": "Backend search terms (generic_keyword) are not returned by the Catalog Items API; check Seller Central."
  },
  "B0GHMCG8Q9": {
   "asin": "B0GHMCG8Q9",
@@ -282,7 +298,7 @@
     ]
    }
   ],
-  "image_count": 27,
+  "image_count": 9,
   "image_variants": [
    "MAIN",
    "PT01",
@@ -452,6 +468,21 @@
     {
      "name": "COLOR"
     }
+   ],
+   "item_type_keyword": [
+    "pet-self-feeders"
+   ],
+   "operation_mode": [
+    "Automatic"
+   ],
+   "dog_breed_size": [
+    "all"
+   ],
+   "target_audience_keyword": [
+    "house-cats"
+   ],
+   "directions": [
+    "Placement: Set feeder on a flat, stable indoor surface"
    ]
   },
   "other_attribute_keys": [
@@ -467,7 +498,8 @@
    "supplier_declared_has_product_identifier_exemption",
    "target_audience_keyword",
    "unspsc_code"
-  ]
+  ],
+  "note": "Backend search terms (generic_keyword) are not returned by the Catalog Items API; check Seller Central."
  },
  "B0GHH8L59K": {
   "asin": "B0GHH8L59K",
@@ -517,7 +549,7 @@
     ]
    }
   ],
-  "image_count": 24,
+  "image_count": 8,
   "image_variants": [
    "MAIN",
    "PT01",
@@ -685,6 +717,25 @@
    ],
    "unit_count": [
     1.0
+   ],
+   "item_type_keyword": [
+    "pet-self-feeders"
+   ],
+   "operation_mode": [
+    "Automatic"
+   ],
+   "dog_breed_size": [
+    "all"
+   ],
+   "target_audience_keyword": [
+    "house-cats"
+   ],
+   "directions": [
+    "Placement: Set feeder on a flat, stable indoor surface",
+    "Filling: Add pet food to the storage container",
+    "Power: Connect the power adapter and turn on the feeder",
+    "Setup: Set feeding times using the app or controls",
+    "Care: Clean bowls and container regularly"
    ]
   },
   "other_attribute_keys": [
@@ -701,7 +752,8 @@
    "supplier_declared_has_product_identifier_exemption",
    "target_audience_keyword",
    "unspsc_code"
-  ]
+  ],
+  "note": "Backend search terms (generic_keyword) are not returned by the Catalog Items API; check Seller Central."
  },
  "B0GTCGYZDM": {
   "asin": "B0GTCGYZDM",
@@ -751,7 +803,7 @@
     ]
    }
   ],
-  "image_count": 27,
+  "image_count": 9,
   "image_variants": [
    "MAIN",
    "PT01",
@@ -904,6 +956,21 @@
    ],
    "unit_count": [
     1.0
+   ],
+   "item_type_keyword": [
+    "pet-self-feeders"
+   ],
+   "operation_mode": [
+    "Automatic"
+   ],
+   "dog_breed_size": [
+    "all"
+   ],
+   "target_audience_keyword": [
+    "house-cats"
+   ],
+   "directions": [
+    "Placement: Set feeder on a flat, stable indoor surface"
    ]
   },
   "other_attribute_keys": [
@@ -920,7 +987,8 @@
    "supplier_declared_has_product_identifier_exemption",
    "target_audience_keyword",
    "unspsc_code"
-  ]
+  ],
+  "note": "Backend search terms (generic_keyword) are not returned by the Catalog Items API; check Seller Central."
  },
  "B0DR7FCLZR": {
   "asin": "B0DR7FCLZR",
@@ -976,7 +1044,7 @@
     ]
    }
   ],
-  "image_count": 24,
+  "image_count": 8,
   "image_variants": [
    "MAIN",
    "PT01",
@@ -1125,6 +1193,34 @@
    ],
    "unit_count": [
     1.0
+   ],
+   "item_type_keyword": [
+    "pet-self-waterers"
+   ],
+   "indoor_outdoor_usage": [
+    "indoor",
+    "outdoor"
+   ],
+   "warranty_description": [
+    "This product is covered by a 1-year limited warranty against defects in materials or workmanship. If any issues arise within the warranty period, please contact our customer service for assistance."
+   ],
+   "dog_breed_size": [
+    "extra_small",
+    "small",
+    "medium"
+   ],
+   "target_audience_keyword": [
+    "Cats",
+    "Dogs"
+   ],
+   "directions": [
+    "Assembly: Unbox all components carefully. Place the fountain on a flat, stable surface. Connect the power adapter to the fountain and plug it into a power outlet.",
+    "Filling with Water: Open the top lid and pour fresh water into the water tank. Ensure the water level does not exceed the maximum capacity (3.2L).",
+    "Power On: Switch on the fountain using the power button and choose your preferred flow mode (flower waterfall or gentle fountain). The LED light will automatically turn on for easy visibility, or you can turn it off using the switch on the wire.",
+    "Maintenance: Clean the fountain and replace the filters every 2-3 weeks for optimal performance. The pump should be cleaned regularly to maintain quiet operation."
+   ],
+   "animal_water_dispenser_form": [
+    "fountain_water_dispenser"
    ]
   },
   "other_attribute_keys": [
@@ -1143,7 +1239,8 @@
    "target_audience_keyword",
    "unspsc_code",
    "warranty_description"
-  ]
+  ],
+  "note": "Backend search terms (generic_keyword) are not returned by the Catalog Items API; check Seller Central."
  },
  "B0GHKN9DBR": {
   "asin": "B0GHKN9DBR",
@@ -1193,7 +1290,7 @@
     ]
    }
   ],
-  "image_count": 27,
+  "image_count": 9,
   "image_variants": [
    "MAIN",
    "PT01",
@@ -1332,6 +1429,29 @@
    ],
    "unit_count": [
     1.0
+   ],
+   "item_type_keyword": [
+    "pet-self-waterers"
+   ],
+   "indoor_outdoor_usage": [
+    "indoor"
+   ],
+   "warranty_description": [
+    "This product is covered by a 1-year limited warranty against defects in materials or workmanship. If any issues arise within the warranty period, please contact our customer service for assistance."
+   ],
+   "dog_breed_size": [
+    "extra_small",
+    "small",
+    "medium"
+   ],
+   "target_audience_keyword": [
+    "house-cats"
+   ],
+   "directions": [
+    "Assembly: Unbox all components carefully. Place the fountain on a flat, stable surface. Connect the power adapter to the fountain and plug it into a power outlet."
+   ],
+   "animal_water_dispenser_form": [
+    "fountain_water_dispenser"
    ]
   },
   "other_attribute_keys": [
@@ -1351,7 +1471,8 @@
    "target_audience_keyword",
    "unspsc_code",
    "warranty_description"
-  ]
+  ],
+  "note": "Backend search terms (generic_keyword) are not returned by the Catalog Items API; check Seller Central."
  },
  "B0GHLBGCP3": {
   "asin": "B0GHLBGCP3",
@@ -1401,7 +1522,7 @@
     ]
    }
   ],
-  "image_count": 27,
+  "image_count": 9,
   "image_variants": [
    "MAIN",
    "PT01",
@@ -1538,6 +1659,30 @@
    ],
    "unit_count": [
     1.0
+   ],
+   "item_type_keyword": [
+    "pet-self-waterers"
+   ],
+   "indoor_outdoor_usage": [
+    "indoor"
+   ],
+   "warranty_description": [
+    "This product is covered by a 1-year limited warranty against defects in materials or workmanship. If any issues arise within the warranty period, please contact our customer service for assistance."
+   ],
+   "dog_breed_size": [
+    "extra_small"
+   ],
+   "target_audience_keyword": [
+    "house-cats"
+   ],
+   "directions": [
+    "Assembly: Unbox all components carefully. Place the fountain on a flat, stable surface. Connect the power adapter to the fountain and plug it into a power outlet.",
+    "Filling: Add clean water to the reservoir up to the visible water level",
+    "Filter: Make sure the filter cartridge is properly installed before use",
+    "Care: Clean the fountain and replace the filter regularly for best performance"
+   ],
+   "animal_water_dispenser_form": [
+    "fountain_water_dispenser"
    ]
   },
   "other_attribute_keys": [
@@ -1556,7 +1701,8 @@
    "target_audience_keyword",
    "unspsc_code",
    "warranty_description"
-  ]
+  ],
+  "note": "Backend search terms (generic_keyword) are not returned by the Catalog Items API; check Seller Central."
  },
  "B0GHKRYV6W": {
   "asin": "B0GHKRYV6W",
@@ -1606,7 +1752,7 @@
     ]
    }
   ],
-  "image_count": 27,
+  "image_count": 9,
   "image_variants": [
    "MAIN",
    "PT01",
@@ -1750,6 +1896,32 @@
    ],
    "unit_count": [
     1.0
+   ],
+   "item_type_keyword": [
+    "pet-self-waterers"
+   ],
+   "indoor_outdoor_usage": [
+    "indoor"
+   ],
+   "warranty_description": [
+    "This product is covered by a 1-year limited warranty against defects in materials or workmanship. If any issues arise within the warranty period, please contact our customer service for assistance."
+   ],
+   "dog_breed_size": [
+    "extra_small",
+    "small",
+    "medium"
+   ],
+   "target_audience_keyword": [
+    "Small Animals",
+    "Dogs",
+    "house-cats",
+    "Cats"
+   ],
+   "directions": [
+    "Assembly: Unbox all components carefully. Place the fountain on a flat, stable surface. Connect the power adapter to the fountain and plug it into a power outlet."
+   ],
+   "animal_water_dispenser_form": [
+    "fountain_water_dispenser"
    ]
   },
   "other_attribute_keys": [
@@ -1769,7 +1941,8 @@
    "target_audience_keyword",
    "unspsc_code",
    "warranty_description"
-  ]
+  ],
+  "note": "Backend search terms (generic_keyword) are not returned by the Catalog Items API; check Seller Central."
  },
  "B0H3L6VXV6": {
   "asin": "B0H3L6VXV6",
@@ -1819,7 +1992,7 @@
     ]
    }
   ],
-  "image_count": 27,
+  "image_count": 9,
   "image_variants": [
    "MAIN",
    "PT01",
@@ -1950,6 +2123,18 @@
     {
      "name": "COLOR"
     }
+   ],
+   "item_type_keyword": [
+    "pet-self-feeders"
+   ],
+   "dog_breed_size": [
+    "all"
+   ],
+   "target_audience_keyword": [
+    "house-cats"
+   ],
+   "directions": [
+    "Placement: Set feeder on a flat, stable indoor surface"
    ]
   },
   "other_attribute_keys": [
@@ -1962,6 +2147,12 @@
    "supplier_declared_dg_hz_regulation",
    "supplier_declared_has_product_identifier_exemption",
    "target_audience_keyword"
-  ]
+  ],
+  "note": "Backend search terms (generic_keyword) are not returned by the Catalog Items API; check Seller Central."
+ },
+ "_meta": {
+  "source": "SP-API GET /catalog/2022-04-01/items/{asin} (summaries,attributes,salesRanks,dimensions,images,productTypes), US marketplace",
+  "fetched": "2026-10-04",
+  "B0H3L6VXV6": "variation parent of B0GHLSQMJ9 (white) / B0GHMCG8Q9 (black)"
  }
 }
