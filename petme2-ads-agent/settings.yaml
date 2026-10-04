@@ -2,11 +2,11 @@
 status: approved            # suggested | approved (owner sets "approved") - owner approved in chat 2026-10-04
 mode: supervised            # audit | supervised | auto - set by owner's instruction in chat 2026-10-04
 ads_source: browser         # browser (now) | ads_api (later)
-daily_spend_cap: 20         # total $ per day, all campaigns
-max_bid: 1.00           # highest $ per click allowed
+daily_spend_cap: 60         # total $ per day, all campaigns - owner raised in chat 2026-10-04 (honeymoon test)
+max_bid: 1.50           # highest $ per click allowed - owner raised in chat 2026-10-04
 max_budget_increase_without_approval: 25%
 max_bid_change_per_day: 20%
-max_changes_per_day: 50
+max_changes_per_day: 200    # owner raised in chat 2026-10-04 (campaign setup)
 experiment_budget_share: 15%
 max_running_experiments: 3
 min_stock_days_for_ads: 10
