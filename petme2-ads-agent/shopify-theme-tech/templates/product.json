@@ -51,16 +51,18 @@
             "show_gift_card_recipient": false
           }
         },
-        "description": {
-          "type": "description",
-          "settings": {}
-        },
         "shipping": {
           "type": "collapsible_tab",
           "settings": {
             "heading": "Free shipping & 30-day guarantee",
             "icon": "truck",
             "content": "<p>Free U.S. shipping on every order. Orders are fulfilled by Amazon.</p><p>30-day money-back guarantee: if your pet doesn't like it, contact us within 30 days and we'll give you your money back.</p>"
+          }
+        },
+        "details": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<details class=\"pm2-details\"><summary>Full product details</summary><div class=\"pm2-details__body rte\">{{ product.description }}</div></details><style>.pm2-details{border-top:1px solid rgba(var(--color-foreground),.12);border-bottom:1px solid rgba(var(--color-foreground),.12)}.pm2-details summary{cursor:pointer;list-style:none;padding:16px 0;min-height:44px;font-weight:600;display:flex;justify-content:space-between;align-items:center}.pm2-details summary::-webkit-details-marker{display:none}.pm2-details summary::after{content:\"+\";font-size:22px;font-weight:300}.pm2-details[open] summary::after{content:\"\\2013\"}.pm2-details__body{padding:0 0 18px;font-size:15px;line-height:1.6}</style>"
           }
         }
       },
@@ -71,7 +73,7 @@
         "variant_picker",
         "quantity_selector",
         "buy_buttons",
-        "description",
+        "details",
         "shipping"
       ]
     },

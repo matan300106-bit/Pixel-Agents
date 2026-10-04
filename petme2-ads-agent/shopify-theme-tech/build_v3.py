@@ -71,3 +71,21 @@ insert_after(C, "cart-footer", "trust_badges", {"type": "pm2-trust-badges", "blo
                  "color_scheme": "scheme-3", "padding_top": 8, "padding_bottom": 24}})
 save("templates/cart.json", C)
 print("index:", I["order"]); print("product:", P["order"]); print("cart:", C["order"]); print("header:", H["order"])
+
+# Shorter buy box: the long product description no longer sits open under the buy buttons.
+# It moves into a closed "Full product details" drop-down (owner: "long large text ... stressing").
+P = load("templates/product.json")
+main = P["sections"]["main"]
+if "description" in main["blocks"]:
+    i = main["block_order"].index("description")
+    main["block_order"][i] = "details"
+    del main["blocks"]["description"]
+    main["blocks"]["details"] = {"type": "custom_liquid", "settings": {"custom_liquid": (
+        '<details class="pm2-details"><summary>Full product details</summary>'
+        '<div class="pm2-details__body rte">{{ product.description }}</div></details>'
+        '<style>.pm2-details{border-top:1px solid rgba(var(--color-foreground),.12);border-bottom:1px solid rgba(var(--color-foreground),.12)}'
+        '.pm2-details summary{cursor:pointer;list-style:none;padding:16px 0;min-height:44px;font-weight:600;display:flex;justify-content:space-between;align-items:center}'
+        '.pm2-details summary::-webkit-details-marker{display:none}.pm2-details summary::after{content:"+";font-size:22px;font-weight:300}'
+        '.pm2-details[open] summary::after{content:"\\2013"}.pm2-details__body{padding:0 0 18px;font-size:15px;line-height:1.6}</style>')}}
+    save("templates/product.json", P)
+print("product main blocks:", P["sections"]["main"]["block_order"])
