@@ -302,6 +302,18 @@
   @supports (overflow-x: clip) { body { overflow-x: clip; } }
   html, body { max-width: 100%; }
 
+  /* Product photo lightbox: show the whole photo on screen (no giant zoom on tall photos). */
+  .product-media-modal__content > img,
+  .product-media-modal__content > .global-media-settings:not(.deferred-media) {
+    width: auto !important;
+    max-width: 100%;
+    max-height: calc(100vh - 4rem);
+    max-height: calc(100dvh - 4rem);
+    object-fit: contain;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .button,
     .header__icon,
