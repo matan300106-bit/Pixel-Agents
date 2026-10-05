@@ -302,6 +302,9 @@
   @supports (overflow-x: clip) { body { overflow-x: clip; } }
   html, body { max-width: 100%; }
 
+  /* Free U.S. shipping: hide Dawn's "Shipping calculated at checkout" line under the price (it contradicts free shipping). */
+  .product__tax { display: none !important; }
+
   /* Product photo lightbox: show the whole photo on screen (no giant zoom on tall photos). */
   .product-media-modal__content > img,
   .product-media-modal__content > .global-media-settings:not(.deferred-media) {
