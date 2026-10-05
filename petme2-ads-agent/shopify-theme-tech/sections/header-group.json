@@ -94,9 +94,17 @@
         "show_code_without_email": false,
         "color_scheme": "scheme-3"
       }
+    },
+    "pm2-ahrefs": {
+      "type": "pm2-ahrefs-analytics",
+      "settings": {
+        "enabled": true,
+        "data_key": "/T5c1ngTg1eI29SYFzuY5g"
+      }
     }
   },
   "order": [
+    "pm2-ahrefs",
     "announcement-bar",
     "header",
     "pm2-global-style",
