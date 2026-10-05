@@ -23,13 +23,13 @@ Upload file for 3+4+5: `outbox/2026-10-04/bulk-upload-2-new-campaigns.xlsx` (83 
 
 8. **V2 REBUILD (replaces 1–7):** owner archives all old campaigns and uploads ONE file `outbox/2026-10-04-v2/PETME2-ALL-CAMPAIGNS-V2.xlsx` (427 rows, 7 campaigns, $58/day, all PAUSED). Draft: `ads-v2-draft.md`. → **APPROVED** (owner: "make me something to upload 1 time", chat 2026-10-04). UPLOADED and campaigns 1–6 turned ON by owner 2026-10-04. Items 1–7 replaced by V2.
 
-## 2026-10-05 — Bid raise (owner asked in chat: "bids too low, no traction")
-Owner instruction in chat counts as APPROVED. Done by the owner's Chrome agent, not by upload.
-- Rule: each enabled keyword / product target bid = Amazon suggested bid (middle value), never lower than now, capped:
-  - 3L camera feeder, 3L dual feeder black/white: max $1.20
-  - 5L WiFi feeder (launch): max $1.00
-  - 3.2L stainless fountain: max $1.40
-  - $21.99 fountains (B0GHKN9DBR, B0GHLBGCP3, B0GHKRYV6W): max $0.60 (above break-even, launch week only)
-  - Auto campaign default bids: same caps. Brand campaign: max $0.60.
-- Top of search placement +30% on Exact campaigns only.
-- Review on 2026-10-08 with fresh data; lower bids where ACOS > break-even after 10+ clicks.
+## 2026-10-05 — Bid raise, careful version (owner: "lower side, we are still testing")
+Owner instruction in chat counts as APPROVED. Done by the owner's Chrome agent on screen, no bulk upload.
+- New bid = Amazon suggested bid LOW end (first number of the range), never lower than now, never more than +50% over now, capped:
+  - 3L camera feeder, 3L dual feeder black/white: max $0.85
+  - 5L WiFi feeder (launch): max $0.70
+  - 3.2L stainless fountain: max $1.00
+  - $21.99 fountains (B0GHKN9DBR, B0GHLBGCP3, B0GHKRYV6W): max $0.45
+  - Brand campaign: max $0.45. Auto default bids: same caps.
+- Top of search +15% on Exact campaigns only, strategy "down only".
+- Ramp: every 3 days, if a keyword has < 100 impressions, +15% (within max_bid $1.50). Review 2026-10-08.
