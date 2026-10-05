@@ -36,26 +36,6 @@
         "show_text_below": true
       }
     },
-    "product-grid": {
-      "type": "main-collection-product-grid",
-      "settings": {
-        "products_per_page": 24,
-        "columns_desktop": 4,
-        "columns_mobile": "2",
-        "color_scheme": "scheme-3",
-        "image_ratio": "square",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "standard",
-        "enable_filtering": false,
-        "filter_type": "horizontal",
-        "enable_sorting": true,
-        "padding_top": 40,
-        "padding_bottom": 48
-      }
-    },
     "why": {
       "type": "multicolumn",
       "blocks": {
@@ -187,11 +167,46 @@
         "padding_top": 56,
         "padding_bottom": 64
       }
+    },
+    "cats": {
+      "type": "pm2-shop-group",
+      "settings": {
+        "collection": "cat-supplements",
+        "anchor": "cats",
+        "number": "01",
+        "title": "For cats",
+        "badge": "Coming soon",
+        "text": "Skin & coat, immune support, L-lysine and cat grass. Tasty soft chews made for cats.",
+        "image": "shopify://shop_images/hf_20261004_165018_703ef6e5-5d38-45d8-9229-e1e9f3b15337.jpg",
+        "show_link": false,
+        "quick_add": false,
+        "color_scheme": "scheme-3",
+        "padding_top": 40,
+        "padding_bottom": 24
+      }
+    },
+    "dogs": {
+      "type": "pm2-shop-group",
+      "settings": {
+        "collection": "dog-supplements",
+        "anchor": "dogs",
+        "number": "02",
+        "title": "For dogs",
+        "badge": "Coming soon",
+        "text": "Hip & joint, probiotic, multivitamin 25-in-1 and tear stain. Tasty soft chews made for dogs.",
+        "image": "shopify://shop_images/hf_20261004_165111_127f2798-ef3e-479c-9d6a-8fe3515415dc.jpg",
+        "show_link": false,
+        "quick_add": false,
+        "color_scheme": "scheme-3",
+        "padding_top": 24,
+        "padding_bottom": 48
+      }
     }
   },
   "order": [
     "hero",
-    "product-grid",
+    "cats",
+    "dogs",
     "why",
     "guarantee",
     "faq"
