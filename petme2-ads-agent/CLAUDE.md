@@ -236,3 +236,9 @@ report_email: TBD
 
 - 2026-10-06, owner: "always do whatever is needed, don't ask me." Do the work directly (Shopify store data, theme copies, content, SEO, Search Console, review requests, reports). Only hand the owner the steps no tool can do (publishing a theme, installing apps, logins/2FA, Seller Central and Ads console clicks via Chrome prompts).
 - Still log every change in `changes-log.csv` with the old value so it can be undone. Never delete what can't be restored, never invent claims, keep supplement wording compliant.
+
+---
+
+## 16. Side project: Cat Town (Instagram + web page)
+
+Cat Town work moved to its own session (owner, 2026-10-06: keep this session for ADS). Everything needed is in `social/cat-town/HANDOFF.md` (state, files, links, how to render/upload). In this ADS session, don't start Cat Town work; point the owner to the Cat Town session.
