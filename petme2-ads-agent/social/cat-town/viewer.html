@@ -975,7 +975,7 @@ const fit = () => { W = stage.clientWidth; H = stage.clientHeight; renderer.setS
 addEventListener('resize', fit); fit();
 const slider = $('grow'), tOf = f => f <= 0 ? -1 : EP.newFrom + (EP.newTo - EP.newFrom) * Math.pow((f - .5) / FN, .8) + 1e-6;
 if (EP.live) {   // live page: the real town today (EP.live.followers cats besides Mango); no growth demo controls
-  slider.max = slider.value = EP.live.followers; [slider, $('play'), ...slider.parentElement.querySelectorAll('.row label, .chips')].forEach(e => { e.hidden = true; e.style.display = 'none'; });
+  slider.max = slider.value = EP.live.followers; [slider, $('play'), ...slider.parentElement.querySelectorAll('.row, .chips')].forEach(e => { e.hidden = true; e.style.display = 'none'; });
   if (EP.live.followers < 100) { controls.autoRotate = true; controls.target.set(0, 3, 0); camera.position.set(0, 3, 0).add(new THREE.Vector3(.55, .5, .67).setLength(innerWidth < 700 ? 84 : 70)); } }
 const FMAX = +slider.max;
 let target = +slider.value, cur = target, playing = false, ANIM = 0, nextFeed = 7, feedKind = 'food';
@@ -1116,6 +1116,7 @@ document.body.classList.add('ready');
 // "Save postcard": render the current view into a 1080x1350 card and show it as an image (the page sandbox blocks scripted downloads,
 // so the visitor long-presses / right-clicks the image to save it).
 const pcBox = $('pcBox'), pcBtn = $('postcard');
+pcBtn.hidden = true; pcBtn.style.display = 'none';   // owner 2026-10-06: no "Save postcard" on the website
 const closePC = () => { pcBox.hidden = true; pcBtn.focus(); };
 pcBtn.addEventListener('click', async () => {
   controls.update(); window.renderFrame(tOf(Math.round(cur)), ANIM);
