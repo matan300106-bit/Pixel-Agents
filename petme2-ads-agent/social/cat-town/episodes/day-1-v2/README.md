@@ -1,7 +1,7 @@
 # Cat Town Day 1 (v2) video
 
-Final video (18.4 s, 1080x1920): project files `cat-town/day-1/cat-town-day1.mp4` (not in git, 18 MB). Cover: `cover.jpg`.
-Plan: `viral-plan.md`. Reviewer report on the first cut: `review.md` (6/10); fixes applied after it: brand sign renamed "Pet Shop" in the goal town, captions hidden when they repeat the big text, end card cut to 4 words + "Follow" button, exact loop (last segment anim = T - 18.4 so the last frame matches frame 0, text fades out), tag kept inside the safe zone, louder pops, music lower, stereo audio, "TODAY: 1 CAT".
+Final video (18.8 s, 1080x1920): project files `cat-town/day-1/cat-town-day1.mp4` (not in git, 18 MB). Cover: `cover.jpg`.
+Plan: `viral-plan.md`. Reviewer report on the first cut: `review.md` (6/10); fixes applied after it: brand sign renamed "Pet Shop" in the goal town, captions hidden when they repeat the big text, end card cut to 4 words + "Follow" button, exact loop (last segment anim = T - 18.4 so the last frame matches frame 0, text fades out), tag kept inside the safe zone, louder pops, music lower, stereo audio, "TODAY: 1 CAT". Later polish: goal shot held 0.4 s longer (lines after it shifted), clean cover without subtitles.
 
 ## Free pipeline (no paid credits)
 - Voice: Kokoro TTS (`af_heart`, speed 1.12) run locally (`voice_gen.py`; model files from github.com/thewh1teagle/kokoro-onnx releases). edge-tts is blocked from the cloud container (403), and files can't be copied back from the Composio sandbox.

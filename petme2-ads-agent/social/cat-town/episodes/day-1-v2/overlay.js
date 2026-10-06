@@ -18,7 +18,7 @@
   window.ovDraw = (T, D) => {
     let h = '';
     const beat = D.beats.find(b => T >= b.s && T < b.e);
-    if (D.pill && !(T >= 12.8 && T < 14.25)) { const k = back((T - .25) / .35); h += `<div class="pill" style="transform:scale(${k});transform-origin:left center">🐱 <b>1</b> cat · Day 1</div>`; }
+    if (D.pill && !(T >= 12.8 && T < 14.65)) { const k = back((T - .25) / .35); h += `<div class="pill" style="transform:scale(${k});transform-origin:left center">🐱 <b>1</b> cat · Day 1</div>`; }
     if (beat) { const k = back((T - beat.s) / .3); h += `<div class="big" style="transform:scale(${.6 + .4 * k});opacity:${Math.min(1, (T - beat.s) / .12)}">${beat.html}</div>`;
       if (beat.small && T >= beat.ss) h += `<div class="small" style="top:${beat.sy}px;transform:scale(${back((T - beat.ss) / .3)})">${beat.small}</div>`;
       if (beat.follow && T >= beat.fs) { const k2 = back((T - beat.fs) / .35), pulse = 1 + .05 * Math.sin((T - beat.fs) * 8); h += `<div class="follow" style="transform:translateX(-50%) scale(${k2 * pulse})">Follow 👇</div>`; } }
@@ -26,6 +26,6 @@
     const line = D.lines.find(l => !l.hide && T >= l.s - .05 && T < l.e + .3);
     if (line) h += `<div class="cap">${line.words.map(w => `<span class="${T >= w.s && T < w.e + .05 ? 'on' : ''}">${w.w}</span>`).join(' ')}</div>`;
     const tg = document.getElementById('tags'); if (tg) tg.style.visibility = T < 11.1 ? 'hidden' : 'visible';
-    ov.innerHTML = h; ov.style.opacity = Math.min(1, Math.max(0, (18.4 - 1/30 - T) / .3)); if (tg) tg.style.opacity = ov.style.opacity;
+    ov.innerHTML = h; ov.style.opacity = Math.min(1, Math.max(0, (18.8 - 1/30 - T) / .3)); if (tg) tg.style.opacity = ov.style.opacity;
   };
 })();

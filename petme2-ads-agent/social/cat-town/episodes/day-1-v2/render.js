@@ -1,7 +1,7 @@
 // node render.js test T1,T2,...   |  node render.js range i0 i1  (frames at 30 fps -> v/frames/fNNNN.jpg)
 const { chromium } = require('playwright'); const fs = require('fs');
 const D = JSON.parse(fs.readFileSync(__dirname + '/v/text.json'));
-const SEG = T => T < 4.55 ? ['e0', 0] : T < 5.8 ? ['e0', 5] : T < 6.6 ? ['e0', 15] : T < 7.4 ? ['e0', 8] : T < 12.8 ? ['e1', 18] : T < 14.25 ? ['e2', 0] : ['e0', -18.4];
+const SEG = T => T < 4.55 ? ['e0', 0] : T < 5.8 ? ['e0', 5] : T < 6.6 ? ['e0', 15] : T < 7.4 ? ['e0', 8] : T < 12.8 ? ['e1', 18] : T < 14.65 ? ['e2', 0] : ['e0', -18.8];
 (async () => {
   const [mode, a, b] = process.argv.slice(2);
   const Ts = mode === 'test' ? a.split(',').map(Number) : [...Array(+b - +a).keys()].map(i => (i + +a) / 30);
