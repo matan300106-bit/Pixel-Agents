@@ -33,8 +33,9 @@ An Instagram series + interactive web page: a low-poly 3D **city built for cats*
 ## Day-1 video pipeline (when real data arrives)
 Voice: edge-tts `en-US-AvaMultilingualNeural` rate +6% with WordBoundary timings (Composio remote workbench); original synth music + pop SFX; mix with ffmpeg sidechain; render frames headless → H.264; deliver via Shopify Files link. Needs real data from the owner: new follower count, top comments with likes, Instagram handle (@petme2 unconfirmed). Do not post anything without owner approval.
 
-## In progress at handoff (2026-10-06)
-A builder agent in the ADS session was doing: real **PETME2 Stainless Steel Fountain 3.2L** model at the center (from product photo: round steel bowl, flat top, goose-neck spout, dark water window + "PETME2"), **bigger central square (~1.7x)**, giant **Dual Bowl Automatic Feeder** next to it (white tank, dark window, wooden legs, two steel bowls; cats eat), **arrow D-pad** (move/zoom/center), **double-tap to fly there**, game-like phone controls, first-load hint. Check `build-notes.md` and `git log` for whether it landed; then build viewer + Shopify files, upload to an unpublished theme copy, send the owner the preview link.
+## Status at handoff (2026-10-06, commit 9d1a5ec on petme2-campaign-plan)
+DONE in code (builder, see `build-notes.md`): real PETME2 Stainless Steel Fountain 3.2L model at the center, giant Dual Bowl Feeder next to it (cats eat, one stares at the tank), plaza 16 → 28, D-pad arrows + zoom + center button, double-tap fly-to (single tap opens the info card after 250 ms), game-style phone controls, first-load hint, phone LITE mode; `build_shopify.py` fixed. Previews: `previews/final_fountain_feeder.jpg`, `final_square_top.jpg`, `final_city_1000.jpg`, `final_day1.jpg`.
+NOT DONE: nothing of this is uploaded yet. Shopify preview theme 188907684052 and the artifact link still have the older version (tap houses, 1,000 cap, no fountain/feeder/D-pad). Next: `python3 build_viewer.py && python3 build_shopify.py`, test at phone size, upload to an unpublished theme copy, republish the artifact, send the owner the preview link.
 
 ## Open polish items
 Phone: Mochi starts cut at the edge; Day-1 web view far; episode shots don't visit Mochi/beach; "Find your house" search waits for real handles (no demo names on a public page except clearly-labelled examples).
