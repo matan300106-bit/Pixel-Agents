@@ -1,5 +1,5 @@
 const { chromium } = require('playwright');
-const fps = +process.argv[2] || 30, dur = 12.5, only = process.argv[3];
+const fps = +process.argv[2] || 30, dur = 21, only = process.argv[3];
 (async () => {
   const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
   const p = await b.newPage({ viewport: { width: 1080, height: 1920 } });

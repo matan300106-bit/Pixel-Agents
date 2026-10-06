@@ -2,7 +2,10 @@
 
 Idea (from @telbatata's "city grows every day" reels): a tiny low-poly island where cats live. Every episode builds ONE thing that followers asked for in the comments. PETME2 products show up naturally (fountain plaza, feeding hall).
 
-## Episode 1 (ready): `cat-town-day-1.mp4` (1080x1920, 12.5 s, no sound)
+## Episode 1 (ready): 1080x1920, 21 s, with voiceover + music + subtitles
+Final with sound: Shopify Files → `petme2-cat-town-day-1.mp4`. `cat-town-day-1.mp4` here is the silent render.
+Voice (en-US Aria, edge-tts): "Day one: we're building a town... for cats!" / "First, a cozy home. And look, our first cat just moved in!" / "Every town needs fresh water, so we built a fountain. Cats love running water!" / "What should the cats build next? Comment below, and follow to see it built!"
+Music: original synth track made in code (no copyright issues).
 Empty island → first cat house pops up, orange cat walks in → fresh-water fountain appears, grey cat runs to drink → end card "What should the cats build next? Comment below & follow @petme2".
 
 **Caption:**
