@@ -1,0 +1,5 @@
+{"day": 2, "new_followers": 12,
+ "comments": [{"by": "example.anna", "text": "Build a cat airport!", "likes": 87},
+              {"by": "example.dan", "text": "A sushi bar for Mango", "likes": 54},
+              {"by": "example.lior", "text": "Giant scratching tower", "likes": 31}],
+ "build": {"name": "Cat Airport"}}

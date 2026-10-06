@@ -1,0 +1,51 @@
+[
+ {
+  "role": "hook",
+  "text": "Day 2. You asked for a Cat Airport.",
+  "s": 0.15,
+  "e": 2.085,
+  "wav": "/home/claude/Pixel-Agents/petme2-ads-agent/social/cat-town/daily/days/example-day-02/v0t.wav"
+ },
+ {
+  "role": "cats",
+  "text": "12 new followers... so 12 new cats moved in!",
+  "s": 2.435,
+  "e": 5.198,
+  "wav": "/home/claude/Pixel-Agents/petme2-ads-agent/social/cat-town/daily/days/example-day-02/v1t.wav"
+ },
+ {
+  "role": "total",
+  "text": "Cat Town has 13 cats now.",
+  "s": 5.348,
+  "e": 6.966,
+  "wav": "/home/claude/Pixel-Agents/petme2-ads-agent/social/cat-town/daily/days/example-day-02/v2t.wav"
+ },
+ {
+  "role": "comment",
+  "text": "And the most liked comment wants...",
+  "s": 7.416,
+  "e": 8.874,
+  "wav": "/home/claude/Pixel-Agents/petme2-ads-agent/social/cat-town/daily/days/example-day-02/v3t.wav"
+ },
+ {
+  "role": "build",
+  "text": "a Cat Airport!",
+  "s": 9.124,
+  "e": 9.913,
+  "wav": "/home/claude/Pixel-Agents/petme2-ads-agent/social/cat-town/daily/days/example-day-02/v4t.wav"
+ },
+ {
+  "role": "built",
+  "text": "So we built it!",
+  "s": 10.363,
+  "e": 11.137,
+  "wav": "/home/claude/Pixel-Agents/petme2-ads-agent/social/cat-town/daily/days/example-day-02/v5t.wav"
+ },
+ {
+  "role": "cta",
+  "text": "Follow to move your cat in, and comment what we build tomorrow!",
+  "s": 11.637,
+  "e": 14.64,
+  "wav": "/home/claude/Pixel-Agents/petme2-ads-agent/social/cat-town/daily/days/example-day-02/v6t.wav"
+ }
+]
