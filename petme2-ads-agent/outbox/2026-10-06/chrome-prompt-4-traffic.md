@@ -4,9 +4,9 @@
 You are working in my Amazon Seller Central and Amazon Ads (advertising.amazon.com). Do the 3 parts in order. Don't create, delete or archive anything. If you see a login, 2-step code or CAPTCHA, stop and tell me.
 
 PART 1 - PRICES (Seller Central > Inventory > Manage All Inventory). Change ONLY "Your price", Save each:
-- L6-L3S1-I7Q6 -> 27.99
-- SD-85ET-IOZ3 -> 27.99
-- JE-LQEW-9EHL -> 27.99
+- L6-L3S1-I7Q6 -> 24.99
+- SD-85ET-IOZ3 -> 24.99
+- JE-LQEW-9EHL -> 24.99
 - 93-E8EG-20UY -> 51.99
 - LW-EZAJ-KKZD -> 51.99
 - QO-7VBS-CVT4 -> 54.99
@@ -26,7 +26,7 @@ Caps (max $ per click):
 - Stainless fountain 3.2L: $1.30
 - Dual bowl feeders (white + black): $1.25
 - 5L WiFi feeder: $1.10
-- The three 2L/2.2L fountains (now $27.99): $0.75
+- The three 2L/2.2L fountains (now $24.99): $0.55
 - PETME2 brand keywords: $0.60
 - Auto ad groups: same caps as their product.
 Placements: in every campaign set "Top of search (first page)" to +30%.
