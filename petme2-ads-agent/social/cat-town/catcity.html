@@ -69,13 +69,14 @@ let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 214748364
 const hash01 = n => ((n * 2654435761) >>> 0) % 10000 / 10000;
 const V = (x, y, z) => new THREE.Vector3(x, y, z);
 const STILL = !!EP.still;
+const LITE = !!window.CAT_LITE, VIEWER = !!window.CAT_VIEWER;   // LITE: phones (no shadows, no antialias, fewer trees); VIEWER: interactive page (no preserved buffer)
 
 // ---------- renderer ----------
 const W = 1080, H = 1920;
-const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+const renderer = new THREE.WebGLRenderer({ antialias: !LITE, preserveDrawingBuffer: !VIEWER, powerPreference: 'high-performance' });
 renderer.setSize(W, H); renderer.setPixelRatio(1);
 renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
-renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.shadowMap.enabled = !LITE; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 document.body.prepend(renderer.domElement);
 const scene = new THREE.Scene();
 { const c = document.createElement('canvas'); c.width = 4; c.height = 512; const g = c.getContext('2d');
@@ -403,7 +404,7 @@ houseLots.forEach((l, n) => placeHouse(n, APPEAR[n] < 0 ? 1 : 0));
 
 // ---------- countryside trees + beach palms ----------
 { const spots = [];
-  for (let k = 0; k < 14000 && spots.length < 4200; k++) { const a = rnd() * Math.PI * 2, r = 20 + Math.pow(rnd(), .8) * 640; const x = Math.cos(a) * r, z = Math.sin(a) * r;
+  for (let k = 0; k < 14000 && spots.length < (LITE ? 1300 : 4200); k++) { const a = rnd() * Math.PI * 2, r = 20 + Math.pow(rnd(), .8) * 640; const x = Math.cos(a) * r, z = Math.sin(a) * r;
     if (x > coastAt(z) - 12) continue; if (r < 20 + (houseLots.length ? 0 : 0)) continue;
     if (near(roadHash, x, z, 9, o => o.t === Infinity ? undefined : false) || any(houseHash, x, z, 7) || any(window.__gHash, x, z, 4)) continue;
     if (SPOTS.slice(0, usedSpots).some(s => Math.hypot(s.x - x, s.z - z) < 14)) continue;

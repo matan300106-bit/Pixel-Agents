@@ -58,7 +58,7 @@
 <div class="info" id="info" hidden role="status"><div id="infoBody"></div><button id="infoClose" type="button" aria-label="Close">✕</button></div>
 <div class="pc" id="pcBox" hidden role="dialog" aria-modal="true" aria-labelledby="pcHint"><div class="pc__card"><img id="pcImg" alt="Your Cat Town postcard"><p id="pcHint">Your Cat Town postcard. Long-press it (phone) or right-click it (computer) to save.</p><div class="pc__row"><button id="pcClose" type="button">Close</button></div></div></div>
 <div hidden><div id="title"></div><div id="cmList"></div><div id="crown"></div><div id="tags"></div><div id="sub"></div><div id="end"></div><div id="cm"></div><div id="brand"></div><div id="count"></div></div>
-<script>window.CITY = {"day": 1, "followersBefore": 0, "followersNew": 1000, "order": "index", "newFrom": 0, "newTo": 100, "noReserved": true, "dayRange": [1, 40], "landmarks": [{"kind": "petshop", "sign": "PETME2 Pet Shop", "at": 2.410898263946398, "unlock": 10}, {"kind": "cafe", "sign": "Cat Café", "at": 7.538373935406145, "unlock": 40}, {"kind": "statue", "sign": "Mango Statue", "at": 11.846439577727473, "unlock": 70}, {"kind": "cityhall", "sign": "City Hall", "at": 15.785504435478215, "unlock": 100}, {"kind": "market", "sign": "Fish Market", "at": 32.934906888374, "unlock": 250}, {"kind": "pool", "sign": "Cat Pool", "at": 47.996926373270945, "unlock": 400}, {"kind": "custom", "sign": "Cat Airport", "at": 75.13290395877345, "unlock": 700}, {"kind": "custom", "sign": "Cat Cinema", "at": 91.87575778645768, "unlock": 900}]};</script>
+<script>window.CAT_VIEWER = true; window.CAT_LITE = matchMedia('(pointer: coarse)').matches || innerWidth < 820; window.CITY = {"day": 1, "followersBefore": 0, "followersNew": 1000, "order": "index", "newFrom": 0, "newTo": 100, "noReserved": true, "dayRange": [1, 40], "landmarks": [{"kind": "petshop", "sign": "PETME2 Pet Shop", "at": 2.410898263946398, "unlock": 10}, {"kind": "cafe", "sign": "Cat Café", "at": 7.538373935406145, "unlock": 40}, {"kind": "statue", "sign": "Mango Statue", "at": 11.846439577727473, "unlock": 70}, {"kind": "cityhall", "sign": "City Hall", "at": 15.785504435478215, "unlock": 100}, {"kind": "market", "sign": "Fish Market", "at": 32.934906888374, "unlock": 250}, {"kind": "pool", "sign": "Cat Pool", "at": 47.996926373270945, "unlock": 400}, {"kind": "custom", "sign": "Cat Airport", "at": 75.13290395877345, "unlock": 700}, {"kind": "custom", "sign": "Cat Cinema", "at": 91.87575778645768, "unlock": 900}]};</script>
 <script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/" } }</script>
 <script type="module">
 import * as THREE from 'three';
@@ -74,13 +74,14 @@ let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 214748364
 const hash01 = n => ((n * 2654435761) >>> 0) % 10000 / 10000;
 const V = (x, y, z) => new THREE.Vector3(x, y, z);
 const STILL = !!EP.still;
+const LITE = !!window.CAT_LITE, VIEWER = !!window.CAT_VIEWER;   // LITE: phones (no shadows, no antialias, fewer trees); VIEWER: interactive page (no preserved buffer)
 
 // ---------- renderer ----------
 const stage = document.getElementById('stage'); let W = stage.clientWidth, H = stage.clientHeight;
-const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
-renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2)); renderer.setSize(W, H);
+const renderer = new THREE.WebGLRenderer({ antialias: !LITE, preserveDrawingBuffer: !VIEWER, powerPreference: 'high-performance' });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, LITE ? 1.25 : 2)); renderer.setSize(W, H);
 renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
-renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.shadowMap.enabled = !LITE; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 stage.appendChild(renderer.domElement);
 const scene = new THREE.Scene();
 { const c = document.createElement('canvas'); c.width = 4; c.height = 512; const g = c.getContext('2d');
@@ -408,7 +409,7 @@ houseLots.forEach((l, n) => placeHouse(n, APPEAR[n] < 0 ? 1 : 0));
 
 // ---------- countryside trees + beach palms ----------
 { const spots = [];
-  for (let k = 0; k < 14000 && spots.length < 4200; k++) { const a = rnd() * Math.PI * 2, r = 20 + Math.pow(rnd(), .8) * 640; const x = Math.cos(a) * r, z = Math.sin(a) * r;
+  for (let k = 0; k < 14000 && spots.length < (LITE ? 1300 : 4200); k++) { const a = rnd() * Math.PI * 2, r = 20 + Math.pow(rnd(), .8) * 640; const x = Math.cos(a) * r, z = Math.sin(a) * r;
     if (x > coastAt(z) - 12) continue; if (r < 20 + (houseLots.length ? 0 : 0)) continue;
     if (near(roadHash, x, z, 9, o => o.t === Infinity ? undefined : false) || any(houseHash, x, z, 7) || any(window.__gHash, x, z, 4)) continue;
     if (SPOTS.slice(0, usedSpots).some(s => Math.hypot(s.x - x, s.z - z) < 14)) continue;
@@ -807,14 +808,17 @@ slider.addEventListener('input', () => { target = +slider.value; setPlay(false);
 document.querySelectorAll('[data-f]').forEach(b => b.addEventListener('click', () => { target = +b.dataset.f; slider.value = target; setPlay(false); }));
 $('play').addEventListener('click', () => { if (playing) return setPlay(false); if (cur >= FMAX - 1) cur = 0; setPlay(true); });
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches; if (reduce) controls.autoRotate = false;
-let last = performance.now();
-function loop(now) { const dt = Math.min(.05, (now - last) / 1000); last = now; ANIM += reduce ? 0 : dt;
+let last = performance.now(), onScreen = true;
+// phones: draw at most 30 frames a second; everywhere: stop drawing while the city is scrolled off screen or the tab is hidden
+new IntersectionObserver(es => { onScreen = es[0].isIntersecting; }, { threshold: 0.01 }).observe(stage);
+const FRAME_MS = LITE ? 33 : 0;
+function loop(now) { requestAnimationFrame(loop); if (!onScreen || document.hidden || now - last < FRAME_MS) return;
+  const dt = Math.min(.05, (now - last) / 1000); last = now; ANIM += reduce ? 0 : dt;
   if (playing) { cur = Math.min(FMAX, cur + Math.max(4, cur * .35) * dt * 2.2); target = cur; slider.value = Math.round(cur); if (cur >= FMAX) setPlay(false); }
   else cur += (target - cur) * Math.min(1, dt * 8);
   if (Math.abs(target - cur) < .5) cur = target;
   slider.setAttribute('aria-valuetext', Math.round(cur) + ' followers');
-  controls.update(); window.renderFrame(tOf(Math.round(cur)), ANIM);
-  requestAnimationFrame(loop); }
+  controls.update(); window.renderFrame(tOf(Math.round(cur)), ANIM); }
 
 // ---------- tap a house or a building: who lives there / what it is ----------
 const PICK = new Map();   // instanced mesh -> (instance index -> house number)
@@ -843,7 +847,7 @@ renderer.domElement.addEventListener('pointerup', e => {
   const r = renderer.domElement.getBoundingClientRect(); ndc.set((e.clientX - r.left) / r.width * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
   ray.setFromCamera(ndc, camera);
   const tNow = tOf(Math.round(cur));
-  for (const h of ray.intersectObjects(scene.children, true)) {
+  for (const h of ray.intersectObjects(scene.children.filter(o => !o.isInstancedMesh || PICK.has(o)), true)) {
     const map = PICK.get(h.object);
     if (map && h.instanceId != null && map[h.instanceId] >= 0) { const n = map[h.instanceId], l = houseLots[n];
       if (APPEAR[n] >= 0 && tNow < APPEAR[n]) continue;

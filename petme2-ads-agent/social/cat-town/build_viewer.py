@@ -11,7 +11,7 @@ R("import * as THREE from 'three';\nimport { mergeGeometries } from './node_modu
   "import * as THREE from 'three';\nimport { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';\nimport { OrbitControls } from 'three/addons/controls/OrbitControls.js';")
 js = re.sub(r"const EP = await \(await fetch\(.*?\)\)\.json\(\);", "const EP = window.CITY;", js)
 R("const W = 1080, H = 1920;", "const stage = document.getElementById('stage'); let W = stage.clientWidth, H = stage.clientHeight;")
-R("renderer.setSize(W, H); renderer.setPixelRatio(1);", "renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2)); renderer.setSize(W, H);")
+R("renderer.setSize(W, H); renderer.setPixelRatio(1);", "renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, LITE ? 1.25 : 2)); renderer.setSize(W, H);")
 R("document.body.prepend(renderer.domElement);", "stage.appendChild(renderer.domElement);")
 R("sun.shadow.mapSize.set(4096, 4096);", "sun.shadow.mapSize.set(2048, 2048);")
 LOOP = open('viewer_loop.js').read()
@@ -20,6 +20,6 @@ data = {"day": 1, "followersBefore": 0, "followersNew": 1000, "order": "index", 
 for k, sg, f in [("petshop", "PETME2 Pet Shop", 10), ("cafe", "Cat Café", 40), ("statue", "Mango Statue", 70), ("cityhall", "City Hall", 100), ("market", "Fish Market", 250),
                  ("pool", "Cat Pool", 400), ("custom", "Cat Airport", 700), ("custom", "Cat Cinema", 900)]:
     data["landmarks"].append({"kind": k, "sign": sg, "at": 100 * ((f - .5) / 1000) ** .8, "unlock": f})
-head = re.sub(r"<script>window.CITY = .*?</script>", lambda m: "<script>window.CITY = " + json.dumps(data, ensure_ascii=False) + ";</script>", head, flags=re.S)
+head = re.sub(r"<script>window.CAT_VIEWER.*?</script>|<script>window.CITY = .*?</script>", lambda m: "<script>window.CAT_VIEWER = true; window.CAT_LITE = matchMedia('(pointer: coarse)').matches || innerWidth < 820; window.CITY = " + json.dumps(data, ensure_ascii=False) + ";</script>", head, flags=re.S)
 open('viewer.html', 'w').write(head + '<script type="module">' + js + '</script>\n')
 print('viewer.html built', len(head + js), 'bytes')
