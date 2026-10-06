@@ -147,3 +147,9 @@ Owner ask: fountain and feeder each in its own circle, side by side like an 8; c
 - Cameras: `q_hw.json`, `q_hw_wide.json`, `q_feed_food.json`, `q_feed_water.json`.
 - The store has 20 themes (Shopify's limit), so `themeDuplicate` returns null. Uploaded to the unpublished copy 188910403796 instead (renamed). Theme names must be 50 characters or fewer.
 - Owner feedback (same night): the whole city rushing in looked funny. Now only about 1 in 3 street cats within 75 of the square walk over (`l.r < 75 && hash01(k*7+3) < .3`); the circle's own drinkers/eaters still gather. Card notes say "the cats nearby".
+
+## Update 2026-10-06 (go-live): Mango only
+
+- Owner: go live with 0 cats, only Mango. `build_viewer.py` data now has `"live": {"followers": 0}`. In live mode the viewer sets the slider to that number, hides the slider, size chips and Play growth, and starts the camera close on the square (84 phone / 70 desktop) while followers < 100.
+- To grow the real town later: raise `live.followers` in `build_viewer.py` (and add real handles), rebuild, upload. Remove `live` to bring back the growth demo.
+- Uploaded to 188910403796, renamed "PETME2 — Cat Town LIVE (Mango only)". Owner publishes it.

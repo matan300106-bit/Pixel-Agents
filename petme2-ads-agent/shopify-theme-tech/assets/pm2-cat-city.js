@@ -893,7 +893,11 @@ controls.enableDamping = true; controls.maxPolarAngle = Math.PI * .47; controls.
 controls.autoRotate = true; controls.autoRotateSpeed = .35; renderer.domElement.addEventListener('pointerdown', () => { controls.autoRotate = false; });
 const fit = () => { W = stage.clientWidth; H = stage.clientHeight; renderer.setSize(W, H); camera.aspect = W / H; camera.fov = W / H < .8 ? 55 : 42; camera.updateProjectionMatrix(); };
 addEventListener('resize', fit); fit();
-const slider = $('grow'), FMAX = +slider.max, tOf = f => f <= 0 ? -1 : EP.newFrom + (EP.newTo - EP.newFrom) * Math.pow((f - .5) / FN, .8) + 1e-6;
+const slider = $('grow'), tOf = f => f <= 0 ? -1 : EP.newFrom + (EP.newTo - EP.newFrom) * Math.pow((f - .5) / FN, .8) + 1e-6;
+if (EP.live) {   // live page: the real town today (EP.live.followers cats besides Mango); no growth demo controls
+  slider.max = slider.value = EP.live.followers; [slider, $('play'), ...slider.parentElement.querySelectorAll('.row label, .chips')].forEach(e => { e.hidden = true; e.style.display = 'none'; });
+  if (EP.live.followers < 100) { controls.autoRotate = true; controls.target.set(0, 3, 0); camera.position.set(0, 3, 0).add(new THREE.Vector3(.55, .5, .67).setLength(innerWidth < 700 ? 84 : 70)); } }
+const FMAX = +slider.max;
 let target = +slider.value, cur = target, playing = false, ANIM = 0, nextFeed = 7, feedKind = 'food';
 const setPlay = on => { playing = on; $('play').textContent = on ? 'Pause' : 'Play growth'; };
 slider.addEventListener('input', () => { target = +slider.value; setPlay(false); });

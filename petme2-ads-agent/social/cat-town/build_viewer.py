@@ -16,7 +16,7 @@ R("document.body.prepend(renderer.domElement);", "stage.appendChild(renderer.dom
 R("sun.shadow.mapSize.set(4096, 4096);", "sun.shadow.mapSize.set(2048, 2048);")
 LOOP = open('viewer_loop.js').read()
 R("await document.fonts.ready;\nwindow.ready = true;", LOOP)
-data = {"day": 1, "followersBefore": 0, "followersNew": 1000, "order": "index", "newFrom": 0, "newTo": 100, "noReserved": True, "dayRange": [1, 40], "landmarks": []}
+data = {"live": {"followers": 0}, "day": 1, "followersBefore": 0, "followersNew": 1000, "order": "index", "newFrom": 0, "newTo": 100, "noReserved": True, "dayRange": [1, 40], "landmarks": []}
 for k, sg, f in [("petshop", "PETME2 Pet Shop", 10), ("cafe", "Cat Café", 40), ("statue", "Mango Statue", 70), ("cityhall", "City Hall", 100), ("market", "Fish Market", 250),
                  ("pool", "Cat Pool", 400), ("custom", "Cat Airport", 700), ("custom", "Cat Cinema", 900)]:
     data["landmarks"].append({"kind": k, "sign": sg, "at": 100 * ((f - .5) / 1000) ** .8, "unlock": f})
