@@ -42,3 +42,22 @@ Budgets: if a campaign shows "Out of budget" in the last 7 days, raise its daily
 At the end, give me a table: campaign | ad group | keyword/target | old bid | suggested low | new bid. And list every Part A problem you found.
 If you see a login, 2-step code or CAPTCHA, stop and tell me.
 ```
+
+## Prompt 3 — Amazon prices: no-loss prices (replaces Prompt 1)
+
+```
+Open Seller Central > Inventory > Manage All Inventory. Change ONLY "Your price" for these SKUs and Save each one:
+- L6-L3S1-I7Q6 (Quiet Cat Water Fountain 2L): -> 27.99
+- SD-85ET-IOZ3 (Transparent Cat Water Fountain 2.2L): -> 27.99
+- JE-LQEW-9EHL (Cat Water Fountain with Stainless Steel Tray 2.2L): -> 27.99
+- 93-E8EG-20UY (Dual Bowl Cat Feeder 3L, Black): -> 51.99
+- LW-EZAJ-KKZD (Dual Bowl Cat Feeder 3L, White): -> 51.99
+- QO-7VBS-CVT4 (Elevated WiFi Cat Feeder 5L): -> 54.99
+- 2H-2T1T-CJC3 (Automatic Cat Feeder with 1080P Camera 3L): -> 54.99
+Do NOT change QY-HHE8-0H1B (Stainless fountain 3.2L, stays 39.99).
+Do not add a Sale price, List price or coupon. Do not change anything else.
+If Amazon shows "potential pricing error" or "price alert", confirm the price is correct.
+If a price gets "Inactive (pricing error)" or the Featured Offer is lost, tell me the exact message.
+After saving, wait 2 minutes, refresh, and give me a table: SKU | new price shown | status.
+If you see a login, 2-step code or CAPTCHA, stop and tell me.
+```
