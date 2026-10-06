@@ -111,7 +111,7 @@ def main():
 
     st = {"day": 0, "houses": [], "buildings": [], "cats": [], "followers": 0} if a.reset else load_state()
     rnd = random.Random(1000 + a.day)
-    taken = [(0.0, 0.0, 2.6)] + [(h["x"], h["z"], .9) for h in st["houses"]] + [(b["x"], b["z"], 1.8) for b in st["buildings"]]
+    taken = [(0.0, 0.0, 2.6)] + [(h["x"], h["z"], .45) for h in st["houses"]] + [(b["x"], b["z"], 1.8) for b in st["buildings"]]
     for h in st["houses"]: h.pop("appear", None)
     for b in st["buildings"]: b.pop("appear", None)
     for c in st["cats"]: c.pop("appear", None)
@@ -145,8 +145,8 @@ def main():
 
     # ---- new houses + cats ----
     for i in range(n):
-        x, z = free_spot(taken, 3.6, 1.15, -1.75, 2.2)
-        taken.append((x, z, .9))
+        x, z = free_spot(taken, 3.6, 1.0, -1.75, 2.1)
+        taken.append((x, z, .45))
         appear = round(t_houses + (pop_span * i / max(1, n)), 2)
         st["houses"].append({"x": x, "z": z, "ry": round(math.atan2(-x, -z), 2),
                              "roof": rnd.choice(ROOFS), "wall": rnd.choice(WALLS), "appear": appear, "day": a.day})
