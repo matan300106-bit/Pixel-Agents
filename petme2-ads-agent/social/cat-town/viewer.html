@@ -25,6 +25,13 @@
   button:hover { border-color: var(--brand); color: var(--brand); }
   button:focus-visible, input:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
   #play { background: var(--brand); color: #fff; border-color: var(--brand); margin-left: auto; }
+  #postcard { margin-left: auto; } #postcard + #play { margin-left: 0; }
+  .pc { position: fixed; inset: 0; z-index: 10; display: grid; place-items: center; padding: calc(env(safe-area-inset-top, 0px) + 16px) 16px calc(env(safe-area-inset-bottom, 0px) + 16px); background: rgba(10,16,28,.62); }
+  .pc[hidden] { display: none; }
+  .pc__card { background: var(--panel); color: var(--ink); border-radius: 22px; padding: 14px; width: min(420px, 100%); max-height: 100%; box-sizing: border-box; display: grid; gap: 10px; box-shadow: 0 16px 40px rgba(10,20,40,.35); }
+  .pc__card img { display: block; width: 100%; height: auto; max-height: calc(100dvh - 190px); object-fit: contain; border-radius: 12px; background: var(--sky); -webkit-touch-callout: default; user-select: auto; }
+  .pc__card p { margin: 0; font-size: 13px; line-height: 1.4; color: var(--muted); text-align: center; }
+  .pc__row { display: flex; justify-content: center; }
   .rules { font-size: 13px; line-height: 1.45; color: var(--muted); margin: 0; }
   .rules b { color: var(--ink); }
   @media (max-width: 520px) { .dock { padding: 12px 14px; gap: 8px; } .chips button { padding: 6px 11px; font-size: 13px; } .rules { font-size: 12px; } .dock label small { display: none; } }
@@ -35,11 +42,12 @@
 <div class="loading">Building Cat Town…</div>
 <div class="top"><span class="pill">🐾 PETME2 Cat Town</span><b id="countN">1</b><span id="countL">cat · day 1</span></div>
 <div class="dock">
-  <div class="row"><label for="grow">Followers <small>drag to grow the city</small></label><button id="play" type="button">Play growth</button></div>
+  <div class="row"><label for="grow">Followers <small>drag to grow the city</small></label><button id="postcard" type="button">Save postcard</button><button id="play" type="button">Play growth</button></div>
   <input id="grow" type="range" min="0" max="5000" step="1" value="1000" aria-label="Followers">
   <div class="chips"><button type="button" data-f="0">Day 1</button><button type="button" data-f="100">100</button><button type="button" data-f="1000">1,000</button><button type="button" data-f="2500">2,500</button><button type="button" data-f="5000">5,000</button></div>
   <p class="rules"><b>New follower</b> = a new cat + their own little house. <b>Most-liked comment</b> builds anything. Cats walk the streets; humans run the cat taxis. Drag to look around.</p>
 </div>
+<div class="pc" id="pcBox" hidden role="dialog" aria-modal="true" aria-labelledby="pcHint"><div class="pc__card"><img id="pcImg" alt="Your Cat Town postcard"><p id="pcHint">Your Cat Town postcard. Long-press it (phone) or right-click it (computer) to save.</p><div class="pc__row"><button id="pcClose" type="button">Close</button></div></div></div>
 <div hidden><div id="title"></div><div id="cmList"></div><div id="crown"></div><div id="tags"></div><div id="sub"></div><div id="end"></div><div id="cm"></div><div id="brand"></div><div id="count"></div></div>
 <script>window.CITY = {"day": 1, "followersBefore": 0, "followersNew": 5000, "order": "index", "newFrom": 0, "newTo": 100, "noReserved": true, "dayRange": [1, 150], "landmarks": [{"kind": "petshop", "sign": "PETME2 Pet Shop", "at": 0.6652775691064388}, {"kind": "cafe", "sign": "Cat Café", "at": 2.0801836235731934}, {"kind": "statue", "sign": "Mango Statue", "at": 3.268976813619732}, {"kind": "cityhall", "sign": "City Hall", "at": 4.355945738151372}, {"kind": "market", "sign": "Fish Market", "at": 9.088253586270579}, {"kind": "pool", "sign": "Cat Pool", "at": 15.836251510649447}, {"kind": "custom", "sign": "Cat Airport", "at": 25.352741637440364}, {"kind": "custom", "sign": "Cat Cinema", "at": 36.10790729584761}, {"kind": "custom", "sign": "Cat Stadium", "at": 48.03536812353648}, {"kind": "cafe", "sign": "Sushi Bar", "at": 61.073198035457274}, {"kind": "custom", "sign": "Cat School", "at": 75.16727301487116}, {"kind": "market", "sign": "Toy Store", "at": 88.6254307791284}]};</script>
 <script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/" } }</script>
@@ -47,7 +55,7 @@
 import * as THREE from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-try { await document.fonts.load('900 100px Nunito'); } catch (e) {}
+try { await document.fonts.load('900 100px Nunito'); await document.fonts.load('800 100px Nunito'); } catch (e) {}   // sign canvases need the font before they draw
 const EP = window.CITY;
 const $ = id => document.getElementById(id);
 const ease = t => t < 0 ? 0 : t > 1 ? 1 : 1 - Math.pow(1 - t, 3);
@@ -172,7 +180,7 @@ SPOTS.forEach((s, k) => { s.t = k < landmarks.length ? Math.min(timeNear(s.x, s.
   if (k < landmarks.length && lmAt(k) < 0 && s.t === Infinity) s.t = -1; });
 SPOTS.forEach((s, k) => { if (k < landmarks.length) PIECES.forEach(p => { if (Math.hypot(p.x - s.x, p.z - s.z) < 18) p.t = Math.min(p.t, s.t); }); });
 const CR = Math.max(36, ...houseLots.map(l => l.r), ...SPOTS.slice(0, usedSpots).map(s => s.r)) + 14;
-const SHR = Math.max(CR, 100);
+const SHR = Math.max(CR, 100); window.__CR = CR;
 scene.fog.near = Math.max(320, CR * 1.4); scene.fog.far = Math.max(1150, CR * 3.6);
 sun.position.set(SHR * .6, SHR * 1.4, SHR * .9); Object.assign(sun.shadow.camera, { left: -SHR - 30, right: SHR + 30, top: SHR + 30, bottom: -SHR - 30, near: 1, far: SHR * 4 }); sun.shadow.camera.updateProjectionMatrix();
 
@@ -225,6 +233,40 @@ const CAT_GEO = (() => { const p = [];
   add(B(.1, .1, .6), 0, .78, -.62, -.7);
   [[-.16, .3], [.16, .3], [-.16, -.3], [.16, -.3]].forEach(([x, z]) => add(B(.12, .3, .12), x, .15, z));
   return merge(p); })();
+const CAT_COLORS = ['#8E8E9A', '#3B3B44', '#FFFFFF', '#D9A066', '#C47A4A', '#E8D5B5', '#2B2B30', '#B0B0B8', '#F2A65A'];
+
+// ---------- shared helpers for the extras (design-review.md section 2) ----------
+const TAU = Math.PI * 2, mod = (x, m) => ((x % m) + m) % m, frac = x => x - Math.floor(x);
+const smooth = (a, b, x) => { const k = Math.min(1, Math.max(0, (x - a) / (b - a))); return k * k * (3 - 2 * k); };
+const wrapA = a => Math.atan2(Math.sin(a), Math.cos(a));
+// time when follower n (1-based) moves in; -Infinity = already there; Infinity = not in this city
+const unlockT = n => n <= 0 ? -Infinity : n > F ? Infinity : (APPEAR[n - 1] < 0 ? -Infinity : APPEAR[n - 1]);
+// pop that FINISHES when follower n arrives (works in video and in the viewer)
+const popK = (t, n, d = .6) => { const t1 = unlockT(n); return t1 === -Infinity ? 1 : t1 === Infinity ? 0 : back((t - (t1 - d)) / d); };
+const UNLOCK = { hostBox: 5, busStop: 10, circles: 20, redDot: 500, mochi: 1000, balloonStep: 500 };
+const MOCHI_A = 3.7;   // Big Mochi's angle (review said 3.45; 3.7 keeps it fully inside both the p_1000 and p_5000 frames)
+const polar = (a, r) => [Math.cos(a) * r, Math.sin(a) * r];
+const yawTo = (dx, dz) => Math.atan2(dx, dz);              // engine convention: geometry faces +z
+const paint = (g, hex) => { g = g.index ? g.toNonIndexed() : g; if (g.attributes.uv) g.deleteAttribute('uv'); const c = new THREE.Color(hex), n = g.attributes.position.count, a = new Float32Array(n * 3);
+  for (let i = 0; i < n; i++) c.toArray(a, i * 3); g.setAttribute('color', new THREE.BufferAttribute(a, 3)); return g; };
+const XM = new THREE.Matrix4(), XM2 = new THREE.Matrix4(), XQ = new THREE.Quaternion(), QI = new THREE.Quaternion(), XE = new THREE.Euler(0, 0, 0, 'YXZ'), XV = new THREE.Vector3(), XS = new THREE.Vector3();
+const putCat = (m, i, x, y, z, yaw, s, pitch = 0, roll = 0, sy = 1) => { if (i < 0) return; if (!(s > 0)) { m.setMatrixAt(i, ZERO); return; }
+  XM.compose(XV.set(x, y, z), XQ.setFromEuler(XE.set(pitch, yaw, roll, 'YXZ')), XS.set(s, s * sy, s)); m.setMatrixAt(i, XM); };
+
+// ---------- pose kit: sit, loaf, drink, belly-up (all face +z, feet at y 0) + WALK (animated standing extras) ----------
+const poseGeo = parts => merge(parts.map(([g, x, y, z, rx = 0, ry = 0, rz = 0]) => { if (rx) g.rotateX(rx); if (ry) g.rotateY(ry); if (rz) g.rotateZ(rz); return g.translate(x, y, z); }));
+const EAR = () => new THREE.ConeGeometry(.1, .22, 4);
+const LEGS = (y = .15) => [[-.16, .3], [.16, .3], [-.16, -.3], [.16, -.3]].map(([x, z]) => [B(.12, .3, .12), x, y, z]);
+const CAT_SIT = poseGeo([[B(.55, .3, .5), 0, .15, -.15], [B(.5, .7, .5), 0, .5, -.02, -.35], [B(.48, .42, .42), 0, 1.0, .12], [EAR(), -.15, 1.31, .10], [EAR(), .15, 1.31, .10],
+  [B(.12, .45, .12), -.13, .22, .20], [B(.12, .45, .12), .13, .22, .20], [B(.1, .08, .7), .30, .04, .05, 0, .9]]);
+const CAT_LOAF = poseGeo([[B(.55, .4, .95), 0, .2, 0], [B(.48, .42, .42), 0, .45, .5], [EAR(), -.15, .76, .48], [EAR(), .15, .76, .48], [B(.1, .08, .7), .30, .04, -.05]]);
+const CAT_DRINK = poseGeo([[B(.5, .45, .9), 0, .42, 0, .12], [B(.48, .42, .42), 0, .40, .70, .6], [EAR(), -.15, .66, .88, .6], [EAR(), .15, .66, .88, .6], [B(.1, .1, .6), 0, .85, -.55, 1.2], ...LEGS()]);
+const CAT_BELLY = poseGeo([[B(.5, .45, .9), 0, .225, 0], [B(.48, .42, .42), 0, .21, .5, -.3], [EAR(), -.15, .15, .80, Math.PI / 2], [EAR(), .15, .15, .80, Math.PI / 2], ...LEGS(.60), [B(.1, .08, .6), 0, .04, -.62]]);
+const POSES = {};
+for (const [k, g] of [['sit', CAT_SIT], ['loaf', CAT_LOAF], ['drink', CAT_DRINK], ['belly', CAT_BELLY]]) { const m = IM(g, 800); m.frustumCulled = false; m.used = 0; for (let i = 0; i < 800; i++) m.setMatrixAt(i, ZERO); POSES[k] = m; }
+const WALK = IM(CAT_GEO, 32); WALK.frustumCulled = false; for (let i = 0; i < 32; i++) { WALK.setMatrixAt(i, ZERO); WALK.setColorAt(i, col.set('#F28C28')); }
+const slot = (pm, c) => { if (pm.used >= 800) return -1; const i = pm.used++; pm.setColorAt(i, col.set(c)); return i; };
+let TAPE = null, TAPE_H = 0, BOXM = null, FLAPM = null, BOX_H = 0, BOX_FL = null;   // filled by the gardens block (hero row/box use the last slots)
 
 // ---------- center: Mango's square with the PETME2 fountain ----------
 const signs = [];
@@ -232,8 +274,10 @@ function textSign(text, w = 12, border = '#2F5FE0') {
   const c = document.createElement('canvas'); c.width = 1024; c.height = 220;
   const g = c.getContext('2d'); g.fillStyle = '#FFFFFF'; g.beginPath(); g.roundRect(6, 6, 1012, 208, 60); g.fill();
   g.lineWidth = 12; g.strokeStyle = border; g.stroke();
-  g.fillStyle = '#1B2333'; g.font = '900 104px Nunito'; g.textAlign = 'center'; g.textBaseline = 'middle';
-  let s = text.toUpperCase(); while (g.measureText(s).width > 940 && s.length > 4) s = s.slice(0, -2);
+  g.fillStyle = '#1B2333'; g.textAlign = 'center'; g.textBaseline = 'middle';
+  let s = text.toUpperCase(), fs = 104; g.font = `900 ${fs}px Nunito`;
+  while (g.measureText(s).width > 940 && fs > 56) { fs -= 6; g.font = `900 ${fs}px Nunito`; }   // shrink to fit, don't cut letters
+  while (g.measureText(s).width > 940 && s.length > 4) s = s.slice(0, -1);
   g.fillText(s, 512, 116);
   const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 8;
   return new THREE.Mesh(new THREE.PlaneGeometry(w, w * 220 / 1024), new THREE.MeshBasicMaterial({ map: tex, transparent: true }));
@@ -259,13 +303,14 @@ function landmark(kind, sign) {
   return g;
 }
 
-{ const plaza = mesh(Cyl(16, 16, .14, 40), '#E9E3D3', false); plaza.position.y = .07; scene.add(plaza);
+let FWATER = null;
+{ const plaza = mesh(Cyl(16, 16, .14, 40), '#E9E3D3', false); plaza.position.y = .05; scene.add(plaza);   // top .12: below the avenue road (.14), no z-fighting
   const ring = mesh(Cyl(12, 12, .16, 40), '#4A4F5C', false); ring.position.y = .09; scene.add(ring);
   const island = mesh(Cyl(8, 8, .5, 10), '#F1E6CF'); island.position.y = .25; scene.add(island);
   const lawn = mesh(Cyl(7.2, 7.2, .54, 10), '#9FD47F', false); lawn.position.y = .27; scene.add(lawn);
   const base = mesh(Cyl(4.4, 4.8, 1.2, 16), '#FFFFFF'); base.position.y = 1.1; scene.add(base);
   const bowl = mesh(Cyl(4.0, 3.6, 1.6, 16), '#2F5FE0'); bowl.position.y = 2.5; scene.add(bowl);
-  const water = new THREE.Mesh(new THREE.SphereGeometry(3.2, 16, 8, 0, Math.PI * 2, 0, Math.PI / 2), new THREE.MeshStandardMaterial({ color: '#7FD0FF', roughness: .2, transparent: true, opacity: .85 })); water.position.y = 3.3; scene.add(water);
+  const water = new THREE.Mesh(new THREE.SphereGeometry(3.2, 16, 8, 0, Math.PI * 2, 0, Math.PI / 2), new THREE.MeshStandardMaterial({ color: '#7FD0FF', roughness: .2, transparent: true, opacity: .85 })); water.position.y = 3.3; scene.add(water); FWATER = water;
   [-1.8, 1.8].forEach(x => { const e = mesh(new THREE.ConeGeometry(.9, 1.8, 3), '#2F5FE0'); e.position.set(x, 3.9, -2.2); scene.add(e); });
   const sign = textSign('PETME2', 7, '#2F5FE0'); sign.position.set(0, 7.4, 0); scene.add(sign); signs.push(sign);
 }
@@ -316,7 +361,9 @@ houseLots.forEach((l, n) => placeHouse(n, APPEAR[n] < 0 ? 1 : 0));
       if (x > coastAt(z) - 18 || any(roadHash, x, z, 6.5) || any(lotHash, x, z, 4.2) || any(spotHash, x, z, 12) || any(gHash, x, z, 5)) continue;
       const t = timeNear(x, z, 18); if (t === Infinity) continue;
       const kinds = ['tree', 'tree', 'tree', 'pond', 'yarn', 'cattree', 'flowers', 'tree'];
-      const o = { x, z, t, kind: kinds[Math.floor(hash01(i * 17 + k * 101) * kinds.length)] }; items.push(o); hadd(gHash, o); } }
+      const o = { x, z, t, i, k, kind: kinds[Math.floor(hash01(i * 17 + k * 101) * kinds.length)] };
+      if (o.kind === 'tree') { const h = hash01(i * 53 + k * 7 + 1); if (h < .30) o.kind = h < .15 ? 'circle' : 'tinybox'; }   // cat circle traps + if-it-fits boxes
+      items.push(o); hadd(gHash, o); } }
   const by = kd => items.filter(o => o.kind === kd);
   const trees = by('tree'), ponds = by('pond'), yarns = by('yarn'), cts = by('cattree'), fl = by('flowers');
   const tTrunk = IM(Cyl(.3, .4, 2.2, 6), trees.length, true, mat('#8A5A3B')), tTop = IM(new THREE.IcosahedronGeometry(2.1, 0), trees.length);
@@ -331,6 +378,22 @@ houseLots.forEach((l, n) => placeHouse(n, APPEAR[n] < 0 ? 1 : 0));
   const fb = IM(new THREE.ConeGeometry(.35, .9, 5), fl.length * 6, false);
   fl.forEach((o, i) => { for (let q = 0; q < 6; q++) { grown(fb, i * 6 + q, LR(o.x + Math.cos(q) * 1.4, .45, o.z + Math.sin(q) * 1.4), o.t); fb.setColorAt(i * 6 + q, col.set(['#E85D8A', '#FFC93C', '#9B6FE0', '#FFFFFF', '#F28C28', '#5DB563'][q])); } });
   [tTop, yb, ctPlat, fb].forEach(m => { if (m.instanceColor) m.instanceColor.needsUpdate = true; });
+  // Build 2: cat circle traps (white tape + one sitting cat). Hero row on the plaza uses the last 4 tape slots (dark tape).
+  const circ = by('circle'), boxes = by('tinybox');
+  TAPE = IM(new THREE.TorusGeometry(.75, .05, 4, 24).rotateX(Math.PI / 2), circ.length + 4, false, new THREE.MeshBasicMaterial({ color: '#FFFFFF' })); TAPE.frustumCulled = false; TAPE_H = circ.length;
+  circ.forEach((o, i) => { grown(TAPE, i, new THREE.Matrix4().compose(V(o.x, .1, o.z), QI, V(1.27, 1, 1.27)), o.t); TAPE.setColorAt(i, col.set('#FFFFFF'));
+    const s = slot(POSES.sit, CAT_COLORS[(o.i * 5 + o.k * 3 + 3) % CAT_COLORS.length]); if (s >= 0) grown(POSES.sit, s, LR(o.x, 0, o.z, 0, hash01(o.i * 7 + o.k) * 6.28, 0, 1.15), o.t); });
+  for (let c = 0; c < 4; c++) { TAPE.setMatrixAt(TAPE_H + c, ZERO); TAPE.setColorAt(TAPE_H + c, col.set('#3B3B44')); }
+  TAPE.instanceColor.needsUpdate = true;
+  // Build 3: if it fits, I sits (tiny box, open flaps, oversized loaf cat). Hero box uses the last slot.
+  const FL = sx => new THREE.Matrix4().makeTranslation(sx * (.275 + .15 * Math.cos(.5)), .40 - .15 * Math.sin(.5), 0).multiply(new THREE.Matrix4().makeRotationZ(-sx * .5)).multiply(new THREE.Matrix4().makeRotationY(Math.PI / 2));
+  BOX_FL = [FL(1), FL(-1)];
+  BOXM = IM(B(.55, .40, .55), boxes.length + 1, true, mat('#C99A62')); FLAPM = IM(B(.55, .03, .30), boxes.length * 2 + 2, true, mat('#BC8C55')); BOX_H = boxes.length;
+  [BOXM, FLAPM].forEach(m => m.frustumCulled = false);
+  boxes.forEach((o, i) => { const bm = LR(o.x, 0, o.z, 0, hash01(o.i * 11 + o.k) * 6.28);
+    grown(BOXM, i, bm.clone().multiply(LR(0, .2, 0)), o.t); grown(FLAPM, i * 2, bm.clone().multiply(BOX_FL[0]), o.t); grown(FLAPM, i * 2 + 1, bm.clone().multiply(BOX_FL[1]), o.t);
+    const s = slot(POSES.loaf, CAT_COLORS[(o.i * 7 + o.k * 5 + 1) % CAT_COLORS.length]); if (s >= 0) grown(POSES.loaf, s, bm.clone().multiply(LR(0, .34, 0, 0, 0, 0, 1.3)), o.t); });
+  BOXM.setMatrixAt(BOX_H, ZERO); FLAPM.setMatrixAt(BOX_H * 2, ZERO); FLAPM.setMatrixAt(BOX_H * 2 + 1, ZERO);
   window.__gHash = gHash;
 }
 
@@ -342,7 +405,9 @@ houseLots.forEach((l, n) => placeHouse(n, APPEAR[n] < 0 ? 1 : 0));
     if (SPOTS.slice(0, usedSpots).some(s => Math.hypot(s.x - x, s.z - z) < 14)) continue;
     spots.push([x, z, .7 + rnd() * .8, rnd() < .7]); }
   // in growth mode, trees standing where the city will be are removed when the city gets there
-  const treeT = ([x, z]) => GROW ? timeNear(x, z, 9) : Infinity;
+  // Big Mochi (Build 4) lies at polar(MOCHI_A, 500): trees within 75 of it go when it starts to rise (checked after all rnd() calls)
+  const [mcx, mcz] = polar(MOCHI_A, 500), mochiT = unlockT(UNLOCK.mochi) - 2;
+  const treeT = ([x, z]) => { let tt = GROW ? timeNear(x, z, 9) : Infinity; if (Math.hypot(x - mcx, z - mcz) < 75) tt = Math.min(tt, mochiT); return tt; };
   const round = spots.filter(t => t[3]), cone = spots.filter(t => !t[3]);
   const trunk = IM(Cyl(.35, .45, 2.4, 6), spots.length, true, mat('#8A5A3B')), ball = IM(new THREE.IcosahedronGeometry(2.4, 0), round.length), cn = IM(new THREE.ConeGeometry(1.8, 5, 7), cone.length);
   const greens = ['#3E9B4F', '#4FA65A', '#2F8A45', '#5DB563'];
@@ -350,11 +415,15 @@ houseLots.forEach((l, n) => placeHouse(n, APPEAR[n] < 0 ? 1 : 0));
   spots.forEach((p, k) => TREES.push([trunk, k, LR(p[0], 1.2 * p[2], p[1], 0, 0, 0, p[2]), treeT(p)]));
   round.forEach((p, k) => { TREES.push([ball, k, new THREE.Matrix4().compose(V(p[0], 3.6 * p[2], p[1]), new THREE.Quaternion().setFromEuler(new THREE.Euler(0, k, 0)), V(p[2], p[2] * .9, p[2])), treeT(p)]); ball.setColorAt(k, col.set(greens[k % 4])); });
   cone.forEach((p, k) => { TREES.push([cn, k, LR(p[0], 4.4 * p[2], p[1], 0, 0, 0, p[2]), treeT(p)]); cn.setColorAt(k, col.set(greens[(k + 1) % 4])); });
-  TREES.forEach(([m, i, bm]) => m.setMatrixAt(i, bm)); [ball, cn].forEach(m => m.instanceColor.needsUpdate = true);
-  window.__trees = TREES.filter(t => t[3] !== Infinity);
+  TREES.forEach(([m, i, bm, tt]) => m.setMatrixAt(i, tt === -Infinity ? ZERO : bm)); [ball, cn].forEach(m => m.instanceColor.needsUpdate = true);
   const NP = 70, pt = IM(Cyl(.25, .35, 6, 6), NP, true, mat('#A8784F')), pl = IM(new THREE.ConeGeometry(3, 1.2, 6), NP, true, mat('#3E9B4F'));
-  for (let k = 0; k < NP; k++) { const z = -420 + k * 12 + rnd() * 5, x = coastAt(z) + 2 + rnd() * 10;
-    pt.setMatrixAt(k, LR(x, 3, z, .12, 0, .1)); pl.setMatrixAt(k, LR(x + .4, 6.2, z + .3)); }
+  // Red Dot Beach (Build 5): palms near the lighthouse and in the dot's play area go when it unlocks (after the rnd() calls)
+  const LHX = coastAt(60) + 25, dotT = unlockT(UNLOCK.redDot) - .6;
+  for (let k = 0; k < NP; k++) { const z = -420 + k * 12 + rnd() * 5, x = coastAt(z) + 2 + rnd() * 10, b1 = LR(x, 3, z, .12, 0, .1), b2 = LR(x + .4, 6.2, z + .3);
+    const hide = Math.hypot(x - LHX, z - 60) < 10 || (z > 26 && z < 114);
+    if (hide) { TREES.push([pt, k, b1, dotT], [pl, k, b2, dotT]); }
+    pt.setMatrixAt(k, hide && dotT === -Infinity ? ZERO : b1); pl.setMatrixAt(k, hide && dotT === -Infinity ? ZERO : b2); }
+  window.__trees = TREES.filter(t => t[3] !== Infinity);
 }
 
 // ---------- landmarks ----------
@@ -368,7 +437,6 @@ const confData = []; for (let k = 0; k < 260; k++) { confData.push({ vx: (rnd() 
 CONF.instanceColor.needsUpdate = true; CONF.visible = false; scene.add(CONF);
 
 // ---------- cats: Mango + one per follower, walking the sidewalks from place to place ----------
-const CAT_COLORS = ['#8E8E9A', '#3B3B44', '#FFFFFF', '#D9A066', '#C47A4A', '#E8D5B5', '#2B2B30', '#B0B0B8', '#F2A65A'];
 const catMesh = IM(CAT_GEO, F + 1);
 catMesh.setColorAt(0, col.set('#F28C28'));
 for (let n = 1; n <= F; n++) catMesh.setColorAt(n, col.set(CAT_COLORS[(n * 5 + 3) % CAT_COLORS.length]));
@@ -399,6 +467,214 @@ const TAXIS = [];
     g.add(st); g.scale.setScalar(.95); scene.add(g);
     TAXIS.push({ g, leg1, leg2, rd: ROADS[lot.ri], s0: lot.s, L: 30 + hash01(i * 7) * 50, v: 2.6, ph: hash01(i * 3 + 1), side: i % 2 ? 1 : -1, n: lot.n });
   } }
+
+// ================= Cat Town extras (design-review.md BUILD LIST) =================
+// ---------- Build 1: Mango's Water Bar (cats drink from a ring around the fountain) ----------
+const WB = { spots: [] };
+const Hpath = r => .16 + .37 * smooth(8.6, 8.0, r) + .25 * Math.max(0, 1 - Math.abs(r - 8.3) / .4);   // road -> hop onto the island -> lawn
+{ const wall = mesh(Cyl(6.4, 6.4, .26, 40), '#FFFFFF'); wall.position.y = .67; scene.add(wall);
+  const ws = new THREE.Mesh(Cyl(6.22, 6.22, .04, 40), new THREE.MeshStandardMaterial({ color: '#7FD0FF', roughness: .2 })); ws.position.y = .82; ws.receiveShadow = true; scene.add(ws);
+  const lip = mesh(new THREE.TorusGeometry(6.32, .1, 6, 48).rotateX(Math.PI / 2), '#2F5FE0', false); lip.position.y = .84; scene.add(lip);
+  WB.drops = IM(new THREE.IcosahedronGeometry(.16, 0), 36, false, new THREE.MeshStandardMaterial({ color: '#BFE9FF', emissive: '#7FD0FF', emissiveIntensity: .3, flatShading: true }));
+  WB.rip = IM(new THREE.RingGeometry(.8, 1, 24).rotateX(-Math.PI / 2), 44, false, new THREE.MeshBasicMaterial({ color: '#FFFFFF', transparent: true, opacity: .8, depthWrite: false }));
+  WB.rip.receiveShadow = false;
+  [WB.drops, WB.rip].forEach(m => { m.frustumCulled = false; for (let i = 0; i < m.count; i++) m.setMatrixAt(i, ZERO); });
+  const avA = [0, 1, 2, 3, 4, 5].map(i => mod(spokeA(spokes[i], 12.5), TAU));
+  const path = pts => { const cum = [0]; for (let i = 1; i < pts.length; i++) cum.push(cum[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1])); return { pts, cum, len: cum[cum.length - 1] }; };
+  const ORDER = [1, 17, 2, 16, 3, 15, 4, 14, 5, 13, 6, 12, 7, 11, 8, 10, 9];   // first cats flank Mango
+  for (let m = 1; m <= 17; m++) { const an = mod(Math.PI / 2 + m * Math.PI / 9, TAU);
+    let ii = 0, oi = 0; for (let i = 0; i < 6; i++) { if (mod(an - avA[i], TAU) < mod(an - avA[ii], TAU)) ii = i; if (mod(avA[i] - an, TAU) < mod(avA[oi] - an, TAU)) oi = i; }
+    const spI = spokes[ii], spO = spokes[oi], A0 = avA[ii], a1 = A0 + mod(an - A0, TAU), b1 = an + mod(avA[oi] - an, TAU);
+    const pin = []; for (let r = 22; r > 12.6; r -= 1.5) pin.push(polar(spokeA(spI, r), r)); pin.push(polar(A0, 12.5));
+    for (let g = A0; g < a1 - .02; g += .08) pin.push(polar(g, 10.5)); pin.push(polar(a1, 10.5));        // in-lane r 10.5, counter-clockwise
+    for (let r = 10; r > 6.85; r -= .5) pin.push(polar(an, r)); pin.push(polar(an, 6.8));
+    const pout = []; for (let r = 6.8; r < 9.25; r += .5) pout.push(polar(an, r)); pout.push(polar(an, 9.3));
+    for (let g = an + .08; g < b1 - .02; g += .08) pout.push(polar(g, 9.3)); pout.push(polar(b1, 9.3));    // out-lane r 9.3, counter-clockwise
+    for (let r = 12.5; r < 22.1; r += 1.5) pout.push(polar(spokeA(spO, r), r));
+    const c = CAT_COLORS[(m * 5 + 3) % CAT_COLORS.length]; WALK.setColorAt(m, col.set(c));
+    WB.spots.push({ m, a: an, rank: ORDER.indexOf(m) + 1, pin: path(pin), pout: path(pout), yawC: yawTo(-Math.cos(an), -Math.sin(an)), ph: hash01(m * 41 + 3) * 24,
+      p: polar(an, 6.8), nose: polar(an, 5.75), ds: slot(POSES.drink, c) }); }
+  WB.mSit = slot(POSES.sit, '#F28C28'); WB.mDrink = slot(POSES.drink, '#F28C28');   // Mango, the host (WALK slot 0)
+}
+
+// ---------- Build 2 (hero row) + Build 3 (hero box) on the plaza ----------
+const ROW_A = [1.70, 1.83, 1.96, 2.09], ROW_YAW = yawTo(Math.cos(1.83), Math.sin(1.83));
+const ROW = ROW_A.map(a => polar(a, 14.6)), ROW_SIT = [0, 1, 2, 3].map(c => slot(POSES.sit, CAT_COLORS[(c * 7 + 2) % CAT_COLORS.length]));
+const C4 = ROW[3], S4 = [C4[0] - Math.sin(2.09) * 6, C4[1] + Math.cos(2.09) * 6];   // the 4th cat comes from avenue 2's sidewalk
+WALK.setColorAt(18, col.set(CAT_COLORS[(3 * 7 + 2) % CAT_COLORS.length]));
+const HB = polar(2.85, 14.2), HB_YAW = yawTo(Math.cos(2.85), Math.sin(2.85)) + 1.2, HB_M = LR(HB[0], .14, HB[1], 0, HB_YAW), HB_CAT = slot(POSES.loaf, '#8E8E9A');
+const HB_L = [LR(0, .2, 0), BOX_FL[0], BOX_FL[1]];
+
+// ---------- Build 4: Big Mochi, the sleeping mountain cat ----------
+const MO = {};
+{ const [mx, mz] = polar(MOCHI_A, 500), g = new THREE.Group(); g.position.set(mx, 0, mz); g.rotation.y = Math.atan2(-mx, -mz); scene.add(g); MO.g = g;
+  const M = c => new THREE.MeshStandardMaterial({ color: c, flatShading: true, roughness: .95, fog: false });
+  const add = (geo, c, x, y, z, parent = g) => { const m = new THREE.Mesh(geo, typeof c === 'string' ? M(c) : c); m.position.set(x, y, z); parent.add(m); return m; };
+  const bg = new THREE.IcosahedronGeometry(40, 2).toNonIndexed(), bp = bg.attributes.position, bc = new Float32Array(bp.count * 3), cS = new THREE.Color('#DDA06A'), cBd = new THREE.Color('#F2C9A0');
+  for (let f = 0; f < bp.count; f += 3) { const cx = (bp.getX(f) + bp.getX(f + 1) + bp.getX(f + 2)) / 3, cy = (bp.getY(f) + bp.getY(f + 1) + bp.getY(f + 2)) / 3;
+    const c = Math.sin(cx * .16) > .55 && cy > 0 ? cS : cBd; for (let q = 0; q < 3; q++) c.toArray(bc, (f + q) * 3); }
+  bg.setAttribute('color', new THREE.BufferAttribute(bc, 3));
+  MO.body = add(bg, new THREE.MeshStandardMaterial({ vertexColors: true, flatShading: true, roughness: .95, fog: false }), 0, 14, 0); MO.body.scale.set(1.35, .55, 1);
+  const hg = new THREE.Group(); g.add(hg); MO.head = hg;
+  add(new THREE.IcosahedronGeometry(17, 1), '#F2C9A0', 44, 16, 22, hg).scale.set(1, .9, .95);
+  add(new THREE.ConeGeometry(6, 10, 4), '#F2C9A0', 36, 31, 22, hg).rotation.z = .35;
+  MO.ear = add(new THREE.ConeGeometry(6, 10, 4), '#F2C9A0', 54, 26, 22, hg); MO.ear.rotation.z = -1.1;
+  add(B(5, .8, .8), '#7A5A48', 40, 17, 38.5, hg).rotation.z = .25; add(B(5, .8, .8), '#7A5A48', 50, 17, 37.5, hg).rotation.z = -.25;
+  add(new THREE.ConeGeometry(1.6, 2, 3).rotateX(Math.PI / 2), '#E58FA0', 45, 13, 39, hg);
+  add(new THREE.TorusGeometry(43, 5, 6, 24, Math.PI * 1.05).rotateX(Math.PI / 2), '#DDA06A', 0, 7, 0).scale.x = 1.26;
+  add(B(10, 6, 14), '#F2C9A0', 30, 3, 36);
+  const zg = merge([B(8, 1.2, 1.2).translate(0, 5, 0), B(8, 1.2, 1.2).translate(0, -5, 0), B(1.2, 12.8, 1.2).rotateZ(-.675)]);
+  MO.z = new THREE.InstancedMesh(zg, new THREE.MeshBasicMaterial({ color: '#FFFFFF', fog: false }), 3); MO.z.frustumCulled = false; g.add(MO.z);
+  g.visible = false;
+}
+
+// ---------- Build 5: Red Dot Beach (lighthouse + laser dot + chasers) ----------
+const RD = {};
+{ const cx = coastAt(60), lx = cx + 25; RD.cx = cx;
+  const tr = h => 3 - .8 * h / 18, parts = [paint(Cyl(4, 4.5, 2, 10).translate(0, .2, 0), '#B8B0A0'), paint(Cyl(2.2, 3.0, 18, 10).translate(0, 9, 0), '#FFFFFF')];
+  [4, 9, 14].forEach(h => parts.push(paint(Cyl(tr(h + .8) + .06, tr(h - .8) + .06, 1.6, 10).translate(0, h, 0), '#E85D5D')));
+  parts.push(paint(Cyl(3.2, 3.2, .4, 10).translate(0, 18.2, 0), '#3B3B44'), paint(B(3, 2.4, 3).translate(0, 19.6, 0), '#9FD3FF'));
+  RD.lh = new THREE.Mesh(merge(parts), new THREE.MeshStandardMaterial({ vertexColors: true, flatShading: true, roughness: .85 })); RD.lh.castShadow = true; RD.lh.receiveShadow = true;
+  RD.lh.position.set(lx, -.4, 60); scene.add(RD.lh);
+  RD.laser = new THREE.Group(); RD.laser.position.set(lx, 21.0, 60); scene.add(RD.laser);
+  RD.laser.add(mesh(Cyl(.6, .6, 4.5, 10).rotateX(Math.PI / 2), '#3B3B44'));
+  const tip = new THREE.Mesh(Cyl(.35, .35, .3, 10).rotateX(Math.PI / 2), new THREE.MeshStandardMaterial({ color: '#FF2A2A', emissive: '#FF2A2A', emissiveIntensity: 1 })); tip.position.z = 2.4; RD.laser.add(tip);
+  RD.beam = new THREE.Mesh(Cyl(.08, .08, 1, 6).rotateX(Math.PI / 2).translate(0, 0, .5), new THREE.MeshBasicMaterial({ color: '#FF2A2A', transparent: true, opacity: .35, depthWrite: false })); scene.add(RD.beam);
+  RD.dot = new THREE.Mesh(Cyl(1.3, 1.3, .04, 20), new THREE.MeshBasicMaterial({ color: '#FF2A2A', toneMapped: false })); scene.add(RD.dot);
+  RD.halo = new THREE.Mesh(Cyl(2.2, 2.2, .03, 20), new THREE.MeshBasicMaterial({ color: '#FF2A2A', transparent: true, opacity: .3, depthWrite: false, toneMapped: false })); scene.add(RD.halo);
+  for (let k = 0; k < 5; k++) WALK.setColorAt(19 + k, col.set(CAT_COLORS[(k * 4 + 1) % CAT_COLORS.length]));
+  RD.belly = slot(POSES.belly, '#FFFFFF');
+  RD.D = tau => { const z = 70 + 28 * Math.sin(.47 * tau) + 7 * Math.cos(1.7 * tau); return [coastAt(z) + 5 + 8 * Math.sin(.9 * tau) + 3 * Math.sin(2.3 * tau), z]; };
+}
+
+// ---------- Build 6: fish balloons (2 cats in each basket) ----------
+// placement chosen with a projection check: every balloon is inside the p_1000 / p_5000 frames, off Big Mochi, and never over the fountain in the opening shot
+const BAL = { ANG: [4.1, 3.0, 1.0, 0.7, 1.8], RF: [.6, .35, .5, .35, .35], COL: ['#FF9F43', '#7FB6E8', '#F4A7B9', '#FFC93C', '#5BB98C'] };
+{ const vm = new THREE.MeshStandardMaterial({ vertexColors: true, flatShading: true, roughness: .8 });
+  const shell = merge([paint(new THREE.SphereGeometry(6, 12, 8).scale(.9, 1, 1.6), '#FFFFFF'),
+    paint(new THREE.ConeGeometry(3, 4, 4).rotateX(Math.PI / 2).scale(.3, 1, 1).translate(0, 0, -11), '#FFFFFF'),   // tail fin
+    ...[3, -3].map(z => paint(new THREE.TorusGeometry(5.5, .4, 6, 24).scale(.93, 1.04, 1).translate(0, 0, z), '#BFBFBF'))]);
+  const parts = merge([...[-1, 1].flatMap(sx => [paint(new THREE.SphereGeometry(.9, 8, 6).translate(sx * 4.6, 1.5, 5.5), '#FFFFFF'), paint(new THREE.SphereGeometry(.45, 6, 4).translate(sx * 5.3, 1.5, 5.8), '#1B2333')]),
+    ...[[-1, -1], [1, -1], [-1, 1], [1, 1]].map(([x, z]) => paint(Cyl(.05, .05, 4, 4).translate(x, -8, z), '#3B3B44')), paint(B(2, 1.4, 2).translate(0, -10.7, 0), '#C98B5A')]);
+  BAL.shell = IM(shell, 5, true, vm); BAL.parts = IM(parts, 5, true, vm.clone());
+  [BAL.shell, BAL.parts].forEach(m => { m.frustumCulled = false; for (let k = 0; k < 5; k++) m.setMatrixAt(k, ZERO); });
+  BAL.COL.forEach((c, k) => BAL.shell.setColorAt(k, col.set(c))); BAL.shell.instanceColor.needsUpdate = true;
+  BAL.cats = [0, 1, 2, 3, 4].map(k => [slot(POSES.sit, CAT_COLORS[(k * 3 + 1) % CAT_COLORS.length]), slot(POSES.sit, CAT_COLORS[(k * 3 + 5) % CAT_COLORS.length])]);
+  BAL.catL = [LR(-.45, -11.2, 0), LR(.45, -11.2, 0)];
+}
+
+// ---------- Build 7: one hero bus stop, "NEXT NAP / 5 MIN" ----------
+const BS = {};
+{ const [x, z] = polar(.85, 14.2), g = new THREE.Group(); g.position.set(x, .14, z); g.rotation.y = yawTo(Math.cos(.85), Math.sin(.85)); scene.add(g); BS.g = g; BS.yaw = g.rotation.y;
+  const parts = [paint(B(4, 2.4, .12).translate(0, 1.34, -.6), '#9FD3FF'), paint(B(4.4, .2, 1.6).translate(0, 2.64, 0), '#FFC93C'),
+    ...[[-1.9, -.6], [1.9, -.6], [-1.9, .6], [1.9, .6]].map(([px, pz]) => paint(Cyl(.08, .08, 2.5, 6).translate(px, 1.39, pz), '#3B3B44')),
+    paint(B(3.6, .15, .7).translate(0, .64, -.2), '#C98B5A'), ...[-1.6, 1.6].map(px => paint(B(.12, .5, .6).translate(px, .39, -.2), '#C98B5A')),
+    paint(Cyl(.06, .06, 3, 6).translate(2.7, 1.5, .4), '#3B3B44')];
+  const sh = new THREE.Mesh(merge(parts), new THREE.MeshStandardMaterial({ vertexColors: true, flatShading: true, roughness: .85 })); sh.castShadow = true; sh.receiveShadow = true; g.add(sh);
+  const c = document.createElement('canvas'); c.width = 1024; c.height = 384; const cx = c.getContext('2d');
+  cx.fillStyle = '#FFFFFF'; cx.beginPath(); cx.roundRect(7, 7, 1010, 370, 60); cx.fill(); cx.lineWidth = 14; cx.strokeStyle = '#1B2333'; cx.stroke();
+  cx.fillStyle = '#1B2333'; cx.textAlign = 'center'; cx.textBaseline = 'alphabetic';
+  [['NEXT NAP', 172], ['5 MIN', 332]].forEach(([s, y]) => { let fs = 150; cx.font = `900 ${fs}px Nunito`; while (cx.measureText(s).width > 900 && fs > 60) { fs -= 6; cx.font = `900 ${fs}px Nunito`; } cx.fillText(s, 512, y); });
+  const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 8;
+  const board = new THREE.Mesh(new THREE.PlaneGeometry(2.4, .9), new THREE.MeshBasicMaterial({ map: tex })); board.position.set(2.7, 2.9, .42); g.add(board);
+  BS.sl = [[slot(POSES.loaf, CAT_COLORS[4]), -1.1, 0, POSES.loaf], [slot(POSES.loaf, CAT_COLORS[6]), 0, .5, POSES.loaf], [slot(POSES.belly, CAT_COLORS[5]), 1.1, Math.PI / 2, POSES.belly]];
+  g.visible = false;
+}
+Object.values(POSES).forEach(m => { m.count = m.used; if (m.instanceColor) m.instanceColor.needsUpdate = true; });
+WALK.instanceColor.needsUpdate = true;
+
+// ---------- per-frame update of all extras (pure function of t and anim) ----------
+function updateExtras(t, anim) {
+  const D = POSES.drink, S = POSES.sit, R = WB.rip, P = 24, FW = EP.fountainWave, wave = FW != null && anim >= FW && anim < FW + 6;
+  // Build 1: small drinkers
+  for (const s of WB.spots) { const k = popK(t, s.rank), ri = (s.m - 1) * 2;
+    let mode = 0, x = s.p[0], z = s.p[1], y = .54, yaw = s.yawC, sc = 1.15 * k;
+    if (k > 0) {
+      if (wave) { const l0 = FW + 3 + (s.m - 1) * .12; mode = anim >= l0 && anim < l0 + .5 ? 1 : 2; }
+      else { const u = mod(anim + s.ph, P);
+        if (u < 7) { const [px, pz, dx, dz] = sampleRoad(s.pin, u / 7 * s.pin.len); x = px; z = pz; yaw = Math.atan2(dx, dz); y = Hpath(Math.hypot(px, pz)) + Math.abs(Math.sin(anim * 11 + s.m)) * .15; sc *= back(u / .3); mode = 1; }
+        else if (u < 15) { mode = 2;
+          if (s.m % 3 === 0 && u >= 11 && u < 11.8) { mode = 1; const e = Math.min(1, (u - 11) / .15, (11.8 - u) / .15), yc = Math.atan2(camera.position.x - x, camera.position.z - z);
+            yaw = s.yawC + e * Math.max(-.7, Math.min(.7, wrapA(yc - s.yawC))); } }   // deadpan glance at the camera
+        else if (u < 15.5) { mode = 1; yaw = s.yawC + ease((u - 15) / .5) * Math.PI; }
+        else if (u < 22.4) { const v = Math.min(u, 22) - 15.5, [px, pz, dx, dz] = sampleRoad(s.pout, v / 6.5 * s.pout.len); x = px; z = pz; yaw = Math.atan2(dx, dz);
+          y = Hpath(Math.hypot(px, pz)) + Math.abs(Math.sin(anim * 11 + s.m)) * (v < 1.5 ? .22 : .15); if (u > 22) sc *= 1 - (u - 22) / .4; mode = 1; }
+      } }
+    if (mode === 1) putCat(WALK, s.m, x, y, z, yaw, sc); else WALK.setMatrixAt(s.m, ZERO);
+    if (mode === 2) { putCat(D, s.ds, x, .54, z, s.yawC, sc, .05 * Math.sin(anim * 14 + s.m));
+      for (let q = 0; q < 2; q++) { const f = frac(anim * 1.6 + s.m * .37 + q * .5), r = .15 + .55 * f; if (f > .92) R.setMatrixAt(ri + q, ZERO); else { XM.compose(XV.set(s.nose[0], .85, s.nose[1]), QI, XS.set(r, 1, r)); R.setMatrixAt(ri + q, XM); } } }
+    else { D.setMatrixAt(s.ds, ZERO); R.setMatrixAt(ri, ZERO); R.setMatrixAt(ri + 1, ZERO); } }
+  // Build 1: Mango (sit as host -> turn -> drink -> turn back)
+  { const u = mod(anim, P); let mode, yaw = 0;
+    if (wave) { const l0 = FW + 3 + 17 * .12; mode = anim >= l0 && anim < l0 + .5 ? 1 : 2; yaw = Math.PI; }
+    else if (u < 16 || u >= 23.2) { mode = 0; yaw = .35 * Math.sin(anim * .6); }
+    else if (u < 16.6) { mode = 1; yaw = ease((u - 16) / .6) * Math.PI; }
+    else if (u < 22.6) { mode = 2; yaw = Math.PI; }
+    else { mode = 1; yaw = Math.PI + ease((u - 22.6) / .6) * Math.PI; }
+    putCat(S, WB.mSit, 0, .52, 7.6, yaw, mode === 0 ? 2.6 : 0);
+    putCat(WALK, 0, 0, .52, 7.5, yaw, mode === 1 ? 2.6 : 0);
+    putCat(D, WB.mDrink, 0, .52, 7.4, Math.PI, mode === 2 ? 2.6 : 0, .15 + .05 * Math.sin(anim * 14));
+    for (let q = 0; q < 2; q++) { const f = frac(anim * 1.6 + q * .5), r = 2 * (.15 + .55 * f);
+      if (mode !== 2 || f > .92) R.setMatrixAt(34 + q, ZERO); else { XM.compose(XV.set(0, .86, 5.0), QI, XS.set(r, 1, r)); R.setMatrixAt(34 + q, XM); } } }
+  // Build 1: droplet arcs + their landing ripples; the dome breathes
+  for (let k = 0; k < 6; k++) { const aa = Math.PI / 2 + Math.PI / 18 + k * Math.PI / 3, ca = Math.cos(aa), sa = Math.sin(aa);
+    for (let i = 0; i < 6; i++) { const f = frac(anim * .7 + i / 6), r = 5.5 * f; XM.makeTranslation(ca * r, 6.8 * (1 - f) + .84 * f + 6 * f * (1 - f), sa * r); WB.drops.setMatrixAt(k * 6 + i, XM); }
+    const f = frac(anim * 1.6 + k * .37), r = .15 + .55 * f; if (f > .92) R.setMatrixAt(36 + k, ZERO); else { XM.compose(XV.set(ca * 5.5, .85, sa * 5.5), QI, XS.set(r, 1, r)); R.setMatrixAt(36 + k, XM); } }
+  if (FWATER) FWATER.scale.y = 1 + .02 * Math.sin(anim * 3);
+  // Build 2: hero circle row (3 identical sitters + the one that walks in late)
+  { const kt = popK(t, UNLOCK.circles);
+    ROW.forEach(([x, z], c) => { if (kt <= 0) TAPE.setMatrixAt(TAPE_H + c, ZERO); else { XM.compose(XV.set(x, .16, z), QI, XS.set(kt, 1, kt)); TAPE.setMatrixAt(TAPE_H + c, XM); } });
+    for (let c = 0; c < 3; c++) putCat(S, ROW_SIT[c], ROW[c][0], .14, ROW[c][1], ROW_YAW, 1.15 * popK(t, UNLOCK.circles + c));
+    const k4 = popK(t, UNLOCK.circles + 3), u = mod(anim, 20), yIn = yawTo(C4[0] - S4[0], C4[1] - S4[1]), yOut = yIn + Math.PI;
+    let mode = 1, x = C4[0], z = C4[1], yaw = ROW_YAW, sc = 1.15 * k4, y = .14;
+    if (u < 4) { const f = u / 4; x = S4[0] + (C4[0] - S4[0]) * f; z = S4[1] + (C4[1] - S4[1]) * f; yaw = yIn; sc *= back(u / .3); y += Math.abs(Math.sin(anim * 10)) * .1; }
+    else if (u < 4.4) yaw = yIn + wrapA(ROW_YAW - yIn) * ease((u - 4) / .4);
+    else if (u < 16) mode = 2;
+    else if (u < 16.4) yaw = ROW_YAW + wrapA(yOut - ROW_YAW) * ease((u - 16) / .4);
+    else { const f = Math.min(1, (u - 16.4) / 3.2); x = C4[0] + (S4[0] - C4[0]) * f; z = C4[1] + (S4[1] - C4[1]) * f; yaw = yOut; y += Math.abs(Math.sin(anim * 10)) * .1; if (u > 19.6) sc *= 1 - (u - 19.6) / .4; }
+    putCat(WALK, 18, x, y, z, yaw, mode === 1 ? sc : 0); putCat(S, ROW_SIT[3], C4[0], .14, C4[1], ROW_YAW, mode === 2 ? sc : 0); }
+  // Build 3: hero box (the loaf shifts its weight every 9 s)
+  { const kb = popK(t, UNLOCK.hostBox);
+    if (kb <= 0) { BOXM.setMatrixAt(BOX_H, ZERO); FLAPM.setMatrixAt(BOX_H * 2, ZERO); FLAPM.setMatrixAt(BOX_H * 2 + 1, ZERO); }
+    else { XM2.copy(HB_M).multiply(XM.makeScale(kb, kb, kb)); BOXM.setMatrixAt(BOX_H, XM.multiplyMatrices(XM2, HB_L[0]));
+      FLAPM.setMatrixAt(BOX_H * 2, XM.multiplyMatrices(XM2, HB_L[1])); FLAPM.setMatrixAt(BOX_H * 2 + 1, XM.multiplyMatrices(XM2, HB_L[2])); }
+    const e = mod(anim, 9), sh = e < 1 ? .15 * Math.min(1, e / .15, (1 - e) / .15) : 0;
+    putCat(POSES.loaf, HB_CAT, HB[0], .14 + .36 * kb, HB[1], HB_YAW + sh, 1.6 * kb); }
+  // Build 4: Big Mochi rises at 1,000 followers, breathes, flicks an ear, snores Zzz
+  { const T1 = unlockT(UNLOCK.mochi), k = T1 === -Infinity ? 1 : T1 === Infinity ? 0 : ease((t - (T1 - 2)) / 2);
+    MO.g.visible = k > 0;
+    if (k > 0) { MO.g.position.y = -50 * (1 - k); const br = Math.sin(anim * 1.1); MO.body.scale.y = .55 * (1 + .03 * br); MO.head.position.y = .6 * br;
+      const e = mod(anim, 7); MO.ear.rotation.z = -1.1 + (e < .4 ? .5 * Math.sin(Math.PI * e / .4) : 0);
+      for (let q = 0; q < 3; q++) { const f = frac(anim * .25 + q / 3), s = 1.2 * Math.sin(Math.PI * f); XM.compose(XV.set(44 + 10 * f, 34 + 30 * f, 22), QI, XS.set(s, s, s)); MO.z.setMatrixAt(q, XM); }
+      MO.z.instanceMatrix.needsUpdate = true; } }
+  // Build 5: Red Dot Beach
+  { const k5 = popK(t, UNLOCK.redDot), on = k5 > 0;
+    [RD.lh, RD.laser, RD.beam, RD.dot, RD.halo].forEach(o => o.visible = on);
+    if (!on) { for (let c = 0; c < 5; c++) WALK.setMatrixAt(19 + c, ZERO); POSES.belly.setMatrixAt(RD.belly, ZERO); }
+    else { const [dx, dz] = RD.D(anim); RD.lh.scale.setScalar(k5); RD.laser.scale.setScalar(k5);
+      RD.dot.position.set(dx, .06, dz); RD.halo.position.set(dx, .05, dz); RD.dot.scale.setScalar(k5); RD.halo.scale.setScalar(k5);
+      RD.laser.lookAt(dx, .06, dz); RD.laser.updateMatrixWorld(); const tipP = RD.laser.localToWorld(XV.set(0, 0, 2.55)); RD.beam.position.copy(tipP);
+      RD.beam.lookAt(dx, .06, dz); RD.beam.scale.set(1, 1, Math.max(.01, tipP.distanceTo(XS.set(dx, .06, dz))));
+      for (let c = 0; c < 5; c++) { const tc = anim - .35 - .3 * c, [px, pz] = RD.D(tc), [qx, qz] = RD.D(tc - .05), L = Math.hypot(px - qx, pz - qz) || 1, off = (c % 2 ? 1 : -1) * .7 * c;
+        const x = px - (pz - qz) / L * off, z = pz + (px - qx) / L * off; let yaw = Math.atan2(dx - x, dz - z), y = Math.abs(Math.sin(anim * 12 + c)) * .1;
+        if (c === 0) { const q = mod(anim, 3) / .5; if (q <= 1) y = Math.sin(Math.PI * q); }          // pounce
+        if (c === 2 && Math.hypot(dx - x, dz - z) < 3) yaw += .12 * Math.sin(anim * 22);             // butt wiggle
+        putCat(WALK, 19 + c, x, y, z, yaw, 1.15 * k5); }
+      putCat(POSES.belly, RD.belly, RD.cx + 14, 0, 50, -.6, 1.15 * k5, 0, .08 * Math.sin(anim * 2)); } }   // the quitter
+  // Build 6: fish balloons
+  { for (let k = 0; k < 5; k++) { const kk = popK(t, UNLOCK.balloonStep * (k + 1));
+      if (kk <= 0) { BAL.shell.setMatrixAt(k, ZERO); BAL.parts.setMatrixAt(k, ZERO); S.setMatrixAt(BAL.cats[k][0], ZERO); S.setMatrixAt(BAL.cats[k][1], ZERO); continue; }
+      const a = BAL.ANG[k] + .06 * Math.sin(anim * .05 + k), r = Math.min(240, Math.max(60, CR * BAL.RF[k])) + 12 * Math.sin(2.1 * k), y = 56 + 8 * (k % 3) + 3 * Math.sin(anim * .5 + k);
+      XM2.compose(XV.set(Math.cos(a) * r, y, Math.sin(a) * r), XQ.setFromEuler(XE.set(0, yawTo(-Math.sin(a), Math.cos(a)) + .1 * Math.sin(anim * 1.5 + k), 0, 'YXZ')), XS.set(kk, kk, kk));
+      BAL.shell.setMatrixAt(k, XM2); BAL.parts.setMatrixAt(k, XM2); for (let q = 0; q < 2; q++) S.setMatrixAt(BAL.cats[k][q], XM.multiplyMatrices(XM2, BAL.catL[q])); } }
+  // Build 7: bus stop + 3 sleepers
+  { const kb = popK(t, UNLOCK.busStop); BS.g.visible = kb > 0; BS.g.scale.setScalar(Math.max(.001, kb));
+    const c0 = Math.cos(BS.yaw), s0 = Math.sin(BS.yaw);
+    BS.sl.forEach(([i, lx, ly, pm], c) => { const kc = popK(t, UNLOCK.busStop + c), lz = -.2, wx = BS.g.position.x + lx * c0 + lz * s0, wz = BS.g.position.z - lx * s0 + lz * c0;
+      const roll = pm === POSES.belly && mod(anim, 8) < 1 ? .05 * Math.sin(anim * 6) : 0;
+      putCat(pm, i, wx, .14 + .715 * kb, wz, BS.yaw + ly, 1.15 * kc, 0, roll, 1 + .04 * Math.sin(anim * 1.4 + c)); }); }
+  [WALK, WB.drops, WB.rip, TAPE, BOXM, FLAPM, BAL.shell, BAL.parts, ...Object.values(POSES)].forEach(m => m.instanceMatrix.needsUpdate = true);
+}
 
 // ---------- camera ----------
 const ST = EP.starts || [0, 0, 0, 0];
@@ -458,7 +734,7 @@ window.renderFrame = (t, anim = t) => {
     LMG.forEach(([g, a]) => { if (a < 0) { g.visible = true; return; } g.visible = t >= a; const k2 = back((t - a) / .7); g.scale.set(Math.max(.001, .8 * (.6 + .4 * k2)), Math.max(.001, .8 * k2), Math.max(.001, .8 * (.6 + .4 * k2))); });
   }
   // Mango strolls around the fountain
-  { const a = anim * .4; cm.compose(V(Math.cos(a) * 9.6, .5 + Math.abs(Math.sin(anim * 8)) * .1, Math.sin(a) * 9.6), Q.setFromEuler(EU.set(0, -a, 0)), V(2.6, 2.6, 2.6)); catMesh.setMatrixAt(0, cm); }
+  catMesh.setMatrixAt(0, ZERO);   // Mango now hosts the Water Bar (WALK / pose meshes), no more road patrol
   for (let k = 0; k < F; k++) { const w = CATW[k], a0 = APPEAR[k] < 0 ? -1 : APPEAR[k] + .3, vis = a0 < 0 || t >= a0;
     const s = vis ? 1.15 * (a0 < 0 ? 1 : back((t - a0) / .4)) : 0, l = houseLots[k];
     if (w.nap) { cm.compose(V(l.x, w.roofY, l.z), Q.setFromEuler(EU.set(0, l.ry + Math.sin(anim * .3 + k) * .4, 0)), V(s, s * .8, s)); catMesh.setMatrixAt(k + 1, cm); continue; }
@@ -469,6 +745,7 @@ window.renderFrame = (t, anim = t) => {
     const [x, z, dx, dz] = walkPos(tx.rd, tx.s0, tx.L, tx.v, tx.ph, anim);
     tx.g.position.set(x - dz * 2.4 * tx.side, 0, z + dx * 2.4 * tx.side); tx.g.rotation.y = Math.atan2(dx, dz);
     const sw = Math.sin(anim * 7 + i) * .45; tx.leg1.rotation.x = sw; tx.leg2.rotation.x = -sw; });
+  updateExtras(t, anim);
   signs.forEach(s => { const wp = s.getWorldPosition(new THREE.Vector3()); s.lookAt(camera.position.x, wp.y, camera.position.z); });
   let gk = 0;
   if (NB) { const bt = NEWB.at; NB.visible = t >= bt; gk = back((t - bt) / .9); NB.scale.set(Math.max(.001, .8 * (.6 + .4 * gk)), Math.max(.001, .8 * gk), Math.max(.001, .8 * (.6 + .4 * gk)));
@@ -531,5 +808,24 @@ function loop(now) { const dt = Math.min(.05, (now - last) / 1000); last = now; 
   requestAnimationFrame(loop); }
 requestAnimationFrame(loop);
 document.body.classList.add('ready');
+// "Save postcard": render the current view into a 1080x1350 card and show it as an image (the page sandbox blocks scripted downloads,
+// so the visitor long-presses / right-clicks the image to save it).
+const pcBox = $('pcBox'), pcBtn = $('postcard');
+const closePC = () => { pcBox.hidden = true; pcBtn.focus(); };
+pcBtn.addEventListener('click', async () => {
+  controls.update(); window.renderFrame(tOf(Math.round(cur)), ANIM);
+  const src = renderer.domElement, c = document.createElement('canvas'); c.width = 1080; c.height = 1350; const g = c.getContext('2d');
+  const sw = src.width, sh = src.height, ar = 1080 / 1220; let cw = sw, ch = sw / ar; if (ch > sh) { ch = sh; cw = sh * ar; }
+  g.drawImage(src, (sw - cw) / 2, (sh - ch) / 2, cw, ch, 0, 0, 1080, 1220);
+  g.fillStyle = '#FFFFFF'; g.fillRect(0, 1220, 1080, 130);
+  try { await document.fonts.load('900 40px Nunito'); await document.fonts.load('800 30px Nunito'); } catch (e) {}
+  g.textBaseline = 'middle'; g.fillStyle = '#1B2333'; g.font = '900 40px Nunito, sans-serif'; g.textAlign = 'left';
+  g.fillText('Cat Town · ' + $('countN').textContent + ' ' + $('countL').textContent, 48, 1285);
+  g.fillStyle = '#2F5FE0'; g.font = '800 30px Nunito, sans-serif'; g.textAlign = 'right'; g.fillText('@petme2', 1032, 1285);
+  $('pcImg').src = c.toDataURL('image/png'); pcBox.hidden = false; $('pcClose').focus();
+});
+$('pcClose').addEventListener('click', closePC);
+pcBox.addEventListener('click', e => { if (e.target === pcBox) closePC(); });
+addEventListener('keydown', e => { if (e.key === 'Escape' && !pcBox.hidden) closePC(); });
 
 </script>

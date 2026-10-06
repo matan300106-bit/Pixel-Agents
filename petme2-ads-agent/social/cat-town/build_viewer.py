@@ -9,7 +9,7 @@ def R(a, b):
     assert a in js, 'missing: ' + a[:80]; js = js.replace(a, b, 1)
 R("import * as THREE from 'three';\nimport { mergeGeometries } from './node_modules/three/examples/jsm/utils/BufferGeometryUtils.js';",
   "import * as THREE from 'three';\nimport { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';\nimport { OrbitControls } from 'three/addons/controls/OrbitControls.js';")
-js = re.sub(r"const EP = await \(await fetch\(.*?\)\)\.json\(\);", "try { await document.fonts.load('900 100px Nunito'); } catch (e) {}\nconst EP = window.CITY;", js)
+js = re.sub(r"const EP = await \(await fetch\(.*?\)\)\.json\(\);", "const EP = window.CITY;", js)
 R("const W = 1080, H = 1920;", "const stage = document.getElementById('stage'); let W = stage.clientWidth, H = stage.clientHeight;")
 R("renderer.setSize(W, H); renderer.setPixelRatio(1);", "renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2)); renderer.setSize(W, H);")
 R("document.body.prepend(renderer.domElement);", "stage.appendChild(renderer.domElement);")
