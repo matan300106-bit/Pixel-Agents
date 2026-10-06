@@ -51,11 +51,13 @@ const NEWB = EP.newBuild || null;
 const COAST_X = 200;
 const coastAt = z => COAST_X + Math.sin(z * .012) * 14;
 const RING0 = 42, RGAP = 30, NR = 15;
-// Mango's square (1.7x bigger since 2026-10-06): plaza disc, roundabout lane, island, lawn, water-bar wall
-const SQ = { plaza: 28, lane: 19, island: 13.6, lawn: 12.8, wall: 10 };
+// Mango's square (2026-10-06 evening): a figure 8 of two "food & drink stops" side by side (fountain circle at -C, feeder circle at +C),
+// Mango hosting in the waist between them, inside an oval roundabout lane (laneX x laneZ) on a round plaza.
+const SQ = { plaza: 33, laneX: 29.8, laneZ: 18.4, C: 11.5, island: 12.8, lawn: 12, wall: 9.4 };
+const laneR = a => 1 / Math.hypot(Math.cos(a) / SQ.laneX, Math.sin(a) / SQ.laneZ);   // oval lane edge at angle a
 const ringR = (k, a) => (RING0 + RGAP * k) * (1 + .045 * Math.sin(3 * a + k * 1.7) + .02 * Math.sin(7 * a + k * .9));
 const spokes = [];
-for (let i = 0; i < 6; i++) spokes.push({ a0: i * Math.PI / 3 + .26, r0: SQ.lane, s: i * 1.3 });
+for (let i = 0; i < 6; i++) spokes.push({ a0: i * Math.PI / 3 + .26, r0: Math.round(laneR(i * Math.PI / 3 + .26)) - 1, s: i * 1.3 });
 for (let i = 0; i < 6; i++) spokes.push({ a0: i * Math.PI / 3 + .26 + Math.PI / 6, r0: RING0 + RGAP, s: 7 + i });
 for (let i = 0; i < 12; i++) spokes.push({ a0: i * Math.PI / 6 + .26 + Math.PI / 12, r0: RING0 + RGAP * 4, s: 20 + i });
 for (let i = 0; i < 24; i++) spokes.push({ a0: i * Math.PI / 12 + .26 + Math.PI / 24, r0: RING0 + RGAP * 9, s: 40 + i });
@@ -214,7 +216,7 @@ const CAT_DRINK = poseGeo([[B(.5, .45, .9), 0, .42, 0, .12], [B(.48, .42, .42), 
 const CAT_BELLY = poseGeo([[B(.5, .45, .9), 0, .225, 0], [B(.48, .42, .42), 0, .21, .5, -.3], [EAR(), -.15, .15, .80, Math.PI / 2], [EAR(), .15, .15, .80, Math.PI / 2], ...LEGS(.60), [B(.1, .08, .6), 0, .04, -.62]]);
 const POSES = {};
 for (const [k, g] of [['sit', CAT_SIT], ['loaf', CAT_LOAF], ['drink', CAT_DRINK], ['belly', CAT_BELLY]]) { const m = IM(g, 800); m.frustumCulled = false; m.used = 0; for (let i = 0; i < 800; i++) m.setMatrixAt(i, ZERO); POSES[k] = m; }
-const WALK = IM(CAT_GEO, 32); WALK.frustumCulled = false; for (let i = 0; i < 32; i++) { WALK.setMatrixAt(i, ZERO); WALK.setColorAt(i, col.set('#F28C28')); }
+const WALK = IM(CAT_GEO, 90); WALK.frustumCulled = false; for (let i = 0; i < 90; i++) { WALK.setMatrixAt(i, ZERO); WALK.setColorAt(i, col.set('#F28C28')); }
 const slot = (pm, c) => { if (pm.used >= 800) return -1; const i = pm.used++; pm.setColorAt(i, col.set(c)); return i; };
 let TAPE = null, TAPE_H = 0, BOXM = null, FLAPM = null, BOX_H = 0, BOX_FL = null;   // filled by the gardens block (hero row/box use the last slots)
 
@@ -259,10 +261,11 @@ let FWATER = null;
 // front: dark oval water-level window with "PETME2" above it. The water-bar ring (wall/water/lip) is part of the same tap group.
 const FT = { g: new THREE.Group(), R0: 6.1, R1: 6.6, y0: .7, H: 6 }; FT.top = FT.y0 + FT.H;
 { const plaza = mesh(Cyl(SQ.plaza, SQ.plaza, .14, 72), '#E9E3D3', false); plaza.position.y = .05; scene.add(plaza);   // top .12: below the avenue road (.14), no z-fighting
-  const ring = mesh(Cyl(SQ.lane, SQ.lane, .16, 72), '#4A4F5C', false); ring.position.y = .09; scene.add(ring);
-  const island = mesh(Cyl(SQ.island, SQ.island, .5, 16), '#F1E6CF'); island.position.y = .25; scene.add(island);
-  const lawn = mesh(Cyl(SQ.lawn, SQ.lawn, .54, 16), '#9FD47F', false); lawn.position.y = .27; scene.add(lawn);
-  const g = FT.g; scene.add(g);
+  const ring = mesh(Cyl(1, 1, .16, 72).scale(SQ.laneX, 1, SQ.laneZ), '#4A4F5C', false); ring.position.y = .09; scene.add(ring);   // oval roundabout
+  for (const cx of [-SQ.C, SQ.C]) {   // the figure 8: two overlapping islands + lawns
+    const island = mesh(Cyl(SQ.island, SQ.island, .5, 40), '#F1E6CF'); island.position.set(cx, .25, 0); scene.add(island);
+    const lawn = mesh(Cyl(SQ.lawn, SQ.lawn, .54, 40), '#9FD47F', false); lawn.position.set(cx, .27, 0); scene.add(lawn); }
+  const g = FT.g; g.position.x = -SQ.C; scene.add(g);
   const add = (geo, m, x, y, z, cast = true) => { const o = new THREE.Mesh(geo, m); o.position.set(x, y, z); o.castShadow = cast; o.receiveShadow = true; g.add(o); return o; };
   // brushed steel: light grey, modest metalness (no env map, so it must not go dark), lighter vertical facets painted into the map
   const sc = document.createElement('canvas'); sc.width = 512; sc.height = 4; const sg = sc.getContext('2d');
@@ -289,7 +292,7 @@ const FT = { g: new THREE.Group(), R0: 6.1, R1: 6.6, y0: .7, H: 6 }; FT.top = FT
   const curve = new THREE.CatmullRomCurve3(SP.map(([x, y]) => V(x, capT + y, 0)));
   add(new THREE.TubeGeometry(curve, 56, .3, 12, false), STEEL2, 0, 0, 0);
   add(Cyl(.4, .36, .45, 16), STEEL2, 3.3, capT + 6.15, 0);
-  FT.tip = V(3.3, capT + 5.92, 0); FT.hit = V(3.3, FT.top - .02, 0);
+  FT.tip = V(3.3 - SQ.C, capT + 5.92, 0); FT.hit = V(3.3 - SQ.C, FT.top - .02, 0);   // world coordinates (the group sits at x -C)
   // clear water stream (scrolling streaks) from the spout tip onto the top plate
   const wc = document.createElement('canvas'); wc.width = 64; wc.height = 256; const wg = wc.getContext('2d');
   wg.fillStyle = '#A8DCFF'; wg.fillRect(0, 0, 64, 256);
@@ -314,10 +317,10 @@ const FT = { g: new THREE.Group(), R0: 6.1, R1: 6.6, y0: .7, H: 6 }; FT.top = FT
   add(new THREE.TorusGeometry(SQ.wall - .08, .1, 6, 72).rotateX(Math.PI / 2), mat('#2F5FE0'), 0, .84, 0, false);
 }
 
-// ---------- the PETME2 Dual Bowl Automatic Cat Feeder, giant, on the square next to the fountain ----------
+// ---------- the PETME2 Dual Bowl Automatic Cat Feeder, giant, in the middle of the right circle (its own "food bar" ring around it) ----------
 // white food tank (domed lid, accent clip, dark window strip), white base unit (LED dots + round button), 4 angled wooden legs, 2 steel bowls in front
-const FD = { g: new THREE.Group(), a: .78, r: 23.5 };
-{ const g = FD.g, [x, z] = polar(FD.a, FD.r); FD.yaw = yawTo(-Math.sin(FD.a), Math.cos(FD.a)); g.position.set(x, .12, z); g.rotation.y = FD.yaw; scene.add(g);
+const FD = { g: new THREE.Group(), yaw: 0 };
+{ const g = FD.g, x = SQ.C, z = 0; g.position.set(x, .54, z); g.rotation.y = FD.yaw; scene.add(g);
   const WHITE = new THREE.MeshStandardMaterial({ color: '#F6F7F9', roughness: .45 }), WOOD = mat('#A8784F');
   const add = (geo, m, x, y, z, rx = 0, rz = 0, cast = true) => { const o = new THREE.Mesh(geo, m); o.position.set(x, y, z); o.rotation.set(rx, 0, rz); o.castShadow = cast; o.receiveShadow = true; g.add(o); return o; };
   [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(([sx, sz]) => add(Cyl(.34, .26, 2.7, 8), WOOD, sx * 2.25, 1.2, sz * 1.7, -sz * .22, sx * .22));
@@ -338,6 +341,16 @@ const FD = { g: new THREE.Group(), a: .78, r: 23.5 };
     add(new THREE.TorusGeometry(1.43, .08, 6, 40).rotateX(Math.PI / 2), FT.steel2, bx, .62, 4.4, 0, 0, false);
     add(Cyl(1.2, 1.2, .1, 24), mat('#A8703F'), bx, .42, 4.4, 0, 0, false); });                                    // kibble
   FD.L = (lx, lz) => { const c = Math.cos(FD.yaw), s = Math.sin(FD.yaw); return [x + lx * c + lz * s, z - lx * s + lz * c]; };   // local -> world
+  // the food bar: white outer wall, kibble trough, white inner wall, blue lip (same height as the Water Bar ring, group y is the lawn top)
+  const RW = SQ.wall, RI = SQ.wall - 2.1, KIB = new THREE.MeshStandardMaterial({ color: '#A8703F', roughness: .9, flatShading: true });
+  add(new THREE.CylinderGeometry(RW, RW, .26, 72, 1, true), mat('#FFFFFF'), 0, .13, 0); add(new THREE.CylinderGeometry(RI, RI, .26, 72, 1, true), mat('#FFFFFF'), 0, .13, 0);
+  add(new THREE.RingGeometry(RI, RW, 72).rotateX(-Math.PI / 2), KIB, 0, .24, 0, 0, 0, false);
+  add(new THREE.TorusGeometry(RW - .08, .1, 6, 72).rotateX(Math.PI / 2), mat('#2F5FE0'), 0, .3, 0, 0, 0, false);
+  add(new THREE.TorusGeometry(RI + .08, .08, 6, 72).rotateX(Math.PI / 2), mat('#FFFFFF'), 0, .28, 0, 0, 0, false);
+  const kb = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(.17, 0), KIB, 260); kb.receiveShadow = true;
+  for (let i = 0; i < 260; i++) { const a = i / 260 * TAU + hash01(i * 3 + 1) * .05, r = RI + .3 + hash01(i * 7 + 2) * (RW - RI - .6);
+    kb.setMatrixAt(i, LR(Math.cos(a) * r, .27, Math.sin(a) * r, hash01(i) * 3, hash01(i * 5) * 3, 0, .8 + hash01(i * 11) * .5)); kb.setColorAt(i, col.set(['#A8703F', '#8A5A34', '#C08850'][i % 3])); }
+  g.add(kb);
 }
 
 // ---------- cat houses: one per follower; 6 districts, each with its own style ----------
@@ -381,7 +394,7 @@ houseLots.forEach((l, n) => placeHouse(n, APPEAR[n] < 0 ? 1 : 0));
 
 // ---------- gardens between the streets: trees, fish ponds, yarn balls, cat trees, flower beds ----------
 { const items = [], gHash = new Map();
-  for (let k = -1; k < NR - 1; k++) { const rmid = a => k < 0 ? 34.5 : (ringR(k, a) + ringR(k + 1, a)) / 2, circ = 2 * Math.PI * (k < 0 ? 34.5 : RING0 + RGAP * k + 15), n = Math.floor(circ / 9);
+  for (let k = -1; k < NR - 1; k++) { const rmid = a => k < 0 ? SQ.plaza + 2.5 : (ringR(k, a) + ringR(k + 1, a)) / 2, circ = 2 * Math.PI * (k < 0 ? SQ.plaza + 2.5 : RING0 + RGAP * k + 15), n = Math.floor(circ / 9);
     for (let i = 0; i < n; i++) { const a = (i + hash01(i * 31 + k) * .5) / n * Math.PI * 2, r = rmid(a), x = Math.cos(a) * r, z = Math.sin(a) * r;
       if (x > coastAt(z) - 18 || any(roadHash, x, z, 6.5) || any(lotHash, x, z, 4.2) || any(spotHash, x, z, 12) || any(gHash, x, z, 5)) continue;
       const t = timeNear(x, z, 18); if (t === Infinity) continue;
@@ -495,40 +508,41 @@ const TAXIS = [];
   } }
 
 // ================= Cat Town extras (design-review.md BUILD LIST) =================
-// ---------- Build 1: Mango's Water Bar (cats drink from a ring around the fountain) ----------
-const WB = { spots: [] };
-const Hpath = r => .16 + .37 * smooth(SQ.island + .6, SQ.island, r) + .25 * Math.max(0, 1 - Math.abs(r - SQ.island - .3) / .4);   // road -> hop onto the island -> lawn
-// radii: cats leave/enter the avenues at WB.R_AV, in-lane WB.R_IN, out-lane WB.R_OUT (both on the roundabout lane), drink at WB.R_SPOT, nose over the water at WB.R_NOSE
-Object.assign(WB, { R_AV: SQ.lane + .5, R_FAR: SQ.plaza + 3, R_IN: SQ.lane - 1.8, R_OUT: SQ.island + 1.8, R_SPOT: SQ.wall + .4, R_NOSE: SQ.wall - .65, P: 30 });
-{ const { R_AV, R_FAR, R_IN, R_OUT, R_SPOT } = WB;
-  WB.drops = IM(new THREE.IcosahedronGeometry(.16, 0), 36, false, new THREE.MeshStandardMaterial({ color: '#BFE9FF', emissive: '#7FD0FF', emissiveIntensity: .3, flatShading: true }));
-  WB.rip = IM(new THREE.RingGeometry(.8, 1, 24).rotateX(-Math.PI / 2), 44, false, new THREE.MeshBasicMaterial({ color: '#FFFFFF', transparent: true, opacity: .8, depthWrite: false }));
+// ---------- Build 1: the two food & drink stops (figure 8). Cats walk in from the streets, drink around the fountain circle, eat around the feeder circle ----------
+// each stop: N spots on its ring (the side facing the other circle is Mango's), a straight walk in from the plaza edge along the ring's normal, a walk out beside it.
+// Loungers sit and loaf on each lawn so the square reads as the town's meeting point. WALK slots: 0 Mango, 30.. fountain drinkers, 56.. feeder eaters.
+const WB = { spots: [], lounge: [], P: 34, N: 26 };
+const inIsle = (x, z) => Math.min(...[-SQ.C, SQ.C].map(cx => Math.hypot(x - cx, z) - SQ.island));   // < 0 inside the figure 8
+const Hy = (x, z) => { const d = inIsle(x, z); return .16 + .37 * smooth(.6, 0, d) + .25 * Math.max(0, 1 - Math.abs(d - .3) / .4); };   // road -> hop onto the island -> lawn
+{ WB.drops = IM(new THREE.IcosahedronGeometry(.16, 0), 36, false, new THREE.MeshStandardMaterial({ color: '#BFE9FF', emissive: '#7FD0FF', emissiveIntensity: .3, flatShading: true }));
+  WB.rip = IM(new THREE.RingGeometry(.8, 1, 24).rotateX(-Math.PI / 2), 64, false, new THREE.MeshBasicMaterial({ color: '#FFFFFF', transparent: true, opacity: .8, depthWrite: false }));
   WB.rip.receiveShadow = false;
   [WB.drops, WB.rip].forEach(m => { m.frustumCulled = false; for (let i = 0; i < m.count; i++) m.setMatrixAt(i, ZERO); });
-  const avA = [0, 1, 2, 3, 4, 5].map(i => mod(spokeA(spokes[i], R_AV), TAU));
   const path = pts => { const cum = [0]; for (let i = 1; i < pts.length; i++) cum.push(cum[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1])); return { pts, cum, len: cum[cum.length - 1] }; };
-  const ORDER = [1, 17, 2, 16, 3, 15, 4, 14, 5, 13, 6, 12, 7, 11, 8, 10, 9];   // first cats flank Mango
-  for (let m = 1; m <= 17; m++) { const an = mod(Math.PI / 2 + m * Math.PI / 9, TAU);
-    let ii = 0, oi = 0; for (let i = 0; i < 6; i++) { if (mod(an - avA[i], TAU) < mod(an - avA[ii], TAU)) ii = i; if (mod(avA[i] - an, TAU) < mod(avA[oi] - an, TAU)) oi = i; }
-    const spI = spokes[ii], spO = spokes[oi], A0 = avA[ii], a1 = A0 + mod(an - A0, TAU), b1 = an + mod(avA[oi] - an, TAU);
-    const pin = []; for (let r = R_FAR; r > R_AV + .1; r -= 1.5) pin.push(polar(spokeA(spI, r), r)); pin.push(polar(A0, R_AV));
-    for (let g = A0; g < a1 - .02; g += .05) pin.push(polar(g, R_IN)); pin.push(polar(a1, R_IN));        // in-lane, counter-clockwise
-    for (let r = R_IN - .5; r > R_SPOT + .05; r -= .5) pin.push(polar(an, r)); pin.push(polar(an, R_SPOT));
-    const pout = []; for (let r = R_SPOT; r < R_OUT - .05; r += .5) pout.push(polar(an, r)); pout.push(polar(an, R_OUT));
-    for (let g = an + .05; g < b1 - .02; g += .05) pout.push(polar(g, R_OUT)); pout.push(polar(b1, R_OUT));    // out-lane, counter-clockwise
-    for (let r = R_AV; r < R_FAR + .1; r += 1.5) pout.push(polar(spokeA(spO, r), r));
-    const c = CAT_COLORS[(m * 5 + 3) % CAT_COLORS.length]; WALK.setColorAt(m, col.set(c));
-    WB.spots.push({ m, a: an, rank: ORDER.indexOf(m) + 1, pin: path(pin), pout: path(pout), yawC: yawTo(-Math.cos(an), -Math.sin(an)), ph: hash01(m * 41 + 3) * WB.P,
-      p: polar(an, R_SPOT), nose: polar(an, WB.R_NOSE), ds: slot(POSES.drink, c) }); }
+  const RS = SQ.wall + .4, RN = SQ.wall - .65, END = SQ.plaza + 2;
+  [{ cx: -SQ.C, inner: 0, drink: true, w0: 30 }, { cx: SQ.C, inner: Math.PI, drink: false, w0: 56 }].forEach((st, si) => {
+    const list = [];
+    for (let j = 0; j < WB.N; j++) { const th = st.inner + .96 + j / (WB.N - 1) * (TAU - 1.92), c = Math.cos(th), sn = Math.sin(th);
+      const S = [st.cx + RS * c, RS * sn], b = S[0] * c + S[1] * sn, L = -b + Math.sqrt(b * b - (S[0] * S[0] + S[1] * S[1] - END * END));   // walk out along the normal to the plaza edge
+      const side = [-sn * .45, c * .45], F = [S[0] + c * L, S[1] + sn * L];
+      const pin = path([[F[0] + side[0], F[1] + side[1]], [S[0] + c * 2 + side[0] * .5, S[1] + sn * 2 + side[1] * .5], S]);
+      const pout = path([S, [S[0] + c * 2 - side[0] * .5, S[1] + sn * 2 - side[1] * .5], [F[0] - side[0], F[1] - side[1]]]);
+      const w = st.w0 + j, cc = CAT_COLORS[(j * 5 + si * 4 + 3) % CAT_COLORS.length]; WALK.setColorAt(w, col.set(cc));
+      list.push({ w, th, drink: st.drink, pin, pout, p: S, nose: [st.cx + RN * c, RN * sn], yawC: yawTo(-c, -sn), ph: hash01(j * 41 + si * 7 + 3) * WB.P,
+        ds: slot(POSES.drink, cc), off: Math.abs(wrapA(th - st.inner)) }); }
+    list.sort((p, q) => p.off - q.off).forEach((o, j) => { o.rank = 2 * j + 1 + si; o.m = j + 1; WB.spots.push(o); });   // the cats next to Mango come first; fountain and feeder take turns
+    for (let j = 0; j < 10; j++) { const th = st.inner + 1.1 + (j + .5) / 10 * (TAU - 2.2), r = SQ.lawn - .9, x = st.cx + Math.cos(th) * r, z = Math.sin(th) * r, loaf = j % 3 === 1;
+      const cc = CAT_COLORS[(j * 3 + si * 5 + 2) % CAT_COLORS.length];
+      WB.lounge.push({ x, z, yaw: yawTo(Math.cos(th), Math.sin(th)) + (hash01(j * 13 + si) - .5) * 1.4, pm: loaf ? POSES.loaf : POSES.sit, i: slot(loaf ? POSES.loaf : POSES.sit, cc), rank: 2 * WB.N + 1 + j * 2 + si }); } });
   WB.mSit = slot(POSES.sit, '#F28C28'); WB.mDrink = slot(POSES.drink, '#F28C28');   // Mango, the host (WALK slot 0)
 }
 
 // ---------- Build 2 (hero row) + Build 3 (hero box) on the plaza ----------
-const ROW_A = [1.71, 1.79, 1.87, 1.95], ROW_YAW = yawTo(Math.cos(1.83), Math.sin(1.83));
-const ROW = ROW_A.map(a => polar(a, 24)), ROW_SIT = [0, 1, 2, 3].map(c => slot(POSES.sit, CAT_COLORS[(c * 7 + 2) % CAT_COLORS.length]));
+const ROW_A = [3.75, 3.83, 3.91, 3.99], ROW_YAW = yawTo(Math.cos(3.87), Math.sin(3.87));   // between avenues 3 and 4, outside the oval lane
+const ROW = ROW_A.map(a => polar(a, 27)), ROW_SIT = [0, 1, 2, 3].map(c => slot(POSES.sit, CAT_COLORS[(c * 7 + 2) % CAT_COLORS.length]));
 const C4 = ROW[3], S4 = [C4[0] - Math.sin(ROW_A[3]) * 6.5, C4[1] + Math.cos(ROW_A[3]) * 6.5];   // the 4th cat comes from avenue 2's sidewalk
 WALK.setColorAt(18, col.set(CAT_COLORS[(3 * 7 + 2) % CAT_COLORS.length]));
-const HB = polar(2.88, 24), HB_YAW = yawTo(Math.cos(2.88), Math.sin(2.88)) + 1.2, HB_M = LR(HB[0], .14, HB[1], 0, HB_YAW), HB_CAT = slot(POSES.loaf, '#8E8E9A');
+const HB = polar(2.0, 27), HB_YAW = yawTo(Math.cos(2.0), Math.sin(2.0)) + 1.2, HB_M = LR(HB[0], .14, HB[1], 0, HB_YAW), HB_CAT = slot(POSES.loaf, '#8E8E9A');
 const HB_L = [LR(0, .2, 0), BOX_FL[0], BOX_FL[1]];
 
 // ---------- Build 4: Big Mochi, the sleeping mountain cat ----------
@@ -591,7 +605,7 @@ const BAL = { ANG: [4.1, 3.0, 1.0, 0.7, 1.8], RF: [.6, .35, .5, .35, .35], COL: 
 
 // ---------- Build 7: one hero bus stop, "NEXT NAP / 5 MIN" ----------
 const BS = {};
-{ const BA = 6.02, [x, z] = polar(BA, 24), g = new THREE.Group(); g.position.set(x, .14, z); g.rotation.y = yawTo(Math.cos(BA), Math.sin(BA)); scene.add(g); BS.g = g; BS.yaw = g.rotation.y;   // moved from angle .85 (the feeder's sector now)
+{ const BA = 5.0, [x, z] = polar(BA, 27), g = new THREE.Group(); g.position.set(x, .14, z); g.rotation.y = yawTo(Math.cos(BA), Math.sin(BA)); scene.add(g); BS.g = g; BS.yaw = g.rotation.y;   // moved from angle .85 (the feeder's sector now)
   const parts = [paint(B(4, 2.4, .12).translate(0, 1.34, -.6), '#9FD3FF'), paint(B(4.4, .2, 1.6).translate(0, 2.64, 0), '#FFC93C'),
     ...[[-1.9, -.6], [1.9, -.6], [-1.9, .6], [1.9, .6]].map(([px, pz]) => paint(Cyl(.08, .08, 2.5, 6).translate(px, 1.39, pz), '#3B3B44')),
     paint(B(3.6, .15, .7).translate(0, .64, -.2), '#C98B5A'), ...[-1.6, 1.6].map(px => paint(B(.12, .5, .6).translate(px, .39, -.2), '#C98B5A')),
@@ -606,47 +620,46 @@ const BS = {};
   BS.sl = [[slot(POSES.loaf, CAT_COLORS[4]), -1.1, 0, POSES.loaf], [slot(POSES.loaf, CAT_COLORS[6]), 0, .5, POSES.loaf], [slot(POSES.belly, CAT_COLORS[5]), 1.1, Math.PI / 2, POSES.belly]];
   g.visible = false;
 }
-// ---------- feeder regulars: 2 eaters (drink pose) + a deadpan starer who sits and looks up at the tank ----------
-FD.cats = [0, 1].map(e => ({ w: 24 + e, ds: slot(POSES.drink, CAT_COLORS[[4, 2][e]]), rank: [3, 6][e], bx: e ? 1.55 : -1.55, ph: e * 11 }));
-FD.cats.forEach((c, e) => WALK.setColorAt(c.w, col.set(CAT_COLORS[[4, 2][e]])));
-FD.star = { w: 26, ss: slot(POSES.sit, '#3B3B44'), rank: 8 }; WALK.setColorAt(26, col.set('#3B3B44'));
 Object.values(POSES).forEach(m => { m.count = m.used; if (m.instanceColor) m.instanceColor.needsUpdate = true; });
 WALK.instanceColor.needsUpdate = true;
 
 // ---------- per-frame update of all extras (pure function of t and anim) ----------
 function updateExtras(t, anim) {
-  const D = POSES.drink, S = POSES.sit, R = WB.rip, P = 24, PW = WB.P, FW = EP.fountainWave, wave = FW != null && anim >= FW && anim < FW + 6;
-  // Build 1: small drinkers
+  const D = POSES.drink, S = POSES.sit, R = WB.rip, P = 30, PW = WB.P, FW = EP.fountainWave, wave = FW != null && anim >= FW && anim < FW + 6;
+  // Build 1: drinkers (fountain circle) + eaters (feeder circle). 34 s loop: walk in 8 s, drink/eat 14 s, turn, walk out 8 s, gone 3.5 s
   for (const s of WB.spots) { const k = popK(t, s.rank), ri = (s.m - 1) * 2;
     let mode = 0, x = s.p[0], z = s.p[1], y = .54, yaw = s.yawC, sc = 1.15 * k;
     if (k > 0) {
-      if (wave) { const l0 = FW + 3 + (s.m - 1) * .12; mode = anim >= l0 && anim < l0 + .5 ? 1 : 2; }
-      else { const u = mod(anim + s.ph, PW);   // 30 s loop: walk in 9.5 s, drink 9 s, turn, walk out 9 s (the paths are 1.7x longer than before)
-        if (u < 9.5) { const [px, pz, dx, dz] = sampleRoad(s.pin, u / 9.5 * s.pin.len); x = px; z = pz; yaw = Math.atan2(dx, dz); y = Hpath(Math.hypot(px, pz)) + Math.abs(Math.sin(anim * 11 + s.m)) * .15; sc *= back(u / .3); mode = 1; }
-        else if (u < 18.5) { mode = 2;
-          if (s.m % 3 === 0 && u >= 13.5 && u < 14.3) { mode = 1; const e = Math.min(1, (u - 13.5) / .15, (14.3 - u) / .15), yc = Math.atan2(camera.position.x - x, camera.position.z - z);
+      if (wave && s.drink) { const l0 = FW + 3 + (s.m - 1) * .1; mode = anim >= l0 && anim < l0 + .5 ? 1 : 2; }
+      else { const u = mod(anim + s.ph, PW);
+        if (u < 8) { const [px, pz, dx, dz] = sampleRoad(s.pin, u / 8 * s.pin.len); x = px; z = pz; yaw = Math.atan2(dx, dz); y = Hy(px, pz) + Math.abs(Math.sin(anim * 11 + s.w)) * .15; sc *= back(u / .3); mode = 1; }
+        else if (u < 22) { mode = 2;
+          if (s.m % 4 === 0 && u >= 15 && u < 15.8) { mode = 1; const e = Math.min(1, (u - 15) / .15, (15.8 - u) / .15), yc = Math.atan2(camera.position.x - x, camera.position.z - z);
             yaw = s.yawC + e * Math.max(-.7, Math.min(.7, wrapA(yc - s.yawC))); } }   // deadpan glance at the camera
-        else if (u < 19) { mode = 1; yaw = s.yawC + ease((u - 18.5) / .5) * Math.PI; }
-        else if (u < 28.4) { const v = Math.min(u, 28) - 19, [px, pz, dx, dz] = sampleRoad(s.pout, v / 9 * s.pout.len); x = px; z = pz; yaw = Math.atan2(dx, dz);
-          y = Hpath(Math.hypot(px, pz)) + Math.abs(Math.sin(anim * 11 + s.m)) * (v < 1.5 ? .22 : .15); if (u > 28) sc *= 1 - (u - 28) / .4; mode = 1; }
+        else if (u < 22.5) { mode = 1; yaw = s.yawC + ease((u - 22) / .5) * Math.PI; }
+        else if (u < 30.9) { const v = Math.min(u, 30.5) - 22.5, [px, pz, dx, dz] = sampleRoad(s.pout, v / 8 * s.pout.len); x = px; z = pz; yaw = Math.atan2(dx, dz);
+          y = Hy(px, pz) + Math.abs(Math.sin(anim * 11 + s.w)) * (v < 1.5 ? .22 : .15); if (u > 30.5) sc *= 1 - (u - 30.5) / .4; mode = 1; }
       } }
-    if (mode === 1) putCat(WALK, s.m, x, y, z, yaw, sc); else WALK.setMatrixAt(s.m, ZERO);
-    if (mode === 2) { putCat(D, s.ds, x, .54, z, s.yawC, sc, .05 * Math.sin(anim * 14 + s.m));
-      for (let q = 0; q < 2; q++) { const f = frac(anim * 1.6 + s.m * .37 + q * .5), r = .15 + .55 * f; if (f > .92) R.setMatrixAt(ri + q, ZERO); else { XM.compose(XV.set(s.nose[0], .85, s.nose[1]), QI, XS.set(r, 1, r)); R.setMatrixAt(ri + q, XM); } } }
-    else { D.setMatrixAt(s.ds, ZERO); R.setMatrixAt(ri, ZERO); R.setMatrixAt(ri + 1, ZERO); } }
-  // Build 1: Mango (sit as host -> turn -> drink -> turn back)
-  { const u = mod(anim, P); let mode, yaw = 0;
-    if (wave) { const l0 = FW + 3 + 17 * .12; mode = anim >= l0 && anim < l0 + .5 ? 1 : 2; yaw = Math.PI; }
-    else if (u < 16 || u >= 23.2) { mode = 0; yaw = .35 * Math.sin(anim * .6); }
-    else if (u < 16.6) { mode = 1; yaw = ease((u - 16) / .6) * Math.PI; }
-    else if (u < 22.6) { mode = 2; yaw = Math.PI; }
-    else { mode = 1; yaw = Math.PI + ease((u - 22.6) / .6) * Math.PI; }
-    const mz = SQ.wall + 1.2;   // Mango sits just outside the water-bar wall, at the front (+z)
-    putCat(S, WB.mSit, 0, .52, mz, yaw, mode === 0 ? 2.6 : 0);
-    putCat(WALK, 0, 0, .52, mz - .1, yaw, mode === 1 ? 2.6 : 0);
-    putCat(D, WB.mDrink, 0, .52, mz - .2, Math.PI, mode === 2 ? 2.6 : 0, .15 + .05 * Math.sin(anim * 14));
+    if (mode === 1) putCat(WALK, s.w, x, y, z, yaw, sc); else WALK.setMatrixAt(s.w, ZERO);
+    if (mode === 2) { putCat(D, s.ds, x, .54, z, s.yawC, sc, (s.drink ? .05 : .09) * Math.sin(anim * (s.drink ? 14 : 9) + s.w));
+      if (s.drink) for (let q = 0; q < 2; q++) { const f = frac(anim * 1.6 + s.m * .37 + q * .5), r = .15 + .55 * f; if (f > .92) R.setMatrixAt(ri + q, ZERO); else { XM.compose(XV.set(s.nose[0], .85, s.nose[1]), QI, XS.set(r, 1, r)); R.setMatrixAt(ri + q, XM); } } }
+    else { D.setMatrixAt(s.ds, ZERO); if (s.drink) { R.setMatrixAt(ri, ZERO); R.setMatrixAt(ri + 1, ZERO); } } }
+  // loungers on the lawns (sit / loaf, a slow head-turn now and then)
+  WB.lounge.forEach((l, j) => putCat(l.pm, l.i, l.x, .54, l.z, l.yaw + .25 * Math.sin(anim * .3 + j), 1.15 * popK(t, l.rank), 0, 0, 1 + .03 * Math.sin(anim * 1.3 + j)));
+  // Mango, the host in the waist of the 8: sits facing the town, turns left to drink at the fountain, back, turns right to eat at the feeder, back
+  { const u = mod(anim, P + 6); let mode = 0, yaw = .35 * Math.sin(anim * .6), D0 = -1;
+    if (wave) { const l0 = FW + 3 + WB.N * .1; mode = anim >= l0 && anim < l0 + .5 ? 1 : 2; yaw = -Math.PI / 2; D0 = -1; }
+    else if (u >= 8 && u < 8.6) { mode = 1; yaw = -ease((u - 8) / .6) * Math.PI / 2; }
+    else if (u >= 8.6 && u < 13) { mode = 2; yaw = -Math.PI / 2; D0 = -1; }
+    else if (u >= 13 && u < 13.6) { mode = 1; yaw = -Math.PI / 2 + ease((u - 13) / .6) * Math.PI / 2; }
+    else if (u >= 19 && u < 19.6) { mode = 1; yaw = ease((u - 19) / .6) * Math.PI / 2; }
+    else if (u >= 19.6 && u < 24.4) { mode = 2; yaw = Math.PI / 2; D0 = 1; }
+    else if (u >= 24.4 && u < 25) { mode = 1; yaw = Math.PI / 2 - ease((u - 24.4) / .6) * Math.PI / 2; }
+    putCat(S, WB.mSit, 0, .52, 0, yaw, mode === 0 ? 2.6 : 0);
+    putCat(WALK, 0, 0, .52, 0, yaw, mode === 1 ? 2.6 : 0);
+    putCat(D, WB.mDrink, D0 * .3, .52, 0, yaw, mode === 2 ? 2.6 : 0, .15 + .05 * Math.sin(anim * 14));
     for (let q = 0; q < 2; q++) { const f = frac(anim * 1.6 + q * .5), r = 2 * (.15 + .55 * f);
-      if (mode !== 2 || f > .92) R.setMatrixAt(34 + q, ZERO); else { XM.compose(XV.set(0, .86, mz - 2.6), QI, XS.set(r, 1, r)); R.setMatrixAt(34 + q, XM); } } }
+      if (mode !== 2 || D0 > 0 || f > .92) R.setMatrixAt(2 * WB.N + q, ZERO); else { XM.compose(XV.set(-(SQ.C - SQ.wall) - 1.1, .86, 0), QI, XS.set(r, 1, r)); R.setMatrixAt(2 * WB.N + q, XM); } } }
   // Build 1: the spout's stream (scrolling streaks), drops falling beside it, splash hops + ripples where it hits the top plate
   { const hx = FT.hit.x, hy = FT.hit.y, hz = FT.hit.z, sL = FT.tip.y - hy;
     for (let k = 0; k < 6; k++) { const aa = k * TAU / 6 + .3, ca = Math.cos(aa), sa = Math.sin(aa);
@@ -654,7 +667,7 @@ function updateExtras(t, anim) {
         if (i < 3) { const r = .3 + 1.4 * f; XM.makeTranslation(hx + ca * r, hy + .1 + 1.3 * 4 * f * (1 - f), hz + sa * r); }      // splash hops
         else XM.makeTranslation(hx + ca * .34, FT.tip.y - .2 - sL * f * f, hz + sa * .34);                                        // drops beside the stream
         WB.drops.setMatrixAt(k * 6 + i, XM); }
-      const f = frac(anim * 1.3 + k / 6), r = .35 + 1.6 * f; if (f > .92) R.setMatrixAt(36 + k, ZERO); else { XM.compose(XV.set(hx, hy + .04, hz), QI, XS.set(r, 1, r)); R.setMatrixAt(36 + k, XM); } }
+      const f = frac(anim * 1.3 + k / 6), r = .35 + 1.6 * f; if (f > .92) R.setMatrixAt(2 * WB.N + 2 + k, ZERO); else { XM.compose(XV.set(hx, hy + .04, hz), QI, XS.set(r, 1, r)); R.setMatrixAt(2 * WB.N + 2 + k, XM); } }
     FT.wTex.offset.y = frac(anim * 1.4); FT.stream.scale.set(1 + .06 * Math.sin(anim * 9), 1, 1 + .06 * Math.sin(anim * 7 + 1)); }
   // Build 2: hero circle row (3 identical sitters + the one that walks in late)
   { const kt = popK(t, UNLOCK.circles);
@@ -702,23 +715,6 @@ function updateExtras(t, anim) {
       const a = BAL.ANG[k] + .06 * Math.sin(anim * .05 + k), r = Math.min(240, Math.max(60, CR * BAL.RF[k])) + 12 * Math.sin(2.1 * k), y = 56 + 8 * (k % 3) + 3 * Math.sin(anim * .5 + k);
       XM2.compose(XV.set(Math.cos(a) * r, y, Math.sin(a) * r), XQ.setFromEuler(XE.set(0, yawTo(-Math.sin(a), Math.cos(a)) + .1 * Math.sin(anim * 1.5 + k), 0, 'YXZ')), XS.set(kk, kk, kk));
       BAL.shell.setMatrixAt(k, XM2); BAL.parts.setMatrixAt(k, XM2); for (let q = 0; q < 2; q++) S.setMatrixAt(BAL.cats[k][q], XM.multiplyMatrices(XM2, BAL.catL[q])); } }
-  // Feeder: 2 eaters on a 26 s loop (walk in, eat, turn, walk out) + the starer on a 34 s loop (sits, looks up at the tank, deadpan)
-  for (const c of FD.cats) { const k = popK(t, c.rank), u = mod(anim + c.ph, 26), A = FD.L(c.bx + (c.bx > 0 ? 1.4 : -1.4), 12), Bp = FD.L(c.bx, 6.45), yIn = yawTo(Bp[0] - A[0], Bp[1] - A[1]);
-    let mode = 0, x = Bp[0], z = Bp[1], yaw = FD.yaw + Math.PI, sc = 1.15 * k, y = .12;
-    if (k > 0) { if (u < 5) { const f = u / 5; x = A[0] + (Bp[0] - A[0]) * f; z = A[1] + (Bp[1] - A[1]) * f; yaw = yIn; sc *= back(u / .3); y += Math.abs(Math.sin(anim * 10 + c.w)) * .1; mode = 1; }
-      else if (u < 5.4) { mode = 1; yaw = yIn + wrapA(FD.yaw + Math.PI - yIn) * ease((u - 5) / .4); }
-      else if (u < 15) mode = 2;
-      else if (u < 15.5) { mode = 1; yaw = FD.yaw + Math.PI + ease((u - 15) / .5) * Math.PI; }
-      else if (u < 20.9) { const f = Math.min(1, (u - 15.5) / 5); x = Bp[0] + (A[0] - Bp[0]) * f; z = Bp[1] + (A[1] - Bp[1]) * f; yaw = yIn + Math.PI; y += Math.abs(Math.sin(anim * 10 + c.w)) * .1; if (u > 20.5) sc *= 1 - (u - 20.5) / .4; mode = 1; } }
-    putCat(WALK, c.w, x, y, z, yaw, mode === 1 ? sc : 0); putCat(D, c.ds, Bp[0], .26, Bp[1], FD.yaw + Math.PI, mode === 2 ? sc : 0, .05 * Math.sin(anim * 12 + c.w)); }
-  { const c = FD.star, k = popK(t, c.rank), u = mod(anim + 7, 34), A = FD.L(-4.5, 11.5), Bp = FD.L(0, 8.2), yIn = yawTo(Bp[0] - A[0], Bp[1] - A[1]), yS = FD.yaw + Math.PI;
-    let mode = 0, x = Bp[0], z = Bp[1], yaw = yS, sc = 1.15 * k, y = .12;
-    if (k > 0) { if (u < 4) { const f = u / 4; x = A[0] + (Bp[0] - A[0]) * f; z = A[1] + (Bp[1] - A[1]) * f; yaw = yIn; sc *= back(u / .3); y += Math.abs(Math.sin(anim * 10)) * .1; mode = 1; }
-      else if (u < 4.4) { mode = 1; yaw = yIn + wrapA(yS - yIn) * ease((u - 4) / .4); }
-      else if (u < 14) mode = 2;
-      else if (u < 14.4) { mode = 1; yaw = yS + ease((u - 14) / .4) * Math.PI * .8; }
-      else if (u < 18.4) { const f = Math.min(1, (u - 14.4) / 3.6); x = Bp[0] + (A[0] - Bp[0]) * f; z = Bp[1] + (A[1] - Bp[1]) * f; yaw = yIn + Math.PI; y += Math.abs(Math.sin(anim * 10)) * .1; if (u > 18) sc *= 1 - (u - 18) / .4; mode = 1; } }
-    putCat(WALK, c.w, x, y, z, yaw, mode === 1 ? sc : 0); putCat(S, c.ss, x, .12, z, yS, mode === 2 ? sc : 0, -.32); }   // head tilted up at the tank
   // Build 7: bus stop + 3 sleepers
   { const kb = popK(t, UNLOCK.busStop); BS.g.visible = kb > 0; BS.g.scale.setScalar(Math.max(.001, kb));
     const c0 = Math.cos(BS.yaw), s0 = Math.sin(BS.yaw);

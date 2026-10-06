@@ -123,3 +123,16 @@ Owner asks: "make a real fountain, like what we actually sell", "make a bigger c
 - At 360 px the "Play growth" button wraps to a second row of the dock (that row was not changed here); the pad moves up with the dock height (`--dockH`).
 - The feeder hides part of the fountain from some angles of the default `q_fountain` camera; `q_fountain_feeder` frames both.
 - The starer's "look up" is a whole-body tilt (cats have no separate head in the pose kit).
+
+## Update 2026-10-06 (night): figure 8 "food & drink stops"
+
+Owner ask: fountain and feeder each in its own circle, side by side like an 8; cats walk in from the streets and gather (drink around the fountain, eat around the feeder); more cats; Mango hosts between the circles.
+
+- `SQ` is now `{ plaza: 33, laneX: 29.8, laneZ: 18.4, C: 11.5, island: 12.8, lawn: 12, wall: 9.4 }`. Two islands + lawns at x = ±C make the 8; the roundabout lane is an oval (`laneR(a)`), and the 6 inner avenues start at the oval's edge.
+- Fountain group sits at x = −C (its Water Bar ring is part of it); `FT.tip` / `FT.hit` are world coordinates. Feeder group sits at x = +C on the lawn, facing +z, with its own "food bar" ring (white walls, kibble trough with 260 kibble pieces, blue lip). Tapping either still opens its card.
+- Build 1 rewritten: `WB.N = 26` spots per circle (the side facing the other circle is left for Mango). Each cat walks in from the plaza edge along the ring's normal, drinks/eats 14 s, turns, walks out beside its in-path (34 s loop). Fountain and feeder ranks alternate (1, 2, 3 …), so a small city shows both. 10 loungers (sit/loaf) per lawn unlock after the spots. WALK slots: 0 Mango, 30–55 drinkers, 56–81 eaters (WALK has 90). Ripples: drinkers 0–51, Mango 52–53, stream 54–59.
+- Mango sits at the waist (0, 0) facing +z, turns left to drink at the fountain, back, turns right to eat at the feeder, back (36 s loop).
+- Removed the old feeder regulars (2 eaters + starer). Hero circle row moved to angles 3.75–3.99 r 27, hero box to angle 2.0 r 27, bus stop to angle 5.0 r 27 (off the oval lane and off the avenues). Inner garden band follows `SQ.plaza + 2.5`.
+- New cameras: `q_food_stops.json`, `q_food_stops_close.json`; `q_square_top.json` raised to y 118 to fit the whole 8. Older `q_circles`, `q_box`, `q_busstop`, `q_fountain*` cameras still point at the old spots.
+- Checks: stills `q_food_stops`, `q_square_top`, `p_day1`, `p_1000`; viewer at 400x860 (touch): loads, home button, tapping fountain and feeder opens the right cards, no page errors.
+- Uploaded to theme copy 188910403796 (only `assets/pm2-cat-city.js` changed; checksums match).
