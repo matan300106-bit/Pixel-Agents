@@ -80,3 +80,46 @@ The old Mango road patrol is gone (`catMesh` slot 0 = ZERO). The City Hall Mango
 - `q_circles` at t=3 shows the 4th circle empty (that cat is still walking in). This is by design; use t ≥ 4.4 for a full row.
 - In the test harness Google Fonts is blocked, so the postcard footer was checked with a fallback font. On the live page it uses Nunito from Google Fonts. A tight phone row might wrap again if a much wider font is used.
 - `CITY_PLAN.md` still names `town2.html` as the episode engine (noted in the review; not changed here).
+
+## Update 2026-10-06 (evening): real PETME2 fountain + feeder, bigger square, move-around controls
+
+Owner asks: "make a real fountain, like what we actually sell", "make a bigger circle", "fountain & feeder next by", plus web page controls (arrows, zoom, double-tap to fly).
+
+### Engine (`catcity.html`)
+| Item | Where (comment in code) | Notes |
+|---|---|---|
+| Square sizes in one place | `const SQ = {…}` (next to `RING0`) | plaza 16 → **28**, lane 12 → 19, island 8 → 13.6, lawn 7.2 → 12.8, water-bar wall 6.4 → 10 (about 1.7x). Ring roads did not need to move (`RING0` stays 42). |
+| Street plan follows the square | spokes `r0: SQ.lane`; lots `r < SQ.plaza + 4`; always-visible roads `< SQ.plaza + 5`; inner garden band 28 → 34.5; countryside trees inside `SQ.plaza + 4` removed after the `rnd()` calls (other trees keep their places) | No houses, gardens or trees on the square (checked top-down). Lots: 6,502 → 6,464 (enough for 5,000). |
+| PETME2 Stainless Steel Fountain (3.2L) | `FT` block ("Mango's square + the PETME2 Stainless Steel Cat Water Fountain") | Brushed-steel bowl (r 6.1 → 6.6, h 6, canvas map with lighter vertical facets, `#C9CED6`-ish, metalness .3, roughness .35), top plate with 4 ring grooves, pump cap, goose-neck spout (`TubeGeometry` on a CatmullRom curve, rises 7.85 = 1.3x bowl), clear stream with scrolling streaks, splash drops + ripples where it lands, dark oval water-level window with a light-grey "PETME2" above it (canvas on a curved patch). Height about 15.2. The old dome, blue ears and PETME2 billboard are gone. |
+| Water Bar resized | `Build 1` + `updateExtras` | Radii in `WB` (`R_AV` 19.5, `R_FAR` 31, in-lane 17.2, out-lane 15.4, drink spot 10.4, nose 9.35), `Hpath` follows `SQ.island`. Paths are ~1.7x longer, so the drinker loop is 30 s (walk in 9.5, drink 9, turn, walk out 9); Mango keeps his 24 s loop. Mango sits at z 11.2, ripple at 8.6. Droplets/ripples now belong to the spout stream. |
+| PETME2 Dual Bowl Automatic Feeder | `FD` block | White tank + domed lid + blue clip, dark window strip with kibble level, white base with 4 LED dots + round button, 4 angled wooden legs (`#A8784F`), 2 food chutes into 2 shallow steel bowls with kibble. On the plaza at angle .78, r 23.5, facing along the plaza. Visible from Day 1. |
+| Feeder regulars | "feeder regulars" + `updateExtras` ("Feeder:") | 2 eaters (WALK 24/25 + drink pose, 26 s loop, unlock at followers 3 and 6) and a deadpan starer (WALK 26 + sit pose, head tilted up at the tank, 34 s loop, unlock 8). All pure functions of `t`/`anim`. |
+| Plaza heroes moved | `ROW` (r 24, angles 1.71–1.95), `HB` (polar(2.88, 24)), bus stop (polar(6.02, 24), moved out of the feeder's sector) | Cameras `q_fountain`, `q_fountain_day1`, `q_circles`, `q_busstop`, `q_box`, `v_busstop` re-aimed (demo folder + `previews/`). New: `q_fountain_feeder.json`, `q_square_top.json`. |
+| Episode opening | default shot looks at y 5–6 (taller fountain) | |
+
+### Web page (`viewer_loop.js` + shell in `viewer.html`)
+- Tap info: fountain group (bowl, spout and water ring) shows "💧 PETME2 Stainless Steel Fountain"; feeder shows "🍽️ PETME2 Dual Bowl Feeder". No prices. The old radius-based fountain check is removed; the pin height comes from `userData.info.pinY`.
+- Move-around pad (bottom right, above the dock): ▲ ▼ ◀ ▶ pan over the ground (25% of the camera distance, 0.3 s ease; hold = keeps moving), + / − zoom, ◎ flies back to Mango's square. 48 px buttons, pressed state, `navigator.vibrate(8)`, aria-labels, focus ring. Keyboard: arrow keys, + / −. Pan is clamped to 1.3x `__CR`. Any button stops auto-rotate.
+- Double-tap / double-click flies there (ground plane y = 0, 0.8 s, distance x0.6) with a yellow ring marker. A single tap now opens the card after 250 ms, so a double tap cancels it (no card flicker, and the scene raycast no longer blocks the second tap).
+- One-time hint "Double-tap to fly there · drag to look around · tap a house" (4 s, `localStorage` flag in try/catch). Reduced motion: moves are instant.
+- Card titles wrap normally now (`overflow-wrap: anywhere` instead of `word-break: break-all`, which broke "Feeder" into "Feed er").
+- Debug helpers for tests: `window.__cam()`, `window.__screenOf(x, y, z)`, `window.__ffPos()`.
+- LITE settings are unchanged (no shadows/antialias on phones, fewer trees, 30 fps cap, pause off screen).
+
+### Shopify (`build_shopify.py`)
+- **Fixed a break from the LITE change:** the shell now writes `window.CAT_VIEWER…; window.CITY = …` in one script, and the old regex looked for `<script>window.CITY =` only, so the script crashed (and the last port had no LITE/VIEWER flags). It now carries the whole flags + city script over.
+- `[data-nav]` and `.dock` lookups are scoped to the section; `#pad`/`#hint` get the `pcc-` prefix; `.pad`/`.hint` become `position: absolute`; the hint flag key is `pm2CatTownHintSeen`.
+
+### Checks
+- Stills (SwiftShader 1080x1920): `p_day1`, `p_100`, `p_1000`, `p_1000street`, `q_fountain`, `q_fountain_day1`, `q_circles`, `q_busstop`, `q_box`, `v_busstop`, new close-ups. Top view at anim 0/5/10/15/20/25: cats come in on the lane, 4–8 drink at a time, leave on the inner lane; Mango drinks at anim ~20. Feeder: eaters walk in, eat, leave; the starer sits and looks up.
+- `p_1000` full still: **5.5 s** (6.6 s before in the same session), so no slowdown.
+- `vtest` (400x860 phone), 360x740, 1280x800: pad visible, not over the dock, counter or card. `taptest`: house, fountain and feeder cards correct. `navtest.js` (demo folder): home, up, hold right, zoom in/out, arrow key, + key, single tap fountain/feeder, double-tap (fly + card unchanged), dblclick all move the view as expected. No page errors, except 2 `setPointerCapture` errors that OrbitControls throws for the test's synthetic pointer events (test only).
+- Test note: under SwiftShader a frame takes a few hundred ms, so two real Playwright touch taps arrive > 300 ms apart. The double-tap test therefore dispatches both taps in one page tick; mouse `dblclick` works directly.
+
+### Previews
+`final_fountain_feeder.jpg` (camera `q_fountain_feeder.json`, anim 5.6), `final_square_top.jpg` (`q_square_top.json`), `final_city_1000.jpg`, `final_day1.jpg` refreshed.
+
+### Known issues
+- At 360 px the "Play growth" button wraps to a second row of the dock (that row was not changed here); the pad moves up with the dock height (`--dockH`).
+- The feeder hides part of the fountain from some angles of the default `q_fountain` camera; `q_fountain_feeder` frames both.
+- The starer's "look up" is a whole-body tilt (cats have no separate head in the pose kit).

@@ -910,6 +910,8 @@ addEventListener('resize', syncDock); syncDock();
 { const hint = $('hint'); let seen = false; try { seen = localStorage.getItem('pm2CatTownHintSeen') === '1'; } catch (e) {}
   if (hint && !seen) { hint.hidden = false; requestAnimationFrame(() => hint.classList.add('is-on'));
     setTimeout(() => { hint.classList.remove('is-on'); setTimeout(() => { hint.hidden = true; }, 500); }, 4000); try { localStorage.setItem('pm2CatTownHintSeen', '1'); } catch (e) {} } }
+window.__screenOf = (x, y, z) => { const v = new THREE.Vector3(x, y, z).project(camera), r = renderer.domElement.getBoundingClientRect(); return [r.left + (v.x + 1) / 2 * r.width, r.top + (1 - v.y) / 2 * r.height]; };   // test helper
+window.__ffPos = () => [FT.g.position.toArray(), FD.g.position.toArray()];
 window.__cam = () => ({ pos: camera.position.toArray().map(v => +v.toFixed(2)), target: controls.target.toArray().map(v => +v.toFixed(2)) });
 
 // ---------- tap a house or a building: who lives there / what it is ----------
@@ -934,18 +936,23 @@ const showInfo = (html, pos, y) => { infoBody.innerHTML = html; infoBox.hidden =
 const hideInfo = () => { infoBox.hidden = true; PIN.visible = false; };
 $('infoClose').addEventListener('click', hideInfo);
 const ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
-let downX = 0, downY = 0, lastTap = { t: 0, x: 0, y: 0 };
+let downX = 0, downY = 0, lastTap = { t: 0, x: 0, y: 0 }, tapTimer = 0;
 renderer.domElement.addEventListener('pointerdown', e => { downX = e.clientX; downY = e.clientY; });
 renderer.domElement.addEventListener('pointerup', e => {
   if (Math.hypot(e.clientX - downX, e.clientY - downY) > 6) return;          // a drag, not a tap
-  const r = renderer.domElement.getBoundingClientRect(); ndc.set((e.clientX - r.left) / r.width * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
-  ray.setFromCamera(ndc, camera);
-  const now = performance.now(), dbl = now - lastTap.t < 300 && Math.hypot(e.clientX - lastTap.x, e.clientY - lastTap.y) < 25;
+  const r = renderer.domElement.getBoundingClientRect(), nx = (e.clientX - r.left) / r.width * 2 - 1, ny = -((e.clientY - r.top) / r.height) * 2 + 1;
+  const now = e.timeStamp, dbl = now - lastTap.t < 320 && Math.hypot(e.clientX - lastTap.x, e.clientY - lastTap.y) < 25;
   lastTap = dbl ? { t: 0, x: 0, y: 0 } : { t: now, x: e.clientX, y: e.clientY };
-  if (dbl) {   // double-tap / double-click: fly there (ground plane y = 0, not the scene); the first tap's card stays as it is
+  clearTimeout(tapTimer);
+  if (dbl) {   // double-tap / double-click: fly there (ground plane y = 0, not the heavy scene); the pending single tap is cancelled, so the card does not change
+    ndc.set(nx, ny); ray.setFromCamera(ndc, camera);
     const gp = ray.ray.intersectPlane(GROUND, new THREE.Vector3()); if (!gp) return; stopSpin(); tick(); clampT(gp);
     flyTo(gp.clone(), gp.clone().add(camera.position.clone().sub(controls.target).multiplyScalar(.6)), .8);
-    MARK.position.set(gp.x, .3, gp.z); MARK.visible = true; markT = now; return; }
+    MARK.position.set(gp.x, .3, gp.z); MARK.visible = true; markT = performance.now(); return; }
+  tapTimer = setTimeout(() => tapAt(nx, ny), 250);   // single tap: wait a moment so a double tap can cancel it (and the scene raycast doesn't block the 2nd tap)
+});
+function tapAt(nx, ny) {
+  ndc.set(nx, ny); ray.setFromCamera(ndc, camera);
   const tNow = tOf(Math.round(cur));
   for (const h of ray.intersectObjects(scene.children.filter(o => !o.isInstancedMesh || PICK.has(o)), true)) {
     const map = PICK.get(h.object);
@@ -963,7 +970,7 @@ renderer.domElement.addEventListener('pointerup', e => {
     if (h.object.isInstancedMesh || h.object.isMesh) break;
   }
   hideInfo();
-});
+}
 const _render = window.renderFrame;
 window.renderFrame = (t, a) => { if (PIN.visible) { PIN.position.y = pinY + Math.abs(Math.sin(a * 3)) * .8; PIN.rotation.y = a * 2; } _render(t, a); };
 requestAnimationFrame(loop);

@@ -38,18 +38,18 @@
   .pm2-city .info[hidden] { display: none; }
   .pm2-city #pcc-infoBody { display: flex; gap: 12px; align-items: flex-start; }
   .pm2-city .info__icon { font-size: 30px; line-height: 1; }
-  .pm2-city .info__title { display: block; font: 900 19px var(--display); color: var(--ink); word-break: break-all; }
+  .pm2-city .info__title { display: block; font: 900 19px var(--display); color: var(--ink); overflow-wrap: anywhere; }
   .pm2-city .info__line { display: block; font-size: 14px; color: var(--muted); margin-top: 2px; }
   .pm2-city .info__note { display: block; font-size: 12px; color: var(--brand); margin-top: 6px; font-weight: 700; }
   .pm2-city #pcc-infoClose { position: absolute; top: 8px; right: 8px; width: 32px; height: 32px; padding: 0; border-radius: 50%; font-size: 14px; }
   /* move-around pad (bottom right, above the dock) + first-visit hint */
-  .pm2-city .pad { position: absolute; right: 16px; bottom: calc(env(safe-area-inset-bottom, 0px) + var(--dockH, 210px) + 28px); z-index: 4; display: grid; grid-template-columns: repeat(3, 48px); grid-template-rows: repeat(3, 48px); gap: 4px; padding: 6px; border-radius: 26px; background: var(--panel); box-shadow: 0 10px 28px rgba(10,20,40,.22); backdrop-filter: blur(6px); }
+  .pm2-city .pad { position: absolute; right: 16px; bottom: calc(env(safe-area-inset-bottom, 0px) + var(--dockH, 210px) + 28px); z-index: 4; display: grid; grid-template-columns: repeat(3, 48px); grid-template-rows: repeat(3, 48px); gap: 4px; padding: 6px; border-radius: 26px; background: var(--panel); background: color-mix(in srgb, var(--panel) 72%, transparent); box-shadow: 0 10px 28px rgba(10,20,40,.18); backdrop-filter: blur(6px); }
   .pm2-city .pad button { width: 48px; height: 48px; padding: 0; border-radius: 50%; border: 1.5px solid var(--line); background: transparent; color: var(--ink); font: 900 20px/1 var(--display); display: grid; place-items: center; touch-action: manipulation; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; transition: transform .08s, background .08s; }
   .pm2-city .pad button:hover { border-color: var(--brand); color: var(--brand); }
   .pm2-city .pad button.is-down, .pm2-city .pad button:active { transform: scale(.9); background: var(--brand); border-color: var(--brand); color: #fff; }
   .pm2-city .pad .pad__home { background: var(--brand); border-color: var(--brand); color: #fff; font-size: 18px; }
   .pm2-city .pad .pad__zoom { font-size: 24px; }
-  .pm2-city .hint { position: absolute; left: 16px; right: 16px; top: calc(env(safe-area-inset-top, 0px) + 150px); margin: 0 auto; max-width: 360px; text-align: center; background: #1B2333; color: #fff; font: 800 14px/1.35 var(--display); padding: 10px 14px; border-radius: 14px; box-shadow: 0 10px 28px rgba(10,20,40,.3); z-index: 4; pointer-events: none; opacity: 0; transition: opacity .45s; }
+  .pm2-city .hint { position: absolute; left: 16px; right: 16px; top: calc(env(safe-area-inset-top, 0px) + clamp(150px, 11vw + 100px, 190px)); margin: 0 auto; max-width: 360px; text-align: center; background: #1B2333; color: #fff; font: 800 14px/1.35 var(--display); padding: 10px 14px; border-radius: 14px; box-shadow: 0 10px 28px rgba(10,20,40,.3); z-index: 4; pointer-events: none; opacity: 0; transition: opacity .45s; }
   .pm2-city .hint.is-on { opacity: 1; }
   .pm2-city .hint[hidden] { display: none; }
   .pm2-city #pcc-stage { user-select: none; -webkit-user-select: none; }
@@ -65,7 +65,7 @@
   <div class="row"><label for="pcc-grow">Followers <small>drag to grow the city</small></label><button id="pcc-postcard" type="button">Save postcard</button><button id="pcc-play" type="button">Play growth</button></div>
   <input id="pcc-grow" type="range" min="0" max="1000" step="1" value="1000" aria-label="Followers">
   <div class="chips"><button type="button" data-f="0">Day 1</button><button type="button" data-f="100">100</button><button type="button" data-f="250">250</button><button type="button" data-f="500">500</button><button type="button" data-f="1000">1,000</button></div>
-  <p class="rules"><b>New follower</b> = a new cat + their own little house. <b>Most-liked comment</b> builds anything. Cats walk the streets; humans run the cat taxis. Tap a house to see who lives there. Double-tap to fly there. Drag to look around.</p>
+  <p class="rules"><b>New follower</b> = a new cat + their own little house. <b>Most-liked comment</b> builds anything. Cats walk the streets; humans run the cat taxis. Tap a house to see who lives there; double-tap to fly there.</p>
 </div>
 <div class="pad" id="pcc-pad" role="group" aria-label="Move around the city">
   <span></span><button type="button" data-nav="up" aria-label="Move up">▲</button><button type="button" class="pad__zoom" data-nav="in" aria-label="Zoom in">+</button>
