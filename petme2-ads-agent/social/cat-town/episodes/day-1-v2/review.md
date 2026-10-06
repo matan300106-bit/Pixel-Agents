@@ -64,3 +64,32 @@ Score: 10 PASS / 5 FAIL.
 - **Pinned comment:** the plan's "I'll build its house on Day 2" promises a house per commenter, which does not scale. Final version: "Mango needs a neighbor. Follow + drop your cat's name, the first followers move in on Day 2. Most-liked reply = what we build next. Cat airport? Sushi bar?"
 - **Cover:** missing; make it. The plan's aerial frame (about 2.0 s) leaves Mango as a dot in a 3:4 grid thumbnail. Use about 0.5 s (f0015): big Mango, "POPULATION: 1 CAT" and the pill, all within y 240-1680 so it survives the 3:4 crop. Once fix 1 is in, use the version with a face.
 - **Posting:** Trial Reel first, as the plan says. Reply to every comment within 60 min.
+
+## Re-check (render of 22:27): 15/15 pass. READY. Virality 7/10
+- **Tech:** H.264, 1080x1920, 30 fps, 18.4 s.
+  - AAC is now **stereo**. -16.1 LUFS, true peak -4.5 dBTP.
+  - No black frames and no silence gaps.
+  - The cuts are unchanged (2.8 to 14.27 s), so nothing broke.
+
+| # | Result | Evidence |
+|---|---|---|
+| 1 | PASS | Mango fills frame 0. Voice starts at 0.15 s. |
+| 2 | PASS | "POPULATION: 1 CAT" by about 0.17 s. |
+| 3 | PASS | 18.4 s. Lines are 7 words or fewer. |
+| 4 | PASS | Spoken at 8.4-10.1 s and on screen at 7.4-10.3 s. |
+| 5 | PASS | Same cut map as before. No stretch over 3 s without a change. |
+| 6 | PASS | Goal flash at 12.8-14.27 s is unchanged. |
+| 7 | PASS | Tags read "@you / moved in (example)". The counter stays at 1 cat. |
+| 8 | PASS | The sign now says "PET SHOP" (f0400). No brand text found. |
+| 9 | PASS | @you tag at 12.0 s spans x about 525-915. The end card is the headline plus "Follow 👇", about 6 words. |
+| 10 | PASS | Subtitles are hidden at 7.4-10.3 s and 15.9-18.4 s. No double text. |
+| 11 | PASS | f0551 vs f0000 mean pixel diff is 0.31, near identical. The text fades out over f0540-551. |
+| 12 | PASS | One spoken CTA. The comment CTA is now only in the caption and pinned comment, which is OK. |
+| 13 | PASS | Pops are +5 to +8 dB over the bed (9.75 / 10.65 / 11.55 s). Music is lower, with gaps at about -21 to -23 dB. No clipping. |
+| 14 | PASS | Spec OK. Stereo. |
+| 15 | PASS | cover.jpg exists: Mango, the pill and "POPULATION: 1 CAT", all inside the 3:4 crop. Caption and hashtags are OK. |
+
+- **Still open (not blocking):**
+  - Mango has no face and is seen from behind in the hook. This is the main thing between 7 and 8+ for the next episode.
+  - The goal shot is still only 1.45 s.
+  - Optional: drop the "This is Mango." subtitle from cover.jpg for a cleaner grid tile.
