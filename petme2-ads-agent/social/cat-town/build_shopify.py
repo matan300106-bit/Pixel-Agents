@@ -6,9 +6,9 @@ v = open('viewer.html').read()
 shell, mod = v.split('<script type="module">', 1)
 js = mod.rsplit('</script>', 1)[0]
 css = re.search(r'<style>(.*?)</style>', shell, re.S).group(1)
-city = re.search(r'<script>window.CITY = (.*?);</script>', shell, re.S).group(1)
+city = re.search(r'<script>(window\.CAT_VIEWER.*?window\.CITY = .*?;)</script>', shell, re.S).group(1)   # viewer + LITE flags and the city data
 body = shell.split('</style>', 1)[1]
-body = re.sub(r'<script>window.CITY = .*?</script>', '', body, flags=re.S)
+body = re.sub(r'<script>window\.CAT_VIEWER.*?</script>', '', body, flags=re.S)
 body = re.sub(r'<script type="importmap">.*?</script>', '', body, flags=re.S)
 E = 'https://cdn.jsdelivr.net/npm/three@0.170.0/'
 js = js.replace("import * as THREE from 'three';", f"import * as THREE from '{E}+esm';")
@@ -17,7 +17,10 @@ js = js.replace("import { OrbitControls } from 'three/addons/controls/OrbitContr
 assert "const $ = id => document.getElementById(id);" in js
 js = js.replace("const $ = id => document.getElementById(id);", "const ROOT = document.querySelector('[data-cat-city]'); const $ = id => document.getElementById('pcc-' + id);")
 js = js.replace("document.getElementById('stage')", "$('stage')").replace("document.querySelectorAll('[data-f]')", "ROOT.querySelectorAll('[data-f]')")
+js = js.replace("document.querySelectorAll('[data-nav]')", "ROOT.querySelectorAll('[data-nav]')").replace("document.querySelector('.dock')", "ROOT.querySelector('.dock')")
+js = js.replace("localStorage.getItem('catTownHintSeen')", "localStorage.getItem('pm2CatTownHintSeen')").replace("localStorage.setItem('catTownHintSeen'", "localStorage.setItem('pm2CatTownHintSeen'")
 js = js.replace("document.body.classList.add('ready');", "ROOT.classList.add('ready');").replace("document.querySelector('.ui')", "ROOT")
+assert 'document.querySelector' not in js.replace("document.querySelector('[data-cat-city]')", ''), 'unscoped querySelector left'
 left = re.findall(r"document\.getElementById\((?!'pcc-' \+ id)[^)]*\)", js); assert not left, left
 body = re.sub(r'\bid="([\w-]+)"', r'id="pcc-\1"', body)
 body = re.sub(r'\bfor="([\w-]+)"', r'for="pcc-\1"', body)
@@ -29,7 +32,7 @@ css = re.sub(r'\n  :root\[data-theme="dark"\].*?\n', '\n', css)
 css = css.replace('  html, body { height: 100%; }\n', '')
 css = css.replace('  body { background: var(--sky); color: var(--ink); font-family: var(--body); overflow: hidden; }',
   '  .pm2-city { position: relative; height: calc(100svh - var(--header-height, 64px)); min-height: 600px; overflow: hidden; background: var(--sky); color: var(--ink); font-family: var(--body); }')
-css = re.sub(r'#(stage|countN|countL|play|postcard|infoBody|infoClose|info)\b', r'#pcc-\1', css)
+css = re.sub(r'#(stage|countN|countL|play|postcard|infoBody|infoClose|info|pad|hint)\b', r'#pcc-\1', css)
 out = []
 for ln in css.split('\n'):
     s = ln.strip()
@@ -41,7 +44,7 @@ def scope_media(mt):
     inner = re.sub(r'(^|\}\s*)([^{}]+)\{', lambda m: m.group(1) + ', '.join('.pm2-city ' + x.strip() for x in m.group(2).split(',')) + ' {', mt.group(2))
     return mt.group(1) + inner + '}'
 css = re.sub(r'(@media \(max-width: 520px\) \{)(.*)\}', scope_media, css)
-for c in ['top', 'dock', 'loading', 'info']:
+for c in ['top', 'dock', 'loading', 'info', 'pad', 'hint']:
     css = css.replace(f'.pm2-city .{c} {{ position: fixed;', f'.pm2-city .{c} {{ position: absolute;')
 css = css.replace('.pm2-city body.ready .loading', '.pm2-city.ready .loading').replace('#pcc-stage { position: fixed; inset: 0; }', '#pcc-stage { position: absolute; inset: 0; }')
 liquid = """{%- comment -%}
@@ -54,7 +57,7 @@ liquid = """{%- comment -%}
 <section class="pm2-city" data-cat-city>
 """ + body.strip() + """
 </section>
-<script>window.CITY = """ + city + """;</script>
+<script>""" + city + """</script>
 <script type="module" src="{{ 'pm2-cat-city.js' | asset_url }}"></script>
 
 {% schema %}

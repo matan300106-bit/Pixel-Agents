@@ -43,6 +43,17 @@
   .info__line { display: block; font-size: 14px; color: var(--muted); margin-top: 2px; }
   .info__note { display: block; font-size: 12px; color: var(--brand); margin-top: 6px; font-weight: 700; }
   #infoClose { position: absolute; top: 8px; right: 8px; width: 32px; height: 32px; padding: 0; border-radius: 50%; font-size: 14px; }
+  /* move-around pad (bottom right, above the dock) + first-visit hint */
+  .pad { position: fixed; right: 16px; bottom: calc(env(safe-area-inset-bottom, 0px) + var(--dockH, 210px) + 28px); z-index: 4; display: grid; grid-template-columns: repeat(3, 48px); grid-template-rows: repeat(3, 48px); gap: 4px; padding: 6px; border-radius: 26px; background: var(--panel); background: color-mix(in srgb, var(--panel) 72%, transparent); box-shadow: 0 10px 28px rgba(10,20,40,.18); backdrop-filter: blur(6px); }
+  .pad button { width: 48px; height: 48px; padding: 0; border-radius: 50%; border: 1.5px solid var(--line); background: transparent; color: var(--ink); font: 900 20px/1 var(--display); display: grid; place-items: center; touch-action: manipulation; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; transition: transform .08s, background .08s; }
+  .pad button:hover { border-color: var(--brand); color: var(--brand); }
+  .pad button.is-down, .pad button:active { transform: scale(.9); background: var(--brand); border-color: var(--brand); color: #fff; }
+  .pad .pad__home { background: var(--brand); border-color: var(--brand); color: #fff; font-size: 18px; }
+  .pad .pad__zoom { font-size: 24px; }
+  .hint { position: fixed; left: 16px; right: 16px; top: calc(env(safe-area-inset-top, 0px) + 150px); margin: 0 auto; max-width: 360px; text-align: center; background: #1B2333; color: #fff; font: 800 14px/1.35 var(--display); padding: 10px 14px; border-radius: 14px; box-shadow: 0 10px 28px rgba(10,20,40,.3); z-index: 4; pointer-events: none; opacity: 0; transition: opacity .45s; }
+  .hint.is-on { opacity: 1; }
+  .hint[hidden] { display: none; }
+  #stage { user-select: none; -webkit-user-select: none; }
   .loading { position: fixed; inset: 0; display: grid; place-items: center; font: 900 18px var(--display); color: var(--ink); pointer-events: none; }
   body.ready .loading { display: none; }
 </style>
@@ -53,8 +64,14 @@
   <div class="row"><label for="grow">Followers <small>drag to grow the city</small></label><button id="postcard" type="button">Save postcard</button><button id="play" type="button">Play growth</button></div>
   <input id="grow" type="range" min="0" max="1000" step="1" value="1000" aria-label="Followers">
   <div class="chips"><button type="button" data-f="0">Day 1</button><button type="button" data-f="100">100</button><button type="button" data-f="250">250</button><button type="button" data-f="500">500</button><button type="button" data-f="1000">1,000</button></div>
-  <p class="rules"><b>New follower</b> = a new cat + their own little house. <b>Most-liked comment</b> builds anything. Cats walk the streets; humans run the cat taxis. Tap a house to see who lives there. Drag to look around.</p>
+  <p class="rules"><b>New follower</b> = a new cat + their own little house. <b>Most-liked comment</b> builds anything. Cats walk the streets; humans run the cat taxis. Tap a house to see who lives there; double-tap to fly there.</p>
 </div>
+<div class="pad" id="pad" role="group" aria-label="Move around the city">
+  <span></span><button type="button" data-nav="up" aria-label="Move up">▲</button><button type="button" class="pad__zoom" data-nav="in" aria-label="Zoom in">+</button>
+  <button type="button" data-nav="left" aria-label="Move left">◀</button><button type="button" class="pad__home" data-nav="home" aria-label="Back to the center">◎</button><button type="button" data-nav="right" aria-label="Move right">▶</button>
+  <span></span><button type="button" data-nav="down" aria-label="Move down">▼</button><button type="button" class="pad__zoom" data-nav="out" aria-label="Zoom out">−</button>
+</div>
+<div class="hint" id="hint" hidden aria-live="polite">Double-tap to fly there · drag to look around · tap a house</div>
 <div class="info" id="info" hidden role="status"><div id="infoBody"></div><button id="infoClose" type="button" aria-label="Close">✕</button></div>
 <div class="pc" id="pcBox" hidden role="dialog" aria-modal="true" aria-labelledby="pcHint"><div class="pc__card"><img id="pcImg" alt="Your Cat Town postcard"><p id="pcHint">Your Cat Town postcard. Long-press it (phone) or right-click it (computer) to save.</p><div class="pc__row"><button id="pcClose" type="button">Close</button></div></div></div>
 <div hidden><div id="title"></div><div id="cmList"></div><div id="crown"></div><div id="tags"></div><div id="sub"></div><div id="end"></div><div id="cm"></div><div id="brand"></div><div id="count"></div></div>
@@ -113,9 +130,11 @@ const NEWB = EP.newBuild || null;
 const COAST_X = 200;
 const coastAt = z => COAST_X + Math.sin(z * .012) * 14;
 const RING0 = 42, RGAP = 30, NR = 15;
+// Mango's square (1.7x bigger since 2026-10-06): plaza disc, roundabout lane, island, lawn, water-bar wall
+const SQ = { plaza: 28, lane: 19, island: 13.6, lawn: 12.8, wall: 10 };
 const ringR = (k, a) => (RING0 + RGAP * k) * (1 + .045 * Math.sin(3 * a + k * 1.7) + .02 * Math.sin(7 * a + k * .9));
 const spokes = [];
-for (let i = 0; i < 6; i++) spokes.push({ a0: i * Math.PI / 3 + .26, r0: 12, s: i * 1.3 });
+for (let i = 0; i < 6; i++) spokes.push({ a0: i * Math.PI / 3 + .26, r0: SQ.lane, s: i * 1.3 });
 for (let i = 0; i < 6; i++) spokes.push({ a0: i * Math.PI / 3 + .26 + Math.PI / 6, r0: RING0 + RGAP, s: 7 + i });
 for (let i = 0; i < 12; i++) spokes.push({ a0: i * Math.PI / 6 + .26 + Math.PI / 12, r0: RING0 + RGAP * 4, s: 20 + i });
 for (let i = 0; i < 24; i++) spokes.push({ a0: i * Math.PI / 12 + .26 + Math.PI / 24, r0: RING0 + RGAP * 9, s: 40 + i });
@@ -159,7 +178,7 @@ const cand = [], lotHash = new Map();
 ROADS.forEach((rd, ri) => { const total = rd.cum[rd.cum.length - 1];
   for (let s = 2.8; s < total - 2.8; s += 5.3) { const [x, z, dx, dz, idx] = sampleRoad(rd, s), nx = -dz, nz = dx;
     for (const side of [1, -1]) { const lx = x + nx * 5.1 * side, lz = z + nz * 5.1 * side, r = Math.hypot(lx, lz);
-      if (r < 18 || lx > coastAt(lz) - 18) continue;
+      if (r < SQ.plaza + 4 || lx > coastAt(lz) - 18) continue;   // houses stay off Mango's square
       if (near(roadHash, lx, lz, 4.5, o => (o.ri === ri && Math.abs(o.i - 1 - idx) < 3) ? undefined : false)) continue;
       if (any(lotHash, lx, lz, 4.4)) continue;
       if (near(spotHash, lx, lz, 10.5, () => false)) continue;
@@ -185,7 +204,7 @@ else if (FN > 0) {
 }
 const timeNear = (x, z, r) => { let t = Infinity; near(houseHash, x, z, r, h => { t = Math.min(t, APPEAR[h.n]); }); return t; };
 const lmAt = k => (landmarks[k] && landmarks[k].at != null) ? landmarks[k].at : -1;
-PIECES.forEach(p => { p.t = Math.hypot(p.x, p.z) < 22 ? -1 : timeNear(p.x, p.z, 12); });
+PIECES.forEach(p => { p.t = Math.hypot(p.x, p.z) < SQ.plaza + 5 ? -1 : timeNear(p.x, p.z, 12); });
 SPOTS.forEach((s, k) => { s.t = k < landmarks.length ? Math.min(timeNear(s.x, s.z, 22), lmAt(k) < 0 ? Infinity : lmAt(k)) : timeNear(s.x, s.z, 22);
   if (k < landmarks.length && lmAt(k) < 0 && s.t === Infinity) s.t = -1; });
 SPOTS.forEach((s, k) => { if (k < landmarks.length) PIECES.forEach(p => { if (Math.hypot(p.x - s.x, p.z - s.z) < 18) p.t = Math.min(p.t, s.t); }); });
@@ -314,15 +333,90 @@ function landmark(kind, sign) {
 }
 
 let FWATER = null;
-{ const plaza = mesh(Cyl(16, 16, .14, 40), '#E9E3D3', false); plaza.position.y = .05; scene.add(plaza);   // top .12: below the avenue road (.14), no z-fighting
-  const ring = mesh(Cyl(12, 12, .16, 40), '#4A4F5C', false); ring.position.y = .09; scene.add(ring);
-  const island = mesh(Cyl(8, 8, .5, 10), '#F1E6CF'); island.position.y = .25; scene.add(island);
-  const lawn = mesh(Cyl(7.2, 7.2, .54, 10), '#9FD47F', false); lawn.position.y = .27; scene.add(lawn);
-  const base = mesh(Cyl(4.4, 4.8, 1.2, 16), '#FFFFFF'); base.position.y = 1.1; scene.add(base);
-  const bowl = mesh(Cyl(4.0, 3.6, 1.6, 16), '#2F5FE0'); bowl.position.y = 2.5; scene.add(bowl);
-  const water = new THREE.Mesh(new THREE.SphereGeometry(3.2, 16, 8, 0, Math.PI * 2, 0, Math.PI / 2), new THREE.MeshStandardMaterial({ color: '#7FD0FF', roughness: .2, transparent: true, opacity: .85 })); water.position.y = 3.3; scene.add(water); FWATER = water;
-  [-1.8, 1.8].forEach(x => { const e = mesh(new THREE.ConeGeometry(.9, 1.8, 3), '#2F5FE0'); e.position.set(x, 3.9, -2.2); scene.add(e); });
-  const sign = textSign('PETME2', 7, '#2F5FE0'); sign.position.set(0, 7.4, 0); scene.add(sign); signs.push(sign);
+// ---------- Mango's square + the PETME2 Stainless Steel Cat Water Fountain (3.2L), giant, low-poly ----------
+// bowl: brushed steel, slightly wider at the top; flat top plate with ring grooves; pump cap; goose-neck spout; clear stream onto the plate;
+// front: dark oval water-level window with "PETME2" above it. The water-bar ring (wall/water/lip) is part of the same tap group.
+const FT = { g: new THREE.Group(), R0: 6.1, R1: 6.6, y0: .7, H: 6 }; FT.top = FT.y0 + FT.H;
+{ const plaza = mesh(Cyl(SQ.plaza, SQ.plaza, .14, 72), '#E9E3D3', false); plaza.position.y = .05; scene.add(plaza);   // top .12: below the avenue road (.14), no z-fighting
+  const ring = mesh(Cyl(SQ.lane, SQ.lane, .16, 72), '#4A4F5C', false); ring.position.y = .09; scene.add(ring);
+  const island = mesh(Cyl(SQ.island, SQ.island, .5, 16), '#F1E6CF'); island.position.y = .25; scene.add(island);
+  const lawn = mesh(Cyl(SQ.lawn, SQ.lawn, .54, 16), '#9FD47F', false); lawn.position.y = .27; scene.add(lawn);
+  const g = FT.g; scene.add(g);
+  const add = (geo, m, x, y, z, cast = true) => { const o = new THREE.Mesh(geo, m); o.position.set(x, y, z); o.castShadow = cast; o.receiveShadow = true; g.add(o); return o; };
+  // brushed steel: light grey, modest metalness (no env map, so it must not go dark), lighter vertical facets painted into the map
+  const sc = document.createElement('canvas'); sc.width = 512; sc.height = 4; const sg = sc.getContext('2d');
+  sg.fillStyle = '#C9CED6'; sg.fillRect(0, 0, 512, 4);
+  for (let i = 0; i < 512; i++) { const v = 200 + Math.round(22 * hash01(i * 7 + 1)) - 11; sg.fillStyle = `rgba(${v},${v + 4},${v + 10},.35)`; sg.fillRect(i, 0, 1, 4); }
+  for (let k = 0; k < 8; k++) { const x = k * 64 + 18, gr = sg.createLinearGradient(x, 0, x + 22, 0);
+    gr.addColorStop(0, 'rgba(244,247,250,0)'); gr.addColorStop(.5, 'rgba(244,247,250,.8)'); gr.addColorStop(1, 'rgba(244,247,250,0)'); sg.fillStyle = gr; sg.fillRect(x, 0, 22, 4); }
+  const stTex = new THREE.CanvasTexture(sc); stTex.colorSpace = THREE.SRGBColorSpace; stTex.wrapS = THREE.RepeatWrapping;
+  const STEEL = new THREE.MeshStandardMaterial({ color: '#FFFFFF', map: stTex, metalness: .3, roughness: .35 });
+  const STEEL2 = new THREE.MeshStandardMaterial({ color: '#C9CED6', metalness: .3, roughness: .35 });
+  FT.steel = STEEL; FT.steel2 = STEEL2;
+  add(new THREE.CylinderGeometry(FT.R1, FT.R0, FT.H, 64, 1, true), STEEL, 0, FT.y0 + FT.H / 2, 0);
+  add(new THREE.TorusGeometry(FT.R1 - .06, .16, 8, 64).rotateX(Math.PI / 2), STEEL2, 0, FT.top, 0);
+  // top plate with concentric ring grooves
+  const pc = document.createElement('canvas'); pc.width = pc.height = 512; const pg = pc.getContext('2d');
+  const rg = pg.createRadialGradient(256, 256, 20, 256, 256, 256); rg.addColorStop(0, '#E2E6EB'); rg.addColorStop(1, '#C3C9D1'); pg.fillStyle = rg; pg.fillRect(0, 0, 512, 512);
+  [.36, .52, .68, .84].forEach(f => { pg.lineWidth = 7; pg.strokeStyle = '#8E96A1'; pg.beginPath(); pg.arc(256, 256, f * 256, 0, TAU); pg.stroke();
+    pg.lineWidth = 3; pg.strokeStyle = '#F1F3F6'; pg.beginPath(); pg.arc(256, 256, f * 256 + 6, 0, TAU); pg.stroke(); });
+  const pTex = new THREE.CanvasTexture(pc); pTex.colorSpace = THREE.SRGBColorSpace;
+  add(new THREE.CircleGeometry(FT.R1 - .1, 64).rotateX(-Math.PI / 2), new THREE.MeshStandardMaterial({ map: pTex, metalness: .3, roughness: .35 }), 0, FT.top - .04, 0, false);
+  // pump cap + goose-neck spout
+  add(Cyl(1.5, 1.65, .7, 40), STEEL2, 0, FT.top + .3, 0); add(Cyl(1.1, 1.1, .1, 40), mat('#A9B0BA'), 0, FT.top + .68, 0, false);
+  const capT = FT.top + .7, SP = [[0, 0], [0, 3.2], [.15, 6.2], [1.0, 7.7], [2.3, 7.85], [3.15, 7.0], [3.3, 6.1]];
+  const curve = new THREE.CatmullRomCurve3(SP.map(([x, y]) => V(x, capT + y, 0)));
+  add(new THREE.TubeGeometry(curve, 56, .3, 12, false), STEEL2, 0, 0, 0);
+  add(Cyl(.4, .36, .45, 16), STEEL2, 3.3, capT + 6.15, 0);
+  FT.tip = V(3.3, capT + 5.92, 0); FT.hit = V(3.3, FT.top - .02, 0);
+  // clear water stream (scrolling streaks) from the spout tip onto the top plate
+  const wc = document.createElement('canvas'); wc.width = 64; wc.height = 256; const wg = wc.getContext('2d');
+  wg.fillStyle = '#A8DCFF'; wg.fillRect(0, 0, 64, 256);
+  for (let i = 0; i < 26; i++) { wg.fillStyle = `rgba(255,255,255,${.35 + .5 * hash01(i * 13 + 3)})`; wg.fillRect(Math.floor(hash01(i * 5 + 1) * 60), Math.floor(hash01(i * 9 + 2) * 256), 3, 18 + 40 * hash01(i * 3 + 7)); }
+  const wTex = new THREE.CanvasTexture(wc); wTex.colorSpace = THREE.SRGBColorSpace; wTex.wrapS = wTex.wrapT = THREE.RepeatWrapping; wTex.repeat.set(2, 1.5);
+  const sL = FT.tip.y - FT.hit.y;
+  FT.stream = add(new THREE.CylinderGeometry(.2, .27, sL, 14, 1, true), new THREE.MeshStandardMaterial({ map: wTex, color: '#FFFFFF', transparent: true, opacity: .78, roughness: .1, depthWrite: false }), 3.3, FT.hit.y + sL / 2, 0, false);
+  FT.wTex = wTex; FWATER = FT.stream;
+  // front: dark vertical oval water-level window + "PETME2" in light grey small text above it (canvas on a patch hugging the bowl)
+  const lc = document.createElement('canvas'); lc.width = 320; lc.height = 512; const lg = lc.getContext('2d');
+  lg.font = '900 50px Nunito, sans-serif'; lg.textAlign = 'center'; lg.textBaseline = 'middle';
+  lg.fillStyle = 'rgba(110,118,130,.55)'; lg.fillText('PETME2', 161, 104); lg.fillStyle = '#EEF1F5'; lg.fillText('PETME2', 160, 102);
+  lg.save(); lg.beginPath(); lg.ellipse(160, 318, 50, 140, 0, 0, TAU); lg.fillStyle = '#1D232D'; lg.fill(); lg.clip();
+  lg.fillStyle = '#2E4A66'; lg.fillRect(0, 360, 320, 160);                      // water level
+  lg.fillStyle = 'rgba(255,255,255,.22)'; lg.fillRect(126, 190, 12, 250); lg.restore();
+  lg.lineWidth = 6; lg.strokeStyle = '#9AA2AD'; lg.beginPath(); lg.ellipse(160, 318, 50, 140, 0, 0, TAU); lg.stroke();
+  const lTex = new THREE.CanvasTexture(lc); lTex.colorSpace = THREE.SRGBColorSpace; lTex.anisotropy = 8;
+  const th = .62; add(new THREE.CylinderGeometry(FT.R1 + .03, FT.R0 + .03, FT.H, 10, 1, true, -th / 2, th), new THREE.MeshStandardMaterial({ map: lTex, transparent: true, metalness: .2, roughness: .4, depthWrite: false }), 0, FT.y0 + FT.H / 2, 0, false);
+  // Mango's Water Bar ring around the base: white wall, water, blue lip
+  add(Cyl(SQ.wall, SQ.wall, .26, 72), mat('#FFFFFF'), 0, .67, 0);
+  const ws = add(Cyl(SQ.wall - .18, SQ.wall - .18, .04, 72), new THREE.MeshStandardMaterial({ color: '#7FD0FF', roughness: .2 }), 0, .82, 0, false);
+  add(new THREE.TorusGeometry(SQ.wall - .08, .1, 6, 72).rotateX(Math.PI / 2), mat('#2F5FE0'), 0, .84, 0, false);
+}
+
+// ---------- the PETME2 Dual Bowl Automatic Cat Feeder, giant, on the square next to the fountain ----------
+// white food tank (domed lid, accent clip, dark window strip), white base unit (LED dots + round button), 4 angled wooden legs, 2 steel bowls in front
+const FD = { g: new THREE.Group(), a: .78, r: 23.5 };
+{ const g = FD.g, [x, z] = polar(FD.a, FD.r); FD.yaw = yawTo(-Math.sin(FD.a), Math.cos(FD.a)); g.position.set(x, .12, z); g.rotation.y = FD.yaw; scene.add(g);
+  const WHITE = new THREE.MeshStandardMaterial({ color: '#F6F7F9', roughness: .45 }), WOOD = mat('#A8784F');
+  const add = (geo, m, x, y, z, rx = 0, rz = 0, cast = true) => { const o = new THREE.Mesh(geo, m); o.position.set(x, y, z); o.rotation.set(rx, 0, rz); o.castShadow = cast; o.receiveShadow = true; g.add(o); return o; };
+  [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(([sx, sz]) => add(Cyl(.34, .26, 2.7, 8), WOOD, sx * 2.25, 1.2, sz * 1.7, -sz * .22, sx * .22));
+  add(new THREE.CylinderGeometry(3.3, 3.1, 3, 48).scale(1, 1, .8), WHITE, 0, 3.8, 0);                         // base unit
+  add(new THREE.TorusGeometry(2.95, .07, 6, 48).rotateX(Math.PI / 2), mat('#D5DAE1'), 0, 5.32, 0, 0, 0, false);  // seam
+  add(new THREE.CylinderGeometry(2.9, 2.9, 6.6, 48), WHITE, 0, 8.6, 0);                                         // food tank
+  add(Cyl(3.02, 3.02, .28, 48), WHITE, 0, 11.95, 0);
+  add(new THREE.SphereGeometry(3.0, 40, 10, 0, TAU, 0, Math.PI / 2).scale(1, .3, 1), WHITE, 0, 12.08, 0);        // slightly domed lid
+  add(B(.9, 1.1, .4), mat('#2F5FE0'), 0, 11.8, 2.98);                                                           // accent clip
+  add(B(.6, 4.6, .14), new THREE.MeshStandardMaterial({ color: '#232A33', roughness: .3 }), 0, 8.6, 2.88, 0, 0, false);   // window strip
+  add(B(.44, 1.9, .16), mat('#8A5A34'), 0, 7.25, 2.9, 0, 0, false);                                              // kibble in the window
+  const LED = new THREE.MeshStandardMaterial({ color: '#BFF2C8', emissive: '#7FE08A', emissiveIntensity: .6 });
+  for (let i = 0; i < 4; i++) add(new THREE.SphereGeometry(.13, 8, 6), LED, 1.55, 4.85 - i * .32, 2.24, 0, 0, false);
+  add(Cyl(.36, .36, .16, 20).rotateX(Math.PI / 2), mat('#D3D8DF'), 1.55, 3.25, 2.26, 0, 0, false);              // round button
+  [-1.55, 1.55].forEach(bx => { add(B(.6, .22, 2.4), WHITE, bx, 1.8, 3.25, .8);                                    // food chutes, slanting down into the bowls
+    add(new THREE.CylinderGeometry(1.45, 1.0, .6, 40, 1, true), FT.steel, bx, .32, 4.4, 0, 0);                    // shallow steel bowls
+    add(new THREE.CircleGeometry(1.0, 32).rotateX(-Math.PI / 2), FT.steel2, bx, .04, 4.4, 0, 0, false);
+    add(new THREE.TorusGeometry(1.43, .08, 6, 40).rotateX(Math.PI / 2), FT.steel2, bx, .62, 4.4, 0, 0, false);
+    add(Cyl(1.2, 1.2, .1, 24), mat('#A8703F'), bx, .42, 4.4, 0, 0, false); });                                    // kibble
+  FD.L = (lx, lz) => { const c = Math.cos(FD.yaw), s = Math.sin(FD.yaw); return [x + lx * c + lz * s, z - lx * s + lz * c]; };   // local -> world
 }
 
 // ---------- cat houses: one per follower; 6 districts, each with its own style ----------
@@ -366,7 +460,7 @@ houseLots.forEach((l, n) => placeHouse(n, APPEAR[n] < 0 ? 1 : 0));
 
 // ---------- gardens between the streets: trees, fish ponds, yarn balls, cat trees, flower beds ----------
 { const items = [], gHash = new Map();
-  for (let k = -1; k < NR - 1; k++) { const rmid = a => k < 0 ? 28 : (ringR(k, a) + ringR(k + 1, a)) / 2, circ = 2 * Math.PI * (k < 0 ? 28 : RING0 + RGAP * k + 15), n = Math.floor(circ / 9);
+  for (let k = -1; k < NR - 1; k++) { const rmid = a => k < 0 ? 34.5 : (ringR(k, a) + ringR(k + 1, a)) / 2, circ = 2 * Math.PI * (k < 0 ? 34.5 : RING0 + RGAP * k + 15), n = Math.floor(circ / 9);
     for (let i = 0; i < n; i++) { const a = (i + hash01(i * 31 + k) * .5) / n * Math.PI * 2, r = rmid(a), x = Math.cos(a) * r, z = Math.sin(a) * r;
       if (x > coastAt(z) - 18 || any(roadHash, x, z, 6.5) || any(lotHash, x, z, 4.2) || any(spotHash, x, z, 12) || any(gHash, x, z, 5)) continue;
       const t = timeNear(x, z, 18); if (t === Infinity) continue;
@@ -414,6 +508,7 @@ houseLots.forEach((l, n) => placeHouse(n, APPEAR[n] < 0 ? 1 : 0));
     if (near(roadHash, x, z, 9, o => o.t === Infinity ? undefined : false) || any(houseHash, x, z, 7) || any(window.__gHash, x, z, 4)) continue;
     if (SPOTS.slice(0, usedSpots).some(s => Math.hypot(s.x - x, s.z - z) < 14)) continue;
     spots.push([x, z, .7 + rnd() * .8, rnd() < .7]); }
+  for (let k = spots.length - 1; k >= 0; k--) if (Math.hypot(spots[k][0], spots[k][1]) < SQ.plaza + 4) spots.splice(k, 1);   // the bigger square stays clear (after the rnd() calls)
   // in growth mode, trees standing where the city will be are removed when the city gets there
   // Big Mochi (Build 4) lies at polar(MOCHI_A, 500): trees within 75 of it go when it starts to rise (checked after all rnd() calls)
   const [mcx, mcz] = polar(MOCHI_A, 500), mochiT = unlockT(UNLOCK.mochi) - 2;
@@ -481,38 +576,38 @@ const TAXIS = [];
 // ================= Cat Town extras (design-review.md BUILD LIST) =================
 // ---------- Build 1: Mango's Water Bar (cats drink from a ring around the fountain) ----------
 const WB = { spots: [] };
-const Hpath = r => .16 + .37 * smooth(8.6, 8.0, r) + .25 * Math.max(0, 1 - Math.abs(r - 8.3) / .4);   // road -> hop onto the island -> lawn
-{ const wall = mesh(Cyl(6.4, 6.4, .26, 40), '#FFFFFF'); wall.position.y = .67; scene.add(wall);
-  const ws = new THREE.Mesh(Cyl(6.22, 6.22, .04, 40), new THREE.MeshStandardMaterial({ color: '#7FD0FF', roughness: .2 })); ws.position.y = .82; ws.receiveShadow = true; scene.add(ws);
-  const lip = mesh(new THREE.TorusGeometry(6.32, .1, 6, 48).rotateX(Math.PI / 2), '#2F5FE0', false); lip.position.y = .84; scene.add(lip);
+const Hpath = r => .16 + .37 * smooth(SQ.island + .6, SQ.island, r) + .25 * Math.max(0, 1 - Math.abs(r - SQ.island - .3) / .4);   // road -> hop onto the island -> lawn
+// radii: cats leave/enter the avenues at WB.R_AV, in-lane WB.R_IN, out-lane WB.R_OUT (both on the roundabout lane), drink at WB.R_SPOT, nose over the water at WB.R_NOSE
+Object.assign(WB, { R_AV: SQ.lane + .5, R_FAR: SQ.plaza + 3, R_IN: SQ.lane - 1.8, R_OUT: SQ.island + 1.8, R_SPOT: SQ.wall + .4, R_NOSE: SQ.wall - .65, P: 30 });
+{ const { R_AV, R_FAR, R_IN, R_OUT, R_SPOT } = WB;
   WB.drops = IM(new THREE.IcosahedronGeometry(.16, 0), 36, false, new THREE.MeshStandardMaterial({ color: '#BFE9FF', emissive: '#7FD0FF', emissiveIntensity: .3, flatShading: true }));
   WB.rip = IM(new THREE.RingGeometry(.8, 1, 24).rotateX(-Math.PI / 2), 44, false, new THREE.MeshBasicMaterial({ color: '#FFFFFF', transparent: true, opacity: .8, depthWrite: false }));
   WB.rip.receiveShadow = false;
   [WB.drops, WB.rip].forEach(m => { m.frustumCulled = false; for (let i = 0; i < m.count; i++) m.setMatrixAt(i, ZERO); });
-  const avA = [0, 1, 2, 3, 4, 5].map(i => mod(spokeA(spokes[i], 12.5), TAU));
+  const avA = [0, 1, 2, 3, 4, 5].map(i => mod(spokeA(spokes[i], R_AV), TAU));
   const path = pts => { const cum = [0]; for (let i = 1; i < pts.length; i++) cum.push(cum[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1])); return { pts, cum, len: cum[cum.length - 1] }; };
   const ORDER = [1, 17, 2, 16, 3, 15, 4, 14, 5, 13, 6, 12, 7, 11, 8, 10, 9];   // first cats flank Mango
   for (let m = 1; m <= 17; m++) { const an = mod(Math.PI / 2 + m * Math.PI / 9, TAU);
     let ii = 0, oi = 0; for (let i = 0; i < 6; i++) { if (mod(an - avA[i], TAU) < mod(an - avA[ii], TAU)) ii = i; if (mod(avA[i] - an, TAU) < mod(avA[oi] - an, TAU)) oi = i; }
     const spI = spokes[ii], spO = spokes[oi], A0 = avA[ii], a1 = A0 + mod(an - A0, TAU), b1 = an + mod(avA[oi] - an, TAU);
-    const pin = []; for (let r = 22; r > 12.6; r -= 1.5) pin.push(polar(spokeA(spI, r), r)); pin.push(polar(A0, 12.5));
-    for (let g = A0; g < a1 - .02; g += .08) pin.push(polar(g, 10.5)); pin.push(polar(a1, 10.5));        // in-lane r 10.5, counter-clockwise
-    for (let r = 10; r > 6.85; r -= .5) pin.push(polar(an, r)); pin.push(polar(an, 6.8));
-    const pout = []; for (let r = 6.8; r < 9.25; r += .5) pout.push(polar(an, r)); pout.push(polar(an, 9.3));
-    for (let g = an + .08; g < b1 - .02; g += .08) pout.push(polar(g, 9.3)); pout.push(polar(b1, 9.3));    // out-lane r 9.3, counter-clockwise
-    for (let r = 12.5; r < 22.1; r += 1.5) pout.push(polar(spokeA(spO, r), r));
+    const pin = []; for (let r = R_FAR; r > R_AV + .1; r -= 1.5) pin.push(polar(spokeA(spI, r), r)); pin.push(polar(A0, R_AV));
+    for (let g = A0; g < a1 - .02; g += .05) pin.push(polar(g, R_IN)); pin.push(polar(a1, R_IN));        // in-lane, counter-clockwise
+    for (let r = R_IN - .5; r > R_SPOT + .05; r -= .5) pin.push(polar(an, r)); pin.push(polar(an, R_SPOT));
+    const pout = []; for (let r = R_SPOT; r < R_OUT - .05; r += .5) pout.push(polar(an, r)); pout.push(polar(an, R_OUT));
+    for (let g = an + .05; g < b1 - .02; g += .05) pout.push(polar(g, R_OUT)); pout.push(polar(b1, R_OUT));    // out-lane, counter-clockwise
+    for (let r = R_AV; r < R_FAR + .1; r += 1.5) pout.push(polar(spokeA(spO, r), r));
     const c = CAT_COLORS[(m * 5 + 3) % CAT_COLORS.length]; WALK.setColorAt(m, col.set(c));
-    WB.spots.push({ m, a: an, rank: ORDER.indexOf(m) + 1, pin: path(pin), pout: path(pout), yawC: yawTo(-Math.cos(an), -Math.sin(an)), ph: hash01(m * 41 + 3) * 24,
-      p: polar(an, 6.8), nose: polar(an, 5.75), ds: slot(POSES.drink, c) }); }
+    WB.spots.push({ m, a: an, rank: ORDER.indexOf(m) + 1, pin: path(pin), pout: path(pout), yawC: yawTo(-Math.cos(an), -Math.sin(an)), ph: hash01(m * 41 + 3) * WB.P,
+      p: polar(an, R_SPOT), nose: polar(an, WB.R_NOSE), ds: slot(POSES.drink, c) }); }
   WB.mSit = slot(POSES.sit, '#F28C28'); WB.mDrink = slot(POSES.drink, '#F28C28');   // Mango, the host (WALK slot 0)
 }
 
 // ---------- Build 2 (hero row) + Build 3 (hero box) on the plaza ----------
-const ROW_A = [1.70, 1.83, 1.96, 2.09], ROW_YAW = yawTo(Math.cos(1.83), Math.sin(1.83));
-const ROW = ROW_A.map(a => polar(a, 14.6)), ROW_SIT = [0, 1, 2, 3].map(c => slot(POSES.sit, CAT_COLORS[(c * 7 + 2) % CAT_COLORS.length]));
-const C4 = ROW[3], S4 = [C4[0] - Math.sin(2.09) * 6, C4[1] + Math.cos(2.09) * 6];   // the 4th cat comes from avenue 2's sidewalk
+const ROW_A = [1.71, 1.79, 1.87, 1.95], ROW_YAW = yawTo(Math.cos(1.83), Math.sin(1.83));
+const ROW = ROW_A.map(a => polar(a, 24)), ROW_SIT = [0, 1, 2, 3].map(c => slot(POSES.sit, CAT_COLORS[(c * 7 + 2) % CAT_COLORS.length]));
+const C4 = ROW[3], S4 = [C4[0] - Math.sin(ROW_A[3]) * 6.5, C4[1] + Math.cos(ROW_A[3]) * 6.5];   // the 4th cat comes from avenue 2's sidewalk
 WALK.setColorAt(18, col.set(CAT_COLORS[(3 * 7 + 2) % CAT_COLORS.length]));
-const HB = polar(2.85, 14.2), HB_YAW = yawTo(Math.cos(2.85), Math.sin(2.85)) + 1.2, HB_M = LR(HB[0], .14, HB[1], 0, HB_YAW), HB_CAT = slot(POSES.loaf, '#8E8E9A');
+const HB = polar(2.88, 24), HB_YAW = yawTo(Math.cos(2.88), Math.sin(2.88)) + 1.2, HB_M = LR(HB[0], .14, HB[1], 0, HB_YAW), HB_CAT = slot(POSES.loaf, '#8E8E9A');
 const HB_L = [LR(0, .2, 0), BOX_FL[0], BOX_FL[1]];
 
 // ---------- Build 4: Big Mochi, the sleeping mountain cat ----------
@@ -575,7 +670,7 @@ const BAL = { ANG: [4.1, 3.0, 1.0, 0.7, 1.8], RF: [.6, .35, .5, .35, .35], COL: 
 
 // ---------- Build 7: one hero bus stop, "NEXT NAP / 5 MIN" ----------
 const BS = {};
-{ const [x, z] = polar(.85, 14.2), g = new THREE.Group(); g.position.set(x, .14, z); g.rotation.y = yawTo(Math.cos(.85), Math.sin(.85)); scene.add(g); BS.g = g; BS.yaw = g.rotation.y;
+{ const BA = 6.02, [x, z] = polar(BA, 24), g = new THREE.Group(); g.position.set(x, .14, z); g.rotation.y = yawTo(Math.cos(BA), Math.sin(BA)); scene.add(g); BS.g = g; BS.yaw = g.rotation.y;   // moved from angle .85 (the feeder's sector now)
   const parts = [paint(B(4, 2.4, .12).translate(0, 1.34, -.6), '#9FD3FF'), paint(B(4.4, .2, 1.6).translate(0, 2.64, 0), '#FFC93C'),
     ...[[-1.9, -.6], [1.9, -.6], [-1.9, .6], [1.9, .6]].map(([px, pz]) => paint(Cyl(.08, .08, 2.5, 6).translate(px, 1.39, pz), '#3B3B44')),
     paint(B(3.6, .15, .7).translate(0, .64, -.2), '#C98B5A'), ...[-1.6, 1.6].map(px => paint(B(.12, .5, .6).translate(px, .39, -.2), '#C98B5A')),
@@ -590,25 +685,29 @@ const BS = {};
   BS.sl = [[slot(POSES.loaf, CAT_COLORS[4]), -1.1, 0, POSES.loaf], [slot(POSES.loaf, CAT_COLORS[6]), 0, .5, POSES.loaf], [slot(POSES.belly, CAT_COLORS[5]), 1.1, Math.PI / 2, POSES.belly]];
   g.visible = false;
 }
+// ---------- feeder regulars: 2 eaters (drink pose) + a deadpan starer who sits and looks up at the tank ----------
+FD.cats = [0, 1].map(e => ({ w: 24 + e, ds: slot(POSES.drink, CAT_COLORS[[4, 2][e]]), rank: [3, 6][e], bx: e ? 1.55 : -1.55, ph: e * 11 }));
+FD.cats.forEach((c, e) => WALK.setColorAt(c.w, col.set(CAT_COLORS[[4, 2][e]])));
+FD.star = { w: 26, ss: slot(POSES.sit, '#3B3B44'), rank: 8 }; WALK.setColorAt(26, col.set('#3B3B44'));
 Object.values(POSES).forEach(m => { m.count = m.used; if (m.instanceColor) m.instanceColor.needsUpdate = true; });
 WALK.instanceColor.needsUpdate = true;
 
 // ---------- per-frame update of all extras (pure function of t and anim) ----------
 function updateExtras(t, anim) {
-  const D = POSES.drink, S = POSES.sit, R = WB.rip, P = 24, FW = EP.fountainWave, wave = FW != null && anim >= FW && anim < FW + 6;
+  const D = POSES.drink, S = POSES.sit, R = WB.rip, P = 24, PW = WB.P, FW = EP.fountainWave, wave = FW != null && anim >= FW && anim < FW + 6;
   // Build 1: small drinkers
   for (const s of WB.spots) { const k = popK(t, s.rank), ri = (s.m - 1) * 2;
     let mode = 0, x = s.p[0], z = s.p[1], y = .54, yaw = s.yawC, sc = 1.15 * k;
     if (k > 0) {
       if (wave) { const l0 = FW + 3 + (s.m - 1) * .12; mode = anim >= l0 && anim < l0 + .5 ? 1 : 2; }
-      else { const u = mod(anim + s.ph, P);
-        if (u < 7) { const [px, pz, dx, dz] = sampleRoad(s.pin, u / 7 * s.pin.len); x = px; z = pz; yaw = Math.atan2(dx, dz); y = Hpath(Math.hypot(px, pz)) + Math.abs(Math.sin(anim * 11 + s.m)) * .15; sc *= back(u / .3); mode = 1; }
-        else if (u < 15) { mode = 2;
-          if (s.m % 3 === 0 && u >= 11 && u < 11.8) { mode = 1; const e = Math.min(1, (u - 11) / .15, (11.8 - u) / .15), yc = Math.atan2(camera.position.x - x, camera.position.z - z);
+      else { const u = mod(anim + s.ph, PW);   // 30 s loop: walk in 9.5 s, drink 9 s, turn, walk out 9 s (the paths are 1.7x longer than before)
+        if (u < 9.5) { const [px, pz, dx, dz] = sampleRoad(s.pin, u / 9.5 * s.pin.len); x = px; z = pz; yaw = Math.atan2(dx, dz); y = Hpath(Math.hypot(px, pz)) + Math.abs(Math.sin(anim * 11 + s.m)) * .15; sc *= back(u / .3); mode = 1; }
+        else if (u < 18.5) { mode = 2;
+          if (s.m % 3 === 0 && u >= 13.5 && u < 14.3) { mode = 1; const e = Math.min(1, (u - 13.5) / .15, (14.3 - u) / .15), yc = Math.atan2(camera.position.x - x, camera.position.z - z);
             yaw = s.yawC + e * Math.max(-.7, Math.min(.7, wrapA(yc - s.yawC))); } }   // deadpan glance at the camera
-        else if (u < 15.5) { mode = 1; yaw = s.yawC + ease((u - 15) / .5) * Math.PI; }
-        else if (u < 22.4) { const v = Math.min(u, 22) - 15.5, [px, pz, dx, dz] = sampleRoad(s.pout, v / 6.5 * s.pout.len); x = px; z = pz; yaw = Math.atan2(dx, dz);
-          y = Hpath(Math.hypot(px, pz)) + Math.abs(Math.sin(anim * 11 + s.m)) * (v < 1.5 ? .22 : .15); if (u > 22) sc *= 1 - (u - 22) / .4; mode = 1; }
+        else if (u < 19) { mode = 1; yaw = s.yawC + ease((u - 18.5) / .5) * Math.PI; }
+        else if (u < 28.4) { const v = Math.min(u, 28) - 19, [px, pz, dx, dz] = sampleRoad(s.pout, v / 9 * s.pout.len); x = px; z = pz; yaw = Math.atan2(dx, dz);
+          y = Hpath(Math.hypot(px, pz)) + Math.abs(Math.sin(anim * 11 + s.m)) * (v < 1.5 ? .22 : .15); if (u > 28) sc *= 1 - (u - 28) / .4; mode = 1; }
       } }
     if (mode === 1) putCat(WALK, s.m, x, y, z, yaw, sc); else WALK.setMatrixAt(s.m, ZERO);
     if (mode === 2) { putCat(D, s.ds, x, .54, z, s.yawC, sc, .05 * Math.sin(anim * 14 + s.m));
@@ -621,16 +720,21 @@ function updateExtras(t, anim) {
     else if (u < 16.6) { mode = 1; yaw = ease((u - 16) / .6) * Math.PI; }
     else if (u < 22.6) { mode = 2; yaw = Math.PI; }
     else { mode = 1; yaw = Math.PI + ease((u - 22.6) / .6) * Math.PI; }
-    putCat(S, WB.mSit, 0, .52, 7.6, yaw, mode === 0 ? 2.6 : 0);
-    putCat(WALK, 0, 0, .52, 7.5, yaw, mode === 1 ? 2.6 : 0);
-    putCat(D, WB.mDrink, 0, .52, 7.4, Math.PI, mode === 2 ? 2.6 : 0, .15 + .05 * Math.sin(anim * 14));
+    const mz = SQ.wall + 1.2;   // Mango sits just outside the water-bar wall, at the front (+z)
+    putCat(S, WB.mSit, 0, .52, mz, yaw, mode === 0 ? 2.6 : 0);
+    putCat(WALK, 0, 0, .52, mz - .1, yaw, mode === 1 ? 2.6 : 0);
+    putCat(D, WB.mDrink, 0, .52, mz - .2, Math.PI, mode === 2 ? 2.6 : 0, .15 + .05 * Math.sin(anim * 14));
     for (let q = 0; q < 2; q++) { const f = frac(anim * 1.6 + q * .5), r = 2 * (.15 + .55 * f);
-      if (mode !== 2 || f > .92) R.setMatrixAt(34 + q, ZERO); else { XM.compose(XV.set(0, .86, 5.0), QI, XS.set(r, 1, r)); R.setMatrixAt(34 + q, XM); } } }
-  // Build 1: droplet arcs + their landing ripples; the dome breathes
-  for (let k = 0; k < 6; k++) { const aa = Math.PI / 2 + Math.PI / 18 + k * Math.PI / 3, ca = Math.cos(aa), sa = Math.sin(aa);
-    for (let i = 0; i < 6; i++) { const f = frac(anim * .7 + i / 6), r = 5.5 * f; XM.makeTranslation(ca * r, 6.8 * (1 - f) + .84 * f + 6 * f * (1 - f), sa * r); WB.drops.setMatrixAt(k * 6 + i, XM); }
-    const f = frac(anim * 1.6 + k * .37), r = .15 + .55 * f; if (f > .92) R.setMatrixAt(36 + k, ZERO); else { XM.compose(XV.set(ca * 5.5, .85, sa * 5.5), QI, XS.set(r, 1, r)); R.setMatrixAt(36 + k, XM); } }
-  if (FWATER) FWATER.scale.y = 1 + .02 * Math.sin(anim * 3);
+      if (mode !== 2 || f > .92) R.setMatrixAt(34 + q, ZERO); else { XM.compose(XV.set(0, .86, mz - 2.6), QI, XS.set(r, 1, r)); R.setMatrixAt(34 + q, XM); } } }
+  // Build 1: the spout's stream (scrolling streaks), drops falling beside it, splash hops + ripples where it hits the top plate
+  { const hx = FT.hit.x, hy = FT.hit.y, hz = FT.hit.z, sL = FT.tip.y - hy;
+    for (let k = 0; k < 6; k++) { const aa = k * TAU / 6 + .3, ca = Math.cos(aa), sa = Math.sin(aa);
+      for (let i = 0; i < 6; i++) { const f = frac(anim * (i < 3 ? 1.5 : .9) + i / 6 + k * .13);
+        if (i < 3) { const r = .3 + 1.4 * f; XM.makeTranslation(hx + ca * r, hy + .1 + 1.3 * 4 * f * (1 - f), hz + sa * r); }      // splash hops
+        else XM.makeTranslation(hx + ca * .34, FT.tip.y - .2 - sL * f * f, hz + sa * .34);                                        // drops beside the stream
+        WB.drops.setMatrixAt(k * 6 + i, XM); }
+      const f = frac(anim * 1.3 + k / 6), r = .35 + 1.6 * f; if (f > .92) R.setMatrixAt(36 + k, ZERO); else { XM.compose(XV.set(hx, hy + .04, hz), QI, XS.set(r, 1, r)); R.setMatrixAt(36 + k, XM); } }
+    FT.wTex.offset.y = frac(anim * 1.4); FT.stream.scale.set(1 + .06 * Math.sin(anim * 9), 1, 1 + .06 * Math.sin(anim * 7 + 1)); }
   // Build 2: hero circle row (3 identical sitters + the one that walks in late)
   { const kt = popK(t, UNLOCK.circles);
     ROW.forEach(([x, z], c) => { if (kt <= 0) TAPE.setMatrixAt(TAPE_H + c, ZERO); else { XM.compose(XV.set(x, .16, z), QI, XS.set(kt, 1, kt)); TAPE.setMatrixAt(TAPE_H + c, XM); } });
@@ -677,6 +781,23 @@ function updateExtras(t, anim) {
       const a = BAL.ANG[k] + .06 * Math.sin(anim * .05 + k), r = Math.min(240, Math.max(60, CR * BAL.RF[k])) + 12 * Math.sin(2.1 * k), y = 56 + 8 * (k % 3) + 3 * Math.sin(anim * .5 + k);
       XM2.compose(XV.set(Math.cos(a) * r, y, Math.sin(a) * r), XQ.setFromEuler(XE.set(0, yawTo(-Math.sin(a), Math.cos(a)) + .1 * Math.sin(anim * 1.5 + k), 0, 'YXZ')), XS.set(kk, kk, kk));
       BAL.shell.setMatrixAt(k, XM2); BAL.parts.setMatrixAt(k, XM2); for (let q = 0; q < 2; q++) S.setMatrixAt(BAL.cats[k][q], XM.multiplyMatrices(XM2, BAL.catL[q])); } }
+  // Feeder: 2 eaters on a 26 s loop (walk in, eat, turn, walk out) + the starer on a 34 s loop (sits, looks up at the tank, deadpan)
+  for (const c of FD.cats) { const k = popK(t, c.rank), u = mod(anim + c.ph, 26), A = FD.L(c.bx + (c.bx > 0 ? 1.4 : -1.4), 12), Bp = FD.L(c.bx, 6.45), yIn = yawTo(Bp[0] - A[0], Bp[1] - A[1]);
+    let mode = 0, x = Bp[0], z = Bp[1], yaw = FD.yaw + Math.PI, sc = 1.15 * k, y = .12;
+    if (k > 0) { if (u < 5) { const f = u / 5; x = A[0] + (Bp[0] - A[0]) * f; z = A[1] + (Bp[1] - A[1]) * f; yaw = yIn; sc *= back(u / .3); y += Math.abs(Math.sin(anim * 10 + c.w)) * .1; mode = 1; }
+      else if (u < 5.4) { mode = 1; yaw = yIn + wrapA(FD.yaw + Math.PI - yIn) * ease((u - 5) / .4); }
+      else if (u < 15) mode = 2;
+      else if (u < 15.5) { mode = 1; yaw = FD.yaw + Math.PI + ease((u - 15) / .5) * Math.PI; }
+      else if (u < 20.9) { const f = Math.min(1, (u - 15.5) / 5); x = Bp[0] + (A[0] - Bp[0]) * f; z = Bp[1] + (A[1] - Bp[1]) * f; yaw = yIn + Math.PI; y += Math.abs(Math.sin(anim * 10 + c.w)) * .1; if (u > 20.5) sc *= 1 - (u - 20.5) / .4; mode = 1; } }
+    putCat(WALK, c.w, x, y, z, yaw, mode === 1 ? sc : 0); putCat(D, c.ds, Bp[0], .26, Bp[1], FD.yaw + Math.PI, mode === 2 ? sc : 0, .05 * Math.sin(anim * 12 + c.w)); }
+  { const c = FD.star, k = popK(t, c.rank), u = mod(anim + 7, 34), A = FD.L(-4.5, 11.5), Bp = FD.L(0, 8.2), yIn = yawTo(Bp[0] - A[0], Bp[1] - A[1]), yS = FD.yaw + Math.PI;
+    let mode = 0, x = Bp[0], z = Bp[1], yaw = yS, sc = 1.15 * k, y = .12;
+    if (k > 0) { if (u < 4) { const f = u / 4; x = A[0] + (Bp[0] - A[0]) * f; z = A[1] + (Bp[1] - A[1]) * f; yaw = yIn; sc *= back(u / .3); y += Math.abs(Math.sin(anim * 10)) * .1; mode = 1; }
+      else if (u < 4.4) { mode = 1; yaw = yIn + wrapA(yS - yIn) * ease((u - 4) / .4); }
+      else if (u < 14) mode = 2;
+      else if (u < 14.4) { mode = 1; yaw = yS + ease((u - 14) / .4) * Math.PI * .8; }
+      else if (u < 18.4) { const f = Math.min(1, (u - 14.4) / 3.6); x = Bp[0] + (A[0] - Bp[0]) * f; z = Bp[1] + (A[1] - Bp[1]) * f; yaw = yIn + Math.PI; y += Math.abs(Math.sin(anim * 10)) * .1; if (u > 18) sc *= 1 - (u - 18) / .4; mode = 1; } }
+    putCat(WALK, c.w, x, y, z, yaw, mode === 1 ? sc : 0); putCat(S, c.ss, x, .12, z, yS, mode === 2 ? sc : 0, -.32); }   // head tilted up at the tank
   // Build 7: bus stop + 3 sleepers
   { const kb = popK(t, UNLOCK.busStop); BS.g.visible = kb > 0; BS.g.scale.setScalar(Math.max(.001, kb));
     const c0 = Math.cos(BS.yaw), s0 = Math.sin(BS.yaw);
@@ -691,7 +812,7 @@ const ST = EP.starts || [0, 0, 0, 0];
 const vv = a => V(...a);
 const NL = NEWL ? V(NEWL.x, 0, NEWL.z) : V(0, 0, CR), U = NL.clone().setY(0).normalize();
 const SH = STILL ? [] : EP.shots ? EP.shots.map(s => ({ t0: s.t0, t1: s.t1, p0: vv(s.p0), p1: vv(s.p1), l0: vv(s.l0), l1: vv(s.l1), f: s.inout ? inout : ease })) : [
-  { t0: 0, t1: ST[1], p0: V(14, 120, 150), p1: V(46, 74, 98), l0: V(0, 3, 0), l1: V(0, 4, 0) },
+  { t0: 0, t1: ST[1], p0: V(14, 120, 150), p1: V(46, 74, 98), l0: V(0, 5, 0), l1: V(0, 6, 0) },
   { t0: ST[1], t1: EP.milestone - .2, p0: NL.clone().addScaledVector(U, -95).setY(16), p1: NL.clone().addScaledVector(U, -52).setY(34), l0: NL.clone().addScaledVector(U, -20).setY(2), l1: NL.clone() },
   { t0: EP.milestone - .2, t1: ST[2], p0: NL.clone().addScaledVector(U, -52).setY(34), p1: V(-CR * .55, CR * 1.25, CR * 1.45), l0: NL.clone(), l1: V(0, 0, -CR * .1), f: inout },
   { t0: ST[2], t1: (NEWB ? NEWB.at : ST[3]) - .25, p0: V(-CR * .55, CR * 1.25, CR * 1.45), p1: V(CR * .9, CR * 1.1, CR * 1.3), l0: V(0, 0, -CR * .1), l1: NBpos.clone().multiplyScalar(.4), f: inout },
@@ -818,7 +939,59 @@ function loop(now) { requestAnimationFrame(loop); if (!onScreen || document.hidd
   else cur += (target - cur) * Math.min(1, dt * 8);
   if (Math.abs(target - cur) < .5) cur = target;
   slider.setAttribute('aria-valuetext', Math.round(cur) + ' followers');
-  controls.update(); window.renderFrame(tOf(Math.round(cur)), ANIM); }
+  navStep(now, dt); controls.update(); window.renderFrame(tOf(Math.round(cur)), ANIM); }
+
+// ---------- move around like a game: D-pad, + / -, back to the center, arrow keys, double-tap to fly there ----------
+controls.touches = { ONE: THREE.TOUCH.ROTATE, TWO: THREE.TOUCH.DOLLY_PAN };
+const UP = new THREE.Vector3(0, 1, 0), GROUND = new THREE.Plane(UP, 0), NV = new THREE.Vector3(), NV2 = new THREE.Vector3();
+let FLY = null, HOLD = null;   // FLY: eased camera flight; HOLD: a D-pad button held down (continuous move)
+const tick = () => { try { navigator.vibrate?.(8); } catch (e) {} };
+const stopSpin = () => { controls.autoRotate = false; };
+const clampT = v => { const R = 1.3 * (window.__CR || 300), d = Math.hypot(v.x, v.z); if (d > R) { v.x *= R / d; v.z *= R / d; } return v; };
+const groundDir = (dx, dz, out) => { NV.subVectors(controls.target, camera.position).setY(0); if (NV.lengthSq() < 1e-6) NV.set(0, 0, -1); NV.normalize();   // dz: forward on screen, dx: right
+  NV2.crossVectors(NV, UP).normalize(); return out.set(0, 0, 0).addScaledVector(NV, dz).addScaledVector(NV2, dx); };
+function flyTo(tgt, pos, dur) { clampT(tgt); const off = pos.clone().sub(tgt), d = THREE.MathUtils.clamp(off.length(), controls.minDistance, controls.maxDistance); pos = tgt.clone().add(off.setLength(d));
+  if (reduce || !dur) { FLY = null; controls.target.copy(tgt); camera.position.copy(pos); return; }
+  FLY = { t0: performance.now(), dur: dur * 1000, a: controls.target.clone(), b: tgt, pa: camera.position.clone(), pb: pos }; }
+function panStep(dx, dz) { stopSpin(); const dist = camera.position.distanceTo(controls.target), m = groundDir(dx, dz, new THREE.Vector3()).multiplyScalar(dist * .25);
+  const base = FLY ? FLY.b : controls.target, basePos = FLY ? FLY.pb : camera.position;
+  const tgt = clampT(base.clone().add(m)); flyTo(tgt, basePos.clone().add(tgt.clone().sub(base)), .3); }
+function zoomStep(f) { stopSpin(); const base = FLY ? FLY.b : controls.target, basePos = FLY ? FLY.pb : camera.position; flyTo(base.clone(), base.clone().add(basePos.clone().sub(base).multiplyScalar(f)), .3); }
+function goHome() { stopSpin(); const off = camera.position.clone().sub(controls.target).setLength(75); if (off.y < 25) off.setY(25).setLength(75); flyTo(new THREE.Vector3(0, 4, 0), new THREE.Vector3(0, 4, 0).add(off), .8); }
+const MARK = new THREE.Mesh(new THREE.RingGeometry(.75, 1, 40).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: '#FFC93C', transparent: true, opacity: 0, depthWrite: false })); MARK.visible = false; MARK.renderOrder = 2; scene.add(MARK);
+let markT = -1;
+function navStep(now, dt) {
+  if (HOLD && now - HOLD.t0 > 300) { FLY = null; const dist = camera.position.distanceTo(controls.target), sp = Math.min(1, (now - HOLD.t0 - 300) / 400) * dist * .85 * dt;   // held: keep moving, ramping up
+    if (HOLD.zoom) { const f = Math.pow(HOLD.zoom, dt * 3.3), off = camera.position.clone().sub(controls.target).multiplyScalar(f); off.setLength(THREE.MathUtils.clamp(off.length(), controls.minDistance, controls.maxDistance)); camera.position.copy(controls.target).add(off); }
+    else { const m = groundDir(HOLD.dx, HOLD.dz, NV.clone()).multiplyScalar(sp), before = controls.target.clone(); clampT(controls.target.add(m)); camera.position.add(controls.target.clone().sub(before)); } }
+  if (FLY) { const k = Math.min(1, (now - FLY.t0) / FLY.dur), e = k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+    controls.target.lerpVectors(FLY.a, FLY.b, e); camera.position.lerpVectors(FLY.pa, FLY.pb, e); if (k >= 1) FLY = null; }
+  if (markT >= 0) { const k = (now - markT) / 800; if (k >= 1) { MARK.visible = false; markT = -1; } else { const sc = 1 + 5 * k; MARK.scale.set(sc, 1, sc); MARK.material.opacity = .9 * (1 - k); } } }
+const PAD = { up: [0, 1], down: [0, -1], left: [-1, 0], right: [1, 0] };
+document.querySelectorAll('[data-nav]').forEach(b => {
+  const act = b.dataset.nav, mv = PAD[act], zf = act === 'in' ? .7 : act === 'out' ? 1 / .7 : 0;
+  const end = () => { HOLD = null; b.classList.remove('is-down'); };
+  b.addEventListener('pointerdown', e => { e.preventDefault(); b.classList.add('is-down'); tick();
+    if (mv) { panStep(mv[0], mv[1]); HOLD = { t0: performance.now(), dx: mv[0], dz: mv[1] }; }
+    else if (zf) { zoomStep(zf); HOLD = { t0: performance.now(), zoom: zf }; }
+    else goHome();
+    try { b.setPointerCapture(e.pointerId); } catch (er) {} });
+  ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(ev => b.addEventListener(ev, end));
+  b.addEventListener('click', e => { if (e.detail === 0) { if (mv) panStep(mv[0], mv[1]); else if (zf) zoomStep(zf); else goHome(); } });   // keyboard Enter / Space
+});
+addEventListener('keydown', e => { const tg = e.target; if (tg && (tg.tagName === 'INPUT' || tg.tagName === 'TEXTAREA' || tg.isContentEditable)) return;
+  if (!pcBox.hidden) return;
+  const k = e.key, mv = { ArrowUp: [0, 1], ArrowDown: [0, -1], ArrowLeft: [-1, 0], ArrowRight: [1, 0] }[k];
+  if (mv) { e.preventDefault(); panStep(mv[0], mv[1]); } else if (k === '+' || k === '=') { e.preventDefault(); zoomStep(.7); } else if (k === '-' || k === '_') { e.preventDefault(); zoomStep(1 / .7); } });
+renderer.domElement.addEventListener('dblclick', e => e.preventDefault());
+const syncDock = () => { const d = document.querySelector('.dock'); if (d) stage.parentElement.style.setProperty('--dockH', d.offsetHeight + 'px'); };
+addEventListener('resize', syncDock); syncDock();
+{ const hint = $('hint'); let seen = false; try { seen = localStorage.getItem('catTownHintSeen') === '1'; } catch (e) {}
+  if (hint && !seen) { hint.hidden = false; requestAnimationFrame(() => hint.classList.add('is-on'));
+    setTimeout(() => { hint.classList.remove('is-on'); setTimeout(() => { hint.hidden = true; }, 500); }, 4000); try { localStorage.setItem('catTownHintSeen', '1'); } catch (e) {} } }
+window.__screenOf = (x, y, z) => { const v = new THREE.Vector3(x, y, z).project(camera), r = renderer.domElement.getBoundingClientRect(); return [r.left + (v.x + 1) / 2 * r.width, r.top + (1 - v.y) / 2 * r.height]; };   // test helper
+window.__ffPos = () => [FT.g.position.toArray(), FD.g.position.toArray()];
+window.__cam = () => ({ pos: camera.position.toArray().map(v => +v.toFixed(2)), target: controls.target.toArray().map(v => +v.toFixed(2)) });
 
 // ---------- tap a house or a building: who lives there / what it is ----------
 const PICK = new Map();   // instanced mesh -> (instance index -> house number)
@@ -832,20 +1005,28 @@ const LM_UNLOCK = (EP.landmarks || []).map(l => l.unlock);
 const LM_TXT = { petshop: 'Toys, treats and fresh water for every cat in town.', cityhall: 'Mayor Mango works here (mostly naps).', cafe: 'Built by the most-liked comment.', statue: 'A golden Mango. He posed for 3 seconds.', market: 'Fresh fish every morning.', pool: 'Nobody swims. Everyone watches.', custom: 'Built by the most-liked comment.' };
 landmarks.forEach((lm, k) => { if (LMG[k]) LMG[k][0].userData.info = { icon: '🏛️', title: lm.sign, line: LM_TXT[lm.kind] || 'Built by the most-liked comment.', note: LM_UNLOCK[k] ? 'Unlocked at ' + LM_UNLOCK[k].toLocaleString('en-US') + ' cats' : '' }; });
 if (typeof MO !== 'undefined' && MO.g) MO.g.userData.info = { icon: '😴', title: 'Big Mochi', line: 'The sleeping mountain cat. Please do not wake her.', note: 'Unlocked at 1,000 cats' };
+if (typeof FT !== 'undefined' && FT.g) FT.g.userData.info = { icon: '💧', title: 'PETME2 Stainless Steel Fountain', line: 'Mango’s Water Bar: fresh moving water for every cat in town.', note: 'Mango is the host.', pinY: 18 };
+if (typeof FD !== 'undefined' && FD.g) FD.g.userData.info = { icon: '🍽️', title: 'PETME2 Dual Bowl Feeder', line: 'Breakfast at 7, dinner at 6. The cats are always early.', note: '', pinY: 15.5 };
 if (typeof BS !== 'undefined' && BS.g) BS.g.userData.info = { icon: '🚏', title: 'Nap Bus Stop', line: 'NEXT NAP: 5 MIN. The bus has never come. Nobody minds.', note: '' };
 const infoBox = $('info'), infoBody = $('infoBody');
 const PIN = new THREE.Mesh(new THREE.ConeGeometry(.9, 1.8, 4).rotateX(Math.PI), new THREE.MeshBasicMaterial({ color: '#FFC93C' })); PIN.visible = false; scene.add(PIN);
 let pinY = 0;
-const showInfo = (html, pos, y) => { infoBody.innerHTML = html; infoBox.hidden = false; if (pos) { PIN.position.set(pos.x, y, pos.z); pinY = y; PIN.visible = true; } else PIN.visible = false; controls.autoRotate = false; };
+const showInfo = (html, pos, y) => { infoBody.innerHTML = html; infoBox.hidden = false; { const h = $('hint'); if (h) h.hidden = true; } if (pos) { PIN.position.set(pos.x, y, pos.z); pinY = y; PIN.visible = true; } else PIN.visible = false; controls.autoRotate = false; };
 const hideInfo = () => { infoBox.hidden = true; PIN.visible = false; };
 $('infoClose').addEventListener('click', hideInfo);
 const ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
-let downX = 0, downY = 0;
+let downX = 0, downY = 0, lastTap = { t: 0, x: 0, y: 0 };
 renderer.domElement.addEventListener('pointerdown', e => { downX = e.clientX; downY = e.clientY; });
 renderer.domElement.addEventListener('pointerup', e => {
   if (Math.hypot(e.clientX - downX, e.clientY - downY) > 6) return;          // a drag, not a tap
   const r = renderer.domElement.getBoundingClientRect(); ndc.set((e.clientX - r.left) / r.width * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
   ray.setFromCamera(ndc, camera);
+  const now = performance.now(), dbl = now - lastTap.t < 300 && Math.hypot(e.clientX - lastTap.x, e.clientY - lastTap.y) < 25;
+  lastTap = dbl ? { t: 0, x: 0, y: 0 } : { t: now, x: e.clientX, y: e.clientY };
+  if (dbl) {   // double-tap / double-click: fly there (ground plane y = 0, not the scene); the first tap's card stays as it is
+    const gp = ray.ray.intersectPlane(GROUND, new THREE.Vector3()); if (!gp) return; stopSpin(); tick(); clampT(gp);
+    flyTo(gp.clone(), gp.clone().add(camera.position.clone().sub(controls.target).multiplyScalar(.6)), .8);
+    MARK.position.set(gp.x, .3, gp.z); MARK.visible = true; markT = now; return; }
   const tNow = tOf(Math.round(cur));
   for (const h of ray.intersectObjects(scene.children.filter(o => !o.isInstancedMesh || PICK.has(o)), true)) {
     const map = PICK.get(h.object);
@@ -856,9 +1037,8 @@ renderer.domElement.addEventListener('pointerup', e => {
       return; }
     let o = h.object; while (o && !o.userData.info) o = o.parent;
     if (o && o.visible) { const I = o.userData.info, p = new THREE.Vector3(); o.getWorldPosition(p);
-      showInfo(`<div class="info__icon">${I.icon}</div><div><b class="info__title">${I.title}</b><span class="info__line">${I.line}</span>${I.note ? `<span class="info__note">${I.note}</span>` : ''}</div>`, p, o === (typeof MO !== 'undefined' && MO.g) ? 60 : 16); return; }
+      showInfo(`<div class="info__icon">${I.icon}</div><div><b class="info__title">${I.title}</b><span class="info__line">${I.line}</span>${I.note ? `<span class="info__note">${I.note}</span>` : ''}</div>`, p, I.pinY || (o === (typeof MO !== 'undefined' && MO.g) ? 60 : 16)); return; }
     const pt = h.point;
-    if (Math.hypot(pt.x, pt.z) < 9.5 && pt.y > .2) { showInfo(`<div class="info__icon">💧</div><div><b class="info__title">Mango’s Water Bar</b><span class="info__line">The PETME2 fountain. Cats walk in from every street to drink. Mango is the host.</span></div>`, new THREE.Vector3(0, 0, 0), 10); return; }
     if (pt.y > 25 && Math.hypot(pt.x, pt.z) < 450) { showInfo(`<div class="info__icon">🐟</div><div><b class="info__title">Fish balloon</b><span class="info__line">Sky tours for cats. Two passengers, zero pilots.</span></div>`, null); return; }
     if (pt.x > COAST_X - 10 && pt.y > 1) { showInfo(`<div class="info__icon">🔴</div><div><b class="info__title">Red Dot Lighthouse</b><span class="info__line">Cats have chased this dot since day 1. Nobody has caught it.</span><span class="info__note">Unlocked at 500 cats</span></div>`, null); return; }
     if (h.object.isInstancedMesh || h.object.isMesh) break;
