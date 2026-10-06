@@ -95,7 +95,7 @@ const LM = (x, y, z, ry = 0, s = 1) => new THREE.Matrix4().compose(V(x, y, z), n
 
 // ---------- counts ----------
 const F0 = EP.followersBefore || 0, FN = EP.followersNew || 0, F = F0 + FN;   // followers (Mango is cat #0, not a follower)
-const HOUSE_MAX = 100, PER_TOWER = 20, FLOOR_H = 3.1;
+const HOUSE_MAX = 1e9, PER_TOWER = 20, FLOOR_H = 3.1;   // every follower gets their own small cat house (towers kept for later)
 const nHouses = Math.min(F, HOUSE_MAX), nApts = Math.max(0, F - HOUSE_MAX);
 // towers have different heights (7-15 floors, 2 apartments per floor) for a real skyline
 const CAP = [], TSTART = []; { let a = 0, i = 0; while (a < nApts) { TSTART.push(a); CAP.push(2 * (7 + ((i * 2654435761 >>> 0) % 9))); a += CAP[i]; i++; } }
@@ -107,7 +107,7 @@ const APPEAR = new Float32Array(F).fill(-1);
 // ---------- city layout ----------
 const BLOCK = 26, ROAD = 5, LOT = 6.6, COAST_X = 128;
 const blocks = [];
-for (let i = -14; i <= 14; i++) for (let j = -14; j <= 14; j++) {
+for (let i = -24; i <= 24; i++) for (let j = -24; j <= 24; j++) {
   if (!i && !j) continue; if (i * BLOCK + BLOCK / 2 + ROAD > COAST_X - 8) continue;
   blocks.push({ i, j, d: Math.hypot(i * 1.05, j) + Math.max(Math.abs(i), Math.abs(j)) * .01 });
 }
@@ -116,23 +116,24 @@ const LM_SLOTS = new Set([1, 4, 7, 11, 16, 22, 29, 37, 46, 56, 67, 79, 92, 106, 
 const landmarks = [...(EP.landmarks || [])];
 const NEWB = EP.newBuild || null;
 const lmBlocks = []; const homeBlocks = [];
-{ let k = 0, lmUsed = 0; const needHomeBlocks = Math.ceil(nHouses / 9) + Math.ceil(nTowers / 4);
+{ let k = 0, lmUsed = 0; const needHomeBlocks = Math.ceil(nHouses / 12) + Math.ceil(nTowers / 4);
   const needLm = landmarks.length + (NEWB ? 1 : 0);
   for (; k < blocks.length && (homeBlocks.length < needHomeBlocks || lmBlocks.length < needLm); k++) {
     if (LM_SLOTS.has(k)) { lmBlocks.push(blocks[k]); continue; }
     homeBlocks.push(blocks[k]);
   } }
-// houses: 9 lots per block; towers: 4 per block
+// houses: 12 small cat houses around the edge of each block (all face a street), a tiny cat park in the middle
 const houseLots = [], towerLots = [];
-{ const order = [[0, 0], [-1, -1], [1, -1], [-1, 1], [1, 1], [0, -1], [0, 1], [-1, 0], [1, 0]];
-  const nhb = Math.ceil(nHouses / 9);
+{ const O = [-7.5, -2.5, 2.5, 7.5], order = [];
+  O.forEach(a => order.push([a, 7.5])); [2.5, -2.5].forEach(c => order.push([7.5, c])); [...O].reverse().forEach(a => order.push([a, -7.5])); [-2.5, 2.5].forEach(c => order.push([-7.5, c]));
+  const nhb = Math.ceil(nHouses / 12);
   homeBlocks.slice(0, nhb).forEach(b => order.forEach(([a, c]) => { if (houseLots.length >= nHouses) return;
-    const ry = (a === 0 && c === 0) ? (b.j >= 0 ? 0 : Math.PI) : Math.abs(c) >= Math.abs(a) ? (c > 0 ? 0 : Math.PI) : (a > 0 ? Math.PI / 2 : -Math.PI / 2);
-    houseLots.push({ x: b.i * BLOCK + a * LOT, z: b.j * BLOCK + c * LOT, ry, block: b }); }));
+    const ry = Math.abs(c) === 7.5 ? (c > 0 ? 0 : Math.PI) : (a > 0 ? Math.PI / 2 : -Math.PI / 2);
+    houseLots.push({ x: b.i * BLOCK + a, z: b.j * BLOCK + c, ry, block: b }); }));
   homeBlocks.slice(nhb).forEach(b => [[-1, -1], [1, 1], [1, -1], [-1, 1]].forEach(([a, c]) => { if (towerLots.length >= nTowers) return;
     towerLots.push({ x: b.i * BLOCK + a * 6.2, z: b.j * BLOCK + c * 6.2, block: b, hue: (towerLots.length * 7) % 5 }); }));
 }
-const usedBlocks = [...homeBlocks.slice(0, Math.ceil(nHouses / 9) + Math.ceil(nTowers / 4)), ...lmBlocks];
+const usedBlocks = [...homeBlocks.slice(0, Math.ceil(nHouses / 12) + Math.ceil(nTowers / 4)), ...lmBlocks];
 usedBlocks.forEach(b => b.active = true);
 const maxR = usedBlocks.length ? Math.max(...usedBlocks.map(b => Math.hypot(b.i, b.j))) : 0;
 // reserved (empty) lots inside the city get a "your idea here" sign
@@ -140,9 +141,10 @@ const reserved = EP.noReserved ? [] : blocks.filter((b, k) => LM_SLOTS.has(k) &&
 reserved.forEach(b => b.active = true);
 const active = blocks.filter(b => b.active);
 const CR = Math.max(40, (maxR + .7) * BLOCK);
+const ACT = new Set(active.map(b => b.i + ',' + b.j));
 const isCity = (x, z, m = 4) => { if (Math.abs(x) < BLOCK / 2 + m && Math.abs(z) < BLOCK / 2 + m) return true;
   const i = Math.round(x / BLOCK), j = Math.round(z / BLOCK);
-  for (let di = -1; di <= 1; di++) for (let dj = -1; dj <= 1; dj++) { const b = active.find(q => q.i === i + di && q.j === j + dj); if (b && Math.abs(x - b.i * BLOCK) < BLOCK / 2 + m && Math.abs(z - b.j * BLOCK) < BLOCK / 2 + m) return true; }
+  for (let di = -1; di <= 1; di++) for (let dj = -1; dj <= 1; dj++) { const bi = i + di, bj = j + dj; if (ACT.has(bi + ',' + bj) && Math.abs(x - bi * BLOCK) < BLOCK / 2 + m && Math.abs(z - bj * BLOCK) < BLOCK / 2 + m) return true; }
   return Math.abs(z - BLOCK / 2) < 6 && x > 0 && x < COAST_X + 10; };   // beach road
 // growth mode: every follower appears in order (city grows outward); used for 'how the city grows' videos
 const GROW = EP.order === 'index';
@@ -193,11 +195,12 @@ for (const b of active) { const x0 = b.i * BLOCK, z0 = b.j * BLOCK, h = BLOCK / 
 for (let i = 1; i * BLOCK < COAST_X + 4; i++) segs.set(`h${i},1`, [i * BLOCK, BLOCK / 2, 'x', -1]);   // road to the beach
 const roadList = [...segs.values()];
 const ROADM = {}; { const rm = new THREE.InstancedMesh(B(1, .12, 1), roadMat, roadList.length); rm.receiveShadow = true; ROADM.rm = rm;
-  const dash = new THREE.InstancedMesh(B(1, .02, 1), lineMat, roadList.length * 4);
+  const pawGeo = mergeGeometries([Cyl(.55, .55, .03, 12).toNonIndexed().translate(0, 0, .15), ...[[-.55, -.55], [-.2, -.85], [.2, -.85], [.55, -.55]].map(([x, z]) => Cyl(.2, .2, .03, 8).toNonIndexed().translate(x, 0, z))].map(g => { g.deleteAttribute('uv'); return g; }));
+  const dash = new THREE.InstancedMesh(pawGeo, lineMat, roadList.length * 4);
   const M = new THREE.Matrix4(); let d = 0;
   roadList.forEach(([x, z, ax], k) => {
     M.compose(V(x, .06, z), new THREE.Quaternion(), ax === 'x' ? V(BLOCK + ROAD, 1, ROAD) : V(ROAD, 1, BLOCK + ROAD)); rm.setMatrixAt(k, M);
-    for (let q = 0; q < 4; q++) { const o = -BLOCK / 2 + 3.5 + q * 6.4; M.compose(V(ax === 'x' ? x + o : x, .13, ax === 'z' ? z + o : z), new THREE.Quaternion(), ax === 'x' ? V(2.6, 1, .3) : V(.3, 1, 2.6)); dash.setMatrixAt(d++, M); } });
+    for (let q = 0; q < 4; q++) { const o = -BLOCK / 2 + 3.5 + q * 6.4; M.compose(V(ax === 'x' ? x + o : x, .13, ax === 'z' ? z + o : z), new THREE.Quaternion().setFromEuler(new THREE.Euler(0, ax === 'x' ? -Math.PI / 2 + (q % 2) * .35 : (q % 2) * .35, 0)), V(.9, 1, .9)); dash.setMatrixAt(d++, M); } });
   scene.add(rm, dash); ROADM.dash = dash;
   if (active.length) { const pm = new THREE.InstancedMesh(B(BLOCK - ROAD, .1, BLOCK - ROAD), mat('#E6E1D3'), active.length); pm.receiveShadow = true;
     active.forEach((b, k) => { M.makeTranslation(b.i * BLOCK, .05, b.j * BLOCK); pm.setMatrixAt(k, M); }); scene.add(pm); ROADM.pm = pm; }
@@ -230,26 +233,40 @@ const CAT_GEO = makeCatGeo();
   const sign = textSign('PETME2', 7, '#2F5FE0'); sign.position.set(0, 7.4, 0); scene.add(sign); window.__signs = [sign];
 }
 
-// ---------- houses (followers 1-100) ----------
-const ROOFS = ['#2F5FE0', '#FFC93C', '#E85D5D', '#5BB98C', '#9B6FE0', '#3B3B44'];
-const WALLS = ['#FFFFFF', '#F4F5F7', '#EEF3FB', '#FFF8EC'];
+// ---------- cat houses: one per follower, 3 cat styles ----------
+// A) cat-face house (ears on the roof, eye windows, pink nose, round cat-flap door)  B) cardboard box house  C) felt cat-cave pod with ears
+const PASTEL = ['#FFFFFF', '#FFE8D6', '#E7F0FF', '#FDE2E8', '#E3F6EC', '#FFF4CC', '#EDE4FF'];
+const ROOFC = ['#2F5FE0', '#F28C28', '#E85D5D', '#5BB98C', '#9B6FE0', '#3B3B44', '#FFC93C'];
+const FELT = ['#8E8E9A', '#F4A7B9', '#9AD8C8', '#C9B6F2', '#F6C86B', '#7FB6E8'];
 const NH = Math.max(1, houseLots.length);
+const kindOf = n => { const h = (n * 2654435761 >>> 0) % 100; return h < 52 ? 'A' : h < 76 ? 'B' : 'C'; };
+const cntK = { A: 0, B: 0, C: 0 }; houseLots.forEach((l, n) => cntK[kindOf(n)]++);
+const IM = (geo, n, cast = true) => { const m = new THREE.InstancedMesh(geo, mat('#ffffff'), Math.max(1, n)); m.castShadow = cast; m.receiveShadow = true; m.count = n; scene.add(m); return m; };
+const half = new THREE.SphereGeometry(1.9, 14, 8, 0, Math.PI * 2, 0, Math.PI / 2);
 const HP = {
-  body: new THREE.InstancedMesh(B(4.4, 3, 4), mat('#ffffff'), NH),
-  roof: new THREE.InstancedMesh(B(4.8, .5, 4.4), mat('#ffffff'), NH),           // modern flat roof
-  ear: new THREE.InstancedMesh(new THREE.ConeGeometry(.6, 1.4, 3), mat('#ffffff'), NH * 2),
-  door: new THREE.InstancedMesh(Cyl(.62, .62, .1, 12).rotateX(Math.PI / 2), mat('#1B2333'), NH),
-  win: new THREE.InstancedMesh(B(1.4, .9, .08), mat('#9FD3FF'), NH * 2),
+  body: IM(B(3.6, 2.4, 3.2), cntK.A), roof: IM(B(3.9, .35, 3.5), cntK.A),
+  ear: IM(new THREE.ConeGeometry(.6, 1.2, 3), cntK.A * 2 + cntK.C * 2),
+  eye: IM(Cyl(.36, .36, .08, 14).rotateX(Math.PI / 2), cntK.A * 2, false), pupil: IM(B(.1, .5, .1), cntK.A * 2, false),
+  nose: IM(new THREE.ConeGeometry(.16, .2, 3).rotateZ(Math.PI), cntK.A, false),
+  door: IM(Cyl(.5, .5, .1, 14).rotateX(Math.PI / 2), NH, false),
+  box: IM(B(3.3, 2.5, 3.1), cntK.B), flap: IM(B(3.3, .06, 1.1), cntK.B * 2), tape: IM(B(.5, .02, 3.12), cntK.B, false),
+  pod: IM(half, cntK.C),
 };
-Object.values(HP).forEach(m => { m.castShadow = true; m.receiveShadow = true; m.count = houseLots.length * (m === HP.ear || m === HP.win ? 2 : 1); scene.add(m); });
-const houseParts = []; const hc = { body: 0, roof: 0, ear: 0, door: 0, win: 0 };
-houseLots.forEach((l, n) => { const h = (n * 2654435761 >>> 0) % 1000 / 1000, roof = ROOFS[Math.floor(h * 61) % ROOFS.length], wall = WALLS[Math.floor(h * 37) % WALLS.length];
+const houseParts = []; const hc = Object.fromEntries(Object.keys(HP).map(k => [k, 0]));
+const LR = (x, y, z, rx = 0, ry = 0, rz = 0) => new THREE.Matrix4().compose(V(x, y, z), new THREE.Quaternion().setFromEuler(new THREE.Euler(rx, ry, rz)), V(1, 1, 1));
+houseLots.forEach((l, n) => { const h = (n * 2246822519 >>> 0) % 1000 / 1000, kind = kindOf(n);
   const p = []; const put = (k, m, c) => { const i = hc[k]++; if (c) HP[k].setColorAt(i, col.set(c)); p.push([HP[k], i, m]); };
-  put('body', LM(0, 1.5, 0), wall); put('roof', LM(0, 3.25, 0), roof); put('ear', LM(-1.6, 4.1, 1.4), roof); put('ear', LM(1.6, 4.1, 1.4), roof);
-  put('door', LM(0, .75, 2.02)); put('win', LM(-1.3, 2, 2.02)); put('win', LM(1.3, 2, 2.02)); houseParts.push(p); });
+  if (kind === 'A') { const wall = PASTEL[Math.floor(h * 71) % PASTEL.length], roof = ROOFC[Math.floor(h * 53) % ROOFC.length], eyeC = h < .5 ? '#B8E05A' : '#FFD23F';
+    put('body', LR(0, 1.2, 0), wall); put('roof', LR(0, 2.57, 0), roof); put('ear', LR(-1.2, 3.3, .6), roof); put('ear', LR(1.2, 3.3, .6), roof);
+    put('eye', LR(-.8, 1.62, 1.61), eyeC); put('eye', LR(.8, 1.62, 1.61), eyeC); put('pupil', LR(-.8, 1.62, 1.67), '#1B2333'); put('pupil', LR(.8, 1.62, 1.67), '#1B2333');
+    put('nose', LR(0, 1.2, 1.63), '#F28FA6'); put('door', LR(0, .48, 1.62, 0, 0, 0).multiply(new THREE.Matrix4().makeScale(.85, .85, 1)), '#1B2333'); }
+  else if (kind === 'B') { put('box', LR(0, 1.25, 0), h < .5 ? '#C99A62' : '#D6AE76');
+    put('flap', LR(0, 2.62, 1.3, .55), '#BC8C55'); put('flap', LR(0, 2.62, -1.3, -.55), '#BC8C55'); put('tape', LR(0, 2.51, 0), '#E9D3A8'); put('door', LR(0, .7, 1.57), '#3A2A1C'); }
+  else { const c = FELT[Math.floor(h * 61) % FELT.length]; put('pod', LR(0, 0, 0), c); put('ear', LR(-.85, 2.05, 0), c); put('ear', LR(.85, 2.05, 0), c); put('door', LR(0, .7, 1.72, -.35), '#1B2333'); }
+  houseParts.push(p); });
 Object.values(HP).forEach(m => { if (m.instanceColor) m.instanceColor.needsUpdate = true; });
 const T = new THREE.Matrix4(), M2 = new THREE.Matrix4();
-function placeHouse(n, s) { const l = houseLots[n];
+function placeHouse(n, s) { const l = houseLots[n]; if (!l) return;
   T.compose(V(l.x, 0, l.z), new THREE.Quaternion().setFromEuler(new THREE.Euler(0, l.ry, 0)), V(s, Math.max(s, .001), s));
   for (const [m, i, lm] of houseParts[n]) { M2.multiplyMatrices(T, lm); m.setMatrixAt(i, M2); } }
 
@@ -300,7 +317,7 @@ const catMesh = new THREE.InstancedMesh(CAT_GEO, mat('#ffffff'), F + 1); catMesh
 catMesh.setColorAt(0, col.set('#F28C28'));
 for (let n = 1; n <= F; n++) catMesh.setColorAt(n, col.set(CAT_COLORS[(n * 5 + 3) % CAT_COLORS.length]));
 catMesh.instanceColor.needsUpdate = true;
-const homeOf = k => k < HOUSE_MAX ? { x: houseLots[k].x, z: houseLots[k].z, r: 3.4 } : (() => { const l = towerLots[aptTower(k - HOUSE_MAX)]; return { x: l.x, z: l.z, r: 5.6 + ((k - HOUSE_MAX) % 3) * .7 }; })();
+const homeOf = k => k < HOUSE_MAX ? { x: houseLots[k].x, z: houseLots[k].z, r: 2.4, roof: k % 3 === 0 ? (kindOf(k) === 'A' ? 2.75 : kindOf(k) === 'B' ? 2.55 : 1.85) : 0 } : (() => { const l = towerLots[aptTower(k - HOUSE_MAX)]; return { x: l.x, z: l.z, r: 5.6 + ((k - HOUSE_MAX) % 3) * .7 }; })();
 
 // ---------- trees + palms ----------
 { const spots = [];
@@ -315,6 +332,23 @@ const homeOf = k => k < HOUSE_MAX ? { x: houseLots[k].x, z: houseLots[k].z, r: 3
   spots.forEach(([x, z, s], k) => { T.compose(V(x, 1.2 * s, z), new THREE.Quaternion(), V(s, s, s)); trunk.setMatrixAt(k, T); });
   round.forEach(([x, z, s], k) => { T.compose(V(x, 3.6 * s, z), new THREE.Quaternion().setFromEuler(new THREE.Euler(0, k, 0)), V(s, s * .9, s)); ball.setMatrixAt(k, T); ball.setColorAt(k, col.set(greens[k % 4])); });
   cone.forEach(([x, z, s], k) => { T.compose(V(x, 4.4 * s, z), new THREE.Quaternion(), V(s, s, s)); cn.setMatrixAt(k, T); cn.setColorAt(k, col.set(greens[(k + 1) % 4])); });
+  // tiny cat park in the middle of every house block: grass, yarn ball / scratching post / cat tree, and a fish street lamp on the corner
+  { const hb = [...new Set(houseLots.map(l => l.block))]; const n = hb.length;
+    const grass = IM(B(9.4, .12, 9.4), n, false), yarn = IM(new THREE.IcosahedronGeometry(1.3, 1), n), post = IM(Cyl(.45, .5, 3.4, 8), n), plat = IM(Cyl(1.4, 1.4, .3, 10), n * 2),
+      tuft = IM(new THREE.ConeGeometry(.35, 1.1, 5), n * 6), lampP = IM(Cyl(.12, .14, 4.2, 6), n), fish = IM(mergeGeometries([new THREE.SphereGeometry(.55, 10, 8).scale(1.5, .8, .45).toNonIndexed(), new THREE.ConeGeometry(.5, .7, 3).rotateZ(Math.PI / 2).translate(-1.05, 0, 0).toNonIndexed()].map(g => { g.deleteAttribute('uv'); return g; })), n, false);
+    fish.material = new THREE.MeshStandardMaterial({ color: '#ffffff', emissive: '#FFB347', emissiveIntensity: .35, flatShading: true });
+    const YARN = ['#E85D5D', '#F4A7B9', '#7FB6E8', '#9B6FE0', '#FFC93C'];
+    hb.forEach((b, i) => { const x = b.i * BLOCK, z = b.j * BLOCK, h = (i * 2654435761 >>> 0) % 3;
+      T.makeTranslation(x, .12, z); grass.setMatrixAt(i, T); grass.setColorAt(i, col.set('#9FD47F'));
+      T.compose(V(x + (h === 0 ? 0 : 2.4), 1.3, z + (h === 0 ? 0 : -2)), new THREE.Quaternion(), V(1, 1, 1).multiplyScalar(h === 0 ? 1 : .7)); yarn.setMatrixAt(i, T); yarn.setColorAt(i, col.set(YARN[i % 5]));
+      T.compose(V(x - 1.8, 1.7, z + 1.4), new THREE.Quaternion(), V(1, h === 2 ? 1.5 : 1, 1)); post.setMatrixAt(i, T); post.setColorAt(i, col.set('#D9C2A3'));
+      T.makeTranslation(x - 1.8, h === 2 ? 5.2 : 3.5, z + 1.4); plat.setMatrixAt(i * 2, T); plat.setColorAt(i * 2, col.set('#2F5FE0'));
+      T.compose(V(x - 1.8, h === 2 ? 2.6 : -9, z + 1.4), new THREE.Quaternion(), V(.8, 1, .8)); plat.setMatrixAt(i * 2 + 1, T); plat.setColorAt(i * 2 + 1, col.set('#8FA9D9'));
+      for (let q = 0; q < 6; q++) { T.makeTranslation(x + Math.cos(q * 1.05 + i) * 3.4, .6, z + Math.sin(q * 1.05 + i) * 3.4); tuft.setMatrixAt(i * 6 + q, T); tuft.setColorAt(i * 6 + q, col.set(q % 2 ? '#5DB563' : '#7CCB6A')); }
+      T.makeTranslation(x - BLOCK / 2 + 3.2, 2.1, z - BLOCK / 2 + 3.2); lampP.setMatrixAt(i, T); lampP.setColorAt(i, col.set('#3B3B44'));
+      T.compose(V(x - BLOCK / 2 + 3.2, 4.5, z - BLOCK / 2 + 3.2), new THREE.Quaternion().setFromEuler(new THREE.Euler(0, i, 0)), V(1, 1, 1)); fish.setMatrixAt(i, T); fish.setColorAt(i, col.set(i % 2 ? '#FF9F43' : '#FFC93C')); });
+    [grass, yarn, post, plat, tuft, lampP, fish].forEach(m => { if (m.instanceColor) m.instanceColor.needsUpdate = true; });
+    const tmp = new THREE.Matrix4(); window.__park = [[grass, 1], [yarn, 1], [post, 1], [plat, 2], [tuft, 6], [lampP, 1], [fish, 1]].map(([m, k]) => ({ m, base: [...Array(n * k).keys()].map(i => { m.getMatrixAt(i, tmp); return [tmp.clone(), bT(hb[Math.floor(i / k)])]; }) })); }
   // a small park with trees in the middle of each tower block
   const tb = [...new Set(towerLots.map(l => l.block))]; const pk = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(2.2, 0), mat('#4FA65A'), Math.max(1, tb.length * 3)); pk.castShadow = true; pk.count = tb.length * 3; scene.add(pk);
   const pg = new THREE.InstancedMesh(B(8, .12, 8), mat('#8CC56A'), Math.max(1, tb.length)); pg.count = tb.length; pg.receiveShadow = true; scene.add(pg);
@@ -327,7 +361,7 @@ const homeOf = k => k < HOUSE_MAX ? { x: houseLots[k].x, z: houseLots[k].z, r: 3
 }
 
 // ---------- cars ----------
-const carGeo = mergeGeometries([B(2.2, 1, 4).toNonIndexed().translate(0, .8, 0), B(1.9, .8, 2).toNonIndexed().translate(0, 1.6, -.3)].map(g => { g.deleteAttribute('uv'); return g; }));
+const carGeo = mergeGeometries([B(2.2, 1, 4).toNonIndexed().translate(0, .8, 0), B(1.9, .8, 2).toNonIndexed().translate(0, 1.6, -.3), new THREE.ConeGeometry(.35, .6, 3).toNonIndexed().translate(-.6, 2.25, -.3), new THREE.ConeGeometry(.35, .6, 3).toNonIndexed().translate(.6, 2.25, -.3)].map(g => { g.deleteAttribute('uv'); return g; }));
 const NCARS = Math.min(80, 6 + Math.floor(roadList.length * .5));
 const carMesh = new THREE.InstancedMesh(carGeo, mat('#ffffff'), NCARS); carMesh.castShadow = true; scene.add(carMesh);
 const CAR_C = ['#E85D5D', '#2F5FE0', '#FFC93C', '#FFFFFF', '#3B3B44', '#5BB98C'];
@@ -438,14 +472,16 @@ window.renderFrame = (t) => {
   if (GROW) {
     const Z = new THREE.Matrix4().makeScale(0, 0, 0);
     [['rm', ROADM.rm], ['dash', ROADM.dash], ['pm', ROADM.pm]].forEach(([k, m]) => { if (!m) return; ROADM.base[k].forEach(([bm, t0], i) => { if (t0 < 0) { m.setMatrixAt(i, bm); return; } const s = ease((t - t0) / .5); if (s <= 0) m.setMatrixAt(i, Z); else { const sm = bm.clone().multiply(new THREE.Matrix4().makeScale(1, s, 1)); m.setMatrixAt(i, sm); } }); m.instanceMatrix.needsUpdate = true; });
+    (window.__park || []).forEach(({ m, base }) => { base.forEach(([bm, t0], i) => { if (t0 < 0) return; const s2 = ease((t - t0 - .2) / .5); m.setMatrixAt(i, s2 <= 0 ? Z : bm.clone().multiply(new THREE.Matrix4().makeScale(1, s2, 1))); }); m.instanceMatrix.needsUpdate = true; });
     LMG.forEach(([g, a]) => { if (a < 0) return; g.visible = t >= a; const k2 = back((t - a) / .7); g.scale.set(Math.max(.001, .6 + .4 * k2), Math.max(.001, k2), Math.max(.001, .6 + .4 * k2)); });
   }
   // Mango walks around the fountain; followers' cats around their homes
   { const a = t * .4; cm.compose(V(Math.cos(a) * 6.2, .5 + Math.abs(Math.sin(t * 8)) * .1, Math.sin(a) * 6.2), new THREE.Quaternion().setFromEuler(new THREE.Euler(0, -a, 0)), V(2.6, 2.6, 2.6)); catMesh.setMatrixAt(0, cm); }
   for (let k = 0; k < F; k++) { const h = homeOf(k), a0 = APPEAR[k] < 0 ? -1 : APPEAR[k] + .3, vis = a0 < 0 || t >= a0;
+    const s = vis ? 1.15 * (a0 < 0 ? 1 : back((t - a0) / .4)) : 0;
+    if (h.roof) { const ry = houseLots[k].ry + Math.sin(t * .3 + k) * .4; cm.compose(V(h.x, h.roof, h.z), new THREE.Quaternion().setFromEuler(new THREE.Euler(0, ry, 0)), V(s, s * .8, s)); catMesh.setMatrixAt(k + 1, cm); continue; }   // roof nappers
     const ang = t * (.35 + (k % 5) * .06) + k * 2.399, x = h.x + Math.cos(ang) * h.r, z = h.z + Math.sin(ang) * h.r;
-    const s = vis ? 1.7 * (a0 < 0 ? 1 : back((t - a0) / .4)) : 0;
-    cm.compose(V(x, Math.abs(Math.sin(t * 9 + k)) * .12, z), new THREE.Quaternion().setFromEuler(new THREE.Euler(0, -ang, 0)), V(s, s, s)); catMesh.setMatrixAt(k + 1, cm); }
+    cm.compose(V(x, Math.abs(Math.sin(t * 9 + k)) * .1, z), new THREE.Quaternion().setFromEuler(new THREE.Euler(0, -ang, 0)), V(s, s, s)); catMesh.setMatrixAt(k + 1, cm); }
   catMesh.instanceMatrix.needsUpdate = true;
   CARS.forEach((c, k) => { let x, z, ry;
     if (c.ring) { const a = c.a0 + t * .35; x = Math.cos(a) * 10.6; z = Math.sin(a) * 10.6; ry = -a; }
@@ -484,7 +520,7 @@ window.renderFrame = (t) => {
     $('crown').style.opacity = on ? 1 : 0; $('crown').style.transform = `scale(${on ? back((t - C.stop) / .35) : 0})`;
     win.querySelector('[data-h]').innerHTML = HEART(on); win.querySelector('[data-h] svg').style.transform = `scale(${on ? 1 + .5 * Math.max(0, 1 - (t - C.stop) / .3) : 1})`;
     const fin = CM.list[CM.win].likes, from = Math.round(fin * .55); win.querySelector('[data-l]').textContent = fmt(on ? Math.round(from + (fin - from) * ease((t - C.stop) / 1.2)) : from); }
-  newTags.forEach(tg => { const a = APPEAR[tg.k] + .25, h = homeOf(tg.k); const top = tg.k < HOUSE_MAX ? 7 : (Math.ceil((tg.k - HOUSE_MAX - TSTART[aptTower(tg.k - HOUSE_MAX)] + 1) / 2)) * FLOOR_H + 4;
+  newTags.forEach(tg => { const a = APPEAR[tg.k] + .25, h = homeOf(tg.k); const top = tg.k < HOUSE_MAX ? 4.6 : (Math.ceil((tg.k - HOUSE_MAX - TSTART[aptTower(tg.k - HOUSE_MAX)] + 1) / 2)) * FLOOR_H + 4;
     const p = proj(V(h.x, top, h.z)); const vis = APPEAR[tg.k] >= 0 && t >= a && t < ms - .25 && p.ok; tg.el.style.display = vis ? 'block' : 'none';
     if (vis) { tg.el.style.left = Math.min(Math.max(p.x, 250), 830) + 'px'; tg.el.style.top = p.y + 'px'; tg.el.style.transform = `translate(-50%,-100%) scale(${back((t - a) / .35)})`; } });
   if (NEWB) { const a = NEWB.at + .8, p = proj(NBpos.clone().add(V(0, 26 * Math.max(.001, gk), 0))); const vis = t >= a && t < ST[3] && p.ok; buildTag.style.display = vis ? 'block' : 'none';
