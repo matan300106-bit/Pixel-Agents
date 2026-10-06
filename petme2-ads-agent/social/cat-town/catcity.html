@@ -564,7 +564,7 @@ const BAL = { ANG: [4.1, 3.0, 1.0, 0.7, 1.8], RF: [.6, .35, .5, .35, .35], COL: 
   [BAL.shell, BAL.parts].forEach(m => { m.frustumCulled = false; for (let k = 0; k < 5; k++) m.setMatrixAt(k, ZERO); });
   BAL.COL.forEach((c, k) => BAL.shell.setColorAt(k, col.set(c))); BAL.shell.instanceColor.needsUpdate = true;
   BAL.cats = [0, 1, 2, 3, 4].map(k => [slot(POSES.sit, CAT_COLORS[(k * 3 + 1) % CAT_COLORS.length]), slot(POSES.sit, CAT_COLORS[(k * 3 + 5) % CAT_COLORS.length])]);
-  BAL.catL = [LR(-.45, -11.2, 0), LR(.45, -11.2, 0)];
+  BAL.catL = [LR(-.45, -10.65, 0), LR(.45, -10.65, 0)];   // heads clear the basket rim (review said -11.2: only ear tips showed)
 }
 
 // ---------- Build 7: one hero bus stop, "NEXT NAP / 5 MIN" ----------

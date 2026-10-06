@@ -1,0 +1,82 @@
+# Cat Town: build notes (builder, 2026-10-06)
+
+Source of truth for this build: `design-review.md` (BUILD LIST, section 3). Engine: `catcity.html`. Web page: `viewer.html` (made by `python3 build_viewer.py`).
+
+## What I built, and where
+
+All engine code is in `catcity.html`. Search for the comment in the "Where" column.
+
+| # | Item | Status | Where (comment in code) | Unlocks at |
+|---|---|---|---|---|
+| — | Shared helpers (`unlockT`, `popK`, `UNLOCK`, `polar`, `yawTo`, `paint`, `putCat`) | DONE | `shared helpers for the extras` | — |
+| — | Pose kit: `CAT_SIT`, `CAT_LOAF`, `CAT_DRINK`, `CAT_BELLY` (800 slots each) + `WALK` (32 slots) | DONE | `pose kit` | — |
+| 1 | Mango's Water Bar: white trough wall, water ring, blue lip, 36 droplets in 6 arcs, ripples, 17 drinking spots + Mango as host, in/out lanes (r 10.5 / r 9.3, always counter-clockwise), deadpan glance (every 3rd spot), dome breathing, `EP.fountainWave` | DONE | `Build 1: Mango's Water Bar` + `updateExtras` | Mango + ring: Day 1. Spot m: follower rank 1..17 (fill order 1, 17, 2, 16 …) |
+| 2 | Circle traps: hero row of 4 dark circles on the plaza (3 sitters + the late 4th cat on a 20 s loop) and white garden circles (15% of garden trees) | DONE | `Build 2: cat circle traps` (gardens) + `Build 2 (hero row)` | Tape 20, cats 20-22, walker 23. Garden circles appear with their district |
+| 3 | If it fits, I sits: hero box on the plaza (grey 1.6 loaf, weight shift every 9 s) + garden boxes (next 15% of garden trees) | DONE | `Build 3` (gardens) + `Build 3 (hero box)` | Hero box 5 |
+| 4 | Big Mochi: sleeping ginger mountain cat (stripes, head, ears, closed eyes, nose, tail, paw), breathing, ear flick, 3 rising Z letters; trees within 75 cleared | DONE | `Build 4: Big Mochi` | Rises over 2 time units, finishing at 1,000 |
+| 5 | Red Dot Beach: lighthouse (white/salmon), laser that tracks the dot, beam, red dot + halo, 5 chasers (pounce, butt wiggle), 1 belly-up quitter; palms cleared | DONE | `Build 5: Red Dot Beach` | 500 |
+| 6 | Fish balloons: 5 balloons (2 draw calls), striped shell, eyes, tail fin, basket with 2 cats, moving shadows | DONE | `Build 6: fish balloons` | Balloon k at 500 × (k+1) |
+| 7 | Bus stop "NEXT NAP / 5 MIN": shelter, own 2-line sign canvas, 2 loaf sleepers + 1 belly-up (breathing, roll) | DONE | `Build 7: one hero bus stop` | Shelter 10, sleepers 10-12 |
+| 8 | Save postcard (web page only) | DONE | `viewer.html` shell (button + `.pc` overlay) and `viewer_loop.js` | — |
+| fix | `textSign()` shrinks the font (104 → min 56 px) instead of cutting letters | DONE | `function textSign` | — |
+| fix | `await document.fonts.load('900 100px Nunito')` (and 800) before any sign canvas is drawn | DONE | top of the module script | — |
+| fix | Plaza disc lowered to top y .12 (it z-fought with the avenue road at y .14; this showed in the fountain close-ups) | DONE (extra) | `plaza.position.y = .05` | — |
+
+Every item is a pure function of `t` / `anim` (no `Math.random()` in `renderFrame`). Two renders of the same `t` gave identical PNGs (same md5).
+
+The old Mango road patrol is gone (`catMesh` slot 0 = ZERO). The City Hall Mango statue stays.
+
+## Postcard (Build 8)
+
+- The button "Save postcard" is in the first dock row, next to "Play growth". The page renders the current view, then draws a 1080×1350 card: the view is cover-cropped into the top 1080×1220, with a white footer reading "Cat Town · N cats · Day D" (900 40px Nunito, ink) and "@petme2" (800 30px, brand blue).
+- **Deviation (from the manager's brief, not the review):** the review said share or download. The page sandbox blocks scripted downloads, so the card opens in an overlay as an `<img>` (data URL). The visitor long-presses or right-clicks it to save. The overlay has a Close button (focus moves to it; Esc and clicking the backdrop also close it). It uses the page CSS tokens (`--panel`, `--ink`, `--muted`, `--sky`).
+- `build_viewer.py` no longer adds its own `fonts.load`, because the engine now has one.
+- Phone dock (≤520 px): row buttons got slightly smaller padding, so "Followers · Save postcard · Play growth" fits on one row at 390 px.
+- Tested (Playwright, SwiftShader) at 390×844 and 1280×800. The image is 1080×1350, the overlay opens, Esc closes it. No page errors.
+
+## Deviations from the review (and why)
+
+1. **Big Mochi angle 3.45 → 3.7** (`MOCHI_A`). At 3.45, Mochi was cut off at the left edge of `p_5000` (x ≈ 23 px). At 3.7 it is fully inside both `p_1000` (x ≈ 480–860, y ≈ 380–500) and `p_5000` (x ≈ 230–430, y ≈ 500–560). It sits a bit higher on screen than the review's 550–720 estimate, but still below the counter pill. Tree clearing uses the same constant. For the 1,000-followers episode shot, look at `(cos 3.7·500, 20, sin 3.7·500)` = (−424.9, 20, −263.6), not (−476, 20, −152).
+2. **Balloon placement.** The review's `ANG = [2.25 … 4.95]` with r = 0.7·CR spreads the balloons around the whole city. The portrait camera only sees about 24° across, so `p_5000` showed 2 balloons and `p_1000` showed 1. I picked new spots with a projection check against `p_1000`, `p_5000` and both opening-shot cameras: `ANG = [4.1, 3.0, 1.0, 0.7, 1.8]`, radius factor `RF = [.6, .35, .5, .35, .35]` (× CR, clamped 60–240, + 12·sin 2.1k). Result: `p_1000` shows 2, `p_5000` shows all 5. None covers the fountain or Mochi in those frames, and none is in the opening shot near the fountain. Height, drift, wag and unlocks are as specified.
+3. **Ripples use `RingGeometry(.8, 1)`, not a `Torus(1, .035)`.** A torus scaled to .15–.7 has a tube about .01 wide, which is invisible even in the close-up. A flat ring scaled in x/z keeps a visible band.
+4. **`CAT_DRINK` tail rx +1.2, not −1.2.** With −1.2 the tail hangs down at the back. +1.2 gives the "tail up = happy cat" the design asked for.
+5. **Tiny-box flaps on the box's long sides, drooping outward (rz ±.5).** With the spec (flaps at z ±.38), the oversized loaf covered both flaps completely. The loaf also sits a little higher (sunk .04, not .1), and the hero box is turned to a profile view (yaw +1.2), so the "cat way bigger than box" reads from the `q_box` camera.
+6. **Balloon tail** is a flat fin (cone with its tip toward the body, flattened in x), not a cone pointing −z (that looked like a second nose). **Basket cats** sit at y −10.65, not −11.2: at −11.2 only ear tips showed above the rim.
+7. **Big Mochi tail torus** is a bit smaller and higher (r 43, tube 5, x-scale 1.26, y 7, arc 1.05π instead of 46/6/1.3/5/1.1π). The bigger ring read as a plate rim around the cat.
+8. **Palms:** besides the ones within 10 of the lighthouse, palms in the dot's play area (z 26–114) are also removed when the beach unlocks. Otherwise chasers run through palm trunks and the canopies hide the dot. Removal happens after all `rnd()` calls, so other trees, palms and boats don't move.
+9. **Tape:** garden circles and the hero row share one `InstancedMesh` (the hero row uses the last 4 slots). Same for boxes and flaps (the hero box uses the last slot). This is as specified, just noting where the slots are.
+10. **Bus stop sleepers** sit on the real bench top (local y .715; the review's .86 included the group's .14 lift). The belly-up sleeper lies along the bench (yaw +π/2).
+
+## Cost
+
+- p_5000 frame (SwiftShader, 1080×1920, including the 4096 shadow map): **5.2–5.4 s** after the build vs **5.5–5.9 s** before. That is within run-to-run noise, so under the +10% budget.
+- Per frame: about 130 matrix writes for the extras (spots, Mango, droplets, ripples, circle and box heroes, beach, balloons, bus stop) plus the instanced-matrix uploads of the pose meshes. Nothing new runs per house or per lot. Garden circles and boxes use `grown()` like the other garden items.
+- New draw calls: about 25 in total, not counting shadow passes (4 pose meshes, WALK, ring/lip/wall/water, droplets, ripples, tape, box, flaps, Mochi about 10 meshes, lighthouse/laser/beam/dot/halo, 2 balloon meshes, bus stop shelter + sign).
+
+## Checks run (stills in `previews/`, configs next to them)
+
+| Still | Result |
+|---|---|
+| `p_day1`, `q_fountain_day1` | Ring + droplets + Mango only. No circles, box, bus stop, beach, balloons or Mochi. |
+| `q_fountain` (t=3), `fountain-flower-top` | 17 spots + Mango. Drinkers' heads over the water, ripples at noses. At t=11.4 a cat stands and stares at the camera. Ring never empty and never full at t = 0, 3, 6 … 21 (4–7 drinking, 8–13 walking, 0–2 empty). |
+| Fountain Wave (`fountainWave: 2`, t 3.5) | All 17 + Mango drinking: a flower from above. Lifts run in order m = 1…17, then Mango. |
+| `q_circles` (t=5.5) | 4 dark circles on the cream plaza, 4 sitters with the same yaw. At t=3 the 4th cat is still walking in. |
+| `q_box` / `tiny-box` | Grey loaf much larger than its box, flaps at the sides. Garden boxes are visible in `p_1000street`. |
+| `q_mochi`, `p_1000`, `p_5000` | Mochi reads as a sleeping ginger cat in front of the mountains, with Z letters. Viewer slider: nothing at 910, rising at 968, nearly up at 998. |
+| `red-dot-beach`, `red-dot-beach-qa` | Lighthouse, laser and beam, bright dot + halo, 5 chasers, belly-up quitter, no palms in the play area. |
+| `fish-balloon`, `p_5000` | 5 balloons with shadows in `p_5000`, 2 in `p_1000`, none at `p_day1`/`p_100`. |
+| `bus-stop`, `bus-stop-qa` | Yellow-roof shelter facing out, "NEXT NAP / 5 MIN" in full, 2 loaves + 1 belly-up on the bench. |
+| Signs | "PETME2 PET SHOP" and "YOUR IDEA HERE?" show in full. |
+| Episode (video) mode | A test episode (980 → 1,020 followers) rendered at t = 0, 1.5, 6, 12, 18: title, subtitles, counter, comment card and end card all work. No balloon over the fountain in the opening. No page errors. |
+| Brand | `#FF2A2A` is used only on the dot, halo, laser tip and beam. No new PETME2 text except the postcard's "@petme2". |
+
+## Known issues
+
+- **Episode shots don't visit the new features yet** (except the fountain, which is in every opening). Adding a Mochi shot or a beach shot means adding `EP.shots` entries in the episode JSON (see deviation 1 for the Mochi look-at point). `EP.fountainWave` must be set in the episode JSON to use the wave.
+- **In the viewer's default desktop angle**, Mochi sits right behind the big counter when it rises. Auto-rotate moves it into view within about 10 s. On phone it shows under the counter.
+- The QA cameras `q_beach` and `q_busstop` from the review crop the lighthouse and the sign at the frame edge. I kept them as specified and added better-framed preview cameras (`v_beach.json`, `v_busstop.json`, `v_balloon.json`).
+- The 2 basket cats line up behind each other when a balloon is seen exactly side-on.
+- Cats have no faces (engine style), so the "deadpan glance" reads as a head turn toward the camera, not a stare.
+- `q_circles` at t=3 shows the 4th circle empty (that cat is still walking in). This is by design; use t ≥ 4.4 for a full row.
+- In the test harness Google Fonts is blocked, so the postcard footer was checked with a fallback font. On the live page it uses Nunito from Google Fonts. A tight phone row might wrap again if a much wider font is used.
+- `CITY_PLAN.md` still names `town2.html` as the episode engine (noted in the review; not changed here).
