@@ -146,3 +146,4 @@ Owner ask: fountain and feeder each in its own circle, side by side like an 8; c
 - Size chips fly closer on small towns (Day 1 now opens near the fountain and feeder). Big Mochi fits the 400x860 phone view.
 - Cameras: `q_hw.json`, `q_hw_wide.json`, `q_feed_food.json`, `q_feed_water.json`.
 - The store has 20 themes (Shopify's limit), so `themeDuplicate` returns null. Uploaded to the unpublished copy 188910403796 instead (renamed). Theme names must be 50 characters or fewer.
+- Owner feedback (same night): the whole city rushing in looked funny. Now only about 1 in 3 street cats within 75 of the square walk over (`l.r < 75 && hash01(k*7+3) < .3`); the circle's own drinkers/eaters still gather. Card notes say "the cats nearby".
