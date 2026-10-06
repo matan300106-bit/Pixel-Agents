@@ -26,16 +26,16 @@ An Instagram series + interactive web page: a low-poly 3D **city built for cats*
 - Private interactive link (Claude artifact): https://claude.ai/artifact/1Kt6gGXdFVUKNLovgrmMgw (republish from the same file path in the session that created it; from a new session pass this URL as `url`).
 - Picture page: https://claude.ai/artifact/J5eZctn7UsJmcoA4QQBSMF
 - Shopify page: petme2.com/pages/cat-town (page template `page.cat-town`, section `pm2-cat-town`).
-  - LIVE theme now: `PETME2 — Honest pricing + Cat Town` (188897886420) → has Cat Town v3 (no tapping, slider to 5,000).
-  - Preview theme: `PETME2 — Cat Town tap houses (1,000)` (188907684052) → tap houses/buildings, 1,000 cap. Preview: https://petme2.com/pages/cat-town?preview_theme_id=188907684052
+  - LIVE theme now (owner published it 2026-10-06): `PETME2 — Cat Town tap houses (1,000)` (188907684052) → tap houses/buildings, 1,000 cap, old blue fountain.
+  - Preview theme: `PETME2 — Cat Town fountain + feeder + controls` (188909420756) → real PETME2 steel fountain, dual bowl feeder, bigger square, arrow/zoom pad, double-tap fly-to. Preview: https://petme2.com/pages/cat-town?preview_theme_id=188909420756
   - Theme writes only to UNPUBLISHED copies (live theme writes are blocked). If the owner publishes the copy, duplicate the live theme again and write to the new copy. Upload big files via `stagedUploadsCreate` (curl POST) + `themeFilesUpsert` with body type URL, then verify `checksumMd5`. Log every change in `../../changes-log.csv`.
 
 ## Day-1 video pipeline (when real data arrives)
 Voice: edge-tts `en-US-AvaMultilingualNeural` rate +6% with WordBoundary timings (Composio remote workbench); original synth music + pop SFX; mix with ffmpeg sidechain; render frames headless → H.264; deliver via Shopify Files link. Needs real data from the owner: new follower count, top comments with likes, Instagram handle (@petme2 unconfirmed). Do not post anything without owner approval.
 
-## Status at handoff (2026-10-06, commit 9d1a5ec on petme2-campaign-plan)
-DONE in code (builder, see `build-notes.md`): real PETME2 Stainless Steel Fountain 3.2L model at the center, giant Dual Bowl Feeder next to it (cats eat, one stares at the tank), plaza 16 → 28, D-pad arrows + zoom + center button, double-tap fly-to (single tap opens the info card after 250 ms), game-style phone controls, first-load hint, phone LITE mode; `build_shopify.py` fixed. Previews: `previews/final_fountain_feeder.jpg`, `final_square_top.jpg`, `final_city_1000.jpg`, `final_day1.jpg`.
-NOT DONE: nothing of this is uploaded yet. Shopify preview theme 188907684052 and the artifact link still have the older version (tap houses, 1,000 cap, no fountain/feeder/D-pad). Next: `python3 build_viewer.py && python3 build_shopify.py`, test at phone size, upload to an unpublished theme copy, republish the artifact, send the owner the preview link.
+## Status (2026-10-06, Cat Town session in the "Cat Town" project)
+The builder's work landed (commit 9d1a5ec, details in `build-notes.md` "Update 2026-10-06 (evening)"): real PETME2 Stainless Steel Fountain 3.2L at the center, ~1.7x square, Dual Bowl Automatic Feeder with eating cats, arrow D-pad + zoom + home, double-tap fly-to, first-load hint. Uploaded to theme copy 188909420756 (checksums match the repo files). Waiting for the owner to check the preview and publish.
+Note: this cloud container can't open petme2.com (proxy blocks it), so live-page checks are done locally with `viewer.html` + Playwright.
 
 ## Open polish items
 Phone: Mochi starts cut at the edge; Day-1 web view far; episode shots don't visit Mochi/beach; "Find your house" search waits for real handles (no demo names on a public page except clearly-labelled examples).
