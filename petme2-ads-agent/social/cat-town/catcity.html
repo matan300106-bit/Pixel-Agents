@@ -1,54 +1,65 @@
-<title>Cat Town</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Nunito+Sans:wght@400;600;700&display=swap">
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<!-- PETME2 Cat Town (city engine). Modern cat city on a coast with mountains.
+     Reads a city/episode JSON (window.EPISODE, default city.json). window.renderFrame(t) draws time t.
+     Rules: followers 1-100 get cat houses, 101+ get apartments in cat towers (20 per tower, grows a floor at a time).
+     Landmarks (PETME2 shop at 10 followers, City Hall at 100, then comment builds) take reserved blocks in order. -->
 <style>
-  /* Layout: full-bleed 3D city, a floating counter on top, a control dock at the bottom. */
-  :root { --sky: #CFE8F7; --ink: #1B2333; --panel: rgba(255,255,255,.94); --muted: #5B6475; --brand: #2F5FE0; --sun: #FFC93C; --line: rgba(27,35,51,.12);
-    --display: 'Nunito', system-ui, sans-serif; --body: 'Nunito Sans', system-ui, sans-serif; }
-  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --sky: #16202E; --ink: #EEF2F8; --panel: rgba(22,30,44,.92); --muted: #A7B1C2; --brand: #7FA2FF; --sun: #FFD25A; --line: rgba(238,242,248,.14); color-scheme: dark; } }
-  :root[data-theme="dark"] { --sky: #16202E; --ink: #EEF2F8; --panel: rgba(22,30,44,.92); --muted: #A7B1C2; --brand: #7FA2FF; --sun: #FFD25A; --line: rgba(238,242,248,.14); color-scheme: dark; }
-  html, body { height: 100%; }
-  body { background: var(--sky); color: var(--ink); font-family: var(--body); overflow: hidden; }
-  #stage { position: fixed; inset: 0; }
-  #stage canvas { display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; }
-  .top { position: fixed; top: calc(env(safe-area-inset-top, 0px) + 14px); left: 16px; right: 16px; display: flex; flex-direction: column; align-items: center; gap: 6px; pointer-events: none; }
-  .pill { font-family: var(--display); font-weight: 900; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--brand); background: var(--panel); padding: 6px 14px; border-radius: 999px; box-shadow: 0 6px 20px rgba(0,0,0,.12); }
-  #countN { font-family: var(--display); font-weight: 900; font-size: clamp(48px, 11vw, 84px); line-height: 1; color: #fff; -webkit-text-stroke: 8px #1B2333; paint-order: stroke fill; font-variant-numeric: tabular-nums; }
-  #countL { font-family: var(--display); font-weight: 900; font-size: 15px; color: #fff; background: #1B2333; padding: 4px 14px; border-radius: 999px; }
-  .dock { position: fixed; left: 16px; right: 16px; bottom: calc(env(safe-area-inset-bottom, 0px) + 16px); margin: 0 auto; max-width: 560px; background: var(--panel); border-radius: 22px; padding: 16px 18px; box-shadow: 0 16px 40px rgba(10,20,40,.22); display: grid; gap: 12px; backdrop-filter: blur(6px); }
-  .row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-  .dock label { font-family: var(--display); font-weight: 800; font-size: 15px; }
-  .dock label small { font-family: var(--body); font-weight: 600; color: var(--muted); font-size: 13px; margin-left: 6px; }
-  input[type=range] { width: 100%; accent-color: var(--brand); height: 28px; }
-  .chips { display: flex; gap: 8px; flex-wrap: wrap; }
-  button { font: 800 14px var(--display); color: var(--ink); background: transparent; border: 1.5px solid var(--line); border-radius: 999px; padding: 8px 14px; cursor: pointer; }
-  button:hover { border-color: var(--brand); color: var(--brand); }
-  button:focus-visible, input:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
-  #play { background: var(--brand); color: #fff; border-color: var(--brand); margin-left: auto; }
-  .rules { font-size: 13px; line-height: 1.45; color: var(--muted); margin: 0; }
-  .rules b { color: var(--ink); }
-  @media (max-width: 520px) { .dock { padding: 12px 14px; gap: 8px; } .chips button { padding: 6px 11px; font-size: 13px; } .rules { font-size: 12px; } .dock label small { display: none; } }
-  .loading { position: fixed; inset: 0; display: grid; place-items: center; font: 900 18px var(--display); color: var(--ink); pointer-events: none; }
-  body.ready .loading { display: none; }
+  @font-face { font-family: Nunito; font-weight: 800; src: url(node_modules/@fontsource/nunito/files/nunito-latin-800-normal.woff2) format('woff2'); }
+  @font-face { font-family: Nunito; font-weight: 900; src: url(node_modules/@fontsource/nunito/files/nunito-latin-900-normal.woff2) format('woff2'); }
+  html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #CFE8F7; font-family: Nunito, sans-serif; }
+  canvas { position: absolute; inset: 0; }
+  .ui { position: absolute; inset: 0; pointer-events: none; }
+  .stroke { color: #fff; -webkit-text-stroke: 12px #1B2333; paint-order: stroke fill; }
+  .count { position: absolute; top: 130px; left: 0; right: 0; text-align: center; }
+  .count b { display: block; font-weight: 900; font-size: 150px; line-height: 1; }
+  .count span { display: inline-block; margin-top: 10px; background: #1B2333; color: #fff; font-weight: 900; font-size: 36px; padding: 8px 26px; border-radius: 999px; }
+  .title { position: absolute; top: 640px; left: 0; right: 0; text-align: center; font-weight: 900; font-size: 210px; line-height: 1; color: #FFD23F; -webkit-text-stroke: 16px #1B2333; paint-order: stroke fill; text-shadow: 0 16px 0 rgba(27,35,51,.35); }
+  .sub { position: absolute; left: 40px; right: 40px; top: 1400px; text-align: center; font-weight: 900; font-size: 82px; line-height: 1.1; }
+  .sub .w { display: inline-block; margin: 0 10px; color: #fff; -webkit-text-stroke: 12px #1B2333; paint-order: stroke fill; }
+  .sub .w.on { color: #FFD23F; }
+  .tag { position: absolute; transform: translate(-50%, -100%); background: #1B2333; color: #fff; font-weight: 900; font-size: 40px; line-height: 1.2; padding: 14px 26px; border-radius: 20px; text-align: center; white-space: nowrap; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+  .tag small { display: block; font-size: 32px; color: #FFD23F; font-weight: 800; }
+  .tag:after { content: ''; position: absolute; left: 50%; bottom: -12px; margin-left: -12px; border: 12px solid transparent; border-bottom: 0; border-top-color: #1B2333; }
+  .cm { position: absolute; left: 90px; right: 90px; top: 760px; }
+  .cm__label { display: inline-block; background: #1B2333; color: #FFD23F; font-weight: 900; font-size: 30px; padding: 8px 20px; border-radius: 999px; margin: 0 0 14px 6px; }
+  .cm__win { height: 196px; overflow: hidden; border-radius: 34px; box-shadow: 0 18px 50px rgba(20,40,90,.3); }
+  .card { height: 196px; box-sizing: border-box; background: #fff; display: flex; align-items: center; gap: 24px; padding: 0 34px; }
+  .card__av { flex: 0 0 84px; height: 84px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 900; font-size: 40px; }
+  .card__body { flex: 1; min-width: 0; }
+  .card__name { font-weight: 800; font-size: 30px; color: #6B7280; }
+  .card__text { font-weight: 900; font-size: 44px; color: #111; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .card__like { flex: 0 0 auto; text-align: center; font-weight: 900; font-size: 34px; color: #6B7280; }
+  .card__like svg { width: 54px; height: 54px; display: block; margin: 0 auto 2px; }
+  .card.win { background: #FFF6D6; box-shadow: inset 0 0 0 6px #FFC93C; }
+  .card.win .card__like { color: #ED4956; }
+  .crown { position: absolute; right: 30px; top: -6px; background: #FFC93C; color: #1B2333; font-weight: 900; font-size: 30px; padding: 8px 18px; border-radius: 999px; box-shadow: 0 8px 20px rgba(0,0,0,.2); }
+  .end { position: absolute; top: 560px; left: 60px; right: 60px; text-align: center; }
+  .end h2 { margin: 0; font-weight: 900; font-size: 128px; line-height: 1.02; color: #FFD23F; -webkit-text-stroke: 14px #1B2333; paint-order: stroke fill; }
+  .end .pills { margin-top: 30px; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .end .pills div { background: rgba(255,255,255,.96); color: #1B2333; font-weight: 900; font-size: 40px; padding: 12px 30px; border-radius: 999px; box-shadow: 0 10px 30px rgba(20,40,90,.2); }
+  .end .pills div b { color: #2F5FE0; }
+  .brand { position: absolute; top: 60px; left: 0; right: 0; text-align: center; }
+  .brand span { display: inline-block; background: rgba(255,255,255,.92); color: #2F5FE0; font-weight: 900; font-size: 30px; letter-spacing: .08em; padding: 8px 22px; border-radius: 999px; }
 </style>
-<div id="stage"></div>
-<div class="loading">Building Cat Town…</div>
-<div class="top"><span class="pill">🐾 PETME2 Cat Town</span><b id="countN">1</b><span id="countL">cat · day 1</span></div>
-<div class="dock">
-  <div class="row"><label for="grow">Followers <small>drag to grow the city</small></label><button id="play" type="button">Play growth</button></div>
-  <input id="grow" type="range" min="0" max="5000" step="1" value="1000" aria-label="Followers">
-  <div class="chips"><button type="button" data-f="0">Day 1</button><button type="button" data-f="100">100</button><button type="button" data-f="1000">1,000</button><button type="button" data-f="2500">2,500</button><button type="button" data-f="5000">5,000</button></div>
-  <p class="rules"><b>New follower</b> = a new cat + their own little house. <b>Most-liked comment</b> builds anything. Cats walk the streets; humans run the cat taxis. Drag to look around.</p>
+</head>
+<body>
+<div class="ui">
+  <div class="brand" id="brand"><span>🐾 PETME2 CAT TOWN</span></div>
+  <div class="count" id="count"><b class="stroke" id="countN">0</b><span id="countL">cats · Day 1</span></div>
+  <div class="title" id="title" style="opacity:0"></div>
+  <div class="cm" id="cm" style="opacity:0"><div class="cm__label">🏆 Most-liked comment builds it</div><div class="cm__win"><div id="cmList"></div></div><div class="crown" id="crown" style="opacity:0">👑 MOST LIKED</div></div>
+  <div id="tags"></div>
+  <div class="end" id="end" style="opacity:0"><h2>What do we build tomorrow?</h2><div class="pills"><div>New follower = <b>a new cat + home</b></div><div>Top comment <b>builds anything</b></div><div>@petme2</div></div></div>
+  <div class="sub" id="sub"></div>
 </div>
-<div hidden><div id="title"></div><div id="cmList"></div><div id="crown"></div><div id="tags"></div><div id="sub"></div><div id="end"></div><div id="cm"></div><div id="brand"></div><div id="count"></div></div>
-<script>window.CITY = {"day": 1, "followersBefore": 0, "followersNew": 5000, "order": "index", "newFrom": 0, "newTo": 100, "noReserved": true, "dayRange": [1, 150], "landmarks": [{"kind": "petshop", "sign": "PETME2 Pet Shop", "at": 0.6652775691064388}, {"kind": "cafe", "sign": "Cat Café", "at": 2.0801836235731934}, {"kind": "statue", "sign": "Mango Statue", "at": 3.268976813619732}, {"kind": "cityhall", "sign": "City Hall", "at": 4.355945738151372}, {"kind": "market", "sign": "Fish Market", "at": 9.088253586270579}, {"kind": "pool", "sign": "Cat Pool", "at": 15.836251510649447}, {"kind": "custom", "sign": "Cat Airport", "at": 25.352741637440364}, {"kind": "custom", "sign": "Cat Cinema", "at": 36.10790729584761}, {"kind": "custom", "sign": "Cat Stadium", "at": 48.03536812353648}, {"kind": "cafe", "sign": "Sushi Bar", "at": 61.073198035457274}, {"kind": "custom", "sign": "Cat School", "at": 75.16727301487116}, {"kind": "market", "sign": "Toy Store", "at": 88.6254307791284}]};</script>
-<script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/" } }</script>
+<script type="importmap">{ "imports": { "three": "./node_modules/three/build/three.module.js" } }</script>
 <script type="module">
 import * as THREE from 'three';
-import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-try { await document.fonts.load('900 100px Nunito'); } catch (e) {}
-const EP = window.CITY;
+import { mergeGeometries } from './node_modules/three/examples/jsm/utils/BufferGeometryUtils.js';
+const EP = await (await fetch((window.EPISODE || new URLSearchParams(location.search).get('ep') || 'city.json') + '?' + Date.now())).json();
 const $ = id => document.getElementById(id);
 const ease = t => t < 0 ? 0 : t > 1 ? 1 : 1 - Math.pow(1 - t, 3);
 const inout = t => t < 0 ? 0 : t > 1 ? 1 : t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
@@ -59,12 +70,12 @@ const V = (x, y, z) => new THREE.Vector3(x, y, z);
 const STILL = !!EP.still;
 
 // ---------- renderer ----------
-const stage = document.getElementById('stage'); let W = stage.clientWidth, H = stage.clientHeight;
+const W = 1080, H = 1920;
 const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
-renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2)); renderer.setSize(W, H);
+renderer.setSize(W, H); renderer.setPixelRatio(1);
 renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
 renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-stage.appendChild(renderer.domElement);
+document.body.prepend(renderer.domElement);
 const scene = new THREE.Scene();
 { const c = document.createElement('canvas'); c.width = 4; c.height = 512; const g = c.getContext('2d');
   const gr = g.createLinearGradient(0, 0, 0, 512); gr.addColorStop(0, '#78B9EE'); gr.addColorStop(.62, '#CDE7F7'); gr.addColorStop(1, '#E8F3FA');
@@ -72,7 +83,7 @@ const scene = new THREE.Scene();
 scene.fog = new THREE.Fog('#DCEEF8', 320, 1150);
 const camera = new THREE.PerspectiveCamera(42, W / H, 0.5, 3000);
 scene.add(new THREE.HemisphereLight('#FFFFFF', '#B5D48A', 1.15));
-const sun = new THREE.DirectionalLight('#FFF1DA', 2.3); sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048); sun.shadow.bias = -0.0004; sun.shadow.normalBias = .4;
+const sun = new THREE.DirectionalLight('#FFF1DA', 2.3); sun.castShadow = true; sun.shadow.mapSize.set(4096, 4096); sun.shadow.bias = -0.0004; sun.shadow.normalBias = .4;
 scene.add(sun); scene.add(sun.target);
 const mats = {};
 const mat = (c, extra = {}) => { const k = c + JSON.stringify(extra); return mats[k] || (mats[k] = new THREE.MeshStandardMaterial({ color: c, flatShading: true, roughness: .9, ...extra })); };
@@ -507,28 +518,8 @@ window.renderFrame = (t, anim = t) => {
     if (vis) { buildTag.style.left = Math.min(Math.max(p.x, 250), 830) + 'px'; buildTag.style.top = p.y + 'px'; buildTag.style.transform = `translate(-50%,-100%) scale(${back((t - a) / .35)})`; } }
   $('end').style.opacity = endK; $('end').style.transform = `scale(${.9 + .1 * back((t - ST[3]) / .5)})`;
 };
-window.__noCam = true;
-const controls = new OrbitControls(camera, renderer.domElement);
-controls.target.set(-10, 2, 0); if (innerWidth < 700) camera.position.set(150, 125, 165); else camera.position.set(190, 100, 150);
-controls.enableDamping = true; controls.maxPolarAngle = Math.PI * .47; controls.minDistance = 12; controls.maxDistance = 900;
-controls.autoRotate = true; controls.autoRotateSpeed = .35; renderer.domElement.addEventListener('pointerdown', () => { controls.autoRotate = false; });
-const fit = () => { W = stage.clientWidth; H = stage.clientHeight; renderer.setSize(W, H); camera.aspect = W / H; camera.fov = W / H < .8 ? 55 : 42; camera.updateProjectionMatrix(); };
-addEventListener('resize', fit); fit();
-const slider = $('grow'), FMAX = +slider.max, tOf = f => f <= 0 ? -1 : EP.newFrom + (EP.newTo - EP.newFrom) * Math.pow((f - .5) / FN, .8) + 1e-6;
-let target = +slider.value, cur = target, playing = false, ANIM = 0;
-const setPlay = on => { playing = on; $('play').textContent = on ? 'Pause' : 'Play growth'; };
-slider.addEventListener('input', () => { target = +slider.value; setPlay(false); });
-document.querySelectorAll('[data-f]').forEach(b => b.addEventListener('click', () => { target = +b.dataset.f; slider.value = target; setPlay(false); }));
-$('play').addEventListener('click', () => { if (playing) return setPlay(false); if (cur >= FMAX - 1) cur = 0; setPlay(true); });
-const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches; if (reduce) controls.autoRotate = false;
-let last = performance.now();
-function loop(now) { const dt = Math.min(.05, (now - last) / 1000); last = now; ANIM += reduce ? 0 : dt;
-  if (playing) { cur = Math.min(FMAX, cur + Math.max(4, cur * .35) * dt * 2.2); target = cur; slider.value = Math.round(cur); if (cur >= FMAX) setPlay(false); }
-  else cur += (target - cur) * Math.min(1, dt * 8);
-  if (Math.abs(target - cur) < .5) cur = target;
-  slider.setAttribute('aria-valuetext', Math.round(cur) + ' followers');
-  controls.update(); window.renderFrame(tOf(Math.round(cur)), ANIM);
-  requestAnimationFrame(loop); }
-requestAnimationFrame(loop);
-document.body.classList.add('ready');
+await document.fonts.ready;
+window.ready = true;
 </script>
+</body>
+</html>
