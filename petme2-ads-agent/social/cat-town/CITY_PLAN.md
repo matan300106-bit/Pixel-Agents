@@ -12,7 +12,7 @@
 | Layout | **Round cat city, not a grid**: ring roads around Mango's square + curvy avenues (more avenues as it grows), houses line every street, gardens/fish ponds/yarn balls/cat trees between streets. 6 neighborhoods, each with its own colors and house mix. Engine: `catcity.html`. |
 | Life on the streets | **No cars.** Cats walk the sidewalks from place to place (some nap on roofs). A few humans push yellow cat strollers as a **Cat Taxi** service. |
 | Land | Coast + mountains: green land, a beach and sea on one side (room for a harbor later), mountains behind (hills for big landmarks). |
-| Style | **A city built for cats**: paw-print road markings, fish street lamps, cats napping on roofs, cars with cat ears, yarn balls and scratching posts in every block. |
+| Style | **A city built for cats**: paw-print road markings, fish street lamps, cats napping on roofs, yarn balls and scratching posts in every block. |
 | Homes | Every follower gets their own small cat house (owner, 2026-10-06). 3 cat styles: cat-face house (ears, eye windows, nose, cat-flap door), cardboard box house, felt cat-cave pod. 12 houses per block around a tiny cat park (yarn ball, scratching post, cat grass). |
 | Mango | Orange tabby, the first resident, lives next to the fountain. |
 | Brand | Small and natural: Mango's PETME2 fountain in the center + a small PETME2 pet shop. No sales talk in videos. |
