@@ -1,80 +1,59 @@
 {%- comment -%}
-  PETME2 Cat Town: live 3D town, view only (rotate / zoom / tap a building to see who requested it).
-  Data: page metafield custom.town_state (JSON). Updated daily via the Admin API, no theme change needed.
+  PETME2 Cat Town (city engine v3): interactive 3D cat city. Built from social/cat-town/viewer.html (catcity.html engine).
+  Drag to look around, slider grows the city 0..5,000 followers, Save postcard. JS: assets/pm2-cat-city.js (three.js from jsdelivr).
 {%- endcomment -%}
-{%- liquid
-  assign s = section.settings
-  assign st = page.metafields.custom.town_state.value
-  assign cats_count = st.cats.size | default: 0
-  assign houses_count = st.houses.size | default: 0
-  assign day = st.day | default: 1
--%}
-<section class="pm2-town" data-town-root>
-  <div class="pm2-town__stage" data-town-canvas>
-    <noscript><p class="pm2-town__noscript">Turn on JavaScript to see Cat Town.</p></noscript>
-  </div>
-
-  <div class="pm2-town__top">
-    <span class="pm2-town__brand">
-      <svg viewBox="0 0 64 64" width="26" height="26" aria-hidden="true"><g fill="currentColor"><ellipse cx="32" cy="42" rx="14" ry="12"/><ellipse cx="14" cy="26" rx="6" ry="8"/><ellipse cx="25" cy="15" rx="6" ry="8"/><ellipse cx="39" cy="15" rx="6" ry="8"/><ellipse cx="50" cy="26" rx="6" ry="8"/></g></svg>
-      PETME2 CAT TOWN
-    </span>
-    <h1 class="pm2-town__day">Day {{ day }}</h1>
-    <div class="pm2-town__stats">
-      <span>{{ cats_count }} {% if cats_count == 1 %}cat{% else %}cats{% endif %}</span>
-      <span>{{ houses_count }} {% if houses_count == 1 %}house{% else %}houses{% endif %}</span>
-    </div>
-  </div>
-
-  <div class="pm2-town__card">
-    <h2>{{ s.heading | escape }}</h2>
-    <ol>
-      <li><strong>Every new follower</strong> = a new cat + a house.</li>
-      <li>The <strong>most-liked comment</strong> builds anything.</li>
-    </ol>
-    {%- if s.instagram_url != blank -%}
-      <a class="pm2-town__btn" href="{{ s.instagram_url }}" target="_blank" rel="noopener">Follow {{ s.instagram_handle | escape }} on Instagram</a>
-    {%- endif -%}
-    <p class="pm2-town__hint">Drag to look around · pinch or scroll to zoom · tap a building</p>
-  </div>
-
-  <div class="pm2-town__tip" data-town-tip hidden></div>
-</section>
-
-<script type="application/json" data-town-state>{{ st | json }}</script>
-<script type="module">
-  import { mountCatTown } from '{{ 'pm2-cat-town.js' | asset_url }}';
-  const root = document.querySelector('[data-town-root]');
-  let state = {};
-  try { state = JSON.parse(document.querySelector('[data-town-state]').textContent || '{}') || {}; } catch (e) {}
-  mountCatTown(root, state);
-</script>
-
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Nunito+Sans:wght@400;600;700&display=swap">
 <style>
-  .pm2-town { position: relative; height: calc(100svh - var(--header-height, 64px)); min-height: 560px; background: #BFE3FF; overflow: hidden; font-family: var(--font-heading-family); }
-  .pm2-town__stage { position: absolute; inset: 0; }
-  .pm2-town__stage canvas { display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; }
-  .pm2-town__noscript { padding: 40px; text-align: center; }
-  .pm2-town__top { position: absolute; top: 18px; left: 0; right: 0; text-align: center; pointer-events: none; }
-  .pm2-town__brand { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,.94); color: #2F5FE0; font-weight: 900; font-size: 15px; letter-spacing: .08em; padding: 8px 16px; border-radius: 999px; box-shadow: 0 8px 24px rgba(20,40,90,.15); }
-  .pm2-town__day { margin: 10px 0 0; color: #fff; font-weight: 900; font-size: clamp(40px, 7vw, 64px); line-height: 1; text-shadow: 0 4px 0 rgba(20,40,90,.25), 0 10px 30px rgba(20,40,90,.25); }
-  .pm2-town__stats { margin-top: 10px; display: inline-flex; gap: 8px; }
-  .pm2-town__stats span { background: rgba(27,35,51,.55); color: #fff; font-weight: 800; font-size: 15px; padding: 5px 12px; border-radius: 999px; }
-  .pm2-town__card { position: absolute; left: 16px; bottom: 16px; max-width: 340px; background: rgba(255,255,255,.95); border-radius: 20px; padding: 18px 20px; box-shadow: 0 16px 40px rgba(20,40,90,.2); color: #1B2333; }
-  .pm2-town__card h2 { margin: 0 0 8px; font-size: 20px; line-height: 1.2; }
-  .pm2-town__card ol { margin: 0 0 12px; padding-left: 20px; font-family: var(--font-body-family); font-size: 15px; line-height: 1.5; }
-  .pm2-town__card strong { color: #2F5FE0; }
-  .pm2-town__btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 18px; border-radius: 999px; background: #2F5FE0; color: #fff; font-weight: 800; font-size: 15px; text-decoration: none; }
-  .pm2-town__btn:hover { filter: brightness(1.08); }
-  .pm2-town__hint { margin: 10px 0 0; font-family: var(--font-body-family); font-size: 12px; color: #5B6475; }
-  .pm2-town__tip { position: absolute; max-width: 250px; background: #1B2333; color: #fff; font-family: var(--font-body-family); font-size: 14px; line-height: 1.35; padding: 8px 12px; border-radius: 12px; pointer-events: none; box-shadow: 0 8px 24px rgba(0,0,0,.25); }
-  @media (max-width: 749px) {
-    .pm2-town__card { left: 12px; right: 12px; bottom: 12px; max-width: none; padding: 14px 16px; }
-    .pm2-town__card h2 { font-size: 17px; }
-    .pm2-town__card ol { font-size: 14px; margin-bottom: 10px; }
-    .pm2-town__hint { display: none; }
-  }
+  /* Layout: full-bleed 3D city, a floating counter on top, a control dock at the bottom. */
+  .pm2-city { --sky: #CFE8F7; --ink: #1B2333; --panel: rgba(255,255,255,.94); --muted: #5B6475; --brand: #2F5FE0; --sun: #FFC93C; --line: rgba(27,35,51,.12);
+    --display: 'Nunito', system-ui, sans-serif; --body: 'Nunito Sans', system-ui, sans-serif; }
+  .pm2-city { position: relative; height: calc(100svh - var(--header-height, 64px)); min-height: 600px; overflow: hidden; background: var(--sky); color: var(--ink); font-family: var(--body); }
+  .pm2-city #pcc-stage { position: absolute; inset: 0; }
+  .pm2-city #pcc-stage canvas { display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; }
+  .pm2-city .top { position: absolute; top: calc(env(safe-area-inset-top, 0px) + 14px); left: 16px; right: 16px; display: flex; flex-direction: column; align-items: center; gap: 6px; pointer-events: none; }
+  .pm2-city .pill { font-family: var(--display); font-weight: 900; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--brand); background: var(--panel); padding: 6px 14px; border-radius: 999px; box-shadow: 0 6px 20px rgba(0,0,0,.12); }
+  .pm2-city #pcc-countN { font-family: var(--display); font-weight: 900; font-size: clamp(48px, 11vw, 84px); line-height: 1; color: #fff; -webkit-text-stroke: 8px #1B2333; paint-order: stroke fill; font-variant-numeric: tabular-nums; }
+  .pm2-city #pcc-countL { font-family: var(--display); font-weight: 900; font-size: 15px; color: #fff; background: #1B2333; padding: 4px 14px; border-radius: 999px; }
+  .pm2-city .dock { position: absolute; left: 16px; right: 16px; bottom: calc(env(safe-area-inset-bottom, 0px) + 16px); margin: 0 auto; max-width: 560px; background: var(--panel); border-radius: 22px; padding: 16px 18px; box-shadow: 0 16px 40px rgba(10,20,40,.22); display: grid; gap: 12px; backdrop-filter: blur(6px); }
+  .pm2-city .row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .pm2-city .dock label { font-family: var(--display); font-weight: 800; font-size: 15px; }
+  .pm2-city .dock label small { font-family: var(--body); font-weight: 600; color: var(--muted); font-size: 13px; margin-left: 6px; }
+  .pm2-city input[type=range] { width: 100%; accent-color: var(--brand); height: 28px; }
+  .pm2-city .chips { display: flex; gap: 8px; flex-wrap: wrap; }
+  .pm2-city button { font: 800 14px var(--display); color: var(--ink); background: transparent; border: 1.5px solid var(--line); border-radius: 999px; padding: 8px 14px; cursor: pointer; }
+  .pm2-city button:hover { border-color: var(--brand); color: var(--brand); }
+  .pm2-city button:focus-visible, .pm2-city input:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+  .pm2-city #pcc-play { background: var(--brand); color: #fff; border-color: var(--brand); margin-left: auto; }
+  .pm2-city #pcc-postcard { margin-left: auto; } #pcc-postcard + #pcc-play { margin-left: 0; }
+  .pm2-city .pc { position: fixed; inset: 0; z-index: 10; display: grid; place-items: center; padding: calc(env(safe-area-inset-top, 0px) + 16px) 16px calc(env(safe-area-inset-bottom, 0px) + 16px); background: rgba(10,16,28,.62); }
+  .pm2-city .pc[hidden] { display: none; }
+  .pm2-city .pc__card { background: var(--panel); color: var(--ink); border-radius: 22px; padding: 14px; width: min(420px, 100%); max-height: 100%; box-sizing: border-box; display: grid; gap: 10px; box-shadow: 0 16px 40px rgba(10,20,40,.35); }
+  .pm2-city .pc__card img { display: block; width: 100%; height: auto; max-height: calc(100dvh - 190px); object-fit: contain; border-radius: 12px; background: var(--sky); -webkit-touch-callout: default; user-select: auto; }
+  .pm2-city .pc__card p { margin: 0; font-size: 13px; line-height: 1.4; color: var(--muted); text-align: center; }
+  .pm2-city .pc__row { display: flex; justify-content: center; }
+  .pm2-city .rules { font-size: 13px; line-height: 1.45; color: var(--muted); margin: 0; }
+  .pm2-city .rules b { color: var(--ink); }
+  @media (max-width: 520px) {.pm2-city .dock { padding: 12px 12px; gap: 8px; } .pm2-city .chips { flex-wrap: nowrap; gap: 6px; } .pm2-city .chips button { flex: 1 1 0; min-width: 0; padding: 6px 4px; font-size: 13px; white-space: nowrap; } .pm2-city .row button { padding: 6px 9px; font-size: 13px; } .pm2-city .row { gap: 6px; } .pm2-city .dock label { font-size: 14px; } .pm2-city .rules { font-size: 12px; } .pm2-city .dock label small { display: none; } }
+  .pm2-city .loading { position: absolute; inset: 0; display: grid; place-items: center; font: 900 18px var(--display); color: var(--ink); pointer-events: none; }
+  .pm2-city.ready .loading { display: none; }
+
+  .pm2-city .ui { display: none; }
 </style>
+<section class="pm2-city" data-cat-city>
+<div id="pcc-stage"></div>
+<div class="loading">Building Cat Town…</div>
+<div class="top"><span class="pill">🐾 PETME2 Cat Town</span><b id="pcc-countN">1</b><span id="pcc-countL">cat · day 1</span></div>
+<div class="dock">
+  <div class="row"><label for="pcc-grow">Followers <small>drag to grow the city</small></label><button id="pcc-postcard" type="button">Save postcard</button><button id="pcc-play" type="button">Play growth</button></div>
+  <input id="pcc-grow" type="range" min="0" max="5000" step="1" value="1000" aria-label="Followers">
+  <div class="chips"><button type="button" data-f="0">Day 1</button><button type="button" data-f="100">100</button><button type="button" data-f="1000">1,000</button><button type="button" data-f="2500">2,500</button><button type="button" data-f="5000">5,000</button></div>
+  <p class="rules"><b>New follower</b> = a new cat + their own little house. <b>Most-liked comment</b> builds anything. Cats walk the streets; humans run the cat taxis. Drag to look around.</p>
+</div>
+<div class="pc" id="pcc-pcBox" hidden role="dialog" aria-modal="true" aria-labelledby="pcc-pcHint"><div class="pc__card"><img id="pcc-pcImg" alt="Your Cat Town postcard"><p id="pcc-pcHint">Your Cat Town postcard. Long-press it (phone) or right-click it (computer) to save.</p><div class="pc__row"><button id="pcc-pcClose" type="button">Close</button></div></div></div>
+<div hidden><div id="pcc-title"></div><div id="pcc-cmList"></div><div id="pcc-crown"></div><div id="pcc-tags"></div><div id="pcc-sub"></div><div id="pcc-end"></div><div id="pcc-cm"></div><div id="pcc-brand"></div><div id="pcc-count"></div></div>
+</section>
+<script>window.CITY = {"day": 1, "followersBefore": 0, "followersNew": 5000, "order": "index", "newFrom": 0, "newTo": 100, "noReserved": true, "dayRange": [1, 150], "landmarks": [{"kind": "petshop", "sign": "PETME2 Pet Shop", "at": 0.6652775691064388}, {"kind": "cafe", "sign": "Cat Café", "at": 2.0801836235731934}, {"kind": "statue", "sign": "Mango Statue", "at": 3.268976813619732}, {"kind": "cityhall", "sign": "City Hall", "at": 4.355945738151372}, {"kind": "market", "sign": "Fish Market", "at": 9.088253586270579}, {"kind": "pool", "sign": "Cat Pool", "at": 15.836251510649447}, {"kind": "custom", "sign": "Cat Airport", "at": 25.352741637440364}, {"kind": "custom", "sign": "Cat Cinema", "at": 36.10790729584761}, {"kind": "custom", "sign": "Cat Stadium", "at": 48.03536812353648}, {"kind": "cafe", "sign": "Sushi Bar", "at": 61.073198035457274}, {"kind": "custom", "sign": "Cat School", "at": 75.16727301487116}, {"kind": "market", "sign": "Toy Store", "at": 88.6254307791284}]};</script>
+<script type="module" src="{{ 'pm2-cat-city.js' | asset_url }}"></script>
 
 {% schema %}
 {
