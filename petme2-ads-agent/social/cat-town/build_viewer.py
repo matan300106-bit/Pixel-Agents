@@ -16,10 +16,10 @@ R("document.body.prepend(renderer.domElement);", "stage.appendChild(renderer.dom
 R("sun.shadow.mapSize.set(4096, 4096);", "sun.shadow.mapSize.set(2048, 2048);")
 LOOP = open('viewer_loop.js').read()
 R("await document.fonts.ready;\nwindow.ready = true;", LOOP)
-data = {"day": 1, "followersBefore": 0, "followersNew": 5000, "order": "index", "newFrom": 0, "newTo": 100, "noReserved": True, "dayRange": [1, 150], "landmarks": []}
+data = {"day": 1, "followersBefore": 0, "followersNew": 1000, "order": "index", "newFrom": 0, "newTo": 100, "noReserved": True, "dayRange": [1, 40], "landmarks": []}
 for k, sg, f in [("petshop", "PETME2 Pet Shop", 10), ("cafe", "Cat Café", 40), ("statue", "Mango Statue", 70), ("cityhall", "City Hall", 100), ("market", "Fish Market", 250),
-                 ("pool", "Cat Pool", 500), ("custom", "Cat Airport", 900), ("custom", "Cat Cinema", 1400), ("custom", "Cat Stadium", 2000), ("cafe", "Sushi Bar", 2700), ("custom", "Cat School", 3500), ("market", "Toy Store", 4300)]:
-    data["landmarks"].append({"kind": k, "sign": sg, "at": 100 * ((f - .5) / 5000) ** .8})
+                 ("pool", "Cat Pool", 400), ("custom", "Cat Airport", 700), ("custom", "Cat Cinema", 900)]:
+    data["landmarks"].append({"kind": k, "sign": sg, "at": 100 * ((f - .5) / 1000) ** .8, "unlock": f})
 head = re.sub(r"<script>window.CITY = .*?</script>", lambda m: "<script>window.CITY = " + json.dumps(data, ensure_ascii=False) + ";</script>", head, flags=re.S)
 open('viewer.html', 'w').write(head + '<script type="module">' + js + '</script>\n')
 print('viewer.html built', len(head + js), 'bytes')

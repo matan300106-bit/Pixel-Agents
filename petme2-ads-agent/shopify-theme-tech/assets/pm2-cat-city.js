@@ -753,6 +753,54 @@ function loop(now) { const dt = Math.min(.05, (now - last) / 1000); last = now; 
   slider.setAttribute('aria-valuetext', Math.round(cur) + ' followers');
   controls.update(); window.renderFrame(tOf(Math.round(cur)), ANIM);
   requestAnimationFrame(loop); }
+
+// ---------- tap a house or a building: who lives there / what it is ----------
+const PICK = new Map();   // instanced mesh -> (instance index -> house number)
+Object.values(HP).forEach(m => PICK.set(m, new Int32Array(Math.max(1, m.count)).fill(-1)));
+houseParts.forEach((p, n) => p.forEach(([m, i]) => { const a = PICK.get(m); if (a) a[i] = n; }));
+const HA = ['whisker', 'mochi', 'purr', 'biscuit', 'tuna', 'nap', 'beans', 'meow', 'sushi', 'luna', 'ziggy', 'socks', 'paws', 'zoomie', 'loaf', 'noodle'], HB2 = ['lover', 'queen', 'king', 'club', 'squad', 'daily', 'world', 'fan', 'life', 'mom', 'dad', 'bestie'];
+const handleOf = n => (EP.handles && EP.handles[n]) || ('demo.' + HA[Math.floor(hash01(n * 37 + 11) * HA.length)] + '_' + HB2[Math.floor(hash01(n * 53 + 7) * HB2.length)] + ((n * 7) % 97));
+const KIND = { A: 'Cat-face house', B: 'Cardboard box house', C: 'Cat-cave pod' };
+const DIST = ['Blue Whisker', 'Box Town', 'Pastel Pods', 'Catnip Green', 'Purple Purr', 'Tuxedo Row'];
+const LM_UNLOCK = (EP.landmarks || []).map(l => l.unlock);
+const LM_TXT = { petshop: 'Toys, treats and fresh water for every cat in town.', cityhall: 'Mayor Mango works here (mostly naps).', cafe: 'Built by the most-liked comment.', statue: 'A golden Mango. He posed for 3 seconds.', market: 'Fresh fish every morning.', pool: 'Nobody swims. Everyone watches.', custom: 'Built by the most-liked comment.' };
+landmarks.forEach((lm, k) => { if (LMG[k]) LMG[k][0].userData.info = { icon: '🏛️', title: lm.sign, line: LM_TXT[lm.kind] || 'Built by the most-liked comment.', note: LM_UNLOCK[k] ? 'Unlocked at ' + LM_UNLOCK[k].toLocaleString('en-US') + ' cats' : '' }; });
+if (typeof MO !== 'undefined' && MO.g) MO.g.userData.info = { icon: '😴', title: 'Big Mochi', line: 'The sleeping mountain cat. Please do not wake her.', note: 'Unlocked at 1,000 cats' };
+if (typeof BS !== 'undefined' && BS.g) BS.g.userData.info = { icon: '🚏', title: 'Nap Bus Stop', line: 'NEXT NAP: 5 MIN. The bus has never come. Nobody minds.', note: '' };
+const infoBox = $('info'), infoBody = $('infoBody');
+const PIN = new THREE.Mesh(new THREE.ConeGeometry(.9, 1.8, 4).rotateX(Math.PI), new THREE.MeshBasicMaterial({ color: '#FFC93C' })); PIN.visible = false; scene.add(PIN);
+let pinY = 0;
+const showInfo = (html, pos, y) => { infoBody.innerHTML = html; infoBox.hidden = false; if (pos) { PIN.position.set(pos.x, y, pos.z); pinY = y; PIN.visible = true; } else PIN.visible = false; controls.autoRotate = false; };
+const hideInfo = () => { infoBox.hidden = true; PIN.visible = false; };
+$('infoClose').addEventListener('click', hideInfo);
+const ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
+let downX = 0, downY = 0;
+renderer.domElement.addEventListener('pointerdown', e => { downX = e.clientX; downY = e.clientY; });
+renderer.domElement.addEventListener('pointerup', e => {
+  if (Math.hypot(e.clientX - downX, e.clientY - downY) > 6) return;          // a drag, not a tap
+  const r = renderer.domElement.getBoundingClientRect(); ndc.set((e.clientX - r.left) / r.width * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
+  ray.setFromCamera(ndc, camera);
+  const tNow = tOf(Math.round(cur));
+  for (const h of ray.intersectObjects(scene.children, true)) {
+    const map = PICK.get(h.object);
+    if (map && h.instanceId != null && map[h.instanceId] >= 0) { const n = map[h.instanceId], l = houseLots[n];
+      if (APPEAR[n] >= 0 && tNow < APPEAR[n]) continue;
+      const day = Math.max(1, Math.round(EP.dayRange[0] + (EP.dayRange[1] - EP.dayRange[0]) * (n + 1) / Math.max(1, F)));
+      showInfo(`<div class="info__icon">🏠</div><div><b class="info__title">@${handleOf(n)}</b><span class="info__line">Cat #${(n + 1).toLocaleString('en-US')} · moved in on day ${day}</span><span class="info__line">${KIND[l.kind]} · ${DIST[l.d]} district</span>${EP.handles ? '' : '<span class="info__note">Example name. Real followers’ Instagram names show here.</span>'}</div>`, l, l.kind === 'C' ? 3.4 : 4.4);
+      return; }
+    let o = h.object; while (o && !o.userData.info) o = o.parent;
+    if (o && o.visible) { const I = o.userData.info, p = new THREE.Vector3(); o.getWorldPosition(p);
+      showInfo(`<div class="info__icon">${I.icon}</div><div><b class="info__title">${I.title}</b><span class="info__line">${I.line}</span>${I.note ? `<span class="info__note">${I.note}</span>` : ''}</div>`, p, o === (typeof MO !== 'undefined' && MO.g) ? 60 : 16); return; }
+    const pt = h.point;
+    if (Math.hypot(pt.x, pt.z) < 9.5 && pt.y > .2) { showInfo(`<div class="info__icon">💧</div><div><b class="info__title">Mango’s Water Bar</b><span class="info__line">The PETME2 fountain. Cats walk in from every street to drink. Mango is the host.</span></div>`, new THREE.Vector3(0, 0, 0), 10); return; }
+    if (pt.y > 25 && Math.hypot(pt.x, pt.z) < 450) { showInfo(`<div class="info__icon">🐟</div><div><b class="info__title">Fish balloon</b><span class="info__line">Sky tours for cats. Two passengers, zero pilots.</span></div>`, null); return; }
+    if (pt.x > COAST_X - 10 && pt.y > 1) { showInfo(`<div class="info__icon">🔴</div><div><b class="info__title">Red Dot Lighthouse</b><span class="info__line">Cats have chased this dot since day 1. Nobody has caught it.</span><span class="info__note">Unlocked at 500 cats</span></div>`, null); return; }
+    if (h.object.isInstancedMesh || h.object.isMesh) break;
+  }
+  hideInfo();
+});
+const _render = window.renderFrame;
+window.renderFrame = (t, a) => { if (PIN.visible) { PIN.position.y = pinY + Math.abs(Math.sin(a * 3)) * .8; PIN.rotation.y = a * 2; } _render(t, a); };
 requestAnimationFrame(loop);
 ROOT.classList.add('ready');
 // "Save postcard": render the current view into a 1080x1350 card and show it as an image (the page sandbox blocks scripted downloads,
