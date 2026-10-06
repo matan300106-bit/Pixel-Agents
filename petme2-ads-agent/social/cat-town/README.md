@@ -1,28 +1,36 @@
 # PETME2 Cat Town – Instagram Reels series
 
-Idea (from @telbatata's "city grows every day" reels): a tiny low-poly island where cats live. Every episode builds ONE thing that followers asked for in the comments. PETME2 products show up naturally (fountain plaza, feeding hall).
+**Rules (said in every episode):**
+1. Every new follower = 1 new cat + 1 new house in the town.
+2. The most-liked comment builds anything it wants.
 
-## Episode 1 (ready): 1080x1920, 21 s, with voiceover + music + subtitles
-Final with sound: Shopify Files → `petme2-cat-town-day-1.mp4`. `cat-town-day-1.mp4` here is the silent render.
-Voice (en-US Aria, edge-tts): "Day one: we're building a town... for cats!" / "First, a cozy home. And look, our first cat just moved in!" / "Every town needs fresh water, so we built a fountain. Cats love running water!" / "What should the cats build next? Comment below, and follow to see it built!"
-Music: original synth track made in code (no copyright issues).
-Empty island → first cat house pops up, orange cat walks in → fresh-water fountain appears, grey cat runs to drink → end card "What should the cats build next? Comment below & follow @petme2".
+The town is saved in `town-state.json` and keeps growing every day.
 
-**Caption:**
-Day 1 of building a town for cats 🐾 The first cat moved in and we built a fresh water fountain 💧
-What should we build next? Comment 👇 The most liked idea gets built tomorrow! Follow so you don't miss it.
-#cattown #cats #catsofinstagram #catlover #petme2 #cutecats #catlife #3danimation #buildingtheworld
+## Daily steps (Claude does all of them)
+1. Owner tells Claude: new followers since last episode + the most-liked comment (+ who wrote it).
+   (If the PETME2 Instagram Business account is connected, Claude reads these itself.)
+2. `python3 build_episode.py --day N --new-followers X --comment "..." --by "@user" --print-script` → voice lines.
+3. Voice (edge-tts, en-US-AvaMultilingualNeural, rate +6%) made on the remote workbench, with **exact word timings** → `episodes/day-N/voice-timings.json`.
+4. `python3 build_episode.py --day N --new-followers X --comment "..." --by "@user" --timings episodes/day-N/voice-timings.json`
+   → `episode.json` (houses, cats, the build, word subtitles) and updates the town.
+5. Serve this folder (`npx http-server -p 8766`), `node render_town.js 30`, ffmpeg → `episodes/day-N/silent.mp4`.
+6. Remote mix: voice + original music (made in code, no copyright) + pop sounds on each build → final MP4 (Shopify Files, private) for the owner to watch.
+Nothing is posted until the owner says so.
 
-**Posting tips:**
-- In Instagram, add a trending song (Reels → Add audio). Trending audio gives more reach than the silent file.
-- Cover: `cover-day-1.png`.
-- Pin a comment: "Vote here 👇 cat café ☕ / fish market 🐟 / cat tree tower 🌳".
-- Post at the same time daily (e.g. 6–8 pm US Eastern).
+## What every episode has (built to go viral)
+- Hook in the first second ("I'm building a town for cats... and you decide what we build").
+- Word-by-word subtitles: big bold words, the word being said turns yellow (most people watch muted).
+- Live counters (cats / houses), "+X followers" badge, "Top comment by @user" badge.
+- Things pop in exactly on the spoken word (house on "house", fountain on "fresh water fountain").
+- End card with the 2 rules + "Follow & comment @petme2".
 
-## Next episodes (build what comments ask; ideas if quiet)
-- Day 2: Cat café · Day 3: "Feeding Hall" with the PETME2 dual feeder · Day 4: cat tree tower · Day 5: fish market · Day 6: a second house + new cat.
+## Builds the town knows
+fountain, café, market, cat tree, statue, pool, tower, vet, park — anything else becomes a big building with the request written on a sign.
 
-## How it's made (no AI video tools)
-`scene.html` is a Three.js scene; `render.js` (Playwright) renders it frame by frame; ffmpeg makes the MP4.
-To render: in a folder with `npm i three@0.170.0 @fontsource/nunito@5`, serve it (`npx http-server -p 8765`), run `node render.js 30`, then
-`ffmpeg -framerate 30 -i frames/f%04d.png -c:v libx264 -pix_fmt yuv420p -crf 18 out.mp4`.
+## Episode 1
+Voice: "I'm building a town for cats... and you decide what we build." / "Every new follower adds a new cat and a house. Meet Mango, our very first resident!" / "And every day, the most liked comment builds anything it wants. Mango was thirsty, so day one: a fresh water fountain!" / "Follow to move your cat in, and comment what we build tomorrow!"
+Caption: see below. Cover: `episodes/day-1/cover.png`.
+
+**Caption (Day 1):**
+Every follower = a new cat + a house in our town 🐱🏠 The most-liked comment builds ANYTHING. What should Mango get next? 👇
+#cattown #cats #catsofinstagram #catlover #petme2 #cutecats #3danimation #buildingtogether
