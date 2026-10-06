@@ -1,0 +1,189 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face { font-family: Nunito; font-weight: 800; src: url(node_modules/@fontsource/nunito/files/nunito-latin-800-normal.woff2) format('woff2'); }
+  @font-face { font-family: Nunito; font-weight: 900; src: url(node_modules/@fontsource/nunito/files/nunito-latin-900-normal.woff2) format('woff2'); }
+  @font-face { font-family: Nunito; font-weight: 700; src: url(node_modules/@fontsource/nunito/files/nunito-latin-700-normal.woff2) format('woff2'); }
+  html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #BFE3FF; font-family: Nunito, sans-serif; }
+  canvas { position: absolute; inset: 0; }
+  .top { position: absolute; top: 120px; left: 0; right: 0; text-align: center; color: #fff; }
+  .brand { display: inline-flex; align-items: center; gap: 14px; background: rgba(255,255,255,.92); color: #2F5FE0; font-weight: 900; font-size: 40px; letter-spacing: .06em; padding: 14px 30px; border-radius: 999px; box-shadow: 0 10px 30px rgba(20,40,90,.15); }
+  .day { margin-top: 26px; font-weight: 900; font-size: 92px; line-height: 1; color: #fff; text-shadow: 0 6px 0 rgba(20,40,90,.25), 0 14px 40px rgba(20,40,90,.25); }
+  .cap { position: absolute; left: 60px; right: 60px; bottom: 300px; text-align: center; }
+  .cap span { display: inline-block; background: #fff; color: #1B2333; font-weight: 900; font-size: 64px; line-height: 1.15; padding: 22px 36px; border-radius: 34px; box-shadow: 0 16px 40px rgba(20,40,90,.22); }
+  .cap span b { color: #2F5FE0; }
+  .end { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; background: rgba(27,35,51,.0); }
+  .end .q { background: #2F5FE0; color: #fff; font-weight: 900; font-size: 78px; line-height: 1.12; padding: 40px 54px; border-radius: 44px; box-shadow: 0 20px 60px rgba(20,40,90,.35); max-width: 860px; }
+  .end .cta { margin-top: 34px; background: #fff; color: #1B2333; font-weight: 800; font-size: 50px; padding: 20px 40px; border-radius: 999px; }
+  .end .handle { margin-top: 28px; color: #fff; font-weight: 900; font-size: 44px; letter-spacing: .04em; text-shadow: 0 4px 20px rgba(20,40,90,.4); }
+  .hide { opacity: 0; }
+  .paw { width: 40px; height: 40px; }
+</style>
+</head>
+<body>
+<div class="top" id="top">
+  <div class="brand"><svg class="paw" viewBox="0 0 64 64"><g fill="#2F5FE0"><ellipse cx="32" cy="42" rx="14" ry="12"/><ellipse cx="14" cy="26" rx="6" ry="8"/><ellipse cx="25" cy="15" rx="6" ry="8"/><ellipse cx="39" cy="15" rx="6" ry="8"/><ellipse cx="50" cy="26" rx="6" ry="8"/></g></svg>PETME2 CAT TOWN</div>
+  <div class="day" id="day">DAY 1</div>
+</div>
+<div class="cap" id="cap"><span id="capText"></span></div>
+<div class="end hide" id="end">
+  <div class="q">What should the cats build next?</div>
+  <div class="cta">Comment below &amp; follow</div>
+  <div class="handle">@petme2</div>
+</div>
+<script type="module">
+import * as THREE from './node_modules/three/build/three.module.js';
+
+const W = 1080, H = 1920;
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setSize(W, H); renderer.setPixelRatio(1);
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+document.body.prepend(renderer.domElement);
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color('#BFE3FF');
+scene.fog = new THREE.Fog('#BFE3FF', 40, 90);
+const camera = new THREE.PerspectiveCamera(38, W / H, 0.1, 200);
+
+scene.add(new THREE.HemisphereLight('#ffffff', '#9CC7A2', 1.1));
+const sun = new THREE.DirectionalLight('#fff4e0', 2.0);
+sun.position.set(12, 22, 10); sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048);
+Object.assign(sun.shadow.camera, { left: -16, right: 16, top: 16, bottom: -16 });
+scene.add(sun);
+
+const flat = c => new THREE.MeshStandardMaterial({ color: c, flatShading: true, roughness: .9 });
+const mesh = (g, c, cast = true) => { const m = new THREE.Mesh(g, flat(c)); m.castShadow = cast; m.receiveShadow = true; return m; };
+
+// Sea
+const sea = mesh(new THREE.CylinderGeometry(40, 40, .4, 48), '#7CC4F2', false); sea.position.y = -1.4; scene.add(sea);
+// Island (grass top + dirt cliff)
+const island = new THREE.Group(); scene.add(island);
+const grass = mesh(new THREE.CylinderGeometry(9, 9.4, 1, 9), '#8FD07A'); grass.position.y = -.5; island.add(grass);
+const cliff = mesh(new THREE.CylinderGeometry(9.4, 7.6, 2.4, 9), '#C99A6B'); cliff.position.y = -2.2; island.add(cliff);
+// Path + plaza
+const plaza = mesh(new THREE.CylinderGeometry(2.6, 2.6, .12, 10), '#EDE4D3'); plaza.position.set(0, .02, .5); island.add(plaza);
+const path = mesh(new THREE.BoxGeometry(1.4, .1, 6), '#EDE4D3'); path.position.set(0, .02, 5.5); island.add(path);
+
+// Trees
+function tree(x, z, s = 1) {
+  const g = new THREE.Group();
+  const trunk = mesh(new THREE.CylinderGeometry(.15 * s, .2 * s, 1 * s, 6), '#8A5A3B'); trunk.position.y = .5 * s; g.add(trunk);
+  const top = mesh(new THREE.ConeGeometry(.8 * s, 1.8 * s, 7), '#4FA65A'); top.position.y = 1.7 * s; g.add(top);
+  g.position.set(x, 0, z); island.add(g); return g;
+}
+[[-6.5,-2.5,1.1],[-5.2,-5,1],[6,-3.8,1.2],[6.8,1.5,.9],[-6.8,2.8,1],[3.6,-6.2,1],[-2.8,-6.8,.9],[5.2,5.2,.8],[-5,5.8,.85]].forEach(t => tree(...t));
+// Rocks
+[[-3.8,6.6],[7.4,-0.6],[2.6,7.2]].forEach(([x,z]) => { const r = mesh(new THREE.DodecahedronGeometry(.45), '#B9C2CC'); r.position.set(x, .2, z); island.add(r); });
+
+// House (rises in)
+const house = new THREE.Group();
+const body = mesh(new THREE.BoxGeometry(3, 2.2, 2.6), '#FFFFFF'); body.position.y = 1.1; house.add(body);
+const roof = mesh(new THREE.ConeGeometry(2.55, 1.5, 4), '#2F5FE0'); roof.position.y = 2.95; roof.rotation.y = Math.PI / 4; house.add(roof);
+const door = mesh(new THREE.BoxGeometry(.8, 1.2, .1), '#1B2333'); door.position.set(0, .6, 1.31); house.add(door);
+const doorArch = mesh(new THREE.CylinderGeometry(.4, .4, .1, 12, 1, false, 0, Math.PI), '#1B2333'); doorArch.rotation.x = Math.PI / 2; doorArch.rotation.z = Math.PI/2; doorArch.position.set(0, 1.2, 1.31); house.add(doorArch);
+[-0.95, .95].forEach(x => { const w = mesh(new THREE.BoxGeometry(.55, .55, .08), '#9FD3FF'); w.position.set(x, 1.45, 1.31); house.add(w); });
+const chimney = mesh(new THREE.BoxGeometry(.35, .8, .35), '#E7EDF7'); chimney.position.set(.8, 3.1, -.3); house.add(chimney);
+house.position.set(-3.2, 0, -1.8); house.rotation.y = .35; island.add(house);
+
+// Fountain (appears later) — PETME2-style: round base, bowl, flowing water
+const fountain = new THREE.Group();
+const fBase = mesh(new THREE.CylinderGeometry(1.1, 1.2, .35, 16), '#E7EDF7'); fBase.position.y = .18; fountain.add(fBase);
+const fWater = mesh(new THREE.CylinderGeometry(.95, .95, .06, 16), '#5AB3F0', false); fWater.position.y = .38; fountain.add(fWater);
+const fStem = mesh(new THREE.CylinderGeometry(.18, .22, .8, 10), '#2F5FE0'); fStem.position.y = .75; fountain.add(fStem);
+const fBowl = mesh(new THREE.CylinderGeometry(.55, .3, .25, 14), '#FFFFFF'); fBowl.position.y = 1.2; fountain.add(fBowl);
+const drops = [];
+for (let i = 0; i < 26; i++) { const d = mesh(new THREE.SphereGeometry(.06, 6, 6), '#7FD0FF', false); d.userData.phase = i / 26; fountain.add(d); drops.push(d); }
+fountain.position.set(0, 0, .5); island.add(fountain);
+
+// Cat (low-poly, orange tabby)
+function makeCat(color) {
+  const c = new THREE.Group();
+  const b = mesh(new THREE.BoxGeometry(.5, .45, .9), color); b.position.y = .45; c.add(b);
+  const h = mesh(new THREE.BoxGeometry(.48, .42, .42), color); h.position.set(0, .82, .5); c.add(h);
+  [-.15, .15].forEach(x => { const e = mesh(new THREE.ConeGeometry(.1, .2, 4), color); e.position.set(x, 1.12, .48); c.add(e); });
+  [-.1, .1].forEach(x => { const eye = mesh(new THREE.BoxGeometry(.06, .08, .02), '#1B2333', false); eye.position.set(x, .86, .72); c.add(eye); });
+  const nose = mesh(new THREE.BoxGeometry(.06, .04, .02), '#F28B9B', false); nose.position.set(0, .78, .72); c.add(nose);
+  const tail = mesh(new THREE.BoxGeometry(.1, .1, .6), color); tail.position.set(0, .75, -.6); tail.rotation.x = -.7; c.add(tail); c.userData.tail = tail;
+  const legs = [];
+  [[-.16,.3],[.16,.3],[-.16,-.3],[.16,-.3]].forEach(([x,z]) => { const l = mesh(new THREE.BoxGeometry(.12, .3, .12), color); l.position.set(x, .15, z); c.add(l); legs.push(l); });
+  c.userData.legs = legs;
+  return c;
+}
+const cat = makeCat('#F2A65A'); island.add(cat);
+const cat2 = makeCat('#8E8E9A'); island.add(cat2);
+
+const ease = t => t < 0 ? 0 : t > 1 ? 1 : 1 - Math.pow(1 - t, 3);
+const back = t => { if (t <= 0) return 0; if (t >= 1) return 1; const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2); };
+const lerp = (a, b, t) => a + (b - a) * t;
+
+const capEl = document.getElementById('capText'), cap = document.getElementById('cap');
+const endEl = document.getElementById('end'), topEl = document.getElementById('top');
+const captions = [
+  [0.4, 2.6, 'An empty island...'],
+  [2.6, 6.2, 'The <b>first cat</b> moved in!'],
+  [6.2, 9.4, 'Day 1 build: a <b>fresh water fountain</b>'],
+];
+
+window.renderFrame = (t) => {
+  // camera: slow orbit + push-in
+  const ang = lerp(-.35, .75, ease(t / 12));
+  const r = lerp(40, 29, ease(t / 9));
+  const y = lerp(30, 19, ease(t / 9));
+  camera.position.set(Math.sin(ang) * r, y, Math.cos(ang) * r);
+  camera.lookAt(0, -0.6, 0);
+  island.position.y = Math.sin(t * 1.2) * .08;
+
+  // house pops in 2.6s → 3.6s
+  const hs = back((t - 2.6) / .9);
+  house.scale.set(Math.max(hs, .001), Math.max(hs, .001), Math.max(hs, .001));
+  house.visible = t > 2.6;
+
+  // cat walks up the path to the house 3.2s → 6s
+  const wt = ease((t - 3.2) / 2.8);
+  const sx = 0, sz = 8, ex = -2.4, ez = .2;
+  cat.visible = t > 3.0;
+  cat.position.set(lerp(sx, ex, wt), 0, lerp(sz, ez, wt));
+  cat.rotation.y = Math.atan2(ex - sx, ez - sz);
+  const walking = t > 3.2 && t < 6;
+  cat.userData.legs.forEach((l, i) => l.rotation.x = walking ? Math.sin(t * 14 + (i % 2) * Math.PI) * .5 : 0);
+  cat.userData.tail.rotation.z = Math.sin(t * 4) * .3;
+  if (t >= 6) { cat.rotation.y = lerp(cat.rotation.y, 0.6, ease((t - 6) / 1)); }
+
+  // fountain grows 6.4 → 7.4, water flows after
+  const fs = back((t - 6.4) / .9);
+  fountain.scale.setScalar(Math.max(fs, .001)); fountain.visible = t > 6.4;
+  drops.forEach(d => {
+    const p = ((t * .9 + d.userData.phase) % 1);
+    const a = d.userData.phase * Math.PI * 2;
+    const rr = .2 + p * .75;
+    d.position.set(Math.cos(a) * rr, 1.35 + p * .5 - p * p * 1.3, Math.sin(a) * rr);
+    d.visible = t > 7.2;
+  });
+
+  // second cat runs to fountain 7.6 → 9.4
+  const w2 = ease((t - 7.6) / 1.8);
+  cat2.visible = t > 7.4;
+  cat2.position.set(lerp(6.5, 1.15, w2), 0, lerp(6.5, 1.3, w2));
+  cat2.rotation.y = Math.atan2(1.15 - 6.5, 1.3 - 6.5);
+  cat2.userData.legs.forEach((l, i) => l.rotation.x = (t > 7.6 && t < 9.4) ? Math.sin(t * 16 + (i % 2) * Math.PI) * .55 : 0);
+  if (t >= 9.4) { cat2.rotation.y = -2.2; cat2.children[1].rotation.x = .35 + Math.sin(t * 6) * .08; }
+  cat2.userData.tail.rotation.z = Math.sin(t * 5) * .35;
+
+  renderer.render(scene, camera);
+
+  // overlays
+  const c = captions.find(([a, b]) => t >= a && t < b);
+  if (c) { capEl.innerHTML = c[2]; const k = Math.min(1, (t - c[0]) / .25); cap.style.opacity = k; cap.style.transform = `translateY(${(1 - k) * 30}px) scale(${.92 + .08 * k})`; }
+  else cap.style.opacity = 0;
+  const e = ease((t - 9.6) / .5);
+  endEl.style.opacity = e; endEl.style.transform = `scale(${.9 + .1 * e})`;
+  endEl.style.background = `rgba(27,35,51,${.35 * e})`;
+  topEl.style.opacity = 1 - e;
+};
+window.ready = true;
+</script>
+</body>
+</html>
