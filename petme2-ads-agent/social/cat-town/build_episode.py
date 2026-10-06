@@ -37,6 +37,14 @@ HIGHLIGHT = {"cats", "cat", "you", "follower", "followers", "house", "houses", "
              "fountain", "built", "follow", "tomorrow", "build"}
 
 
+def article(thing):
+    """'a cat cafe' / 'an ice cream shop' / plurals and names get none."""
+    t = thing.lower()
+    if t.endswith("s") or t.split()[0] in ("more", "some", "the", "two", "three", "another"):
+        return ""
+    return "an " if t[0] in "aeiou" else "a "
+
+
 def script_lines(a, n, build_text, by):
     """Voice script. Short, hooky, ends with the two rules + call to action."""
     if a.first_day:
@@ -51,7 +59,7 @@ def script_lines(a, n, build_text, by):
     return [
         f"Day {a.day} of building a town for cats... and you decide what we build.",
         f"{n} new {'follower' if n == 1 else 'followers'}, so {n} new {cats}, each with their own house!",
-        f"And the most liked comment{who} asked for {build_text}... so we built it!",
+        f"And the most liked comment{who} asked for {article(build_text)}{build_text}... so we built it!",
         "Follow to move your cat in, and comment what we build tomorrow!",
     ]
 
@@ -98,6 +106,7 @@ def main():
     ap.add_argument("--reset", action="store_true", help="start the town from zero")
     ap.add_argument("--print-script", action="store_true", help="only print the voice lines (for TTS), change nothing")
     ap.add_argument("--timings", help="voice-timings.json from the TTS step (durations + word times)")
+    ap.add_argument("--comments", help="JSON list of REAL comments [{by,text,likes,ago}] from the post; the winner = most likes")
     a = ap.parse_args()
 
     st = {"day": 0, "houses": [], "buildings": [], "cats": [], "followers": 0} if a.reset else load_state()
@@ -181,7 +190,16 @@ def main():
     badges.append({"from": starts[2], "to": t_end - .1,
                    "html": "Most-liked comment builds anything!" if a.first_day else (f"Top comment by {by}" if by else "Top comment")})
 
-    ep = {"day": a.day, "duration": round(duration, 2), "islandRadius": R, "trees": trees,
+    comments = None
+    if a.comments:
+        lst = json.loads(Path(a.comments).read_text())
+        win_c = max(lst, key=lambda c: c["likes"])
+        others = [c for c in lst if c is not win_c][:5]
+        ordered = others[:3] + [win_c] + others[3:]          # winner shows after a short scroll
+        up = starts[2] - .3
+        comments = {"list": ordered, "win": ordered.index(win_c),
+                    "t": {"up": up, "scroll": up + .5, "stop": up + 2.2, "down": t_build - .5}}
+    ep = {"day": a.day, "comments": comments, "duration": round(duration, 2), "islandRadius": R, "trees": trees,
           "houses": st["houses"], "buildings": st["buildings"], "cats": st["cats"],
           "words": words, "badges": badges, "timeline": {"end": t_end},
           "camera": {"angFrom": -.35, "angTo": .75, "rFrom": round(40 * k, 1), "rTo": round(29 * k, 1),

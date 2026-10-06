@@ -28,6 +28,24 @@
   .rule.blue b { color: #FFC93C; }
   .handle { color: #fff; font-weight: 900; font-size: 46px; text-shadow: 0 4px 20px rgba(20,40,90,.45); }
   .paw { width: 40px; height: 40px; }
+  /* Instagram-style comments sheet (top comment reveal) */
+  .ig { position: absolute; left: 40px; right: 40px; bottom: -900px; height: 860px; z-index: 4; background: #fff; border-radius: 44px 44px 0 0; box-shadow: 0 -20px 60px rgba(20,40,90,.3); overflow: hidden; font-family: -apple-system, 'Segoe UI', Roboto, Nunito, sans-serif; }
+  .ig__bar { position: relative; z-index: 2; width: 90px; height: 10px; border-radius: 10px; background: #DADDE3; margin: 18px auto 6px; }
+  .ig__title { position: relative; z-index: 2; background: #fff; box-shadow: 0 -40px 0 #fff; text-align: center; font-weight: 800; font-size: 34px; color: #111; padding-bottom: 18px; border-bottom: 2px solid #EFEFF2; }
+  .ig__list { position: absolute; left: 0; right: 0; top: 120px; }
+  .ig__row { display: flex; align-items: flex-start; gap: 22px; padding: 22px 34px; border-radius: 26px; margin: 0 14px; }
+  .ig__av { flex: 0 0 74px; height: 74px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 900; font-size: 34px; }
+  .ig__body { flex: 1; min-width: 0; }
+  .ig__name { font-weight: 800; font-size: 28px; color: #111; }
+  .ig__name span { font-weight: 500; color: #8A8F98; margin-left: 10px; }
+  .ig__text { font-size: 34px; line-height: 1.25; color: #111; margin-top: 4px; }
+  .ig__meta { font-size: 24px; color: #8A8F98; margin-top: 8px; font-weight: 600; }
+  .ig__like { flex: 0 0 70px; text-align: center; color: #8A8F98; font-size: 24px; font-weight: 700; }
+  .ig__like svg { width: 40px; height: 40px; display: block; margin: 6px auto 4px; }
+  .ig__row.win { background: #FFF6D6; box-shadow: inset 0 0 0 4px #FFC93C; }
+  .ig__crown { display: inline-flex; align-items: center; gap: 8px; background: #FFC93C; color: #1B2333; font-weight: 900; font-size: 24px; padding: 6px 14px; border-radius: 999px; margin-bottom: 8px; }
+  .ig__row.win .ig__like { color: #ED4956; }
+
 </style>
 </head>
 <body>
@@ -38,6 +56,7 @@
 </div>
 <div class="badge" id="badge" style="opacity:0"><span id="badgeText"></span></div>
 <div class="sub" id="sub"></div>
+<div class="ig" id="ig"><div class="ig__bar"></div><div class="ig__title">Comments</div><div class="ig__list" id="igList"></div></div>
 <div class="end" id="end" style="opacity:0">
   <div class="rule">Every new follower =<br><b>a new cat + a house</b></div>
   <div class="rule blue">Most-liked comment<br><b>builds anything!</b></div>
@@ -156,7 +175,7 @@ function building(b) {
     const roof = mesh(new THREE.ConeGeometry(2.4, 1.3, 4), '#FFC93C'); roof.position.y = 2.85; roof.rotation.y = Math.PI / 4; g.add(roof);
     const door = mesh(B(.7, 1, .06), '#1B2333'); door.position.set(0, .5, 1.21); g.add(door);
   }
-  if (b.sign) { const s = textSign(b.sign); s.position.set(0, k === 'tower' ? 7.6 : 3.4, 0); g.add(s); g.userData.sign = s; }
+  if (b.sign) { const s = textSign(b.sign); s.position.set(0, k === 'tower' ? 7.6 : 3.4, 0); g.add(s); g.userData.signMesh = s; }
   return g;
 }
 
@@ -193,6 +212,45 @@ EP.words.forEach((w, i) => {
   else last.words.push(w);
 });
 CHUNKS.forEach((c, i) => { const lastW = c.words[c.words.length - 1]; const next = CHUNKS[i + 1]; c.until = next ? Math.min(next.s, lastW.e + .45) : lastW.e + .6; });
+
+// ---------- Instagram comments sheet ----------
+const HEART = (fill) => `<svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-9.6-9.1C.9 8.6 2.9 5 6.4 5c2 0 3.5 1.1 4.3 2.4h2.6C14.1 6.1 15.6 5 17.6 5c3.5 0 5.5 3.6 4 6.9C19.5 16.4 12 21 12 21z" fill="${fill ? '#ED4956' : 'none'}" stroke="${fill ? '#ED4956' : '#8A8F98'}" stroke-width="2"/></svg>`;
+const AV = ['#2F5FE0','#E85D5D','#5BB98C','#9B6FE0','#F2A65A','#1B2333','#4FA3D9'];
+const IG = EP.comments || null;
+const fmt = n => n >= 10000 ? (n/1000).toFixed(0) + 'K' : n >= 1000 ? (n/1000).toFixed(1).replace('.0','') + 'K' : String(n);
+if (IG) {
+  $('igList').innerHTML = IG.list.map((c, i) => `
+    <div class="ig__row${i === IG.win ? ' win-slot' : ''}" data-i="${i}">
+      <div class="ig__av" style="background:${AV[i % AV.length]}">${(c.by.replace('@','')[0] || '?').toUpperCase()}</div>
+      <div class="ig__body">${i === IG.win ? '<div class="ig__crown" data-crown style="opacity:0"><svg width="26" height="26" viewBox="0 0 24 24"><path d="M3 18h18l-1.5-10-5 4-2.5-6-2.5 6-5-4z" fill="#1B2333"/></svg>MOST LIKED</div>' : ''}
+        <div class="ig__name">${c.by}<span>${c.ago || '1h'}</span></div>
+        <div class="ig__text">${c.text}</div>
+        <div class="ig__meta">Reply</div></div>
+      <div class="ig__like"><span data-heart>${HEART(false)}</span><span data-likes>${fmt(c.likes)}</span></div>
+    </div>`).join('');
+}
+function renderIG(t) {
+  if (!IG) return;
+  const T = IG.t, el = $('ig');
+  const up = ease((t - T.up) / .45), down = ease((t - T.down) / .4);
+  el.style.bottom = (-900 + 900 * up - 900 * down) + 'px';
+  const list = $('igList'), rows = list.children, win = rows[IG.win];
+  const target = win ? win.offsetTop - 40 : 0;
+  list.style.transform = `translateY(${-target * ease((t - T.scroll) / (T.stop - T.scroll))}px)`;
+  const on = t >= T.stop;
+  if (win) {
+    win.classList.toggle('win', on);
+    const crown = win.querySelector('[data-crown]'); crown.style.opacity = on ? 1 : 0;
+    crown.style.transform = `scale(${on ? back((t - T.stop) / .35) : 0})`;
+    win.querySelector('[data-heart]').innerHTML = HEART(on);
+    const hs = on ? 1 + .45 * Math.max(0, 1 - (t - T.stop) / .3) : 1;
+    win.querySelector('[data-heart] svg').style.transform = `scale(${hs})`;
+    const final = IG.list[IG.win].likes, from = Math.round(final * .62);
+    const n = on ? Math.round(from + (final - from) * ease((t - T.stop) / 1.2)) : from;
+    win.querySelector('[data-likes]').textContent = fmt(n);
+  }
+}
+
 window.renderFrame = (t) => {
   const T = EP.timeline;
   const ang = lerp(EP.camera.angFrom, EP.camera.angTo, ease(t / EP.duration));
@@ -205,7 +263,7 @@ window.renderFrame = (t) => {
   builds.forEach(b => {
     if (b.userData.appear == null) { b.visible = true; b.scale.setScalar(1); } else pop(b, b.userData.appear, t);
     if (b.userData.drops) b.userData.drops.forEach(d => { const p = (t * .9 + d.userData.phase) % 1, a = d.userData.phase * Math.PI * 2, rr = .2 + p * .75; d.position.set(Math.cos(a) * rr, 1.35 + p * .5 - p * p * 1.3, Math.sin(a) * rr); });
-    if (b.userData.sign) b.userData.sign.lookAt(camera.position.x, b.userData.sign.getWorldPosition(new THREE.Vector3()).y, camera.position.z);
+    if (b.userData.signMesh) b.userData.signMesh.lookAt(camera.position.x, b.userData.signMesh.getWorldPosition(new THREE.Vector3()).y, camera.position.z);
   });
   cats.forEach((c, i) => {
     const u = c.userData;
@@ -232,6 +290,10 @@ window.renderFrame = (t) => {
     const k = Math.min(1, (t - ch.s) / .12); subEl.style.opacity = 1; subEl.style.transform = `scale(${.86 + .14 * k})`;
     subEl.querySelectorAll('.w').forEach((el, j) => { const w = ch.words[j]; el.classList.toggle('on', t >= w.s && t < Math.max(w.e, w.s + .12)); });
   } else { subEl.style.opacity = 0; subEl.dataset.k = ''; }
+  // while the comments sheet is open, subtitles move up above it
+  const igOpen = IG ? ease((t - IG.t.up) / .45) - ease((t - IG.t.down) / .4) : 0;
+  subEl.style.top = lerp(1180, 600, igOpen) + 'px';
+  renderIG(t);
   const bd = EP.badges.find(bb => t >= bb.from && t < bb.to);
   if (bd) { $('badgeText').innerHTML = bd.html; $('badge').style.opacity = Math.min(1, (t - bd.from) / .25); } else $('badge').style.opacity = 0;
   const e = ease((t - T.end) / .5);

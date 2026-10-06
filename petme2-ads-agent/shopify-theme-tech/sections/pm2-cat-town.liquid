@@ -1,0 +1,91 @@
+{%- comment -%}
+  PETME2 Cat Town: live 3D town, view only (rotate / zoom / tap a building to see who requested it).
+  Data: page metafield custom.town_state (JSON). Updated daily via the Admin API, no theme change needed.
+{%- endcomment -%}
+{%- liquid
+  assign s = section.settings
+  assign st = page.metafields.custom.town_state.value
+  assign cats_count = st.cats.size | default: 0
+  assign houses_count = st.houses.size | default: 0
+  assign day = st.day | default: 1
+-%}
+<section class="pm2-town" data-town-root>
+  <div class="pm2-town__stage" data-town-canvas>
+    <noscript><p class="pm2-town__noscript">Turn on JavaScript to see Cat Town.</p></noscript>
+  </div>
+
+  <div class="pm2-town__top">
+    <span class="pm2-town__brand">
+      <svg viewBox="0 0 64 64" width="26" height="26" aria-hidden="true"><g fill="currentColor"><ellipse cx="32" cy="42" rx="14" ry="12"/><ellipse cx="14" cy="26" rx="6" ry="8"/><ellipse cx="25" cy="15" rx="6" ry="8"/><ellipse cx="39" cy="15" rx="6" ry="8"/><ellipse cx="50" cy="26" rx="6" ry="8"/></g></svg>
+      PETME2 CAT TOWN
+    </span>
+    <h1 class="pm2-town__day">Day {{ day }}</h1>
+    <div class="pm2-town__stats">
+      <span>{{ cats_count }} {% if cats_count == 1 %}cat{% else %}cats{% endif %}</span>
+      <span>{{ houses_count }} {% if houses_count == 1 %}house{% else %}houses{% endif %}</span>
+    </div>
+  </div>
+
+  <div class="pm2-town__card">
+    <h2>{{ s.heading | escape }}</h2>
+    <ol>
+      <li><strong>Every new follower</strong> = a new cat + a house.</li>
+      <li>The <strong>most-liked comment</strong> builds anything.</li>
+    </ol>
+    {%- if s.instagram_url != blank -%}
+      <a class="pm2-town__btn" href="{{ s.instagram_url }}" target="_blank" rel="noopener">Follow {{ s.instagram_handle | escape }} on Instagram</a>
+    {%- endif -%}
+    <p class="pm2-town__hint">Drag to look around · pinch or scroll to zoom · tap a building</p>
+  </div>
+
+  <div class="pm2-town__tip" data-town-tip hidden></div>
+</section>
+
+<script type="application/json" data-town-state>{{ st | json }}</script>
+<script type="module">
+  import { mountCatTown } from '{{ 'pm2-cat-town.js' | asset_url }}';
+  const root = document.querySelector('[data-town-root]');
+  let state = {};
+  try { state = JSON.parse(document.querySelector('[data-town-state]').textContent || '{}') || {}; } catch (e) {}
+  mountCatTown(root, state);
+</script>
+
+<style>
+  .pm2-town { position: relative; height: calc(100svh - var(--header-height, 64px)); min-height: 560px; background: #BFE3FF; overflow: hidden; font-family: var(--font-heading-family); }
+  .pm2-town__stage { position: absolute; inset: 0; }
+  .pm2-town__stage canvas { display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; }
+  .pm2-town__noscript { padding: 40px; text-align: center; }
+  .pm2-town__top { position: absolute; top: 18px; left: 0; right: 0; text-align: center; pointer-events: none; }
+  .pm2-town__brand { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,.94); color: #2F5FE0; font-weight: 900; font-size: 15px; letter-spacing: .08em; padding: 8px 16px; border-radius: 999px; box-shadow: 0 8px 24px rgba(20,40,90,.15); }
+  .pm2-town__day { margin: 10px 0 0; color: #fff; font-weight: 900; font-size: clamp(40px, 7vw, 64px); line-height: 1; text-shadow: 0 4px 0 rgba(20,40,90,.25), 0 10px 30px rgba(20,40,90,.25); }
+  .pm2-town__stats { margin-top: 10px; display: inline-flex; gap: 8px; }
+  .pm2-town__stats span { background: rgba(27,35,51,.55); color: #fff; font-weight: 800; font-size: 15px; padding: 5px 12px; border-radius: 999px; }
+  .pm2-town__card { position: absolute; left: 16px; bottom: 16px; max-width: 340px; background: rgba(255,255,255,.95); border-radius: 20px; padding: 18px 20px; box-shadow: 0 16px 40px rgba(20,40,90,.2); color: #1B2333; }
+  .pm2-town__card h2 { margin: 0 0 8px; font-size: 20px; line-height: 1.2; }
+  .pm2-town__card ol { margin: 0 0 12px; padding-left: 20px; font-family: var(--font-body-family); font-size: 15px; line-height: 1.5; }
+  .pm2-town__card strong { color: #2F5FE0; }
+  .pm2-town__btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 18px; border-radius: 999px; background: #2F5FE0; color: #fff; font-weight: 800; font-size: 15px; text-decoration: none; }
+  .pm2-town__btn:hover { filter: brightness(1.08); }
+  .pm2-town__hint { margin: 10px 0 0; font-family: var(--font-body-family); font-size: 12px; color: #5B6475; }
+  .pm2-town__tip { position: absolute; max-width: 250px; background: #1B2333; color: #fff; font-family: var(--font-body-family); font-size: 14px; line-height: 1.35; padding: 8px 12px; border-radius: 12px; pointer-events: none; box-shadow: 0 8px 24px rgba(0,0,0,.25); }
+  @media (max-width: 749px) {
+    .pm2-town__card { left: 12px; right: 12px; bottom: 12px; max-width: none; padding: 14px 16px; }
+    .pm2-town__card h2 { font-size: 17px; }
+    .pm2-town__card ol { font-size: 14px; margin-bottom: 10px; }
+    .pm2-town__hint { display: none; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "PETME2 Cat Town",
+  "tag": "div",
+  "class": "pm2-cat-town-section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Card heading", "default": "Build the town with us" },
+    { "type": "text", "id": "instagram_handle", "label": "Instagram handle", "default": "@petme2" },
+    { "type": "url", "id": "instagram_url", "label": "Instagram link" }
+  ],
+  "presets": [{ "name": "PETME2 Cat Town" }]
+}
+{% endschema %}
