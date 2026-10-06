@@ -125,8 +125,10 @@ def main():
 
     # ---- timeline from the real voice timings (gap 0.3 s between lines) ----
     tim = json.loads(Path(a.timings).read_text())
+    # with a comments sheet, leave a 1.6 s beat before the "most liked comment" line so viewers see it scroll
     starts, t0 = [], 0.2
-    for d in tim["durs"]:
+    for li, d in enumerate(tim["durs"]):
+        if li == 2 and a.comments: t0 += 1.3
         starts.append(round(t0, 3)); t0 += d + 0.3
     duration = round(t0 + 1.0, 2)
     words = []
@@ -196,9 +198,9 @@ def main():
         win_c = max(lst, key=lambda c: c["likes"])
         others = [c for c in lst if c is not win_c][:5]
         ordered = others[:3] + [win_c] + others[3:]          # winner shows after a short scroll
-        up = starts[2] - .3
+        up = starts[2] - 1.6
         comments = {"list": ordered, "win": ordered.index(win_c),
-                    "t": {"up": up, "scroll": up + .5, "stop": up + 2.2, "down": t_build - .5}}
+                    "t": {"up": up, "scroll": up + .5, "stop": up + 2.0, "down": t_build - .5}}
     ep = {"day": a.day, "comments": comments, "duration": round(duration, 2), "islandRadius": R, "trees": trees,
           "houses": st["houses"], "buildings": st["buildings"], "cats": st["cats"],
           "words": words, "badges": badges, "timeline": {"end": t_end},
