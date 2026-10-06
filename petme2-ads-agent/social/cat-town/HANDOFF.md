@@ -27,14 +27,15 @@ An Instagram series + interactive web page: a low-poly 3D **city built for cats*
 - Picture page: https://claude.ai/artifact/J5eZctn7UsJmcoA4QQBSMF
 - Shopify page: petme2.com/pages/cat-town (page template `page.cat-town`, section `pm2-cat-town`).
   - LIVE theme now (owner published it 2026-10-06): `PETME2 — Cat Town fountain + feeder + controls` (188909420756).
-  - Preview theme: `PETME2 — Cat Town figure 8 food & drink stops` (188910403796) → fountain circle + feeder circle side by side, many more cats, Mango between. Preview: https://petme2.com/pages/cat-town?preview_theme_id=188910403796
+  - Preview theme: `PETME2 — Cat Town Halloween + feeding time` (188910403796) → figure 8 food & drink stops + shop buttons + Halloween week + feeding time. Preview: https://petme2.com/pages/cat-town?preview_theme_id=188910403796 (add `&halloween=1` to see Halloween now).
+  - The store is at Shopify's 20-theme limit: a new duplicate fails silently. Reuse an unpublished Cat Town copy, or ask the owner to delete old drafts.
   - Theme writes only to UNPUBLISHED copies (live theme writes are blocked). If the owner publishes the copy, duplicate the live theme again and write to the new copy. Upload big files via `stagedUploadsCreate` (curl POST) + `themeFilesUpsert` with body type URL, then verify `checksumMd5`. Log every change in `../../changes-log.csv`.
 
 ## Day-1 video pipeline (when real data arrives)
 Voice: edge-tts `en-US-AvaMultilingualNeural` rate +6% with WordBoundary timings (Composio remote workbench); original synth music + pop SFX; mix with ffmpeg sidechain; render frames headless → H.264; deliver via Shopify Files link. Needs real data from the owner: new follower count, top comments with likes, Instagram handle (@petme2 unconfirmed). Do not post anything without owner approval.
 
 ## Status (2026-10-06 night, Cat Town session in the "Cat Town" project)
-Live: real fountain + feeder + controls. Preview 188910403796: figure 8 "food & drink stops" (see `build-notes.md`, "Update 2026-10-06 (night)"). Waiting for the owner to check and publish.
+Live: real fountain + feeder + controls. Preview 188910403796: figure 8 food & drink stops + shop buttons + Halloween + feeding time (see `build-notes.md`, "Update 2026-10-06 (late night)"). Waiting for the owner to check and publish.
 Note: this cloud container can't open petme2.com (proxy blocks it), so live-page checks are done locally with `viewer.html` + Playwright.
 
 ## Open polish items

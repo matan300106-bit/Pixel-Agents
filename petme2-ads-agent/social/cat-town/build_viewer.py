@@ -21,5 +21,13 @@ for k, sg, f in [("petshop", "PETME2 Pet Shop", 10), ("cafe", "Cat Café", 40), 
                  ("pool", "Cat Pool", 400), ("custom", "Cat Airport", 700), ("custom", "Cat Cinema", 900)]:
     data["landmarks"].append({"kind": k, "sign": sg, "at": 100 * ((f - .5) / 1000) ** .8, "unlock": f})
 head = re.sub(r"<script>window.CAT_VIEWER.*?</script>|<script>window.CITY = .*?</script>", lambda m: "<script>window.CAT_VIEWER = true; window.CAT_LITE = matchMedia('(pointer: coarse)').matches || innerWidth < 820; window.CITY = " + json.dumps(data, ensure_ascii=False) + ";</script>", head, flags=re.S)
-open('viewer.html', 'w').write(head + '<script type="module">' + js + '</script>\n')
+if '.info__shop' not in head:
+    head = head.replace("  .info__note {", "  .info__shop { display: inline-block; margin-top: 10px; padding: 8px 14px; border-radius: 999px; background: var(--brand); color: #fff; font-weight: 800; font-size: 13px; text-decoration: none; }\n  .info__note {", 1)
+# Escape every non-ASCII character so symbols never break, whatever charset the server sends.
+def esc_html(t): return ''.join(c if ord(c) < 128 else '&#%d;' % ord(c) for c in t)
+def esc_js(t): return ''.join(c if ord(c) < 128 else ''.join('\\u%04x' % u for u in __import__('struct').unpack('<%dH' % (len(c.encode('utf-16-le')) // 2), c.encode('utf-16-le'))) for c in t)
+def esc_page(h):
+    parts = re.split(r'(<script\b[^>]*>.*?</script>)', h, flags=re.S)
+    return ''.join(esc_js(x) if x.startswith('<script') else esc_html(x) for x in parts)
+open('viewer.html', 'w').write(esc_page(head) + '<script type="module">' + esc_js(js) + '</script>\n')
 print('viewer.html built', len(head + js), 'bytes')

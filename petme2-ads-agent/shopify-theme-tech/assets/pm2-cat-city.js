@@ -46,6 +46,12 @@ const F0 = EP.followersBefore || 0, FN = EP.followersNew || 0; let F = F0 + FN; 
 const APPEAR = new Float32Array(F).fill(-1);
 const landmarks = [...(EP.landmarks || [])];
 const NEWB = EP.newBuild || null;
+// Halloween week: Oct 24-31 (visitor's date), or forced with EP.halloween / ?halloween=1 (previews, videos)
+const _today = new Date(), HW = !!(EP.halloween || /[?&]halloween=1/.test(location.search) || (_today.getMonth() === 9 && _today.getDate() >= 24));
+// Feeding time: kibble rains on the food bar (kind 'food') or the fountain gushes (kind 'water'); every cat in town runs to the square for FEED_DUR s
+const FEED = { t0: -1e9, kind: 'food' }, FEED_DUR = 14; let LAST_ANIM = 0;
+if (EP.feed) { FEED.t0 = EP.feed.at; FEED.kind = EP.feed.kind || 'food'; }
+window.feedTime = kind => { FEED.kind = kind; FEED.t0 = LAST_ANIM; };
 
 // ---------- street plan: a round cat city (rings + curvy avenues around Mango's square) ----------
 const COAST_X = 200;
@@ -216,7 +222,7 @@ const CAT_DRINK = poseGeo([[B(.5, .45, .9), 0, .42, 0, .12], [B(.48, .42, .42), 
 const CAT_BELLY = poseGeo([[B(.5, .45, .9), 0, .225, 0], [B(.48, .42, .42), 0, .21, .5, -.3], [EAR(), -.15, .15, .80, Math.PI / 2], [EAR(), .15, .15, .80, Math.PI / 2], ...LEGS(.60), [B(.1, .08, .6), 0, .04, -.62]]);
 const POSES = {};
 for (const [k, g] of [['sit', CAT_SIT], ['loaf', CAT_LOAF], ['drink', CAT_DRINK], ['belly', CAT_BELLY]]) { const m = IM(g, 800); m.frustumCulled = false; m.used = 0; for (let i = 0; i < 800; i++) m.setMatrixAt(i, ZERO); POSES[k] = m; }
-const WALK = IM(CAT_GEO, 90); WALK.frustumCulled = false; for (let i = 0; i < 90; i++) { WALK.setMatrixAt(i, ZERO); WALK.setColorAt(i, col.set('#F28C28')); }
+const WALK = IM(CAT_GEO, 104); WALK.frustumCulled = false; for (let i = 0; i < 104; i++) { WALK.setMatrixAt(i, ZERO); WALK.setColorAt(i, col.set('#F28C28')); }
 const slot = (pm, c) => { if (pm.used >= 800) return -1; const i = pm.used++; pm.setColorAt(i, col.set(c)); return i; };
 let TAPE = null, TAPE_H = 0, BOXM = null, FLAPM = null, BOX_H = 0, BOX_FL = null;   // filled by the gardens block (hero row/box use the last slots)
 
@@ -349,8 +355,9 @@ const FD = { g: new THREE.Group(), yaw: 0 };
   add(new THREE.TorusGeometry(RI + .08, .08, 6, 72).rotateX(Math.PI / 2), mat('#FFFFFF'), 0, .28, 0, 0, 0, false);
   const kb = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(.17, 0), KIB, 260); kb.receiveShadow = true;
   for (let i = 0; i < 260; i++) { const a = i / 260 * TAU + hash01(i * 3 + 1) * .05, r = RI + .3 + hash01(i * 7 + 2) * (RW - RI - .6);
-    kb.setMatrixAt(i, LR(Math.cos(a) * r, .27, Math.sin(a) * r, hash01(i) * 3, hash01(i * 5) * 3, 0, .8 + hash01(i * 11) * .5)); kb.setColorAt(i, col.set(['#A8703F', '#8A5A34', '#C08850'][i % 3])); }
+    kb.setMatrixAt(i, LR(Math.cos(a) * r, .27, Math.sin(a) * r, hash01(i) * 3, hash01(i * 5) * 3, 0, .8 + hash01(i * 11) * .5)); kb.setColorAt(i, col.set(HW && i % 4 === 0 ? ['#FF8A1F', '#9B6FE0', '#FFFFFF', '#5BB98C'][(i >> 2) % 4] : ['#A8703F', '#8A5A34', '#C08850'][i % 3])); }
   g.add(kb);
+  if (HW) { const sg = textSign('Trick or treat!', 10, '#FF8A1F'); sg.position.set(x, 17.2, z); scene.add(sg); signs.push(sg); }
 }
 
 // ---------- cat houses: one per follower; 6 districts, each with its own style ----------
@@ -375,6 +382,8 @@ const HP = {
   box: IM(B(3.3, 2.5, 3.1), cntK.B), flap: IM(B(3.3, .06, 1.1), cntK.B * 2), tape: IM(B(.5, .02, 3.12), cntK.B, false),
   pod: IM(new THREE.SphereGeometry(1.9, 14, 8, 0, Math.PI * 2, 0, Math.PI / 2), cntK.C),
 };
+if (HW) { HP.pump = IM(new THREE.SphereGeometry(.46, 10, 7).scale(1, .78, 1), NH, true, new THREE.MeshStandardMaterial({ color: '#FFFFFF', emissive: '#FF6A00', emissiveIntensity: .28, flatShading: true, roughness: .8 }));
+  HP.stem = IM(Cyl(.05, .08, .22, 5), NH, false, mat('#3E7B3A')); }
 const houseParts = []; const hc = Object.fromEntries(Object.keys(HP).map(k => [k, 0]));
 houseLots.forEach((l, n) => { const h = hash01(n * 13 + 5), pal = DSTYLE[l.d][1];
   const p = []; const put = (k, m, c) => { const i = hc[k]++; if (c) HP[k].setColorAt(i, col.set(c)); p.push([HP[k], i, m]); };
@@ -385,6 +394,7 @@ houseLots.forEach((l, n) => { const h = hash01(n * 13 + 5), pal = DSTYLE[l.d][1]
   else if (l.kind === 'B') { put('box', LR(0, 1.25, 0), h < .5 ? '#C99A62' : '#D6AE76');
     put('flap', LR(0, 2.62, 1.3, .55), '#BC8C55'); put('flap', LR(0, 2.62, -1.3, -.55), '#BC8C55'); put('tape', LR(0, 2.51, 0), '#E9D3A8'); put('door', LR(0, .7, 1.57), '#3A2A1C'); }
   else { const c = pal[Math.floor(h * 61) % pal.length]; put('pod', LR(0, 0, 0), c); put('ear', LR(-.85, 2.05, 0), c); put('ear', LR(.85, 2.05, 0), c); put('door', LR(0, .7, 1.72, -.35), '#1B2333'); }
+  if (HW) { const px = h < .5 ? 1.3 : -1.3, pz = l.kind === 'C' ? 1.75 : l.kind === 'B' ? 1.95 : 2.0; put('pump', LR(px, .36, pz), '#FF8A1F'); put('stem', LR(px, .78, pz)); }
   houseParts.push(p); });
 Object.values(HP).forEach(m => { if (m.instanceColor) m.instanceColor.needsUpdate = true; });
 function placeHouse(n, s) { const l = houseLots[n];
@@ -537,6 +547,17 @@ const Hy = (x, z) => { const d = inIsle(x, z); return .16 + .37 * smooth(.6, 0, 
   WB.mSit = slot(POSES.sit, '#F28C28'); WB.mDrink = slot(POSES.drink, '#F28C28');   // Mango, the host (WALK slot 0)
 }
 
+// ---------- Halloween: witch hats (street cats, loungers, parade, Mango) + a black-cat parade around the 8 (WALK 90-101) ----------
+const HWX = { hatL: LR(0, 1.06, .5, -.15), sitHatL: LR(0, 1.24, .12, -.1) };
+if (HW) { const g = merge([Cyl(.44, .44, .05, 12).translate(0, .025, 0), new THREE.ConeGeometry(.26, .62, 8).translate(0, .36, 0).rotateZ(.12), Cyl(.27, .27, .07, 10).translate(0, .1, 0)]);
+  HWX.n = Math.ceil(F / 2) + 12 + 1 + WB.lounge.length; HWX.hat = IM(g, HWX.n, true, mat('#FFFFFF')); HWX.hat.frustumCulled = false;
+  for (let i = 0; i < HWX.n; i++) { HWX.hat.setMatrixAt(i, ZERO); HWX.hat.setColorAt(i, col.set(i % 3 === 1 ? '#5B3B8C' : '#22202A')); } HWX.hat.instanceColor.needsUpdate = true;
+  HWX.P0 = Math.ceil(F / 2); HWX.M = HWX.P0 + 12; HWX.L0 = HWX.M + 1;
+  for (let j = 0; j < 12; j++) WALK.setColorAt(90 + j, col.set(j % 4 === 3 ? '#3B3B44' : '#1E1E24')); }
+// ---------- feeding time FX: 90 kibble bits (food) or water arcs (water) ----------
+const FX = IM(new THREE.IcosahedronGeometry(.2, 0), 90, false, new THREE.MeshStandardMaterial({ color: '#FFFFFF', flatShading: true, roughness: .6 })); FX.frustumCulled = false;
+for (let i = 0; i < 90; i++) FX.setMatrixAt(i, ZERO);
+
 // ---------- Build 2 (hero row) + Build 3 (hero box) on the plaza ----------
 const ROW_A = [3.75, 3.83, 3.91, 3.99], ROW_YAW = yawTo(Math.cos(3.87), Math.sin(3.87));   // between avenues 3 and 4, outside the oval lane
 const ROW = ROW_A.map(a => polar(a, 27)), ROW_SIT = [0, 1, 2, 3].map(c => slot(POSES.sit, CAT_COLORS[(c * 7 + 2) % CAT_COLORS.length]));
@@ -627,10 +648,15 @@ WALK.instanceColor.needsUpdate = true;
 function updateExtras(t, anim) {
   const D = POSES.drink, S = POSES.sit, R = WB.rip, P = 30, PW = WB.P, FW = EP.fountainWave, wave = FW != null && anim >= FW && anim < FW + 6;
   // Build 1: drinkers (fountain circle) + eaters (feeder circle). 34 s loop: walk in 8 s, drink/eat 14 s, turn, walk out 8 s, gone 3.5 s
+  LAST_ANIM = anim;
+  const ff = anim - FEED.t0, feeding = ff >= 0 && ff < FEED_DUR, fDrink = FEED.kind === 'water';
   for (const s of WB.spots) { const k = popK(t, s.rank), ri = (s.m - 1) * 2;
     let mode = 0, x = s.p[0], z = s.p[1], y = .54, yaw = s.yawC, sc = 1.15 * k;
     if (k > 0) {
-      if (wave && s.drink) { const l0 = FW + 3 + (s.m - 1) * .1; mode = anim >= l0 && anim < l0 + .5 ? 1 : 2; }
+      if (feeding && s.drink === fDrink && ff < FEED_DUR - 1) {   // feeding time: everybody runs in at once and stays
+        if (ff < 2.4) { const [px, pz, dx, dz] = sampleRoad(s.pin, ease(ff / 2.4) * s.pin.len); x = px; z = pz; yaw = Math.atan2(dx, dz); y = Hy(px, pz) + Math.abs(Math.sin(anim * 16 + s.w)) * .25; sc *= back(ff / .3); mode = 1; }
+        else mode = 2; }
+      else if (wave && s.drink) { const l0 = FW + 3 + (s.m - 1) * .1; mode = anim >= l0 && anim < l0 + .5 ? 1 : 2; }
       else { const u = mod(anim + s.ph, PW);
         if (u < 8) { const [px, pz, dx, dz] = sampleRoad(s.pin, u / 8 * s.pin.len); x = px; z = pz; yaw = Math.atan2(dx, dz); y = Hy(px, pz) + Math.abs(Math.sin(anim * 11 + s.w)) * .15; sc *= back(u / .3); mode = 1; }
         else if (u < 22) { mode = 2;
@@ -668,7 +694,29 @@ function updateExtras(t, anim) {
         else XM.makeTranslation(hx + ca * .34, FT.tip.y - .2 - sL * f * f, hz + sa * .34);                                        // drops beside the stream
         WB.drops.setMatrixAt(k * 6 + i, XM); }
       const f = frac(anim * 1.3 + k / 6), r = .35 + 1.6 * f; if (f > .92) R.setMatrixAt(2 * WB.N + 2 + k, ZERO); else { XM.compose(XV.set(hx, hy + .04, hz), QI, XS.set(r, 1, r)); R.setMatrixAt(2 * WB.N + 2 + k, XM); } }
-    FT.wTex.offset.y = frac(anim * 1.4); FT.stream.scale.set(1 + .06 * Math.sin(anim * 9), 1, 1 + .06 * Math.sin(anim * 7 + 1)); }
+    FT.wTex.offset.y = frac(anim * 1.4); const gush = ff >= 0 && ff < FEED_DUR && fDrink ? 2 : 1; FT.stream.scale.set(gush * (1 + .06 * Math.sin(anim * 9)), 1, gush * (1 + .06 * Math.sin(anim * 7 + 1))); }
+  // Halloween: hats on the loungers, Mango (when he sits), and the black-cat parade around the 8
+  if (HW) { const H = HWX.hat;
+    WB.lounge.forEach((l, j) => { const k = popK(t, l.rank); if (k <= 0 || l.pm !== POSES.sit) { H.setMatrixAt(HWX.L0 + j, ZERO); return; }
+      l.pm.getMatrixAt(l.i, XM2); H.setMatrixAt(HWX.L0 + j, XM.multiplyMatrices(XM2, HWX.sitHatL)); });
+    S.getMatrixAt(WB.mSit, XM2); H.setMatrixAt(HWX.M, XM.multiplyMatrices(XM2, HWX.sitHatL));
+    const kp = popK(t, 13);
+    for (let j = 0; j < 12; j++) { const a = -anim * .085 + j * .17, x = Math.cos(a) * 27, z = Math.sin(a) * 15.6, yaw = Math.atan2(Math.sin(a) * 27, -Math.cos(a) * 15.6);
+      putCat(WALK, 90 + j, x, .16 + Math.abs(Math.sin(anim * 9 + j)) * .1, z, yaw, 1.15 * kp);
+      if (kp > 0) { WALK.getMatrixAt(90 + j, XM2); H.setMatrixAt(HWX.P0 + j, XM.multiplyMatrices(XM2, HWX.hatL)); } else H.setMatrixAt(HWX.P0 + j, ZERO); }
+    H.instanceMatrix.needsUpdate = true; }
+  // Feeding time FX: kibble rains onto the food bar, or water arcs from the spout into the Water Bar ring
+  { if (!feeding) { for (let i = 0; i < 90; i++) FX.setMatrixAt(i, ZERO); FT.stream.scale.x = FT.stream.scale.z = 1; }
+    else { FX.material.color.set(fDrink ? '#9FDCFF' : '#A8703F'); FX.material.emissive.set(fDrink ? '#4FB3EA' : '#000000');
+      for (let i = 0; i < 90; i++) { const a = i / 90 * TAU * 3 + i * .7, d0 = (i % 30) / 30 * 3.2, u = (ff - d0) / 1.3;
+        if (fDrink) { const v = frac(ff * .7 + i / 90), rr = SQ.wall - .8 - (i % 3) * .5, tx = -SQ.C + Math.cos(a) * rr, tz = Math.sin(a) * rr;
+          const bx = FT.tip.x + (tx - FT.tip.x) * v, bz = FT.tip.z + (tz - FT.tip.z) * v, by = FT.tip.y + (1.2 - FT.tip.y) * v + 6 * v * (1 - v);
+          XM.compose(XV.set(bx, by, bz), QI, XS.setScalar(ff > FEED_DUR - 1.5 ? 0 : 1.2)); FX.setMatrixAt(i, XM); }
+        else { if (u < 0 || u > 1 || ff > 9) { FX.setMatrixAt(i, ZERO); continue; }
+          const rr = SQ.wall - 1.05 + Math.sin(i * 1.7) * .7, x = SQ.C + Math.cos(a) * rr, z = Math.sin(a) * rr;
+          XM.compose(XV.set(x, 18 - 17.2 * u * u, z), XQ.setFromEuler(XE.set(u * 5, i, 0)), XS.setScalar(1.1)); FX.setMatrixAt(i, XM); } }
+      if (fDrink) FT.stream.scale.x = FT.stream.scale.z = 2; }
+    FX.instanceMatrix.needsUpdate = true; }
   // Build 2: hero circle row (3 identical sitters + the one that walks in late)
   { const kt = popK(t, UNLOCK.circles);
     ROW.forEach(([x, z], c) => { if (kt <= 0) TAPE.setMatrixAt(TAPE_H + c, ZERO); else { XM.compose(XV.set(x, .16, z), QI, XS.set(kt, 1, kt)); TAPE.setMatrixAt(TAPE_H + c, XM); } });
@@ -750,8 +798,8 @@ const fmt = n => n >= 1000 ? (n / 1000).toFixed(1).replace('.0', '') + 'K' : Str
 const CM = EP.comments;
 if (CM) $('cmList').innerHTML = CM.list.map((c, i) => `<div class="card"><div class="card__av" style="background:${AV[i % 6]}">${c.by[0].toUpperCase()}</div><div class="card__body"><div class="card__name">@${c.by}</div><div class="card__text">${c.text}</div></div><div class="card__like"><span data-h>${HEART(false)}</span><span data-l>${fmt(c.likes)}</span></div></div>`).join('');
 const tagsEl = $('tags');
-const newTags = (EP.residents || []).map(r => { const d = document.createElement('div'); d.className = 'tag'; d.innerHTML = `@${r.by}<small>🐱 Cat #${r.n.toLocaleString('en-US')} moved in</small>`; tagsEl.appendChild(d); return { el: d, k: r.n - 1 }; });
-const buildTag = document.createElement('div'); buildTag.className = 'tag'; if (NEWB) buildTag.innerHTML = `@${NEWB.by}<small>🏗️ built the ${NEWB.name}</small>`; buildTag.style.display = 'none'; tagsEl.appendChild(buildTag);
+const newTags = (EP.residents || []).map(r => { const d = document.createElement('div'); d.className = 'tag'; d.innerHTML = `@${r.by}<small>\ud83d\udc31 Cat #${r.n.toLocaleString('en-US')} moved in</small>`; tagsEl.appendChild(d); return { el: d, k: r.n - 1 }; });
+const buildTag = document.createElement('div'); buildTag.className = 'tag'; if (NEWB) buildTag.innerHTML = `@${NEWB.by}<small>\ud83c\udfd7\ufe0f built the ${NEWB.name}</small>`; buildTag.style.display = 'none'; tagsEl.appendChild(buildTag);
 const proj = v => { const p = v.clone().project(camera); return { x: (p.x + 1) / 2 * W, y: (1 - p.y) / 2 * H, ok: p.z < 1 && p.x > -1 && p.x < 1 && p.y > -1 && p.y < 1 }; };
 if (EP.hideUI) ROOT.style.display = 'none';
 
@@ -783,11 +831,17 @@ window.renderFrame = (t, anim = t) => {
   }
   // Mango strolls around the fountain
   catMesh.setMatrixAt(0, ZERO);   // Mango now hosts the Water Bar (WALK / pose meshes), no more road patrol
+  const fT = anim - FEED.t0, feedOn = fT >= 0 && fT < FEED_DUR;
   for (let k = 0; k < F; k++) { const w = CATW[k], a0 = APPEAR[k] < 0 ? -1 : APPEAR[k] + .3, vis = a0 < 0 || t >= a0;
     const s = vis ? 1.15 * (a0 < 0 ? 1 : back((t - a0) / .4)) : 0, l = houseLots[k];
-    if (w.nap) { cm.compose(V(l.x, w.roofY, l.z), Q.setFromEuler(EU.set(0, l.ry + Math.sin(anim * .3 + k) * .4, 0)), V(s, s * .8, s)); catMesh.setMatrixAt(k + 1, cm); continue; }
-    const [x, z, dx, dz] = walkPos(w.rd, w.s0, w.L, w.v, w.ph, anim), nx = -dz, nz = dx, off = 3 * w.side * (dx * nz - dz * nx >= 0 ? 1 : 1);
-    cm.compose(V(x - dz * 3 * w.side, Math.abs(Math.sin(anim * 9 + k)) * .1, z + dx * 3 * w.side), Q.setFromEuler(EU.set(0, Math.atan2(dx, dz), 0)), V(s, s, s)); catMesh.setMatrixAt(k + 1, cm); }
+    if (w.nap) { cm.compose(V(l.x, w.roofY, l.z), Q.setFromEuler(EU.set(0, l.ry + Math.sin(anim * .3 + k) * .4, 0)), V(s, s * .8, s)); catMesh.setMatrixAt(k + 1, cm); }
+    else { const [x, z, dx, dz] = walkPos(w.rd, w.s0, w.L, w.v, w.ph, anim);
+      let px = x - dz * 3 * w.side, pz = z + dx * 3 * w.side, yaw = Math.atan2(dx, dz), bob = .1;
+      const gw = feedOn && l.r < 170 ? smooth(0, 2.2 + l.r / 60, fT) * (1 - smooth(FEED_DUR - 2.5, FEED_DUR, fT)) : 0;   // feeding time: run to the square, crowd its edge, then go home
+      if (gw > 0) { const ga = Math.atan2(pz, px) + (hash01(k * 3 + 2) - .5) * .25, gr = SQ.plaza + 1 + hash01(k * 5 + 1) * 6, gx = Math.cos(ga) * gr, gz = Math.sin(ga) * gr;
+        px += (gx - px) * gw; pz += (gz - pz) * gw; yaw = fT < FEED_DUR - 2.5 ? Math.atan2(-px, -pz) : Math.atan2(px, pz); bob = gw < 1 ? .25 : .06; }
+      cm.compose(V(px, Math.abs(Math.sin(anim * (gw > 0 && gw < 1 ? 16 : 9) + k)) * bob, pz), Q.setFromEuler(EU.set(0, yaw, 0)), V(s, s, s)); catMesh.setMatrixAt(k + 1, cm); }
+    if (HW && k % 2 === 0) HWX.hat.setMatrixAt(k >> 1, s > 0 ? M2.multiplyMatrices(cm, HWX.hatL) : ZERO); }
   catMesh.instanceMatrix.needsUpdate = true;
   TAXIS.forEach((tx, i) => { const a0 = APPEAR[tx.n]; tx.g.visible = a0 < 0 || t >= a0 + .5; if (!tx.g.visible) return;
     const [x, z, dx, dz] = walkPos(tx.rd, tx.s0, tx.L, tx.v, tx.ph, anim);
@@ -804,7 +858,7 @@ window.renderFrame = (t, anim = t) => {
   // ---- UI ----
   const cats = shown + 1; window.__shown = cats;
   const dayNow = EP.dayRange ? Math.round(EP.dayRange[0] + (EP.dayRange[1] - EP.dayRange[0]) * Math.min(1, shown / Math.max(1, F))) : DAY;
-  $('countN').textContent = cats.toLocaleString('en-US'); $('countL').textContent = `${cats === 1 ? 'cat' : 'cats'} · Day ${dayNow}`;
+  $('countN').textContent = cats.toLocaleString('en-US'); $('countL').textContent = `${cats === 1 ? 'cat' : 'cats'} \u00b7 Day ${dayNow}`;
   if (STILL || window.__noCam) { $('count').style.opacity = 1; $('sub').style.opacity = 0; return; }
   const ms = EP.milestone ?? 1e9, pulse = t >= ms ? 1 + .25 * Math.max(0, 1 - (t - ms) / .35) : 1;
   $('countN').style.transform = `scale(${pulse})`; $('countN').style.color = t >= ms && t < ms + 2.5 ? '#FFD23F' : '#fff';
@@ -840,10 +894,12 @@ controls.autoRotate = true; controls.autoRotateSpeed = .35; renderer.domElement.
 const fit = () => { W = stage.clientWidth; H = stage.clientHeight; renderer.setSize(W, H); camera.aspect = W / H; camera.fov = W / H < .8 ? 55 : 42; camera.updateProjectionMatrix(); };
 addEventListener('resize', fit); fit();
 const slider = $('grow'), FMAX = +slider.max, tOf = f => f <= 0 ? -1 : EP.newFrom + (EP.newTo - EP.newFrom) * Math.pow((f - .5) / FN, .8) + 1e-6;
-let target = +slider.value, cur = target, playing = false, ANIM = 0;
+let target = +slider.value, cur = target, playing = false, ANIM = 0, nextFeed = 7, feedKind = 'food';
 const setPlay = on => { playing = on; $('play').textContent = on ? 'Pause' : 'Play growth'; };
 slider.addEventListener('input', () => { target = +slider.value; setPlay(false); });
-ROOT.querySelectorAll('[data-f]').forEach(b => b.addEventListener('click', () => { target = +b.dataset.f; slider.value = target; setPlay(false); }));
+ROOT.querySelectorAll('[data-f]').forEach(b => b.addEventListener('click', () => { target = +b.dataset.f; slider.value = target; setPlay(false);
+  const d = { 0: 62, 100: 115, 250: 170, 500: 220 }[target];   // small city: fly in close so Day 1 isn't a speck
+  if (d) { stopSpin(); const off = camera.position.clone().sub(controls.target).setLength(d); if (off.y < d * .45) off.setY(d * .45).setLength(d); flyTo(new THREE.Vector3(0, 3, 0), new THREE.Vector3(0, 3, 0).add(off), .9); } }));
 $('play').addEventListener('click', () => { if (playing) return setPlay(false); if (cur >= FMAX - 1) cur = 0; setPlay(true); });
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches; if (reduce) controls.autoRotate = false;
 let last = performance.now(), onScreen = true;
@@ -856,6 +912,7 @@ function loop(now) { requestAnimationFrame(loop); if (!onScreen || document.hidd
   else cur += (target - cur) * Math.min(1, dt * 8);
   if (Math.abs(target - cur) < .5) cur = target;
   slider.setAttribute('aria-valuetext', Math.round(cur) + ' followers');
+  if (ANIM >= nextFeed) { window.feedTime(feedKind); feedKind = feedKind === 'food' ? 'water' : 'food'; nextFeed += 45; }   // feeding time every 45 s (first one soon after load)
   navStep(now, dt); controls.update(); window.renderFrame(tOf(Math.round(cur)), ANIM); }
 
 // ---------- move around like a game: D-pad, + / -, back to the center, arrow keys, double-tap to fly there ----------
@@ -920,11 +977,11 @@ const KIND = { A: 'Cat-face house', B: 'Cardboard box house', C: 'Cat-cave pod' 
 const DIST = ['Blue Whisker', 'Box Town', 'Pastel Pods', 'Catnip Green', 'Purple Purr', 'Tuxedo Row'];
 const LM_UNLOCK = (EP.landmarks || []).map(l => l.unlock);
 const LM_TXT = { petshop: 'Toys, treats and fresh water for every cat in town.', cityhall: 'Mayor Mango works here (mostly naps).', cafe: 'Built by the most-liked comment.', statue: 'A golden Mango. He posed for 3 seconds.', market: 'Fresh fish every morning.', pool: 'Nobody swims. Everyone watches.', custom: 'Built by the most-liked comment.' };
-landmarks.forEach((lm, k) => { if (LMG[k]) LMG[k][0].userData.info = { icon: '🏛️', title: lm.sign, line: LM_TXT[lm.kind] || 'Built by the most-liked comment.', note: LM_UNLOCK[k] ? 'Unlocked at ' + LM_UNLOCK[k].toLocaleString('en-US') + ' cats' : '' }; });
-if (typeof MO !== 'undefined' && MO.g) MO.g.userData.info = { icon: '😴', title: 'Big Mochi', line: 'The sleeping mountain cat. Please do not wake her.', note: 'Unlocked at 1,000 cats' };
-if (typeof FT !== 'undefined' && FT.g) FT.g.userData.info = { icon: '💧', title: 'PETME2 Stainless Steel Fountain', line: 'Mango’s Water Bar: fresh moving water for every cat in town.', note: 'Mango is the host.', pinY: 18 };
-if (typeof FD !== 'undefined' && FD.g) FD.g.userData.info = { icon: '🍽️', title: 'PETME2 Dual Bowl Feeder', line: 'Breakfast at 7, dinner at 6. The cats are always early.', note: '', pinY: 15.5 };
-if (typeof BS !== 'undefined' && BS.g) BS.g.userData.info = { icon: '🚏', title: 'Nap Bus Stop', line: 'NEXT NAP: 5 MIN. The bus has never come. Nobody minds.', note: '' };
+landmarks.forEach((lm, k) => { if (LMG[k]) LMG[k][0].userData.info = { icon: '\ud83c\udfdb\ufe0f', title: lm.sign, line: LM_TXT[lm.kind] || 'Built by the most-liked comment.', note: LM_UNLOCK[k] ? 'Unlocked at ' + LM_UNLOCK[k].toLocaleString('en-US') + ' cats' : '' }; });
+if (typeof MO !== 'undefined' && MO.g) MO.g.userData.info = { icon: '\ud83d\ude34', title: 'Big Mochi', line: 'The sleeping mountain cat. Please do not wake her.', note: 'Unlocked at 1,000 cats' };
+if (typeof FT !== 'undefined' && FT.g) FT.g.userData.info = { icon: '\ud83d\udca7', title: 'PETME2 Stainless Steel Fountain', line: 'Mango\u2019s Water Bar: fresh moving water for every cat in town.', note: 'Tap again for water time: every cat comes to drink.', pinY: 18, shop: 'https://www.petme2.com/products/water-fountain', feed: 'water' };
+if (typeof FD !== 'undefined' && FD.g) FD.g.userData.info = { icon: '\ud83c\udf7d\ufe0f', title: 'PETME2 Dual Bowl Feeder', line: 'Breakfast at 7, dinner at 6. The cats are always early.', note: 'Feeding time! Every cat in town is coming.', pinY: 15.5, shop: 'https://www.petme2.com/products/2-in-1-smart-feeder-white', feed: 'food' };
+if (typeof BS !== 'undefined' && BS.g) BS.g.userData.info = { icon: '\ud83d\ude8f', title: 'Nap Bus Stop', line: 'NEXT NAP: 5 MIN. The bus has never come. Nobody minds.', note: '' };
 const infoBox = $('info'), infoBody = $('infoBody');
 const PIN = new THREE.Mesh(new THREE.ConeGeometry(.9, 1.8, 4).rotateX(Math.PI), new THREE.MeshBasicMaterial({ color: '#FFC93C' })); PIN.visible = false; scene.add(PIN);
 let pinY = 0;
@@ -955,14 +1012,15 @@ function tapAt(nx, ny) {
     if (map && h.instanceId != null && map[h.instanceId] >= 0) { const n = map[h.instanceId], l = houseLots[n];
       if (APPEAR[n] >= 0 && tNow < APPEAR[n]) continue;
       const day = Math.max(1, Math.round(EP.dayRange[0] + (EP.dayRange[1] - EP.dayRange[0]) * (n + 1) / Math.max(1, F)));
-      showInfo(`<div class="info__icon">🏠</div><div><b class="info__title">@${handleOf(n)}</b><span class="info__line">Cat #${(n + 1).toLocaleString('en-US')} · moved in on day ${day}</span><span class="info__line">${KIND[l.kind]} · ${DIST[l.d]} district</span>${EP.handles ? '' : '<span class="info__note">Example name. Real followers’ Instagram names show here.</span>'}</div>`, l, l.kind === 'C' ? 3.4 : 4.4);
+      showInfo(`<div class="info__icon">\ud83c\udfe0</div><div><b class="info__title">@${handleOf(n)}</b><span class="info__line">Cat #${(n + 1).toLocaleString('en-US')} \u00b7 moved in on day ${day}</span><span class="info__line">${KIND[l.kind]} \u00b7 ${DIST[l.d]} district</span>${EP.handles ? '' : '<span class="info__note">Example name. Real followers\u2019 Instagram names show here.</span>'}</div>`, l, l.kind === 'C' ? 3.4 : 4.4);
       return; }
     let o = h.object; while (o && !o.userData.info) o = o.parent;
     if (o && o.visible) { const I = o.userData.info, p = new THREE.Vector3(); o.getWorldPosition(p);
-      showInfo(`<div class="info__icon">${I.icon}</div><div><b class="info__title">${I.title}</b><span class="info__line">${I.line}</span>${I.note ? `<span class="info__note">${I.note}</span>` : ''}</div>`, p, I.pinY || (o === (typeof MO !== 'undefined' && MO.g) ? 60 : 16)); return; }
+      if (I.feed) window.feedTime(I.feed);
+      showInfo(`<div class="info__icon">${I.icon}</div><div><b class="info__title">${I.title}</b><span class="info__line">${I.line}</span>${I.note ? `<span class="info__note">${I.note}</span>` : ''}${I.shop ? `<a class="info__shop" href="${I.shop}">See it in the shop \u2192</a>` : ''}</div>`, p, I.pinY || (o === (typeof MO !== 'undefined' && MO.g) ? 60 : 16)); return; }
     const pt = h.point;
-    if (pt.y > 25 && Math.hypot(pt.x, pt.z) < 450) { showInfo(`<div class="info__icon">🐟</div><div><b class="info__title">Fish balloon</b><span class="info__line">Sky tours for cats. Two passengers, zero pilots.</span></div>`, null); return; }
-    if (pt.x > COAST_X - 10 && pt.y > 1) { showInfo(`<div class="info__icon">🔴</div><div><b class="info__title">Red Dot Lighthouse</b><span class="info__line">Cats have chased this dot since day 1. Nobody has caught it.</span><span class="info__note">Unlocked at 500 cats</span></div>`, null); return; }
+    if (pt.y > 25 && Math.hypot(pt.x, pt.z) < 450) { showInfo(`<div class="info__icon">\ud83d\udc1f</div><div><b class="info__title">Fish balloon</b><span class="info__line">Sky tours for cats. Two passengers, zero pilots.</span></div>`, null); return; }
+    if (pt.x > COAST_X - 10 && pt.y > 1) { showInfo(`<div class="info__icon">\ud83d\udd34</div><div><b class="info__title">Red Dot Lighthouse</b><span class="info__line">Cats have chased this dot since day 1. Nobody has caught it.</span><span class="info__note">Unlocked at 500 cats</span></div>`, null); return; }
     if (h.object.isInstancedMesh || h.object.isMesh) break;
   }
   hideInfo();
@@ -983,7 +1041,7 @@ pcBtn.addEventListener('click', async () => {
   g.fillStyle = '#FFFFFF'; g.fillRect(0, 1220, 1080, 130);
   try { await document.fonts.load('900 40px Nunito'); await document.fonts.load('800 30px Nunito'); } catch (e) {}
   g.textBaseline = 'middle'; g.fillStyle = '#1B2333'; g.font = '900 40px Nunito, sans-serif'; g.textAlign = 'left';
-  g.fillText('Cat Town · ' + $('countN').textContent + ' ' + $('countL').textContent, 48, 1285);
+  g.fillText('Cat Town \u00b7 ' + $('countN').textContent + ' ' + $('countL').textContent, 48, 1285);
   g.fillStyle = '#2F5FE0'; g.font = '800 30px Nunito, sans-serif'; g.textAlign = 'right'; g.fillText('@petme2', 1032, 1285);
   $('pcImg').src = c.toDataURL('image/png'); pcBox.hidden = false; $('pcClose').focus();
 });

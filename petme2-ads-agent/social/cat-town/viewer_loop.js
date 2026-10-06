@@ -6,10 +6,12 @@ controls.autoRotate = true; controls.autoRotateSpeed = .35; renderer.domElement.
 const fit = () => { W = stage.clientWidth; H = stage.clientHeight; renderer.setSize(W, H); camera.aspect = W / H; camera.fov = W / H < .8 ? 55 : 42; camera.updateProjectionMatrix(); };
 addEventListener('resize', fit); fit();
 const slider = $('grow'), FMAX = +slider.max, tOf = f => f <= 0 ? -1 : EP.newFrom + (EP.newTo - EP.newFrom) * Math.pow((f - .5) / FN, .8) + 1e-6;
-let target = +slider.value, cur = target, playing = false, ANIM = 0;
+let target = +slider.value, cur = target, playing = false, ANIM = 0, nextFeed = 7, feedKind = 'food';
 const setPlay = on => { playing = on; $('play').textContent = on ? 'Pause' : 'Play growth'; };
 slider.addEventListener('input', () => { target = +slider.value; setPlay(false); });
-document.querySelectorAll('[data-f]').forEach(b => b.addEventListener('click', () => { target = +b.dataset.f; slider.value = target; setPlay(false); }));
+document.querySelectorAll('[data-f]').forEach(b => b.addEventListener('click', () => { target = +b.dataset.f; slider.value = target; setPlay(false);
+  const d = { 0: 62, 100: 115, 250: 170, 500: 220 }[target];   // small city: fly in close so Day 1 isn't a speck
+  if (d) { stopSpin(); const off = camera.position.clone().sub(controls.target).setLength(d); if (off.y < d * .45) off.setY(d * .45).setLength(d); flyTo(new THREE.Vector3(0, 3, 0), new THREE.Vector3(0, 3, 0).add(off), .9); } }));
 $('play').addEventListener('click', () => { if (playing) return setPlay(false); if (cur >= FMAX - 1) cur = 0; setPlay(true); });
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches; if (reduce) controls.autoRotate = false;
 let last = performance.now(), onScreen = true;
@@ -22,6 +24,7 @@ function loop(now) { requestAnimationFrame(loop); if (!onScreen || document.hidd
   else cur += (target - cur) * Math.min(1, dt * 8);
   if (Math.abs(target - cur) < .5) cur = target;
   slider.setAttribute('aria-valuetext', Math.round(cur) + ' followers');
+  if (ANIM >= nextFeed) { window.feedTime(feedKind); feedKind = feedKind === 'food' ? 'water' : 'food'; nextFeed += 45; }   // feeding time every 45 s (first one soon after load)
   navStep(now, dt); controls.update(); window.renderFrame(tOf(Math.round(cur)), ANIM); }
 
 // ---------- move around like a game: D-pad, + / -, back to the center, arrow keys, double-tap to fly there ----------
@@ -88,8 +91,8 @@ const LM_UNLOCK = (EP.landmarks || []).map(l => l.unlock);
 const LM_TXT = { petshop: 'Toys, treats and fresh water for every cat in town.', cityhall: 'Mayor Mango works here (mostly naps).', cafe: 'Built by the most-liked comment.', statue: 'A golden Mango. He posed for 3 seconds.', market: 'Fresh fish every morning.', pool: 'Nobody swims. Everyone watches.', custom: 'Built by the most-liked comment.' };
 landmarks.forEach((lm, k) => { if (LMG[k]) LMG[k][0].userData.info = { icon: '🏛️', title: lm.sign, line: LM_TXT[lm.kind] || 'Built by the most-liked comment.', note: LM_UNLOCK[k] ? 'Unlocked at ' + LM_UNLOCK[k].toLocaleString('en-US') + ' cats' : '' }; });
 if (typeof MO !== 'undefined' && MO.g) MO.g.userData.info = { icon: '😴', title: 'Big Mochi', line: 'The sleeping mountain cat. Please do not wake her.', note: 'Unlocked at 1,000 cats' };
-if (typeof FT !== 'undefined' && FT.g) FT.g.userData.info = { icon: '💧', title: 'PETME2 Stainless Steel Fountain', line: 'Mango’s Water Bar: fresh moving water for every cat in town.', note: 'Mango is the host.', pinY: 18 };
-if (typeof FD !== 'undefined' && FD.g) FD.g.userData.info = { icon: '🍽️', title: 'PETME2 Dual Bowl Feeder', line: 'Breakfast at 7, dinner at 6. The cats are always early.', note: '', pinY: 15.5 };
+if (typeof FT !== 'undefined' && FT.g) FT.g.userData.info = { icon: '💧', title: 'PETME2 Stainless Steel Fountain', line: 'Mango’s Water Bar: fresh moving water for every cat in town.', note: 'Tap again for water time: every cat comes to drink.', pinY: 18, shop: 'https://www.petme2.com/products/water-fountain', feed: 'water' };
+if (typeof FD !== 'undefined' && FD.g) FD.g.userData.info = { icon: '🍽️', title: 'PETME2 Dual Bowl Feeder', line: 'Breakfast at 7, dinner at 6. The cats are always early.', note: 'Feeding time! Every cat in town is coming.', pinY: 15.5, shop: 'https://www.petme2.com/products/2-in-1-smart-feeder-white', feed: 'food' };
 if (typeof BS !== 'undefined' && BS.g) BS.g.userData.info = { icon: '🚏', title: 'Nap Bus Stop', line: 'NEXT NAP: 5 MIN. The bus has never come. Nobody minds.', note: '' };
 const infoBox = $('info'), infoBody = $('infoBody');
 const PIN = new THREE.Mesh(new THREE.ConeGeometry(.9, 1.8, 4).rotateX(Math.PI), new THREE.MeshBasicMaterial({ color: '#FFC93C' })); PIN.visible = false; scene.add(PIN);
@@ -125,7 +128,8 @@ function tapAt(nx, ny) {
       return; }
     let o = h.object; while (o && !o.userData.info) o = o.parent;
     if (o && o.visible) { const I = o.userData.info, p = new THREE.Vector3(); o.getWorldPosition(p);
-      showInfo(`<div class="info__icon">${I.icon}</div><div><b class="info__title">${I.title}</b><span class="info__line">${I.line}</span>${I.note ? `<span class="info__note">${I.note}</span>` : ''}</div>`, p, I.pinY || (o === (typeof MO !== 'undefined' && MO.g) ? 60 : 16)); return; }
+      if (I.feed) window.feedTime(I.feed);
+      showInfo(`<div class="info__icon">${I.icon}</div><div><b class="info__title">${I.title}</b><span class="info__line">${I.line}</span>${I.note ? `<span class="info__note">${I.note}</span>` : ''}${I.shop ? `<a class="info__shop" href="${I.shop}">See it in the shop →</a>` : ''}</div>`, p, I.pinY || (o === (typeof MO !== 'undefined' && MO.g) ? 60 : 16)); return; }
     const pt = h.point;
     if (pt.y > 25 && Math.hypot(pt.x, pt.z) < 450) { showInfo(`<div class="info__icon">🐟</div><div><b class="info__title">Fish balloon</b><span class="info__line">Sky tours for cats. Two passengers, zero pilots.</span></div>`, null); return; }
     if (pt.x > COAST_X - 10 && pt.y > 1) { showInfo(`<div class="info__icon">🔴</div><div><b class="info__title">Red Dot Lighthouse</b><span class="info__line">Cats have chased this dot since day 1. Nobody has caught it.</span><span class="info__note">Unlocked at 500 cats</span></div>`, null); return; }

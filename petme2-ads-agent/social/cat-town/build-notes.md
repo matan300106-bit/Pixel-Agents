@@ -136,3 +136,13 @@ Owner ask: fountain and feeder each in its own circle, side by side like an 8; c
 - New cameras: `q_food_stops.json`, `q_food_stops_close.json`; `q_square_top.json` raised to y 118 to fit the whole 8. Older `q_circles`, `q_box`, `q_busstop`, `q_fountain*` cameras still point at the old spots.
 - Checks: stills `q_food_stops`, `q_square_top`, `p_day1`, `p_1000`; viewer at 400x860 (touch): loads, home button, tapping fountain and feeder opens the right cards, no page errors.
 - Uploaded to theme copy 188910403796 (only `assets/pm2-cat-city.js` changed; checksums match).
+
+## Update 2026-10-06 (late night): shop button, Halloween, feeding time
+
+- Fountain and feeder cards have a "See it in the shop" button (`.info__shop`, product URLs in `viewer_loop.js`).
+- Halloween (`HW`): on Oct 24-31 automatically, or with `?halloween=1` / `EP.halloween`. Pumpkins at every house, witch hats on every other street cat, loungers and Mango, a 12 black-cat parade on the oval lane (WALK 90-101, unlocks at rank 13), candy-colored kibble, "Trick or treat!" sign over the feeder.
+- Feeding time (`FEED`, 14 s): tapping the feeder (food) or fountain (water) calls `window.feedTime(kind)`; the viewer also runs it every 45 s, alternating. Street cats near the square walk to the plaza edge, the matching spot cats rush in; kibble rains onto the food bar, or water arcs into the Water Bar ring. Preview with `EP.feed = {kind, at}`.
+- `build_viewer.py` now escapes all non-ASCII (HTML entities outside scripts, `\uXXXX` inside), so symbols show right even when no charset is sent.
+- Size chips fly closer on small towns (Day 1 now opens near the fountain and feeder). Big Mochi fits the 400x860 phone view.
+- Cameras: `q_hw.json`, `q_hw_wide.json`, `q_feed_food.json`, `q_feed_water.json`.
+- The store has 20 themes (Shopify's limit), so `themeDuplicate` returns null. Uploaded to the unpublished copy 188910403796 instead (renamed). Theme names must be 50 characters or fewer.
