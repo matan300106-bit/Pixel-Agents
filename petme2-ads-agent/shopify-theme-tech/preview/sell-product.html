@@ -1,0 +1,155 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PETME2 product preview</title><link rel="stylesheet" href="vendor/nunito.css"><style>.color-scheme-1{--bg:255,255,255;--fg:27,37,64;--btn:47,95,224;--btn-label:255,255,255;--sec:27,37,64;background:rgb(var(--bg));color:rgb(var(--fg))}
+.color-scheme-2{--bg:47,95,224;--fg:255,255,255;--btn:255,255,255;--btn-label:47,95,224;--sec:255,255,255;background:rgb(var(--bg));color:rgb(var(--fg))}
+.color-scheme-3{--bg:255,255,255;--fg:27,37,64;--btn:47,95,224;--btn-label:255,255,255;--sec:27,37,64;background:rgb(var(--bg));color:rgb(var(--fg))}
+.color-scheme-4{--bg:244,246,250;--fg:27,37,64;--btn:47,95,224;--btn-label:255,255,255;--sec:27,37,64;background:rgb(var(--bg));color:rgb(var(--fg))}
+.color-scheme-5{--bg:233,246,239;--fg:27,37,64;--btn:47,95,224;--btn-label:255,255,255;--sec:27,37,64;background:rgb(var(--bg));color:rgb(var(--fg))}
+
+*,*::before,*::after{box-sizing:border-box}
+html{font-size:62.5%}
+body{margin:0;font-family:'Nunito Sans',system-ui,sans-serif;font-size:1.6rem;line-height:1.6;letter-spacing:.01em;color:#1B2540;background:#fff;-webkit-font-smoothing:antialiased;overflow-x:clip}
+@media(min-width:750px){body{font-size:1.7rem}}
+img{max-width:100%;display:block}
+p{margin:0}
+.pw{max-width:120rem;margin:0 auto;padding:0 2rem}.narrow{max-width:80rem}
+@media(min-width:750px){.pw{padding:0 5rem}}
+h1,h2,.h0,.h1,.h3{font-family:Nunito,sans-serif;font-weight:800;margin:0;letter-spacing:-.015em;line-height:1.15;text-wrap:balance}
+.h0{font-size:clamp(4rem,9vw,7rem)}.h1{font-size:clamp(3rem,5vw,4.6rem)}.h3{font-size:2.2rem;line-height:1.25}
+.center{text-align:center;justify-content:center}
+.eyebrow{font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:1.3rem;color:rgba(var(--fg),.62);margin-bottom:1rem}
+
+.sub{color:rgba(var(--fg),.72);margin-top:1.2rem;font-size:1.7rem}
+.muted{color:rgba(var(--fg),.7);font-size:1.5rem}
+.lead{font-size:1.8rem;color:rgba(var(--fg),.75);margin-top:1.6rem;max-width:52rem}
+:root{--act:47,95,224}
+.button{display:inline-flex;align-items:center;justify-content:center;min-height:4.8rem;padding:0 2.8rem;border-radius:999px;font-weight:700;box-shadow:0 10px 22px -14px rgba(var(--act),.8);
+  background:rgb(var(--btn));color:rgb(var(--btn-label));text-decoration:none;font-size:1.6rem}
+.button--secondary{background:transparent;color:rgb(var(--sec));box-shadow:inset 0 0 0 1.5px rgba(var(--fg),.25)}
+.button.sm{min-height:4.4rem;width:100%;font-size:1.5rem;margin-top:1rem}
+.sale{position:absolute;top:1rem;left:1rem;background:rgb(var(--act));color:#fff;font-weight:800;font-size:1.2rem;border-radius:999px;padding:.4rem 1.1rem}
+.pcard__img{position:relative}s{color:rgba(27,37,64,.55)}
+.btns{display:flex;flex-wrap:wrap;gap:1.2rem;margin-top:2.8rem}
+@media(max-width:749px){.hero .btns .button{flex:1 1 100%}}
+.chips{list-style:none;padding:0;margin:2.4rem 0 0;display:flex;flex-wrap:wrap;gap:.8rem 1.8rem;font-size:1.4rem;font-weight:600;color:rgba(var(--fg),.75)}
+.chips li{display:flex;gap:.6rem;align-items:center;font-weight:700}.chips svg{color:#1E7B4F}
+.color-scheme-1 .chips svg{color:rgb(169,193,255)}
+.sec{padding:7.2rem 0}@media(max-width:749px){.sec{padding:5.6rem 0}}
+.head{text-align:center;max-width:70rem;margin:0 auto 3.6rem}
+/* announcement + header */
+.ann{font-size:1.3rem;font-weight:600;text-align:center;padding:1rem 2rem}
+.hdr{border-bottom:1px solid rgba(27,37,64,.07)}
+.hdr .pw{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:6.4rem}
+.logo{font-family:Nunito;font-weight:900;font-size:2.4rem;letter-spacing:-.02em}
+.logo b{color:rgb(var(--act))}
+.icons{display:flex;justify-content:flex-end}.iconbtn{width:4.4rem;height:4.4rem;display:grid;place-items:center;border-radius:999px}
+.nav{display:none;gap:3.2rem;font-weight:600;font-size:1.5rem}
+@media(min-width:990px){.hdr .pw{grid-template-columns:auto 1fr auto}.nav{display:flex;justify-content:center}.menu-ic{display:none}}
+/* hero */
+.hero{padding:4.8rem 0 6.4rem}
+.hero__grid{display:grid;gap:4rem;align-items:center}
+@media(min-width:990px){.hero__grid{grid-template-columns:1.05fr 1fr;gap:6rem}.hero{padding:8rem 0 9.6rem}}
+.pill-eyebrow{display:inline-flex;align-items:center;gap:1rem;background:#fff;border-radius:999px;padding:.5rem 1.4rem .5rem .5rem;font-weight:700;font-size:1.4rem;margin-bottom:2rem;box-shadow:0 1px 2px rgba(27,37,64,.06)}
+.tag{background:rgb(var(--act));color:#fff;border-radius:999px;padding:.2rem 1.1rem}
+.hl{color:rgb(var(--act))}
+.hero__card{position:relative;background:#fff;border-radius:3.2rem;aspect-ratio:1/1;display:grid;place-items:center;box-shadow:0 30px 60px -40px rgba(27,37,64,.3)}
+.hero__card img{width:78%}
+.badge{position:absolute;display:flex;gap:.6rem;align-items:center;background:#fff;border-radius:999px;padding:.8rem 1.4rem;font-size:1.3rem;font-weight:700;box-shadow:0 10px 30px -14px rgba(27,37,64,.35)}
+.badge svg{color:rgb(var(--act))}.b1{top:8%;left:-2%}.b2{top:46%;right:-3%}.b3{bottom:8%;left:6%}
+@media(max-width:749px){.b1{left:4%}.b2{right:4%}}
+/* ticker */
+.ticker{overflow:hidden;border-block:1px solid rgba(27,37,64,.08);padding:1.4rem 0}
+.ticker__track{display:flex;gap:2rem;white-space:nowrap;width:max-content;font-weight:600;font-size:1.45rem;transform:translateX(-12rem)}
+.tick{display:flex;gap:.8rem;align-items:center}.tick svg{color:#1E7B4F}.dot{color:rgba(27,37,64,.25)}
+/* tabs + cards */
+.seg{display:flex;width:max-content;margin:0 auto;background:#F2F4F8;border-radius:999px;padding:.4rem}
+.seg span{min-height:4.4rem;display:grid;place-items:center;padding:0 2.4rem;border-radius:999px;font-weight:700;font-size:1.5rem;color:rgba(27,37,64,.65)}
+.seg .on{background:#fff;color:#1B2540;box-shadow:0 2px 8px -2px rgba(27,37,64,.15)}
+.sub.center{margin:1.6rem auto 2.8rem;text-align:center}
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:1.6rem 1.2rem;margin-bottom:3.2rem}
+@media(min-width:990px){.cards{grid-template-columns:repeat(4,1fr);gap:2.4rem 2rem}}
+.pcard__img{background:#F4F6FA;border-radius:2.4rem;aspect-ratio:1;display:grid;place-items:center}
+.pcard__img img{width:86%}
+.pcard__t{font-weight:700;font-size:1.5rem;line-height:1.35;margin-top:1.2rem}.pcard__p{font-size:1.5rem;color:rgba(27,37,64,.7);margin-top:.4rem}
+/* quiz */
+.quiz{background:#fff;border-radius:2.8rem;padding:3.2rem 2.4rem;text-align:center;box-shadow:0 20px 50px -36px rgba(27,37,64,.35)}
+.quiz__step{font-size:1.3rem;font-weight:700;color:rgb(var(--act));margin-bottom:.8rem}
+.opts{display:grid;gap:1.2rem;margin-top:2.4rem}@media(min-width:750px){.opts{grid-template-columns:1fr 1fr}}
+.opt{display:flex;gap:1rem;align-items:center;justify-content:center;min-height:6rem;border-radius:2rem;font-weight:700;box-shadow:inset 0 0 0 1.5px rgba(27,37,64,.12)}
+.opt.on{box-shadow:inset 0 0 0 2px rgb(var(--act));background:#F5F8FF;color:#1B2540}
+/* bento */
+.bento{display:grid;gap:1.2rem;grid-template-columns:1fr 1fr}
+.tile{background:#fff;border-radius:2.4rem;padding:2.2rem;display:flex;flex-direction:column;gap:.6rem;min-height:16rem}
+.tile.large,.tile.wide{grid-column:span 2}
+@media(min-width:990px){.bento{grid-template-columns:repeat(4,1fr);gap:2rem}.tile.large{grid-row:span 2}.tile{padding:2.8rem}}
+.tile--img{padding:0;position:relative;overflow:hidden;min-height:30rem;justify-content:flex-end}
+.tile--img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.tile__over{position:relative;padding:2.4rem;background:linear-gradient(transparent,rgba(255,255,255,.92) 35%)}
+.tile__over p:not(.eyebrow):not(.h3){font-size:1.5rem;color:rgba(27,37,64,.75);margin-top:.4rem}
+.link{display:inline-flex;gap:.6rem;align-items:center;font-weight:700;color:rgb(var(--act));margin-top:1rem;font-size:1.5rem}
+.stat{font-family:Nunito;font-weight:900;font-size:4.4rem;line-height:1;color:rgb(var(--act))}
+.tile__t{font-weight:800;font-family:Nunito;font-size:1.9rem;line-height:1.25}
+.ico{width:4.4rem;height:4.4rem;border-radius:1.4rem;background:#EEF4FF;color:rgb(var(--act));display:grid;place-items:center;margin-bottom:.6rem}
+/* steps */
+.steps{list-style:none;padding:0;margin:0;display:grid;gap:1.6rem}@media(min-width:990px){.steps{grid-template-columns:repeat(3,1fr);gap:2.4rem}}
+.step{position:relative;background:#F4F6FA;border-radius:2.4rem;padding:2.8rem;display:flex;flex-direction:column;gap:.6rem}
+.num{position:absolute;top:2.4rem;right:2.4rem;font-family:Nunito;font-weight:900;font-size:1.4rem;width:3.2rem;height:3.2rem;border-radius:999px;display:grid;place-items:center;background:#fff;color:rgb(var(--act))}
+/* compare */
+.ccards{display:grid;grid-auto-flow:column;grid-auto-columns:78%;gap:1.4rem;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:.8rem}
+@media(min-width:990px){.ccards{grid-auto-flow:row;grid-template-columns:repeat(auto-fit,minmax(0,1fr));overflow:visible}}
+.ccard{position:relative;background:#fff;border-radius:2.4rem;padding:2.4rem;scroll-snap-align:start;display:flex;flex-direction:column;gap:1rem}
+.ccard img{width:60%;margin:0 auto}
+.cbadge{position:absolute;top:1.6rem;left:1.6rem;background:#1B2540;color:#fff;font-weight:700;font-size:1.2rem;border-radius:999px;padding:.3rem 1rem}
+dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:.8rem 1.2rem;font-size:1.45rem;padding:1.2rem 0;border-top:1px solid rgba(27,37,64,.08)}
+dt{color:rgba(27,37,64,.6)}dd{margin:0;font-weight:600;text-align:right}
+.cmp + .cmp{padding-top:0}
+/* faq */
+.faqbox{border-radius:2.4rem;padding:.8rem 2.4rem}
+.acc{border-bottom:1px solid rgba(27,37,64,.08)}.acc:last-child{border:0}
+.acc summary{list-style:none;display:flex;justify-content:space-between;align-items:center;gap:1.6rem;padding:1.9rem 0;font-weight:700;font-size:1.65rem;cursor:pointer}
+.acc summary span{width:3.2rem;height:3.2rem;border-radius:999px;background:#fff;display:grid;place-items:center;flex:none;color:rgb(var(--act))}
+.acc p{padding:0 0 1.9rem;color:rgba(27,37,64,.75)}
+/* cta */
+.cta .lead{margin:1.6rem auto 0}
+.cta .chips{justify-content:center}
+.ftr{padding:5.6rem 0 4rem;font-size:1.5rem}.ftr .cols{display:grid;gap:3.2rem}@media(min-width:990px){.ftr .cols{grid-template-columns:2fr 1fr 1fr 1fr}}
+.nl{margin-top:1rem;border:1px solid rgba(27,37,64,.25);border-radius:14px;padding:1.2rem 1.6rem;color:rgba(27,37,64,.6);background:#fff;max-width:36rem}
+.ftr p.t{font-weight:800;font-family:Nunito;margin-bottom:1rem}.ftr li{list-style:none;color:rgba(27,37,64,.7);margin:.6rem 0}.ftr ul{padding:0;margin:0}
+
+.pp{padding:2rem 0 5rem}.pp__grid{display:grid;gap:2.4rem}@media(min-width:990px){.pp__grid{grid-template-columns:1.1fr 1fr;gap:6rem}.pp{padding:4rem 0 7rem}}
+.gal{background:#F4F6FA;border-radius:2.4rem;aspect-ratio:1;display:grid;place-items:center;position:relative}.gal img{width:70%}
+.thumbs{display:flex;gap:.8rem;margin-top:1rem}.thumbs span{width:6.4rem;height:6.4rem;border-radius:1.4rem;background:#F4F6FA;border:2px solid transparent}.thumbs span:first-child{border-color:#1B2540}
+.pt{font-family:Nunito;font-weight:800;font-size:clamp(2.6rem,6vw,3.6rem);line-height:1.15;margin:0}
+.price{display:flex;align-items:center;gap:1.2rem;margin-top:1.2rem;flex-wrap:wrap}.price b{font-size:2.6rem;font-weight:800}.price s{font-size:1.8rem}
+.price .sale{position:static}
+.trust{display:inline-flex;gap:.8rem;align-items:center;font-weight:700;font-size:1.45rem;color:#1E7B4F;margin-top:1.2rem}
+.trust i{width:1.8rem;height:1.8rem;border-radius:50%;background:#1E7B4F;display:grid;place-items:center;color:#fff;flex:none}
+.lbl{font-size:1.4rem;margin:2.2rem 0 .8rem;color:rgba(27,37,64,.75)}
+.pills{display:flex;flex-wrap:wrap;gap:.8rem}.pills span{border:1px solid rgba(27,37,64,.3);border-radius:999px;padding:1rem 2rem;font-size:1.5rem}.pills .on{background:#1B2540;color:#fff;border-color:#1B2540}
+.qty{display:inline-flex;align-items:center;border:1px solid rgba(27,37,64,.25);border-radius:14px;height:4.8rem}.qty span{width:4.6rem;text-align:center}
+.atc{display:flex;width:100%;max-width:48rem;min-height:5.6rem;font-size:1.7rem;font-weight:800;margin-top:2.2rem}
+.shoppay{display:flex;align-items:center;justify-content:center;max-width:48rem;min-height:5.2rem;border-radius:999px;background:#5A31F4;color:#fff;font-weight:800;margin-top:1rem;font-size:1.7rem}
+.more{max-width:48rem;text-align:center;font-size:1.35rem;text-decoration:underline;margin-top:1rem;color:rgba(27,37,64,.7)}
+.desc{margin-top:2.4rem;color:rgba(27,37,64,.8)}.coll{margin-top:1.6rem;border-block:1px solid rgba(27,37,64,.1)}
+.coll summary{justify-content:flex-start}.coll summary span{margin-left:auto}
+.chipsrow{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.6rem}.chipsrow span{background:#F4F6FA;border-radius:999px;padding:.6rem 1.4rem;font-size:1.35rem;font-weight:700}
+.sticky{position:sticky;bottom:0;background:#fff;box-shadow:0 -8px 24px -12px rgba(27,37,64,.25);padding:1rem 1.6rem;display:flex;gap:1.2rem;align-items:center;z-index:5}
+.sticky .button{flex:1;min-height:4.8rem}.sticky .th{width:4.4rem;height:4.4rem;border-radius:1rem;background:#F4F6FA;flex:none}
+@media(min-width:990px){.sticky{display:none}}@media(max-width:749px){.mthide{display:none}}
+</style></head><body><div class="color-scheme-5 ann">Free U.S. shipping on every order</div>
+<header class="color-scheme-3 hdr"><div class="pw"><div class="iconbtn menu-ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></div><div class="logo">PETME<b>2</b></div>
+<nav class="nav"><span>Feeders</span><span>Fountains</span><span>Compare</span><span>Help</span></nav>
+<div class="icons"><span class="iconbtn"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg></span><span class="iconbtn"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6zM9 8V6a3 3 0 0 1 6 0v2"/></svg></span></div></div></header><section class="color-scheme-3 pp"><div class="pw pp__grid">
+<div><div class="gal"><img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20400%20400%22%3E%3Cellipse%20cx%3D%22200%22%20cy%3D%22352%22%20rx%3D%22140%22%20ry%3D%2212%22%20fill%3D%22%231B2540%22%20opacity%3D%22.07%22/%3E%3Crect%20x%3D%22112%22%20y%3D%2260%22%20width%3D%22176%22%20height%3D%22250%22%20rx%3D%2248%22%20fill%3D%22%23FFFFFF%22%20stroke%3D%22%23E2E6EE%22%20stroke-width%3D%222%22/%3E%3Crect%20x%3D%22132%22%20y%3D%2280%22%20width%3D%22136%22%20height%3D%2226%22%20rx%3D%2213%22%20fill%3D%22%23EEF4FF%22/%3E%3Crect%20x%3D%2270%22%20y%3D%22292%22%20width%3D%22260%22%20height%3D%2248%22%20rx%3D%2224%22%20fill%3D%22%23EEF1F5%22/%3E%3Cellipse%20cx%3D%22140%22%20cy%3D%22300%22%20rx%3D%2248%22%20ry%3D%2211%22%20fill%3D%22%23C9D0DB%22/%3E%3Cellipse%20cx%3D%22260%22%20cy%3D%22300%22%20rx%3D%2248%22%20ry%3D%2211%22%20fill%3D%22%23C9D0DB%22/%3E%3C/svg%3E" alt=""></div><div class="thumbs mthide"><span></span><span></span><span></span><span></span></div></div>
+<div><h1 class="pt">PETME2 3L Dual Bowl Smart Feeder</h1>
+<div class="price"><b>$49.99</b><s>$65.99</s><span class="sale">Sale</span></div>
+<div class="trust"><i><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg></i>Free U.S. shipping · 30-day money-back guarantee</div>
+<p class="lbl">Color</p><div class="pills"><span class="on">White</span><span>Black</span></div>
+<p class="lbl">Quantity</p><div class="qty"><span>−</span><span>1</span><span>+</span></div>
+<a class="button atc">Add to cart</a><div class="shoppay">Buy with Shop Pay</div><p class="more">More payment options</p>
+<p class="desc">Two stainless steel bowls, app scheduling and 2-way audio. For dry food, cats and small dogs.</p>
+<details class="acc coll" open><summary><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg> Free shipping & 30-day guarantee<span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span></summary><p> Free U.S. shipping on every order. Orders are fulfilled by Amazon.  30-day money-back guarantee: if your pet doesn't like it, contact us within 30 days and we'll give you your money back. </p></details>
+</div></div></section>
+<section class="color-scheme-3" style="padding:0 0 4rem"><div class="pw"><p class="tile__t">Key specs</p><div class="chipsrow"><span>3L</span><span>2 stainless bowls</span><span>App control</span><span>2-way audio</span><span>Dry food</span></div></div></section>
+<section class="color-scheme-4 sec"><div class="pw"><div class="head"><h2 class="h1">Why you'll love it</h2></div><ol class="steps" style="grid-template-columns:repeat(auto-fit,minmax(22rem,1fr))"><li class="step"><span class="ico"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg></span><p class="tile__t">Scheduled meals</p><p class="muted">Set feeding times and portions in the app</p></li><li class="step"><span class="ico"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg></span><p class="tile__t">Stainless steel bowls</p><p class="muted">Food-safe steel that washes easily</p></li><li class="step"><span class="ico"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg></span><p class="tile__t">Anti-jam design</p><p class="muted">Helps kibble flow smoothly</p></li><li class="step"><span class="ico"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg></span><p class="tile__t">Easy to clean</p><p class="muted">Bowls and food container come apart</p></li></ol>
+<div class="narrow" style="margin:4rem auto 0"><div class="head"><p class="eyebrow">FAQ</p><h2 class="h1">Questions</h2></div><div class="color-scheme-3 faqbox"><details class="acc" ><summary>Can I use wet food?<span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span></summary><p>No. PETME2 feeders are made for dry food (kibble).</p></details><details class="acc" ><summary>Can it feed two pets?<span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span></summary><p>Yes, the 3L Dual Bowl and the 5L Elevated feeders split food into two bowls. The 3L Camera Feeder has one bowl.</p></details><details class="acc" ><summary>Do I need WiFi?<span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span></summary><p>WiFi is needed for the app: schedules, portions and alerts. Setup steps are in the manual.</p></details><details class="acc" ><summary>How do I clean it?<span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span></summary><p>Take off the bowls and the food container and wash them. The manual shows which parts are dishwasher safe.</p></details><details class="acc" open><summary>What if my pet doesn't like it?<span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span></summary><p>Every order comes with a 30-day money-back guarantee. If it's not a fit, contact us within 30 days and we'll give you your money back.</p></details></div></div></div></section>
+<footer class="color-scheme-4 ftr"><div class="pw cols"><div><p class="t">Easy, happy care for cats and small dogs.</p><p style="color:rgba(27,37,64,.7)">Smart feeders and quiet water fountains. Free U.S. shipping and a 30-day money-back guarantee on every order.</p><p class="t" style="margin-top:2rem">Get 10% off your first order</p><div class="nl">Email</div></div>
+<div><p class="t">Products</p><ul><li>Feeders</li><li>Fountains</li></ul></div><div><p class="t">Quick links</p><ul><li>Compare</li><li>FAQ</li></ul></div><div><p class="t">Information</p><ul><li>Shipping</li><li>Contact</li></ul></div></div></footer><div class="sticky color-scheme-3"><span class="th"></span><div style="font-size:1.4rem;line-height:1.3"><b>$49.99</b> <s>$65.99</s></div><a class="button">Add to cart</a></div></body></html>

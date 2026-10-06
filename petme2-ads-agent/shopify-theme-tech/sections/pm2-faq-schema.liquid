@@ -1,0 +1,143 @@
+{%- comment -%}
+  PETME2 FAQ structured data (FAQPage JSON-LD) built from blocks.
+  - show_visible OFF: outputs only the JSON-LD (use it to mirror a FAQ that is already
+    visible on the same page, e.g. the homepage collapsible-content "faq" section).
+  - show_visible ON: also renders a minimal, accessible accordion (details/summary).
+  Google only allows FAQ markup for questions that users can see on the page.
+{%- endcomment -%}
+{%- liquid
+  assign s = section.settings
+  assign sid = section.id
+  assign faq_count = 0
+  for block in section.blocks
+    if block.type == 'faq' and block.settings.question != blank and block.settings.answer != blank
+      assign faq_count = faq_count | plus: 1
+    endif
+  endfor
+-%}
+{%- if faq_count > 0 and s.output_schema -%}
+  {%- assign n = 0 -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'faq' and block.settings.question != blank and block.settings.answer != blank -%}
+            {%- assign n = n | plus: 1 -%}
+            {
+              "@type": "Question",
+              "name": {{ block.settings.question | strip_html | strip_newlines | strip | json }},
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": {{ block.settings.answer | replace: '</p>', ' ' | replace: '<br>', ' ' | strip_html | strip_newlines | strip | json }}
+              }
+            }{%- if n < faq_count -%},{%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+{%- endif -%}
+
+{%- if s.show_visible -%}
+  <div class="pm2-faq-wrap color-{{ s.color_scheme }} gradient">
+    <div
+      class="pm2-faq page-width"
+      id="pm2-faq-{{ sid }}"
+      style="--pm2-pt: {{ s.padding_top }}px; --pm2-pb: {{ s.padding_bottom }}px;"
+    >
+      {%- if s.eyebrow != blank or s.heading != blank -%}
+        <div class="pm2-faq__head">
+          {%- if s.eyebrow != blank -%}<p class="pm2-faq__eyebrow">{{ s.eyebrow | escape }}</p>{%- endif -%}
+          {%- if s.heading != blank -%}<h2 class="pm2-faq__heading h1">{{ s.heading | escape }}</h2>{%- endif -%}
+        </div>
+      {%- endif -%}
+      <div class="pm2-faq__list">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'faq' and block.settings.question != blank -%}
+            <details class="pm2-faq__item" {{ block.shopify_attributes }}{% if forloop.first and s.open_first %} open{% endif %}>
+              <summary class="pm2-faq__q">
+                <span>{{ block.settings.question | escape }}</span>
+                <svg class="pm2-faq__icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="20" height="20"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+              </summary>
+              <div class="pm2-faq__a rte">{{ block.settings.answer }}</div>
+            </details>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+  <style>
+    #pm2-faq-{{ sid }} { padding-top: calc(var(--pm2-pt) * .75); padding-bottom: calc(var(--pm2-pb) * .75); max-width: 76rem; }
+    @media screen and (min-width: 750px) { #pm2-faq-{{ sid }} { padding-top: var(--pm2-pt); padding-bottom: var(--pm2-pb); } }
+    .pm2-faq__head { text-align: center; margin-bottom: 2.4rem; }
+    .pm2-faq__eyebrow {
+      display: inline-block; margin: 0 0 1.2rem; padding: .5rem 1.4rem; border-radius: 999px;
+      background: rgba(var(--color-button), .1); font-size: 1.3rem; font-weight: 600; line-height: 1.5;
+    }
+    .pm2-faq__heading { margin: 0; }
+    .pm2-faq__list { display: grid; gap: 1.2rem; }
+    .pm2-faq__item {
+      border-radius: 20px; background: rgb(var(--color-background));
+      border: 1px solid rgba(var(--color-foreground), .08);
+      box-shadow: 0 10px 28px -20px rgba(var(--color-foreground), .3);
+    }
+    .pm2-faq__q {
+      display: flex; align-items: center; justify-content: space-between; gap: 1.6rem;
+      min-height: 56px; padding: 1.4rem 2rem; cursor: pointer; list-style: none;
+      font-size: 1.6rem; font-weight: 600; line-height: 1.4; letter-spacing: normal; border-radius: 20px;
+    }
+    .pm2-faq__q::-webkit-details-marker { display: none; }
+    .pm2-faq__q:focus-visible { outline: 3px solid rgba(var(--color-button), .5); outline-offset: 2px; }
+    .pm2-faq__icon {
+      flex: 0 0 auto; width: 32px; height: 32px; padding: 6px; border-radius: 999px;
+      background: rgba(var(--color-button), .1); color: rgb(var(--color-button)); transition: transform .25s ease;
+    }
+    .pm2-faq__item[open] .pm2-faq__icon { transform: rotate(45deg); }
+    .pm2-faq__a { padding: 0 2rem 1.8rem; font-size: 1.5rem; line-height: 1.6; color: rgba(var(--color-foreground), .78); }
+    .pm2-faq__a > :first-child { margin-top: 0; }
+    .pm2-faq__a > :last-child { margin-bottom: 0; }
+    @media (prefers-reduced-motion: reduce) { .pm2-faq__icon { transition: none; } }
+  </style>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "PM2 FAQ (rich results)",
+  "tag": "section",
+  "class": "section pm2-faq-section",
+  "settings": [
+    { "type": "paragraph", "content": "Adds FAQPage structured data for Google. Only mark up questions that shoppers can see on this page: turn on 'Show FAQ on page', or copy the exact questions of a visible FAQ section on the same page." },
+    { "type": "checkbox", "id": "output_schema", "label": "Output FAQ structured data", "default": true },
+    { "type": "checkbox", "id": "show_visible", "label": "Show FAQ on page", "default": true },
+    { "type": "checkbox", "id": "open_first", "label": "Open first question", "default": false },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "FAQ" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Questions, answered" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-3" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 56 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 56 }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "Do the feeders work with wet food?" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>No. PETME2 feeders are made for dry food (kibble).</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PM2 FAQ (rich results)",
+      "blocks": [
+        { "type": "faq", "settings": { "question": "Do the feeders work with wet food?", "answer": "<p>No. PETME2 feeders are made for dry food (kibble).</p>" } },
+        { "type": "faq", "settings": { "question": "Which feeder is best for 2 pets?", "answer": "<p>The 3L Dual Bowl or the 5L Elevated WiFi. Both split food into two stainless steel bowls.</p>" } },
+        { "type": "faq", "settings": { "question": "Are the fountains loud?", "answer": "<p>No. Every PETME2 fountain uses a quiet pump made for use inside the home.</p>" } },
+        { "type": "faq", "settings": { "question": "Do you offer free shipping?", "answer": "<p>Yes. Shipping is free on every U.S. order.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

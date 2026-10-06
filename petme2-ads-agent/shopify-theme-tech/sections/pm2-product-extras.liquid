@@ -1,0 +1,144 @@
+{%- comment -%}
+  PETME2 product extras: feature icons, what's in the box, FAQ, and a "complete the setup" pair.
+  Feeder or fountain is chosen from product.type. "In the box" comes from metafield custom.in_the_box (one item per line).
+{%- endcomment -%}
+{%- assign is_fountain = false -%}
+{%- assign t = product.type | downcase -%}
+{%- if t contains 'fountain' or product.handle contains 'fountain' -%}{%- assign is_fountain = true -%}{%- endif -%}
+
+{%- if is_fountain -%}
+  {%- assign feats = section.settings.fountain_features | newline_to_br | split: '<br />' -%}
+  {%- assign pair = section.settings.pair_for_fountain -%}
+  {%- assign faq_prefix = 'f' -%}
+{%- else -%}
+  {%- assign feats = section.settings.feeder_features | newline_to_br | split: '<br />' -%}
+  {%- assign pair = section.settings.pair_for_feeder -%}
+  {%- assign faq_prefix = 'd' -%}
+{%- endif -%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient pm2-px">
+  <div class="page-width pm2-px__inner">
+    <ul class="pm2-px__feats" role="list">
+      {%- for f in feats -%}
+        {%- assign parts = f | strip | split: '::' -%}
+        {%- if parts[0] == blank -%}{%- continue -%}{%- endif -%}
+        <li>
+          <span class="pm2-px__dot" aria-hidden="true"></span>
+          <strong>{{ parts[0] | strip }}</strong>
+          {%- if parts[1] -%}<small>{{ parts[1] | strip }}</small>{%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+
+    <div class="pm2-px__cols">
+      {%- assign box = product.metafields.custom.in_the_box.value -%}
+      {%- if box != blank -%}
+        <div class="pm2-px__box">
+          <h3>What's in the box</h3>
+          <ul>
+            {%- assign items = box | newline_to_br | split: '<br />' -%}
+            {%- for i in items -%}{%- if i != blank -%}<li>{{ i | strip }}</li>{%- endif -%}{%- endfor -%}
+          </ul>
+        </div>
+      {%- endif -%}
+
+      <div class="pm2-px__faq">
+        <h3>Questions</h3>
+        {%- for n in (1..5) -%}
+          {%- assign qk = faq_prefix | append: 'q' | append: n -%}
+          {%- assign ak = faq_prefix | append: 'a' | append: n -%}
+          {%- if section.settings[qk] != blank -%}
+            <details>
+              <summary>{{ section.settings[qk] }}</summary>
+              <div>{{ section.settings[ak] }}</div>
+            </details>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    {%- if pair != blank and pair.id != product.id -%}
+      <div class="pm2-px__pair">
+        <a href="{{ pair.url }}" class="pm2-px__pairimg" tabindex="-1" aria-hidden="true">{%- if pair.featured_image -%}{{ pair.featured_image | image_url: width: 300 | image_tag: loading: 'lazy', alt: pair.title }}{%- endif -%}</a>
+        <div>
+          <p class="pm2-px__eyebrow">{{ section.settings.pair_eyebrow }}</p>
+          <a href="{{ pair.url }}" class="pm2-px__pairname">{{ pair.title }}</a>
+          <p class="pm2-px__pairprice">{{ pair.price | money }}</p>
+        </div>
+        <a class="button" href="{{ pair.url }}">{{ section.settings.pair_button }}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+<style>
+  .pm2-px { padding: 80px 0; color: rgb(var(--color-foreground)); }
+  .pm2-px__feats { list-style: none; margin: 0 0 56px; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+  .pm2-px__feats li { min-width: 0; background: rgba(var(--color-foreground), .035); border: 1px solid rgba(var(--color-foreground), .07); border-radius: 22px; padding: 24px 22px; }
+  .pm2-px__feats strong { display: block; font-weight: 600; font-size: 1.7rem; line-height: 1.3; margin-top: 14px; color: rgb(var(--color-foreground)); overflow-wrap: break-word; }
+  .pm2-px__feats small { display: block; color: rgba(var(--color-foreground), .68); font-size: 1.5rem; line-height: 1.5; margin-top: 4px; }
+  .pm2-px__feats:empty { display: none; }
+  .pm2-px__dot { display: block; width: 28px; height: 4px; background: rgb(var(--color-button)); border-radius: 4px; }
+  .pm2-px__cols { display: grid; grid-template-columns: 1fr 1.6fr; gap: 56px; }
+  .pm2-px__cols > * { min-width: 0; }
+  .pm2-px__cols > :only-child { grid-column: 1 / -1; }
+  .pm2-px__cols h3 { margin: 0 0 14px; }
+  .pm2-px__box ul { margin: 0; padding: 0; list-style: none; }
+  .pm2-px__box li { padding: 12px 0 12px 22px; border-bottom: 1px solid rgba(var(--color-foreground), .08); position: relative; font-size: 1.6rem; line-height: 1.45; }
+  .pm2-px__box li::before { content: ''; position: absolute; left: 0; top: 50%; width: 8px; height: 8px; margin-top: -4px; border-radius: 50%; background: rgb(var(--color-button)); }
+  .pm2-px__faq details { border-bottom: 1px solid rgba(var(--color-foreground), .08); }
+  .pm2-px__faq summary { cursor: pointer; display: flex; align-items: center; min-height: 56px; padding: 14px 40px 14px 0; list-style: none; position: relative; font-weight: 600; font-size: 1.6rem; line-height: 1.4; color: rgb(var(--color-foreground)); }
+  .pm2-px__faq summary::-webkit-details-marker { display: none; }
+  .pm2-px__faq summary::after { content: '+'; position: absolute; right: 0; top: 50%; width: 28px; height: 28px; margin-top: -14px; display: grid; place-items: center; border-radius: 50%; font-size: 2rem; line-height: 1; font-weight: 400; color: rgb(var(--color-button)); background: rgba(var(--color-button), .1); }
+  .pm2-px__faq details[open] summary::after { content: '\2013'; }
+  .pm2-px__faq summary:focus-visible { outline: 2px solid rgb(var(--color-button)); outline-offset: 2px; border-radius: 8px; }
+  .pm2-px__faq details div { padding: 0 0 20px; font-size: 1.6rem; color: rgba(var(--color-foreground), .74); line-height: 1.6; }
+  .pm2-px__pair { margin-top: 56px; display: grid; grid-template-columns: 110px minmax(0, 1fr) auto; gap: 24px; align-items: center; border: 1px solid rgba(var(--color-foreground), .08); border-radius: 24px; padding: 18px 22px; background: rgba(var(--color-foreground), .025); }
+  .pm2-px__pairimg { display: block; aspect-ratio: 1; background: linear-gradient(160deg, #F8FAFD, #EDF2F8); border-radius: 16px; overflow: hidden; }
+  .pm2-px__pairimg img { width: 100%; height: 100%; object-fit: contain; padding: 6%; }
+  .pm2-px__eyebrow { text-transform: uppercase; letter-spacing: .1em; font-size: 1.2rem; color: rgb(var(--color-button)); margin: 0 0 2px; font-weight: 600; }
+  .pm2-px__pairname { display: flex; align-items: center; min-height: 44px; color: rgb(var(--color-foreground)); text-decoration: none; font-weight: 600; font-size: 1.6rem; line-height: 1.3; }
+  .pm2-px__pairprice { margin: 0; font-size: 1.7rem; font-weight: 700; color: rgb(var(--color-foreground)); }
+  .pm2-px .pm2-px__pair .button { min-height: 48px; border-radius: 999px; }
+  .pm2-px .pm2-px__pair .button::before, .pm2-px .pm2-px__pair .button::after { border-radius: 999px; }
+  @media (max-width: 899px) {
+    .pm2-px { padding: 44px 0; }
+    .pm2-px__feats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-bottom: 36px; }
+    .pm2-px__feats li { padding: 18px 16px; border-radius: 20px; }
+    .pm2-px__feats strong { margin-top: 10px; font-size: 1.6rem; }
+    .pm2-px__feats small { font-size: 1.4rem; }
+    .pm2-px__cols { grid-template-columns: 1fr; gap: 32px; }
+    .pm2-px__pair { grid-template-columns: 80px minmax(0, 1fr); gap: 14px 16px; margin-top: 36px; padding: 16px; border-radius: 22px; }
+    .pm2-px__pair .button { grid-column: 1 / -1; width: 100%; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "PETME2 product extras",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "header", "content": "Feature icons (one per line: Title :: small text)" },
+    { "type": "textarea", "id": "feeder_features", "label": "Feeder features" },
+    { "type": "textarea", "id": "fountain_features", "label": "Fountain features" },
+    { "type": "header", "content": "Feeder FAQ" },
+    { "type": "text", "id": "dq1", "label": "Q1" }, { "type": "textarea", "id": "da1", "label": "A1" },
+    { "type": "text", "id": "dq2", "label": "Q2" }, { "type": "textarea", "id": "da2", "label": "A2" },
+    { "type": "text", "id": "dq3", "label": "Q3" }, { "type": "textarea", "id": "da3", "label": "A3" },
+    { "type": "text", "id": "dq4", "label": "Q4" }, { "type": "textarea", "id": "da4", "label": "A4" },
+    { "type": "text", "id": "dq5", "label": "Q5" }, { "type": "textarea", "id": "da5", "label": "A5" },
+    { "type": "header", "content": "Fountain FAQ" },
+    { "type": "text", "id": "fq1", "label": "Q1" }, { "type": "textarea", "id": "fa1", "label": "A1" },
+    { "type": "text", "id": "fq2", "label": "Q2" }, { "type": "textarea", "id": "fa2", "label": "A2" },
+    { "type": "text", "id": "fq3", "label": "Q3" }, { "type": "textarea", "id": "fa3", "label": "A3" },
+    { "type": "text", "id": "fq4", "label": "Q4" }, { "type": "textarea", "id": "fa4", "label": "A4" },
+    { "type": "text", "id": "fq5", "label": "Q5" }, { "type": "textarea", "id": "fa5", "label": "A5" },
+    { "type": "header", "content": "Complete the setup" },
+    { "type": "text", "id": "pair_eyebrow", "label": "Eyebrow", "default": "Complete the setup" },
+    { "type": "text", "id": "pair_button", "label": "Button", "default": "View" },
+    { "type": "product", "id": "pair_for_feeder", "label": "Show on feeder pages" },
+    { "type": "product", "id": "pair_for_fountain", "label": "Show on fountain pages" }
+  ],
+  "presets": [{ "name": "PETME2 product extras" }]
+}
+{% endschema %}

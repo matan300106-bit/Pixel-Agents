@@ -1,0 +1,310 @@
+{%- comment -%}
+  PETME2 trust badges: a compact row of 3-4 real promises (blocks: icon + text).
+  Works anywhere (home, cart, product). On a product page it can move itself right under
+  Dawn's Add to cart button ("Product page position" setting); if the button is not found it stays in place.
+  Real data only:
+  - Low stock line: shown only when the selected variant's inventory is tracked by Shopify and
+    0 < quantity <= threshold. Uses the real number. Not tracked = nothing shown.
+  - "You save" line: only when the selected variant has compare_at_price > price (real prices).
+  Both lines follow Dawn's variant picker (listens to the product form's variant id input).
+  Badge grid: 2 columns when narrow, 4 in a row when the space is wide (container query).
+{%- endcomment -%}
+{%- liquid
+  assign s = section.settings
+  assign sid = section.id
+  assign variant = blank
+  if product != blank
+    assign variant = product.selected_or_first_available_variant
+  endif
+  assign stock_qty = 0
+  if s.show_low_stock and variant != blank and variant.inventory_management == 'shopify'
+    if variant.inventory_quantity > 0 and variant.inventory_quantity <= s.low_stock_threshold
+      assign stock_qty = variant.inventory_quantity
+    endif
+  endif
+  assign save_cents = 0
+  if s.show_savings and variant != blank and variant.compare_at_price > variant.price
+    assign save_cents = variant.compare_at_price | minus: variant.price
+  endif
+  assign stock_parts = s.low_stock_text | split: '[qty]'
+  assign save_parts = s.savings_text | split: '[amount]'
+-%}
+<div
+  class="pm2-tb-wrap color-{{ s.color_scheme }} gradient"
+  id="pm2-tb-{{ sid }}"
+  data-pm2-tb
+  data-section-id="{{ sid }}"
+  {% if product != blank and s.product_position == 'under_buy_buttons' %}data-pm2-tb-move{% endif %}
+>
+  <div class="page-width pm2-tb-outer" style="--pm2-pt: {{ s.padding_top }}px; --pm2-pb: {{ s.padding_bottom }}px;">
+    <div class="pm2-tb pm2-tb--{{ s.style }}" data-pm2-tb-inner>
+      {%- if product != blank -%}
+        {%- if s.show_savings -%}
+          <p class="pm2-tb__line pm2-tb__line--save" data-pm2-tb-save {% if save_cents <= 0 %}hidden{% endif %}>
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M3.5 12.6V4.5a1 1 0 0 1 1-1h8.1l8 8a1.4 1.4 0 0 1 0 2l-6.1 6.1a1.4 1.4 0 0 1-2 0z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><circle cx="8.3" cy="8.3" r="1.6" fill="currentColor"/></svg>
+            <span>{{ save_parts[0] }}<strong data-pm2-tb-save-amount>{{ save_cents | money }}</strong>{{ save_parts[1] }}</span>
+          </p>
+        {%- endif -%}
+        {%- if s.show_low_stock -%}
+          <p class="pm2-tb__line pm2-tb__line--stock" data-pm2-tb-stock {% if stock_qty <= 0 %}hidden{% endif %}>
+            <span class="pm2-tb__dot" aria-hidden="true"></span>
+            <span>{{ stock_parts[0] }}<span data-pm2-tb-qty>{{ stock_qty }}</span>{{ stock_parts[1] }}</span>
+          </p>
+        {%- endif -%}
+        <script type="application/json" data-pm2-tb-variants>
+          {
+          {%- assign first = true -%}
+          {%- for v in product.variants -%}
+            {%- liquid
+              assign q = 0
+              if s.show_low_stock and v.inventory_management == 'shopify' and v.inventory_quantity > 0 and v.inventory_quantity <= s.low_stock_threshold
+                assign q = v.inventory_quantity
+              endif
+              assign sv = 0
+              if s.show_savings and v.compare_at_price > v.price
+                assign sv = v.compare_at_price | minus: v.price
+              endif
+            -%}
+            {%- unless first -%},{%- endunless -%}"{{ v.id }}":{"q":{{ q }},"save":{{ sv | money | json }},"s":{{ sv }}}
+            {%- assign first = false -%}
+          {%- endfor -%}
+          }
+        </script>
+      {%- endif -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <ul class="pm2-tb__list" role="list">
+          {%- for block in section.blocks -%}
+            <li class="pm2-tb__item" {{ block.shopify_attributes }}>
+              <span class="pm2-tb__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+                  {%- case block.settings.icon -%}
+                    {%- when 'truck' -%}<path d="M2.5 6.5h11v9h-11zM13.5 9.5h4l3 3.2v2.8h-7"/><circle cx="6.5" cy="17" r="1.9"/><circle cx="17" cy="17" r="1.9"/>
+                    {%- when 'money_back' -%}<path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v4.5h-4.5"/><path d="M14 9.5c-.4-.7-1.2-1-2-1-1.2 0-2.1.6-2.1 1.6 0 2.3 4.3 1.2 4.3 3.6 0 1-1 1.7-2.2 1.7-.9 0-1.8-.4-2.2-1.1M12 7.3v1.2M12 15.4v1.3"/>
+                    {%- when 'lock' -%}<rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7"/><path d="M12 14.5v2"/>
+                    {%- when 'box' -%}<path d="M3.5 7.5L12 3.5l8.5 4v9L12 20.5l-8.5-4z"/><path d="M3.5 7.5L12 11.5l8.5-4M12 11.5v9"/><path d="M7.8 5.5l8.4 4"/>
+                    {%- when 'shield' -%}<path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.2-7.5 9.5-4.3-1.3-7.5-4.9-7.5-9.5V6z"/><path d="M8.8 12l2.2 2.2 4.2-4.4"/>
+                    {%- when 'heart' -%}<path d="M12 19.5s-7.5-4.3-7.5-9.6A4.2 4.2 0 0 1 12 7.4a4.2 4.2 0 0 1 7.5 2.5c0 5.3-7.5 9.6-7.5 9.6z"/>
+                    {%- when 'paw' -%}<circle cx="6.8" cy="10" r="1.8"/><circle cx="10" cy="6.2" r="1.8"/><circle cx="14" cy="6.2" r="1.8"/><circle cx="17.2" cy="10" r="1.8"/><path d="M8.2 17.2c0-2.6 1.8-4.9 3.8-4.9s3.8 2.3 3.8 4.9c0 1.7-1.6 2.1-3.8 2.1s-3.8-.4-3.8-2.1z"/>
+                    {%- when 'chat' -%}<path d="M4.5 6.5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H10l-4 3.5v-3.5h0a2 2 0 0 1-1.5-2z"/>
+                    {%- else -%}<path d="M5 12.5l4.2 4.2L19 7"/>
+                  {%- endcase -%}
+                </svg>
+              </span>
+              <span class="pm2-tb__text">
+                <span class="pm2-tb__title">{{ block.settings.text | escape }}</span>
+                {%- if block.settings.subtext != blank -%}
+                  <span class="pm2-tb__sub">{{ block.settings.subtext | escape }}</span>
+                {%- endif -%}
+              </span>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      {%- if s.delivery_note != blank -%}
+        <p class="pm2-tb__note">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z" fill="none" stroke="currentColor" stroke-width="1.9"/><circle cx="12" cy="10" r="2.2" fill="none" stroke="currentColor" stroke-width="1.9"/></svg>
+          {{ s.delivery_note | escape }}
+        </p>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var wrap = document.getElementById({{ 'pm2-tb-' | append: sid | json }});
+    if (!wrap) return;
+    var inner = wrap.querySelector('[data-pm2-tb-inner]');
+    var data = {};
+    var json = wrap.querySelector('[data-pm2-tb-variants]');
+    if (json) { try { data = JSON.parse(json.textContent); } catch (e) { data = {}; } }
+
+    function update(id) {
+      var v = data[String(id)];
+      var stock = inner.querySelector('[data-pm2-tb-stock]');
+      var save = inner.querySelector('[data-pm2-tb-save]');
+      if (stock) {
+        var q = v ? v.q : 0;
+        stock.hidden = !(q > 0);
+        var qn = stock.querySelector('[data-pm2-tb-qty]'); if (qn && q > 0) qn.textContent = q;
+      }
+      if (save) {
+        var ok = v && v.s > 0;
+        save.hidden = !ok;
+        var a = save.querySelector('[data-pm2-tb-save-amount]'); if (a && ok) a.textContent = v.save;
+      }
+    }
+    if (json) {
+      document.addEventListener('change', function (e) {
+        var t = e.target;
+        if (t && t.name === 'id' && t.closest && t.closest('form[action*="/cart/add"]') && !t.closest('[data-pm2-tb]')) update(t.value);
+      });
+    }
+
+    // Product page: place the badges right under Dawn's buy buttons (inside the product info column).
+    if (!wrap.hasAttribute('data-pm2-tb-move')) return;
+    var placed = false;
+    function host() {
+      var form = document.querySelector('product-info product-form, .product__info-container product-form');
+      if (!form) return null;
+      var block = form.closest('.product__info-container > *') || form;
+      return block;
+    }
+    function place() {
+      var h = host();
+      if (!h) return;
+      if (inner.parentNode && h.nextElementSibling === inner) return;
+      document.querySelectorAll('[data-pm2-tb-moved="' + wrap.dataset.sectionId + '"]').forEach(function (n) { if (n !== inner) n.remove(); });
+      inner.setAttribute('data-pm2-tb-moved', wrap.dataset.sectionId);
+      inner.classList.add('pm2-tb--in-product');
+      h.insertAdjacentElement('afterend', inner);
+      wrap.classList.add('pm2-tb-wrap--moved');
+      placed = true;
+    }
+    function init() {
+      place();
+      var info = document.querySelector('product-info');
+      if (!info || !('MutationObserver' in window)) return;
+      var queued = false;
+      new MutationObserver(function () {
+        if (queued) return; queued = true;
+        requestAnimationFrame(function () { queued = false; if (placed && !document.contains(inner)) place(); });
+      }).observe(info, { childList: true, subtree: true });
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+    else init();
+  })();
+</script>
+
+<style>
+  .pm2-tb-outer { padding-top: var(--pm2-pt); padding-bottom: var(--pm2-pb); }
+  .pm2-tb-wrap--moved { display: none; }
+  .pm2-tb { container-type: inline-size; color: rgb(var(--color-foreground)); }
+  .pm2-tb--in-product { margin: 1.6rem 0 0.4rem; background: none; }
+  .pm2-tb__line {
+    display: flex; align-items: center; gap: .8rem; margin: 0 0 1rem;
+    font-size: 1.45rem; line-height: 1.35; letter-spacing: normal;
+  }
+  .pm2-tb__line[hidden] { display: none; }
+  .pm2-tb__line--save svg { flex: 0 0 auto; color: rgb(var(--color-button)); }
+  .pm2-tb__line--save strong { font-weight: 800; }
+  .pm2-tb__line--stock { font-weight: 700; color: #a34a00; }
+  .pm2-tb__dot { flex: 0 0 auto; width: .9rem; height: .9rem; border-radius: 999px; background: #e07b00; box-shadow: 0 0 0 4px rgba(224, 123, 0, .18); }
+  .pm2-tb__list {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .8rem;
+  }
+  @container (min-width: 720px) {
+    .pm2-tb__list { grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); grid-auto-flow: column; gap: 1.2rem; }
+  }
+  .pm2-tb__item {
+    display: flex; align-items: center; gap: 1rem; min-width: 0; min-height: 5.6rem;
+    padding: .9rem 1.2rem; border-radius: 20px;
+    font-size: 1.35rem; line-height: 1.3; letter-spacing: normal;
+  }
+  .pm2-tb--card .pm2-tb__item {
+    background: rgba(var(--color-button), .06);
+    box-shadow: inset 0 0 0 1px rgba(var(--color-foreground), .06);
+  }
+  .pm2-tb--plain .pm2-tb__item { padding-left: 0; padding-right: 0; }
+  .pm2-tb__icon {
+    flex: 0 0 auto; display: grid; place-items: center; width: 38px; height: 38px; border-radius: 999px;
+    background: rgb(var(--color-background)); color: rgb(var(--color-button));
+    box-shadow: 0 4px 12px -6px rgba(var(--color-foreground), .35);
+  }
+  .pm2-tb__text { display: flex; flex-direction: column; min-width: 0; overflow-wrap: anywhere; }
+  .pm2-tb__title { font-weight: 700; }
+  .pm2-tb__sub { font-size: 1.2rem; color: rgba(var(--color-foreground), .66); }
+  .pm2-tb__note {
+    display: flex; align-items: center; gap: .6rem; margin: 1rem 0 0;
+    font-size: 1.3rem; line-height: 1.4; color: rgba(var(--color-foreground), .7); letter-spacing: normal;
+  }
+  .pm2-tb__note svg { flex: 0 0 auto; color: rgb(var(--color-button)); }
+  @container (min-width: 720px) {
+    .pm2-tb__note, .pm2-tb__line { justify-content: center; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "PM2 Trust badges",
+  "tag": "section",
+  "class": "section pm2-tb-section",
+  "disabled_on": { "groups": ["header"] },
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "select",
+      "id": "product_position",
+      "label": "Product page position",
+      "options": [
+        { "value": "under_buy_buttons", "label": "Right under Add to cart" },
+        { "value": "section", "label": "Where the section is" }
+      ],
+      "default": "under_buy_buttons",
+      "info": "On other pages the badges always show where the section is."
+    },
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Badge style",
+      "options": [
+        { "value": "card", "label": "Soft cards" },
+        { "value": "plain", "label": "Plain" }
+      ],
+      "default": "card"
+    },
+    { "type": "header", "content": "Real product info (product page only)" },
+    { "type": "checkbox", "id": "show_savings", "label": "Show \"You save\" when the product is on sale", "default": true, "info": "Uses the real compare-at price minus the price." },
+    { "type": "text", "id": "savings_text", "label": "Savings text", "default": "You save [amount]", "info": "[amount] is replaced by the real amount." },
+    { "type": "checkbox", "id": "show_low_stock", "label": "Show low stock line", "default": false, "info": "Only when Shopify tracks the inventory. Uses the real quantity. Turn on only if Shopify stock matches real stock." },
+    { "type": "range", "id": "low_stock_threshold", "label": "Show when stock is at or below", "min": 1, "max": 20, "step": 1, "default": 5 },
+    { "type": "text", "id": "low_stock_text", "label": "Low stock text", "default": "Only [qty] left in stock", "info": "[qty] is replaced by the real quantity." },
+    { "type": "text", "id": "delivery_note", "label": "Delivery note (optional)", "default": "Orders are fulfilled by Amazon" },
+    { "type": "header", "content": "Look" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-3" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 12 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 12 }
+  ],
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Badge",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "truck", "label": "Truck (shipping)" },
+            { "value": "money_back", "label": "Money back" },
+            { "value": "lock", "label": "Lock (secure checkout)" },
+            { "value": "box", "label": "Box (fulfillment)" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "paw", "label": "Paw" },
+            { "value": "chat", "label": "Chat (support)" },
+            { "value": "check", "label": "Check" }
+          ],
+          "default": "truck"
+        },
+        { "type": "text", "id": "text", "label": "Text", "default": "Free U.S. shipping" },
+        { "type": "text", "id": "subtext", "label": "Small text (optional)" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PM2 Trust badges",
+      "blocks": [
+        { "type": "badge", "settings": { "icon": "truck", "text": "Free U.S. shipping" } },
+        { "type": "badge", "settings": { "icon": "money_back", "text": "30-day money-back guarantee" } },
+        { "type": "badge", "settings": { "icon": "lock", "text": "Secure checkout" } },
+        { "type": "badge", "settings": { "icon": "box", "text": "Fulfilled by Amazon" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

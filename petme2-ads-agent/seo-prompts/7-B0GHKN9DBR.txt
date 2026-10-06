@@ -1,0 +1,32 @@
+You are working in my Amazon Seller Central (sellercentral.amazon.com), US marketplace.
+GOAL: Update the listing text of ONE product. Do NOT click Submit/Save until I say "submit".
+RULES: Change only the fields below. Do not change price, images, variations, stock, or any other product. If asked to log in, enter a code, or solve a captcha: stop and tell me. If a field is locked or shows an error, stop and tell me exactly what it says.
+
+Product: SKU L6-L3S1-I7Q6 / ASIN B0GHKN9DBR (2L Plastic Cat Water Fountain (Red Light Alert)).
+
+TITLE (Item Name):
+PETME2 Cat Water Fountain, 68oz/2L Quiet Water Fountains for Cats Indoor, Red Light Low Level Alert, Visible Window, Anti-Dry Pump Shut-Off, Small Pet Dispenser for Kitten and Dog
+
+BULLET POINTS (5 boxes, one per box; delete any extra old bullet boxes 6-10):
+FRESH MOVING WATER CATS WANT TO DRINK: Many cats ignore a still bowl. This automatic cat water fountain keeps water gently moving to invite more sips through the day, an easy upgrade from a plain dish. It works as a cat water dispenser and kitten water fountain for indoor cats, and as a cat drinking fountain small dogs can share. Think of it as a cat water bowl fountain, a running water bowl for cats that keeps water flowing.
+RED LIGHT LOW WATER ALERT: Stop guessing when to refill. A red indicator light warns you when the water runs low, and the clear water level window lets you check the 68oz/2L reservoir at a glance. This automatic water dispenser for cats and automatic cat water dispenser tells you when it needs a refill, so it is a simple pet water dispenser and water dispenser for cats for busy homes.
+ANTI-DRY PUMP PROTECTION: When the water level gets too low, the pump automatically powers off to help protect it from running dry. That means more peace of mind on busy days, whether it serves your cat or a small dog. For dogs it works as a dog water dispenser and automatic dog water dispenser, an automatic water dispenser for dogs and a water dispenser for dogs that will not run the pump empty, a cat or dog automatic water dispenser in one.
+QUIET AND COMPACT FOR SMALL SPACES: Made for water fountains for cats indoor, this slim, quiet cat water fountain keeps bedrooms and apartments calm. It is a small cat water fountain and kitty water fountain that is light and easy to move, and it also works as a small dog water fountain or a dog water fountain for small dogs. The light plastic cat water fountain body fits a water fountain for cats indoor corner or a water fountain for dogs inside.
+EASY TO CLEAN, SIMPLE TO SET UP: The simple structure comes apart quickly for routine washing, an easy to clean cat water fountain. Connect the power cable, fill the reservoir and it is ready. A pet water fountain and pet fountain for single or multi-pet homes, it doubles as an automatic dog water bowl or auto dog water bowl, and as a circulating water bowl for dogs or flowing water bowl for dogs.
+
+PRODUCT DESCRIPTION:
+Give your cat a reason to drink more. The PETME2 Cat Water Fountain keeps 68oz (2L) of water gently moving, because many cats prefer flowing water over a still bowl. It is a compact cat fountain and kitty fountain for indoor homes, and it also suits kittens and small to medium dogs. A water fountain cat owners can set up in minutes, it gives cats fresh fountain water for cats all day. It is a water fountain for cats and small dogs, and a water fountain cats come back to. Compared with bulkier cat fountains, cat water fountains and dog fountains, this moving water cat fountain stays slim. Know when to refill without lifting the lid. A red light alert comes on when the water runs low, and the visible water level window shows how much is left at a glance. If the water drops too far, anti-dry protection automatically powers off the pump to help protect it from running dry. Made for everyday home life. The quiet pump will not disturb naps, bedtime or work calls, and the slim, portable white body fits small kitchens, bedrooms and apartments. For dogs it is a dog fountain and dog drinking fountain, a dog fountain water bowl and dog water bowl fountain. It also works as a dog bowl fountain or fountain dog water bowl, a running water bowl for dogs and automatic water bowl for dogs. For cats it is a fountain cat water bowl and a quiet cat waterer. It is also a dog waterer and automatic dog waterer, a pet drinking fountain and an animal water fountain cats and dogs can share. The simple structure comes apart quickly for routine cleaning. In the box: fountain main unit, water reservoir, power cable and user manual. Setup is simple: place the fountain on a flat, stable surface, fill the reservoir, connect the power and plug it in. Covered by a 1-year limited warranty.
+
+SEARCH TERMS / Generic Keywords (backend, one box):
+plastic kitty drinking waterer bowl automatic auto flowing running circulating fresh inside easy clean mini compact portable slim white refill indicator hydration drinker bedroom bebedero gatos fuente agua perros dispensador animal
+
+ATTRIBUTES (only if the field exists; replace long sentences with these short values):
+- Special Feature: Low Water Red Light Alert, Visible Water Level Window, Anti-Dry Pump Shut-Off, Quiet Pump, Compact Indoor Design
+- Included Components: Fountain main unit, Water reservoir, Power cable, User manual
+
+STEPS:
+1. Catalog -> Manage All Inventory -> search SKU L6-L3S1-I7Q6 -> Edit.
+2. FIRST: copy the CURRENT values of these fields into your reply, so I have a backup.
+3. Replace the fields with the text above EXACTLY (copy, do not rewrite).
+4. STOP before saving. Show me a short summary of what you changed and wait for me to say "submit".
+5. After I say "submit": Save and finish, then tell me if Amazon shows any error or warning.

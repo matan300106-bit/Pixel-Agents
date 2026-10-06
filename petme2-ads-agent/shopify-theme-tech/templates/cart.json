@@ -1,0 +1,147 @@
+{
+  "sections": {
+    "cart-items": {
+      "type": "main-cart-items",
+      "settings": {
+        "color_scheme": "scheme-3",
+        "padding_top": 40,
+        "padding_bottom": 24
+      }
+    },
+    "cart-footer": {
+      "type": "main-cart-footer",
+      "settings": {
+        "color_scheme": "scheme-3",
+        "padding_top": 16,
+        "padding_bottom": 56
+      },
+      "blocks": {
+        "subtotal": {
+          "type": "subtotal",
+          "settings": {}
+        },
+        "buttons": {
+          "type": "buttons",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "subtotal",
+        "buttons"
+      ]
+    },
+    "shipping": {
+      "type": "rich-text",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-5",
+        "full_width": true,
+        "padding_top": 32,
+        "padding_bottom": 32
+      },
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Free U.S. shipping · 30-day money-back guarantee",
+            "heading_size": "h2"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Not happy? Contact us within 30 days and we'll give you your money back.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "text"
+      ]
+    },
+    "upsell": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "water-fountains",
+        "products_to_show": 4,
+        "title": "You may also like",
+        "heading_size": "h1",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 4,
+        "enable_desktop_slider": false,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "color_scheme": "scheme-3",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "standard",
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 56,
+        "padding_bottom": 72
+      }
+    },
+    "trust_badges": {
+      "type": "pm2-trust-badges",
+      "blocks": {
+        "b1": {
+          "type": "badge",
+          "settings": {
+            "icon": "truck",
+            "text": "Free U.S. shipping"
+          }
+        },
+        "b2": {
+          "type": "badge",
+          "settings": {
+            "icon": "money_back",
+            "text": "30-day money-back guarantee"
+          }
+        },
+        "b3": {
+          "type": "badge",
+          "settings": {
+            "icon": "lock",
+            "text": "Secure checkout"
+          }
+        },
+        "b4": {
+          "type": "badge",
+          "settings": {
+            "icon": "box",
+            "text": "Fulfilled by Amazon"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ],
+      "settings": {
+        "style": "plain",
+        "show_savings": false,
+        "show_low_stock": false,
+        "delivery_note": "",
+        "color_scheme": "scheme-3",
+        "padding_top": 8,
+        "padding_bottom": 24
+      }
+    }
+  },
+  "order": [
+    "cart-items",
+    "cart-footer",
+    "trust_badges",
+    "shipping",
+    "upsell"
+  ]
+}

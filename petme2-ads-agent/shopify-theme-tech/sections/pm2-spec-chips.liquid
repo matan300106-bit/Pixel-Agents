@@ -1,0 +1,81 @@
+{%- comment -%}
+  PETME2 spec chips (product template, under main product).
+  Source: product metafield custom.spec_chips (multi-line text), one chip per line: "Value :: Label".
+  A line without "::" renders as a value-only chip. Renders nothing when the metafield is empty.
+{%- endcomment -%}
+{%- liquid
+  assign raw = product.metafields.custom.spec_chips.value | default: ''
+  assign raw = raw | strip
+  assign lines = raw | newline_to_br | split: '<br />'
+-%}
+{%- if raw != blank -%}
+  <div
+    class="color-{{ section.settings.color_scheme }} gradient pm2-spec"
+    style="--pm2-pt: {{ section.settings.padding_top }}px; --pm2-pb: {{ section.settings.padding_bottom }}px;"
+  >
+    <div class="page-width">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="pm2-spec__heading">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+      <ul class="pm2-spec__list" role="list">
+        {%- for line in lines -%}
+          {%- assign line = line | strip -%}
+          {%- if line == blank -%}{%- continue -%}{%- endif -%}
+          {%- assign parts = line | split: '::' -%}
+          {%- assign value = parts[0] | strip -%}
+          {%- assign label = parts[1] | strip -%}
+          <li class="pm2-spec__chip{% if label == blank %} pm2-spec__chip--solo{% endif %}">
+            <span class="pm2-spec__value">{{ value | escape }}</span>
+            {%- if label != blank -%}
+              <span class="pm2-spec__label">{{ label | escape }}</span>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </div>
+  </div>
+{%- elsif request.design_mode -%}
+  <div class="page-width pm2-spec__empty">
+    PETME2 spec chips: add lines to the product metafield <code>custom.spec_chips</code> ("Value :: Label", one per line). Hidden on the live store while empty.
+  </div>
+{%- endif -%}
+
+<style>
+  .pm2-spec { padding: var(--pm2-pt, 8px) 0 var(--pm2-pb, 40px); }
+  .pm2-spec__heading { margin: 0 0 14px; font-size: 13px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: rgba(var(--color-foreground), .6); }
+  .pm2-spec__list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+  .pm2-spec__chip { position: relative; display: flex; flex-direction: column; justify-content: center; gap: 4px; min-width: 0; min-height: 92px; padding: 18px 20px; border-radius: 22px; background: rgba(var(--color-foreground), .035); border: 1px solid rgba(var(--color-foreground), .07); overflow: hidden; transition: border-color .3s ease, transform .3s cubic-bezier(.2,.7,.2,1); }
+  .pm2-spec__chip::after { content: ""; position: absolute; top: 16px; right: 16px; width: 8px; height: 8px; border-radius: 50%; background: rgb(var(--color-button)); box-shadow: 0 0 0 4px rgba(var(--color-button), .14); }
+  @media (hover: hover) { .pm2-spec__chip:hover { border-color: rgba(var(--color-button), .4); transform: translateY(-2px); } }
+  .pm2-spec__value { font-family: var(--font-heading-family); font-weight: 700; font-size: clamp(22px, 2.2vw, 28px); line-height: 1.05; letter-spacing: -.02em; color: rgb(var(--color-foreground)); padding-right: 16px; overflow-wrap: anywhere; }
+  .pm2-spec__chip--solo .pm2-spec__value { font-size: clamp(18px, 1.7vw, 22px); line-height: 1.15; }
+  .pm2-spec__label { font-size: 14px; line-height: 1.35; color: rgba(var(--color-foreground), .65); overflow-wrap: anywhere; }
+  .pm2-spec__empty { margin: 16px auto; padding: 14px 18px; border: 1px dashed rgba(var(--color-foreground), .3); border-radius: 16px; font-size: 13px; }
+  @media (max-width: 749px) {
+    .pm2-spec__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .pm2-spec__chip { min-height: 84px; padding: 14px 14px 16px; border-radius: 20px; }
+    .pm2-spec__value { font-size: clamp(20px, 6vw, 24px); }
+    .pm2-spec__chip::after { top: 14px; right: 14px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pm2-spec__chip { transition: none; }
+    .pm2-spec__chip:hover { transform: none; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "PETME2 spec chips",
+  "tag": "section",
+  "class": "pm2-spec-section",
+  "enabled_on": { "templates": ["product"] },
+  "settings": [
+    { "type": "paragraph", "content": "Chips come from the product metafield custom.spec_chips (multi-line text). One per line: Value :: Label" },
+    { "type": "text", "id": "heading", "label": "Heading (optional)", "default": "Key specs" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-3" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 8 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 40 }
+  ],
+  "presets": [{ "name": "PETME2 spec chips" }]
+}
+{% endschema %}

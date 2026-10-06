@@ -1,0 +1,494 @@
+{%- comment -%}
+  PETME2 welcome offer popup (10% off first order for email signup).
+  Put it in the header group so it works site-wide.
+  - Phone: small bottom sheet (page stays visible above it), after X seconds OR Y% scroll, whichever comes first.
+  - Desktop (mouse): centered modal on exit intent (pointer leaves the top of the window) or after Z seconds.
+  - Never shows on /cart, /checkout, account or password pages, while the cart drawer / notification /
+    menu drawer is open, to customers who already ordered, or after a signup on this browser.
+    After it is closed it stays away for "cap_days" (localStorage), and shows at most once per visit.
+  - Uses Shopify's own customer form (tags newsletter,welcome10). After a successful signup the page
+    reloads with ?customer_posted=true#PM2Popup-<id>; the popup re-opens showing the code + Copy button.
+  - "Shop now" can use Shopify's /discount/CODE link so the code is applied at checkout automatically.
+    The discount code itself must exist in Shopify admin (Discounts).
+  - Theme editor: opens when the section is selected, closes when deselected; caps are ignored there.
+  No timers, no scarcity, no invented numbers.
+{%- endcomment -%}
+{%- liquid
+  assign s = section.settings
+  assign sid = section.id
+  assign form_id = 'PM2Popup-' | append: sid
+  assign render = s.enabled
+  if template.name == 'cart' or template.name == 'password' or template.name == 'gift_card' or template.directory == 'customers'
+    assign render = false
+  endif
+  if customer and request.design_mode == false
+    if customer.orders_count > 0
+      assign render = false
+    endif
+  endif
+  if routes.root_url == '/'
+    assign root = ''
+  else
+    assign root = routes.root_url
+  endif
+  assign shop_path = s.shop_link | default: routes.all_products_collection_url
+  if s.auto_apply and s.code != blank
+    assign code_enc = s.code | url_encode
+    assign shop_href = root | append: '/discount/' | append: code_enc | append: '?redirect=' | append: shop_path
+  else
+    assign shop_href = shop_path
+  endif
+  assign has_image = false
+  if s.image != blank
+    assign has_image = true
+  endif
+-%}
+{%- if render -%}
+  {%- capture code_box -%}
+    <div class="pm2-pop__code">
+      <span class="pm2-pop__code-label">Your code</span>
+      <span class="pm2-pop__code-value" id="PM2PopCode-{{ sid }}">{{ s.code | escape }}</span>
+      <button type="button" class="pm2-pop__copy" data-pm2-copy="{{ s.code | escape }}" aria-describedby="PM2PopCode-{{ sid }}">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><rect x="8.5" y="8.5" width="11" height="11" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="M15.5 5.5v-.5a2 2 0 0 0-2-2h-8a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h.5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+        <span data-pm2-copy-label>Copy code</span>
+      </button>
+    </div>
+    <p class="pm2-pop__live visually-hidden" aria-live="polite" data-pm2-copy-status></p>
+    <a class="button pm2-pop__shop" href="{{ shop_href }}">{{ s.shop_label | escape }}</a>
+    {%- if s.auto_apply -%}
+      <p class="pm2-pop__fine">The code is added at checkout when you shop from this link.</p>
+    {%- endif -%}
+  {%- endcapture -%}
+
+  <div
+    class="pm2-pop{% if has_image %} pm2-pop--has-image{% endif %}"
+    id="PM2Pop-{{ sid }}"
+    data-pm2-pop
+    data-section-id="{{ sid }}"
+    data-form-id="{{ form_id }}"
+    data-delay="{{ s.delay_seconds }}"
+    data-desktop-delay="{{ s.desktop_delay_seconds }}"
+    data-scroll="{{ s.scroll_percent }}"
+    data-cap-days="{{ s.cap_days }}"
+    data-mobile="{{ s.show_on_mobile }}"
+    hidden
+  >
+    <div class="pm2-pop__backdrop" data-pm2-pop-close></div>
+    <div
+      class="pm2-pop__panel color-{{ s.color_scheme }} gradient"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="PM2PopTitle-{{ sid }}"
+      aria-describedby="PM2PopText-{{ sid }}"
+      tabindex="-1"
+      data-pm2-pop-panel
+    >
+      <button type="button" class="pm2-pop__x" data-pm2-pop-close aria-label="{{ 'accessibility.close' | t }}">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+      </button>
+      {%- if has_image -%}
+        <div class="pm2-pop__media">
+          {{ s.image | image_url: width: 720 | image_tag: loading: 'lazy', sizes: '360px', widths: '360, 540, 720', alt: s.image.alt, class: 'pm2-pop__img' }}
+        </div>
+      {%- endif -%}
+      <div class="pm2-pop__body">
+        {%- form 'customer', id: form_id, class: 'pm2-pop__form' -%}
+          {%- if form.posted_successfully? -%}
+            <span hidden data-pm2-pop-state="success"></span>
+            <p class="pm2-pop__eyebrow">
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path d="M5 12.5l4.2 4.2L19 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              You're on the list
+            </p>
+            <h2 class="pm2-pop__title" id="PM2PopTitle-{{ sid }}">{{ s.success_heading | escape }}</h2>
+            <p class="pm2-pop__text" id="PM2PopText-{{ sid }}">{{ s.success_text | escape }}</p>
+            {{ code_box }}
+          {%- else -%}
+            {%- if form.errors -%}
+              <span hidden data-pm2-pop-state="error"></span>
+            {%- endif -%}
+            {%- if s.eyebrow != blank -%}
+              <p class="pm2-pop__eyebrow">{{ s.eyebrow | escape }}</p>
+            {%- endif -%}
+            <h2 class="pm2-pop__title" id="PM2PopTitle-{{ sid }}">{{ s.heading | escape }}</h2>
+            <p class="pm2-pop__text" id="PM2PopText-{{ sid }}">{{ s.text | escape }}</p>
+            {%- if s.show_code_without_email and s.code != blank -%}
+              {{ code_box }}
+              <p class="pm2-pop__or">Want tips and new arrivals? Join our emails:</p>
+            {%- endif -%}
+            <input type="hidden" name="contact[tags]" value="newsletter,welcome10">
+            <div class="pm2-pop__row">
+              <label class="visually-hidden" for="PM2PopEmail-{{ sid }}">Email</label>
+              <input
+                class="pm2-pop__input"
+                id="PM2PopEmail-{{ sid }}"
+                type="email"
+                name="contact[email]"
+                value="{{ form.email }}"
+                placeholder="Your email"
+                autocomplete="email"
+                autocorrect="off"
+                autocapitalize="off"
+                spellcheck="false"
+                required
+                aria-required="true"
+                {% if form.errors %}aria-invalid="true" aria-describedby="PM2PopErr-{{ sid }}"{% endif %}
+              >
+              <button type="submit" class="button pm2-pop__submit">{{ s.button_label | escape }}</button>
+            </div>
+            {%- if form.errors -%}
+              <p class="pm2-pop__error" id="PM2PopErr-{{ sid }}" role="alert">
+                {{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}
+              </p>
+            {%- endif -%}
+            <p class="pm2-pop__consent">
+              {{ s.consent_text | escape }}
+              {%- if shop.privacy_policy.url != blank %}
+                <a href="{{ shop.privacy_policy.url }}">Privacy policy</a>.
+              {%- endif -%}
+            </p>
+            <button type="button" class="pm2-pop__dismiss" data-pm2-pop-close>{{ s.dismiss_label | escape }}</button>
+          {%- endif -%}
+        {%- endform -%}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var root = document.getElementById({{ 'PM2Pop-' | append: sid | json }});
+      if (!root || root.dataset.pm2Ready) return;
+      root.dataset.pm2Ready = '1';
+      var KEY = 'pm2_welcome_popup';
+      var SKEY = 'pm2_welcome_popup_seen';
+      var panel = root.querySelector('[data-pm2-pop-panel]');
+      var design = !!(window.Shopify && window.Shopify.designMode);
+      var d = root.dataset;
+      var isOpen = false, lastFocus = null, armed = true, timers = [], pendingTimer = null;
+
+      function read() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } }
+      function write(o) { try { localStorage.setItem(KEY, JSON.stringify(o)); } catch (e) {} }
+      function seen() { try { return sessionStorage.getItem(SKEY) === '1'; } catch (e) { return false; } }
+      function markSeen() { try { sessionStorage.setItem(SKEY, '1'); } catch (e) {} }
+      function desktop() { return window.matchMedia('(min-width: 750px) and (hover: hover) and (pointer: fine)').matches; }
+
+      function blockedPath() {
+        return /^(\/[a-z]{2}(-[a-z]{2})?)?\/(cart|checkout|checkouts|account|password|challenge)(\/|$|\?)/i.test(location.pathname);
+      }
+      function capped() {
+        var st = read();
+        if (st.signedUp) return true;
+        var days = parseFloat(d.capDays) || 14;
+        return !!(st.closedAt && Date.now() - st.closedAt < days * 864e5);
+      }
+      function otherUiOpen() {
+        return !!document.querySelector('cart-drawer.active, cart-drawer.is-open, cart-notification .active, .cart-notification.active, details[open] > .menu-drawer, .menu-drawer-container[open]')
+          || document.body.classList.contains('overflow-hidden');
+      }
+
+      function focusables() {
+        return Array.prototype.filter.call(
+          panel.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), select, textarea, [tabindex]:not([tabindex="-1"])'),
+          function (el) { return el.offsetParent !== null || el === document.activeElement; }
+        );
+      }
+      function onKey(e) {
+        if (!isOpen) return;
+        if (e.key === 'Escape' || e.key === 'Esc') { e.preventDefault(); close(true); return; }
+        if (e.key !== 'Tab') return;
+        var f = focusables();
+        if (!f.length) { e.preventDefault(); panel.focus(); return; }
+        var first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && (document.activeElement === first || document.activeElement === panel)) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+      function onFocusIn(e) { if (isOpen && !root.contains(e.target)) panel.focus(); }
+
+      function open(focusEl) {
+        if (isOpen) return;
+        isOpen = true; armed = false;
+        clearTimers();
+        lastFocus = document.activeElement;
+        root.hidden = false;
+        document.documentElement.classList.add('pm2-pop-lock');
+        requestAnimationFrame(function () { requestAnimationFrame(function () { root.classList.add('is-open'); }); });
+        (focusEl || panel).focus({ preventScroll: true });
+        document.addEventListener('keydown', onKey, true);
+        document.addEventListener('focusin', onFocusIn);
+        if (!design) markSeen();
+      }
+      function close(remember) {
+        if (!isOpen) return;
+        isOpen = false;
+        root.classList.remove('is-open');
+        document.documentElement.classList.remove('pm2-pop-lock');
+        document.removeEventListener('keydown', onKey, true);
+        document.removeEventListener('focusin', onFocusIn);
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        setTimeout(function () { if (!isOpen) root.hidden = true; }, reduce ? 0 : 320);
+        if (remember && !design) {
+          var st = read();
+          if (!st.signedUp) { st.closedAt = Date.now(); write(st); }
+        }
+        if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+      }
+
+      root.addEventListener('click', function (e) {
+        var t = e.target.closest('[data-pm2-pop-close]');
+        if (t) { e.preventDefault(); close(true); return; }
+        var c = e.target.closest('[data-pm2-copy]');
+        if (c) copy(c);
+      });
+
+      function copy(btn) {
+        var code = btn.getAttribute('data-pm2-copy');
+        var label = btn.querySelector('[data-pm2-copy-label]');
+        var live = root.querySelector('[data-pm2-copy-status]');
+        function done(ok) {
+          if (label) label.textContent = ok ? 'Copied!' : 'Press and hold to copy';
+          if (live) live.textContent = ok ? 'Code ' + code + ' copied' : '';
+          btn.classList.toggle('is-copied', ok);
+          setTimeout(function () { if (label) label.textContent = 'Copy code'; btn.classList.remove('is-copied'); }, 2500);
+        }
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(code).then(function () { done(true); }, fallback);
+        } else { fallback(); }
+        function fallback() {
+          var ta = document.createElement('textarea');
+          ta.value = code; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+          document.body.appendChild(ta); ta.select();
+          var ok = false; try { ok = document.execCommand('copy'); } catch (e) {}
+          document.body.removeChild(ta); done(ok); btn.focus();
+        }
+      }
+
+      function clearTimers() {
+        timers.forEach(clearTimeout); timers = [];
+        if (pendingTimer) { clearInterval(pendingTimer); pendingTimer = null; }
+        window.removeEventListener('scroll', onScroll);
+        document.removeEventListener('mouseout', onLeave);
+      }
+      function trigger() {
+        if (!armed || isOpen) return;
+        if (!otherUiOpen()) { open(); return; }
+        if (pendingTimer) return;
+        var tries = 0;
+        pendingTimer = setInterval(function () {
+          tries++;
+          if (!armed || isOpen || tries > 60) { clearInterval(pendingTimer); pendingTimer = null; return; }
+          if (!otherUiOpen()) { clearInterval(pendingTimer); pendingTimer = null; open(); }
+        }, 1000);
+      }
+      function onScroll() {
+        var h = document.documentElement.scrollHeight - window.innerHeight;
+        if (h > 0 && window.scrollY / h >= (parseFloat(d.scroll) || 40) / 100) trigger();
+      }
+      function onLeave(e) {
+        if (!e.relatedTarget && e.clientY <= 0) trigger();
+      }
+
+      // Opened as the result of our own signup form post (success shows the code, error shows the message).
+      var state = root.querySelector('[data-pm2-pop-state]');
+      var mine = location.hash === '#' + d.formId;
+      if (state && mine) {
+        if (state.getAttribute('data-pm2-pop-state') === 'success') {
+          var st0 = read(); st0.signedUp = true; write(st0);
+        }
+        open(state.getAttribute('data-pm2-pop-state') === 'error' ? root.querySelector('input[type="email"]') : null);
+        return;
+      }
+
+      if (design) {
+        document.addEventListener('shopify:section:select', function (e) { if (e.detail.sectionId === d.sectionId) { armed = true; open(); } });
+        document.addEventListener('shopify:section:deselect', function (e) { if (e.detail.sectionId === d.sectionId) close(false); });
+        return;
+      }
+      if (blockedPath() || capped() || seen()) return;
+      if (desktop()) {
+        timers.push(setTimeout(trigger, (parseFloat(d.desktopDelay) || 20) * 1000));
+        timers.push(setTimeout(function () { document.addEventListener('mouseout', onLeave); }, 3000));
+      } else {
+        if (d.mobile !== 'true') return;
+        timers.push(setTimeout(trigger, (parseFloat(d.delay) || 12) * 1000));
+        window.addEventListener('scroll', onScroll, { passive: true });
+      }
+    })();
+  </script>
+
+  <style>
+    .pm2-pop[hidden] { display: none; }
+    .pm2-pop {
+      position: fixed; inset: 0; z-index: 990;
+      display: flex; align-items: flex-end; justify-content: center;
+    }
+    html.pm2-pop-lock { overflow: hidden; }
+    .pm2-pop > .pm2-pop__backdrop {
+      display: block; position: absolute; inset: 0; background: rgba(17, 24, 39, .16);
+      opacity: 0; transition: opacity .3s ease;
+    }
+    .pm2-pop__panel {
+      box-sizing: border-box; position: relative; width: 100%; max-height: min(62vh, 48rem); overflow: auto; overscroll-behavior: contain;
+      padding: 2.2rem 2rem calc(1.4rem + env(safe-area-inset-bottom));
+      border-radius: 24px 24px 0 0;
+      background-attachment: scroll;
+      --pm2-pop-shadow: 0 -14px 40px -14px rgba(17, 24, 39, .35);
+      box-shadow: var(--pm2-pop-shadow);
+      transform: translateY(100%); transition: transform .32s cubic-bezier(.2, .8, .2, 1);
+      outline: none;
+      color: rgb(var(--color-foreground));
+    }
+    .pm2-pop.is-open .pm2-pop__backdrop { opacity: 1; }
+    .pm2-pop.is-open .pm2-pop__panel { transform: none; }
+    .pm2-pop__panel::before {
+      content: ''; position: absolute; top: .8rem; left: 50%; width: 4rem; height: .4rem; margin-left: -2rem;
+      border-radius: 999px; background: rgba(var(--color-foreground), .14);
+    }
+    .pm2-pop__x {
+      position: absolute; top: .8rem; right: .8rem; z-index: 2;
+      display: grid; place-items: center; width: 44px; height: 44px; padding: 0;
+      border: 0; border-radius: 999px; cursor: pointer;
+      background: rgba(var(--color-foreground), .06); color: rgb(var(--color-foreground));
+      transition: background .2s ease;
+    }
+    .pm2-pop__x:hover { background: rgba(var(--color-foreground), .12); }
+    .pm2-pop__media { display: none; }
+    .pm2-pop__body { min-width: 0; }
+    .pm2-pop__eyebrow, .pm2-pop__title { padding-right: 4.4rem; }
+    .pm2-pop__form { margin: 0; }
+    .pm2-pop__eyebrow {
+      display: inline-flex; align-items: center; gap: .5rem; margin: 0 0 .6rem;
+      font-size: 1.3rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+      color: rgb(var(--color-button));
+    }
+    .pm2-pop__title {
+      margin: 0; font-family: var(--font-heading-family); font-weight: 800;
+      font-size: 2.3rem; line-height: 1.15; letter-spacing: -.01em; color: rgb(var(--color-foreground));
+    }
+    .pm2-pop__text { margin: .6rem 0 1.4rem; font-size: 1.5rem; line-height: 1.45; letter-spacing: normal; color: rgba(var(--color-foreground), .75); }
+    .pm2-pop__row { display: flex; gap: .8rem; }
+    .pm2-pop__input {
+      box-sizing: border-box; flex: 1 1 auto; min-width: 0; height: 4.8rem; padding: 0 1.6rem;
+      border: 1.5px solid rgba(var(--color-foreground), .22); border-radius: 999px;
+      background: rgb(var(--color-background)); color: rgb(var(--color-foreground));
+      font: inherit; font-size: 1.6rem; letter-spacing: normal;
+    }
+    .pm2-pop__input:focus { outline: 2px solid rgb(var(--color-button)); outline-offset: 1px; border-color: transparent; }
+    .pm2-pop__input[aria-invalid="true"] { border-color: #c2412d; }
+    .pm2-pop .button.pm2-pop__submit,
+    .pm2-pop .button.pm2-pop__shop {
+      flex: 0 0 auto; min-height: 4.8rem; min-width: 0; padding: 0 1.8rem; border-radius: 999px;
+      font-weight: 700; font-size: 1.5rem; letter-spacing: normal; white-space: nowrap;
+    }
+    .pm2-pop .button.pm2-pop__submit::after, .pm2-pop .button.pm2-pop__shop::after { border-radius: 999px; }
+    .pm2-pop .button.pm2-pop__shop { display: flex; width: 100%; margin-top: 1rem; text-decoration: none; }
+    .pm2-pop__error { margin: .8rem 0 0; font-size: 1.35rem; color: #b3261e; }
+    .pm2-pop__consent { margin: .8rem 0 0; font-size: 1.2rem; letter-spacing: normal; line-height: 1.45; color: rgba(var(--color-foreground), .62); }
+    .pm2-pop__consent a { color: inherit; text-underline-offset: .2em; }
+    .pm2-pop__dismiss {
+      display: block; min-height: 44px; margin: .2rem auto -.6rem; padding: 0 1.6rem;
+      border: 0; background: none; cursor: pointer; font: inherit; font-size: 1.4rem; font-weight: 600;
+      color: rgba(var(--color-foreground), .7); text-decoration: underline; text-underline-offset: .25em;
+    }
+    .pm2-pop__code {
+      display: flex; align-items: center; gap: .8rem; flex-wrap: wrap;
+      padding: .8rem .8rem .8rem 1.6rem;
+      border: 2px dashed rgba(var(--color-button), .55); border-radius: 18px;
+      background: rgba(var(--color-button), .06);
+    }
+    .pm2-pop__code-label { width: 100%; font-size: 1.2rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: rgba(var(--color-foreground), .6); }
+    .pm2-pop__code-value { flex: 1 1 auto; font-size: 2.2rem; font-weight: 800; letter-spacing: .08em; color: rgb(var(--color-foreground)); font-family: var(--font-heading-family); }
+    .pm2-pop__copy {
+      display: inline-flex; align-items: center; gap: .6rem; min-height: 44px; padding: 0 1.6rem;
+      border: 0; border-radius: 999px; cursor: pointer; font: inherit; font-size: 1.4rem; font-weight: 700;
+      background: rgb(var(--color-background)); color: rgb(var(--color-foreground));
+      box-shadow: inset 0 0 0 1.5px rgba(var(--color-foreground), .2);
+    }
+    .pm2-pop__copy.is-copied { background: rgb(var(--color-button)); color: rgb(var(--color-button-text)); box-shadow: none; }
+    .pm2-pop__fine { margin: .8rem 0 0; font-size: 1.2rem; text-align: center; color: rgba(var(--color-foreground), .6); }
+    .pm2-pop__or { margin: 1.4rem 0 .8rem; font-size: 1.4rem; font-weight: 600; }
+    .pm2-pop :focus-visible { outline: 2px solid rgb(var(--color-button)); outline-offset: 2px; }
+    .pm2-pop .pm2-pop__panel:focus, .pm2-pop .pm2-pop__panel:focus-visible { outline: none; box-shadow: var(--pm2-pop-shadow); }
+
+    @media screen and (max-width: 360px) {
+      .pm2-pop__row { flex-wrap: wrap; }
+      .pm2-pop .button.pm2-pop__submit { width: 100%; }
+    }
+
+    @media screen and (min-width: 750px) {
+      .pm2-pop { align-items: center; padding: 2.4rem; }
+      .pm2-pop > .pm2-pop__backdrop { background: rgba(17, 24, 39, .45); }
+      .pm2-pop__panel {
+        width: 100%; max-width: 48rem; max-height: calc(100vh - 4.8rem);
+        padding: 3.6rem 3.6rem 2.4rem; border-radius: 24px;
+        --pm2-pop-shadow: 0 30px 80px -24px rgba(17, 24, 39, .45);
+        transform: translateY(16px) scale(.98); opacity: 0;
+        transition: transform .3s cubic-bezier(.2, .8, .2, 1), opacity .25s ease;
+      }
+      .pm2-pop.is-open .pm2-pop__panel { opacity: 1; }
+      .pm2-pop__panel::before { display: none; }
+      .pm2-pop__x { top: 1.2rem; right: 1.2rem; }
+      .pm2-pop__title { font-size: 3rem; }
+      .pm2-pop__text { font-size: 1.6rem; }
+      .pm2-pop--has-image .pm2-pop__panel {
+        max-width: 78rem; padding: 0; display: grid; grid-template-columns: 42% 1fr; overflow: hidden;
+      }
+      .pm2-pop--has-image .pm2-pop__media { display: block; position: relative; min-height: 100%; }
+      .pm2-pop--has-image .pm2-pop__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+      .pm2-pop--has-image .pm2-pop__body { padding: 4rem 3.6rem 2.4rem; overflow: auto; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .pm2-pop__panel, .pm2-pop__backdrop { transition: none; }
+    }
+  </style>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "PM2 Welcome popup",
+  "tag": "div",
+  "class": "pm2-pop-section",
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    { "type": "checkbox", "id": "enabled", "label": "Show popup", "default": true },
+    { "type": "header", "content": "Offer" },
+    { "type": "text", "id": "eyebrow", "label": "Small label", "default": "Welcome to PETME2" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Get 10% off your first order" },
+    { "type": "text", "id": "text", "label": "Text", "default": "Join our emails for pet-care tips. Your code shows right after you sign up." },
+    { "type": "text", "id": "code", "label": "Discount code", "default": "WELCOME10", "info": "Must match an active discount in Shopify admin > Discounts." },
+    { "type": "text", "id": "button_label", "label": "Signup button label", "default": "Get 10% off" },
+    { "type": "text", "id": "dismiss_label", "label": "Dismiss link label", "default": "No thanks" },
+    { "type": "text", "id": "consent_text", "label": "Consent text", "default": "By signing up you agree to receive marketing emails from PETME2. Unsubscribe anytime." },
+    {
+      "type": "checkbox",
+      "id": "show_code_without_email",
+      "label": "Show the code without email signup",
+      "default": false
+    },
+    { "type": "header", "content": "After signup" },
+    { "type": "text", "id": "success_heading", "label": "Heading", "default": "Here's your 10% off" },
+    { "type": "text", "id": "success_text", "label": "Text", "default": "Use this code at checkout on your first order." },
+    { "type": "text", "id": "shop_label", "label": "Shop button label", "default": "Shop now" },
+    { "type": "url", "id": "shop_link", "label": "Shop button link", "default": "/collections/all" },
+    {
+      "type": "checkbox",
+      "id": "auto_apply",
+      "label": "Apply the code automatically from the Shop button",
+      "default": true,
+      "info": "Uses Shopify's /discount/CODE link, so the code is already added at checkout."
+    },
+    { "type": "header", "content": "When to show" },
+    { "type": "range", "id": "delay_seconds", "label": "Phone: show after", "min": 3, "max": 60, "step": 1, "unit": "s", "default": 12 },
+    { "type": "range", "id": "scroll_percent", "label": "Phone: or after scrolling", "min": 10, "max": 90, "step": 5, "unit": "%", "default": 40 },
+    { "type": "range", "id": "desktop_delay_seconds", "label": "Desktop: show after (or on exit intent)", "min": 5, "max": 90, "step": 5, "unit": "s", "default": 20 },
+    { "type": "range", "id": "cap_days", "label": "After closing, hide for", "min": 1, "max": 60, "step": 1, "unit": "d", "default": 14 },
+    { "type": "checkbox", "id": "show_on_mobile", "label": "Show on phones", "default": true },
+    { "type": "header", "content": "Look" },
+    { "type": "image_picker", "id": "image", "label": "Image (desktop only, optional)" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-3" }
+  ],
+  "presets": [
+    { "name": "PM2 Welcome popup" }
+  ]
+}
+{% endschema %}

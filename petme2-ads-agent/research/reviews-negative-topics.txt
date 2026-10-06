@@ -1,0 +1,43 @@
+
+== Stainless fountain (B0DR7FCLZR) | negative topics 5 | positive 4
+  - Quality-Overall: mentions 1, 20% of reviews, star impact -0.26 | ['Not good at all']
+  - Smell: mentions 1, 20% of reviews, star impact -0.07 | ['Burning Smell After 1 Month', 'smelled a burning smell']
+  - Ease Of Cleaning: mentions 1, 20% of reviews, star impact None | ['However, I found that even with regimented regular cleaning there would still be some difficult to remove lime scale on the base of fountain part itself']
+  - Leak-Proof: mentions 1, 20% of reviews, star impact None | ['I dont understand how it could leak only underneath it because its stainless steel']
+  - Natural Resource Wastage: mentions 1, 20% of reviews, star impact -0.26 | ['Waste of time and money']
+
+== 3L dual white (B0GHLSQMJ9) | negative topics 0 | positive 0
+
+== 3L dual black (B0GHMCG8Q9) | negative topics 2 | positive 4
+  - Quality-Overall: mentions 1, 50% of reviews, star impact -0.18 | ['The quality of parts, instructions, App features and practicality is all over the place']
+  - Material Quality: mentions 1, 50% of reviews, star impact -0.18 | ["Lower quality materials than other feeders I've tried"]
+
+== 3L dual parent (B0H3L6VXV6) | negative topics 0 | positive 0
+
+== 5L WiFi feeder (B0GHH8L59K) | negative topics 3 | positive 3
+  - Advertised Vs Actual Product: mentions 1, 33.33% of reviews, star impact -0.65 | ['Pic does not match the actual product look']
+  - Battery Life: mentions 1, 33.33% of reviews, star impact None | ['Battery backup. requires 4-AA, not included']
+  - Color: mentions 1, 33.33% of reviews, star impact -0.65 | ["I just don't like the gray legs"]
+
+== Camera feeder (B0GTCGYZDM) | negative topics 8 | positive 10
+  - Instructions/User Manual/Troubleshooting: mentions 4, 22.22% of reviews, star impact -0.25 | ['The instructions are unclear and pretty useless', 'I do wish it had a manual option too for traveling, camping, vacationing, where there is NO WIFI, and when the internet goes down', 'This is an app only unit no manual features']
+  - Value For Money: mentions 3, 16.67% of reviews, star impact -0.26 | ['It costs almost twice as much as another feeder I own', 'At $65.99, I feel this is a little pricey for a product that does not offer any manual controls directly on the machine', 'Waste of money and time']
+  - Ease Of Use: mentions 3, 16.67% of reviews, star impact None | ['It is hung up somehow', 'the process is not very convenient', 'Needs a couple small tweaks']
+  - Connectivity-Overall: mentions 3, 16.67% of reviews, star impact -0.19 | ['we find no reason that it will not connect', 'I would prefer not to connect through wifi', 'It will not connect to my WiFi']
+  - Functionality-Overall: mentions 2, 11.11% of reviews, star impact -0.18 | ['I must have received a defective one as this feeder worked fine for 2 days', 'Then it gets bad']
+  - Durability: mentions 1, 5.56% of reviews, star impact -0.13 | ['It is hung up somehow']
+  - Quality-Overall: mentions 1, 5.56% of reviews, star impact None | ['Unfortunately, once I opened it, I was disappointed by the overall build quality']
+  - Compatibility-Overall: mentions 1, 5.56% of reviews, star impact -0.09 | ['it keeps crashing that must be not compatible with Android 16']
+
+== $19.99 fountain 2L (B0GHKN9DBR) | negative topics 0 | positive 3
+
+== 2.2L transparent (B0GHLBGCP3) | negative topics 4 | positive 7
+  - Water Flow: mentions 1, 25% of reviews, star impact -0.21 | ["However, if the filter becomes clogged, causing the pump to lift water to the top faster than it can flow back down into the reservoir, that's probably going to cause a problem"]
+  - Filtration: mentions 1, 25% of reviews, star impact None | ['Reason I knocked a star off is you cant find replacement filters']
+  - Connectivity-Overall: mentions 1, 25% of reviews, star impact None | ['Also, this is not wireless']
+  - Advertised Vs Actual Product: mentions 1, 25% of reviews, star impact -0.35 | ["since it's not what's shown"]
+
+== Fountain w tray (B0GHKRYV6W) | negative topics 3 | positive 7
+  - Ease Of Cleaning: mentions 1, 33.33% of reviews, star impact -0.31 | ['It isnt all that easy to clean though', 'Hard to clean though']
+  - Material Quality: mentions 1, 33.33% of reviews, star impact -0.02 | ['the tank is still plastic']
+  - Filtration: mentions 1, 33.33% of reviews, star impact -0.02 | ['no filters', 'There are no replacement filters that I have found yet']
