@@ -1,29 +1,28 @@
 {
   "sections": {
     "hero": {
-      "type": "pm2-hero",
+      "type": "pm2-entrance",
       "settings": {
-        "color_scheme": "scheme-4",
-        "show_grid": false,
-        "eyebrow_tag": "Sale",
-        "eyebrow": "Save up to 33% · for cats & small dogs",
-        "heading_line_1": "Meals on time.",
-        "heading_highlight": "Fresh water all day.",
-        "subtext": "Smart feeders you run from your phone, and quiet water fountains that are easy to clean.",
-        "button_label_1": "Shop feeders",
-        "button_link_1": "shopify://collections/feeders",
-        "button_label_2": "Shop fountains",
-        "button_link_2": "shopify://collections/water-fountains",
-        "chip_1": "Free U.S. shipping · 30-day money-back guarantee",
-        "chip_2": "",
-        "chip_3": "",
-        "product": "smart-feeder",
-        "link_product": true,
-        "image": "",
-        "badge_1": "1080P live view",
-        "badge_2": "2-way audio",
-        "badge_3": "",
-        "padding_top": 40,
+        "color_scheme": "scheme-1",
+        "video_url": "https://cdn.shopify.com/videos/c/vp/95b6d8af127243cfa743349a46393a78/95b6d8af127243cfa743349a46393a78.HD-720p-1.6Mbps-96389653.mp4",
+        "poster": "shopify://shop_images/petme2-hero-2-cats-poster.jpg",
+        "video_alt": "Two cats waiting at the PETME2 dual bowl feeder, then eating together",
+        "badge": "Feeds 2 cats at once",
+        "product": "2-in-1-smart-feeder-white",
+        "chip_title": "",
+        "eyebrow_tag": "New",
+        "eyebrow": "Free U.S. shipping · for cats & small dogs",
+        "heading_1": "Easy everyday",
+        "heading_2": "pet care.",
+        "subtext": "Meals on time and fresh water all day. Set it up once, enjoy more time together.",
+        "button_label": "Shop now",
+        "button_link": "shopify://collections/all",
+        "link_label": "Find the right feeder",
+        "link_url": "shopify://pages/how-to-choose",
+        "trust_1": "Free U.S. shipping",
+        "trust_2": "30-day money back",
+        "trust_3": "Easy app control",
+        "padding_top": 56,
         "padding_bottom": 56
       }
     },
@@ -41,7 +40,7 @@
         "b1": {
           "type": "item",
           "settings": {
-            "text": "Sale: save up to 33%",
+            "text": "Shipped fast from U.S. warehouses",
             "icon": "sparkle"
           }
         },
@@ -86,7 +85,7 @@
       "type": "pm2-product-tabs",
       "settings": {
         "eyebrow": "Shop",
-        "heading": "Find their new favorite",
+        "heading": "Fountains, feeders & supplements",
         "color_scheme": "scheme-3",
         "products_per_tab": 4,
         "show_view_all": true,
@@ -109,11 +108,20 @@
             "collection": "water-fountains",
             "text": "Fresh, moving water with a quiet pump."
           }
+        },
+        "b3": {
+          "type": "tab",
+          "settings": {
+            "label": "Supplements",
+            "collection": "supplements",
+            "text": "Daily soft chews for cats and dogs. Coming soon."
+          }
         }
       },
       "block_order": [
+        "b2",
         "b1",
-        "b2"
+        "b3"
       ]
     },
     "quiz": {
@@ -523,6 +531,29 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
+    },
+    "soon_supplements": {
+      "type": "pm2-soon-supplements",
+      "settings": {
+        "image": "shopify://shop_images/petme2-supplements-banner.png",
+        "ribbon": "Coming soon",
+        "eyebrow": "New from PETME2",
+        "heading": "Daily supplements for cats & dogs",
+        "text": "8 tasty soft chews for everyday care, from the team behind PETME2 feeders and fountains. Launching soon.",
+        "cats": "Skin & Coat\nImmune Support\nL-Lysine\nCat Grass",
+        "dogs": "Hip & Joint\nProbiotic\nMultivitamin 25-in-1\nTear Stain",
+        "signup_title": "Be first to know when they launch",
+        "button_label": "Notify me",
+        "success_text": "You're on the list! We'll email you on launch day.",
+        "link_label": "See the line-up",
+        "link_url": "shopify://collections/supplements",
+        "trust_1": "Full ingredient list on every jar",
+        "trust_2": "Clear daily dose by weight",
+        "trust_3": "Chicken-flavored soft chews, no pills",
+        "trust_4": "30-day money-back guarantee",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
     }
   },
   "order": [
@@ -534,6 +565,7 @@
     "cmp_feeders",
     "cmp_fountains",
     "guarantee",
+    "soon_supplements",
     "faq",
     "faq_schema",
     "cta"
