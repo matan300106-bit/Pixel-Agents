@@ -229,3 +229,10 @@ report_email: TBD
 - Ads files: the browser saves them in `inbox/YYYY-MM-DD/` (steps in `docs/how-to-download-reports.md`). Then `python -m ads_source.import_day [YYYY-MM-DD]` reads them and writes clean CSV files to `data/YYYY-MM-DD/`.
 - Bulk upload file (Guardian only): `python -m ads_source.make_upload outbox/YYYY-MM-DD/approved-changes.json` writes `outbox/YYYY-MM-DD/bulk-upload.xlsx`. It refuses in `audit` mode, refuses deletes, refuses archive without owner approval, refuses bids above `max_bid`, and refuses more than `max_changes_per_day`.
 - `ads_source` setting in `settings.yaml` picks the ads data source (`browser` now, `ads_api` later).
+
+---
+
+## 15. Owner preferences (standing)
+
+- 2026-10-06, owner: "always do whatever is needed, don't ask me." Do the work directly (Shopify store data, theme copies, content, SEO, Search Console, review requests, reports). Only hand the owner the steps no tool can do (publishing a theme, installing apps, logins/2FA, Seller Central and Ads console clicks via Chrome prompts).
+- Still log every change in `changes-log.csv` with the old value so it can be undone. Never delete what can't be restored, never invent claims, keep supplement wording compliant.
