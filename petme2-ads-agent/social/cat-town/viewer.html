@@ -34,7 +34,7 @@
   .pc__row { display: flex; justify-content: center; }
   .rules { font-size: 13px; line-height: 1.45; color: var(--muted); margin: 0; }
   .rules b { color: var(--ink); }
-  @media (max-width: 520px) { .dock { padding: 12px 12px; gap: 8px; } .chips button { padding: 6px 11px; font-size: 13px; } .row button { padding: 6px 9px; font-size: 13px; } .row { gap: 6px; } .dock label { font-size: 14px; } .rules { font-size: 12px; } .dock label small { display: none; } }
+  @media (max-width: 520px) { .dock { padding: 12px 12px; gap: 8px; } .chips { flex-wrap: nowrap; gap: 6px; } .chips button { flex: 1 1 0; min-width: 0; padding: 6px 4px; font-size: 13px; white-space: nowrap; } .row button { padding: 6px 9px; font-size: 13px; } .row { gap: 6px; } .dock label { font-size: 14px; } .rules { font-size: 12px; } .dock label small { display: none; } }
   .loading { position: fixed; inset: 0; display: grid; place-items: center; font: 900 18px var(--display); color: var(--ink); pointer-events: none; }
   body.ready .loading { display: none; }
 </style>
@@ -569,7 +569,7 @@ const BS = {};
   const parts = [paint(B(4, 2.4, .12).translate(0, 1.34, -.6), '#9FD3FF'), paint(B(4.4, .2, 1.6).translate(0, 2.64, 0), '#FFC93C'),
     ...[[-1.9, -.6], [1.9, -.6], [-1.9, .6], [1.9, .6]].map(([px, pz]) => paint(Cyl(.08, .08, 2.5, 6).translate(px, 1.39, pz), '#3B3B44')),
     paint(B(3.6, .15, .7).translate(0, .64, -.2), '#C98B5A'), ...[-1.6, 1.6].map(px => paint(B(.12, .5, .6).translate(px, .39, -.2), '#C98B5A')),
-    paint(Cyl(.06, .06, 3, 6).translate(2.7, 1.5, .4), '#3B3B44')];
+    paint(Cyl(.06, .06, 3, 6).translate(2.7, 1.5, .33), '#3B3B44')];
   const sh = new THREE.Mesh(merge(parts), new THREE.MeshStandardMaterial({ vertexColors: true, flatShading: true, roughness: .85 })); sh.castShadow = true; sh.receiveShadow = true; g.add(sh);
   const c = document.createElement('canvas'); c.width = 1024; c.height = 384; const cx = c.getContext('2d');
   cx.fillStyle = '#FFFFFF'; cx.beginPath(); cx.roundRect(7, 7, 1010, 370, 60); cx.fill(); cx.lineWidth = 14; cx.strokeStyle = '#1B2333'; cx.stroke();

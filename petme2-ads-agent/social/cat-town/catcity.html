@@ -573,7 +573,7 @@ const BS = {};
   const parts = [paint(B(4, 2.4, .12).translate(0, 1.34, -.6), '#9FD3FF'), paint(B(4.4, .2, 1.6).translate(0, 2.64, 0), '#FFC93C'),
     ...[[-1.9, -.6], [1.9, -.6], [-1.9, .6], [1.9, .6]].map(([px, pz]) => paint(Cyl(.08, .08, 2.5, 6).translate(px, 1.39, pz), '#3B3B44')),
     paint(B(3.6, .15, .7).translate(0, .64, -.2), '#C98B5A'), ...[-1.6, 1.6].map(px => paint(B(.12, .5, .6).translate(px, .39, -.2), '#C98B5A')),
-    paint(Cyl(.06, .06, 3, 6).translate(2.7, 1.5, .4), '#3B3B44')];
+    paint(Cyl(.06, .06, 3, 6).translate(2.7, 1.5, .33), '#3B3B44')];
   const sh = new THREE.Mesh(merge(parts), new THREE.MeshStandardMaterial({ vertexColors: true, flatShading: true, roughness: .85 })); sh.castShadow = true; sh.receiveShadow = true; g.add(sh);
   const c = document.createElement('canvas'); c.width = 1024; c.height = 384; const cx = c.getContext('2d');
   cx.fillStyle = '#FFFFFF'; cx.beginPath(); cx.roundRect(7, 7, 1010, 370, 60); cx.fill(); cx.lineWidth = 14; cx.strokeStyle = '#1B2333'; cx.stroke();
