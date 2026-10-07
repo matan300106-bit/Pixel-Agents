@@ -26,3 +26,7 @@ Zip: https://cdn.shopify.com/s/files/1/0792/1716/4500/files/petme2-camera-feeder
 - MAIN-A-clean: regenerated (job 4b44359e) + 4K upscale (4958a215), bg flood-filled to 255, 3000x3000 JPG q95. Fill 97.6% h. Amazon-safe MAIN.
 - MAIN-B-halloween-cat-dog: regenerated (cd9d96c7) + 4K upscale (092ba38b): kitten in witch hat + Pomeranian in pumpkin costume, white bg, 3000x3000.
   Amazon MAIN rules allow only the product (no animals/props) -> risk of suppression if used as MAIN. Recommended as image #2; use as MAIN on Shopify/Brand Store.
+
+## Backup of the ORIGINAL listing images (before the Halloween swap)
+Zip: https://cdn.shopify.com/s/files/1/0792/1716/4500/files/petme2-camera-feeder-B0GTCGYZDM-ORIGINAL-backup-2026-10-07.zip?v=1791390248
+MAIN 61ErVGvKouL · PT01 71bV4KpkUdL · PT02 71p22q4rsKL · PT03 71yQimpTCgL · PT04 71oTXLRk+qL · PT05 81k6QxUJa-L · PT06 71fbGsQiNcL · PT07 71OEdnNjqYL · PT08 611lE8PK1HL (m.media-amazon.com/images/I/<id>.jpg)
