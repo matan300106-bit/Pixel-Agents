@@ -2,24 +2,18 @@
 Matan approves before anything is posted.
 
 ## TikTok
-Caption (first line = search words):
-The loneliest cat town 😿 Comment your name and I'll build your cat a house next video 🏠 Tag a friend who needs one 👇
-#cattown #cozygames #catsoftiktok
+Title: Population: 1 cat 😿
+Description (Matan's pick, short and friendly):
+Mango needs friends 🥺 Comment your name and I'll build you a house 🏠🐱
+#catsoftiktok #cattok #cozygames #cattown
 
 Pinned comment:
-📌 Comment your name 👇 I'll build the first names next video, with a house + a cat for each. Follow = 1 new cat moves in 🐱
-
-Sound: keep the original audio (the voice is the story). If you add a trending sound, set it to 5-10% volume under it.
+📌 Comment your name 👇 The first names get built next video. Follow = 1 new cat moves in 🐱
 
 ## Instagram (Reels)
-Caption:
-Population: 1 cat 😿 Mango is the only cat in this whole town.
-Every follow = a new cat + a house with your name on it.
-Comment your name 👇 I'll build your house next video 🏠
-#cattown #catsofinstagram #cozygames #3danimation #lowpoly
-
-Pinned comment:
-📌 Drop your name 👇 first names get built next video. Tag a friend who needs a house 🏠
+Description:
+Mango needs friends 🥺 Comment your name and I'll build you a house 🏠🐱
+#catsofinstagram #cats #cozygames #3danimation #cattown
 
 Cover: cat-town-viral-cover.jpg
 
