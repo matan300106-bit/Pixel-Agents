@@ -25,6 +25,6 @@ beats = [
  dict(s=19.9, e=99, html=HOOK),
 ]
 json.dump(dict(duration=20.4, day=1, cats=1, lines=lines, beats=beats, goal=[14.6, 17.0],
-               hideTags=[[12.6, 14.6]], pinTags=[[7.1, 10.0]], example=[[7.3, 10.0, 'house'], [10.05, 12.55, 'card'], [12.9, 14.6, 'statue']]), open(f'{out}/text.json', 'w'), indent=1)
+               hideTags=[[12.6, 14.6]], pinTags=[[7.1, 10.0]], example=[[7.3, 10.0, 'house'], [10.05, 12.55, 'card'], [12.6, 14.6, 'statue']]), open(f'{out}/text.json', 'w'), indent=1)
 json.dump([dict(i=l['i'], s=l['s'], e=l['e']) for l in lines], open(f'{out}/timeline.json', 'w'))
 for l in lines: print(l['s'], l['e'], l['text'])

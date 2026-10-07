@@ -34,14 +34,14 @@ for k in range(6): add(sfx, 4.2 + k * .11, noise(.05, .6) * env(int(.05 * SR), .
 for k, n in enumerate([64, 62, 59]): add(sfx, 5.05 + k * .45, tone(mid(n), .9, .5, .01, (1, .4)), .22)   # sad "aww" notes, music drops out
 whoosh(6.5, .8, .1, 1.3)                                                    # dive to house 1
 for s, f in [(7.35, 600), (8.25, 700), (9.03, 800)]:
-    add(sfx, s, pop(f, f * 2.4, .14), 1.1); add(sfx, s + .08, tone(f * 2, .6, .25, .003, (1, .3)), .3)   # house pops
+    add(sfx, s, pop(f, f * 2.4, .14), .65); add(sfx, s + .08, tone(f * 2, .6, .25, .003, (1, .3)), .3)   # house pops
     x = np.arange(int(.3 * SR)) / SR; fm = 900 + 300 * np.sin(np.pi * x / .3); add(sfx, s + .18, np.sin(2 * np.pi * np.cumsum(fm) / SR) * np.sin(np.pi * x / .3) ** 1.5, .12)   # tiny meow
 add(sfx, 10.05, pop(300, 900, .1), .6); whoosh(10.0, .35, .2, .6)           # comment card slides up
 for k in range(9): add(sfx, 10.4 + k * .1, noise(.02, .8) * env(int(.02 * SR), .001, .006), .5)   # scroll ticks
 for k, n in enumerate([84, 88]): add(sfx, 11.3 + k * .09, tone(mid(n), .8, .3, .002, (1, .2)), .3)   # crown ding
-add(sfx, 12.75, pop(400, 1500, .16), 1.2)                                  # statue pop
-for k, n in enumerate([72, 76, 79, 84, 88]): add(sfx, 12.82 + k * .07, tone(mid(n), .9, .35, .002, (1, .3)), .24)   # fanfare
-for k in range(16): add(sfx, 13.15 + k * .05, noise(.04, .7) * env(int(.04 * SR), .001, .01), .3)   # confetti crackle
+add(sfx, 12.5, pop(400, 1500, .16), .7)                                  # statue pop
+for k, n in enumerate([72, 76, 79, 84, 88]): add(sfx, 12.57 + k * .07, tone(mid(n), .9, .35, .002, (1, .3)), .24)   # fanfare
+for k in range(16): add(sfx, 12.9 + k * .05, noise(.04, .7) * env(int(.04 * SR), .001, .01), .3)   # confetti crackle
 add(sfx, 17.0, (lambda x: np.sin(2 * np.pi * np.cumsum(900 - 700 * x / x[-1]) / SR) * env(len(x), .002, .12))(np.arange(int(.25 * SR)) / SR), .5)   # record-scratch drop
 add(sfx, 17.02, tone(110, .5, .15, .002, (1, .6, .3)), .35)
 whoosh(17.45, 1.2, .08, 1.3)                                                # dive back to Mango
