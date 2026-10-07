@@ -1,0 +1,605 @@
+{%- comment -%}
+  PETME2 product finder quiz: "Find your perfect feeder or fountain in 3 taps".
+  One question per screen, 3 taps on every path, then a real product card
+  (Dawn product form -> cart drawer / cart page). Vanilla JS, no deps.
+
+  Paths
+    feeder  -> pets (1|2) -> pick: camera   -> feeder_camera
+                                   dual     -> feeder_two_pets_camera_no (3L Dual Bowl)
+                                   big      -> feeder_two_pets_big (5L Elevated)
+    fountain -> steel: yes -> size: big     -> fountain_stainless (3.2L)
+                                    compact -> fountain_tray (2.2L steel tray)
+                       no  -> help: clear   -> fountain_clear (Transparent 2.2L)
+                                    simple  -> fountain_classic (Classic 2L)
+  Each outcome uses its product picker; if empty, falls back to the default handle.
+{%- endcomment -%}
+{%- liquid
+  assign s = section.settings
+  assign sid = section.id
+  assign outcome_keys = 'feeder_two_pets_camera_no,feeder_two_pets_big,feeder_camera,fountain_stainless,fountain_tray,fountain_clear,fountain_classic' | split: ','
+  assign default_handles = '2-in-1-smart-feeder,2-in-1-feeder-1,smart-feeder,water-fountain,water-fountain-4,water-fountain-2,water-fountain-simple' | split: ','
+-%}
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+
+<div class="pm2-quiz-wrap color-{{ s.color_scheme }} gradient">
+  <div
+    class="pm2-quiz page-width"
+    id="pm2-quiz-{{ sid }}"
+    data-pm2-quiz
+    style="--pm2-pt: {{ s.padding_top }}px; --pm2-pb: {{ s.padding_bottom }}px;"
+  >
+    <div class="pm2-quiz__head">
+      {%- if s.eyebrow != blank -%}
+        <p class="pm2-quiz__eyebrow">{{ s.eyebrow | escape }}</p>
+      {%- endif -%}
+      {%- if s.heading != blank -%}
+        <h2 class="pm2-quiz__heading h1">{{ s.heading | escape }}</h2>
+      {%- endif -%}
+      {%- if s.subheading != blank -%}
+        <p class="pm2-quiz__sub">{{ s.subheading | escape }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="pm2-quiz__card color-{{ s.card_color_scheme }}">
+      <div class="pm2-quiz__bar">
+        <button type="button" class="pm2-quiz__back" data-pm2-back hidden>
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="20" height="20"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Back</span>
+        </button>
+        <ol class="pm2-quiz__dots" aria-hidden="true">
+          <li class="pm2-quiz__dot is-on"></li>
+          <li class="pm2-quiz__dot"></li>
+          <li class="pm2-quiz__dot"></li>
+        </ol>
+        <p class="pm2-quiz__count" data-pm2-count>1 of 3</p>
+      </div>
+
+      <p class="visually-hidden" aria-live="polite" data-pm2-live></p>
+
+      {%- comment -%} Step: type {%- endcomment -%}
+      <div class="pm2-quiz__step is-active" data-pm2-step="type" role="group" aria-labelledby="pm2-q-type-{{ sid }}">
+        <h3 class="pm2-quiz__q" id="pm2-q-type-{{ sid }}" tabindex="-1">What are you shopping for?</h3>
+        <div class="pm2-quiz__opts">
+          <button type="button" class="pm2-quiz__opt" data-pm2-answer="feeder">
+            <span class="pm2-quiz__ico" aria-hidden="true">
+              <svg viewBox="0 0 32 32" width="28" height="28"><path d="M5 15h22a11 11 0 0 1-22 0z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M10 15c.5-2 2-3 3.2-3M15 15c.4-2.6 2-4 3.6-4M20 15c.3-1.8 1.4-3 2.8-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </span>
+            <span class="pm2-quiz__txt"><strong>Food feeder</strong><small>Meals on a schedule, from your phone</small></span>
+          </button>
+          <button type="button" class="pm2-quiz__opt" data-pm2-answer="fountain">
+            <span class="pm2-quiz__ico" aria-hidden="true">
+              <svg viewBox="0 0 32 32" width="28" height="28"><path d="M16 4c4.5 6 8 10.2 8 14.5a8 8 0 0 1-16 0C8 14.2 11.5 10 16 4z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M12.5 19.5a3.6 3.6 0 0 0 3.5 3.3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </span>
+            <span class="pm2-quiz__txt"><strong>Water fountain</strong><small>Fresh, moving water all day</small></span>
+          </button>
+        </div>
+      </div>
+
+      {%- comment -%} Feeder step 2: pets {%- endcomment -%}
+      <div class="pm2-quiz__step" data-pm2-step="pets" role="group" aria-labelledby="pm2-q-pets-{{ sid }}" hidden>
+        <h3 class="pm2-quiz__q" id="pm2-q-pets-{{ sid }}" tabindex="-1">How many pets eat at mealtime?</h3>
+        <div class="pm2-quiz__opts">
+          <button type="button" class="pm2-quiz__opt" data-pm2-answer="1">
+            <span class="pm2-quiz__ico" aria-hidden="true">
+              <svg viewBox="0 0 32 32" width="28" height="28"><g fill="currentColor"><ellipse cx="16" cy="21" rx="6" ry="5"/><circle cx="9" cy="13.5" r="2.4"/><circle cx="13.5" cy="9" r="2.4"/><circle cx="18.5" cy="9" r="2.4"/><circle cx="23" cy="13.5" r="2.4"/></g></svg>
+            </span>
+            <span class="pm2-quiz__txt"><strong>One pet</strong><small>Cat or small dog</small></span>
+          </button>
+          <button type="button" class="pm2-quiz__opt" data-pm2-answer="2">
+            <span class="pm2-quiz__ico" aria-hidden="true">
+              <svg viewBox="0 0 32 32" width="28" height="28"><g fill="currentColor"><ellipse cx="9.5" cy="15" rx="4" ry="3.4"/><circle cx="5" cy="9.8" r="1.6"/><circle cx="8" cy="6.8" r="1.6"/><circle cx="11.3" cy="6.8" r="1.6"/><circle cx="14.2" cy="9.8" r="1.6"/><ellipse cx="22.5" cy="25" rx="4" ry="3.4"/><circle cx="18" cy="19.8" r="1.6"/><circle cx="21" cy="16.8" r="1.6"/><circle cx="24.3" cy="16.8" r="1.6"/><circle cx="27.2" cy="19.8" r="1.6"/></g></svg>
+            </span>
+            <span class="pm2-quiz__txt"><strong>Two pets</strong><small>They eat at the same time</small></span>
+          </button>
+        </div>
+      </div>
+
+      {%- comment -%} Feeder step 3: what matters most (order changes with pets) {%- endcomment -%}
+      <div class="pm2-quiz__step" data-pm2-step="feeder_pick" role="group" aria-labelledby="pm2-q-fp-{{ sid }}" hidden>
+        <h3 class="pm2-quiz__q" id="pm2-q-fp-{{ sid }}" tabindex="-1">What matters most to you?</h3>
+        <div class="pm2-quiz__opts" data-pm2-reorder>
+          <button type="button" class="pm2-quiz__opt" data-pm2-answer="camera">
+            <span class="pm2-quiz__ico" aria-hidden="true">
+              <svg viewBox="0 0 32 32" width="28" height="28"><rect x="4" y="9" width="24" height="17" rx="4" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="16" cy="17.5" r="4.6" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M11.5 9l1.8-3h5.4l1.8 3" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="pm2-quiz__txt"><strong>Watching on camera</strong><small data-pm2-hint-1>1080P live view &amp; 2-way audio</small><small data-pm2-hint-2 hidden>1080P live view &middot; one bowl, one pet at a time</small></span>
+          </button>
+          <button type="button" class="pm2-quiz__opt" data-pm2-answer="dual">
+            <span class="pm2-quiz__ico" aria-hidden="true">
+              <svg viewBox="0 0 32 32" width="28" height="28"><path d="M3 17h11a5.5 5.5 0 0 1-11 0zM18 17h11a5.5 5.5 0 0 1-11 0z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M6 13h5M21 13h5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+            </span>
+            <span class="pm2-quiz__txt"><strong>Two bowls, compact</strong><small>3L &middot; app control &amp; 2-way audio</small></span>
+          </button>
+          <button type="button" class="pm2-quiz__opt" data-pm2-answer="big">
+            <span class="pm2-quiz__ico" aria-hidden="true">
+              <svg viewBox="0 0 32 32" width="28" height="28"><rect x="8" y="4" width="16" height="17" rx="4" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M8 11h16" stroke="currentColor" stroke-width="2"/><path d="M5 27h22M10 21v6M22 21v6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+            </span>
+            <span class="pm2-quiz__txt"><strong>Two bowls, extra food</strong><small>5L &middot; elevated &middot; record your voice</small></span>
+          </button>
+        </div>
+      </div>
+
+      {%- comment -%} Fountain step 2: stainless? {%- endcomment -%}
+      <div class="pm2-quiz__step" data-pm2-step="steel" role="group" aria-labelledby="pm2-q-steel-{{ sid }}" hidden>
+        <h3 class="pm2-quiz__q" id="pm2-q-steel-{{ sid }}" tabindex="-1">Do you want stainless steel?</h3>
+        <div class="pm2-quiz__opts">
+          <button type="button" class="pm2-quiz__opt" data-pm2-answer="yes">
+            <span class="pm2-quiz__ico" aria-hidden="true">
+              <svg viewBox="0 0 32 32" width="28" height="28"><path d="M16 4l2.6 7.4L26 14l-7.4 2.6L16 24l-2.6-7.4L6 14l7.4-2.6z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M25 22l1 2.6 2.6 1-2.6 1-1 2.6-1-2.6-2.6-1 2.6-1z" fill="currentColor"/></svg>
+            </span>
+            <span class="pm2-quiz__txt"><strong>Yes, stainless steel</strong><small>A steel surface where they drink</small></span>
+          </button>
+          <button type="button" class="pm2-quiz__opt" data-pm2-answer="no">
+            <span class="pm2-quiz__ico" aria-hidden="true">
+              <svg viewBox="0 0 32 32" width="28" height="28"><circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M11 16.5l3.4 3.4L21.5 13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="pm2-quiz__txt"><strong>No preference</strong><small>Show me the simplest options</small></span>
+          </button>
+        </div>
+      </div>
+
+      {%- comment -%} Fountain step 3a: size (stainless) {%- endcomment -%}
+      <div class="pm2-quiz__step" data-pm2-step="steel_size" role="group" aria-labelledby="pm2-q-size-{{ sid }}" hidden>
+        <h3 class="pm2-quiz__q" id="pm2-q-size-{{ sid }}" tabindex="-1">How much water should it hold?</h3>
+        <div class="pm2-quiz__opts">
+          <button type="button" class="pm2-quiz__opt" data-pm2-answer="big">
+            <span class="pm2-quiz__ico" aria-hidden="true">
+              <svg viewBox="0 0 32 32" width="28" height="28"><rect x="6" y="5" width="20" height="22" rx="5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M6 13c3.4-1.6 6.6 1.6 10 0s6.6 1.6 10 0" fill="none" stroke="currentColor" stroke-width="2"/><path d="M6 13v9a5 5 0 0 0 5 5h10a5 5 0 0 0 5-5v-9" fill="currentColor" opacity=".18"/></svg>
+            </span>
+            <span class="pm2-quiz__txt"><strong>Big tank &middot; 3.2L</strong><small>108oz &middot; fewer refills</small></span>
+          </button>
+          <button type="button" class="pm2-quiz__opt" data-pm2-answer="compact">
+            <span class="pm2-quiz__ico" aria-hidden="true">
+              <svg viewBox="0 0 32 32" width="28" height="28"><rect x="8" y="11" width="16" height="15" rx="4.5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M8 17c2.7-1.3 5.3 1.3 8 0s5.3 1.3 8 0" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+            </span>
+            <span class="pm2-quiz__txt"><strong>Compact &middot; 2.2L</strong><small>Stainless steel drinking tray</small></span>
+          </button>
+        </div>
+      </div>
+
+      {%- comment -%} Fountain step 3b: what would help most {%- endcomment -%}
+      <div class="pm2-quiz__step" data-pm2-step="plain_pick" role="group" aria-labelledby="pm2-q-help-{{ sid }}" hidden>
+        <h3 class="pm2-quiz__q" id="pm2-q-help-{{ sid }}" tabindex="-1">What would help you most?</h3>
+        <div class="pm2-quiz__opts">
+          <button type="button" class="pm2-quiz__opt" data-pm2-answer="clear">
+            <span class="pm2-quiz__ico" aria-hidden="true">
+              <svg viewBox="0 0 32 32" width="28" height="28"><path d="M3 16s4.8-8 13-8 13 8 13 8-4.8 8-13 8S3 16 3 16z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><circle cx="16" cy="16" r="3.8" fill="none" stroke="currentColor" stroke-width="2.2"/></svg>
+            </span>
+            <span class="pm2-quiz__txt"><strong>See the water level</strong><small>Clear tank, check it at a glance</small></span>
+          </button>
+          <button type="button" class="pm2-quiz__opt" data-pm2-answer="simple">
+            <span class="pm2-quiz__ico" aria-hidden="true">
+              <svg viewBox="0 0 32 32" width="28" height="28"><path d="M16 4a8 8 0 0 0-4.6 14.6V22h9.2v-3.4A8 8 0 0 0 16 4z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M12.5 26h7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+            </span>
+            <span class="pm2-quiz__txt"><strong>Keep it simple</strong><small>A light tells you when to refill</small></span>
+          </button>
+        </div>
+      </div>
+
+      {%- comment -%} Results (all pre-rendered, one is shown) {%- endcomment -%}
+      <div class="pm2-quiz__step pm2-quiz__results" data-pm2-step="result" hidden>
+        {%- for key in outcome_keys -%}
+          {%- liquid
+            assign setting_key = 'product_' | append: key
+            assign reasons_key = 'reasons_' | append: key
+            assign p = s[setting_key]
+            if p == blank
+              assign p = all_products[default_handles[forloop.index0]]
+            endif
+            assign reasons = s[reasons_key] | newline_to_br | split: '<br />'
+            assign is_feeder = false
+            if key contains 'feeder'
+              assign is_feeder = true
+            endif
+            assign form_id = 'pm2-quiz-form-' | append: sid | append: '-' | append: forloop.index
+          -%}
+          <div class="pm2-quiz__result" data-pm2-result="{{ key }}" hidden>
+            <h3 class="pm2-quiz__q pm2-quiz__q--result" tabindex="-1">
+              <span class="pm2-quiz__match">{{ s.result_label | escape }}</span>
+              {%- if p != blank -%}{{ p.title | escape }}{%- else -%}{{ s.fallback_title | escape }}{%- endif -%}
+            </h3>
+            {%- if p != blank -%}
+              {%- liquid
+                assign v = p.selected_or_first_available_variant
+              -%}
+              <div class="pm2-quiz__pcard">
+                <a class="pm2-quiz__media" href="{{ p.url }}" tabindex="-1" aria-hidden="true">
+                  {%- if p.featured_media -%}
+                    {{
+                      p.featured_media
+                      | image_url: width: 900
+                      | image_tag:
+                        loading: 'lazy',
+                        widths: '300, 450, 600, 900',
+                        sizes: '(min-width: 750px) 340px, calc(100vw - 72px)',
+                        alt: p.featured_media.alt,
+                        class: 'pm2-quiz__img'
+                    }}
+                  {%- else -%}
+                    {{ 'product-1' | placeholder_svg_tag: 'pm2-quiz__img pm2-quiz__img--ph' }}
+                  {%- endif -%}
+                </a>
+                <div class="pm2-quiz__info">
+                  <p class="pm2-quiz__price">
+                    <span class="pm2-quiz__now">{{ v.price | money }}</span>
+                    {%- if v.compare_at_price > v.price -%}
+                      <s class="pm2-quiz__was"><span class="visually-hidden">Regular price</span> {{ v.compare_at_price | money }}</s>
+                    {%- endif -%}
+                  </p>
+                  {%- if reasons.size > 0 -%}
+                    <ul class="pm2-quiz__reasons" role="list">
+                      {%- for r in reasons -%}
+                        {%- assign rt = r | strip -%}
+                        {%- if rt != blank -%}
+                          <li>
+                            <svg aria-hidden="true" focusable="false" viewBox="0 0 20 20" width="18" height="18"><circle cx="10" cy="10" r="10" fill="currentColor" opacity=".14"/><path d="M6 10.4l2.6 2.5L14 7.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            <span>{{ rt | escape }}</span>
+                          </li>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </ul>
+                  {%- endif -%}
+                  {%- if key == 'feeder_camera' and s.note_camera_two_pets != blank -%}
+                    <p class="pm2-quiz__note pm2-quiz__note--pets" data-pm2-two-pets-note hidden>{{ s.note_camera_two_pets | escape }}</p>
+                  {%- endif -%}
+                  {%- if is_feeder and s.note_feeder != blank -%}
+                    <p class="pm2-quiz__note">{{ s.note_feeder | escape }}</p>
+                  {%- elsif is_feeder == false and s.note_fountain != blank -%}
+                    <p class="pm2-quiz__note">{{ s.note_fountain | escape }}</p>
+                  {%- endif -%}
+
+                  <div class="pm2-quiz__actions">
+                    {%- if p.has_only_default_variant -%}
+                      <product-form class="pm2-quiz__form" data-section-id="{{ sid }}">
+                        <div class="product-form__error-message-wrapper pm2-quiz__error" role="alert" hidden>
+                          <span class="product-form__error-message"></span>
+                        </div>
+                        {%- form 'product', p, id: form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+                          <input type="hidden" name="id" value="{{ v.id }}" {% unless v.available %}disabled{% endunless %}>
+                          <button
+                            id="{{ form_id }}-submit"
+                            type="submit"
+                            name="add"
+                            class="button button--primary button--full-width pm2-quiz__atc"
+                            {% unless v.available %}disabled{% endunless %}
+                          >
+                            <span>
+                              {%- if v.available -%}{{ 'products.product.add_to_cart' | t }}{%- else -%}{{ 'products.product.sold_out' | t }}{%- endif -%}
+                            </span>
+                            <span class="sold-out-message hidden">{{ 'products.product.sold_out' | t }}</span>
+                            {%- render 'loading-spinner' -%}
+                          </button>
+                        {%- endform -%}
+                      </product-form>
+                    {%- else -%}
+                      <a class="button button--primary button--full-width pm2-quiz__atc" href="{{ p.url }}">
+                        {{- 'products.product.choose_options' | t -}}
+                      </a>
+                    {%- endif -%}
+                    <a class="button button--secondary button--full-width pm2-quiz__details" href="{{ p.url }}">
+                      {{- s.details_label | escape -}}
+                      <span class="visually-hidden">: {{ p.title | escape }}</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            {%- else -%}
+              <div class="pm2-quiz__pcard pm2-quiz__pcard--empty">
+                <a class="button button--primary button--full-width" href="{{ routes.all_products_collection_url }}">{{ s.fallback_link_label | escape }}</a>
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+        <button type="button" class="pm2-quiz__restart" data-pm2-restart>
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="18" height="18"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4.5h4.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Start over</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  #pm2-quiz-{{ sid }} { padding-top: calc(var(--pm2-pt) * .75); padding-bottom: calc(var(--pm2-pb) * .75); }
+  @media screen and (min-width: 750px) {
+    #pm2-quiz-{{ sid }} { padding-top: var(--pm2-pt); padding-bottom: var(--pm2-pb); }
+  }
+  .pm2-quiz { --pm2-r: 24px; --pm2-fg: var(--color-foreground); --pm2-accent: var(--color-button); max-width: 76rem; }
+  .pm2-quiz__head { text-align: center; margin: 0 auto 2.4rem; max-width: 56rem; }
+  .pm2-quiz__eyebrow {
+    display: inline-block; margin: 0 0 1.2rem; padding: .5rem 1.4rem; border-radius: 999px;
+    background: rgba(var(--pm2-accent), .1); color: rgb(var(--pm2-fg));
+    font-size: 1.3rem; font-weight: 600; letter-spacing: .04rem; line-height: 1.5;
+  }
+  .pm2-quiz__heading { margin: 0; }
+  .pm2-quiz__sub { margin: .8rem 0 0; color: rgba(var(--pm2-fg), .72); font-size: 1.6rem; line-height: 1.5; }
+
+  .pm2-quiz__card {
+    position: relative; overflow: hidden;
+    background: rgb(var(--color-background));
+    border: 1px solid rgba(var(--pm2-fg), .08);
+    border-radius: var(--pm2-r);
+    box-shadow: 0 1px 2px rgba(var(--pm2-fg), .04), 0 16px 40px -18px rgba(var(--pm2-fg), .22);
+    padding: 1.6rem 1.6rem 2rem;
+  }
+  @media screen and (min-width: 750px) { .pm2-quiz__card { padding: 2.4rem 3.2rem 3.2rem; } }
+
+  .pm2-quiz__bar { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; min-height: 44px; margin-bottom: 1.2rem; }
+  .pm2-quiz__back {
+    justify-self: start; display: inline-flex; align-items: center; gap: .4rem;
+    min-height: 44px; min-width: 44px; padding: 0 1.2rem 0 .6rem; margin-left: -.6rem;
+    border: 0; border-radius: 999px; background: transparent; color: rgb(var(--pm2-fg));
+    font: inherit; font-size: 1.5rem; font-weight: 600; letter-spacing: normal; cursor: pointer;
+  }
+  .pm2-quiz__back:hover { background: rgba(var(--pm2-fg), .06); }
+  .pm2-quiz__back[hidden] { display: inline-flex; visibility: hidden; }
+  .pm2-quiz__dots { grid-column: 2; display: flex; gap: .8rem; list-style: none; margin: 0; padding: 0; }
+  .pm2-quiz__dot { width: .9rem; height: .9rem; border-radius: 999px; background: rgba(var(--pm2-fg), .16); transition: width .3s ease, background-color .3s ease; }
+  .pm2-quiz__dot.is-done { background: rgba(var(--pm2-accent), .55); }
+  .pm2-quiz__dot.is-on { width: 2.6rem; background: rgb(var(--pm2-accent)); }
+  .pm2-quiz__count { justify-self: end; margin: 0; font-size: 1.3rem; color: rgba(var(--pm2-fg), .6); letter-spacing: normal; }
+
+  .pm2-quiz__step[hidden], .pm2-quiz__result[hidden] { display: none !important; }
+  .pm2-quiz__step.is-active { animation: pm2QuizIn .34s cubic-bezier(.2,.7,.2,1) both; }
+  .pm2-quiz__step.is-active.is-back { animation-name: pm2QuizBack; }
+  @keyframes pm2QuizIn { from { opacity: 0; transform: translateX(18px); } to { opacity: 1; transform: none; } }
+  @keyframes pm2QuizBack { from { opacity: 0; transform: translateX(-18px); } to { opacity: 1; transform: none; } }
+
+  .pm2-quiz__q {
+    margin: .4rem 0 1.6rem; font-size: calc(var(--font-heading-scale, 1) * 2.2rem); line-height: 1.25;
+    text-align: center; outline: none;
+  }
+  @media screen and (min-width: 750px) { .pm2-quiz__q { font-size: calc(var(--font-heading-scale, 1) * 2.6rem); margin-bottom: 2.4rem; } }
+  .pm2-quiz__q:focus-visible { outline: 2px solid rgba(var(--pm2-accent), .6); outline-offset: 4px; border-radius: 8px; }
+
+  .pm2-quiz__opts { display: grid; gap: 1.2rem; }
+  @media screen and (min-width: 750px) {
+    .pm2-quiz__opts { grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); gap: 1.6rem; }
+  }
+  .pm2-quiz__opt {
+    display: flex; align-items: center; gap: 1.4rem; width: 100%; min-height: 76px;
+    padding: 1.4rem 1.6rem; text-align: left; cursor: pointer;
+    font: inherit; letter-spacing: normal; color: rgb(var(--pm2-fg));
+    background: rgba(var(--pm2-fg), .03);
+    border: 1.5px solid rgba(var(--pm2-fg), .1); border-radius: 20px;
+    transition: border-color .18s ease, background-color .18s ease, transform .18s ease, box-shadow .18s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  @media screen and (min-width: 750px) {
+    .pm2-quiz__opt { flex-direction: column; text-align: center; justify-content: center; padding: 2.4rem 1.6rem; min-height: 184px; }
+  }
+  .pm2-quiz__opt:hover { border-color: rgba(var(--pm2-accent), .6); background: rgba(var(--pm2-accent), .05); box-shadow: 0 10px 24px -16px rgba(var(--pm2-accent), .6); }
+  .pm2-quiz__opt:active { transform: scale(.98); }
+  .pm2-quiz__opt:focus-visible { outline: 3px solid rgba(var(--pm2-accent), .55); outline-offset: 2px; }
+  .pm2-quiz__opt.is-picked { border-color: rgb(var(--pm2-accent)); background: rgba(var(--pm2-accent), .08); }
+  .pm2-quiz__ico {
+    flex: 0 0 auto; display: grid; place-items: center; width: 52px; height: 52px; border-radius: 16px;
+    background: rgba(var(--pm2-accent), .12); color: rgb(var(--pm2-accent));
+  }
+  @media screen and (min-width: 750px) { .pm2-quiz__ico { width: 64px; height: 64px; border-radius: 20px; } }
+  .pm2-quiz__ico svg { width: 28px; height: 28px; }
+  @media screen and (min-width: 750px) { .pm2-quiz__ico svg { width: 32px; height: 32px; } }
+  .pm2-quiz__txt { display: flex; flex-direction: column; gap: .2rem; min-width: 0; }
+  .pm2-quiz__txt strong { font-size: 1.7rem; line-height: 1.3; font-weight: 700; }
+  .pm2-quiz__txt small { font-size: 1.35rem; line-height: 1.4; color: rgba(var(--pm2-fg), .66); }
+  .pm2-quiz__txt small[hidden] { display: none; }
+
+  /* Result */
+  .pm2-quiz__q--result { margin-bottom: 1.6rem; }
+  .pm2-quiz__match {
+    display: block; width: fit-content; margin: 0 auto .8rem; padding: .3rem 1.2rem; border-radius: 999px;
+    background: rgba(var(--pm2-accent), .12); color: rgb(var(--pm2-accent));
+    font-size: 1.3rem; font-weight: 700; letter-spacing: .04rem; line-height: 1.6;
+  }
+  .pm2-quiz__pcard { display: grid; gap: 1.6rem; }
+  @media screen and (min-width: 750px) { .pm2-quiz__pcard { grid-template-columns: 34rem 1fr; gap: 3.2rem; align-items: center; } }
+  .pm2-quiz__media {
+    display: block; aspect-ratio: 1 / 1; border-radius: 20px; overflow: hidden;
+    background: rgba(var(--pm2-fg), .04);
+  }
+  @media screen and (max-width: 749px) { .pm2-quiz__media { max-width: 30rem; width: 100%; margin: 0 auto; } }
+  .pm2-quiz__img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .pm2-quiz__img--ph { fill: rgba(var(--pm2-fg), .35); }
+  .pm2-quiz__price { margin: 0 0 1.2rem; display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+  .pm2-quiz__now { font-size: 2.2rem; font-weight: 700; letter-spacing: normal; }
+  .pm2-quiz__was { color: rgba(var(--pm2-fg), .55); font-size: 1.5rem; }
+  .pm2-quiz__reasons { list-style: none; margin: 0 0 1.2rem; padding: 0; display: grid; gap: .8rem; }
+  .pm2-quiz__reasons li { display: flex; gap: 1rem; align-items: flex-start; font-size: 1.5rem; line-height: 1.45; letter-spacing: normal; }
+  .pm2-quiz__reasons svg { flex: 0 0 auto; margin-top: .15rem; color: rgb(var(--pm2-accent)); }
+  .pm2-quiz__note { margin: 0 0 .8rem; font-size: 1.3rem; line-height: 1.45; color: rgba(var(--pm2-fg), .66); letter-spacing: normal; }
+  .pm2-quiz__note--pets { padding: .8rem 1.2rem; border-radius: 12px; background: rgba(var(--pm2-accent), .08); color: rgb(var(--pm2-fg)); }
+  .pm2-quiz__note[hidden] { display: none; }
+  .pm2-quiz__actions { display: grid; gap: 1rem; margin-top: 1.6rem; }
+  .pm2-quiz__actions .button { min-height: 50px; border-radius: 999px; }
+  .pm2-quiz__actions .button::before, .pm2-quiz__actions .button::after { border-radius: 999px; }
+  .pm2-quiz__form .form { margin: 0; }
+  .pm2-quiz__error { margin-bottom: .8rem; font-size: 1.3rem; }
+  .pm2-quiz__error[hidden] { display: none; }
+  .pm2-quiz__restart {
+    display: flex; align-items: center; justify-content: center; gap: .6rem; margin: 1.6rem auto 0;
+    min-height: 44px; padding: 0 1.6rem; border: 0; border-radius: 999px; background: transparent; cursor: pointer;
+    font: inherit; font-size: 1.5rem; font-weight: 600; letter-spacing: normal; color: rgba(var(--pm2-fg), .75);
+  }
+  .pm2-quiz__restart:hover { color: rgb(var(--pm2-fg)); background: rgba(var(--pm2-fg), .06); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pm2-quiz__step.is-active, .pm2-quiz__step.is-active.is-back { animation: none; }
+    .pm2-quiz__opt, .pm2-quiz__dot { transition: none; }
+    .pm2-quiz__opt:active { transform: none; }
+  }
+</style>
+
+<script>
+  (function () {
+    var root = document.getElementById('pm2-quiz-{{ sid }}');
+    if (!root || root.dataset.pm2Ready) return;
+    root.dataset.pm2Ready = '1';
+
+    var TOTAL = 3;
+    var history = []; // stack of step ids
+    var answers = {};
+    var live = root.querySelector('[data-pm2-live]');
+    var backBtn = root.querySelector('[data-pm2-back]');
+    var countEl = root.querySelector('[data-pm2-count]');
+    var dots = root.querySelectorAll('.pm2-quiz__dot');
+    var steps = {};
+    root.querySelectorAll('[data-pm2-step]').forEach(function (el) { steps[el.dataset.pm2Step] = el; });
+
+    var OUTCOMES = {
+      camera: 'feeder_camera', dual: 'feeder_two_pets_camera_no', big: 'feeder_two_pets_big',
+      steel_big: 'fountain_stainless', steel_compact: 'fountain_tray', clear: 'fountain_clear', simple: 'fountain_classic'
+    };
+
+    function nextOf(stepId, value) {
+      switch (stepId) {
+        case 'type': return value === 'feeder' ? 'pets' : 'steel';
+        case 'pets': return 'feeder_pick';
+        case 'feeder_pick': return 'result:' + OUTCOMES[value];
+        case 'steel': return value === 'yes' ? 'steel_size' : 'plain_pick';
+        case 'steel_size': return 'result:' + OUTCOMES['steel_' + value];
+        case 'plain_pick': return 'result:' + OUTCOMES[value];
+      }
+      return 'type';
+    }
+
+    function prepFeederPick() {
+      var two = answers.pets === '2';
+      var wrap = steps.feeder_pick.querySelector('[data-pm2-reorder]');
+      var cam = wrap.querySelector('[data-pm2-answer="camera"]');
+      // Two pets: two-bowl feeders first; camera feeder (one bowl) last.
+      if (two) wrap.appendChild(cam); else wrap.insertBefore(cam, wrap.firstChild);
+      cam.querySelector('[data-pm2-hint-1]').hidden = two;
+      cam.querySelector('[data-pm2-hint-2]').hidden = !two;
+    }
+
+    function setProgress(index, done) {
+      dots.forEach(function (d, i) {
+        d.classList.toggle('is-on', !done && i === index);
+        d.classList.toggle('is-done', done || i < index);
+      });
+      countEl.textContent = done ? 'Your match' : (index + 1) + ' of ' + TOTAL;
+    }
+
+    function show(target, isBack) {
+      var resultKey = null;
+      var stepId = target;
+      if (target.indexOf('result:') === 0) { resultKey = target.slice(7); stepId = 'result'; }
+      Object.keys(steps).forEach(function (k) {
+        var el = steps[k];
+        var on = k === stepId;
+        el.hidden = !on;
+        el.classList.toggle('is-active', on);
+        el.classList.toggle('is-back', on && !!isBack);
+      });
+      if (stepId === 'feeder_pick') prepFeederPick();
+      var focusEl;
+      if (resultKey) {
+        var shown;
+        root.querySelectorAll('[data-pm2-result]').forEach(function (r) {
+          var on = r.dataset.pm2Result === resultKey;
+          r.hidden = !on;
+          if (on) shown = r;
+        });
+        var note = shown && shown.querySelector('[data-pm2-two-pets-note]');
+        if (note) note.hidden = answers.pets !== '2';
+        focusEl = shown && shown.querySelector('.pm2-quiz__q');
+        setProgress(TOTAL - 1, true);
+        live.textContent = 'Your match: ' + (focusEl ? focusEl.textContent.replace(/\s+/g, ' ').trim() : '');
+      } else {
+        focusEl = steps[stepId].querySelector('.pm2-quiz__q');
+        setProgress(history.length, false);
+        live.textContent = 'Question ' + (history.length + 1) + ' of ' + TOTAL + ': ' + focusEl.textContent;
+      }
+      backBtn.hidden = history.length === 0;
+      root.dataset.pm2Current = target;
+      if (focusEl && focusEl.focus) {
+        try { focusEl.focus({ preventScroll: true }); } catch (e) { focusEl.focus(); }
+      }
+      // Keep the card in view on small screens
+      var card = root.querySelector('.pm2-quiz__card');
+      var rect = card.getBoundingClientRect();
+      if (rect.top < 0 || rect.top > window.innerHeight * 0.6) {
+        var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        card.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+      }
+    }
+
+    root.addEventListener('click', function (e) {
+      var opt = e.target.closest('[data-pm2-answer]');
+      if (opt && root.contains(opt)) {
+        var step = opt.closest('[data-pm2-step]').dataset.pm2Step;
+        answers[step] = opt.dataset.pm2Answer;
+        opt.parentNode.querySelectorAll('.is-picked').forEach(function (o) { o.classList.remove('is-picked'); });
+        opt.classList.add('is-picked');
+        history.push(root.dataset.pm2Current || 'type');
+        show(nextOf(step, opt.dataset.pm2Answer), false);
+        return;
+      }
+      if (e.target.closest('[data-pm2-back]')) {
+        if (history.length) show(history.pop(), true);
+        return;
+      }
+      if (e.target.closest('[data-pm2-restart]')) {
+        history = []; answers = {};
+        root.querySelectorAll('.is-picked').forEach(function (o) { o.classList.remove('is-picked'); });
+        show('type', true);
+      }
+    });
+
+    root.dataset.pm2Current = 'type';
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "PM2 Product finder quiz",
+  "tag": "section",
+  "class": "section pm2-quiz-section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "3 quick taps" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Find your perfect feeder or fountain" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Answer 3 easy questions. We'll pick the right one for your pets." },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-5" },
+    { "type": "color_scheme", "id": "card_color_scheme", "label": "Quiz card color scheme", "default": "scheme-3" },
+    { "type": "text", "id": "result_label", "label": "Result label", "default": "Your best match" },
+    { "type": "text", "id": "details_label", "label": "Details button label", "default": "View details" },
+    { "type": "text", "id": "note_feeder", "label": "Feeder note", "default": "For dry food · cats & small dogs · free U.S. shipping" },
+    { "type": "text", "id": "note_fountain", "label": "Fountain note", "default": "Quiet pump · comes apart for cleaning · free U.S. shipping" },
+    { "type": "text", "id": "note_camera_two_pets", "label": "Camera feeder note (2 pets)", "default": "Heads up: this feeder has one bowl. For two pets eating together, the 3L Dual Bowl has two." },
+    { "type": "text", "id": "fallback_title", "label": "Fallback title (product missing)", "default": "Browse all products" },
+    { "type": "text", "id": "fallback_link_label", "label": "Fallback link label", "default": "Shop all" },
+    {
+      "type": "header",
+      "content": "Feeder results"
+    },
+    { "type": "paragraph", "content": "Leave a product empty to use the default PETME2 product." },
+    { "type": "product", "id": "product_feeder_two_pets_camera_no", "label": "Two bowls, compact (3L Dual Bowl)" },
+    { "type": "textarea", "id": "reasons_feeder_two_pets_camera_no", "label": "Reasons (one per line)", "default": "Two stainless steel bowls, one for each pet\nSet meal times in the app\n2-way audio: call them to dinner" },
+    { "type": "product", "id": "product_feeder_two_pets_big", "label": "Two bowls, extra food (5L Elevated WiFi)" },
+    { "type": "textarea", "id": "reasons_feeder_two_pets_big", "label": "Reasons (one per line)", "default": "Big 5L capacity, fewer refills\nTwo stainless steel bowls\nWiFi app + record your own mealtime call" },
+    { "type": "product", "id": "product_feeder_camera", "label": "Camera (3L Camera feeder)" },
+    { "type": "textarea", "id": "reasons_feeder_camera", "label": "Reasons (one per line)", "default": "1080P HD live view in the app\n2-way audio: talk to your pet\nSet meal times over WiFi" },
+    {
+      "type": "header",
+      "content": "Fountain results"
+    },
+    { "type": "product", "id": "product_fountain_stainless", "label": "Stainless, big (3.2L)" },
+    { "type": "textarea", "id": "reasons_fountain_stainless", "label": "Reasons (one per line)", "default": "Big 3.2L (108oz) tank\nStainless steel + 4-layer filter\nLED light and a quiet pump" },
+    { "type": "product", "id": "product_fountain_tray", "label": "Stainless, compact (Steel Tray 2.2L)" },
+    { "type": "textarea", "id": "reasons_fountain_tray", "label": "Reasons (one per line)", "default": "Stainless steel drinking tray\n4-layer filter\nQuiet pump, comes apart to clean" },
+    { "type": "product", "id": "product_fountain_clear", "label": "See the water (Transparent 2.2L)" },
+    { "type": "textarea", "id": "reasons_fountain_clear", "label": "Reasons (one per line)", "default": "Clear tank: see the water level at a glance\nFilter cartridge keeps water fresh\nQuiet pump, comes apart to clean" },
+    { "type": "product", "id": "product_fountain_classic", "label": "Keep it simple (Classic 2L)" },
+    { "type": "textarea", "id": "reasons_fountain_classic", "label": "Reasons (one per line)", "default": "Simple, compact 2L\nLow-water light tells you when to refill\nQuiet pump, comes apart to clean" },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 56 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 56 }
+  ],
+  "presets": [
+    { "name": "PM2 Product finder quiz" }
+  ]
+}
+{% endschema %}

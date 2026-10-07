@@ -1,0 +1,2694 @@
+{
+ "generated": "2026-10-04",
+ "source": "SP-API catalog 2022-04-01 (summaries, attributes, salesRanks) + competitivePrice (new Buy Box landed price); Helium 10 Cerebro CSVs",
+ "notes": [
+  "Ranks are category ranks at parent level (variations share them). Lower = sells more.",
+  "Competitor text stored for analysis only - do not copy.",
+  "Catalog summary titles for some top sellers are ~70 chars (Amazon display/short title)."
+ ],
+ "groups": {
+  "dual_3l": {
+   "our_asins": [
+    "B0GHLSQMJ9",
+    "B0GHMCG8Q9"
+   ],
+   "search_seeds": [
+    "automatic cat feeder 2 cats",
+    "dual bowl automatic cat feeder"
+   ],
+   "competitors": [
+    {
+     "asin": "B0C5X2G933",
+     "brand": "oneisall",
+     "price": 49.99,
+     "ranks": {
+      "Automatic Cat Feeders": 3,
+      "Pet Supplies": 1351
+     },
+     "title": "oneisall Automatic Cat Feeder for 2 Cats Pets, Timed Cat Food Dispenser",
+     "title_chars": 71,
+     "capacity": [
+      "11.0 pounds"
+     ],
+     "bullet_point": [
+      "Easy to Set Up: oneisall automatic cat food dispenser has a dial to simplify the programme. Everyone can easily set up it and control feeding",
+      "Peaceful Mealtime for 2 Cats：The bowls are placed opposite with an 16-inch distance. It creates a comfortable space for each cat to eat same amount of food. Avoid queuing or fighting",
+      "5 L/20 Cups Capacity: A full tank of dry food allows 2 adult cats to eat for 10 days. You don’t need to ask neighbors or pet sisters to feed your pets when you go away for weekend or vacation",
+      "10 s Voice Recorder: You can record a 10 s calling message. The feeder would play the audio before each meal",
+      "Precise Portion control:1 Portion ≈ 10 Grams ≈ 1/12 Cup. Allowed kibble size less than 0.5 inch. Up to 6 meals a day. The portion means the kibble amount of each bowl",
+      "Stay-Fresh Tech: oneisall Feeder with multi-layer sealing + desiccants keeps cat food fresh & crisp—so your cat enjoys crunchy meals. Its food-grade stainless steel bowl is hygienic, acne-preventing, easy to clean + dishwasher-safe."
+     ],
+     "special_feature": [
+      "Timer",
+      "Feeding Schedule",
+      "Portion Control",
+      "Voice Recording",
+      "Prevent Fights"
+     ],
+     "material": [
+      "Stainless Steel"
+     ],
+     "power_source_type": [
+      "Daily DC power; emergency backup by 4 AA batteries (not included)"
+     ],
+     "included_components": [
+      "2 Stainless Bowls",
+      "Anti-Chew Cord",
+      "Automatic Feeder",
+      "Desiccant",
+      "Power Plug"
+     ],
+     "item_type_keyword": [
+      "pet-self-feeders"
+     ]
+    },
+    {
+     "asin": "B0D44QYZ7Z",
+     "brand": "PETLIBRO",
+     "price": 94.99,
+     "ranks": {
+      "Automatic Cat Feeders": 10,
+      "Pet Supplies": 4527
+     },
+     "title": "PETLIBRO Automatic Cat Feeder for 2 Cats, 5G&2.4G WiFi Pet Feeders, 5L Programmable Cat Food Dispenser with Airtight Lock-Fresh Technology, Dual Stainless Steel Bowls, Low Food Sensor",
+     "title_chars": 183,
+     "capacity": [
+      "5.0 liters"
+     ],
+     "bullet_point": [
+      "CONVENIENT APP CONTROL: PETLIBRO automatic cat feeder for 2 cats is compatible with 5GHz and 2.4GHz WiFi to ensure a stable connection.APP is available for download via iOS/Android, which makes it easy to program your pet's diet plan and monitor it in real time wherever you are. Supports multiple users to set feeding time and view detailed feeding records.",
+      "TWO CATS FRIENDLY DESIGN: PETLIBRO wifi automatic cat feeder is designed for two-cat families. Dry food is evenly distributed to two bowls to avoid competition for food grabbing. 5L large capacity to meet the diverse needs of cats and dogs. Up to 10 meals can be preset per day, and the amount of each meal can be freely adjusted (1-50 portions).",
+      "SMART ALERT & INDICATION: Instant cell phone notification in case of food shortage, clogging, low battery, etc. with red light warning.PETLIBRO wifi automatic cat food dispense is monitored by infrared sensing and stops in case of clogging to ensure safety. Suitable for dry food diameter 2~15mm to prevent clogging.",
+      "PERSONALIZED VOICE CALLING & DUAL POWER SUPPLY: PETLIBRO's automatic cat feeder with app can record 10 seconds of voice per meal and play it at regular intervals to deliver care. Automatically delete old recordings to keep freshness. Supports external power supply and battery backup to ensure no worry about power outage.",
+      "FRESHNESS AND STABILITY: the PETLIBRO automatic pet feeder has a built-in desiccanat and sealing strip to keep food fresh. Food grade stainless steel bowl, healthy and hygienic, easy to clean. Patented rotor and twist-lock lid design effectively prevents pets from stealing food."
+     ],
+     "special_feature": [
+      "Adjustable",
+      "Pet daily feeding for two pets",
+      "Slide Food Outlet",
+      "Voice Recording",
+      "Detachable for Easy Cleaning"
+     ],
+     "material": [
+      "Stainless Steel",
+      "/"
+     ],
+     "power_source_type": [
+      "Corded Electric"
+     ],
+     "included_components": [
+      "1 x PETLIBRO Automatic Pet Feeder (5L)",
+      "1 x 5V Power Adapter",
+      "1 x Desiccant Bag",
+      "1 x User Guide"
+     ],
+     "item_type_keyword": [
+      "pet-self-feeders"
+     ]
+    },
+    {
+     "asin": "B0GL1XMY8H",
+     "brand": "Nityers",
+     "price": 79.99,
+     "ranks": {
+      "Automatic Cat Feeders": 19,
+      "Pet Supplies": 6268
+     },
+     "title": "Automatic Cat Feeder for 2 Cats - 8L/34 Cups Dual Automatic Dog Feeder with Dog Food Dispenser for 2-18mm Dry Food, Timed Cat Food Dispenser, Up to 50 Portions 6 Meals Per Day, 10s Voice, Keep Fresh",
+     "title_chars": 198,
+     "capacity": [
+      "8.0 liters"
+     ],
+     "bullet_point": [
+      "No More Cat Bowls Fights：Our automatic cat feeder bowls are on opposite sides with approximately 21 inches of wider space in between rather than side-by-side, keeping the cats separated and preventing the piggier cat from eating out of both bowls simultaneously. The even distribution ensures both cats get their fair share, reducing food-related conflict. Both cats can eat comfortably at the same time, helping encourage better eating habits and a more balanced diet in multi-cat households",
+      "8L Large Capacity: The automatic feeder for 2 cats or small to medium dogs is designed with a generous capacity, allowing your pets to feel the warmth of home and your love, even when you're away from home for up to 2 weeks. It’s as if you’ve never left! No more worrying about finding a pet sitter just to refill the cat food bowl. The large capacity reduces the frequency of refilling, and the transparent food container lets you easily track the food level at all times without opening the lid. A heavier, wider base with non-slip pads greatly reduces the chance of tipping",
+      "Anti-Clog Feeding for Large Kibble: Designed to handle kibble sizes from 0.08 to 0.7 inches (2 to 18 mm), upgraded from 15mm for enhanced compatibility. Even with larger cat dental kibble or irregular-shaped dog food, it dispenses smoothly without jams. Our widened food channel and reinforced dispensing system ensure every meal drops smoothly without blockages, ensuring more reliable performance and better feeding consistency for both cats and dogs",
+      "Customize Feeding Plan: The automatic dog feeder allows for precise portion control, enabling you to tailor feeding amounts, perfect for pets on special diets or those who struggle with weight management. Whether you have small cats or medium dogs, you can adjust the portion size from 1 to 50 portions (each portion approx. 1/16 cup) per meal. You can also schedule up to 6 meals per day, supporting a \"little and often\" feeding routine for optimal health and well-being",
+      "Lock in Freshness: The cat food dispenser preserves your pet’s food freshness with a desiccant bag and secure locking lid, preventing the food from becoming stale. The lid and hopper securely lock in place to prevent sneaky paws from raiding the feeder. Our patented silicone rotor, paired with a rotor cover, forms a complete “Freshness Lock” system that seals the food outlet between meals, blocking air and tiny intruders, preventing odors from escaping, and keeping the kibble dry to stop clumping",
+      "Bowl Diameter 6.7 Inches: This 6.7 inch food bowl not only helps reduce whisker anxiety for cats but also allows dogs to take bigger bites, making mealtime enjoyable and stress-free. Crafted from durable stainless steel, it prevents chin acne and eliminates the risk of plastic allergies, while also being easy to remove and clean for added convenience. Pairs perfectly with our cat automatic feeders to make mealtime smooth",
+      "Thorough Cleaning: Our automatic dog food dispenser has fully removable parts — including the lid, food hopper, dispenser rotor, stainless steel bowl, and bowl tray — for effortless deep cleaning. Unlike feeders with open-bottom hoppers that can spill kibble when removed without emptying first, our thoughtfully designed hopper keeps food contained and minimizes mess. Feeders requiring precise alignment of the food hopper with the base, twisting, or stubborn clasps can be frustrating, but our hopper slides easily into the base and locks securely with dual side sliding locks, making setup simple and stress-free while keeping every meal safe and fresh for your pet",
+      "Dual Power Supply: The cat feeder automatic operates on both a DC power adapter and 4 AA batteries (not included), providing a backup power source in case of a power outage, your pet’s feeding schedule won’t be disrupted. The backup power source provides peace of mind, especially for pet owners in areas prone to outages or those who are often away from home",
+      "Lifetime Satisfaction: Endorsed by pet lovers and trusted by households, our auto cat feeder combines innovative design with durability. As a professional pet feeder manufacturer, we believe high quality and friendly service are our constant aim. We go the extra distance to ensure our automatic pet feeders rise above the rest. If an item is found defective within a year, we will issue a replacement. For any questions or concerns, please contact our friendly and professional 24/7 customer support team. **Search “B0DSVHP5LM” to find the matching pet food mat for your Nityers cat auto feeder"
+     ],
+     "special_feature": [
+      "Automatic",
+      "Feeding Schedule",
+      "Spill Proof",
+      "Voice Recording",
+      "Whisker Friendly"
+     ],
+     "material": [
+      "Abs Plastic",
+      "Plastic",
+      "Stainless Steel"
+     ],
+     "power_source_type": [
+      "Corded Electric, Battery Operated"
+     ],
+     "included_components": [
+      "Spring-lock Lid with Desiccant Pack",
+      "8L Food Storage Container",
+      "Automatic Pet Feeder Main Body",
+      "Stainless Steel Food Bowl and Bowl Tray",
+      "Power Adapter with Cord"
+     ],
+     "item_type_keyword": [
+      "pet-self-feeders"
+     ]
+    },
+    {
+     "asin": "B0F532H2JP",
+     "brand": "KATALICLAB",
+     "price": 36.08,
+     "ranks": {
+      "Automatic Cat Feeders": 21,
+      "Pet Supplies": 6707
+     },
+     "title": "Automatic Cat Feeders for Two Cats, 5L/20 Cups Double Automatic Cat Food Dispenser with 2 Stainless Bowls, Timer Setting 20 Portions 6 Meals Per Day, 10s Meal Call (Black)",
+     "title_chars": 171,
+     "capacity": [
+      "5.0 liters"
+     ],
+     "bullet_point": [
+      "Feed Two Cats: The automatic cat feeder is perfect for two pets. It features a unique meal divider that ensures an even distribution of food, preventing any potential conflicts between the two cats during mealtime, perfect for long weekends and short business trips, providing you with peace of mind for 2 happy and well-fed pets.",
+      "Clog-free & High-Capacity Food Storage: With a generous 6L transparen food storage with a scheduled arrange 2 pets' feeding for 2-3 weeks at the same time. Plenty of storage space reduces the need for frequent refills, and transparent granary lets you observe the grain levels in real time, ensuring you know precisely when it's time for a refill.",
+      "Voice Record Meal Call: Record up to 10 seconds of your voice for mealtime calls. Let your cat and dog hear your voice when it’s mealtime to create a strong bond and set good eating habits. (Manual Feeding Function: Press the \"Feed\" button to give your pet extra rewards) Personalized recording of timed cat feeder makes your pet feel safer!",
+      "Reliable Backup & Unleash the Outdoors: Say goodbye to worries about power outages! Automatic pet feeder is wall-powered and/or battery-powered. 3 D-size batteries (not included) provide the necessary backup power. Your pet will stay well-fed even during power outages and you to place it outdoors as well. Whether it's your energetic dog or other outdoor pets, they can now enjoy scheduled feedings without any hassle.",
+      "Secure Sliding Lock Lid Storage: Storage container comes equipped with a convenient sliding lock lid, ensuring a tight seal to preserve the freshness and crunchiness of your pet's food and secure from any poaches. With the included desiccant, the pet feeder keeps food fresh and delicious for every meal."
+     ],
+     "special_feature": [
+      "Timer"
+     ],
+     "material": [
+      "Acrylonitrile Butadiene Styrene",
+      "Plastic"
+     ],
+     "included_components": [
+      "Lid"
+     ],
+     "item_type_keyword": [
+      "pet-self-feeders"
+     ]
+    },
+    {
+     "asin": "B0D4QCWM91",
+     "brand": "HoneyGuaridan",
+     "price": 49.99,
+     "ranks": {
+      "Automatic Cat Feeders": 31,
+      "Pet Supplies": 9081
+     },
+     "title": "HoneyGuaridan Automatic Cat Feeder for 2 Cats,Cat Food Dispenser",
+     "title_chars": 64,
+     "capacity": [
+      "3.5 liters"
+     ],
+     "bullet_point": [
+      "[Unique Dual Side Equal Feeding] HoneyGuaridan Dual Cat Automatic Feeder achieve equal distribution of pet food on both sides, effectively avoiding uneven feeding. The left and right feeding design provides a quiet feeding environment for your pets. You no longer have to worry about your pets competing for food.",
+      "[Multiple Sealing Keeps Food Fresh] The rubber seal between the lid and the container of the automatic feeder effectively insulates the air to prevent the food from oxidizing and prevents the smell of your pet's food from escaping. There is also a desiccant bag on the lid to dehumidify and prevent moisture. The unique sealed revolving door design in the feeder automatically closes the feeding port after each feeding is completed, preventing ants and insects from entering",
+      "[Fixed Time Quantitative Flexible Feeding] 3.5L Double Cat Automatic Feeder with buttons makes it easy to plan to feed your dog or cat 1-6 times a day, with 0-24 servings per feeding. With a flexible, healthy and sensible feeding schedule, your pets can develop good eating habits and also stay away from obesity and other diseases. Ideal for families with multiple pets.",
+      "[Dual Power Supply ] The timed cats feeder can be powered by USB power adapter and 3 alkaline D-size batteries (NOT Included). Once the feeding schedule is set, it is repeated every day. In the event of a power outage, the automatic feeder will automatically switch to battery power. For safety reasons, it is recommended to use Battery power sources. Battery alone can supply power for 200 days.No need to worry about your pet going hungry while you are away.",
+      "[Easy to operate, easy to disassemble and wash] The automatic feeder is easy to set up and you can set up a feeding schedule in minutes. The top cover, clear food bucket and stainless steel bowl can be removed from the main unit and cleaned with water. In addition to the main unit, other parts of the cat feeder should be cleaned regularly to provide a clean and healthy feeding environment for your pet."
+     ],
+     "special_feature": [
+      "cat feeder"
+     ],
+     "material": [
+      "Metal",
+      "Plastic"
+     ],
+     "included_components": [
+      "2 x Food Bowl"
+     ],
+     "item_type_keyword": [
+      "pet-self-feeders"
+     ]
+    },
+    {
+     "asin": "B0DZ2JH37L",
+     "brand": "Frienhund",
+     "price": 39.89,
+     "ranks": {
+      "Automatic Cat Feeders": 39,
+      "Pet Supplies": 10746
+     },
+     "title": "Frienhund Timed Automatic Cat Feeder 2 Cats with Slow Feed: Dual Automatic Dog Feeder with Information Visualization, Programmable Auto Cat Food Dispenser for Multiple Pets,Detachable for Clean-29 Cup",
+     "title_chars": 200,
+     "capacity": [
+      "7.0 liters"
+     ],
+     "bullet_point": [
+      "Easy to Read : Unlike standard timed cat feeder with cramped interfaces, our upgraded 2.4-inch screen offers crystal-clear visibility at a glance. Easily verify your pet’s entire feeding schedule without navigating complex menus. The intuitive layout displays the full schedule (up to 6 meals/day, 1-9 portions/meal) and status icons—including the Slow Feeding Mode indicator—so you always know your cat is being fed exactly as planned.",
+      "Conflict-Free Dining : Designed specifically for multi-cat households, our automatic cat feeder separates the bowls by a generous 18.7 inches. Unlike narrow splitters that force cats into uncomfortable proximity, this extended distance provides ample \"personal space.\" It effectively reduces food aggression and anxiety, ensuring both cats can eat simultaneously and peacefully without one waiting for the other to finish.",
+      "Large Dog Food Storage Container : Eliminate the need for daily refills. The spacious 7L (29 Cups) transparent hopper holds enough dry food to sustain multiple cats or small dogs for weeks—perfect for short trips or busy schedules. The automatic dog feeder includes a built-in desiccant box to lock in freshness, keeping kibble crunchy. The 360° clear view allows you to monitor food levels instantly, so you’ll know exactly when it’s time to top up without opening the lid.",
+      "Scientific Slow Feeding Mode : Stop \"Scarf and Barf\" (eating too fast and vomiting) before it starts. By activating the Slow Feeding Mode, the cat feeder automatic dispenses a portion every minute until the meal is complete. This controlled pace effectively prevents choking, regurgitation, bloating, and obesity. Unlike traditional slow feeding bowls that can be chewed or flipped, our integrated system ensures a consistent, calm dining experience. When the \"SLOW\" icon illuminates, your pets are protected by a smarter, medically-sound feeding rhythm.",
+      "Clean More Thoroughly ( Detachable ) : Say goodbye to \"cat acne\". Our auto cat feeder features a BPA-free removable food tank and premium stainless steel bowls. The entire unit disassembles in seconds, allowing for a deep, thorough clean of every corner. The stainless steel bowls are 100% dishwasher-safe, making it effortless to provide a clean dining environment that keeps your pet’s skin healthy and their breath fresh.",
+      "Dual Power Protection: Rest easy knowing your pets are cared for, even during unexpected power outages. Never miss a meal. This cat automatic feeders operates on a 5V DC adapter for daily use, backed by 3 D-cell batteries (not included) as an emergency failsafe. Whether it’s a local blackout or a tripped circuit while you’re on vacation, the system automatically switches to battery power to ensure the feeding schedule remains uninterrupted. Enjoy your trips or long workdays with 100% peace of mind.",
+      "Tip-Proof & No More Messy Spills: Tired of active pets knocking over their automatic pet feeder and leaving a mess on your floor? Our cat food dispenser features a rock-solid triangular structure. For even more security, it includes a carabiner for wall-mounting, ensuring even the most energetic cats or dogs can’t budge it. Say goodbye to tipped-over bowls and wasted food—finally, a cat feeder that stays exactly where you put it.",
+      "Compatible with Various Dry Foods : The automatic feeder's shaft is made of elastic silicone. It is well compatible with various types of dry food within 15mm, including Freeze Dried Food, Air Dried Food, Multi Pieced Food, etc. Intake of different types of food ensures that your pet has rich nutrition.",
+      "Anti-Bite Nylon Braided Wire : The specially made anti-bite nylon braided line of this dual automatic cat feeder can effectively prevent your line-biting pet from chewing it. This will be your best protection when you go out of town.",
+      "Pet Lovers : Frienhund offers a free one-year warranty and 24/7 online service for our automatic cat feeder 2 cats. The automatic cat feeder is designed for all pet lovers like me, if you have any problems, you can contact us by order, email, or phone. We will solve your problem until it is solved."
+     ],
+     "special_feature": [
+      "Feeding Schedule",
+      "Portion Control",
+      "Automatic",
+      "Slow",
+      "Timer"
+     ],
+     "material": [
+      "Acrylonitrile Butadiene Styrene",
+      "Stainless Steel"
+     ],
+     "power_source_type": [
+      "Corded Electric"
+     ],
+     "included_components": [
+      "pet feeder * 1",
+      "Desiccant * 1",
+      "Stainless Steel Feeding Bowl *2",
+      "（Nylon Braided Data Cable + Adapter）*1",
+      "Screw Accessory Kit *1, Manual *1"
+     ],
+     "item_type_keyword": [
+      "pet-self-feeders"
+     ]
+    },
+    {
+     "asin": "B0H6GH5C91",
+     "brand": "DownyPaws",
+     "price": 59.99,
+     "ranks": {
+      "Automatic Cat Feeders": 42,
+      "Pet Supplies": 11158
+     },
+     "title": "DownyPaws Automatic Cat Feeder 2 Cats, Rechargeable Timed Food Dispenser BK",
+     "title_chars": 75,
+     "capacity": [
+      "4.5 liters"
+     ],
+     "bullet_point": [
+      "Dual Bowls for More Peaceful Meals: Designed for 2-cat homes, the opposite-facing dual bowls give each cat their own eating space, helping reduce crowding and mealtime distractions. Two removable stainless steel bowls provide a cleaner, more comfortable feeding experience for both cats.",
+      "90+ Days of Cordless Feeding Freedom: Powered by a built-in rechargeable lithium battery, DuoFeed provides 90+ days of cordless use, freeing you from outlet locations and dangling cords—ideal for cord-chewing cats and flexible placement around your home. Prefer to plug in? It also supports wired use and includes a 3.9 ft (1.2 m) chew-resistant power cord.",
+      "Easy Programming, Meals Right on Schedule: Setting up their feeding routine is simple—just turn, press, and confirm. Schedule 1–6 meals a day with 0–12 portions per meal (approx. 1/16 cup [8.5 g] per portion). Program memory keeps your settings saved after power interruptions, while a 30-second personalized meal call brings a familiar voice to every mealtime.",
+      "Even Portions, Built for 2 Cats: The shared dispensing system helps distribute food evenly between both bowls, so each cat gets a fair share. A roomy 4.5 L (19-cup) food tank means fewer refills, while compatibility with 2–18 mm dry food—including kibble and suitable freeze-dried pieces—gives you more flexibility at mealtime.",
+      "Cat-Proof Design, Multi-Layer Freshness: A secure lid and self-closing rotor help keep curious paws away from stored food and the dispensing outlet, while the stable base helps resist tipping. A built-in desiccant and enclosed dispensing structure work together to help keep kibble dry, fresh, and crunchy between meals.",
+      "Fewer Parts, Easier to Clean: A simple, streamlined design with fewer removable parts makes everyday cleanup easier. The food tank, lid, rotor, and stainless steel bowls can be removed for cleaning, while the main unit can be wiped clean with a soft, damp cloth. Do not rinse or immerse the main unit in water."
+     ],
+     "special_feature": [
+      "Automatic",
+      "Timer",
+      "Voice Recording",
+      "Rechargeable",
+      "Cordless"
+     ],
+     "power_source_type": [
+      "Battery Powered"
+     ],
+     "included_components": [
+      "Automatic Pet Feeder x 1",
+      "Power Adapter",
+      "Desiccant Bag x 1",
+      "User Manual"
+     ],
+     "item_type_keyword": [
+      "pet-self-feeders"
+     ]
+    }
+   ],
+   "analysis": {
+    "title_pattern": "Brand + 'Automatic Cat Feeder for 2 Cats' first (5/7); then capacity as 'xL/xx Cups', bowl count/material, meals/portions, voice call. Top 3 split: short 64-75 chars (oneisall #3, HoneyGuaridan) vs long 170-200.",
+    "bullets": "5-10 bullets, 'Header: text' or [Header]/【Header】 style, 300-500 chars. Order: 2-cat fairness/no fighting -> capacity (days of food) -> portion spec (grams/cup, meals/day, kibble size) -> freshness (desiccant, seal, lock lid) -> dual power (battery type) -> easy clean/dishwasher-safe stainless bowls.",
+    "claims": [
+     "even split / no food fights, bowl spacing in inches",
+     "capacity in L AND cups + days of food for 2 cats",
+     "portion size grams, up to N meals/day, kibble size range",
+     "desiccant + sealing lid + paw-proof lock",
+     "DC adapter + battery backup (battery type stated)",
+     "10s voice meal call",
+     "stainless dishwasher-safe bowls",
+     "1-yr warranty (Frienhund), cordless rechargeable (DownyPaws)"
+    ],
+    "number_one": "oneisall B0C5X2G933 (#3 Automatic Cat Feeders, $49.99): exact-match short title, very concrete numeric bullets (10 g per portion, 6 meals, 0.5 in kibble, 16 in bowl spacing, 10 days for 2 cats), no WiFi needed.",
+    "gaps": "PETME2 has app control + 2-way audio at $49.99 - same price as oneisall #3 which has no app; most dual timers only have a 10s recorder. Our title leads with '3L Dual Automatic Pet Feeder' (and B0GHMCG8Q9 with 'Cat Treat Dispenser') instead of the exact phrase. Missing hard numbers (cups, days, grams/portion, meals/day, kibble size, battery type)."
+   }
+  },
+  "wifi_5l": {
+   "our_asins": [
+    "B0GHH8L59K"
+   ],
+   "search_seeds": [
+    "wifi automatic cat feeder",
+    "automatic pet feeder 5l"
+   ],
+   "competitors": [
+    {
+     "asin": "B09S8WMJY9",
+     "brand": "PETLIBRO",
+     "price": 68.5,
+     "ranks": {
+      "Automatic Cat Feeders": 2,
+      "Pet Supplies": 915
+     },
+     "title": "PETLIBRO Automatic Cat Feeder, 5G WiFi Automatic Dog Food Dispenser with Freshness Preservation, 5L Timed Pet Feeder with Low Food Sensor, Up to 10 Meals Per Day, Granary Black",
+     "title_chars": 176,
+     "capacity": [
+      "5.0 liters"
+     ],
+     "bullet_point": [
+      "Smart APP Control: Wi-Fi fully automatic dog feeder is 5GHz and 2.4GHz WiFi-enabled allowing you to program your pet's meals anywhere anytime through the PETLIBRO App on your iOS or Android smartphone.",
+      "Never Miss A Meal: Easily schedule up to 10 meals per day and 1-48 portions per meal (1/12 cup each portion) with the Wi-Fi automatic cat feeder, you can easily customize your furry friend's feeding plan and check the feeding records to ensure your cat has been fed on a set schedule by the APP.",
+      "Personalized Meal Call: Record a voice message for up to 10 seconds that plays for each feeding, and freely set the times the meal call play, so your pet can feel your care even when you're not at home. Not only that, but the thoughtful automatic cat food dispenser provides you with the ability to record up to 10 customized meal calls and adjust the volume to your needs!",
+      "Freshness in Every Bite: Patent rotor in the tank base and twist-lock lid of the automatic pet feeder prevent pets sneaking into the food dispenser for extra food. Built-in desiccant bag and sealing strip keep food fresh and crunchy. Food-grade stainless steel bowl provides healthy and hygienic feeding, saving your pets from chin acne.",
+      "Smart Notifications and Indicators: Your phone receives notifications and the machine’s indicators also lights up red when the food tank of the cat feeder automatic is empty, food gets jammed, the battery is low, or has other problems. The infrared sensor keeps checking and stops food dispensing if the food outlet is blocked."
+     ],
+     "special_feature": [
+      "Supports 2.4G & 5G Wi-Fi Network"
+     ],
+     "material": [
+      "Stainless Steel"
+     ],
+     "power_source_type": [
+      "Corded Electric"
+     ],
+     "included_components": [
+      "Wi-Fi Automatic Pet Feeder*1",
+      "Desiccant Bag*1",
+      "Charger*1",
+      "User Manual",
+      "Quick Guide*1"
+     ],
+     "item_type_keyword": [
+      "pet-self-feeders"
+     ]
+    },
+    {
+     "asin": "B0DCFW2LQT",
+     "brand": "ANDOLL HOME",
+     "price": 31.99,
+     "ranks": {
+      "Automatic Cat Feeders": 1,
+      "Pet Supplies": 663
+     },
+     "title": "ANDOLL HOME Automatic Cat Feeder,4L Timed Cat＆Dog Dry Food Dispenser",
+     "title_chars": 68,
+     "capacity": [
+      "4.0 liters"
+     ],
+     "bullet_point": [
+      "【Smooth feeding， No food blockage】-Have you encountered any issues with the food cardholder not coming out while using the feeder? Are you still troubled by constantly shaking the feeder to let food flow out? Our automatic pet feeder comes with a food distribution system that ensures smooth and even feeding of food into the feeding bowl during the automatic feeding program. The detailed design and comprehensive functionality can free up your hands and time, allowing you to no longer worry about pet feeding.",
+      "【Custom voice recording】-You can record 10s voice to keep connected with your pets. When the feeding time you set is up, the system will automatically play your recording 3 times to shout for your pet to come and eat. Your voice will keep a close relationship with your pet and also let your pet eat with peace of mind.",
+      "【Fresh food prioritizes health】-The automatic cat feeder features a finger broadcasting lid opening device at the top to prevent your pet from stealing food. We have designed a desiccant placement box in our food dispenser, the design can completely isolate the air to prevent food from getting damp and moldy. We have included a desiccant to ensure the freshness of pet food.",
+      "【Ensure smooth feeding】- We have designed a food swinging device in the food dispenser to ensure that food can be smoothly placed into the feeding bowl from getting stuck. The feeding bowl of our automatic cat feeder is designed to tilt 8 degrees to ensure that your pet can eat in a comfortable position.",
+      "【Two power supply options available】- Use the 5V DC adapter while supplying the automatic cat food dispenser via 3 AA alkaline batteries(not included) installed in case of power outages, to ensure that your cat gets food consistently."
+     ],
+     "special_feature": [
+      "Adjustable",
+      "Ant Proof",
+      "Automatic",
+      "Programmable",
+      "Timer"
+     ],
+     "material": [
+      "Stainless Steel"
+     ],
+     "power_source_type": [
+      "Corded Electric"
+     ],
+     "included_components": [
+      "User Manual",
+      "Power Cord",
+      "Trays",
+      "Power Adapter",
+      "Lid"
+     ],
+     "item_type_keyword": [
+      "pet-self-feeders"
+     ]
+    },
+    {
+     "asin": "B0C5X4N132",
+     "brand": "oneisall",
+     "price": 69.99,
+     "ranks": {
+      "Automatic Cat Feeders": 3,
+      "Pet Supplies": 1351
+     },
+     "title": "oneisall 5G WiFi Automatic Cat Feeder for 2 Cats, App Control, 20 Cups/5L",
+     "title_chars": 73,
+     "capacity": [
+      "5.0 liters"
+     ],
+     "bullet_point": [
+      "5G Stable Wi-Fi Connection: oneisall automatic cat food dispenser can connect to 5G/2.4G Wi-Fi. Compared to 2.4G Wi-Fi, this feeder with 5G feature would connect to network more stably. You don’t need to worry about failing to control when you are out of home",
+      "Feed Your Pets Anywhere Anytime: You can feed your pets by scheduled plan or manual feeding anywhere and anytime. You can also view the feeding log on your IOS or Android mobile phone",
+      "Share the APP to Your Families: You can also share the APP to your families to feed and monitor your pets feeding together",
+      "5 L/20 Cups Capacity: A full tank of dry food allows 2 adult cats to eat for 10 days. oneisall cat feeder would help to feed your furry babies well when you go away for vacation",
+      "10 s Voice Recorder: You can record a 10 s calling message. The feeder would play the audio before each meal. To let your baby pets know that you love them all the time, you can record a calling message and let them hear your voice at meal time",
+      "Precise Portion control: 1 Portion ≈ 10 Grams ≈ 1/12 Cup. Allowed kibble size less than 0.5 inch. The portion means the kibble amount of each bowl. And this cat feeder would deliver the same amount of food to each bowl. 100% fair for each lovely pet"
+     ],
+     "special_feature": [
+      "Smart App",
+      "Feeding Schedule",
+      "Android Compatible",
+      "iOS Compatible",
+      "Voice Recording"
+     ],
+     "material": [
+      "Stainless Steel"
+     ],
+     "power_source_type": [
+      "Corded Electric"
+     ],
+     "included_components": [
+      "2 Stainless Bowls",
+      "Anti-Chew Cord",
+      "Automatic Feeder",
+      "Desiccant",
+      "Power Plug"
+     ],
+     "item_type_keyword": [
+      "pet-self-feeders"
+     ]
+    },
+    {
+     "asin": "B0FBG5PS97",
+     "brand": "IMIPAW",
+     "price": 51.99,
+     "ranks": {
+      "Automatic Cat Feeders": 20,
+      "Pet Supplies": 6705
+     },
+     "title": "IMIPAW Automatic Cat Feeders, 5L Large Capacity, Timed Feeding Dry Food, Dual Power Design, Programmable Portion Size, 1-6 Meals Per Day, with Desiccant, Suitable for Small Pets Food Dispenser, Black",
+     "title_chars": 199,
+     "capacity": [
+      "5.0 liters"
+     ],
+     "bullet_point": [
+      "Personalized Healthy Feeding Plan: Easily create a customized feeding plan for up to 6 meals per day (120 servings total). Each meal can accurately deliver 1-20 servings (approximately 7-9 grams per serving) to meet the personalized nutritional needs of your cat, and the 12-hour clock programming is simple and easy to understand",
+      "\"One-touch Operation & Easy Cleaning: Built-in LCD screen simplifies setup. Press the \"\"up\"\" and \"\"down\"\" buttons simultaneously to manually feed 1 serving instantly. Optimized angled feeder prevents food jams, and removable food tray allows for thorough cleaning. Secure lid lock design effectively prevents pets from stealing food",
+      "Large Food Storage Capacity: The 5L/21 cups (1 cup = 48 teaspoons) large food storage bucket can hold enough cat food to meet your pet's needs for many days. Contains a desiccant bag to help keep the food fresh and easy to chew. It is an ideal choice for your weekend away or short business trip, so that your pet can eat regularly at home and the owner can rest assured",
+      "Dual Power Supply Guarantee & Anti-clogging Design: It is powered by a 5V DC adapter and supports 3 D-type batteries (NOT INCLUDED) as a backup power source, effectively preventing accidental power outages from causing food shortages. The uniquely designed feeding port effectively reduces food accumulation and ensures smooth feeding",
+      "Reliable Quality & After-Sales: We are committed to providing high-quality products and user satisfaction. If you encounter any problems while using this timer feeder, please feel free to contact us for professional support and solutions"
+     ],
+     "special_feature": [
+      "Programmable",
+      "Automatic",
+      "Portion Control"
+     ],
+     "material": [
+      "Acrylonitrile Butadiene Styrene"
+     ],
+     "power_source_type": [
+      "Corded Electric"
+     ],
+     "included_components": [
+      "Lid"
+     ],
+     "item_type_keyword": [
+      "pet-self-feeders"
+     ]
+    },
+    {
+     "asin": "B0GXYJTFKB",
+     "brand": "KATALICLAB",
+     "price": 49.99,
+     "ranks": {
+      "Automatic Cat Feeders": 21,
+      "Pet Supplies": 6707
+     },
+     "title": "Automatic Cat Feeders WiFi for Two Cats, 5L/20 Cups Double Automatic Cat Food Dispenser with APP Control, 2 Stainless Bowls, Timer Setting 20 Portions 10 Meals Per Day",
+     "title_chars": 167,
+     "capacity": [
+      "5.0 liters"
+     ],
+     "bullet_point": [
+      "Smart Life App Control with 5GHz & 2.4GHz WiFi – Feed Your Pets Anytime, Anywhere：Stay connected to your pets wherever you are with stable dual-band WiFi and Smart Life App compatibility for iOS and Android. Schedule up to 10 meals daily with 1–20 adjustable portions per meal, dispense food instantly with one tap, monitor feeding history and share access with family members for convenient pet care at home or while traveling.",
+      "Even Food Distribution for Two Pets – No More Mealtime Fighting：The built-in meal divider automatically splits every serving evenly between two bowls, helping prevent food competition, bullying, and overeating. Perfect for multi-cat households or families with two small pets.",
+      "Large 5L Capacity with Anti-Clog Design – Up to 2–3 Weeks of Feeding：The spacious 20 Cups food tank stores enough kibble for two pets for up to 2–3 weeks. An advanced anti-clog system helps ensure smooth dispensing, while the transparent hopper allows quick food-level checks at a glance.",
+      "Instant Treat Dispensing with One-Touch Feeding：Give your pets an extra snack anytime using either the feeder button or the mobile app. Ideal for rewarding good behavior, reinforcing training, or simply staying connected with your pets while away from home.",
+      "Dual Power Supply for Reliable Feeding During Outages：Powered by both an AC adapter and backup D batteries, the feeder continues operating even during unexpected power interruptions. Enjoy dependable scheduled feeding whether used indoors or in covered outdoor areas.",
+      "Airtight Freshness Protection – Keep Kibble Crisp Longer：The sliding-lock lid creates a secure seal against moisture, insects, and air exposure. Combined with the included desiccant bag, it helps maintain freshness, flavor, and crunchiness between refills."
+     ],
+     "special_feature": [
+      "Timer",
+      "Smart App"
+     ],
+     "included_components": [
+      "Lid"
+     ],
+     "item_type_keyword": [
+      "pet-self-feeders"
+     ]
+    },
+    {
+     "asin": "B0B376CLN3",
+     "brand": "Petory",
+     "price": 51.99,
+     "ranks": {
+      "Automatic Cat Feeders": 23,
+      "Pet Supplies": 7110
+     },
+     "title": "Petory WiFi Automatic Cat Feeder - 4L Dry Food Dispenser for Cats and Dogs",
+     "title_chars": 74,
+     "capacity": [
+      "4.0 liters"
+     ],
+     "bullet_point": [
+      "【Easier Programming with App】 Connect the automatic cat feeder to 2.4GHz Wi-Fi via bluetooth, you can give extra snacks to your cats and dogs from anywhere and anytime, and flexible setting feeding plan. Up to 10 meals daily with 1-50 portions(1/10cup per portion)",
+      "【Timely Alarm Notification】Get peace of mind every time as notifications come in when the food is run out or blocked. In the event of a Wi-Fi interruption or offline feeder, you will be notified so you can take appropriate action",
+      "【External Power or Backup Battery】Petory pet feeder allows using external power or backup battery alone. We recommend dual power supply, automatic feeder with battery backup that will keep dispensing even if the power goes out or offline",
+      "【Long-Lasting Feeding】 This food dispenser can store up to 16.9 cups of dry food (under 0.7in diameter kibbles,freeze-dried grains), which can last to feed cats and small dogs for 20 days. Desiccant Bag can keep food fresh",
+      "【Easy to Clean】 Counterclockwise rotate the hopper to separate the hopper from the base. The hopper and bowl are dishwasher-safe. Made of BPA-free plastic and stainless steel is healthy for pets"
+     ],
+     "special_feature": [
+      "Voice Recording"
+     ],
+     "material": [
+      "Plastic"
+     ],
+     "power_source_type": [
+      "Corded Electric"
+     ],
+     "included_components": [
+      "Bag"
+     ],
+     "item_type_keyword": [
+      "pet-self-feeders"
+     ]
+    },
+    {
+     "asin": "B09TKH9Q31",
+     "brand": "PAPIFEED",
+     "price": 39.99,
+     "ranks": {
+      "Dog Automatic Feeders": 16,
+      "Automatic Cat Feeders": 26,
+      "Pet Supplies": 7479
+     },
+     "title": "PAPIFEED Automatic Cat Feeder with App, WiFi Auto Cat Feeder, 6L Slow-Feed Cat Food Dispenser for Dry Food, Dual Power Supply Timed Pet Feeder for Small Dog, 10 Meals/Day, 12 Portions/Meal, White",
+     "title_chars": 195,
+     "capacity": [
+      "6.0 liters"
+     ],
+     "bullet_point": [
+      "6L Large Capacity: The 6L(25-cup) large food storage bucket can hold enough food to meet your pet's needs for many days. Controlled through the APP, the auto cat feeder can be set to feed 1-10 meals/day(max 12 portions/meal) of dry food at a specified time.",
+      "Easy Deep Clean: Our cat food dispenser is designed for the health of small indoor pets. The 6L food storage tank and the food-grade stainless steel bowl are removable. This makes them easy to clean(dishwasher safe), helping to prevent residue and odor buildup for fresher food.",
+      "Dual Power Supply: The timed cat feeder is powered by the 5V DC adapter and 4 AA batteries (not included). Automatically switch to battery power during power outages to ensure your cat or dog doesn't miss any meals.",
+      "Freshness & Stability: PAPIFEED automatic pet feeder features built-in desiccant and sealing strips that block moisture and keep food fresh. The Velcro design securely fastens the lid, effectively preventing pets from stealing food."
+     ],
+     "special_feature": [
+      "Smart App",
+      "6L Large Capacity",
+      "Dual Power Supply"
+     ],
+     "material": [
+      "Stainless Steel",
+      "Plastic"
+     ],
+     "power_source_type": [
+      "Corded Electric"
+     ],
+     "included_components": [
+      "Adapter",
+      "Auto cat feeder",
+      "User Manual"
+     ],
+     "item_type_keyword": [
+      "pet-self-feeders"
+     ]
+    },
+    {
+     "asin": "B0GTXN5MJK",
+     "brand": "HoneyGuaridan",
+     "price": 69.99,
+     "ranks": {
+      "Automatic Cat Feeders": 31,
+      "Pet Supplies": 9081
+     },
+     "title": "HoneyGuaridan 5L Automatic Cat Feeder for Two Cats, 2.4/5G WiFi Smart Feed Pet Feeder with Stainless Steel Bowl,APP Control Dispenser, Dual Power Supply,Desiccant Bag,10s Meal Call Black",
+     "title_chars": 186,
+     "capacity": [
+      "5.0 liters"
+     ],
+     "bullet_point": [
+      "【Convenient and Stable App Control】 Easily manage your pet's feeding schedule with the \"HGsmart\" App on iOS / Android devices. Connect your automatic cat feeder to 2.4GHz/5GHz Wi-Fi for real-time monitoring and control from anywhere. View feeding records in the app to ensure the cat food is working as expected",
+      "【Blanced and Accurate Portion Control】 If you set one portion per meal, the device will dispense 1 portion to each bowl. The double food delivery chute assures each cat gets the same portion of food. You can set up to 6 meals a day with 0-24 optional portions per meal. 1 serving is approximately 6g (depending on the size of the cat food). Set a healthy and sensible feeding schedule for your pets to form good eating habits",
+      "【Multiple Sealing Keeps Food Fresh】The rubber seal between the lid and the container of the automatic feeder effectively insulates the air to prevent the food from oxidizing and prevents the smell of your pet's food from escaping. There is also a desiccant bag on the lid to dehumidify and prevent moisture. The unique sealed revolving door design in the feeder automatically closes the feeding port after each feeding is completed, preventing ants and insects from entering",
+      "【Personalized Meal Calls】Record a 10-second voice message to call your cats and dogs to have their meal. The automatic cat feeder will play your message, and old recordings will be automatically deleted when a new one is set",
+      "【Dual Power Supply】The feeder comes with a Type C adapter and has the option to use 3 D-cell batteries (not included), We recommend using both battery and adapter. The machine needs to be plugged in when used with wifi connection.In the event of a power outage, the automatic dog feeder will continue to run on 3 D-size batteries to ensure your pets never miss a meal.(Note:Cannot connect to wifi when using battery alone)"
+     ],
+     "special_feature": [
+      "cat feeder"
+     ],
+     "material": [
+      "Stainless Steel"
+     ],
+     "included_components": [
+      "filter"
+     ],
+     "item_type_keyword": [
+      "pet-self-feeders"
+     ]
+    }
+   ],
+   "analysis": {
+    "title_pattern": "Brand + Automatic Cat Feeder + '5G/2.4G WiFi' + '5L' (5/8 titles) + 'for 2 Cats' when dual + meals/day + low-food sensor/freshness.",
+    "bullets": "5-6 bullets, ~200-370 chars, Title-Case or CAPS header + colon. App (5G/2.4G, iOS/Android, family sharing) -> schedule (meals/day, portions) -> voice call -> freshness -> alerts (low food, jam, low battery) -> dual power.",
+    "claims": [
+     "5GHz+2.4GHz WiFi",
+     "up to 10 meals/day, 1-48 portions",
+     "app notifications for low food/jam",
+     "feeding log + share app with family",
+     "10s voice",
+     "desiccant + twist lock lid",
+     "battery backup",
+     "dishwasher safe hopper/bowl"
+    ],
+    "number_one": "PETLIBRO B09S8WMJY9 (#2, $68.50) - every bullet is a benefit headline + concrete number; ANDOLL B0DCFW2LQT (#1, $31.99, non-WiFi 4L) wins on price and anti-jam messaging.",
+    "gaps": "At $45.99 ours is the cheapest 5L WiFi DUAL-bowl feeder found (oneisall $69.99, HoneyGuaridan $69.99, PETLIBRO dual $94.99, KATALICLAB $49.99). 'Elevated' is rare (only MUBBI legs). Title lacks 'for 2 Cats' and WiFi band; voice recording + anti-jam + stainless already true - add hard numbers if verified."
+   }
+  },
+  "camera": {
+   "our_asins": [
+    "B0GTCGYZDM"
+   ],
+   "search_seeds": [
+    "automatic cat feeder with camera"
+   ],
+   "competitors": [
+    {
+     "asin": "B0FJLNGCL4",
+     "brand": "PETLIBRO",
+     "price": 85.49,
+     "ranks": {
+      "Automatic Cat Feeders": 2,
+      "Pet Supplies": 915
+     },
+     "title": "PETLIBRO Automatic Cat Feeder with Camera, Auto Pet Food Dispenser Slow Feeder Dog Bowl, 1080P HD Video with Night Vision, 5G WiFi with 2-Way Audio, Stainless Steel Slow Food Tray for Small Dogs",
+     "title_chars": 194,
+     "capacity": [
+      "5.0 liters"
+     ],
+     "bullet_point": [
+      "Healthy Eating Starts with Slow Feeder Dog Bowls：This upgraded automatic dog feeder features a stainless steel slow-feed bowl that reduces eating speed by up to 2×, making it not only a automatic cat feeder but also prevents choking, bloating, and indigestion, supporting better digestion for cats and small dogs that eat too fast.",
+      "1080P HD Camera with Night Vision & Two-Way Audio — Always Stay Connected: Stay close to your pet wherever you are with a built-in 1080P HD camera featuring night vision. Watch your furry friend in real time through the PETLIBRO App, while feeding moments can be recorded and played back via a micro SD card (supports up to 256GB, not included) or optional cloud storage subscription. Talk and comfort your pet in real time with two-way audio, or record a personalized 10-second meal call to let them feel your presence even when you’re away.",
+      "Smart APP Control for Flexible Feeding Plans: Easily schedule up to 10 meals per day with adjustable portions (1–50 per meal) via the PETLIBRO App. This dog feeder support for both 5GHz and 2.4GHz WiFi ensures stable connection, while multiple family members can control and check feeding history anytime. Receive instant App alerts when food runs low—ensuring every meal stays on schedule",
+      "Reliable Anti-Blockage System with Smart Safeguards: Equipped with an infrared detection system and patented anti-blockage outlet, the automatic pet feeder for dogs or cats ensures every meal dispenses smoothly. Even during power outages, battery backup (batteries not included) keeps feeding on schedule.",
+      "Hygienic, Fresh, and Easy to Clean: With a 5L sealed food tank and desiccant compartment, this programmable automatic cat feeders keeps kibble dry and fresh. The stainless steel dog bowl is dishwasher safe, rust-resistant, and easy to remove — keeping every meal clean, safe, and convenient."
+     ],
+     "special_feature": [
+      "Camera",
+      "Slow"
+     ],
+     "material": [
+      "Stainless Steel"
+     ],
+     "power_source_type": [
+      "Corded Electric"
+     ],
+     "included_components": [
+      "1* Automatic Camera Feeder with Slow Food Bowl"
+     ],
+     "item_type_keyword": [
+      "pet-self-feeders"
+     ]
+    },
+    {
+     "asin": "B0B5ZGGWBQ",
+     "brand": "PETLIBRO",
+     "price": 109.53,
+     "ranks": {
+      "Automatic Cat Feeders": 6,
+      "Pet Supplies": 2011
+     },
+     "title": "PETLIBRO Automatic Cat Feeder with Camera, 1080P HD Video & Night Vision",
+     "title_chars": 72,
+     "capacity": [
+      "5.0 liters"
+     ],
+     "bullet_point": [
+      "Smart App Control for Scheduled & Remote Feeding: Easily manage your pet’s meals anytime, anywhere with the PETLIBRO app (iOS & Android). Set personalized schedules or manually feed your cat when you're away, perfect for workdays, travel, or irregular routines. Ensure your pet never misses a meal. Supports both 5GHz & 2.4GHz WiFi for stable connection. Customize up to 10 meals per day with 1–50 portions per meal, track feeding history, and share control with family members for consistent pet care",
+      "1080P HD Camera with Night Vision for Real-Time Monitoring: Stay connected with your pet through a 1080P HD camera with 145° wide-angle lens. Monitor eating habits day and night with infrared night vision. And review recorded videos supports up to 256GB micro SD card(package not included) or Video Cloud (paid subscription) to better understand your pet’s routine",
+      "Two-Way Audio & Personalized Meal Call: Interact with your pet remotely using built-in microphone and speaker. Speak in real time or record up to 10-second voice messages to call your pet during mealtime, reducing separation anxiety and reinforcing feeding routines while helping maintain emotional bonding—even when you’re away",
+      "Smart Alerts & Anti-Clog Detection for Reliable Feedind: Receive instant notifications for low food levels, food blockage, motion, or sound detection. Stay informed and ensure your feeder runs smoothly without interruptions",
+      "Motion Detection & Activity Tracking: Receive real-time notifications when motion is detected. The feeder can automatically record pet activity videos, allowing you to monitor behavior and ensure your pet’s wellbeing even when you’re not at home. Adjustable sensitivity for customized use"
+     ],
+     "special_feature": [
+      "1080P HD Camera with Night Vision",
+      "2-Way Audio & Personalized Meal Call",
+      "Smart APP Control (5GHz/2.4GHz WiFi)",
+      "Food Blockage Detection Alerts",
+      "Airtight Food Storage with Desiccant"
+     ],
+     "material": [
+      "Stainless Steel",
+      "Plastic",
+      "Silicone"
+     ],
+     "power_source_type": [
+      "DC Power Supply"
+     ],
+     "included_components": [
+      "Automatic Pet Feeder, Food Bowl with Holder, Power Adapter, User Guide Kit, Desiccant Bag"
+     ],
+     "item_type_keyword": [
+      "pet-self-feeders"
+     ]
+    },
+    {
+     "asin": "B0CNNNJ3FQ",
+     "brand": "Yuposl",
+     "price": 66.99,
+     "ranks": {
+      "Automatic Cat Feeders": 7,
+      "Pet Supplies": 2678
+     },
+     "title": "Automatic Cat Feeder with Camera - 5G WiFi Auto Cat Food Dispenser, 1080P HD Video with Night Vision, 1-15 Meals, 1-99 Portions, 2-Way Audio, Keeps Food Fresh, Timed Pet Feeder Also for Dogs",
+     "title_chars": 190,
+     "capacity": [
+      "2.0 liters"
+     ],
+     "bullet_point": [
+      "GET A CLOSE LOOK AT YOUR PET WITH THE 1080P HD CAMERA: The Yuposl Smart Pet Feeder is equipped with a 1080P HD camera and a wide viewing angle, allowing you to see what your pet is eating while you're out and about. The built-in camera also supports infrared night vision for clear visibility in the dark.",
+      "CALL YOUR BABY TO MEAL: The feeder offers two-way audio and personalized meal calls, using the built-in microphone and speaker for two-way communication with your pet. You can record voice messages (up to 10 seconds) to be played during mealtimes. Old recordings are replaced with new ones.",
+      "SMART APP CONTROL AND EASY CONNECTION: The Yuposl cat feeder with camera supports both 5GHz and 2.4GHz WiFi, allowing you to program and monitor your pet's feeding from anywhere, anytime using the app on your iOS or Android device. You can easily set up to 15 meals per day with 1-99 servings per meal and view feeding logs for peace of mind. Our advanced system proactively prevents overfeeding, skipped meals, and portion errors through its high-precision motor and infrared sensors, which detect and alert you to any issues like jams. The feeder can also be controlled by multiple family members' smartphones.",
+      "NOTIFICATIONS WHEN ANYTHING GOES WRONG: Our 1080P HD camera can automatically capture your pet's feeding at any time, so don't worry, your phone will be notified when the food/battery is low, clogged, WiFi connection is disconnected, the feeder is malfunctioning, or any other problem occurs. The infrared sensor detects blockages and stops food dispensing if necessary.",
+      "EFFICIENT PRESERVATION: Ensures the freshness of your pet's food. The pet feeder effectively insulates food from air with a soft rubber rotor, and the top cover reinforces the seal and uses desiccant to keep food fresh."
+     ],
+     "special_feature": [
+      "Easy to Clean",
+      "Easy to Use",
+      "Lightweight",
+      "Adjustable",
+      "Nonslip"
+     ],
+     "material": [
+      "Stainless Steel",
+      "Plastic",
+      "Acrylonitrile Butadiene Styrene"
+     ],
+     "power_source_type": [
+      "Corded Electric"
+     ],
+     "included_components": [
+      "Automatic Pet Feeder",
+      "Lid",
+      "Stainless Steel Bowl"
+     ],
+     "item_type_keyword": [
+      "pet-self-feeders"
+     ]
+    },
+    {
+     "asin": "B0DCNNN5FC",
+     "brand": "Frienhund",
+     "price": 69.99,
+     "ranks": {
+      "Automatic Cat Feeders": 9,
+      "Dog Automatic Feeders": 12,
+      "Pet Supplies": 4287
+     },
+     "title": "Frienhund Automatic Cat Feeder with 2K Camera: 5G WiFi Automatic Dog Feeder with Night Vision,Cat Food Dispenser with 7L Large Food Storage Container for Multiple Pet,Detachable for Easy Clean -29 Cup",
+     "title_chars": 200,
+     "capacity": [
+      "7.0 liters"
+     ],
+     "bullet_point": [
+      "Go Out of Town Without Worrying : When you are traveling, attending a party or up too late to feed your pet at home, smart automatic cat feeder will regularly schedule your pet's daily food for you. No matter where you are, you can monitor your pet's daily routine and diet, as well as change your feeding schedule online, anytime, anywhere via the mobile app.",
+      "Feeding Schedule ( Regular Diet ) : Setting up a scientific feeding schedule for your pet (up to 15 meals per day, with a maximum of 20 portions per meal) with automatic dog feeder will not only improve your pet's eating habits, but also save pet owners' valuable time (you don't have to constantly think about whether your pet is getting food or not). Not only can you view your pet's feeding history in the app, but you can also view how much food is left in the dog food bowl via the camera.",
+      "Record Wonderful Moments ( Life ) : The Full HD 3 megapixel camera on the cat feeder automatic perfectly records every moment your pet is playing at home. Even when night falls, the infrared sensor in the camera provides clear night vision. It not only supports shooting and recording, but also supports storing data in TF card and cloud storage. (TF card supports up to 128GB) When you turn on motion detection, the APP will remind you when your cat is doing activities.",
+      "Dual-band WiFi : The Frienhund automatic cat feeder with camera supports dual-band WiFi (2.4GHz & 5GHz). Dual-band network lets you don't have to modify your router for channel compatibility issues. Faster 5G networks allow for more stable, crisp video quality.",
+      "Stay Close to Your Pet : “ Two-way Audio ” allows you to talk to your pet in real time. If your cat is sensitive to sound, you can adjust the volume of the feeder through the “Device Volume” in the APP. auto cat feeder supports various terminal logins, in addition to remote control via mobile phone or tablet, you can also log in to the IPC terminal via PC browser to keep your mischievous cat or dog company at all times.",
+      "Dog Food Storage Container : 7L (29 Cups) Large capacity cat food storage with desiccant continuously provides your cats or large dogs with fresh food for weeks. The 360° transparent food tank makes it easy to visualize how much food is being consumed.",
+      "No Longer Knocked Over : Are you angry about the active cats or large dogs in your house always knocking over the dog food bowl? The auto cat feeder is specially designed for this purpose with a carabiner design, you can flexibly attach automatic pet feeder to the wall so that you don't have to worry about the food bowl being knocked over by your pets anymore.",
+      "Clean More Thoroughly ( Detachable ) : The automatic cat food dispenser （BPA-Free） has a removable food tank and stainless steel bowl. Individually disassembled Food Tank can be cleaned more thoroughly. Stainless steel bowls can be placed in the dishwasher for cleaning. These removable designs make eating more hygienic for your pet.",
+      "Dual Power Supply : The cat feeder has two power supply systems. DC 5V power adapter for daily use of the dog feeder. The 3 D cell batteries ensure your pet has a continuous supply of food when your home loses power. You can enjoy your vacation or work away from home with peace of mind. ( Dual power supply recommended )",
+      "Pet Lovers : Frienhund offers a free one-year warranty and 24/7 online service for automatic feeders. The automatic cat feeder is designed for all pet lovers like me, if you have any problems, you can contact us by order, email, or phone. We will solve your problem until it is solved."
+     ],
+     "special_feature": [
+      "Camera",
+      "Feeding Schedule",
+      "Portion Control",
+      "Smart App",
+      "Two Way Audio"
+     ],
+     "material": [
+      "Acrylonitrile Butadiene Styrene",
+      "Stainless Steel"
+     ],
+     "power_source_type": [
+      "Corded Electric"
+     ],
+     "included_components": [
+      "5g automatic cat feeder",
+      "automatic cat feeder app",
+      "automatic cat feeder wifi",
+      "timed cat feeder",
+      "wifi dog feeder"
+     ],
+     "item_type_keyword": [
+      "pet-self-feeders"
+     ]
+    },
+    {
+     "asin": "B0FCBCS9HR",
+     "brand": "Frienhund",
+     "price": 84.22,
+     "ranks": {
+      "Automatic Cat Feeders": 9,
+      "Pet Supplies": 4287
+     },
+     "title": "Frienhund Automatic Cat Feeder with Two 1080P Camera for 2 Cats: 7L Automatic Dog Feeder with Night Vision & Slow Feed, 5G WiFi Auto Cat Food Dispenser for Multiple Pet,Detachable for Clean(ACF180W-C)",
+     "title_chars": 200,
+     "capacity": [
+      "7.0 liters"
+     ],
+     "bullet_point": [
+      "Dual Bowls for Separate Feeding & Dual Camera Smart Monitoring: This smart feeder innovatively features two independent stainless steel bowls, allowing multiple pets to eat simultaneously without fighting. It also boasts dual 1080P HD cameras: one clearly monitors feeding, while the other surveys the surrounding environment. You can view your pets' activities anytime, anywhere via a mobile app, providing comprehensive protection.",
+      "1080P HD Night Vision & Two-Way Voice Interaction: The built-in 1080P HD infrared night vision camera allows you to view clear real-time video on your mobile app, day or night. It supports two-way voice interaction, allowing you to talk to your pet through your phone to soothe them, or record your voice for automatic playback, letting them feel your constant presence.",
+      "Smart Timed and Quantified Feeding & Remote Control via Mobile App: Easily set up multiple daily feeding plans via the mobile app, precisely controlling feeding time and portion size (approximately 10-15g per serving). Even when you're away on business or travel, you can manually dispense food with a single click via the app, up to 12 servings consecutively, ensuring your pet is fed on time, eliminating hunger worries, and cultivating healthy and regular eating habits.",
+      "Dual Power Supply & Local/Cloud Video Storage: The product supports dual power supply modes: a power adapter and three D-type batteries. In the event of a sudden power outage, the backup battery power automatically activates, ensuring uninterrupted feeding. It supports local video recording via TF card insertion and cloud storage subscription, allowing you to replay exciting video clips anytime via the app, ensuring you don't miss any of your pet's adorable moments.",
+      "7L Large Capacity Food Tank & Food-Grade Easy-to-Clean Material: Equipped with a large 7-liter dry food tank, it meets the dietary needs of multiple pets or a single pet for several days, reducing the hassle of frequent refills. All parts that come into contact with food (such as the food tank, dispenser, and bowl) are made of environmentally friendly ABS or stainless steel, allowing for easy disassembly and washing, ensuring pet hygiene and protecting your pet's health."
+     ],
+     "special_feature": [
+      "Camera",
+      "Feeding Schedule",
+      "Smart App",
+      "Two Way Audio",
+      "Voice Recording"
+     ],
+     "material": [
+      "Acrylonitrile Butadiene Styrene",
+      "Stainless Steel"
+     ],
+     "power_source_type": [
+      "Corded Electric"
+     ],
+     "included_components": [
+      "Automatic Pet Feeder * 1",
+      "Desiccant Pack * 1",
+      "Nylon Braided Data Cable * 1",
+      "Power Adapter * 1",
+      "User's Manual * 1 , Mounting Screw Kit * 1"
+     ],
+     "item_type_keyword": [
+      "pet-self-feeders"
+     ]
+    },
+    {
+     "asin": "B0GSR1GTHW",
+     "brand": "MUBBI",
+     "price": 59.99,
+     "ranks": {
+      "Automatic Cat Feeders": 13,
+      "Pet Supplies": 5384
+     },
+     "title": "Automatic Cat Feeder with Camera - 7L/29 Cups Auto Dog Feeder with Large Food Tray & 1080P Night Vision, Elevated Bowl, 2-Way Audio, 10s Voice Recording, 5G WiFi Timed Cat Food Dispenser, 1-15 Meals",
+     "title_chars": 198,
+     "capacity": [
+      "7.0 liters"
+     ],
+     "bullet_point": [
+      "🐶No Spinal Pressure, No Extra Stand Needed: Our automatic cat feeder features four removable support legs that you can easily install or remove to adjust the height to the perfect position for your pet. The base also includes non-slip pads to ensure stability and prevent shifting during mealtime.",
+      "🐶7L (29 Cups)Large Capacity:The extra-large 7-liter hopper capacity is ample to meet the feeding needs of an adult cat for up to 6 weeks or a small dog for up to 2 weeks. Set up to 15 meals daily, with portions ranging from 1 to 99 servings (approx. 6g per serving). Additionally, this product synchronizes with network time, completely eliminating clock drift or feeding delays. Whether you're on vacation or a business trip, this MUBBI automatic cat and dog food feeder ensures your pets receive precise, on-time meals. The MUBBI ultimate dry food dispenser, letting you enjoy your holiday worry-free.",
+      "😻1080P HD Camera Full Night Vision with Privacy Protection: MUBBI automatic pet feeder features a 1080P HD camera, allowing you to clearly monitor your pet's eating habits anytime, anywhere, and accurately track their feeding status and portion sizes. This auto dog feeder app is jointly developed by Tuya, the creator of the Smart Life smart home platform. It employs industry-standard security measures and strict data protection protocols to ensure the safety and privacy of camera and feeding data. Note: You can also disable the camera function via the app's privacy mode.",
+      "😻Thoughtful design: The wide field of view lets you easily spot your pet while they're eating—especially handy for multi-cat households or pets that look alike. This camera also offers fresh perspectives on your furry friends, capturing those precious moments. Even if the main camera gets knocked over, motion detection lets you check in anytime to see them wandering nearby, snacking, or taking a nap.",
+      "🐕Full-featured app control with real-time alerts: The MUBBI Timed Cat Feeder supports dual-band WiFi at 5GHz and 2.4GHz, empowering you to manage everything effortlessly via your smartphone. Easily set feeding schedules, manually dispense treats, view detailed feeding logs, and share access with family members. The system instantly pushes alerts for food jams, low battery, or WiFi disconnections. Smart connectivity features define this modern cat feeder automatic.",
+      "🐕Two-Way Audio and Meal Reminders: The MUBBI automatic feeder allows you to converse with your pet through real-time two-way audio or record a 10-second personalized “meal reminder” that plays automatically during feeding, adding familiar and heartwarming care to every meal. You can also call your cat or dog and interact in real time, enjoying the fun of remote play.",
+      "😺Fresh Design, Easy-Clean Bowl: MUBBI pet food storage containers come with desiccant packets and secure snap-on lids to keep pet food fresh while preventing sneaky snacks. The removable food-grade stainless steel bowl cleans effortlessly with hot water, offering greater safety than plastic bowls and effectively preventing chin acne.",
+      "😺Flexible Power Solution: Durable, bite-resistant Type-C power cable ensures long-term reliability. When on the go, use 4 AA batteries as a backup power source to prevent outages, or rely solely on battery power to break free from cable constraints and place MUBBI auto cat feeder anywhere.",
+      "🐶100% Easy-to-Disassemble Deep Cleaning - The 6.9-inch large capacity food bowl not only alleviates whisker anxiety for cats and allows dogs to eat heartily, but is also dishwasher-safe and effortlessly disassembles. The entire unit (including the food rotator) disassembles quickly for thorough cleaning without spilling kibble everywhere. The thoughtfully designed food container effectively seals kibble for effortless cleanup. Plus, the food container lifts out without disassembling any parts, making it easy to carry and refill.",
+      "🐶Better Customer Satisfaction: MUBBI is committed to providing reliable protection. We hope both you and your pet enjoy using this auto pet feeder. Should you encounter any issues during use, please feel free to contact us at any time, and we will promptly provide assistance."
+     ],
+     "special_feature": [
+      "Smart App",
+      "Adjustable",
+      "Jam-Free",
+      "1080P Camera",
+      "Two Way Audio"
+     ],
+     "material": [
+      "Acrylonitrile Butadiene Styrene",
+      "Stainless Steel"
+     ],
+     "power_source_type": [
+      "Corded Electric/Battery Operated"
+     ],
+     "included_components": [
+      "Desiccant Bag × 1",
+      "Stainless Steel Bowl × 1",
+      "Power Set × 1",
+      "Feeder × 1",
+      "User Manual × 1"
+     ],
+     "item_type_keyword": [
+      "pet-self-feeders"
+     ]
+    },
+    {
+     "asin": "B0GFDH3WD5",
+     "brand": "oneisall",
+     "price": 99.99,
+     "ranks": {
+      "Automatic Cat Feeders": 29,
+      "Pet Supplies": 8137
+     },
+     "title": "oneisall Automatic Cat Feeder with Camera for 2 Cats Pets, 20 Cups/5L",
+     "title_chars": 69,
+     "capacity": [
+      "5.0 liters"
+     ],
+     "bullet_point": [
+      "【2X Cameras. 2X Clarity.】 This automatic pet feeder features 2 AI-assisted Camera, smart event alerts cameras, so you can see each of your cats clearly in real time. Let AI captures every cute moment in crisp HD, with videos automatically recorded and saved to the cloud or a TF card for easy pet monitoring and vlog sharing.",
+      "【Vivid Night Vision】 1080P HD night vision live view — check in anytime for peace of mind. The premium smart feeder with camera is precisely angled to focus on your cat's feeding area, so you can enjoy every playful moment while your privacy stays fully protected.",
+      "【Live Chat with Cats】 Stay close to your cats, even when you're away. Built-in two-way audio, this dual-bowl oneisall cat feeder with camera lets you hear and talk to your fur babies in real time—whether you're away for work or on vacation. Comfort them with your voice and stay connected, anytime they need you.",
+      "【Tap to Treat on the Go】 Schedule meals in the oneisall app for easy portion control and feeding anytime, anywhere. Set up to 10 meals per day with precise portions, track feeding routines, and receive real-time notifications when your cat comes to eat or when the app control cat feeder needs a refill.",
+      "【Peaceful Meals for Days】 The capacity of 5L (20-cup) can feed two cats for up to 10 days. The cat feeder with camera is compatible with mixed kibble, dry food, air-dried food for multiple pets. The bowls are placed opposite with a 16-inch distance, creates a comfortable space for each cat for a peaceful meal time.",
+      "【Battery Backup & Steady Feeding】 This automatic cat feeder supports 3 x D batteries (not included) as backup power. It automatically switches to battery power during outages to keep all your preset feeding schedules running normally. When operating on battery, all Wi-Fi and app functions are disabled with no feeding logs saved, and the feeder cannot charge batteries while connected to the power adapter."
+     ],
+     "special_feature": [
+      "2 1080P HD Cameras",
+      "Night Vision",
+      "Camera",
+      "Smart Event Alerts",
+      "Two Way Audio"
+     ],
+     "material": [
+      "Stainless Steel"
+     ],
+     "power_source_type": [
+      "Daily DC power; emergency backup by 3 D batteries (not included)"
+     ],
+     "included_components": [
+      "2 Stainless Bowls",
+      "Anti-Chew Cord",
+      "Automatic Feeder",
+      "Desiccant",
+      "Power Plug"
+     ],
+     "item_type_keyword": [
+      "pet-self-feeders"
+     ]
+    },
+    {
+     "asin": "B0CFFKWYH6",
+     "brand": "PETKIT",
+     "price": 129.99,
+     "ranks": {
+      "Automatic Cat Feeders": 36,
+      "Pet Supplies": 10462
+     },
+     "title": "PETKIT Upgraded Multi-Cat Recognition Automatic Cat Feeder with Camera",
+     "title_chars": 70,
+     "capacity": [
+      "3.0 liters"
+     ],
+     "bullet_point": [
+      "【1080P HD Camera &Night Vision】The PETKIT automatic cat feeder features a 1080P high resolution and 140° wide viewing angle AI-powered camera, allowing you to see and hear your fur babies anytime anywhere，Plus, there are before-and-after photos comparing the amount of food left in the bowl and know they are being well fed. Supports IR night vision for easily capturing the movement of pets in the dark. Videos can be saved on secure cloud storage for easy viewing anytime (Certain services need to be purchased in the app).",
+      "【Upgraded Multi-Pet Recognition】 Supports AI-powered facial recognition for cats and dogs (up to 15 pets). Upload your pets’ photos and let the AI remember each one for you. Open the PETKIT app to see at a glance who’s eaten and who hasn’t. Perfect for multi-pet households, ensuring every pet receives the care they need and making pet ownership smarter and easier!",
+      "【Clear Pet Vlog】The AI-powered camera captures and records your pet's activities, from playful antics to satisfying meals, providing a clear overview of their activities. Scroll in the timeline to review valuable clips, it's like having a pet vlog. The captured motion is automatically classified into three categories: Feeding, Eating, and Pet Visiting. Quickly locate what you want to see through the timeline.",
+      "【Smart App Control】 The 2.4G&5GHz Wi-Fi enabled automatic feeder, you can set up personalized feeding plan for your beloved pets. Flexible feeding times and precise portion control (1-5 portions) help pets develop healthy dietary habits. Pop-up notifications on the phone will alert you in the event of food shortage, power failure, or other problems. Set the camera's operating time and disable voice recording via the app, so you can take full control of your privacy.",
+      "【Two-way Audio and Meal Call】 You are able to call your cat over and interact in real-time, delight in the experience of remotely interacting with your pets that most feeders don't offer. You can also record a personalized voice message within 20 seconds, it will be played automatically while dispensing food to remind your pets that it's mealtime. (Set up to 5 messages, if you want to set more than 5 messages, delete the old before the new messages done.)",
+      "【Freshness in Every Bite】Triple fresh-lock systems prevent moisture and keep food dry and fresh. Dual power supply systems，When running on battery power, the feeding schedule continues as normal even when offline,ensure your fur friends will never miss a meal.With non-stick coating makes the 304 stainless steel feeding bowl easy to clean and anti-stick.",
+      "【PETKIT After-Sales Service】Upgraded to 2-year coverage."
+     ],
+     "special_feature": [
+      "Upgraded Multi-Cat Recognition Automatic Pet Feeder with 1080P HD Camera",
+      "AI Pet Tracking",
+      "Two Way Audio",
+      "Voice Recording",
+      "Night Vision, 140° Wide Angle"
+     ],
+     "material": [
+      "Stainless Steel and ABS Plastic"
+     ],
+     "power_source_type": [
+      "Battery Powered"
+     ],
+     "included_components": [
+      "Power Adapter, Instruction Manual, Food Bowl"
+     ],
+     "item_type_keyword": [
+      "pet-self-feeders"
+     ]
+    }
+   ],
+   "analysis": {
+    "title_pattern": "'Automatic Cat Feeder with Camera' exact phrase first (8/8), then 1080P + Night Vision (6/8) + 5G WiFi (5/8) + 2-Way Audio + capacity.",
+    "bullets": "5-10 bullets, 320-440 chars; CAPS headers on Yuposl #7. Camera (resolution, angle, night vision) -> 2-way audio/meal call -> app schedule -> alerts/motion/recording -> freshness -> power/warranty.",
+    "claims": [
+     "1080P/2K camera, wide angle degrees",
+     "infrared night vision",
+     "two-way audio + 10s meal call",
+     "motion/sound alerts, video recording, cloud/local storage",
+     "5G/2.4G WiFi",
+     "anti-jam infrared detection",
+     "battery backup",
+     "1-2 yr warranty"
+    ],
+    "number_one": "PETLIBRO B0FJLNGCL4 (#2, $85.49) and B0B5ZGGWBQ (#6, $109.53): camera+night vision in title, bullets each lead with one feature and one parent benefit; Yuposl (#7, $66.99) proves a cheaper 2L unit ranks with a full spec-stack title.",
+    "gaps": "Ours $52.99 is the cheapest camera feeder in the top 8 (MUBBI $59.99, Yuposl $66.99 at only 2L). Our title starts 'Cat Automatic Feeder with Camera' - reorder to exact 6.4k-SV phrase. Add 'Night Vision' / field-of-view / alerts ONLY if the unit has them."
+   }
+  },
+  "stainless_fountain": {
+   "our_asins": [
+    "B0DR7FCLZR"
+   ],
+   "search_seeds": [
+    "stainless steel cat water fountain"
+   ],
+   "competitors": [
+    {
+     "asin": "B0FPFZ3C5K",
+     "brand": "Veken",
+     "price": 27.99,
+     "ranks": {
+      "Cat Fountains": 1,
+      "Pet Supplies": 98
+     },
+     "title": "Veken Innovation Award Winner Stainless Steel Cat Water Fountain, 108oz, C1",
+     "title_chars": 75,
+     "capacity": [
+      "108.0 ounces"
+     ],
+     "bullet_point": [
+      "Premium 304 Stainless Steel & Easy Maintenance. Crafted from high-quality 304 stainless steel, this pet fountain offers a durable, premium build. It’s easy to clean — all water-contact parts are top-rack dishwasher safe and completely BPA-free. With a generous 108 oz (3.2 L) capacity, it provides plenty of fresh water while reducing the need for frequent refills.",
+      "Quick Snap-Together Assembly & Large Water Window. Set up in minutes with the intuitive four-step, snap-together design. The large viewing window, enhanced by an optional blue LED light, makes it easy to check water levels and doubles as a soothing night glow — turning hydration time into your pet’s favorite moment of the day.",
+      "Ultra-Quiet Suspended Pump Design. The advanced suspended pump operates at a whisper-quiet 25 dB, ensuring peaceful operation throughout your home. Its innovative design delivers stable, low-noise performance even with continuous, long-term use.",
+      "Multi-Stage Filtration for Cleaner Water. The high-efficiency filter captures hair, food debris, and impurities while helping inhibit biofilm growth to keep water fresh and clean. For best performance, use softened or filtered water. Although the fountain features stainless steel construction, clean the fountain and pump weekly, and replace the filter and pre-filter sponge every 2 weeks.",
+      "Leak-Proof Structure for Peace of Mind. Built with robust materials and a fully sealed construction, this fountain is reliably leak- and spill-proof, protecting your floors from unwanted messes."
+     ],
+     "material": [
+      "Stainless Steel"
+     ],
+     "power_source_type": [
+      "Corded Electric"
+     ],
+     "included_components": [
+      "1 x Pet Water Fountain （8.3 x 8.3 x 4.9in）",
+      "1 x Adapter (100-120V)",
+      "1 x DC Pump (with a 6ft power cord)",
+      "6 x Filters, 6 x Pre-filter Sponges",
+      "1 x Silicone Mat, 1 x Brush"
+     ],
+     "item_type_keyword": [
+      "pet-self-waterers"
+     ]
+    },
+    {
+     "asin": "B0FDKQGRCK",
+     "brand": "PETLIBRO",
+     "price": 74.39,
+     "ranks": {
+      "Cat Fountains": 2,
+      "Pet Supplies": 214
+     },
+     "title": "PETLIBRO Upgrade Cat Water Fountain Stainless Steel Tray, Dockstream 2 Cat Fountain Indoor, 3L/101oz Auto Cat Fountains for Drinking, App Monitoring Pet Water Fountain Dog, 5G WiFi Cat Water Dispenser",
+     "title_chars": 200,
+     "capacity": [
+      "3.0 liters"
+     ],
+     "bullet_point": [
+      "Hydration Data that Goes Deeper: Via Dockstream 2 cat water fountain stainless steel, track your pet's water intake with more precision and accuracy than ever before, cat fountain water bowl with improved scale and 5 Ghz connectivity. See their hydration history, favorite time to drink, and other important trends via cat water fountain, so you can spot changes early in the pet water fountain app.",
+      "Maintenance Made Effortless: The detachable 3-liter tank of stainless steel cat water fountain means more water for them, fewer refills for you. And upgrade cat water dispenser with an enhanced pump-free design that keeps wires out of the water, there are fewer parts with cat water fountain to clean too.",
+      "The Fresh Water They Deserve: 4-layer filtration removes fur, heavy metals, and odors. The cat water fountain stainless steel tray is non-toxic and hygienic. For best performance, we recommend using PETLIBRO official replacement filters designed specifically for this fountain.",
+      "Designed for Pets: Choose continuous or timed water flow modes in the Cat Fountains for Drinking app based on your pet's needs. Stainless steel cat water fountain's anti-knockover design can stand up to curious paws and frisky drinkers. Whisper-quiet operation of pet water fountain means you can even put it where you sleep.",
+      "2-Year Warranty of Cat Water Fountain: Your cat fountain is covered for 2 years, and you always have access to friendly customer support for petlibro cat water fountain stainless steel."
+     ],
+     "special_feature": [
+      "Corded Powered"
+     ],
+     "material": [
+      "Stainless Steel"
+     ],
+     "power_source_type": [
+      "Corded Electric"
+     ],
+     "included_components": [
+      "1*App Monitoring Cat Water Fountain",
+      "1*Multi-layer Filter & Pump Sponge",
+      "1*AC Power Adapter",
+      "1*User Manual"
+     ],
+     "item_type_keyword": [
+      "pet-self-waterers"
+     ]
+    },
+    {
+     "asin": "B0C8MHHVPC",
+     "brand": "Neareal",
+     "price": 33.24,
+     "ranks": {
+      "Cat Fountains": 3,
+      "Pet Supplies": 255
+     },
+     "title": "Cat Water Fountain Stainless Steel: 108oz/3.2L Cat Fountain for Drinking",
+     "title_chars": 72,
+     "capacity": [
+      "108.0 ounces"
+     ],
+     "bullet_point": [
+      "Water Level Window & Stainless Steel: Our new design features a water level window, allowing you to effortlessly keep an eye on water levels without ever having to remove the cover of the cat fountain. Crafted from premium 304 stainless steel, it's not only corrosion-resistant but can also withstand high-temperature cleaning, ensuring your pet's health and safety",
+      "Quadruple Filtration System: Cat water fountain boasts a state-of-the-art quadruple filtration system, including an activated carbon filter with a cotton layer and activated carbon. This powerful system effectively eliminates odors and softens water, while the filter sponge traps pet hair, dirt, and food particles, delivering pure and refreshing water to your furry friend",
+      "108 oz/3.2 L Capacity & Travel Convenience: With a generous capacity of 108 oz/3.2 L, stainless steel cat water fountain can keep your pets hydrated for up to 7 days, ensuring they always have access to fresh water, even in your absence. Spend more quality time with your furriends and worry less about refills! Travel with peace of mind knowing that your furry companion is well taken care of",
+      "Ultra-Silent 5 V Pump: Engineered for your pet's comfort, pet fountain features an ultra-silent 5 V pump that operates at a gentle ≤ 28 dB, allowing your furry friend to enjoy a peaceful drink without any disturbances; Rest assured, your pet won't be startled by loud noises, and you can maintain their daily routine undisturbed; Plus, its efficient design ensures minimal power consumption",
+      "Attractive Streaming Design: Mimicking the natural preference of pets for drinking flowing water, our stainless steel cat water fountain entices your furriends to drink more, keeping them well-hydrated and reducing the risk of kidney disease. Additionally, the flowing water increases oxygen levels, resulting in fresher, better-tasting water that your pet will love"
+     ],
+     "special_feature": [
+      "Ultra-quiet water pump",
+      "BPA-free stainless steel bowl",
+      "Multi-layer filtration system",
+      "3.2L large capacity design",
+      "Easy to disassemble and clean"
+     ],
+     "material": [
+      "Stainless Steel"
+     ],
+     "power_source_type": [
+      "Corded Electric"
+     ],
+     "included_components": [
+      "1 x Pet Water Fountain",
+      "4 x Filter and 4 x Sponge"
+     ],
+     "item_type_keyword": [
+      "pet-self-waterers"
+     ]
+    },
+    {
+     "asin": "B0F5BF98CW",
+     "brand": "ATMZIQXR",
+     "price": 24.99,
+     "ranks": {
+      "Cat Fountains": 5,
+      "Pet Supplies": 753
+     },
+     "title": "Cat Water Fountain Stainless Steel: Cat Fountain for Drinking - 88oz/2.6L",
+     "title_chars": 73,
+     "capacity": [
+      "2.6 liters"
+     ],
+     "bullet_point": [
+      "Reliable Care for Your Pets - ATMZIQXR upholds the philosophy of \"Smarter care for pets, simpler life for owners.\" Our upgraded 2.6L (88oz) cat water fountain ensures your furry friend stays hydrated for 7-9 days. You don't have to worry about it getting thirsty even when it's home alone.",
+      "Trusted by Pets - This cat fountain is crafted from high-quality 304 stainless steel—rust-proof, durable, and effortless to clean, ensuring your pet always enjoys fresh, contaminant-free water. The smooth body lines with matte texture easily manage various home styles.",
+      "The Sound of Silence - You won’t have to worry about this pet water fountain disturbing your sleep. Whether placed in the bedroom, study, or living room, it operates almost silently (≤25dB). Equipped with an ultra-low-power 0.8W pump, it’s highly energy-efficient and eco-friendly. For optimal performance, we recommend cleaning the pump every two weeks to prevent clogging from pet hair.",
+      "Purity in Every Drink - This water fountains for cats indoor features a 4-stage filtration system to keep every sip clean: activated carbon removes odors, ion exchange resin softens the water, multi-layered non-woven fabric traps hair and debris, while high-density sponge filters out tiny particles. Provide fresh water for your furry friend.",
+      "Clear View, Easy Refills - This stainless steel cat water fountain features a transparent water-level window, allowing you to check the remaining water at a glance—no need to open the lid. You can promptly replenish fresh water for your beloved pet. Additionally, this helps you accurately monitor your pet's daily water intake.",
+      "Premium Support Enjoy exceptional customer service with our cat fountains for drinking. Our dedicated team is always ready to assist you. Search \"ATMZIQXR filter\" and \"ATMZIQXR pump\" to find replacement parts. Search \"B0F5B8MH2W\" for cat fountains for drinking with 9 filters. Search \"B0FF4GWMKW\" for cat fountains for drinking with 16 filters（We recommend replacing the filter every two weeks）"
+     ],
+     "special_feature": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+     ],
+     "material": [
+      "1"
+     ],
+     "power_source_type": [
+      "Corded Electric"
+     ],
+     "included_components": [
+      "1x Cat Drinking Fountain",
+      "1x Carbon Filter & Sponge Filter",
+      "1x Pump",
+      "1x Faucet",
+      "1x User Manual"
+     ],
+     "item_type_keyword": [
+      "pet-self-waterers"
+     ]
+    },
+    {
+     "asin": "B0FVXPBX4N",
+     "brand": "Petlipo",
+     "price": 16.19,
+     "ranks": {
+      "Cat Fountains": 6,
+      "Pet Supplies": 833
+     },
+     "title": "Cat Water Fountain Stainless Steel for Cats Indoor 2.5L 85oz by BPA-Free SUS304, Effective 6-Layer Filter Cat Fountain for Drinking 15dB Ultra Quiet Metal Pet Water Fountain (Fountain+1 Filter)",
+     "title_chars": 193,
+     "capacity": [
+      "2.5 liters"
+     ],
+     "bullet_point": [
+      "304 FOOD-GRADE STAINLESS STEEL: Petlipo stainless steel cat water fountain is BPA-free for safety, dishwasher-safe & easy-to-clean, resists rust/corrosion, prevents scratching and chewing, offers superior durability, is 100% recyclable and provides long-term cost-effectiveness. It's your preferred choice for a cat drinking fountain",
+      "LONG LASTING 6-LAYER UPGRADED FILTER FOR FRESH WATER: Our cat water fountain filter contain non-woven fabrics, activated carbon and ion exchange resin, which can effectively filter impurities in the water and absorb heavy metals. Improve the taste and smell of water. It is better to clean the filter WEEKLY and replace it every 3-4 Weeks. 4pcs filters can be used for 3-4 months",
+      "2.5L/85oz LARGE CAPACITY FOR FEWER REFILLS: About 10x the capacity of an ordinary cat water bowl, this cat fountain greatly reduce the annoying work of refilling & cleaning. It can also be used as dog water fountain. Especially beneficial for households with multiple pets or for busy pet owners who may be away from home for extended periods. Your cat / dog will always have access to an ample supply of fresh water",
+      "15dB WHISPER QUIET & ENERGY SAVING: Our cat water dispenser operates ultra quietly, ensures a peaceful drinking experience for your cat. And, the pet fountain pump is designed with low power consumption, making it energy-efficient and cost-effective to run",
+      "2-YEAR PUMP WARRANTY: Enjoy added peace of mind with a 2-year pump warranty. If you experience any pump issues during thewarranty period, please contact our customer service by email immediately. We will promptly resolve the issue and provide a new pump",
+      "KEEP THE PETS HYDRATED: This cat fountain stainless steel with soft water flow which attracts cats to drink more water. Built-in pump LED light and viewing window ensure a clear water level visibility day and night, so you will never miss a refill to keep cats hydrated and healthy"
+     ],
+     "special_feature": [
+      "Dishwasher Safe",
+      "Food-grade 304 stainless steel",
+      "15dB ultra silent water pump",
+      "6-layer effective cat fountain filter",
+      "Durable and affordable"
+     ],
+     "material": [
+      "Stainless Steel"
+     ],
+     "power_source_type": [
+      "Corded Electric"
+     ],
+     "included_components": [
+      "cat water fountain",
+      "cat water fountain filter"
+     ],
+     "item_type_keyword": [
+      "pet-self-waterers"
+     ]
+    },
+    {
+     "asin": "B0DDPYHHFX",
+     "brand": "GIOTOHUN",
+     "price": 24.99,
+     "ranks": {
+      "Cat Fountains": 8,
+      "Pet Supplies": 1160
+     },
+     "title": "Cat Water Fountain Stainless Steel: 74oz/2.2L Cat Fountain for Drinking",
+     "title_chars": 71,
+     "capacity": [
+      "2.2 liters"
+     ],
+     "bullet_point": [
+      "【GIOTOHUN Is Trustworthy】 \"Making the lives of pets and owners smarter\" is the philosophy of the GIOTOHUN brand. Our products allow your pet to get enough water while saving you time. If you have to go out, you don't have to worry about your pet being thirstyh.The cat water fountain has 2.2L (74oz), the cat water fountain filled with water can provide your pet with 5-7 days of drinking water.",
+      "【Drinking Fun】 GIOTOHUN's cat fountain is available in both faucet running water and fountain running water models. The simulated faucet running water design will entice your furry friends at home to drink cleaner water with the cat fountain. For shorter furry friends, you can use the fountain mode to better care for their spines. GIOTOHUN's cat fountain meets the different needs of pets.",
+      "【Drink With Peace Of Mind】 The stainless steel cat water fountain is made of SUS 304 stainless steel for sturdy, rust-resistant construction, safety and durability. In addition, the stainless steel is easy to clean and promotes a clean water source, ensuring that your pet receives a clean and healthy water source.",
+      "【Good Dreams】 The new upgraded water pump reduces the noise so you can sleep peacefully even if pet water fountain is in your bedroom. Its sound (<25dB) is less than a whisper. It is also a 0.8W low power consumption water pump, which is very energy efficient and environmentally friendly. We recommend cleaning the water pump every 2 weeks to prevent it from getting clogged with cat hair.",
+      "【Enjoy Every Sip Of Fresh Water】 This water fountains for cats indoor has a 4-stage filtration system to consistently provide your pet with fresh, healthy water. 1.Activated carbon removes bad taste and odor 2.Ion exchange resin could soften the tap water 3.The non-woven fabric captures cats' hair and impurities 4.The high-density sponge of pump helps remove fine particles(Please search “B0DFMBP2BJ” to buy the official cartridge.",
+      "【Warm Tips】 This cat fountains for drinking can be assembled and disassembled in minutes, making maintenance a breeze. If you need replacement parts, you can buy them at the GIOTOHUN store.（We recommend replacing the filter every two weeks）"
+     ],
+     "material": [
+      "Stainless Steel"
+     ],
+     "power_source_type": [
+      "Corded Electric"
+     ],
+     "included_components": [
+      "Cat Water Fountain",
+      "Carbon filter",
+      "Sponge filter",
+      "Plug"
+     ],
+     "item_type_keyword": [
+      "pet-self-waterers"
+     ]
+    },
+    {
+     "asin": "B0DSFNMG93",
+     "brand": "HOOISE",
+     "price": 23.74,
+     "ranks": {
+      "Cat Fountains": 9,
+      "Pet Supplies": 1569
+     },
+     "title": "Cat Water Fountain Stainless Steel: Pet Fountains for Cats/Dog Indoor 74oz",
+     "title_chars": 74,
+     "capacity": [
+      "2.2 liters"
+     ],
+     "bullet_point": [
+      "【304 Stainless Steel Material】 The whole cat water dispenser is made of stainless steel in one piece, the cat water bowl has no seams and will not retain impurities to harbor bacteria. The metal material of the automatic cat water fountain is more durable than plastic, not easy to fall and crack, can withstand high temperature sterilization and cleaning, bringing healthier water bowls fountain to cats.",
+      "【24-Hour Fountain Running Water】This cat waterfall fountain indoor with metal faucet, uninterrupted running water is more likely to attract the attention of animals, making cats love drinking water more. This kitty spout cat water fountain driven water circulation through the water pump filtration, so that the water is fresher, better taste, can better maintain the health of cats.",
+      "【74oz with Window】 Small body with large capacity.This mini water dish for cats can store 2.2L of water at a time, even if you go out a week, you don't need to worry about your cat drinking water. This pets running water bowl with window, you can quickly know the amount of water and refill it, no need to open the lid.",
+      "【3 Activated Carbon Filters Replacement】Our auto drinking fountain for small dogs comes with a filter made of activated carbon, resin, and cotton layer. It can isolate the cat litter and hair brought in by pets and filter and soften the water. Let your pets drink clean and healthy water.",
+      "【5V Mute Pump】 This indoor water fountain uses a 5V low voltage mute pump to make the water flow quietly, and you don't have to worry about making noise to scare cats and electricity problems even if it runs for a long time. This water bowl for cats no spilling with metal faucet, the water source will not splash and overflow, reducing cleaning problems. We recommend deep cleaning the water pump and changing the filter every 2-3 weeks.",
+      "【Filters Support】Accessories Service: Search for “B0DSG1KQJQ” to find the 6pack filters for the HOOISE Cat Water Dispenser. Search for “B0DS61P5HT” to find the 12pack filters,search for\"B0GH7LHFR9\"to find the 20 filter sets for you to choose from. Save time searching for replacement parts."
+     ],
+     "material": [
+      "Stainless Steel"
+     ],
+     "power_source_type": [
+      "Corded Electric"
+     ],
+     "included_components": [
+      "Stainless steel water dispenser*1",
+      "Filter*3",
+      "Sponge *3",
+      "Water pump *1"
+     ],
+     "item_type_keyword": [
+      "pet-self-waterers"
+     ]
+    },
+    {
+     "asin": "B0GDCZCXMY",
+     "brand": "PETLIBRO",
+     "price": 36.69,
+     "ranks": {
+      "Cat Fountains": 12,
+      "Pet Supplies": 1754
+     },
+     "title": "PETLIBRO Stainless Steel Cat Water Fountain, 101oz/3L Automatic Water Dispenser for Cats Indoor, Quiet Pet Water Dispenser with 2 Filters, Adjustable Flow Cat Fountain Also for Small Dogs",
+     "title_chars": 187,
+     "capacity": [
+      "3.0 liters"
+     ],
+     "bullet_point": [
+      "Stainless Steel Cat Fountain: Made with BPA-free 304 stainless steel, this cat water fountain stainless steel design resists rust, corrosion, and odors for cleaner daily drinking than plastic bowls.",
+      "3L Capacity for Indoor Cats: The 101oz/3L capacity keeps water ready for water fountains for cats indoor, multi-cat homes, and busy families, making it a practical cat accessories for indoor cats choice.",
+      "Filtered Fresh Water Daily: The filter and pre-filter sponge help capture hair, debris, odors, and impurities. For replacement pet water fountain filters, search PETLIBRO water fountain filter.",
+      "Quiet Automatic Water Dispenser: This automatic water dispenser for cats runs below 30dB and features adjustable flow, helping attract pets to drink more than from a still cat water bowl.",
+      "Less Splashing, Dog-Friendly Too: The raised pump holder and outlet design help reduce leaks and splashes, while also working as a water dispenser for dogs, dog water bowl dispenser, or small dog drinking station."
+     ],
+     "material": [
+      "Stainless Steel"
+     ],
+     "power_source_type": [
+      "Corded Electric"
+     ],
+     "included_components": [
+      "1x Stainless Steel Cat Water Fountain With 2 Filters"
+     ],
+     "item_type_keyword": [
+      "pet-self-waterers"
+     ]
+    }
+   ],
+   "analysis": {
+    "title_pattern": "Keyword first: 'Cat Water Fountain Stainless Steel:' or 'Stainless Steel Cat Water Fountain' (8/8), then 'xxoz/x.xL' and 'Cat Fountain for Drinking'. Top 5 titles are 71-75 chars; brand often omitted from summary title.",
+    "bullets": "5-6 bullets, 300-380 chars, Title-Case header + colon or [Header]/CAPS. 304 stainless -> quiet pump dB number -> multi-stage filter (stages named) -> capacity + days -> water window/LED -> easy assembly/dishwasher -> warranty/filter replacement ASIN.",
+    "claims": [
+     "304 / SUS304 food-grade stainless, BPA-free",
+     "<=25dB / 15dB / <30dB pump",
+     "4-6 stage filter (carbon, ion resin, cotton)",
+     "oz + L capacity, days of water",
+     "water level window, blue LED",
+     "faucet vs bubbling flow modes",
+     "leak-proof, dishwasher safe",
+     "2-yr warranty (PETLIBRO, Petlipo)"
+    ],
+    "number_one": "Veken B0FPFZ3C5K (#1 Cat Fountains, #98 Pet Supplies, $27.99, 108oz): award badge in title, short clean title, bullets give specific numbers (25 dB, 4-step snap assembly, leak-proof). Neareal B0C8MHHVPC (#3, $33.24) is our direct 108oz/3.2L twin.",
+    "gaps": "Our title opens 'Luxury Smart Pet Fountain 2026' - no brand, no 'cat water fountain stainless steel' at front, no oz-first format. Real differentiators few top sellers stack together: dual flow modes + LED + 4-layer filter + dishwasher safe. Price $39.99 vs $25-33 needs those in bullet 1-2. Add dB value only if measured."
+   }
+  },
+  "plastic_fountain": {
+   "our_asins": [
+    "B0GHKN9DBR",
+    "B0GHLBGCP3",
+    "B0GHKRYV6W"
+   ],
+   "search_seeds": [
+    "cat water fountain",
+    "cat fountain 2L",
+    "pet water fountain for cats inside",
+    "cat water fountain with filter"
+   ],
+   "competitors": [
+    {
+     "asin": "B08NC54VZN",
+     "brand": "Veken",
+     "price": 13.99,
+     "ranks": {
+      "Dog Fountains": 1,
+      "Cat Fountains": 4,
+      "Pet Supplies": 432
+     },
+     "title": "Veken Innovation Award Winner 95oz/2.8L Cat Water Fountain, C1 Classic",
+     "title_chars": 70,
+     "capacity": [
+      "95.0 ounces"
+     ],
+     "bullet_point": [
+      "Award-winning product: Veken is proud to be a 2023 Category Winner of the Pet Innovation Awards, an honor given to only the most forward-thinking products within the rapidly expanding Pet industry.",
+      "High-quality: Made of food-grade materials, with all water-contact parts BPA-free. Durable, easy to operate and clean. The water-level window and blue LED light attract pets and make monitoring water levels simple. A convenient switch on the cord lets you easily turn the light on or off.",
+      "Two flow designs: The Veken Pet Fountain has 2 modes: flower waterfall (faucet drinking) and the gentle fountain. The water streaming down the petals of the flower on the fountain will draw your pets attention and encourage animals to drink more often.",
+      "5 stages filtration system: In addition to circulating water to help keep it fresh, the 5-stage filtration system combines multi-layer filter media, coconut shell activated carbon, and a composite scale inhibitor to improve taste and reduce impurities.",
+      "Ultra-quiet pump: This water fountain uses an ultra-quiet, low-energy pump designed for long-term use. To maintain smooth operation, clean the pump and replace filters every 1-2 weeks. Always keep water in the fountain when running to avoid damaging the pump."
+     ],
+     "special_feature": [
+      "Automatic,Durable,Led Light"
+     ],
+     "material": [
+      "Plastic"
+     ],
+     "power_source_type": [
+      "Corded Electric"
+     ],
+     "included_components": [
+      "1 x Pet Water Fountain（8.3 x 8.3 x 6.6in）",
+      "1 x Adapter（AC 100-120V）",
+      "1 x DC Pump （with a 6ft power cord）",
+      "2 x Filters; 2 x Pre-filter Sponges",
+      "1 x Silicone Mat, 1 x Brush"
+     ],
+     "item_type_keyword": [
+      "pet-self-waterers"
+     ]
+    },
+    {
+     "asin": "B0FDKVJNXB",
+     "brand": "PETLIBRO",
+     "price": 78.63,
+     "ranks": {
+      "Cat Fountains": 7,
+      "Pet Supplies": 1126
+     },
+     "title": "PETLIBRO Upgrade Cat Water Fountain, Cordless Cat Fountain Battery Operated, App Monitoring 3L/101oz Dockstream 2 Pet Water Fountain with Stainless Steel Tray, 5GHz WiFi Dog Water Bowl Dispenser",
+     "title_chars": 194,
+     "capacity": [
+      "3.0 liters"
+     ],
+     "bullet_point": [
+      "Unmatched Cordless Convenience: Enjoy up to a full month of operation on a single charge. Place the Dockstream 2 cat water fountain anywhere your pet loves, or take our cat fountain with you on weekend trips without worrying about cords.",
+      "Advanced Hydration Tracking: Monitor your pet's drinking habits with unparalleled accuracy thanks to our wireless cat water fountain's upgraded scale and stable 5 GHz Wi-Fi. View trends, track history, and get vital insights in the PETLIBRO pet fountain's app to proactively manage your pet's health.",
+      "Effortless Maintenance: Our automatic water dispenser for cats is equipped with a large 3-liter, detachable tank to minimize your refill chores. Our innovative pump-free design means no wires are submerged in water, resulting in fewer parts to clean and a more hygienic fountain.",
+      "Pure Water, Happy Pet: A robust 4-layer filtration system effectively removes fur, heavy metals, and unpleasant odors. The cat water fountain stainless steel tray is non-toxic, promotes hygiene. For best performance, we recommend using PETLIBRO official replacement filters designed specifically for this fountain.",
+      "Pet-Proof & Peaceful: PETLIBRO cat fountains for drinking is engineered with a stable, anti-tip design to withstand playful paws. Its whisper-silent operation ensures it won't disturb you or your pet, making it perfect for any room, even the bedroom."
+     ],
+     "special_feature": [
+      "battery operated wireless cat water fountain",
+      "App Monitoring Cat Water Fountain",
+      "automatic cat water fountain with stainless steel tray"
+     ],
+     "material": [
+      "Stainless Steel",
+      "Acrylonitrile Butadiene Styrene (ABS)"
+     ],
+     "power_source_type": [
+      "Battery Powered"
+     ],
+     "included_components": [
+      "1*App Monitoring Cat Water Fountain",
+      "1*Multi-layer Filter & Pump Sponge",
+      "1*AC Power Adapter",
+      "1*User Manual"
+     ],
+     "item_type_keyword": [
+      "pet-self-waterers"
+     ]
+    },
+    {
+     "asin": "B0HJR7ZL2S",
+     "brand": "Dwarfuarm",
+     "price": 99.99,
+     "ranks": {
+      "Cat Fountains": 26,
+      "Pet Supplies": 3108
+     },
+     "title": "3L Filterless Cat Water Fountain, Wireless, Wastewater Separation,Black",
+     "title_chars": 71,
+     "capacity": [
+      "3.0 liters"
+     ],
+     "bullet_point": [
+      "Three-Zone Design for Clean, Flowing Water: This cat water fountain features an innovative triple-area layout—separate zones for clean water, used water, and a free-flowing fountain—to help keep water fresh and encourage your pet to drink. Made with pet-safe 304 stainless steel bowls and durable BPA-free plastics, it’s a reassuring choice for households with multiple pets or sensitive cats.",
+      "Smart Hydration Reminders & Motion-Activated Flow: Set a water refresh schedule that fits your routine. When water runs low, the fountain automatically refills using gravity. A built-in motion sensor starts the gentle fountain flow to attract cats, promoting healthy hydration throughout the day—great for cats, small dogs, and multi-pet homes.",
+      "Water-Electricity Separation & Filter-Free Design: Engineered with a water-electricity separation structure for added safety. Unlike many fountains, no filters are needed—just rinse the included mesh screen, saving time and cost. Automatic refill, one-touch water change, and wastewater reminders make this pet water dispenser both safe and economical compared to traditional plastic cat water fountains.",
+      "Wireless & Quiet Operation for Placement Anywhere: Powered by a built-in 4000mAh rechargeable battery, this wireless cat fountain gives you freedom to place it anywhere. Its whisper-quiet pump works discreetly in bedrooms or living rooms. The carry handle and 3L clear tank make refilling simple—ideal for busy pet parents.",
+      "Easy to Clean for Daily Use: The wastewater tank features a water level monitoring system to help prevent overflow. Simply wash the water tank and stainless steel tray with soap and water, and wipe the main unit with a damp cloth (do not immerse the main unit). The reusable catch-screen traps hair and debris—no replacement needed, just rinse regularly.",
+      "Complete Package for Multi-Pet Homes: This indoor pet water fountain includes: main unit ×1, 3L clean water tank ×1, top cover ×1, 1.35L wastewater tank ×1, stainless steel bowl ×1, Type-C charging cable ×1, cleaning brush ×1, and user manual ×1. Ideal for multi-pet families, it works as a cat water dispenser, cat fountain, or small dog water bowl dispenser—a simple and economical way to provide fresh water for your furry companions."
+     ],
+     "special_feature": [
+      "Filterless Cat Water Fountain"
+     ],
+     "material": [
+      "Stainless Steel （304）, Acrylonitrile Butadiene Styrene (ABS)"
+     ],
+     "power_source_type": [
+      "Battery Powered"
+     ],
+     "included_components": [
+      "Pet Water Fountain"
+     ],
+     "item_type_keyword": [
+      "pet-self-waterers"
+     ]
+    },
+    {
+     "asin": "B0HHN93SXF",
+     "brand": "FEELNEEDY",
+     "price": 55.79,
+     "ranks": {
+      "Cat Fountains": 28,
+      "Pet Supplies": 3234
+     },
+     "title": "FEELNEEDY Wireless No Filters Cat Water Fountain, Wastewater Separation",
+     "title_chars": 71,
+     "capacity": [
+      "3.5 liters"
+     ],
+     "bullet_point": [
+      "Revolutionary Wastewater Separation – Features independent clean/wastewater tanks for continuous fresh water. The self-cleaning cycle timing automatically pours stale water, every sip is crisp and clean. Perfect for cats and small pets with sensitive hydration needs, this pet water fountain reduces slimy residue and guarantees 24/7 freshness",
+      "No Filters, Pure Savings – No filters or recurring costs! This revolutionary design skips weekly filter replacements, saving you time and money. Simplified maintenance meets hygienic hydration, offering a budget-friendly solution for pet owners",
+      "180 Days Cordless Freedom – Powered by a 3,000mAh USB-C rechargeable battery, this fountain runs cordlessly for up to 6 months per full charge. The 3.5L clean-water tank lasts 3–9 days, ideal for homes, balconies, or travel. Keep pets hydrated effortlessly, even when you’re away",
+      "304 Stainless Steel Bowl – The drinking surface uses 304-safe, rust-resistant stainless steel (clean/waste tanks: durable plastic) to prevent bacterial buildup and pet acne. Smudge-proof and easy to clean, it ensures worry-free hydration",
+      "Quiet Operation – Near-silent 30dB motor ensures peace day and night. *Note: A brief 30–35dB water-refill sound occurs during pouring water.* All detachable parts and non-stick materials enable 3-minute deep cleaning—perfect for sound-sensitive households",
+      "Warm Reminder: Any issues or needs please feel free to contact us via Amazon message, you can click our store name under “Buy Now\" ,and click \"Ask a Question\" , we will solve the problem within 12 hours"
+     ],
+     "special_feature": [
+      "Wastewater Separation",
+      "No filters",
+      "3,000mAh USB-C rechargeable battery"
+     ],
+     "material": [
+      "Acrylonitrile Butadiene Styrene (ABS)"
+     ],
+     "power_source_type": [
+      "Battery Powered"
+     ],
+     "included_components": [
+      "Water Fountain Unit"
+     ],
+     "item_type_keyword": [
+      "pet-self-waterers"
+     ]
+    },
+    {
+     "asin": "B07SBXDMZQ",
+     "brand": "Wonder Creature",
+     "price": 19.95,
+     "ranks": {
+      "Cat Fountains": 45,
+      "Pet Supplies": 4165
+     },
+     "title": "Wonder Creature Cat Water Fountain Stainless Steel Lid 81oz/2.4L-3 Filters",
+     "title_chars": 74,
+     "capacity": [
+      "2.4 liters"
+     ],
+     "bullet_point": [
+      "High-grade stainless-steel top is durable, hygienic and dishwasher-safe. All in one package includes 3 carbon filters, 1 Foam Filter and 1 Mat. 3 replacement filters instead of 1. No need to purchase filters immediately. Food grade material and BPA free cat fountain is safe for your pets.",
+      "Upgraded pump with LED light: The pump is quiet (below 40 dB). Low-voltage pump is reliable and easy to maintain. It's very convenient to observe water level through the window. Clean the pump with the brushes regularly to increase its lifespan.",
+      "Circulating filtration system: A replaceable charcoal filter removes dirt and food particles, and a pre-filter sponge designed to catch hair and debris. This system ensures that your beloved pets have access to fresh, clean water.",
+      "3 flow designs to encourage drinking: 360° multi-directional streams aerate the water for added oxygen and freshness. A source of running water encourages pets to drink more rather than still water. 3 different drinking modes.",
+      "Assemble and dissemble: Wonder Creature pet fountain only takes a few minutes to set up and disassemble for cleaning and maintenance."
+     ],
+     "special_feature": [
+      "Easy to Clean"
+     ],
+     "material": [
+      "Stainless Steel",
+      "Plastic"
+     ],
+     "power_source_type": [
+      "Corded Electric"
+     ],
+     "included_components": [
+      "Pet fountain x 1, Pump x 1, Replacement carbon filters x 3, Sponge foam filter x 1, Silicone mat x 1, DC adapter x 1"
+     ],
+     "item_type_keyword": [
+      "pet-self-waterers"
+     ]
+    },
+    {
+     "asin": "B0DZWWPGDN",
+     "brand": "Veken",
+     "price": 15.65,
+     "ranks": {
+      "Cat Fountains": 50,
+      "Pet Supplies": 4508
+     },
+     "title": "Veken 85oz/2.5L Cat Water Fountain with Detachable Tank & Secure Clips, D1",
+     "title_chars": 74,
+     "capacity": [
+      "85.0 ounces"
+     ],
+     "bullet_point": [
+      "Safe Power Design: Our cat water fountain uses magnetic induction for power, keeping the electrical parts separate from the water. This ensures safety by preventing any risk of electric shock or leaks, giving you peace of mind.",
+      "No Pump Needed: This pet fountain is designed without a traditional pump, making it easier to clean and set up. With fewer parts to worry about, maintenance is simple, and you won’t have to deal with pump-related issues. Note: For water-flow issues, ensure the lid and pump cap are properly seated, and check the water tank level (above MIN).",
+      "Quiet Operation, Only 25-30dB: The pet water fountain runs quietly, with very little noise from the machine or water flow. It’s energy-efficient and won’t disturb your home’s peace and quiet. Note: When the water level is near or below the MIN line, the fountain may make noise. Refill above MIN to restore quiet, stable operation.",
+      "Advanced 5-Stage Filtration: Our fountain features a 5-stage filtration system with upgraded materials. This combination ensures your pet has fresh and pure water for up to 3 weeks. Note: Clean the filter and the fountain every 2 weeks to prevent debris buildup that may lead to overflow.",
+      "Customizable Water Flow, Controllable LED: You can easily change the water flow by adding or removing the spout. Choose between a gentle flow or a more dynamic stream, depending on what works best for your pet. The LED light can be turned on/off using the button on the power cord.",
+      "Includes Silicone Pad, Replaceable Impeller and Cleaning Brush: The included silicone pad reduces noise and prevents water from splashing onto your floors. It helps keep your space clean and free from messes. Replaceable Impeller and cleaning brush give you a better product experience"
+     ],
+     "material": [
+      "Plastic"
+     ],
+     "power_source_type": [
+      "Corded Electric"
+     ],
+     "included_components": [
+      "1 x Pet Water Fountain（8.35*6.89*5.59inch）",
+      "1 x Adapter",
+      "2 x Filters; 2 x Pre-filter Sponges; 1 x Cleaning Brush",
+      "1 x Silicone Mat; 1 x Instruction Manual",
+      "2 x Replaceable lmpellers (1 impeller in pet water fountain)"
+     ],
+     "item_type_keyword": [
+      "pet-self-waterers"
+     ]
+    },
+    {
+     "asin": "B0BF5CQMKX",
+     "brand": "PETKIT",
+     "price": 28.49,
+     "ranks": {
+      "Cat Fountains": 67,
+      "Pet Supplies": 5215
+     },
+     "title": "PETKIT Eversweet Solo SE Cat Water Fountain 65oz/1.85L Wireless Pump",
+     "title_chars": 68,
+     "capacity": [
+      "1.8 liters"
+     ],
+     "bullet_point": [
+      "3.0 WIRELESS PUMP: This automatic cat water fountain uses upgraded wireless pump 3.0, which is more stable than wired water pump and does not have any wire bundle entanglement, it is more safe. At the same time, a piece of foam filter is placed in water inlet of the pump, which can intercept impurities entering the pump in advance and make the pump have a longer service life. Removable pump structure also makes cleaning easy.",
+      "SEPARABLE WATER TANK AND BASE: The water tank of this cat water dispenser and the power supply base are separable design, which is safer than charged non-separable tank. Detachable design is also convenient for you to add water and clean this dog water dispenser.",
+      "FILTER 3.0: This petkit cat water fountain for indoor cats comes with a piece of PETKIT filter 3.0, which increases the amount of filtration material and has better filtration, providing fresh water for your pet at any time.",
+      "PUMP TO PREVENT DRY BURNING: When the fountain is short of water, the pump will automatically stop working to prevent the device from burning out. You don't have to worry about your pet being in danger.",
+      "INDICATOR LIGHT REMINDER: Indicator light on this pet water fountain will alert you to the working status of fountain, and when the fountain is out of water, the indicator light will turn into a flashing blue light. Do not worry about missing the water refill time.",
+      "GUSHING CAT FOUNTAIN: It attracts the attention of cats dogs and increases the amount of water your pet drinks. This design can also reduce noise. Upgraded pump 3.0 can also reduce the noise to 25 db.",
+      "Replaced pump: B0B2DM5Q7N"
+     ],
+     "special_feature": [
+      "Ultra quiet",
+      "Wireless Pump",
+      "USB Cable",
+      "2L"
+     ],
+     "material": [
+      "ABS Plastic"
+     ],
+     "power_source_type": [
+      "Corded Electric"
+     ],
+     "included_components": [
+      "pump"
+     ],
+     "item_type_keyword": [
+      "pet-self-waterers"
+     ]
+    }
+   ],
+   "analysis": {
+    "title_pattern": "Short 68-74 chars: brand + 'Cat Water Fountain' + oz/L + one hook (Wireless, No Filters, Stainless Steel Lid, '3 Filters').",
+    "bullets": "5-7 bullets, 225-375 chars, CAPS headers on PETKIT. Pump safety (dry-burn stop, water/electric separation) -> quiet dB -> filter stages -> LED/indicator -> capacity -> what is included.",
+    "claims": [
+     "BPA-free food-grade plastic",
+     "dry-burn protection / auto pump stop",
+     "indicator light for low water",
+     "water level window",
+     "quiet pump 25-40dB",
+     "5-stage filter",
+     "included filters count",
+     "stainless top/tray"
+    ],
+    "number_one": "Veken C1 Classic B08NC54VZN (#4 Cat Fountains, #1 Dog Fountains, $13.99, 95oz): award + 2 flow modes + 5-stage filter + LED + window; impossible to beat on price - compete on long-tail and safety features.",
+    "gaps": "Head term 'cat water fountain' is owned by stainless units; our plastic ones rank 269-293. Our real features (low-water red light, anti-dry, visible level, 4-layer filter, SS tray on B0GHKRYV6W) match what PETKIT/Veken sell on. Target 'water fountains for cats indoor', 'cat water dispenser', 'automatic water dispenser for cats', 'cat water bowl' (competitors rank 1-15 there). Use oz+L ('74oz/2.2L'), state filters-included count in title for B0GHKRYV6W."
+   }
+  }
+ },
+ "helium10_keywords_competitors_rank_top20": {
+  "feeders (cols: B0GTCGYZDM,B0GHH8L59K,B09S8WMJY9,B0B5ZGGWBQ,B0953SDCRG,B0C5X2G933,B0DCNNN5FC)": [
+   {
+    "kw": "automatic cat feeder",
+    "sv": 187032,
+    "title_density": "42",
+    "comp_top20": 3,
+    "ranks": {
+     "B0GTCGYZDM": 271,
+     "B0GHH8L59K": 268,
+     "B09S8WMJY9": 155,
+     "B0B5ZGGWBQ": 15,
+     "B0953SDCRG": 15,
+     "B0C5X2G933": 29,
+     "B0DCNNN5FC": 11
+    }
+   },
+   {
+    "kw": "cat food dispenser",
+    "sv": 23065,
+    "title_density": "10",
+    "comp_top20": 3,
+    "ranks": {
+     "B0GTCGYZDM": null,
+     "B0GHH8L59K": null,
+     "B09S8WMJY9": 10,
+     "B0B5ZGGWBQ": 15,
+     "B0953SDCRG": 15,
+     "B0C5X2G933": 41,
+     "B0DCNNN5FC": 26
+    }
+   },
+   {
+    "kw": "cat feeder automatic",
+    "sv": 20495,
+    "title_density": "0",
+    "comp_top20": 4,
+    "ranks": {
+     "B0GTCGYZDM": 297,
+     "B0GHH8L59K": 300,
+     "B09S8WMJY9": 45,
+     "B0B5ZGGWBQ": 16,
+     "B0953SDCRG": 16,
+     "B0C5X2G933": 14,
+     "B0DCNNN5FC": 18
+    }
+   },
+   {
+    "kw": "slow feeder cat bowl",
+    "sv": 15954,
+    "title_density": "23",
+    "comp_top20": 2,
+    "ranks": {
+     "B0GTCGYZDM": null,
+     "B0GHH8L59K": null,
+     "B09S8WMJY9": 15,
+     "B0B5ZGGWBQ": 148,
+     "B0953SDCRG": 148,
+     "B0C5X2G933": 18,
+     "B0DCNNN5FC": null
+    }
+   },
+   {
+    "kw": "auto cat feeder",
+    "sv": 8838,
+    "title_density": "1",
+    "comp_top20": 2,
+    "ranks": {
+     "B0GTCGYZDM": 160,
+     "B0GHH8L59K": 306,
+     "B09S8WMJY9": 98,
+     "B0B5ZGGWBQ": 14,
+     "B0953SDCRG": 14,
+     "B0C5X2G933": 55,
+     "B0DCNNN5FC": 75
+    }
+   },
+   {
+    "kw": "automatic cat feeder with camera",
+    "sv": 6417,
+    "title_density": "30",
+    "comp_top20": 3,
+    "ranks": {
+     "B0GTCGYZDM": 121,
+     "B0GHH8L59K": null,
+     "B09S8WMJY9": 46,
+     "B0B5ZGGWBQ": 12,
+     "B0953SDCRG": 12,
+     "B0C5X2G933": 65,
+     "B0DCNNN5FC": 6
+    }
+   },
+   {
+    "kw": "wet food automatic feeder",
+    "sv": 5946,
+    "title_density": "4",
+    "comp_top20": 2,
+    "ranks": {
+     "B0GTCGYZDM": null,
+     "B0GHH8L59K": null,
+     "B09S8WMJY9": 61,
+     "B0B5ZGGWBQ": 15,
+     "B0953SDCRG": 15,
+     "B0C5X2G933": 70,
+     "B0DCNNN5FC": 136
+    }
+   },
+   {
+    "kw": "automatic feeder",
+    "sv": 5654,
+    "title_density": "0",
+    "comp_top20": 3,
+    "ranks": {
+     "B0GTCGYZDM": null,
+     "B0GHH8L59K": 261,
+     "B09S8WMJY9": 97,
+     "B0B5ZGGWBQ": 15,
+     "B0953SDCRG": 15,
+     "B0C5X2G933": 12,
+     "B0DCNNN5FC": 72
+    }
+   },
+   {
+    "kw": "automatic cat feeder 2 cats",
+    "sv": 4741,
+    "title_density": "6",
+    "comp_top20": 2,
+    "ranks": {
+     "B0GTCGYZDM": 178,
+     "B0GHH8L59K": 64,
+     "B09S8WMJY9": 98,
+     "B0B5ZGGWBQ": 71,
+     "B0953SDCRG": 71,
+     "B0C5X2G933": 5,
+     "B0DCNNN5FC": 9
+    }
+   },
+   {
+    "kw": "automatic cat feeders",
+    "sv": 4110,
+    "title_density": "2",
+    "comp_top20": 3,
+    "ranks": {
+     "B0GTCGYZDM": 299,
+     "B0GHH8L59K": 300,
+     "B09S8WMJY9": 54,
+     "B0B5ZGGWBQ": 13,
+     "B0953SDCRG": 13,
+     "B0C5X2G933": 28,
+     "B0DCNNN5FC": 18
+    }
+   },
+   {
+    "kw": "surefeed microchip pet feeder",
+    "sv": 3539,
+    "title_density": "1",
+    "comp_top20": 3,
+    "ranks": {
+     "B0GTCGYZDM": null,
+     "B0GHH8L59K": null,
+     "B09S8WMJY9": 10,
+     "B0B5ZGGWBQ": 13,
+     "B0953SDCRG": 13,
+     "B0C5X2G933": 32,
+     "B0DCNNN5FC": null
+    }
+   },
+   {
+    "kw": "cat feeder with collar sensor",
+    "sv": 3335,
+    "title_density": "1",
+    "comp_top20": 2,
+    "ranks": {
+     "B0GTCGYZDM": null,
+     "B0GHH8L59K": null,
+     "B09S8WMJY9": 77,
+     "B0B5ZGGWBQ": 16,
+     "B0953SDCRG": 16,
+     "B0C5X2G933": 36,
+     "B0DCNNN5FC": 37
+    }
+   },
+   {
+    "kw": "pet feeder",
+    "sv": 3330,
+    "title_density": "11",
+    "comp_top20": 2,
+    "ranks": {
+     "B0GTCGYZDM": null,
+     "B0GHH8L59K": null,
+     "B09S8WMJY9": 71,
+     "B0B5ZGGWBQ": 23,
+     "B0953SDCRG": 23,
+     "B0C5X2G933": 15,
+     "B0DCNNN5FC": 8
+    }
+   },
+   {
+    "kw": "automatic feeder cat dry food",
+    "sv": 3330,
+    "title_density": "0",
+    "comp_top20": 3,
+    "ranks": {
+     "B0GTCGYZDM": 250,
+     "B0GHH8L59K": 242,
+     "B09S8WMJY9": 82,
+     "B0B5ZGGWBQ": 15,
+     "B0953SDCRG": 15,
+     "B0C5X2G933": 20,
+     "B0DCNNN5FC": 73
+    }
+   },
+   {
+    "kw": "timed cat feeder",
+    "sv": 3330,
+    "title_density": "1",
+    "comp_top20": 2,
+    "ranks": {
+     "B0GTCGYZDM": 242,
+     "B0GHH8L59K": 270,
+     "B09S8WMJY9": 96,
+     "B0B5ZGGWBQ": 8,
+     "B0953SDCRG": 8,
+     "B0C5X2G933": 28,
+     "B0DCNNN5FC": 64
+    }
+   },
+   {
+    "kw": "auto feeder cat food",
+    "sv": 2859,
+    "title_density": "0",
+    "comp_top20": 2,
+    "ranks": {
+     "B0GTCGYZDM": 276,
+     "B0GHH8L59K": 192,
+     "B09S8WMJY9": 42,
+     "B0B5ZGGWBQ": 10,
+     "B0953SDCRG": 10,
+     "B0C5X2G933": 47,
+     "B0DCNNN5FC": 77
+    }
+   },
+   {
+    "kw": "cat auto feeder",
+    "sv": 2842,
+    "title_density": "0",
+    "comp_top20": 2,
+    "ranks": {
+     "B0GTCGYZDM": 270,
+     "B0GHH8L59K": null,
+     "B09S8WMJY9": 93,
+     "B0B5ZGGWBQ": 14,
+     "B0953SDCRG": 14,
+     "B0C5X2G933": 39,
+     "B0DCNNN5FC": 71
+    }
+   },
+   {
+    "kw": "cat food dispenser automatic",
+    "sv": 2667,
+    "title_density": "0",
+    "comp_top20": 3,
+    "ranks": {
+     "B0GTCGYZDM": 251,
+     "B0GHH8L59K": null,
+     "B09S8WMJY9": 58,
+     "B0B5ZGGWBQ": 13,
+     "B0953SDCRG": 13,
+     "B0C5X2G933": 36,
+     "B0DCNNN5FC": 12
+    }
+   },
+   {
+    "kw": "cat feeder with camera",
+    "sv": 2519,
+    "title_density": "31",
+    "comp_top20": 3,
+    "ranks": {
+     "B0GTCGYZDM": 127,
+     "B0GHH8L59K": null,
+     "B09S8WMJY9": 49,
+     "B0B5ZGGWBQ": 8,
+     "B0953SDCRG": 8,
+     "B0C5X2G933": 54,
+     "B0DCNNN5FC": 7
+    }
+   },
+   {
+    "kw": "food dispenser",
+    "sv": 2174,
+    "title_density": "26",
+    "comp_top20": 2,
+    "ranks": {
+     "B0GTCGYZDM": null,
+     "B0GHH8L59K": null,
+     "B09S8WMJY9": 7,
+     "B0B5ZGGWBQ": 23,
+     "B0953SDCRG": 23,
+     "B0C5X2G933": 6,
+     "B0DCNNN5FC": 22
+    }
+   },
+   {
+    "kw": "cat automatic feeder",
+    "sv": 2172,
+    "title_density": "0",
+    "comp_top20": 2,
+    "ranks": {
+     "B0GTCGYZDM": 240,
+     "B0GHH8L59K": 299,
+     "B09S8WMJY9": 74,
+     "B0B5ZGGWBQ": 13,
+     "B0953SDCRG": 13,
+     "B0C5X2G933": 43,
+     "B0DCNNN5FC": 63
+    }
+   },
+   {
+    "kw": "cat food feeder",
+    "sv": 2169,
+    "title_density": "0",
+    "comp_top20": 2,
+    "ranks": {
+     "B0GTCGYZDM": null,
+     "B0GHH8L59K": null,
+     "B09S8WMJY9": 99,
+     "B0B5ZGGWBQ": 15,
+     "B0953SDCRG": 15,
+     "B0C5X2G933": 28,
+     "B0DCNNN5FC": 33
+    }
+   },
+   {
+    "kw": "outdoor cat feeder",
+    "sv": 1768,
+    "title_density": "1",
+    "comp_top20": 3,
+    "ranks": {
+     "B0GTCGYZDM": null,
+     "B0GHH8L59K": null,
+     "B09S8WMJY9": 14,
+     "B0B5ZGGWBQ": 16,
+     "B0953SDCRG": 16,
+     "B0C5X2G933": 51,
+     "B0DCNNN5FC": 31
+    }
+   },
+   {
+    "kw": "automatic food dispenser for cats",
+    "sv": 1766,
+    "title_density": "0",
+    "comp_top20": 2,
+    "ranks": {
+     "B0GTCGYZDM": 244,
+     "B0GHH8L59K": null,
+     "B09S8WMJY9": 9,
+     "B0B5ZGGWBQ": 36,
+     "B0953SDCRG": 36,
+     "B0C5X2G933": 40,
+     "B0DCNNN5FC": 17
+    }
+   },
+   {
+    "kw": "timed cat feeders for dry food",
+    "sv": 1766,
+    "title_density": "0",
+    "comp_top20": 3,
+    "ranks": {
+     "B0GTCGYZDM": null,
+     "B0GHH8L59K": null,
+     "B09S8WMJY9": 80,
+     "B0B5ZGGWBQ": 15,
+     "B0953SDCRG": 15,
+     "B0C5X2G933": 10,
+     "B0DCNNN5FC": 52
+    }
+   },
+   {
+    "kw": "dog food feeder",
+    "sv": 1759,
+    "title_density": "0",
+    "comp_top20": 2,
+    "ranks": {
+     "B0GTCGYZDM": null,
+     "B0GHH8L59K": null,
+     "B09S8WMJY9": 56,
+     "B0B5ZGGWBQ": 15,
+     "B0953SDCRG": 15,
+     "B0C5X2G933": 278,
+     "B0DCNNN5FC": 21
+    }
+   },
+   {
+    "kw": "cat food automatic feeder",
+    "sv": 1759,
+    "title_density": "0",
+    "comp_top20": 2,
+    "ranks": {
+     "B0GTCGYZDM": 285,
+     "B0GHH8L59K": 280,
+     "B09S8WMJY9": 7,
+     "B0B5ZGGWBQ": 33,
+     "B0953SDCRG": 33,
+     "B0C5X2G933": 28,
+     "B0DCNNN5FC": 13
+    }
+   },
+   {
+    "kw": "pet food dispenser",
+    "sv": 1598,
+    "title_density": "1",
+    "comp_top20": 2,
+    "ranks": {
+     "B0GTCGYZDM": null,
+     "B0GHH8L59K": null,
+     "B09S8WMJY9": 124,
+     "B0B5ZGGWBQ": 9,
+     "B0953SDCRG": 9,
+     "B0C5X2G933": 22,
+     "B0DCNNN5FC": 38
+    }
+   },
+   {
+    "kw": "auto feeder",
+    "sv": 1594,
+    "title_density": "0",
+    "comp_top20": 2,
+    "ranks": {
+     "B0GTCGYZDM": 306,
+     "B0GHH8L59K": null,
+     "B09S8WMJY9": 74,
+     "B0B5ZGGWBQ": 14,
+     "B0953SDCRG": 14,
+     "B0C5X2G933": 28,
+     "B0DCNNN5FC": 55
+    }
+   },
+   {
+    "kw": "automatic wet cat food feeder",
+    "sv": 1594,
+    "title_density": "0",
+    "comp_top20": 2,
+    "ranks": {
+     "B0GTCGYZDM": null,
+     "B0GHH8L59K": null,
+     "B09S8WMJY9": 164,
+     "B0B5ZGGWBQ": 16,
+     "B0953SDCRG": 16,
+     "B0C5X2G933": 74,
+     "B0DCNNN5FC": 87
+    }
+   },
+   {
+    "kw": "auto cat feeder dry food",
+    "sv": 1509,
+    "title_density": "0",
+    "comp_top20": 2,
+    "ranks": {
+     "B0GTCGYZDM": 249,
+     "B0GHH8L59K": 299,
+     "B09S8WMJY9": 58,
+     "B0B5ZGGWBQ": 30,
+     "B0953SDCRG": 30,
+     "B0C5X2G933": 13,
+     "B0DCNNN5FC": 10
+    }
+   }
+  ],
+  "fountains (cols: B0GHKN9DBR,B0GHLBGCP3,B08NC54VZN,B0FPFZ3C5K,B0FDKQGRCK,B0FJMBNZQ1,B0C8MHHVPC)": [
+   {
+    "kw": "cat water fountain",
+    "sv": 319141,
+    "title_density": "46",
+    "comp_top20": 4,
+    "ranks": {
+     "B0GHKN9DBR": null,
+     "B0GHLBGCP3": 293,
+     "B08NC54VZN": 82,
+     "B0FPFZ3C5K": 11,
+     "B0FDKQGRCK": 8,
+     "B0FJMBNZQ1": 2,
+     "B0C8MHHVPC": 2
+    }
+   },
+   {
+    "kw": "dog water fountain",
+    "sv": 97595,
+    "title_density": "31",
+    "comp_top20": 3,
+    "ranks": {
+     "B0GHKN9DBR": null,
+     "B0GHLBGCP3": 269,
+     "B08NC54VZN": 142,
+     "B0FPFZ3C5K": 37,
+     "B0FDKQGRCK": 19,
+     "B0FJMBNZQ1": 12,
+     "B0C8MHHVPC": 12
+    }
+   },
+   {
+    "kw": "cat fountain",
+    "sv": 83521,
+    "title_density": "13",
+    "comp_top20": 4,
+    "ranks": {
+     "B0GHKN9DBR": null,
+     "B0GHLBGCP3": null,
+     "B08NC54VZN": 138,
+     "B0FPFZ3C5K": 16,
+     "B0FDKQGRCK": 9,
+     "B0FJMBNZQ1": 2,
+     "B0C8MHHVPC": 2
+    }
+   },
+   {
+    "kw": "cat water fountain stainless steel",
+    "sv": 79303,
+    "title_density": "21",
+    "comp_top20": 4,
+    "ranks": {
+     "B0GHKN9DBR": null,
+     "B0GHLBGCP3": null,
+     "B08NC54VZN": 24,
+     "B0FPFZ3C5K": 16,
+     "B0FDKQGRCK": 12,
+     "B0FJMBNZQ1": 2,
+     "B0C8MHHVPC": 2
+    }
+   },
+   {
+    "kw": "stainless steel cat water fountain",
+    "sv": 70227,
+    "title_density": "15",
+    "comp_top20": 4,
+    "ranks": {
+     "B0GHKN9DBR": null,
+     "B0GHLBGCP3": null,
+     "B08NC54VZN": 91,
+     "B0FPFZ3C5K": 9,
+     "B0FDKQGRCK": 15,
+     "B0FJMBNZQ1": 2,
+     "B0C8MHHVPC": 2
+    }
+   },
+   {
+    "kw": "water fountains for cats indoor",
+    "sv": 49512,
+    "title_density": "2",
+    "comp_top20": 5,
+    "ranks": {
+     "B0GHKN9DBR": 236,
+     "B0GHLBGCP3": 285,
+     "B08NC54VZN": 3,
+     "B0FPFZ3C5K": 16,
+     "B0FDKQGRCK": 7,
+     "B0FJMBNZQ1": 1,
+     "B0C8MHHVPC": 1
+    }
+   },
+   {
+    "kw": "pet water fountain",
+    "sv": 42109,
+    "title_density": "10",
+    "comp_top20": 3,
+    "ranks": {
+     "B0GHKN9DBR": null,
+     "B0GHLBGCP3": null,
+     "B08NC54VZN": 82,
+     "B0FPFZ3C5K": 32,
+     "B0FDKQGRCK": 9,
+     "B0FJMBNZQ1": 2,
+     "B0C8MHHVPC": 2
+    }
+   },
+   {
+    "kw": "cat water bowl",
+    "sv": 27400,
+    "title_density": "5",
+    "comp_top20": 5,
+    "ranks": {
+     "B0GHKN9DBR": null,
+     "B0GHLBGCP3": null,
+     "B08NC54VZN": 6,
+     "B0FPFZ3C5K": 1,
+     "B0FDKQGRCK": 15,
+     "B0FJMBNZQ1": 3,
+     "B0C8MHHVPC": 3
+    }
+   },
+   {
+    "kw": "dog water bowl dispenser",
+    "sv": 26095,
+    "title_density": "6",
+    "comp_top20": 2,
+    "ranks": {
+     "B0GHKN9DBR": null,
+     "B0GHLBGCP3": null,
+     "B08NC54VZN": 27,
+     "B0FPFZ3C5K": 8,
+     "B0FDKQGRCK": 18,
+     "B0FJMBNZQ1": 139,
+     "B0C8MHHVPC": 139
+    }
+   },
+   {
+    "kw": "cat water dispenser",
+    "sv": 17542,
+    "title_density": "8",
+    "comp_top20": 4,
+    "ranks": {
+     "B0GHKN9DBR": 254,
+     "B0GHLBGCP3": 266,
+     "B08NC54VZN": 13,
+     "B0FPFZ3C5K": 74,
+     "B0FDKQGRCK": 15,
+     "B0FJMBNZQ1": 8,
+     "B0C8MHHVPC": 8
+    }
+   },
+   {
+    "kw": "cat fountain stainless steel",
+    "sv": 15361,
+    "title_density": "0",
+    "comp_top20": 4,
+    "ranks": {
+     "B0GHKN9DBR": null,
+     "B0GHLBGCP3": null,
+     "B08NC54VZN": 27,
+     "B0FPFZ3C5K": 8,
+     "B0FDKQGRCK": 16,
+     "B0FJMBNZQ1": 1,
+     "B0C8MHHVPC": 1
+    }
+   },
+   {
+    "kw": "water fountain for dogs inside",
+    "sv": 14057,
+    "title_density": "2",
+    "comp_top20": 3,
+    "ranks": {
+     "B0GHKN9DBR": null,
+     "B0GHLBGCP3": null,
+     "B08NC54VZN": 88,
+     "B0FPFZ3C5K": 1,
+     "B0FDKQGRCK": 28,
+     "B0FJMBNZQ1": 6,
+     "B0C8MHHVPC": 6
+    }
+   },
+   {
+    "kw": "dog water dispenser",
+    "sv": 12131,
+    "title_density": "19",
+    "comp_top20": 4,
+    "ranks": {
+     "B0GHKN9DBR": null,
+     "B0GHLBGCP3": null,
+     "B08NC54VZN": 23,
+     "B0FPFZ3C5K": 8,
+     "B0FDKQGRCK": 18,
+     "B0FJMBNZQ1": 17,
+     "B0C8MHHVPC": 17
+    }
+   },
+   {
+    "kw": "pet fountain",
+    "sv": 11094,
+    "title_density": "6",
+    "comp_top20": 4,
+    "ranks": {
+     "B0GHKN9DBR": null,
+     "B0GHLBGCP3": null,
+     "B08NC54VZN": 84,
+     "B0FPFZ3C5K": 15,
+     "B0FDKQGRCK": 8,
+     "B0FJMBNZQ1": 2,
+     "B0C8MHHVPC": 2
+    }
+   },
+   {
+    "kw": "dog fountain water bowl",
+    "sv": 11094,
+    "title_density": "3",
+    "comp_top20": 2,
+    "ranks": {
+     "B0GHKN9DBR": 285,
+     "B0GHLBGCP3": null,
+     "B08NC54VZN": 6,
+     "B0FPFZ3C5K": 3,
+     "B0FDKQGRCK": 64,
+     "B0FJMBNZQ1": 100,
+     "B0C8MHHVPC": 100
+    }
+   },
+   {
+    "kw": "pet water dispenser",
+    "sv": 8821,
+    "title_density": "5",
+    "comp_top20": 5,
+    "ranks": {
+     "B0GHKN9DBR": null,
+     "B0GHLBGCP3": null,
+     "B08NC54VZN": 15,
+     "B0FPFZ3C5K": 4,
+     "B0FDKQGRCK": 18,
+     "B0FJMBNZQ1": 14,
+     "B0C8MHHVPC": 14
+    }
+   },
+   {
+    "kw": "automatic water dispenser for cats",
+    "sv": 8819,
+    "title_density": "2",
+    "comp_top20": 3,
+    "ranks": {
+     "B0GHKN9DBR": 257,
+     "B0GHLBGCP3": 249,
+     "B08NC54VZN": 2,
+     "B0FPFZ3C5K": 58,
+     "B0FDKQGRCK": 52,
+     "B0FJMBNZQ1": 5,
+     "B0C8MHHVPC": 5
+    }
+   },
+   {
+    "kw": "stainless steel water fountain for cats",
+    "sv": 8816,
+    "title_density": "0",
+    "comp_top20": 4,
+    "ranks": {
+     "B0GHKN9DBR": null,
+     "B0GHLBGCP3": null,
+     "B08NC54VZN": 61,
+     "B0FPFZ3C5K": 10,
+     "B0FDKQGRCK": 16,
+     "B0FJMBNZQ1": 2,
+     "B0C8MHHVPC": 2
+    }
+   },
+   {
+    "kw": "water fountain for cats",
+    "sv": 7835,
+    "title_density": "2",
+    "comp_top20": 4,
+    "ranks": {
+     "B0GHKN9DBR": null,
+     "B0GHLBGCP3": null,
+     "B08NC54VZN": 68,
+     "B0FPFZ3C5K": 12,
+     "B0FDKQGRCK": 10,
+     "B0FJMBNZQ1": 2,
+     "B0C8MHHVPC": 2
+    }
+   },
+   {
+    "kw": "water dispenser for dogs",
+    "sv": 7806,
+    "title_density": "1",
+    "comp_top20": 5,
+    "ranks": {
+     "B0GHKN9DBR": null,
+     "B0GHLBGCP3": null,
+     "B08NC54VZN": 15,
+     "B0FPFZ3C5K": 6,
+     "B0FDKQGRCK": 19,
+     "B0FJMBNZQ1": 17,
+     "B0C8MHHVPC": 17
+    }
+   },
+   {
+    "kw": "water bowl",
+    "sv": 7740,
+    "title_density": "14",
+    "comp_top20": 4,
+    "ranks": {
+     "B0GHKN9DBR": null,
+     "B0GHLBGCP3": null,
+     "B08NC54VZN": 10,
+     "B0FPFZ3C5K": 1,
+     "B0FDKQGRCK": 21,
+     "B0FJMBNZQ1": 7,
+     "B0C8MHHVPC": 7
+    }
+   },
+   {
+    "kw": "automatic water dispenser for dogs",
+    "sv": 7439,
+    "title_density": "2",
+    "comp_top20": 5,
+    "ranks": {
+     "B0GHKN9DBR": null,
+     "B0GHLBGCP3": null,
+     "B08NC54VZN": 14,
+     "B0FPFZ3C5K": 3,
+     "B0FDKQGRCK": 17,
+     "B0FJMBNZQ1": 11,
+     "B0C8MHHVPC": 11
+    }
+   },
+   {
+    "kw": "water fountain",
+    "sv": 7092,
+    "title_density": "30",
+    "comp_top20": 3,
+    "ranks": {
+     "B0GHKN9DBR": null,
+     "B0GHLBGCP3": null,
+     "B08NC54VZN": 7,
+     "B0FPFZ3C5K": 90,
+     "B0FDKQGRCK": 94,
+     "B0FJMBNZQ1": 4,
+     "B0C8MHHVPC": 4
+    }
+   },
+   {
+    "kw": "dog water fountain stainless steel",
+    "sv": 6419,
+    "title_density": "1",
+    "comp_top20": 3,
+    "ranks": {
+     "B0GHKN9DBR": null,
+     "B0GHLBGCP3": null,
+     "B08NC54VZN": 72,
+     "B0FPFZ3C5K": 43,
+     "B0FDKQGRCK": 16,
+     "B0FJMBNZQ1": 5,
+     "B0C8MHHVPC": 5
+    }
+   },
+   {
+    "kw": "cat drinking fountain",
+    "sv": 5948,
+    "title_density": "2",
+    "comp_top20": 3,
+    "ranks": {
+     "B0GHKN9DBR": 216,
+     "B0GHLBGCP3": null,
+     "B08NC54VZN": 65,
+     "B0FPFZ3C5K": 29,
+     "B0FDKQGRCK": 16,
+     "B0FJMBNZQ1": 3,
+     "B0C8MHHVPC": 3
+    }
+   },
+   {
+    "kw": "water bowl fountain",
+    "sv": 5948,
+    "title_density": "0",
+    "comp_top20": 4,
+    "ranks": {
+     "B0GHKN9DBR": 276,
+     "B0GHLBGCP3": null,
+     "B08NC54VZN": 122,
+     "B0FPFZ3C5K": 1,
+     "B0FDKQGRCK": 18,
+     "B0FJMBNZQ1": 4,
+     "B0C8MHHVPC": 4
+    }
+   },
+   {
+    "kw": "cat fountains",
+    "sv": 5946,
+    "title_density": "1",
+    "comp_top20": 4,
+    "ranks": {
+     "B0GHKN9DBR": null,
+     "B0GHLBGCP3": null,
+     "B08NC54VZN": 72,
+     "B0FPFZ3C5K": 14,
+     "B0FDKQGRCK": 8,
+     "B0FJMBNZQ1": 2,
+     "B0C8MHHVPC": 2
+    }
+   },
+   {
+    "kw": "automatic dog water dispenser",
+    "sv": 5654,
+    "title_density": "7",
+    "comp_top20": 3,
+    "ranks": {
+     "B0GHKN9DBR": 302,
+     "B0GHLBGCP3": null,
+     "B08NC54VZN": 16,
+     "B0FPFZ3C5K": 4,
+     "B0FDKQGRCK": 17,
+     "B0FJMBNZQ1": 32,
+     "B0C8MHHVPC": 32
+    }
+   },
+   {
+    "kw": "fountain",
+    "sv": 4748,
+    "title_density": "45",
+    "comp_top20": 2,
+    "ranks": {
+     "B0GHKN9DBR": null,
+     "B0GHLBGCP3": null,
+     "B08NC54VZN": 72,
+     "B0FPFZ3C5K": 73,
+     "B0FDKQGRCK": 90,
+     "B0FJMBNZQ1": 8,
+     "B0C8MHHVPC": 8
+    }
+   },
+   {
+    "kw": "water dispenser for cats",
+    "sv": 4736,
+    "title_density": "2",
+    "comp_top20": 4,
+    "ranks": {
+     "B0GHKN9DBR": 247,
+     "B0GHLBGCP3": null,
+     "B08NC54VZN": 7,
+     "B0FPFZ3C5K": 79,
+     "B0FDKQGRCK": 12,
+     "B0FJMBNZQ1": 6,
+     "B0C8MHHVPC": 6
+    }
+   },
+   {
+    "kw": "stainless steel cat fountain",
+    "sv": 4542,
+    "title_density": "1",
+    "comp_top20": 4,
+    "ranks": {
+     "B0GHKN9DBR": null,
+     "B0GHLBGCP3": null,
+     "B08NC54VZN": 64,
+     "B0FPFZ3C5K": 13,
+     "B0FDKQGRCK": 15,
+     "B0FJMBNZQ1": 2,
+     "B0C8MHHVPC": 2
+    }
+   },
+   {
+    "kw": "cat water fountain with filtration",
+    "sv": 4522,
+    "title_density": "0",
+    "comp_top20": 4,
+    "ranks": {
+     "B0GHKN9DBR": null,
+     "B0GHLBGCP3": 302,
+     "B08NC54VZN": 3,
+     "B0FPFZ3C5K": 1,
+     "B0FDKQGRCK": 29,
+     "B0FJMBNZQ1": 2,
+     "B0C8MHHVPC": 2
+    }
+   },
+   {
+    "kw": "water bowl for dogs",
+    "sv": 4231,
+    "title_density": "3",
+    "comp_top20": 4,
+    "ranks": {
+     "B0GHKN9DBR": null,
+     "B0GHLBGCP3": null,
+     "B08NC54VZN": 12,
+     "B0FPFZ3C5K": 2,
+     "B0FDKQGRCK": 35,
+     "B0FJMBNZQ1": 17,
+     "B0C8MHHVPC": 17
+    }
+   },
+   {
+    "kw": "metal cat water fountain",
+    "sv": 3337,
+    "title_density": "0",
+    "comp_top20": 3,
+    "ranks": {
+     "B0GHKN9DBR": null,
+     "B0GHLBGCP3": null,
+     "B08NC54VZN": 16,
+     "B0FPFZ3C5K": 30,
+     "B0FDKQGRCK": 49,
+     "B0FJMBNZQ1": 2,
+     "B0C8MHHVPC": 2
+    }
+   },
+   {
+    "kw": "pet water bowl",
+    "sv": 3335,
+    "title_density": "1",
+    "comp_top20": 5,
+    "ranks": {
+     "B0GHKN9DBR": null,
+     "B0GHLBGCP3": null,
+     "B08NC54VZN": 13,
+     "B0FPFZ3C5K": 2,
+     "B0FDKQGRCK": 18,
+     "B0FJMBNZQ1": 8,
+     "B0C8MHHVPC": 8
+    }
+   }
+  ]
+ }
+}

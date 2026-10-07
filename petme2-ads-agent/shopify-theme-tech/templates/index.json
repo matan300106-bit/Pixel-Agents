@@ -1,0 +1,573 @@
+{
+  "sections": {
+    "hero": {
+      "type": "pm2-entrance",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "video_url": "https://cdn.shopify.com/videos/c/vp/95b6d8af127243cfa743349a46393a78/95b6d8af127243cfa743349a46393a78.HD-720p-1.6Mbps-96389653.mp4",
+        "poster": "shopify://shop_images/petme2-hero-2-cats-poster.jpg",
+        "video_alt": "Two cats waiting at the PETME2 dual bowl feeder, then eating together",
+        "badge": "Feeds 2 cats at once",
+        "product": "2-in-1-smart-feeder-white",
+        "chip_title": "",
+        "eyebrow_tag": "New",
+        "eyebrow": "Free U.S. shipping · for cats & small dogs",
+        "heading_1": "Easy everyday",
+        "heading_2": "pet care.",
+        "subtext": "Meals on time and fresh water all day. Set it up once, enjoy more time together.",
+        "button_label": "Shop now",
+        "button_link": "shopify://collections/all",
+        "link_label": "Find the right feeder",
+        "link_url": "shopify://pages/how-to-choose",
+        "trust_1": "Free U.S. shipping",
+        "trust_2": "30-day money back",
+        "trust_3": "Easy app control",
+        "padding_top": 56,
+        "padding_bottom": 56
+      }
+    },
+    "ticker": {
+      "type": "pm2-marquee",
+      "settings": {
+        "color_scheme": "scheme-3",
+        "duration": 40,
+        "size": "small",
+        "show_divider": true,
+        "show_borders": true,
+        "reverse": false
+      },
+      "blocks": {
+        "b1": {
+          "type": "item",
+          "settings": {
+            "text": "Shipped fast from U.S. warehouses",
+            "icon": "sparkle"
+          }
+        },
+        "b2": {
+          "type": "item",
+          "settings": {
+            "text": "Free U.S. shipping",
+            "icon": "truck"
+          }
+        },
+        "b3": {
+          "type": "item",
+          "settings": {
+            "text": "30-day money-back guarantee",
+            "icon": "sparkle"
+          }
+        },
+        "b4": {
+          "type": "item",
+          "settings": {
+            "text": "10% off your first order",
+            "icon": "sparkle"
+          }
+        },
+        "b5": {
+          "type": "item",
+          "settings": {
+            "text": "For cats & small dogs",
+            "icon": "paw"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "b5"
+      ]
+    },
+    "shop": {
+      "type": "pm2-product-tabs",
+      "settings": {
+        "eyebrow": "Shop",
+        "heading": "Fountains, feeders & supplements",
+        "color_scheme": "scheme-3",
+        "products_per_tab": 4,
+        "show_view_all": true,
+        "padding_top": 56,
+        "padding_bottom": 56
+      },
+      "blocks": {
+        "b1": {
+          "type": "tab",
+          "settings": {
+            "label": "Feeders",
+            "collection": "feeders",
+            "text": "Meals on time, set from your phone."
+          }
+        },
+        "b2": {
+          "type": "tab",
+          "settings": {
+            "label": "Fountains",
+            "collection": "water-fountains",
+            "text": "Fresh, moving water with a quiet pump."
+          }
+        },
+        "b3": {
+          "type": "tab",
+          "settings": {
+            "label": "Supplements",
+            "collection": "supplements",
+            "text": "Daily soft chews for cats and dogs. Coming soon."
+          }
+        }
+      },
+      "block_order": [
+        "b2",
+        "b1",
+        "b3"
+      ]
+    },
+    "quiz": {
+      "type": "pm2-quiz",
+      "settings": {
+        "color_scheme": "scheme-4",
+        "note_feeder": "For dry food · cats & small dogs · Free U.S. shipping · 30-day money-back guarantee",
+        "note_fountain": "Quiet pump · comes apart for cleaning · Free U.S. shipping · 30-day money-back guarantee"
+      }
+    },
+    "bento": {
+      "type": "pm2-bento",
+      "settings": {
+        "eyebrow": "Why pet parents pick PETME2",
+        "heading": "Simple care, done for you.",
+        "subheading": "<p>Set it up once. They eat on time and drink fresh water.</p>",
+        "color_scheme": "scheme-3",
+        "padding_top": 56,
+        "padding_bottom": 56
+      },
+      "blocks": {
+        "b1": {
+          "type": "image_tile",
+          "settings": {
+            "size": "large",
+            "image": "shopify://shop_images/Your_pets_meals_managed_from_your_phone_3d0ac522-2f46-4a7b-a1d9-e2b48f76d5bb.jpg",
+            "eyebrow": "App control",
+            "title": "Meals on time, from your phone",
+            "text": "Set meal times and portions in the app.",
+            "link": "shopify://collections/feeders",
+            "link_label": "Shop feeders"
+          }
+        },
+        "b2": {
+          "type": "stat_tile",
+          "settings": {
+            "size": "small",
+            "value": "1080P",
+            "label": "Live view",
+            "text": "See and talk to your pet with the 3L Camera feeder."
+          }
+        },
+        "b3": {
+          "type": "text_tile",
+          "settings": {
+            "size": "small",
+            "icon": "bowl",
+            "title": "Two bowls, two pets",
+            "text": "Dual-bowl feeders fill two stainless steel bowls. Dry food only."
+          }
+        },
+        "b4": {
+          "type": "image_tile",
+          "settings": {
+            "size": "wide",
+            "image": "shopify://shop_images/Homepage-Water-Fountains_79d73496-2084-410b-bd2e-dc1ea0e329a5.png",
+            "eyebrow": "Fountains",
+            "title": "Fresh water they'll love",
+            "text": "Quiet pumps. Every model comes apart for cleaning.",
+            "link": "shopify://collections/water-fountains",
+            "link_label": "Shop fountains"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ]
+    },
+    "cmp_feeders": {
+      "type": "pm2-compare",
+      "settings": {
+        "color_scheme": "scheme-4",
+        "anchor": "compare-feeders",
+        "eyebrow": "Compare feeders",
+        "heading": "Which feeder fits your pet?",
+        "text": "Every PETME2 feeder runs on a schedule from the app. Made for dry food, cats and small dogs.",
+        "row1": "Capacity",
+        "row2": "Bowls",
+        "row3": "Control",
+        "row4": "Camera",
+        "row5": "Audio",
+        "button_text": "View details"
+      },
+      "blocks": {
+        "m1": {
+          "type": "model",
+          "settings": {
+            "product": "2-in-1-smart-feeder",
+            "name": "3L Dual Bowl",
+            "badge": "",
+            "v1": "3L",
+            "v2": "2 stainless steel",
+            "v3": "App",
+            "v4": "—",
+            "v5": "2-way audio"
+          }
+        },
+        "m2": {
+          "type": "model",
+          "settings": {
+            "product": "2-in-1-feeder-1",
+            "name": "5L Elevated WiFi",
+            "badge": "",
+            "v1": "5L",
+            "v2": "2 stainless steel",
+            "v3": "WiFi app",
+            "v4": "—",
+            "v5": "Voice recording"
+          }
+        },
+        "m3": {
+          "type": "model",
+          "settings": {
+            "product": "smart-feeder",
+            "name": "3L Camera Feeder",
+            "badge": "",
+            "v1": "3L",
+            "v2": "1 stainless steel",
+            "v3": "WiFi app",
+            "v4": "1080P HD, live view",
+            "v5": "2-way audio"
+          }
+        }
+      },
+      "block_order": [
+        "m1",
+        "m2",
+        "m3"
+      ]
+    },
+    "cmp_fountains": {
+      "type": "pm2-compare",
+      "settings": {
+        "color_scheme": "scheme-3",
+        "anchor": "compare-fountains",
+        "eyebrow": "Compare fountains",
+        "heading": "Which fountain fits your home?",
+        "text": "Every PETME2 fountain has a quiet pump and comes apart for easy cleaning.",
+        "row1": "Capacity",
+        "row2": "Material",
+        "row3": "Filter",
+        "row4": "Water level",
+        "row5": "Best for",
+        "button_text": "View details"
+      },
+      "blocks": {
+        "w1": {
+          "type": "model",
+          "settings": {
+            "product": "water-fountain",
+            "name": "Stainless 3.2L",
+            "badge": "Premium",
+            "v1": "3.2L / 108oz",
+            "v2": "Stainless steel",
+            "v3": "4-layer filter",
+            "v4": "LED light",
+            "v5": "Big drinkers, cats & dogs"
+          }
+        },
+        "w2": {
+          "type": "model",
+          "settings": {
+            "product": "water-fountain-4",
+            "name": "Steel Tray 2.2L",
+            "badge": "",
+            "v1": "2.2L",
+            "v2": "Plastic + steel tray",
+            "v3": "4-layer filter",
+            "v4": "Window + low-water light",
+            "v5": "A steel drinking surface"
+          }
+        },
+        "w3": {
+          "type": "model",
+          "settings": {
+            "product": "water-fountain-2",
+            "name": "Transparent 2.2L",
+            "badge": "",
+            "v1": "2.2L",
+            "v2": "Clear plastic",
+            "v3": "Filter cartridge",
+            "v4": "See-through body",
+            "v5": "Seeing water at a glance"
+          }
+        },
+        "w4": {
+          "type": "model",
+          "settings": {
+            "product": "water-fountain-simple",
+            "name": "Classic 2L",
+            "badge": "",
+            "v1": "2L",
+            "v2": "Plastic",
+            "v3": "—",
+            "v4": "Window + low-water light",
+            "v5": "Small spaces"
+          }
+        }
+      },
+      "block_order": [
+        "w1",
+        "w2",
+        "w3",
+        "w4"
+      ]
+    },
+    "faq": {
+      "type": "collapsible-content",
+      "settings": {
+        "caption": "FAQ",
+        "heading": "Questions? We've got you.",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "layout": "none",
+        "container_color_scheme": "scheme-3",
+        "color_scheme": "scheme-4",
+        "open_first_collapsible_row": true,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 56,
+        "padding_bottom": 56
+      },
+      "blocks": {
+        "q1": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What if my pet doesn't like it?",
+            "icon": "check_mark",
+            "row_content": "<p>No worries. Every order comes with a 30-day money-back guarantee. If it's not a fit, contact us within 30 days and we'll give you your money back.</p>"
+          }
+        },
+        "q2": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How fast is shipping?",
+            "icon": "check_mark",
+            "row_content": "<p>Shipping is free on every U.S. order. Orders are fulfilled by Amazon.</p>"
+          }
+        },
+        "q3": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Do the feeders work with wet food?",
+            "icon": "check_mark",
+            "row_content": "<p>No. PETME2 feeders are made for dry food (kibble).</p>"
+          }
+        },
+        "q4": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Which feeder is best for 2 pets?",
+            "icon": "check_mark",
+            "row_content": "<p>The 3L Dual Bowl or the 5L Elevated WiFi. Both split food into two stainless steel bowls.</p>"
+          }
+        },
+        "q5": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Do I need WiFi?",
+            "icon": "check_mark",
+            "row_content": "<p>WiFi is needed for the app: schedules and portions.</p>"
+          }
+        },
+        "q6": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Are the fountains loud?",
+            "icon": "check_mark",
+            "row_content": "<p>No. Every PETME2 fountain uses a quiet pump made for use inside the home.</p>"
+          }
+        },
+        "q7": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Are the fountains easy to clean?",
+            "icon": "check_mark",
+            "row_content": "<p>Yes. Every PETME2 fountain comes apart for cleaning.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5",
+        "q6",
+        "q7"
+      ]
+    },
+    "faq_schema": {
+      "type": "pm2-faq-schema",
+      "settings": {
+        "output_schema": true,
+        "show_visible": false
+      },
+      "blocks": {
+        "b1": {
+          "type": "faq",
+          "settings": {
+            "question": "What if my pet doesn't like it?",
+            "answer": "<p>No worries. Every order comes with a 30-day money-back guarantee. If it's not a fit, contact us within 30 days and we'll give you your money back.</p>"
+          }
+        },
+        "b2": {
+          "type": "faq",
+          "settings": {
+            "question": "How fast is shipping?",
+            "answer": "<p>Shipping is free on every U.S. order. Orders are fulfilled by Amazon.</p>"
+          }
+        },
+        "b3": {
+          "type": "faq",
+          "settings": {
+            "question": "Do the feeders work with wet food?",
+            "answer": "<p>No. PETME2 feeders are made for dry food (kibble).</p>"
+          }
+        },
+        "b4": {
+          "type": "faq",
+          "settings": {
+            "question": "Which feeder is best for 2 pets?",
+            "answer": "<p>The 3L Dual Bowl or the 5L Elevated WiFi. Both split food into two stainless steel bowls.</p>"
+          }
+        },
+        "b5": {
+          "type": "faq",
+          "settings": {
+            "question": "Do I need WiFi?",
+            "answer": "<p>WiFi is needed for the app: schedules and portions.</p>"
+          }
+        },
+        "b6": {
+          "type": "faq",
+          "settings": {
+            "question": "Are the fountains loud?",
+            "answer": "<p>No. Every PETME2 fountain uses a quiet pump made for use inside the home.</p>"
+          }
+        },
+        "b7": {
+          "type": "faq",
+          "settings": {
+            "question": "Are the fountains easy to clean?",
+            "answer": "<p>Yes. Every PETME2 fountain comes apart for cleaning.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "b5",
+        "b6",
+        "b7"
+      ]
+    },
+    "cta": {
+      "type": "pm2-cta-band",
+      "settings": {
+        "eyebrow": "Ready when you are",
+        "heading": "Easy care starts here.",
+        "text": "<p>Try it for 30 days. If your pet doesn't love it, get your money back.</p>",
+        "button_label_1": "Shop feeders",
+        "button_link_1": "shopify://collections/feeders",
+        "button_label_2": "Shop fountains",
+        "button_link_2": "shopify://collections/water-fountains",
+        "color_scheme": "scheme-5",
+        "padding_top": 64,
+        "padding_bottom": 64
+      },
+      "blocks": {
+        "b1": {
+          "type": "chip",
+          "settings": {
+            "text": "Free U.S. shipping"
+          }
+        },
+        "b2": {
+          "type": "chip",
+          "settings": {
+            "text": "30-day money-back guarantee"
+          }
+        },
+        "b3": {
+          "type": "chip",
+          "settings": {
+            "text": "10% off your first order"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3"
+      ]
+    },
+    "guarantee": {
+      "type": "pm2-guarantee",
+      "settings": {
+        "style": "card",
+        "icon": "shield",
+        "color_scheme": "scheme-4",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "soon_supplements": {
+      "type": "pm2-soon-supplements",
+      "settings": {
+        "image": "shopify://shop_images/petme2-supplements-banner.png",
+        "ribbon": "Coming soon",
+        "eyebrow": "New from PETME2",
+        "heading": "Daily supplements for cats & dogs",
+        "text": "8 tasty soft chews for everyday care, from the team behind PETME2 feeders and fountains. Launching soon.",
+        "cats": "Skin & Coat\nImmune Support\nL-Lysine\nCat Grass",
+        "dogs": "Hip & Joint\nProbiotic\nMultivitamin 25-in-1\nTear Stain",
+        "signup_title": "Be first to know when they launch",
+        "button_label": "Notify me",
+        "success_text": "You're on the list! We'll email you on launch day.",
+        "link_label": "See the line-up",
+        "link_url": "shopify://collections/supplements",
+        "trust_1": "Full ingredient list on every jar",
+        "trust_2": "Clear daily dose by weight",
+        "trust_3": "Chicken-flavored soft chews, no pills",
+        "trust_4": "30-day money-back guarantee",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "ticker",
+    "shop",
+    "quiz",
+    "bento",
+    "cmp_feeders",
+    "cmp_fountains",
+    "guarantee",
+    "soon_supplements",
+    "faq",
+    "faq_schema",
+    "cta"
+  ]
+}

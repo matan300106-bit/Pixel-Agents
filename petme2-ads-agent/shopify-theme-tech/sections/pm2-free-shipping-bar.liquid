@@ -1,0 +1,122 @@
+{%- comment -%}
+  PETME2 free-shipping reassurance strip (shipping is free on every U.S. order).
+  Truck icon + main line + optional second line. No cart math.
+  - "inline": shows where the section is placed (e.g. top of the cart page).
+  - "drawer": puts a copy inside Dawn's cart drawer, under its header, on every page
+    that has this section (put it in the header group to show it site-wide).
+    Dawn re-renders the drawer after each cart change, so the copy is re-inserted.
+  - "both": both of the above.
+{%- endcomment -%}
+{%- liquid
+  assign s = section.settings
+  assign sid = section.id
+  assign show_inline = true
+  if s.placement == 'drawer'
+    assign show_inline = false
+  endif
+-%}
+{%- if s.text != blank -%}
+  {%- capture strip_inner -%}
+    <span class="pm2-fsb__icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="18" height="18"><path d="M2.5 6.5h11v9h-11zM13.5 9.5h4l3 3.2v2.8h-7" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><circle cx="6.5" cy="17" r="1.9" fill="rgb(var(--color-background))" stroke="currentColor" stroke-width="1.9"/><circle cx="17" cy="17" r="1.9" fill="rgb(var(--color-background))" stroke="currentColor" stroke-width="1.9"/></svg>
+    </span>
+    <span class="pm2-fsb__body">
+      <span class="pm2-fsb__msg">{{ s.text | escape }}</span>
+      {%- if s.subtext != blank -%}
+        <span class="pm2-fsb__sub">{{ s.subtext | escape }}</span>
+      {%- endif -%}
+    </span>
+  {%- endcapture -%}
+
+  {%- if show_inline -%}
+    <div class="pm2-fsb-wrap color-{{ s.color_scheme }} gradient">
+      <div class="page-width pm2-fsb-outer" style="--pm2-pt: {{ s.padding_top }}px; --pm2-pb: {{ s.padding_bottom }}px;">
+        <p class="pm2-fsb">{{ strip_inner }}</p>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- if s.placement != 'inline' -%}
+    <template id="pm2-fsb-tpl-{{ sid }}">
+      <p class="pm2-fsb pm2-fsb--drawer" data-pm2-fsb-mirror>{{ strip_inner }}</p>
+    </template>
+    <script>
+      (function () {
+        var sid = {{ sid | json }};
+        if (window.PM2FSBOwner && window.PM2FSBOwner !== sid) return;
+        window.PM2FSBOwner = sid;
+        function ensure() {
+          var drawer = document.querySelector('cart-drawer');
+          var tpl = document.getElementById('pm2-fsb-tpl-' + sid);
+          if (!drawer || !tpl) return;
+          var header = drawer.querySelector('.drawer__header');
+          if (!header || drawer.querySelector('[data-pm2-fsb-mirror]')) return;
+          header.insertAdjacentElement('afterend', tpl.content.firstElementChild.cloneNode(true));
+        }
+        function init() {
+          ensure();
+          var drawer = document.querySelector('cart-drawer');
+          if (!drawer || drawer.dataset.pm2FsbObserved || !('MutationObserver' in window)) return;
+          drawer.dataset.pm2FsbObserved = '1';
+          var queued = false;
+          new MutationObserver(function () {
+            if (queued) return;
+            queued = true;
+            requestAnimationFrame(function () { queued = false; ensure(); });
+          }).observe(drawer, { childList: true, subtree: true });
+        }
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+        else init();
+      })();
+    </script>
+  {%- endif -%}
+
+  <style>
+    .pm2-fsb-outer { padding-top: var(--pm2-pt); padding-bottom: var(--pm2-pb); }
+    .pm2-fsb {
+      display: flex; align-items: center; justify-content: center; gap: 1rem;
+      width: fit-content; max-width: 100%; margin: 0 auto; padding: .8rem 1.6rem .8rem .8rem;
+      border-radius: 999px; background: rgba(var(--color-button), .08);
+      color: rgb(var(--color-foreground)); font-size: 1.4rem; line-height: 1.35; letter-spacing: normal;
+    }
+    .pm2-fsb__icon {
+      flex: 0 0 auto; display: grid; place-items: center; width: 32px; height: 32px; border-radius: 999px;
+      background: rgb(var(--color-background)); color: rgb(var(--color-button));
+      box-shadow: 0 3px 10px -5px rgba(var(--color-foreground), .35);
+    }
+    .pm2-fsb__body { display: flex; flex-direction: column; min-width: 0; }
+    .pm2-fsb__msg { font-weight: 600; }
+    .pm2-fsb__sub { font-size: 1.25rem; color: rgba(var(--color-foreground), .66); }
+    .pm2-fsb--drawer { width: auto; justify-content: flex-start; margin: 0 0 1.2rem; border-radius: 16px; }
+  </style>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "PM2 Free shipping strip",
+  "tag": "section",
+  "class": "section pm2-fsb-section",
+  "settings": [
+    { "type": "text", "id": "text", "label": "Text", "default": "Free U.S. shipping on every order" },
+    { "type": "text", "id": "subtext", "label": "Second line (optional)" },
+    {
+      "type": "select",
+      "id": "placement",
+      "label": "Show strip",
+      "options": [
+        { "value": "inline", "label": "Here (where the section is)" },
+        { "value": "drawer", "label": "In the cart drawer only" },
+        { "value": "both", "label": "Here and in the cart drawer" }
+      ],
+      "default": "both",
+      "info": "The cart drawer copy works on every page that has this section. Add it to the header to show it site-wide."
+    },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-3" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 16 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 0 }
+  ],
+  "presets": [
+    { "name": "PM2 Free shipping strip" }
+  ]
+}
+{% endschema %}

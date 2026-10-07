@@ -1,0 +1,4 @@
+days/*/frames/
+days/*/*.wav
+days/*/*.mp4
+days/*/test_*.jpg

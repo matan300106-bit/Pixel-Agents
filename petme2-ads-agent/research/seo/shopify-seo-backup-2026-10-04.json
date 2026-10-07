@@ -1,0 +1,359 @@
+{
+ "_meta": {
+  "store": "0zetbw-nf (petme2.com)",
+  "taken": "2026-10-04",
+  "purpose": "Backup of SEO title/description, image alt, collection SEO/descriptionHtml before SEO update"
+ },
+ "products": [
+  {
+   "id": "gid://shopify/Product/9235788792020",
+   "handle": "water-fountain",
+   "seo": {
+    "title": "3.2L Stainless Steel Pet Fountain with LED | PETME2",
+    "description": "Whisper-quiet 3.2L stainless steel water fountain for cats & dogs with 4-layer filtration, dual flow modes, and an LED water-level window."
+   },
+   "media": [
+    {
+     "id": "gid://shopify/MediaImage/39173490639060",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39391242387668",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39391242584276",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39391168659668",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39391187435732",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39391213355220",
+     "alt": ""
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Product/9235790463188",
+   "handle": "water-fountain-2",
+   "seo": {
+    "title": "2.2L Clear Cat Water Fountain, USB Powered | PETME2",
+    "description": "Compact 2.2L cat water fountain with a transparent reservoir, clear min/max markings, built-in filter, and a quiet USB-powered pump."
+   },
+   "media": [
+    {
+     "id": "gid://shopify/MediaImage/39173505351892",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39391674859732",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39391674761428",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39391674925268",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39391674958036",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39391674892500",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39391674794196",
+     "alt": ""
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Product/9235791642836",
+   "handle": "water-fountain-simple",
+   "seo": {
+    "title": "2L Cat Water Fountain with Low-Water Alert | PETME2",
+    "description": "Compact 2L automatic pet fountain with a red low-water alert light, visible water level, and anti-dry auto shutoff for cats & small dogs."
+   },
+   "media": [
+    {
+     "id": "gid://shopify/MediaImage/39173532975316",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39392571850964",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39392571785428",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/38644547813588",
+     "alt": "PETME2 2L cat water fountain with low-water red light alert"
+    },
+    {
+     "id": "gid://shopify/MediaImage/38644548010196",
+     "alt": "PETME2 2L cat water fountain with low-water red light alert"
+    },
+    {
+     "id": "gid://shopify/MediaImage/39392571883732",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39392571818196",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39392571752660",
+     "alt": ""
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Product/9235792494804",
+   "handle": "water-fountain-4",
+   "seo": {
+    "title": "2.2L Cat Water Fountain, Steel Tray & Filter | PETME2",
+    "description": "Quiet 2.2L automatic cat fountain with a stainless steel drinking tray, built-in filter cartridge, and a visible water-level window."
+   },
+   "media": [
+    {
+     "id": "gid://shopify/MediaImage/39173548212436",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39393606893780",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39393606828244",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39393606795476",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39393606729940",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39393606861012",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39393606762708",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39393606926548",
+     "alt": ""
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Product/9235794395348",
+   "handle": "smart-feeder",
+   "seo": {
+    "title": null,
+    "description": null
+   },
+   "media": [
+    {
+     "id": "gid://shopify/MediaImage/39173495455956",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39213403242708",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39213415432404",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39213337280724",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39213420642516",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/38644563902676",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39213417300180",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/38644564099284",
+     "alt": ""
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Product/9235795214548",
+   "handle": "2-in-1-smart-feeder",
+   "seo": {
+    "title": "3L Dual Bowl Automatic Cat Feeder, App Control | PETME2",
+    "description": "Smart 3L automatic feeder with two stainless steel bowls, app-scheduled meals up to 10x a day, and 12 portion levels for multi-pet homes."
+   },
+   "media": [
+    {
+     "id": "gid://shopify/MediaImage/39173513052372",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39391779160276",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39391779520724",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39391779455188",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39391779553492",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39391779422420",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39391779487956",
+     "alt": ""
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Product/9235795738836",
+   "handle": "2-in-1-smart-feeder-white",
+   "seo": {
+    "title": "3L Dual Bowl Automatic Cat Feeder, White | PETME2",
+    "description": "Smart 3L automatic feeder with two stainless steel bowls, app-scheduled meals, two-way audio, and 12 portion levels for multi-pet homes."
+   },
+   "media": [
+    {
+     "id": "gid://shopify/MediaImage/39173519835348",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39391312576724",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39391284068564",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39391284166868",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39391284035796",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39391284134100",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39391284199636",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39391284101332",
+     "alt": ""
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Product/9235796525268",
+   "handle": "2-in-1-feeder-1",
+   "seo": {
+    "title": "5L Dual Bowl Automatic Pet Feeder, Voice Recording | PETME2",
+    "description": "Flagship 5L automatic feeder for two pets with app-scheduled meals, a recorded voice call at mealtime, and detachable stainless steel bowls."
+   },
+   "media": [
+    {
+     "id": "gid://shopify/MediaImage/39173509316820",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39173516460244",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39173516493012",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39173516558548",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39173516591316",
+     "alt": ""
+    },
+    {
+     "id": "gid://shopify/MediaImage/39173516525780",
+     "alt": ""
+    }
+   ]
+  }
+ ],
+ "collections": [
+  {
+   "id": "gid://shopify/Collection/457989095636",
+   "handle": "water-fountains",
+   "title": "Water Fountains",
+   "descriptionHtml": "",
+   "seo": {
+    "title": null,
+    "description": null
+   }
+  },
+  {
+   "id": "gid://shopify/Collection/457989128404",
+   "handle": "feeders",
+   "title": "Feeders",
+   "descriptionHtml": "",
+   "seo": {
+    "title": null,
+    "description": null
+   }
+  },
+  {
+   "id": "gid://shopify/Collection/446376181972",
+   "handle": "frontpage",
+   "title": "Feeder 2-in-1",
+   "descriptionHtml": "",
+   "seo": {
+    "title": null,
+    "description": null
+   },
+   "note": "not modified"
+  }
+ ],
+ "shop": {
+  "name": "Petme2",
+  "description": "",
+  "primaryDomain": "https://www.petme2.com"
+ }
+}
