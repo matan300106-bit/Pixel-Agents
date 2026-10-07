@@ -190,6 +190,8 @@ else if (FN > 0) {
   const a = nr.filter(o => o.d < 48), b = nr.filter(o => o.d >= 48);
   [a, b].forEach(L2 => L2.forEach((o, i) => APPEAR[o.k] = EP.newFrom + (EP.newTo - EP.newFrom) * (i + .5) / L2.length));
 }
+if (Array.isArray(EP.appear)) EP.appear.forEach((a, i) => { if (F0 + i < F) APPEAR[F0 + i] = a; });   // videos: exact pop time per new house
+window.__lots = houseLots.map(l => [Math.round(l.x * 10) / 10, Math.round(l.z * 10) / 10]);
 const timeNear = (x, z, r) => { let t = Infinity; near(houseHash, x, z, r, h => { t = Math.min(t, APPEAR[h.n]); }); return t; };
 const lmAt = k => (landmarks[k] && landmarks[k].at != null) ? landmarks[k].at : -1;
 PIECES.forEach(p => { p.t = Math.hypot(p.x, p.z) < SQ.plaza + 5 ? -1 : timeNear(p.x, p.z, 12); });
