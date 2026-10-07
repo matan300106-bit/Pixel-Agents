@@ -1,0 +1,424 @@
+{
+ "duration": 18.2,
+ "day": 2,
+ "cats": 1,
+ "lines": [
+  {
+   "i": 0,
+   "text": "Top comment? We build it.",
+   "s": 0.15,
+   "e": 1.498,
+   "words": [
+    {
+     "w": "Top",
+     "s": 0.15,
+     "e": 0.343
+    },
+    {
+     "w": "comment?",
+     "s": 0.343,
+     "e": 0.856
+    },
+    {
+     "w": "We",
+     "s": 0.856,
+     "e": 0.984
+    },
+    {
+     "w": "build",
+     "s": 0.984,
+     "e": 1.305
+    },
+    {
+     "w": "it.",
+     "s": 1.305,
+     "e": 1.498
+    }
+   ],
+   "hide": true
+  },
+  {
+   "i": 1,
+   "text": "Every day. Anything you want.",
+   "s": 1.75,
+   "e": 3.258,
+   "words": [
+    {
+     "w": "Every",
+     "s": 1.75,
+     "e": 2.052
+    },
+    {
+     "w": "day.",
+     "s": 2.052,
+     "e": 2.293
+    },
+    {
+     "w": "Anything",
+     "s": 2.293,
+     "e": 2.775
+    },
+    {
+     "w": "you",
+     "s": 2.775,
+     "e": 2.956
+    },
+    {
+     "w": "want.",
+     "s": 2.956,
+     "e": 3.258
+    }
+   ],
+   "hide": true
+  },
+  {
+   "i": 2,
+   "text": "The comment with the most likes wins...",
+   "s": 3.5,
+   "e": 5.222,
+   "words": [
+    {
+     "w": "The",
+     "s": 3.5,
+     "e": 3.657
+    },
+    {
+     "w": "comment",
+     "s": 3.657,
+     "e": 4.022
+    },
+    {
+     "w": "with",
+     "s": 4.022,
+     "e": 4.231
+    },
+    {
+     "w": "the",
+     "s": 4.231,
+     "e": 4.387
+    },
+    {
+     "w": "most",
+     "s": 4.387,
+     "e": 4.596
+    },
+    {
+     "w": "likes",
+     "s": 4.596,
+     "e": 4.857
+    },
+    {
+     "w": "wins...",
+     "s": 4.857,
+     "e": 5.222
+    }
+   ],
+   "hide": false
+  },
+  {
+   "i": 3,
+   "text": "and we build it!",
+   "s": 5.6,
+   "e": 6.338,
+   "words": [
+    {
+     "w": "and",
+     "s": 5.6,
+     "e": 5.77
+    },
+    {
+     "w": "we",
+     "s": 5.77,
+     "e": 5.884
+    },
+    {
+     "w": "build",
+     "s": 5.884,
+     "e": 6.168
+    },
+    {
+     "w": "it!",
+     "s": 6.168,
+     "e": 6.338
+    }
+   ],
+   "hide": false
+  },
+  {
+   "i": 4,
+   "text": "With the winner's name on it.",
+   "s": 6.45,
+   "e": 7.595,
+   "words": [
+    {
+     "w": "With",
+     "s": 6.45,
+     "e": 6.641
+    },
+    {
+     "w": "the",
+     "s": 6.641,
+     "e": 6.784
+    },
+    {
+     "w": "winner's",
+     "s": 6.784,
+     "e": 7.166
+    },
+    {
+     "w": "name",
+     "s": 7.166,
+     "e": 7.356
+    },
+    {
+     "w": "on",
+     "s": 7.356,
+     "e": 7.452
+    },
+    {
+     "w": "it.",
+     "s": 7.452,
+     "e": 7.595
+    }
+   ],
+   "hide": true
+  },
+  {
+   "i": 5,
+   "text": "Mango's review: ten out of ten.",
+   "s": 8.0,
+   "e": 9.709,
+   "words": [
+    {
+     "w": "Mango's",
+     "s": 8.0,
+     "e": 8.46
+    },
+    {
+     "w": "review:",
+     "s": 8.46,
+     "e": 8.92
+    },
+    {
+     "w": "ten",
+     "s": 8.92,
+     "e": 9.117
+    },
+    {
+     "w": "out",
+     "s": 9.117,
+     "e": 9.315
+    },
+    {
+     "w": "of",
+     "s": 9.315,
+     "e": 9.446
+    },
+    {
+     "w": "ten.",
+     "s": 9.446,
+     "e": 9.709
+    }
+   ],
+   "hide": true
+  },
+  {
+   "i": 6,
+   "text": "Let's build the city together.",
+   "s": 10.1,
+   "e": 11.392,
+   "words": [
+    {
+     "w": "Let's",
+     "s": 10.1,
+     "e": 10.348
+    },
+    {
+     "w": "build",
+     "s": 10.348,
+     "e": 10.597
+    },
+    {
+     "w": "the",
+     "s": 10.597,
+     "e": 10.746
+    },
+    {
+     "w": "city",
+     "s": 10.746,
+     "e": 10.945
+    },
+    {
+     "w": "together.",
+     "s": 10.945,
+     "e": 11.392
+    }
+   ],
+   "hide": true
+  },
+  {
+   "i": 7,
+   "text": "Right now? One cat. Zero buildings.",
+   "s": 12.75,
+   "e": 14.759,
+   "words": [
+    {
+     "w": "Right",
+     "s": 12.75,
+     "e": 13.085
+    },
+    {
+     "w": "now?",
+     "s": 13.085,
+     "e": 13.353
+    },
+    {
+     "w": "One",
+     "s": 13.353,
+     "e": 13.554
+    },
+    {
+     "w": "cat.",
+     "s": 13.554,
+     "e": 13.821
+    },
+    {
+     "w": "Zero",
+     "s": 13.821,
+     "e": 14.089
+    },
+    {
+     "w": "buildings.",
+     "s": 14.089,
+     "e": 14.759
+    }
+   ],
+   "hide": true
+  },
+  {
+   "i": 8,
+   "text": "So comment what we build first. Weirder is better.",
+   "s": 15.0,
+   "e": 17.477,
+   "words": [
+    {
+     "w": "So",
+     "s": 15.0,
+     "e": 15.118
+    },
+    {
+     "w": "comment",
+     "s": 15.118,
+     "e": 15.531
+    },
+    {
+     "w": "what",
+     "s": 15.531,
+     "e": 15.767
+    },
+    {
+     "w": "we",
+     "s": 15.767,
+     "e": 15.885
+    },
+    {
+     "w": "build",
+     "s": 15.885,
+     "e": 16.18
+    },
+    {
+     "w": "first.",
+     "s": 16.18,
+     "e": 16.533
+    },
+    {
+     "w": "Weirder",
+     "s": 16.533,
+     "e": 16.946
+    },
+    {
+     "w": "is",
+     "s": 16.946,
+     "e": 17.064
+    },
+    {
+     "w": "better.",
+     "s": 17.064,
+     "e": 17.477
+    }
+   ],
+   "hide": false
+  }
+ ],
+ "beats": [
+  {
+   "s": 0.0,
+   "e": 1.6,
+   "html": "TOP COMMENT<br>\u2192 <y>WE BUILD IT</y>",
+   "still": true
+  },
+  {
+   "s": 1.6,
+   "e": 3.5,
+   "html": "EVERY DAY.<br><y>ANYTHING.</y>",
+   "small": "(the cat version \ud83d\udc31)",
+   "ss": 2.3
+  },
+  {
+   "s": 3.5,
+   "e": 6.2,
+   "html": "MOST LIKES <y>WINS</y>"
+  },
+  {
+   "s": 6.2,
+   "e": 7.9,
+   "html": "<y>BUILT!</y>"
+  },
+  {
+   "s": 7.9,
+   "e": 9.9,
+   "html": "Mango's review:<br><y>10/10</y>"
+  },
+  {
+   "s": 9.9,
+   "e": 12.6,
+   "html": "LET'S BUILD<br>THE CITY <y>TOGETHER</y>"
+  },
+  {
+   "s": 12.6,
+   "e": 14.75,
+   "html": "TODAY: <y>1 CAT</y><br><r>0 BUILDINGS</r>"
+  },
+  {
+   "s": 14.75,
+   "e": 17.5,
+   "html": "COMMENT<br><y>YOUR IDEA</y>",
+   "small": "Most likes in 24 h wins",
+   "ss": 15.3,
+   "small2": "Follow to see it built",
+   "ss2": 16.3,
+   "arrow": true
+  },
+  {
+   "s": 17.5,
+   "e": 99,
+   "html": "TOP COMMENT<br>\u2192 <y>WE BUILD IT</y>"
+  }
+ ],
+ "goal": [
+  9.9,
+  12.6
+ ],
+ "example": [
+  [
+   3.5,
+   5.85,
+   "card"
+  ],
+  [
+   6.2,
+   7.9,
+   "build"
+  ]
+ ]
+}

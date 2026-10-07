@@ -1,0 +1,112 @@
+{
+  "sections": {
+    "hero_banner_qeMbmk": {
+      "type": "hero-banner",
+      "blocks": {
+        "background_slide_VxR6fx": {"type": "background_slide", "settings": {"background_image": "shopify://shop_images/main-banner.jpg", "mobile_background_image": "shopify://shop_images/image_846.jpg"}}
+      },
+      "block_order": ["background_slide_VxR6fx"],
+      "name": "Pet Care Hero",
+      "settings": {"eyebrow": "Happy pets, happy heart", "heading_line_1": "Better care,", "heading_line_2": "better life.", "description": "", "primary_button_text": "Shop Now!", "primary_button_url": "shopify://collections/all", "secondary_button_text": "Explore Best Sellers", "secondary_button_url": "shopify://collections/all", "padding_top": 24, "padding_bottom": 24, "padding_top_mobile": 20, "padding_bottom_mobile": 20, "eyebrow_color": "#ffffff", "heading_color": "#ffffff", "accent_color": "#ffffff", "text_color": "#111111", "primary_button_bg": "#f3783a", "primary_button_text2": "#ffffff", "secondary_button_border": "#ffffff", "secondary_button_text2": "#000000"}
+    },
+    "category_image_grid_HqG6km": {
+      "type": "category-image-grid",
+      "blocks": {
+        "category_ME8heP": {"type": "category", "settings": {"image": "shopify://shop_images/homepage-feeder.png", "title": "Feeders", "text": "<p>Premium design, simple routines, clean product experiences, and a mobile-first shopping journey built for modern pet owners.</p>", "primary_button_text": "Shop Now", "primary_button_link": "shopify://collections/feeders", "secondary_button_text": "Learn More", "secondary_button_link": "#"}},
+        "category_bQDyYC": {"type": "category", "settings": {"image": "shopify://shop_images/Homepage-Water-Fountains_79d73496-2084-410b-bd2e-dc1ea0e329a5.png", "title": "Water Fountains", "text": "<p>Premium design, simple routines, clean product experiences, and a mobile-first shopping journey built for modern pet owners.</p>", "primary_button_text": "Shop Now", "primary_button_link": "shopify://collections/water-fountains", "secondary_button_text": "Learn More", "secondary_button_link": "shopify://products/2-in-1-smart-feeder-white"}}
+      },
+      "block_order": ["category_ME8heP", "category_bQDyYC"],
+      "name": "Category image grid",
+      "settings": {"heading": "Shop by category", "columns_desktop": 2, "columns_tablet": 2, "card_gap": 24, "card_gap_mobile": 20, "card_height": 560, "card_height_mobile": 440, "card_radius": 30, "content_padding": 40, "content_padding_mobile": 26, "heading_bottom_gap": 38, "heading_bottom_gap_mobile": 28, "title_bottom_gap": 12, "text_bottom_gap": 26, "button_gap": 22, "button_width": 128, "padding_top": 100, "padding_bottom": 100, "padding_top_mobile": 60, "padding_bottom_mobile": 60, "section_bg": "#ffffff", "heading_color": "#000000", "overlay_color": "#000000", "overlay_opacity": 70, "title_color": "#ffffff", "text_color": "#ffffff", "primary_button_bg": "#f3783a", "primary_button_text": "#ffffff", "primary_button_hover_bg": "#000000", "primary_button_hover_text": "#ffffff", "secondary_button_border": "#ffffff", "secondary_button_text": "#ffffff", "secondary_button_hover_bg": "#ffffff", "secondary_button_hover_text": "#000000"}
+    },
+    "product_showcase_slider_EERJYp": {
+      "type": "product-showcase-slider",
+      "blocks": {
+        "slide_Jxq7cw": {"type": "slide", "settings": {"product": "2-in-1-feeder-1", "subtitle": "New release", "title": "", "description": "", "use_product_description": false, "button_text": "Shop Now", "button_link": "", "link_text": "Learn More", "link_url": ""}},
+        "slide_dfFQGD": {"type": "slide", "settings": {"product": "water-fountain-simple", "subtitle": "Best seller", "title": "", "description": "", "use_product_description": false, "button_text": "Shop Now", "button_link": "", "link_text": "Learn More", "link_url": ""}},
+        "slide_T8VK8h": {"type": "slide", "settings": {"product": "2-in-1-smart-feeder", "subtitle": "Best seller", "title": "", "description": "", "use_product_description": false, "button_text": "Shop Now", "button_link": "", "link_text": "Learn More", "link_url": ""}},
+        "slide_t6jCby": {"type": "slide", "settings": {"product": "2-in-1-smart-feeder-white", "subtitle": "New", "title": "", "description": "", "use_product_description": false, "button_text": "Shop Now", "button_link": "", "link_text": "Learn More", "link_url": ""}}
+      },
+      "block_order": ["slide_Jxq7cw", "slide_dfFQGD", "slide_T8VK8h", "slide_t6jCby"],
+      "name": "Sync product showcase",
+      "settings": {"heading": "New & Popular", "sticky_top": 0, "section_bg": "#fbf8f5", "column_gap": 42, "thumb_column_width": 136, "content_width": 470, "content_min_height": 420, "image_height": 560, "image_height_tablet": 420, "image_height_mobile": 340, "thumb_size": 130, "thumb_size_mobile": 88, "thumb_gap": 22, "thumb_line_gap": 14, "active_line_width": 3, "thumb_radius": 0, "thumb_image_padding": 10, "thumb_bg": "#ffffff", "divider_color": "#000000", "active_line_color": "#f3783a", "heading_color": "#000000", "heading_bottom_gap": 34, "subtitle_color": "#f3783a", "subtitle_size": 15, "subtitle_gap": 22, "title_color": "#000000", "inactive_title_size_mobile": 22, "title_gap": 18, "desc_color": "#000000", "desc_size": 16, "desc_width": 350, "desc_gap": 34, "item_gap": 30, "active_item_gap": 38, "button_gap": 18, "actions_bottom_gap": 26, "button_bg": "#f3783a", "button_text": "#ffffff", "link_bg": "#f6f1ec", "link_color": "#000000", "padding_top": 100, "padding_bottom": 100, "padding_top_mobile": 60, "padding_bottom_mobile": 60}
+    },
+    "pet_product_picks_6TDweY": {
+      "type": "pet-product-picks",
+      "blocks": {
+        "static-product-card": {
+          "type": "_product-card", "static": true,
+          "settings": {"product_card_gap": 0, "inherit_color_scheme": true, "color_scheme": "", "border": "none", "border_width": 1, "border_opacity": 100, "border_radius": 0, "padding-block-start": 0, "padding-block-end": 0, "padding-inline-start": 0, "padding-inline-end": 0},
+          "blocks": {
+            "product_card_gallery_Myb8gQ": {"type": "_product-card-gallery", "settings": {"image_ratio": "square", "border": "none", "border_width": 1, "border_opacity": 100, "border_radius": 0, "padding-block-start": 0, "padding-block-end": 0, "padding-inline-start": 0, "padding-inline-end": 0}, "blocks": {}},
+            "review_6YzcPH": {"type": "review", "name": "t:names.product_review_stars", "settings": {"stars_style": "shaded", "show_number": true, "rating_color": "primary", "type_preset": "paragraph", "width": "100%", "alignment": "center"}, "blocks": {}},
+            "product_title_aFVwkb": {"type": "product-title", "name": "t:names.product_title", "settings": {"width": "fit-content", "max_width": "normal", "alignment": "left", "type_preset": "rte", "font": "var(--font-body--family)", "font_size": "1rem", "line_height": "normal", "letter_spacing": "normal", "case": "none", "wrap": "pretty", "color": "var(--color-foreground)", "background": false, "background_color": "#00000026", "corner_radius": 0, "padding-block-start": 4, "padding-block-end": 0, "padding-inline-start": 0, "padding-inline-end": 0}, "blocks": {}},
+            "text_NJkaCD": {"type": "text", "name": "t:names.text", "settings": {"text": "{{ closest.product.description }}", "width": "fit-content", "max_width": "normal", "alignment": "left", "type_preset": "rte", "font": "var(--font-body--family)", "font_size": "1rem", "line_height": "normal", "letter_spacing": "normal", "case": "none", "wrap": "pretty", "color": "var(--color-foreground)", "background": false, "background_color": "#00000026", "corner_radius": 0, "padding-block-start": 0, "padding-block-end": 0, "padding-inline-start": 0, "padding-inline-end": 0}, "blocks": {}},
+            "price_xXixPF": {"type": "price", "name": "t:names.product_price", "settings": {"show_sale_price_first": true, "show_installments": false, "show_tax_info": false, "type_preset": "", "width": "100%", "alignment": "left", "font": "var(--font-body--family)", "font_size": "1rem", "line_height": "normal", "letter_spacing": "normal", "case": "none", "color": "var(--color-foreground)", "padding-block-start": 0, "padding-block-end": 0, "padding-inline-start": 0, "padding-inline-end": 0}, "blocks": {}}
+          },
+          "block_order": ["product_card_gallery_Myb8gQ", "review_6YzcPH", "product_title_aFVwkb", "text_NJkaCD", "price_xXixPF"]
+        }
+      },
+      "name": "Pet product picks",
+      "settings": {"collection": "water-fountains", "heading": "Pet Parents’ Top Picks", "view_all_text": "View All", "view_all_link": "", "products_to_show": 4, "feature_image": "shopify://shop_images/Smart_Feeding.png", "feature_title": "Smart Feeding.\nHappy Pets.", "feature_text": "<p>Smart feeders for a healthier, happier life.</p>", "feature_link": "", "section_width": 1080, "feature_card_width": 330, "feature_card_height": 630, "feature_card_height_tablet": 380, "feature_card_height_mobile": 390, "feature_card_radius": 0, "feature_content_padding": 34, "column_gap": 22, "column_gap_mobile": 28, "products_columns": 2, "products_columns_tablet": 2, "products_columns_mobile": 2, "product_column_gap": 24, "product_row_gap": 38, "product_column_gap_mobile": 16, "product_row_gap_mobile": 34, "heading_size": 30, "heading_size_mobile": 28, "heading_weight": "400", "feature_title_size": 32, "feature_title_size_mobile": 28, "feature_title_gap": 10, "feature_text_size": 13, "feature_text_size_mobile": 13, "view_all_width": 84, "view_all_height": 36, "view_all_radius": 0, "view_all_text_size": 11, "header_bottom_gap": 22, "header_bottom_gap_mobile": 22, "padding_top": 100, "padding_bottom": 100, "padding_top_mobile": 60, "padding_bottom_mobile": 60, "section_bg": "#ffffff", "heading_color": "#000000", "view_all_bg": "#f3783a", "view_all_text_color": "#ffffff", "feature_card_bg": "#f5f5f5", "feature_overlay_color": "#000000", "feature_overlay_opacity": 45, "feature_title_color": "#ffffff", "feature_text_color": "#ffffff"}
+    },
+    "video_feature_banner_bnj3Ri": {
+      "type": "video-feature-banner",
+      "name": "Video feature banner",
+      "settings": {"banner_image": "shopify://shop_images/Rectangle_34626129.jpg", "video": "shopify://files/videos/44d805d5a3a14767ba6d3e4964b89523.HD-1080p-7.2Mbps-54726534.mp4", "video_url": "", "section_bg": "#ffffff", "modal_bg": "#000000d9", "close_bg": "#ffffff", "close_color": "#000000", "padding_top": 68, "padding_bottom": 0, "padding_top_mobile": 0, "padding_bottom_mobile": 0}
+    },
+    "logo_carousel_swiper_yCntaQ": {
+      "type": "logo-carousel-swiper",
+      "blocks": {
+        "logo_RYyhcT": {"type": "logo", "settings": {"logo": "shopify://shop_images/01-08-Photoroom_2.png", "logo_text": "PETME2", "logo_alt": "Logo", "logo_link": ""}},
+        "logo_VbK9GB": {"type": "logo", "settings": {"logo_text": "Free shipping on all U.S. orders $50+", "logo_alt": "Logo", "logo_link": ""}},
+        "logo_FhFwqc": {"type": "logo", "settings": {"logo": "shopify://shop_images/01-08-Photoroom_2.png", "logo_text": "PETME2", "logo_alt": "Logo", "logo_link": ""}},
+        "logo_tyxdrx": {"type": "logo", "settings": {"logo_text": "Free shipping on all U.S. orders $50+", "logo_alt": "Logo", "logo_link": ""}}
+      },
+      "block_order": ["logo_RYyhcT", "logo_VbK9GB", "logo_FhFwqc", "logo_tyxdrx"],
+      "name": "Logo carousel swiper",
+      "settings": {"slider_speed": 5000, "pause_on_hover": false, "bar_height": 52, "bar_height_mobile": 40, "item_spacing": 56, "item_spacing_mobile": 36, "logo_width": 112, "logo_width_mobile": 88, "logo_height": 34, "logo_height_mobile": 28, "logo_opacity": 100, "logo_grayscale": false, "text_size": 18, "text_size_mobile": 15, "text_weight": "400", "letter_spacing": 1, "section_bg": "#ffffff", "text_color": "#999999", "border_color": "#e5e5e5", "border_width": 1}
+    },
+    "tech_slider_Kpet9N": {
+      "type": "tech-slider",
+      "blocks": {
+        "slide_QwDdXY": {"type": "slide", "settings": {"image": "shopify://shop_images/image_42_1.jpg", "eyebrow": "Precise Portions", "title": "Feeding Calculator", "text": "<p>2-in-1 Dual Automatic Cat Feeder - Feed two cats or small dogs at the same time with balanced portions, easy-to-clean design, and smart app control.</p>", "primary_button_text": "Shop Now!", "primary_button_link": "shopify://collections/all", "secondary_button_text": "Learn more", "secondary_button_link": ""}},
+        "slide_BwUzga": {"type": "slide", "settings": {"image": "shopify://shop_images/main-05.jpg", "eyebrow": "Fresh Storage", "title": "Sealed Food Container", "text": "<p>Keep every meal fresh with thoughtful food storage and easy daily feeding support.</p>", "primary_button_text": "Shop Now!", "primary_button_link": "shopify://collections/all", "secondary_button_text": "Learn more", "secondary_button_link": ""}},
+        "slide_7j7L7W": {"type": "slide", "settings": {"image": "shopify://shop_images/Your_pets_meals_managed_from_your_phone_3d0ac522-2f46-4a7b-a1d9-e2b48f76d5bb.jpg", "eyebrow": "Smart Control", "title": "App Connected Feeding", "text": "<p>Schedule meals, adjust portions, and monitor feeding routines directly from your mobile device.</p>", "primary_button_text": "Shop Now!", "primary_button_link": "shopify://collections/all", "secondary_button_text": "Learn more", "secondary_button_link": ""}}
+      },
+      "block_order": ["slide_QwDdXY", "slide_BwUzga", "slide_7j7L7W"],
+      "name": "Tech slider",
+      "settings": {"heading": "Tech that's smarter than smart", "enable_loop": true, "enable_autoplay": false, "autoplay_delay": 3500, "slider_speed": 600, "slide_gap": 16, "section_width": 1240, "content_width": 340, "content_min_height": 360, "column_gap": 70, "column_gap_mobile": 36, "slide_width": 430, "slide_width_tablet": 380, "slide_width_mobile": 86, "image_height": 390, "image_height_tablet": 360, "image_height_mobile": 320, "image_radius": 8, "heading_size": 28, "heading_size_mobile": 28, "heading_weight": "400", "heading_bottom_gap": 38, "heading_bottom_gap_mobile": 28, "eyebrow_size": 13, "eyebrow_weight": "400", "eyebrow_bottom_gap": 4, "title_size": 24, "title_size_mobile": 24, "title_weight": "400", "title_bottom_gap": 16, "text_width": 330, "text_size": 12, "text_size_mobile": 13, "text_line_height": 165, "text_bottom_gap": 28, "button_gap": 18, "button_width": 110, "button_height": 38, "button_radius": 0, "button_text_size": 12, "dots_bottom_gap": 28, "dot_width": 16, "dot_height": 2, "dot_radius": 0, "dot_gap": 8, "arrows_top_gap": 20, "arrow_size": 32, "arrow_gap": 14, "padding_top": 100, "padding_bottom": 100, "padding_top_mobile": 60, "padding_bottom_mobile": 60, "section_bg": "#ffffff", "heading_color": "#000000", "eyebrow_color": "#000000", "title_color": "#000000", "text_color": "#000000", "primary_button_bg": "#ff7138", "primary_button_text": "#ffffff", "secondary_button_bg": "#e8eaec", "secondary_button_text": "#000000", "image_bg": "#f5f5f5", "dot_color": "#dddddd", "dot_active_color": "#ff7138", "arrow_bg": "#ffffff", "arrow_color": "#999999", "arrow_border": "#dddddd"}
+    },
+    "before_after_slider_T6gP38": {
+      "type": "before-after-slider",
+      "name": "Before after slider",
+      "settings": {"before_image": "shopify://shop_images/image_32.jpg", "after_image": "shopify://shop_images/after.jpg", "before_label": "Before", "after_label": "After", "start_position": 50, "background_color": "#ffffff", "divider_color": "#ffffff", "handle_bg": "#f3f3f3", "handle_icon_color": "#ef7a3b", "label_color": "#ffffff", "section_height": 760, "section_height_tablet": 560, "section_height_mobile": 340, "handle_size": 118, "handle_size_mobile": 76, "divider_width": 2}
+    },
+    "product_feature_banner_GzmHVi": {
+      "type": "product-feature-banner",
+      "blocks": {
+        "feature_VFGBPD": {"type": "feature", "settings": {"icon_image": "shopify://shop_images/icon-park-outline_weight.png", "title": "Integrated Smart Feeder Scale", "text": "<p>Dispenses & weighs food amount accurately</p>"}},
+        "feature_GRnnYw": {"type": "feature", "settings": {"icon_image": "shopify://shop_images/icon-park-outline_more-app.png", "title": "Smart App Control", "text": "<p>Schedule Meals, Control Portions Remotely</p>"}},
+        "feature_CUkkmU": {"type": "feature", "settings": {"icon_image": "shopify://shop_images/material-symbols-light_clean-hands-outline.png", "title": "Easy-to-Clean Automatic", "text": "<p>Easy-Clean Design for Hygienic Pet Feeding</p>"}}
+      },
+      "block_order": ["feature_VFGBPD", "feature_GRnnYw", "feature_CUkkmU"],
+      "name": "Product feature banner",
+      "settings": {"heading": "Buy the Smart\nPet Feeder", "image": "shopify://shop_images/image-Photoroom_54_1.png", "feature_primary_button_text": "Shop Now!", "feature_primary_button_link": "shopify://collections/all", "feature_secondary_button_text": "Learn more", "feature_secondary_button_link": "", "section_width": 1240, "content_width": 430, "column_gap": 60, "column_gap_mobile": 36, "card_radius": 16, "card_padding_top": 74, "card_padding_bottom": 74, "card_padding_left": 92, "card_padding_right": 70, "card_padding_mobile": 20, "image_max_width": 720, "image_height": 520, "image_height_tablet": 440, "image_height_mobile": 340, "heading_size": 42, "heading_size_mobile": 34, "heading_weight": "400", "heading_bottom_gap": 34, "item_title_size": 15, "item_title_size_mobile": 15, "item_text_size": 15, "item_text_size_mobile": 14, "item_gap": 36, "icon_box_size": 48, "icon_box_size_mobile": 44, "icon_size": 28, "icon_text_gap": 22, "icon_radius": 4, "icon_border_width": 2, "item_title_gap": 8, "buttons_top_gap": 40, "button_gap": 24, "button_width": 132, "button_height": 44, "button_radius": 0, "button_text_size": 13, "padding_top": 100, "padding_bottom": 100, "padding_top_mobile": 60, "padding_bottom_mobile": 60, "section_bg": "#ffffff", "card_bg": "#f1ece5", "heading_color": "#000000", "item_title_color": "#000000", "item_text_color": "#000000", "icon_color": "#ff6f35", "feature_primary_button_bg": "#f3783a", "feature_primary_button_text_color": "#ffffff", "feature_secondary_button_bg": "#e8eaec", "feature_secondary_button_text_color": "#000000"}
+    },
+    "shop_feed_slider_6BGeeA": {
+      "type": "shop-feed-slider",
+      "blocks": {
+        "image_x4LfB8": {"type": "image", "settings": {"image": "shopify://shop_images/Rectangle_67_1.jpg", "link": "", "image_alt": ""}},
+        "image_U4iVzA": {"type": "image", "settings": {"image": "shopify://shop_images/Rectangle_68_1.jpg", "link": "", "image_alt": ""}},
+        "image_gtCLLD": {"type": "image", "settings": {"image": "shopify://shop_images/image_830.jpg", "link": "", "image_alt": ""}},
+        "image_PqB9qD": {"type": "image", "settings": {"image": "shopify://shop_images/Rectangle_65_2.jpg", "link": "", "image_alt": ""}},
+        "image_tJAyHX": {"type": "image", "settings": {"image": "shopify://shop_images/Two_pets_One_easier_feeding_routine.jpg", "link": "", "image_alt": ""}}
+      },
+      "block_order": ["image_x4LfB8", "image_U4iVzA", "image_gtCLLD", "image_PqB9qD", "image_tJAyHX"],
+      "name": "Shop feed slider",
+      "settings": {"heading": "Shop the Feed", "avatar_text": "PETME2", "username": "@petme2", "follow_text": "Follow", "follow_link": "shopify://pages/about-us", "enable_loop": true, "enable_autoplay": true, "autoplay_delay": 3500, "slider_speed": 600, "show_arrows": false, "slide_gap": 32, "mobile_slide_width": 82, "section_width": 1800, "header_bottom_gap": 26, "header_bottom_gap_mobile": 24, "image_height": 430, "image_height_mobile": 360, "image_radius": 8, "profile_gap": 14, "avatar_size": 52, "avatar_padding": 3, "avatar_border_width": 2, "button_width": 112, "button_height": 36, "button_radius": 0, "arrow_size": 42, "arrows_top_gap": 32, "heading_size": 34, "heading_size_mobile": 30, "heading_weight": "400", "username_size": 13, "button_text_size": 12, "padding_top": 0, "padding_bottom": 100, "padding_top_mobile": 0, "padding_bottom_mobile": 60, "section_bg": "#ffffff", "heading_color": "#000000", "username_color": "#000000", "button_bg": "#f3783a", "button_text_color": "#ffffff", "avatar_bg": "#ffffff", "avatar_border_color": "#b400ff", "image_bg": "#f5f5f5", "arrow_bg": "#ffffff", "arrow_color": "#000000", "arrow_border_color": "#000000"}
+    }
+  },
+  "order": ["hero_banner_qeMbmk", "category_image_grid_HqG6km", "product_showcase_slider_EERJYp", "pet_product_picks_6TDweY", "video_feature_banner_bnj3Ri", "logo_carousel_swiper_yCntaQ", "tech_slider_Kpet9N", "before_after_slider_T6gP38", "product_feature_banner_GzmHVi", "shop_feed_slider_6BGeeA"]
+}

@@ -1,0 +1,51 @@
+{%- comment -%}
+  PETME2 article structured data for AEO/GEO (no visible output):
+  - FAQPage from the article metafield custom.faq (JSON: [{"q": "...", "a": "..."}]) — same Q&As as the visible FAQ.
+  - BreadcrumbList: Home > Blog > Article.
+  Dawn's main-article already outputs the Article schema.
+{%- endcomment -%}
+{%- liquid
+  assign faq = article.metafields.custom.faq.value
+-%}
+{%- if faq != blank and faq.size > 0 -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- for item in faq -%}
+          {%- if item.q != blank and item.a != blank -%}
+            {%- unless forloop.first %},{% endunless -%}
+            {
+              "@type": "Question",
+              "name": {{ item.q | strip_html | json }},
+              "acceptedAnswer": { "@type": "Answer", "text": {{ item.a | strip_html | json }} }
+            }
+          {%- endif -%}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+{%- endif -%}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": {{ request.origin | append: routes.root_url | json }} },
+      { "@type": "ListItem", "position": 2, "name": {{ blog.title | json }}, "item": {{ request.origin | append: blog.url | json }} },
+      { "@type": "ListItem", "position": 3, "name": {{ article.title | json }}, "item": {{ request.origin | append: article.url | json }} }
+    ]
+  }
+</script>
+
+{% schema %}
+{
+  "name": "PETME2 article schema",
+  "tag": "div",
+  "class": "pm2-article-schema",
+  "settings": [
+    { "type": "paragraph", "content": "Adds FAQPage (from article metafield custom.faq) and breadcrumb structured data. Nothing visible." }
+  ]
+}
+{% endschema %}
