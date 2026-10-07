@@ -310,6 +310,20 @@ function landmark(kind, sign) {
     q(B(6, 2.4, 6), '#E7EDF7', 0, 1.2, 12); cat('#F28C28', 5, 0, 2.4, 12).rotation.y = 0; q(B(4.4, 1.6, .2), '#1B2333', 0, 5.6, 14.3); sy = 25; }
   else if (kind === 'cafe') { q(B(16, 7, 12), '#FFF4E6', 0, 3.5, 0); for (let i = 0; i < 8; i++) { const s = q(B(2, .4, 3.4), i % 2 ? '#FFFFFF' : '#E85D5D', -7 + i * 2, 6.4, 7); s.rotation.x = .45; } q(Cyl(1.6, 1.2, 2.4, 14), '#FFFFFF', 0, 8.2, 0); }
   else if (kind === 'market') { q(B(16, 3, 9), '#C98B5A', 0, 1.5, 0); const r = q(B(18, .5, 11), '#2F5FE0', 0, 7.6, 0); r.rotation.x = -.12; }
+  else if (kind === 'fishmarket') {   // Day 2 top comment: "add a fish supermarket"
+    q(B(21, .4, 17), '#E7EDF7', 0, .2, 1); q(B(18, 7, 11), '#EAF6FF', 0, 3.9, -1.5); q(B(18.6, .9, 11.6), '#1E6FD0', 0, 7.8, -1.5);
+    q(B(18.1, 1, 11.1), '#5AB3F0', 0, .9, -1.5);                                                            // wave-blue base band
+    [-5.6, 5.6].forEach(x => { q(B(5.4, 3.4, .2), '#9FD3FF', x, 3.7, 4.05); q(B(5.8, .35, .3), '#FFFFFF', x, 5.55, 4.1); q(B(5.8, .35, .3), '#FFFFFF', x, 1.85, 4.1); });
+    q(B(3.6, 4.6, .2), '#CFEFFF', 0, 2.7, 4.05); q(B(.12, 4.6, .3), '#7D8CA3', 0, 2.7, 4.12); q(B(4.2, .4, .3), '#1B2333', 0, 5.1, 4.12);   // sliding doors
+    for (let i = 0; i < 9; i++) { const a = q(B(2, .3, 2.6), i % 2 ? '#FFFFFF' : '#2F5FE0', -8 + i * 2, 6.6, 5.2); a.rotation.x = .5; }   // striped awning
+    const fish = (c, sx, x, y, z, ry = 0) => { const f = new THREE.Group(); const m = new THREE.Mesh(new THREE.SphereGeometry(1, 14, 10), mat(c)); m.scale.set(1.6, .8, .45); m.castShadow = true; f.add(m);
+      const tl = new THREE.Mesh(new THREE.ConeGeometry(.75, 1.1, 3).rotateZ(Math.PI / 2), mat(c)); tl.position.set(-1.9, 0, 0); f.add(tl);
+      [-.46, .46].forEach(zz => { const e = new THREE.Mesh(new THREE.SphereGeometry(.2, 8, 6), mat('#FFFFFF')); e.position.set(1, .2, zz); f.add(e); const p2 = new THREE.Mesh(new THREE.SphereGeometry(.11, 6, 5), mat('#1B2333')); p2.position.set(1.08, .22, zz * 1.1); f.add(p2); });
+      f.scale.setScalar(sx); f.position.set(x, y, z); f.rotation.y = ry; g.add(f); return f; };
+    const big = fish('#FF8A2A', 3.2, 0, 11.6, -1.5); big.rotation.z = .12; q(Cyl(.3, .3, 3.2, 8), '#8A8F98', 0, 9.6, -1.5);   // giant fish on the roof
+    [-6.2, 6.2].forEach((x, j) => { q(B(5.2, 1.5, 2.4), '#2F5FE0', x, .95, 7.3); q(B(5.2, .35, 2.4), '#F4FBFF', x, 1.85, 7.3);       // ice counters with fish
+      ['#FF9F43', '#C7D3E0', '#FF7A9A'].forEach((c, i) => { const f = fish(c, .42, x - 1.45 + i * 1.6, 2.2, 7.3 + (i % 2 ? .35 : -.35)); f.rotation.x = Math.PI / 2; }); });   // lying on the ice
+    sy = 17; }
   else if (kind === 'statue') { q(B(6, 4, 6), '#E7EDF7', 0, 2, 0); cat('#FFC93C', 7, 0, 4, 0); }
   else if (kind === 'pool') { q(B(17, 1, 12), '#E7EDF7', 0, .5, 0); q(B(15, .3, 10), '#5AB3F0', 0, 1.05, 0); }
   else if (kind === 'reserved') { const p = q(Cyl(.25, .25, 5, 6), '#8A5A3B', 0, 2.5, 0); for (let i = 0; i < 5; i++) q(new THREE.ConeGeometry(.5, 1.2, 8), '#FF8A2A', -6 + i * 3, .6, 8); sy = 6.5; }
@@ -536,8 +550,9 @@ houseLots.forEach((l, n) => placeHouse(n, APPEAR[n] < 0 ? 1 : 0));
 const LMG = [];
 landmarks.forEach((lm, k) => { const s = SPOTS[k]; if (!s) return; const g = landmark(lm.kind, lm.sign); g.scale.setScalar(.8); g.position.set(s.x, 0, s.z); g.rotation.y = s.ry; scene.add(g); LMG.push([g, s.t]); });
 if (!EP.noReserved) SPOTS.forEach((s, k) => { if (k < usedSpots || k > usedSpots + 1 || s.t === Infinity) return; const g = landmark('reserved', 'Your idea here?'); g.position.set(s.x, 0, s.z); g.rotation.y = s.ry; scene.add(g); LMG.push([g, s.t]); });
-let NB = null, NBpos = V(0, 0, 0);
-if (NEWB && SPOTS[landmarks.length]) { const s = SPOTS[landmarks.length]; NB = landmark(NEWB.kind, NEWB.sign); NB.scale.setScalar(.8); NBpos = V(s.x, 0, s.z); NB.position.copy(NBpos); NB.rotation.y = s.ry; NB.visible = false; scene.add(NB); }
+let NB = null, NBpos = V(0, 0, 0), LOT = null;
+if (NEWB && SPOTS[landmarks.length]) { const s = SPOTS[landmarks.length]; NB = landmark(NEWB.kind, NEWB.sign); NB.scale.setScalar(.8); NBpos = V(s.x, 0, s.z); NB.position.copy(NBpos); NB.rotation.y = s.ry; NB.visible = false; scene.add(NB);
+  if (EP.lotSign) { LOT = landmark('reserved', EP.lotSign); LOT.position.copy(NBpos); LOT.rotation.y = s.ry; scene.add(LOT); } }   // videos: a sign on the empty lot until the build pops
 const CONF = new THREE.InstancedMesh(new THREE.PlaneGeometry(1, .6), new THREE.MeshBasicMaterial({ color: '#ffffff', side: THREE.DoubleSide }), 260);
 const confData = []; for (let k = 0; k < 260; k++) { confData.push({ vx: (rnd() - .5) * 30, vy: 10 + rnd() * 22, vz: (rnd() - .5) * 30, r: rnd() * 6 }); CONF.setColorAt(k, col.set(['#FFC93C', '#E85D5D', '#2F5FE0', '#5BB98C', '#FFFFFF', '#9B6FE0'][k % 6])); }
 CONF.instanceColor.needsUpdate = true; CONF.visible = false; scene.add(CONF);
@@ -853,10 +868,10 @@ const HEART = f => `<svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-9.6-9.1C.9
 const AV = ['#2F5FE0', '#E85D5D', '#5BB98C', '#9B6FE0', '#F2A65A', '#1B2333'];
 const fmt = n => n >= 1000 ? (n / 1000).toFixed(1).replace('.0', '') + 'K' : String(n);
 const CM = EP.comments;
-if (CM) $('cmList').innerHTML = CM.list.map((c, i) => `<div class="card"><div class="card__av" style="background:${AV[i % 6]}">${c.by[0].toUpperCase()}</div><div class="card__body"><div class="card__name">@${c.by}</div><div class="card__text">${c.text}</div></div><div class="card__like"><span data-h>${HEART(false)}</span><span data-l>${fmt(c.likes)}</span></div></div>`).join('');
+if (CM) $('cmList').innerHTML = CM.list.map((c, i) => `<div class="card"><div class="card__av" style="background:${AV[i % 6]}">${c.by[0].toUpperCase()}</div><div class="card__body"><div class="card__name">${c.name || '@' + c.by}</div><div class="card__text">${c.text}</div></div><div class="card__like"><span data-h>${HEART(false)}</span><span data-l>${c.likes == null ? '' : fmt(c.likes)}</span></div></div>`).join('');   // likes: null = heart only, no number
 const tagsEl = $('tags');
 const newTags = (EP.residents || []).map(r => { const d = document.createElement('div'); d.className = 'tag'; d.innerHTML = `@${r.by}<small>🐱 Cat #${r.n.toLocaleString('en-US')} moved in</small>`; tagsEl.appendChild(d); return { el: d, k: r.n - 1 }; });
-const buildTag = document.createElement('div'); buildTag.className = 'tag'; if (NEWB) buildTag.innerHTML = `@${NEWB.by}<small>🏗️ built the ${NEWB.name}</small>`; buildTag.style.display = 'none'; tagsEl.appendChild(buildTag);
+const buildTag = document.createElement('div'); buildTag.className = 'tag'; if (NEWB) buildTag.innerHTML = `${NEWB.byName || '@' + NEWB.by}<small>🏗️ built the ${NEWB.name}</small>`; buildTag.style.display = 'none'; tagsEl.appendChild(buildTag);
 const proj = v => { const p = v.clone().project(camera); return { x: (p.x + 1) / 2 * W, y: (1 - p.y) / 2 * H, ok: p.z < 1 && p.x > -1 && p.x < 1 && p.y > -1 && p.y < 1 }; };
 if (EP.hideUI) document.querySelector('.ui').style.display = 'none';
 
@@ -910,6 +925,7 @@ window.renderFrame = (t, anim = t) => {
   updateExtras(t, anim);
   signs.forEach(s => { const wp = s.getWorldPosition(new THREE.Vector3()); s.lookAt(camera.position.x, wp.y, camera.position.z); });
   let gk = 0;
+  if (LOT) LOT.visible = t < NEWB.at;
   if (NB) { const bt = NEWB.at; NB.visible = t >= bt; gk = back((t - bt) / .9); NB.scale.set(Math.max(.001, .8 * (.6 + .4 * gk)), Math.max(.001, .8 * gk), Math.max(.001, .8 * (.6 + .4 * gk)));
     CONF.visible = t >= bt + .4 && t < bt + 4.4;
     if (CONF.visible) { const u = t - bt - .4; confData.forEach((d, i) => { cm.compose(V(NBpos.x + d.vx * u, 22 + d.vy * u - 8.8 * u * u, NBpos.z + d.vz * u), Q.setFromEuler(EU.set(d.r + u * 5, d.r * 2 + u * 3, 0)), V(1.4, 1.4, 1.4)); CONF.setMatrixAt(i, cm); }); CONF.instanceMatrix.needsUpdate = true; } }
@@ -941,7 +957,7 @@ window.renderFrame = (t, anim = t) => {
     const on = t >= C.stop, win = rows[CM.win]; win.classList.toggle('win', on);
     $('crown').style.opacity = on ? 1 : 0; $('crown').style.transform = `scale(${on ? back((t - C.stop) / .35) : 0})`;
     win.querySelector('[data-h]').innerHTML = HEART(on); win.querySelector('[data-h] svg').style.transform = `scale(${on ? 1 + .5 * Math.max(0, 1 - (t - C.stop) / .3) : 1})`;
-    const fin = CM.list[CM.win].likes, from = Math.round(fin * .55); win.querySelector('[data-l]').textContent = fmt(on ? Math.round(from + (fin - from) * ease((t - C.stop) / 1.2)) : from); }
+    const fin = CM.list[CM.win].likes, from = Math.round(fin * .55); if (fin != null) win.querySelector('[data-l]').textContent = fmt(on ? Math.round(from + (fin - from) * ease((t - C.stop) / 1.2)) : from); }
   newTags.forEach(tg => { const l = houseLots[tg.k]; if (!l) return; const a = APPEAR[tg.k] + .25;
     const p = proj(V(l.x, 4.6, l.z)); const vis = APPEAR[tg.k] >= 0 && t >= a && t < ms - .25 && p.ok; tg.el.style.display = vis ? 'block' : 'none';
     if (vis) { tg.el.style.left = Math.min(Math.max(p.x, 250), 830) + 'px'; tg.el.style.top = p.y + 'px'; tg.el.style.transform = `translate(-50%,-100%) scale(${back((t - a) / .35)})`; } });

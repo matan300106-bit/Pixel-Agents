@@ -180,3 +180,11 @@ Owner ask: fountain and feeder each in its own circle, side by side like an 8; c
 - Owner: pop-up lower, smaller, not pushy. `.info` now uses `bottom: dockH + 26px` (just above the dock); placeLow only moves the hint now. max-width 300px, icon 18px, title 14px, lines 12px, note 11px, softer shadow. Shop link is plain underlined text "See it in our shop" instead of a filled button. Uploaded to 188917874900, checksums verified.
 - Owner: remove the fountain/feeder pop-up for now. `"shopCards": False` in build_viewer.py; tapping them still starts water/feeding time but shows no card. Set True to bring the (low, small, soft) card back. Uploaded to 188917874900, checksums verified.
 - Owner: the Cat Town feeder is product `2-in-1-feeder-1` (not smart-feeder-white). Shop link updated (pop-up still off). Uploaded to 188917874900, checksum verified.
+
+## Update 2026-10-07 (Day 2): Fish Supermarket (first real top-comment build)
+
+- Top comment "add a fish supermarket" (by PIKA). New landmark kind `fishmarket` in catcity.html: white-aqua store, striped awning, glass doors, giant orange fish on the roof, two ice counters with fish. Front faces Mango's square.
+- Website: `build_viewer.py` now has a list of real builds (`at: 0`, always shown, first spots = in front of Mango, `note` shown on the tap card). The demo "Fish Market" (250 cats) is now "Toy Market". In live mode the page opens looking over the square at the newest real build.
+- Engine extras for videos: comment `likes: null` = heart only (no number), `name` shows a display name instead of @handle, `newBuild.byName`, `EP.lotSign` puts a "Your idea here?" sign on the empty lot until the build pops.
+- Uploaded to new copy 188939337940 "PETME2 — Cat Town Day 2 fish supermarket", checksums verified. Owner publishes.
+- Video: `episodes/day-2-fish/` (README there).
