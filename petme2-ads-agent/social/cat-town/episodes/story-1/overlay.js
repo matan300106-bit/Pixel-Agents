@@ -1,4 +1,4 @@
-// Story copy of day-1-v4/overlay.js: no Day label when day is null, per-line caption y (line.top).
+// Story copy of day-1-v4/overlay.js: no Day label when day is null, per-line caption y (line.top), per-beat small-line y (beat.st).
 // Injected into each engine page: hides the engine's own UI (keeps the comment card + build tag), draws the badge + text layer.
 (() => {
   const css = `#brand,#count,#title,#end,#sub{display:none!important}
@@ -32,7 +32,7 @@
     b += goal ? `<div class="cnt"><b class="g">1,000</b><span>cats · THE GOAL</span></div>` : `<div class="cnt"><b>${D.cats}</b><span>${D.cats === 1 ? 'cat' : 'cats'}${D.day ? ' · Day ' + D.day : ''}</span></div>`;
     const beat = D.beats.find(x => T >= x.s && T < x.e);
     if (beat) { const k = beat.still ? 1 : back((T - beat.s) / .3); h += `<div class="big" style="transform:scale(${.6 + .4 * k});opacity:${beat.still ? 1 : Math.min(1, (T - beat.s) / .1)}">${beat.html}</div>`;
-      if (beat.small && T >= beat.ss) h += `<div class="small" style="transform:scale(${back((T - beat.ss) / .3)})">${beat.small}</div>`;
+      if (beat.small && T >= beat.ss) h += `<div class="small" style="${beat.st ? `top:${beat.st}px;` : ''}transform:scale(${back((T - beat.ss) / .3)})">${beat.small}</div>`;
       if (beat.small2 && T >= beat.ss2) h += `<div class="small" style="top:790px;color:#fff;transform:scale(${back((T - beat.ss2) / .3)})">${beat.small2}</div>`;
       if (beat.arrow) { const a = T - beat.s - .5; if (a > 0) h += `<div class="arrow" style="transform:translateX(${18 * Math.sin(a * 9)}px) scale(${back(a / .3)})">👉</div>`; } }
     for (const [s, e, kind] of D.example) { if (T < s || T >= e) continue; const k = back((T - s) / .3);

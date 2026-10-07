@@ -1,18 +1,15 @@
-# Cat Town Instagram story (3 cards, 5 s each, sound on)
+# Cat Town Instagram story (3 photos)
 Matan uploads. Nothing is posted by Claude.
 
-Upload in this order, as 3 story cards:
-1. cat-town-story-1.mp4 — "This is Mango. He's the only cat in Cat Town."
-2. cat-town-story-2.mp4 — "Every new follow brings a new cat, with a house and your name on it!"
-   Add: Link sticker → petme2.com/cat-town (text: "SEE THE TOWN"). Put it on the empty road at the bottom left.
-3. cat-town-story-3.mp4 — "What should we build next? Reply with your idea!"
-   Add: Question sticker "What should we build in Cat Town?" Put it under the "YOUR IDEA HERE?" sign (the empty grass area).
-   Optional: a Mention sticker of our own account so people can follow from the story.
+Upload in this order, as 3 story photos (1080x1920):
+1. cat-town-story-photo-1.jpg — "This is Mango. The only cat in Cat Town."
+2. cat-town-story-photo-2.jpg — "1 follow = 1 new cat + a house with your name."
+   Add: Link sticker → petme2.com/cat-town (text: "SEE THE TOWN"). Put it on the empty road at the bottom, under the house line.
+3. cat-town-story-photo-3.jpg — "What do we build next? Reply with your idea."
+   Add: Question sticker "What should we build in Cat Town?" Put it on the empty grass under the "YOUR IDEA HERE?" sign.
+   Optional: music sticker, and a Mention sticker of our own account.
 
-Stickers can't be baked into the video, so add them in the Instagram app before you share.
-Keep the bottom 15% clear (the reply bar covers it). The text is already placed for that.
+Add stickers in the Instagram app before you share. Keep the bottom 15% clear (the reply bar covers it).
+The @you house tag is marked EXAMPLE (demo of the rule).
 
-One file instead of 3: cat-town-story-all-in-one.mp4 (15 s). Then add both stickers on it.
-
-Later: share the answers from the Question sticker as new story cards ("You said: ..."), and save the 3 cards as a Highlight called "Cat Town".
-The @you house tags are marked EXAMPLE (demo of the rule).
+Video version (if wanted later): cat-town-story-1/2/3.mp4 and cat-town-story-all-in-one.mp4.
