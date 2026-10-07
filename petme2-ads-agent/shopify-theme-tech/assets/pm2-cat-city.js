@@ -4,10 +4,10 @@ import { mergeGeometries } from 'https://cdn.jsdelivr.net/npm/three@0.170.0/exam
 import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/controls/OrbitControls.js/+esm';
 try { await document.fonts.load('900 100px Nunito'); await document.fonts.load('800 100px Nunito'); } catch (e) {}   // sign canvases need the font before they draw
 const EP = window.CITY;
-if (EP.live) {   // live town: residents come from the page metafield (window.CITY_LIVE = { start: 'YYYY-MM-DD', residents: [{ name, ig, tt, day }] })
+if (EP.live) {   // live town: residents come from the page metafield (window.CITY_LIVE = { start: 'YYYY-MM-DD', residents: [{ name, ig, tt, day }], updated: ISO time })
   const L = window.CITY_LIVE || {}, R = (Array.isArray(L.residents) ? L.residents : []).filter(r => r && (r.name || r.ig || r.tt));
   const st = new Date((L.start || '') + 'T00:00:00'), dn = isNaN(st) ? 1 : Math.floor((Date.now() - st) / 864e5) + 1;
-  EP.live.residents = R; EP.live.followers = R.length; EP.live.day = Math.max(1, dn); EP.followersNew = Math.max(EP.followersNew || 0, R.length); }
+  EP.live.residents = R; EP.live.updated = L.updated || ''; EP.live.followers = R.length; EP.live.day = Math.max(1, dn); EP.followersNew = Math.max(EP.followersNew || 0, R.length); }
 const ROOT = document.querySelector('[data-cat-city]'); const $ = id => document.getElementById('pcc-' + id);
 const ease = t => t < 0 ? 0 : t > 1 ? 1 : 1 - Math.pow(1 - t, 3);
 const inout = t => t < 0 ? 0 : t > 1 ? 1 : t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
@@ -1002,7 +1002,9 @@ const esc = v => String(v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;'
 function resCard(n) { const r = RES[n], ig = clean(r.ig), tt = clean(r.tt), title = ig ? '@' + ig : tt ? '@' + tt : r.name, l = houseLots[n];
   const more = [ig && r.name ? r.name : '', ig && tt ? 'TikTok @' + tt : ''].filter(Boolean).join(' \u00b7 ');
   return `<div class="info__icon">\ud83c\udfe0</div><div><b class="info__title">${esc(title)}</b><span class="info__line">Cat #${(n + 1).toLocaleString('en-US')} \u00b7 moved in on day ${esc(r.day || 1)}</span>${more ? `<span class="info__line">${esc(more)}</span>` : ''}<span class="info__line">${KIND[l.kind]} \u00b7 ${DIST[l.d]} district</span></div>`; }
-if (RES) { const form = $('find'), q = $('findQ'); form.hidden = false; const placeLow = () => { const op = infoBox.offsetParent || form.offsetParent, base = op && getComputedStyle(infoBox).position !== 'fixed' ? op.getBoundingClientRect().top : 0, y = Math.round(form.getBoundingClientRect().bottom - base + 10) + 'px';
+if (RES) { const form = $('find'), q = $('findQ'); form.hidden = false;
+  { const u = new Date(EP.live.updated), el = $('upd');   // "Updated <date, time> \u00b7 Next update in a few hours" (very small, under the counter)
+    if (el && !isNaN(u)) { el.textContent = 'Updated ' + u.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' }) + ' \u00b7 Next update in a few hours'; el.hidden = false; } } const placeLow = () => { const op = infoBox.offsetParent || form.offsetParent, base = op && getComputedStyle(infoBox).position !== 'fixed' ? op.getBoundingClientRect().top : 0, y = Math.round(form.getBoundingClientRect().bottom - base + 10) + 'px';
     infoBox.style.top = y; const h = $('hint'); if (h) h.style.top = y; };
   placeLow(); addEventListener('resize', placeLow); requestAnimationFrame(placeLow);
   form.addEventListener('submit', e => { e.preventDefault(); const w = clean(q.value); if (!w) return; q.blur();

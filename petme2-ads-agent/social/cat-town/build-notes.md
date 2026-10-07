@@ -164,3 +164,4 @@ Owner ask: fountain and feeder each in its own circle, side by side like an 8; c
 - `viewer.html` now has a viewport meta, so local phone tests match real phones.
 - /cat-town already redirects to /pages/cat-town (UrlRedirect 606478794964), so the short link works.
 - Uploaded to new copy 188916498644 (old copy 188909420756 had been deleted, so a duplicate worked). Tested with sample residents in the test browser only.
+- Owner (00:40): small "Updated <date, time> · Next update in a few hours" line under the counter. Comes from the metafield's `updated` field (ISO time, e.g. `2026-10-07T00:50:00Z`), shown in the visitor's own time zone. Set `updated` every time the resident list changes.

@@ -110,7 +110,9 @@ const esc = v => String(v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;'
 function resCard(n) { const r = RES[n], ig = clean(r.ig), tt = clean(r.tt), title = ig ? '@' + ig : tt ? '@' + tt : r.name, l = houseLots[n];
   const more = [ig && r.name ? r.name : '', ig && tt ? 'TikTok @' + tt : ''].filter(Boolean).join(' · ');
   return `<div class="info__icon">🏠</div><div><b class="info__title">${esc(title)}</b><span class="info__line">Cat #${(n + 1).toLocaleString('en-US')} · moved in on day ${esc(r.day || 1)}</span>${more ? `<span class="info__line">${esc(more)}</span>` : ''}<span class="info__line">${KIND[l.kind]} · ${DIST[l.d]} district</span></div>`; }
-if (RES) { const form = $('find'), q = $('findQ'); form.hidden = false; const placeLow = () => { const op = infoBox.offsetParent || form.offsetParent, base = op && getComputedStyle(infoBox).position !== 'fixed' ? op.getBoundingClientRect().top : 0, y = Math.round(form.getBoundingClientRect().bottom - base + 10) + 'px';
+if (RES) { const form = $('find'), q = $('findQ'); form.hidden = false;
+  { const u = new Date(EP.live.updated), el = $('upd');   // "Updated <date, time> · Next update in a few hours" (very small, under the counter)
+    if (el && !isNaN(u)) { el.textContent = 'Updated ' + u.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' }) + ' · Next update in a few hours'; el.hidden = false; } } const placeLow = () => { const op = infoBox.offsetParent || form.offsetParent, base = op && getComputedStyle(infoBox).position !== 'fixed' ? op.getBoundingClientRect().top : 0, y = Math.round(form.getBoundingClientRect().bottom - base + 10) + 'px';
     infoBox.style.top = y; const h = $('hint'); if (h) h.style.top = y; };
   placeLow(); addEventListener('resize', placeLow); requestAnimationFrame(placeLow);
   form.addEventListener('submit', e => { e.preventDefault(); const w = clean(q.value); if (!w) return; q.blur();
