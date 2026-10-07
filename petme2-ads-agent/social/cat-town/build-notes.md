@@ -175,3 +175,4 @@ Owner ask: fountain and feeder each in its own circle, side by side like an 8; c
 - Uploaded to new copy 188917547220 (the owner had published 188916498644).
 - Owner: the fountain/feeder card was too big. Compact card: max-width 340px, padding 9/38/9/11, icon 22px, title 15.5px, lines 12.5px, note 11.5px, smaller shop and close buttons. Uploaded to 188917547220 (liquid only).
 - Owner: Mango-themed fountain/feeder card text (viewer_loop.js info lines). Uploaded to new copy 188917874900 (owner had published 188917547220).
+- Owner: hide the arrow pad (joystick) for now. `"pad": False` in build_viewer.py data; viewer_loop.js hides `#pad` when `EP.pad === false`. Set it to True to bring it back. Touch is unchanged: one finger rotates, two fingers pinch zoom/pan, double-tap flies there; arrow keys still work on a computer. Uploaded to 188917874900 (still unpublished), checksums verified.
