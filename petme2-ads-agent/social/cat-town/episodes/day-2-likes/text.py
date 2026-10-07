@@ -19,17 +19,17 @@ beats = [
  dict(s=11.3, e=14.0, html='YESTERDAY?<br>JUST <y>MANGO</y> 🐱', small='and an empty road 🛣️', ss=12.7),
  dict(s=14.0, e=18.3, html='<y>128</y> FOLLOWERS<br>= <y>128</y> HOUSES 🏠'),
  dict(s=18.3, e=21.95, html='<y>194</y> LIKES<br>= <y>194</y> CATS 🐱'),
- dict(s=21.95, e=24.9, html='MORE <y>CATS</y><br>THAN <y>HOUSES</y>?! 🙀'),
+ dict(s=21.95, e=24.9, html='MORE <y>CATS</y><br>THAN <y>HOUSES</y>?!'),
  dict(s=24.9, e=29.0, html='OUR <y>FIRST</y><br>CAT HOUSE 🏠'),
  dict(s=29.0, e=30.4, html="LET'S BUILD<br>THE <y>TOP COMMENT</y> 🚧"),
  dict(s=30.4, e=34.9, html="LET'S <y>BUILD IT!</y> 🚧"),
  dict(s=34.9, e=35.7, html='<y>BUILT!</y> 🎉🐟', small='“add a fish supermarket” ✅', ss=35.1, smallTop=1300),
  dict(s=35.7, e=37.6, html='TOP COMMENT<br>EVERY DAY<br>= <y>WE BUILD IT</y>'),
- dict(s=37.6, e=41.9, html='<y>66 CATS</y><br>NEED A HOME 🥺', small='Follow = +1 house 🏠', ss=39.6),
+ dict(s=37.6, e=41.9, html='<y>66 CATS</y><br>NEED A HOME 🥺', small='Follow = +1 house 🏠', ss=39.6, smallTop=1330),
  dict(s=41.9, e=45.0, html='ARE YOU<br><y>COMING?</y> 👇', small='Follow to move in 🐱', ss=43.3),
  dict(s=45.0, e=99, html=HOOK),
 ]
 json.dump(dict(duration=45.5, day=2, houses=True, catsCounter=True, cats=1, followers=0, roll=[0, 0], build=[30.4, 34.9], firstStreet='Meowstache Ave 🪧', lines=lines, beats=beats, goal=[99, 99],
-               hideTags=[[0, 24.9], [29.0, 99]], pinTags=[], example=[]), open(f'{out}/text.json', 'w'), indent=1, ensure_ascii=False)
+               hideTags=[[0, 25.7], [29.0, 99]], pinTags=[], example=[]), open(f'{out}/text.json', 'w'), indent=1, ensure_ascii=False)
 json.dump([dict(i=l['i'], s=l['s'], e=l['e']) for l in lines], open(f'{out}/timeline.json', 'w'))
 for l in lines: print(l['s'], l['e'], l['text'])
