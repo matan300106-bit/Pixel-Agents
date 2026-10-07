@@ -11,7 +11,7 @@ const SEG = T => T < 5.0 ? ['e0', 0] : T < 10.0 ? ['eh', 0] : T < 15.0 ? ['e0', 
   const pages = {};
   for (const e of [...new Set(Ts.map(T => SEG(T)[0]))]) { const p = await br.newPage({ viewport: { width: 1080, height: 1920 } }); p.on('pageerror', x => console.log('err', e, x.message));
     await p.goto(`http://127.0.0.1:8772/catcity.html?ep=${REL}/${e}.json`); await p.waitForFunction('window.ready === true', null, { timeout: 180000 });
-    await p.addScriptTag({ path: __dirname + '/overlay.js' });
+    await p.addScriptTag({ path: __dirname + '/overlay.js' }); await p.addScriptTag({ path: __dirname + '/photo_overlay.js' });
     if (e === 'eh') await p.evaluate(() => document.querySelectorAll('#tags .tag').forEach(el => { el.innerHTML = '@you<small>🐱 moved in</small>'; }));
     pages[e] = p; }
   fs.mkdirSync(DIR + '/frames', { recursive: true });
