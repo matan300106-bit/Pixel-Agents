@@ -25,27 +25,26 @@ while T < DUR - .25:
         if b % 4 == 0: add(mus, T, tone(mid(ch[0] - 24), 2.4, .9, .02, (1, .3)), .22)
     b += 1; T = b * beat / 2
 for n in [60, 64, 67, 72, 76]:   # warm pad swell under "missing is you"
-    x = np.arange(int(2.4 * SR)) / SR; add(mus, 13.75, np.sin(2 * np.pi * mid(n) * x) * np.minimum(1, x / .5) * np.minimum(1, (2.4 - x) / .15), .08)
+    x = np.arange(int(2.4 * SR)) / SR; add(mus, 13.65, np.sin(2 * np.pi * mid(n) * x) * np.minimum(1, x / .5) * np.minimum(1, (2.4 - x) / .15), .08)
 add(mus, DUR - .2, tone(mid(60), .2, .1), .1)    # lands on the intro chord root so the loop restarts clean
 # sfx
 E = json.load(open(f'{DIR}/e1.json')); AP = E['appear']
-whoosh(0.85, 1.9, .06, 1.1)                                                  # fly out to the first lot
-for k, t in enumerate(AP[:5]):                                               # first houses: a big pop + chime each
-    add(sfx, t, pop(400, 1500, .16), 1.0); add(sfx, t + .3, pop(650, 1300, .1), .4)
-    add(sfx, t + .05, tone(mid([76, 79, 83, 84, 88][k]), .7, .3, .002, (1, .3)), .22)
-whoosh(4.4, .6, .12, 1.2)                                                    # whip across town to #3
-whoosh(6.25, 3.0, .05, 1.0)                                                  # pull back while the rest pop
-for k, t in enumerate(AP[5:]):                                               # the rest: rising ticks (every 2nd house)
+x = np.arange(int(.45 * SR)) / SR; f = 700 + 350 * np.sin(np.pi * x / .45) - 200 * x / .45
+MEOW = np.sin(2 * np.pi * np.cumsum(f) / SR) * np.sin(np.pi * x / .45) ** 1.5 * (1 + .3 * np.sin(2 * np.pi * 2 * f * x))
+add(sfx, 4.0, MEOW, .2)                                                      # lonely Mango
+whoosh(4.25, 3.0, .05, 1.0)                                                  # pull back while every house pops
+for k, t in enumerate(AP):                                                   # rising ticks (every 2nd house)
     if k % 2 == 0: add(sfx, t, pop(500 + 6 * k, 1100 + 9 * k, .05), .22)
 for k, n in enumerate([72, 76, 79, 84, 88]): add(sfx, AP[-1] + .15 + k * .07, tone(mid(n), .9, .35, .002, (1, .3)), .24)   # 128: fanfare
 for k in range(16): add(sfx, AP[-1] + .4 + k * .05, noise(.04, .7) * env(int(.04 * SR), .001, .01), .25)
-whoosh(12.05, 1.6, .07, 1.0)                                                 # down to Mango
-for k, n in enumerate([79, 84]): add(sfx, 12.9 + k * .1, tone(mid(n), .8, .3, .002, (1, .2)), .22)
-whoosh(13.7, 2.4, .06, .9)
+whoosh(8.55, 1.1, .08, 1.1)                                                  # down to houses #1 and #2
+for k, n in enumerate([84, 88]): add(sfx, 9.1 + k * .12, pop(400 + 200 * k, 1500, .14), .8); add(sfx, 9.15, tone(mid(84), .7, .3, .002, (1, .3)), .2)   # name tags
+whoosh(11.55, 1.4, .07, 1.0)                                                 # to Mango
+for k, n in enumerate([79, 84]): add(sfx, 12.6 + k * .1, tone(mid(n), .8, .3, .002, (1, .2)), .22)
+whoosh(13.65, 2.4, .06, .9)
 add(sfx, 15.0, pop(700, 1600, .12), .45)
 whoosh(16.15, .9, .1, 1.3)                                                   # dive back to Mango
-x = np.arange(int(.45 * SR)) / SR; f = 700 + 350 * np.sin(np.pi * x / .45) - 200 * x / .45   # soft synth meow
-add(sfx, 16.45, np.sin(2 * np.pi * np.cumsum(f) / SR) * np.sin(np.pi * x / .45) ** 1.5 * (1 + .3 * np.sin(2 * np.pi * 2 * f * x)), .22)
+add(sfx, 16.45, MEOW, .22)
 # voice
 for l in json.load(open(f'{DIR}/timeline.json')):
     a, _ = sf.read(f"{DIR}/l{l['i']:02d}.wav"); add(voc, l['s'], a)
