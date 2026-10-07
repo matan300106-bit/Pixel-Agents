@@ -119,7 +119,7 @@ if (EP.pad === false) { const pd = $('pad'); if (pd) { pd.hidden = true; pd.styl
 if (RES) { const form = $('find'), q = $('findQ'); form.hidden = false;
   { const u = new Date(EP.live.updated), el = $('upd');   // "Updated <date, time> · Next update in a few hours" (very small, under the counter)
     if (el && !isNaN(u)) { el.textContent = 'Updated ' + u.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' }) + ' · Next update in a few hours'; el.hidden = false; } } const topEl = $('countN').parentElement, placeLow = () => { const op = infoBox.offsetParent || topEl.offsetParent, base = op && getComputedStyle(infoBox).position !== 'fixed' ? op.getBoundingClientRect().top : 0, y = Math.round(topEl.getBoundingClientRect().bottom - base + 10) + 'px';
-    infoBox.style.top = y; const h = $('hint'); if (h) h.style.top = y; };
+    const h = $('hint'); if (h) h.style.top = y; };   // info card sits low, just above the dock (CSS); only the hint goes under the top block
   placeLow(); addEventListener('resize', placeLow); requestAnimationFrame(placeLow); syncDock(); requestAnimationFrame(syncDock);
   form.addEventListener('submit', e => { e.preventDefault(); const w = clean(q.value); if (!w) return; q.blur();
     let n = RES.findIndex(r => clean(r.ig) === w || clean(r.tt) === w || clean(r.name) === w);
@@ -160,7 +160,7 @@ function tapAt(nx, ny) {
     let o = h.object; while (o && !o.userData.info) o = o.parent;
     if (o && o.visible) { const I = o.userData.info, p = new THREE.Vector3(); o.getWorldPosition(p);
       if (I.feed) window.feedTime(I.feed);
-      showInfo(`<div class="info__icon">${I.icon}</div><div><b class="info__title">${I.title}</b><span class="info__line">${I.line}</span>${I.note ? `<span class="info__note">${I.note}</span>` : ''}${I.shop ? `<a class="info__shop" href="${I.shop}">See it in the shop →</a>` : ''}</div>`, p, I.pinY || (o === (typeof MO !== 'undefined' && MO.g) ? 60 : 16)); return; }
+      showInfo(`<div class="info__icon">${I.icon}</div><div><b class="info__title">${I.title}</b><span class="info__line">${I.line}</span>${I.note ? `<span class="info__note">${I.note}</span>` : ''}${I.shop ? `<a class="info__shop" href="${I.shop}">See it in our shop</a>` : ''}</div>`, p, I.pinY || (o === (typeof MO !== 'undefined' && MO.g) ? 60 : 16)); return; }
     const pt = h.point;
     if (pt.y > 25 && Math.hypot(pt.x, pt.z) < 450) { showInfo(`<div class="info__icon">🐟</div><div><b class="info__title">Fish balloon</b><span class="info__line">Sky tours for cats. Two passengers, zero pilots.</span></div>`, null); return; }
     if (pt.x > COAST_X - 10 && pt.y > 1) { showInfo(`<div class="info__icon">🔴</div><div><b class="info__title">Red Dot Lighthouse</b><span class="info__line">Cats have chased this dot since day 1. Nobody has caught it.</span><span class="info__note">Unlocked at 500 cats</span></div>`, null); return; }
