@@ -60,3 +60,83 @@ Words per line: 4 / 2 / 2 / 6 / 4 / 5 / 6 / 5 / 6 / 6 / 9 = **55**.
   - The "mayor/vote" wording is a cute civic joke; never use real politics.
   - All demo content is stamped EXAMPLE.
   - No product line ("water and food" is gone); the feeder appears only as a 1.3 s joke backdrop.
+
+---
+
+## Day 1 v3 cut 1: /tmp/ct2/d/cut1.mp4 (approved "straight hook" script)
+
+**Verdict: NEEDS FIXES (3 camera fixes, all re-render-cheap). Virality score: 7 / 10**, about 8 after the fixes.
+What works:
+- The voice is the same as Day 1 (af_heart).
+- Subtitles run on every line.
+- The badge "PETME2 CAT TOWN / 1 / cat · Day 1" is on all 528 frames.
+- The EXAMPLE stamps are there.
+- The goal town and the loop are good.
+What holds it back: a static first second, Mango's head cut off on his name line, and a 1.7 s fountain hero shot under the comment rule.
+
+### Tech (measured)
+- H.264 1080x1920, 30 fps, 528 frames, 17.6 s. AAC stereo.
+- **-15.5 LUFS**, true peak -4.4 dBFS. No black frames. No silence over 0.3 s.
+- Cuts at 2.6, 4.5, 7.8, 10.4, 12.0 and 14.4 s.
+- **Loop diff f0000 vs f0527 = 0.43** (pass). The headline "POPULATION: 1 CAT" is on both frames.
+- Voice: L1 0.15-1.89, L5 8.00-10.08 ("top comment gets built"), L7 12.25-13.67 (inside the goal shot 12.0-14.4), CTA 14.60-16.37.
+
+### Checks
+
+| Check | Result | Evidence |
+|---|---|---|
+| Hook muted (0-2 s) | PASS (weak) | "POPULATION: 1 CAT" is on frame 0 and readable. But **0.0-1.0 s is a static back view of Mango** (frame-diff 1.9 then 0.7). The pull-back only starts at 1.0. |
+| Hook unmuted | PASS | "This whole town has only one cat" ends at 1.89; "one" lands on the pull-back reveal (good). |
+| Pacing | PASS (one weak spot) | A cut or text change at least every 2.6 s. Low motion at 3.5-4.4 (0.4-1.1), see fix 2. |
+| Overlaps / safe zone | PASS (minor) | Badge y≈227-430, headline about 460-670, captions about 1220-1320, small lines about 700-850. At 10.0 s the statue sits *behind* the caption block, see fix 3. |
+| Legibility | PASS | Headlines are large and stroked; captions about 38 px with a stroke. The "@you moved in" tag is small (about 22 px) but readable. |
+| Honesty | PASS | The counter is "1" everywhere and "1,000 cats · THE GOAL" only in 12.0-14.4. The house (5.5-7.8) and statue (9.6-10.4) carry EXAMPLE. |
+| CTA | PASS | One spoken ask (the owner's comment line). "Top comment gets built" and "Follow = 1 new cat 🐱" are small text 15.0-17.0. |
+| Loop | PASS | 0.43 diff, same headline, and the meow/voice reads "...in Cat Town! / This whole town has only one cat." |
+| Brand / product | **FAIL** | **7.8-9.5 s: the PETME2 fountain is centred, large and on its own under "TOP COMMENT = WE BUILD IT"** (feeder at right). For 1.7 s the rule sits on a product hero shot, the exact ad-read the earlier reviews warned about. |
+
+### Fixes worth a re-render (ranked)
+
+1. **Build shot (7.8-10.4 s): reuse the rule-v1 cut-2 build camera.**
+   - Use the outside-the-lot-looking-in angle with the statue centred at about y 700-1150, the town centre and Mango small behind.
+   - Pop the statue at **8.9 s** (on "top comment") instead of about 9.6, so confetti fires while the line is being said, and it is fully up on "gets built" (9.6-10.1).
+   - Keep EXAMPLE + "MANGO STATUE" visible 8.9-10.4.
+   - This removes the fountain hero shot and gives the comment rule a payoff 0.7 s earlier.
+   - Keep the statue and its tag above y 1180 so the caption (about 1220-1320) does not cover it.
+2. **Mango intro (2.6-4.5 s, "His name is Mango. Zero friends."): his head is cut off at the left edge**, so only the body and tail are in frame while his name is said, and the shot is nearly static.
+   - Reframe the eating shot so all of Mango sits at x about 150-650 (head included, 3/4 side view), with the bowl to his right.
+   - Add a slow 5-8 % push-in over 2.6-4.5.
+3. **Hook motion from frame 0 (0.0-1.0 s).**
+   - Start the pull-back at **0.0 s**, eased out, instead of 1.0 s. Keep the same end pose at about 2.5 s.
+   - Frame 0 then stays identical (loop safe), and the image moves in the first 300 ms, which stops thumbs better than a still back view.
+   - For the loop, the last 0.5 s (17.1-17.6) should be the matching push-in that lands exactly on frame 0. It does now; keep it.
+
+Optional, only if re-rendering anyway: at 6.0-7.8 s a cat should step out of the "@you moved in" house (the old Day 1 fix 6), so "1 follow = 1 new cat" is literal. Also make the goal headline "LET'S BUILD A CAT TOWN" visible from 12.0, not about 12.3.
+
+---
+
+## Day 1 v3 cut 2: /tmp/ct2/d/cut2.mp4
+
+**Verdict: READY. Virality score: 8 / 10.**
+
+### Tech (measured)
+- 528 frames, 17.6 s.
+- **-15.3 LUFS**, true peak -4.3 dBFS. No black frames.
+- **Loop diff 0.43** (pass). The headline is the same on the first and last frame.
+
+### Re-check of the cut 1 fixes
+
+| Fix | Result | Evidence |
+|---|---|---|
+| 1. Build shot | **PASS** | Wider outside-the-lot view. The fountain and feeder are now small background objects at y≈700-900. The statue pops at 8.9 s and is fully up by 9.6 on "gets built". The "MANGO STATUE" sign and the EXAMPLE stamp sit at y≈760-1280, above the captions (about 1295-1425). Confetti fires at 9.5-10.0. |
+| 2. Mango intro (2.6-4.5) | **PASS** | All of Mango is in frame (x≈250-1000) with a slow push-in. Motion is still gentle (0.7-1.3 frame-diff), but the headline plus voice carry it, and it is under 2 s. |
+| 3. Hook motion | **PASS** | The pull-back now starts on frame 1. Frame-diff rises 0.45 → 4.5 by frame 3 and averages 12-18 over 0-1.5 s (cut 1: 1.9 / 0.7). Frame 0 is unchanged, so the loop still holds. |
+| "every day" small line removed | OK | The rule is still said ("And every day, the top comment gets built") and subtitled. |
+
+Everything else is unchanged from cut 1 and passes: honesty (the counter shows 1 everywhere; "1,000 · THE GOAL" only in the goal shot; EXAMPLE stamps on the house and statue), one spoken CTA, the safe zone and legibility.
+
+### Remaining issues (none must-fix)
+- The statue is small (about 15 % of the frame width). A closer camera would sell the payoff more, but it is not worth another render.
+- Optional for future days:
+  - A cat stepping out of the "@you" house.
+  - The goal headline showing from 12.0 s.
