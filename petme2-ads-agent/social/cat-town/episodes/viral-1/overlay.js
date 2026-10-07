@@ -9,7 +9,7 @@
   #ov .cnt b{display:block;font-weight:900;font-size:104px;line-height:1;color:#fff;-webkit-text-stroke:11px #1B2333;paint-order:stroke fill}
   #ov .cnt b.g{color:#FFD23F}
   #ov .cnt span{display:inline-block;margin-top:6px;background:#1B2333;color:#fff;font-weight:900;font-size:32px;padding:7px 24px;border-radius:999px}
-  #ov .big{position:absolute;left:50px;right:180px;top:500px;text-align:center;font-weight:900;font-size:96px;line-height:1.04;color:#fff;-webkit-text-stroke:14px #1B2333;paint-order:stroke fill;text-shadow:0 12px 0 rgba(27,35,51,.45),0 0 40px rgba(27,35,51,.35)}
+  #ov .big{position:absolute;left:50px;right:180px;top:500px;text-align:center;font-weight:900;font-size:96px;line-height:1.04;color:#fff;-webkit-text-stroke:17px #1B2333;paint-order:stroke fill;text-shadow:0 12px 0 rgba(27,35,51,.45),0 0 40px rgba(27,35,51,.35)}
   #ov .big y{color:#FFD23F} #ov .big r{color:#FF6B6B}
   #ov .small{position:absolute;left:50px;right:180px;top:712px;text-align:center;font-weight:900;font-size:60px;color:#FFD23F;-webkit-text-stroke:11px #1B2333;paint-order:stroke fill}
   #ov .ex{position:absolute;background:#E8384F;color:#fff;font-weight:900;font-size:34px;letter-spacing:.06em;padding:6px 18px;border-radius:12px;border:4px solid #fff;box-shadow:0 8px 20px rgba(0,0,0,.25);transform-origin:left center}
@@ -39,7 +39,7 @@
     const goal = T >= D.goal[0] && T < D.goal[1];
     b += `<div class="brand"><span>🐾 PETME2 CAT TOWN</span></div>`;
     const R = D.roll, rc = R ? Math.round(R[2] + (R[3] - R[2]) * Math.pow(Math.min(1, Math.max(0, (T - R[0]) / (R[1] - R[0]))), 1.6)) : 1000;
-    b += goal ? `<div class="cnt"><b class="g">${rc.toLocaleString('en-US')}</b><span>${rc >= 1000 ? 'cats · THE DREAM 🎉' : 'cats · THE DREAM'}</span></div>` : `<div class="cnt"><b>${D.cats}</b><span>${D.cats === 1 ? 'cat' : 'cats'} · Day ${D.day}</span></div>`;
+    b += goal ? `<div class="cnt"><b class="g">${rc.toLocaleString('en-US')}</b><span>${rc >= 1000 ? 'cats · THE DREAM 🎉' : 'cats · THE DREAM'}</span></div>` : `<div class="cnt"><b>${D.rewind && T >= D.rewind[0] && T < D.rewind[1] ? Math.max(1, Math.round(1000 * Math.pow(1 - (T - D.rewind[0]) / (D.rewind[1] - D.rewind[0]), 2))).toLocaleString('en-US') : D.cats}</b><span>${D.cats === 1 ? 'cat' : 'cats'} · Day ${D.day}</span></div>`;
     const beat = D.beats.find(x => T >= x.s && T < x.e);
     if (beat) { const k = beat.still ? 1 : back((T - beat.s) / .3); h += `<div class="big" style="transform:scale(${.6 + .4 * k});opacity:${beat.still ? 1 : Math.min(1, (T - beat.s) / .1)}">${beat.html}</div>`;
       if (beat.small && T >= beat.ss) h += `<div class="small" style="transform:scale(${back((T - beat.ss) / .3)})">${beat.small}</div>`;
@@ -47,7 +47,7 @@
       if (beat.arrow) { const a = T - beat.s - .5; if (a > 0) h += `<div class="arrow" style="transform:translateX(${18 * Math.sin(a * 9)}px) scale(${back(a / .3)})">👉</div>`; } }
     const g0 = (D.grade || []).find(([s, e]) => T >= s && T < e); if (g0 && g0[3]) h0 += `<div class="tint"></div>`;
     if (D.flash && T >= D.flash && T < D.flash + .3) h0 += `<div class="flash" style="opacity:${1 - (T - D.flash) / .3}"></div>`;
-    for (const [s, e, txt] of (D.bubbles || [])) if (T >= s && T < e) h += `<div class="bub" style="transform:scale(${back((T - s) / .3)})">${txt}</div>`;
+    for (const [s, e, txt] of (D.bubbles || [])) if (T >= s && T < e) h += `<div class="bub" style="transform:scale(${s === 0 ? 1 : back((T - s) / .3)})">${txt}</div>`;
     for (const [s, e, kind] of D.example) { if (T < s || T >= e) continue; const k = back((T - s) / .3);
       let x = 96, y = 1064;
       if (kind === 'house') { const tg = [...document.querySelectorAll('#tags .tag')].find(el => el.style.display === 'block'); if (!tg) continue; const r0 = tg.getBoundingClientRect(), r = { left: r0.left, width: r0.width, top: 950 }; const cx = Math.min(820, Math.max(260, r.left + r.width / 2));
@@ -64,7 +64,7 @@
     if (T < 13.4) (D.chips || []).forEach(([s, name], i) => { if (T < s) return; const k = back((T - s) / .3);
       h += `<div class="chip" style="top:1170px;transform:translateY(${(i - (nc - 1)) * 96}px) scale(${k})"><i style="background:${COL[i % 5]}">${name[0]}</i><em>💬</em><b>${name}</b></div>`; });
     const line = [...D.lines].reverse().find(l => !l.hide && T >= l.s - .05 && T < l.e + .3);
-    if (line) h += `<div class="cap">${line.words.map(w => `<span class="${T >= w.s && T < w.e + .05 ? 'on' : ''}">${w.w}</span>`).join(' ')}</div>`;
+    if (line) h += `<div class="cap" style="font-size:${line.words.length > 7 ? 54 : 64}px">${line.words.map(w => `<span class="${T >= w.s && T < w.e + .05 ? 'on' : ''}">${w.w}</span>`).join(' ')}</div>`;
     const g = (D.grade || []).find(([s, e]) => T >= s && T < e); const cv = document.querySelector('canvas'); if (cv && g) cv.style.filter = g[2];
     ov.innerHTML = h0 + b + `<div style="opacity:${end}">${h}</div>`;
     const tg = document.getElementById('tags'); if (tg) tg.style.opacity = (D.hideTags || []).some(([s, e]) => T >= s && T < e) ? 0 : 1; if (tg && (D.pinTags || []).some(([s, e]) => T >= s && T < e)) tg.style.opacity = 0; if (tg) tg.classList.toggle('pin', (D.pinTags || []).some(([s, e]) => T >= s && T < e));

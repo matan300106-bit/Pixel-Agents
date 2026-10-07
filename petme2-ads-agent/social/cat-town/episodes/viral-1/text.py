@@ -21,10 +21,10 @@ beats = [
  dict(s=14.45, e=99, html=HOOK, still=True),
 ]
 # grade: cool grey when Mango is alone, warm when the town fills (CSS filter on the engine canvas)
-SAD = 'saturate(.38) brightness(.9) contrast(1.04)'; WARM = 'saturate(1.22) brightness(1.04) sepia(.1)'
+SAD = 'saturate(.5) brightness(.92) contrast(1.04)'; WARM = 'saturate(1.22) brightness(1.04) sepia(.1)'
 grade = [[0, 4.0, SAD, 1], [4.0, 13.4, WARM, 0], [13.4, 99, SAD, 1]]
 chips = [[11.3, 'Noa'], [11.75, 'Leo'], [12.2, 'Maya']]
-json.dump(dict(duration=14.8, day=1, cats=1, lines=lines, beats=beats, goal=[7.8, 10.6], roll=[7.85, 10.1, 1, 1000], grade=grade, chips=chips, flash=4.0, pops=[4.6, 5.45, 6.19], bubbles=[[0.5, 2.2, 'anyone? 🥺'], [13.9, 14.45, 'anyone? 🥺']],
+json.dump(dict(duration=14.8, day=1, cats=1, lines=lines, beats=beats, goal=[7.8, 10.6], roll=[7.85, 10.1, 1, 1000], grade=grade, chips=chips, flash=4.0, pops=[4.6, 5.45, 6.19], bubbles=[[0, 2.2, 'anyone? 🥺'], [13.9, 99, 'anyone? 🥺']], rewind=[10.6, 10.95],
                pinTags=[[4.4, 7.8]], example=[[4.5, 7.8, 'house'], [11.0, 13.4, 'chips']]), open(f'{out}/text.json', 'w'), indent=1)
 json.dump([dict(i=l['i'], s=l['s'], e=l['e']) for l in lines], open(f'{out}/timeline.json', 'w'))
 for l in lines: print(l['s'], l['e'], l['text'])
