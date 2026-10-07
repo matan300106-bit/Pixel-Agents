@@ -1,10 +1,11 @@
-# Self-made music + SFX for the "Be OK" video (no voice) -> DIR/mix.wav. Happy ukulele-ish pluck + claps at 116 bpm (Mango's dance tempo),
-# cut to silence when Mango freezes (16.0 s). The creator can lay the trending sound over it in the TikTok app.
+# Self-made music + SFX + Kokoro voice for the "Be OK" video -> DIR/mix.wav. Happy ukulele-ish pluck + claps at 116 bpm (Mango's dance tempo),
+# cut to silence when Mango freezes (EP.dance.stop). The creator can lay the trending sound over it in the TikTok app.
 import numpy as np, json, soundfile as sf, subprocess, sys
 DIR = sys.argv[1] if len(sys.argv) > 1 else 'v'
-SR = 48000; DUR = 19.0; N = int(SR * DUR); rng = np.random.default_rng(5)
-mus = np.zeros(N); sfx = np.zeros(N)
-E = json.load(open(f'{DIR}/e1.json')); STOP = E['dance']['stop']; BONK = E['bonk']; AP = E['appear']; RAIN = E['strays']['at']; PEEK = E['strays']['peek']
+E = json.load(open(f'{DIR}/e1.json'))
+SR = 48000; DUR = E['duration']; N = int(SR * DUR); rng = np.random.default_rng(5)
+mus = np.zeros(N); sfx = np.zeros(N); voc = np.zeros(N)
+STOP = E['dance']['stop']; BONK = E['bonk']; AP = E['appear']; RAIN = E['strays']['at']; PEEK = E['strays']['peek']
 def env(n, a=.005, r=.3): x = np.arange(n) / SR; return np.minimum(1, x / a) * np.exp(-x / r)
 def add(buf, s, sig, g=1):
     i = int(s * SR); j = min(N, i + len(sig))
@@ -43,13 +44,16 @@ for j, t in enumerate(AP):                                                      
 for j, t in enumerate(RAIN):                                                       # rule 2: a soft plop as each cat lands, a few mrrps
     add(sfx, t, sweep(320, 140, .09, .05), .32)
     if j % 5 == 0: add(sfx, t + .05, sweep(700 + 10 * j, 1000 + 10 * j, .16, .1) * np.sin(np.linspace(0, np.pi, int(.16 * SR))), .14)
-x = np.arange(int(3.0 * SR)) / SR; add(sfx, 10.0, (np.sin(2 * np.pi * 60 * x) + .4 * np.sin(2 * np.pi * 120 * x)) * .5 * np.minimum(1, x / .05) * np.minimum(1, (3 - x) / .05), .12)   # fridge hum
-for j in range(9): add(sfx, 10.3 + j * .29, sweep(650 + 40 * (j % 3), 950 + 50 * (j % 4), .28, .2) * np.sin(np.linspace(0, np.pi, int(.28 * SR))), .1)   # crowded little meows
+SA = E['strays']['shopAt']; x = np.arange(int(2.8 * SR)) / SR; add(sfx, SA, (np.sin(2 * np.pi * 60 * x) + .4 * np.sin(2 * np.pi * 120 * x)) * .5 * np.minimum(1, x / .05) * np.minimum(1, (2.8 - x) / .05), .12)   # fridge hum
+for j in range(9): add(sfx, SA + .3 + j * .27, sweep(650 + 40 * (j % 3), 950 + 50 * (j % 4), .28, .2) * np.sin(np.linspace(0, np.pi, int(.28 * SR))), .1)   # crowded little meows
 add(sfx, BONK, tone(mid(79), .2, .05, .001, (1, .2)), .55); add(sfx, BONK, noise(.05, .5) * env(int(.05 * SR), .001, .01), .5)   # bonk (wood block)
 add(sfx, BONK + .04, sweep(300, 900, .35, .25) * (1 + .5 * np.sin(np.linspace(0, 60, int(.35 * SR)))), .25)   # boing
 add(sfx, BONK + .72, sweep(260, 120, .1, .06), .3)                                  # the fish lands
 pk = PEEK['at'] + PEEK['dur']; add(sfx, pk + .2, sweep(620, 880, .22, .15) * np.sin(np.linspace(0, np.pi, int(.22 * SR))), .3)   # one small mrrp
-mix = .7 * mus + sfx; mix *= .89 / np.max(np.abs(mix))
+for l in json.load(open(f'{DIR}/timeline.json')):
+    a, _ = sf.read(f"{DIR}/l{l['i']:02d}.wav"); add(voc, l['s'], a)
+vm = np.convolve(np.abs(voc), np.ones(2400) / 2400, 'same'); duck = np.convolve(1 - .75 * np.clip(vm * 12, 0, 1), np.ones(4800) / 4800, 'same')
+mix = voc + duck * (.6 * mus + .8 * sfx); mix *= .89 / np.max(np.abs(mix))
 fade = np.ones(N); fade[:int(.005 * SR)] = np.linspace(0, 1, int(.005 * SR)); fade[-int(.02 * SR):] = np.linspace(1, 0, int(.02 * SR))
 sf.write(f'{DIR}/mix_raw.wav', mix * fade, SR)
 subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-i', f'{DIR}/mix_raw.wav', '-af', 'loudnorm=I=-14:TP=-2:LRA=11,alimiter=limit=0.79:level=false', '-ac', '2', '-ar', str(SR), f'{DIR}/mix.wav'], check=True)
