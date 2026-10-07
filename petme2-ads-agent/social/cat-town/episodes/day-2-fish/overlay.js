@@ -1,7 +1,11 @@
 // Injected into each engine page: hides the engine's own UI (keeps the comment card + build tag), draws the badge + text layer.
 (() => {
   const css = `#brand,#count,#title,#end,#sub{display:none!important}
-  #cm{top:800px!important;right:140px!important}
+  #cm{top:880px!important;left:50px!important;right:50px!important}
+  .cm__label{font-size:40px!important;padding:10px 26px!important}
+  .cm__win,.card{height:250px!important} .card__av{flex-basis:110px!important;height:110px!important;font-size:52px!important}
+  .card__name{font-size:38px!important} .card__text{font-size:58px!important;white-space:normal!important;line-height:1.05} .card__like svg{width:72px!important;height:72px!important}
+  .crown{font-size:38px!important;top:-12px!important}
   #ov{position:absolute;inset:0;pointer-events:none;font-family:Nunito,sans-serif;z-index:5}
   #ov .brand{position:absolute;top:226px;left:0;right:0;text-align:center}
   #ov .brand span{display:inline-block;background:rgba(255,255,255,.95);color:#2F5FE0;font-weight:900;font-size:32px;letter-spacing:.08em;padding:10px 26px;border-radius:999px;box-shadow:0 8px 24px rgba(20,40,90,.18)}
@@ -20,6 +24,7 @@
   .tag{font-size:42px!important}
   #tags.pin .tag{top:1760px!important;left:540px!important}
 `;
+  const lab = document.querySelector('.cm__label'); if (lab) lab.textContent = '🗳️ Your likes picked it';
   const st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
   const ov = document.createElement('div'); ov.id = 'ov'; document.body.appendChild(ov);
   const back = x => { x = Math.min(1, Math.max(0, x)); const c = 1.70158; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
@@ -31,8 +36,9 @@
     b += goal ? `<div class="cnt"><b class="g">1,000</b><span>cats · THE GOAL</span></div>` : `<div class="cnt"><b>${D.cats}</b><span>${D.cats === 1 ? 'cat' : 'cats'} · Day ${D.day}</span></div>`;
     const beat = D.beats.find(x => T >= x.s && T < x.e);
     if (beat) { const k = beat.still ? 1 : back((T - beat.s) / .3); h += `<div class="big" style="transform:scale(${.6 + .4 * k});opacity:${beat.still ? 1 : Math.min(1, (T - beat.s) / .1)}">${beat.html}</div>`;
-      if (beat.small && T >= beat.ss) h += `<div class="small" style="transform:scale(${back((T - beat.ss) / .3)})">${beat.small}</div>`;
+      if (beat.small && T >= beat.ss) h += `<div class="small" style="${beat.smallTop ? 'top:' + beat.smallTop + 'px;' : ''}transform:scale(${back((T - beat.ss) / .3)})">${beat.small}</div>`;
       if (beat.small2 && T >= beat.ss2) h += `<div class="small" style="top:790px;color:#fff;transform:scale(${back((T - beat.ss2) / .3)})">${beat.small2}</div>`;
+      if (beat.arrowDown) { const a = T - beat.s - .4; if (a > 0) h += `<div class="arrow" style="left:490px;top:${760 + 18 * Math.sin(a * 9)}px;transform:scale(${back(a / .3)})">👇</div>`; }
       if (beat.arrow) { const a = T - beat.s - .5; if (a > 0) h += `<div class="arrow" style="transform:translateX(${18 * Math.sin(a * 9)}px) scale(${back(a / .3)})">👉</div>`; } }
     for (const [s, e, kind] of D.example) { if (T < s || T >= e) continue; const k = back((T - s) / .3);
       let x = 96, y = 1064;

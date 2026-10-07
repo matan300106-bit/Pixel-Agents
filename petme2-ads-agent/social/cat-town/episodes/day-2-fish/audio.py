@@ -16,10 +16,10 @@ def noise(d, lp=.1):
     for i in range(1, len(n)): y[i] = y[i - 1] + lp * (n[i] - y[i - 1])
     return y
 def whoosh(s, d=.7, lp=.08, g=1.4): w = noise(d, lp); x = np.arange(len(w)) / SR; add(sfx, s, w * np.sin(np.pi * x / d) ** 2, g)
-# music: bouncy I-vi-IV-V pluck arps at 108 bpm, bass on the bar; quiet under "needs friends"
+# music: bouncy I-vi-IV-V pluck arps at 108 bpm, bass on the bar
 prog = [[60, 64, 67, 72], [57, 60, 64, 69], [53, 57, 60, 65], [55, 59, 62, 67]]; beat = 60 / 108; b = 0; T = 0.0
 while T < DUR - .25:
-    ch = prog[(b // 4) % 4]; quiet = (10.8 <= T < 12.9)
+    ch = prog[(b // 4) % 4]; quiet = False
     if not quiet:
         add(mus, T, tone(mid(ch[b % 4] + (12 if b % 8 >= 4 else 0)), 1.2, .35), .16)
         if b % 4 == 0: add(mus, T, tone(mid(ch[0] - 24), 2.4, .9, .02, (1, .3)), .22)
@@ -31,12 +31,13 @@ add(mus, DUR - .2, tone(mid(60), .2, .1), .1)    # lands on the intro chord root
 whoosh(1.35, 1.6, .06, 1.2)                                                 # pull back: the whole empty town
 whoosh(3.25, 1.2, .08, 1.0)                                                 # glide over Mango to the empty lot
 add(sfx, 5.65, pop(300, 900, .1), .6); whoosh(5.6, .35, .2, .6)             # comment card slides up
-for k, n in enumerate([84, 88]): add(sfx, 6.95 + k * .09, tone(mid(n), .8, .3, .002, (1, .2)), .3)   # crown ding
-add(sfx, 8.4, pop(400, 1500, .16), 1.2)                                    # fish supermarket pop
-for k, n in enumerate([72, 76, 79, 84, 88]): add(sfx, 8.47 + k * .07, tone(mid(n), .9, .35, .002, (1, .3)), .24)   # fanfare
-for k in range(16): add(sfx, 8.8 + k * .05, noise(.04, .7) * env(int(.04 * SR), .001, .01), .3)   # confetti crackle
-add(sfx, 9.25, pop(600, 1300, .1), .5)                                     # credit tag
-for k, n in enumerate([64, 62, 59]): add(sfx, 10.85 + k * .45, tone(mid(n), .9, .5, .01, (1, .4)), .22)   # soft "aww" notes, music drops out
+for k, n in enumerate([84, 88]): add(sfx, 7.25 + k * .09, tone(mid(n), .8, .3, .002, (1, .2)), .3)   # crown ding
+add(sfx, 8.75, pop(400, 1500, .16), 1.2)                                    # fish supermarket pop
+for k, n in enumerate([72, 76, 79, 84, 88]): add(sfx, 8.82 + k * .07, tone(mid(n), .9, .35, .002, (1, .3)), .24)   # fanfare
+for k in range(16): add(sfx, 9.15 + k * .05, noise(.04, .7) * env(int(.04 * SR), .001, .01), .3)   # confetti crackle
+add(sfx, 9.6, pop(600, 1300, .1), .5)                                     # credit tag
+whoosh(10.95, 1.4, .07, 1.1)                                                # up high: the only building in town
+for k, n in enumerate([72, 79, 84]): add(sfx, 11.5 + k * .12, tone(mid(n), .9, .35, .002, (1, .3)), .2)   # sparkle
 whoosh(13.0, 1.5, .07, 1.2)                                                 # rise over the empty town
 add(sfx, 16.6, pop(700, 1600, .12), .45)
 whoosh(17.55, .8, .1, 1.3)                                                  # dive back to Mango
