@@ -1,0 +1,844 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Chimney sweeping, inspections and repairs. Swept clean before the first fire.">
+<title>The Chimney Sweeper</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: one tall stack, like the chimney itself. Hero = live "flue cam" you sweep clean; sections step down in brick courses. */
+:root {
+  --bg: #e8e6e2;         /* limewash ash */
+  --surface: #f5f4f1;
+  --fg: #1c1a1b;         /* soot */
+  --muted: #5d5853;
+  --line: #cdc7bf;       /* mortar */
+  --brick: #a23a24;
+  --brick-ink: #fff6f0;
+  --ember: #d9651c;
+  --band-bg: #1c1a1b;
+  --band-fg: #f1ede8;
+  --band-muted: #a9a29b;
+  --hud: #f4efe6;
+
+  --display: "Big Shoulders Display", "Oswald", "Arial Narrow", Impact, sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --wrap: 1180px;
+  --gutter: clamp(16px, 4vw, 40px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141314; --surface: #1d1b1c; --fg: #eeeae5; --muted: #a49d96; --line: #353133;
+    --brick: #cf5a3e; --brick-ink: #1a0f0b; --ember: #f0893a;
+    --band-bg: #221f1f; --band-fg: #f1ede8; --band-muted: #a9a29b; --hud: #f4efe6;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141314; --surface: #1d1b1c; --fg: #eeeae5; --muted: #a49d96; --line: #353133;
+  --brick: #cf5a3e; --brick-ink: #1a0f0b; --ember: #f0893a;
+  --band-bg: #221f1f; --band-fg: #f1ede8; --band-muted: #a9a29b; --hud: #f4efe6;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font: 400 1rem/1.6 var(--body);
+  -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: var(--wrap); margin-inline: auto; padding-inline: var(--gutter); }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--ember); outline-offset: 3px; border-radius: 4px; }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; }
+p { margin: 0; }
+
+.eyebrow {
+  font: 500 0.75rem/1 var(--mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  font: 600 0.98rem/1 var(--body);
+  padding: 15px 22px;
+  border-radius: 3px;
+  text-decoration: none;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform .15s ease, background-color .15s ease, border-color .15s ease;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn-primary { background: var(--brick); color: var(--brick-ink); }
+.btn-primary:hover { background: var(--ember); }
+.btn-ghost { background: transparent; color: var(--fg); border-color: var(--fg); }
+.btn-ghost:hover { border-color: var(--brick); color: var(--brick); }
+.btn .num { font-variant-numeric: tabular-nums; }
+
+/* ---------- Header ---------- */
+.site-head {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.site-head .wrap { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-block: 14px; }
+.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.logo svg { width: 30px; height: 36px; flex: none; }
+.logo span { font: 900 1.35rem/0.9 var(--display); text-transform: uppercase; letter-spacing: 0.02em; }
+.logo small { display: block; font: 500 0.62rem/1 var(--mono); letter-spacing: 0.16em; color: var(--muted); margin-top: 4px; }
+.nav { display: flex; align-items: center; gap: 26px; }
+.nav a:not(.btn) { text-decoration: none; font-weight: 500; font-size: 0.95rem; color: var(--muted); }
+.nav a:not(.btn):hover { color: var(--fg); }
+.nav .btn { padding: 11px 16px; font-size: 0.9rem; }
+@media (max-width: 760px) { .nav a:not(.btn) { display: none; } }
+.nav .btn { white-space: nowrap; }
+@media (max-width: 420px) { .logo small { display: none; } .logo span { font-size: 1.15rem; } }
+
+/* ---------- Hero ---------- */
+.hero .wrap {
+  display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(28px, 5vw, 64px);
+  align-items: center; padding-block: clamp(36px, 6vw, 76px) clamp(40px, 6vw, 72px);
+}
+.hero-copy { display: grid; gap: 24px; min-width: 0; }
+.hero h1 {
+  font-weight: 900;
+  font-size: clamp(3.1rem, 8.4vw, 6.9rem);
+  line-height: 0.88;
+  text-transform: uppercase;
+  letter-spacing: -0.005em;
+}
+.hero h1 em { font-style: normal; color: var(--brick); }
+.lead { font-size: 1.13rem; color: var(--muted); max-width: 33em; }
+.lead strong { color: var(--fg); font-weight: 600; }
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.assurances { display: flex; flex-wrap: wrap; gap: 8px 22px; padding: 0; margin: 4px 0 0; list-style: none; font-size: 0.92rem; color: var(--muted); }
+.assurances li { display: flex; align-items: center; gap: 8px; }
+.assurances li::before { content: ""; width: 9px; height: 5px; background: var(--brick); border-radius: 1px; }
+
+/* Flue cam */
+.flue-wrap { display: grid; gap: 14px; min-width: 0; }
+.flue {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  width: 100%;
+  max-width: 100%;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #1a1612;
+  box-shadow: 0 0 0 1px var(--line), 0 30px 60px -30px rgba(20, 12, 8, .55);
+  touch-action: none;
+  cursor: none;
+  user-select: none;
+}
+.flue canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+#soot { transition: opacity .9s ease; }
+.flue.is-clean #soot { opacity: 0; }
+.hud { position: absolute; inset: 0; pointer-events: none; font: 500 0.7rem/1 var(--mono); letter-spacing: 0.12em; color: var(--hud); text-transform: uppercase; }
+.hud > * { position: absolute; text-shadow: 0 1px 2px rgba(0,0,0,.8); }
+.hud .tl { top: 14px; left: 16px; display: flex; align-items: center; gap: 8px; }
+.hud .tr { top: 14px; right: 16px; }
+.hud .bl { bottom: 14px; left: 16px; }
+.hud .br { bottom: 14px; right: 16px; }
+.rec { width: 8px; height: 8px; border-radius: 50%; background: #e5432c; box-shadow: 0 0 8px #e5432c; animation: blink 1.4s steps(2, start) infinite; }
+@keyframes blink { to { visibility: hidden; } }
+.hud .corner { width: 22px; height: 22px; border: 2px solid rgba(244, 239, 230, .7); }
+.hud .c1 { top: 38px; left: 16px; border-right: 0; border-bottom: 0; }
+.hud .c2 { top: 38px; right: 16px; border-left: 0; border-bottom: 0; }
+.hud .c3 { bottom: 38px; left: 16px; border-right: 0; border-top: 0; }
+.hud .c4 { bottom: 38px; right: 16px; border-left: 0; border-top: 0; }
+.clean-msg {
+  position: absolute; left: 50%; top: 50%; translate: -50% -50%;
+  background: rgba(20, 16, 13, .82); color: var(--hud);
+  padding: 16px 20px; border-radius: 4px; text-align: center; width: max-content; max-width: 80%;
+  font: 800 1.6rem/1 var(--display); text-transform: uppercase; letter-spacing: .02em;
+  opacity: 0; scale: .96; transition: opacity .5s ease .4s, scale .5s ease .4s; pointer-events: none;
+}
+.clean-msg small { display: block; margin-top: 8px; font: 400 .85rem/1.4 var(--body); text-transform: none; letter-spacing: 0; color: #cfc6bb; }
+.flue.is-clean .clean-msg { opacity: 1; scale: 1; }
+
+.brush { position: absolute; left: 0; top: 0; width: 76px; height: 76px; pointer-events: none; opacity: 0; transition: opacity .2s; will-change: transform; }
+.brush.on { opacity: 1; }
+
+.meter-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.meter { flex: 1 1 160px; display: grid; gap: 7px; min-width: 0; }
+.meter-label { display: flex; justify-content: space-between; font: 500 0.72rem/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.meter-label b { color: var(--fg); font-weight: 500; font-variant-numeric: tabular-nums; }
+.meter-track { height: 8px; background: var(--line); border-radius: 2px; overflow: hidden; }
+.meter-fill { height: 100%; background: linear-gradient(90deg, var(--brick), var(--ember)); transform-origin: left; transform: scaleX(0); transition: transform .25s ease; }
+.mini { font: 600 0.85rem/1 var(--body); padding: 10px 14px; border-radius: 3px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); cursor: pointer; }
+.mini:hover { border-color: var(--fg); }
+.flue-hint { font-size: .88rem; color: var(--muted); }
+
+@media (max-width: 860px) {
+  .hero .wrap { grid-template-columns: 1fr; }
+  .flue { aspect-ratio: 1 / 1; }
+}
+
+/* ---------- Facts strip ---------- */
+.facts { border-block: 1px solid var(--line); background: var(--surface); }
+.facts .wrap { display: grid; grid-template-columns: repeat(3, 1fr); }
+.fact { padding: 28px 28px 30px 0; display: grid; gap: 6px; align-content: start; min-width: 0; }
+.fact + .fact { padding-left: 28px; border-left: 1px solid var(--line); }
+.fact .big { font: 800 2.6rem/1 var(--display); text-transform: uppercase; color: var(--brick); font-variant-numeric: tabular-nums; }
+.fact p { color: var(--muted); font-size: .95rem; max-width: 30em; }
+.fact cite { font: 500 .68rem/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; font-style: normal; color: var(--muted); opacity: .8; }
+@media (max-width: 760px) {
+  .facts .wrap { grid-template-columns: 1fr; }
+  .fact, .fact + .fact { padding: 22px 0; border-left: 0; }
+  .fact + .fact { border-top: 1px solid var(--line); }
+}
+
+/* ---------- Sections ---------- */
+section.block .wrap { padding-block: clamp(56px, 8vw, 104px); display: grid; gap: clamp(28px, 4vw, 44px); }
+.sec-head { display: grid; gap: 12px; max-width: 46em; }
+.sec-head h2 { font-weight: 900; font-size: clamp(2.3rem, 5vw, 3.6rem); line-height: .95; text-transform: uppercase; }
+.sec-head p { color: var(--muted); font-size: 1.05rem; }
+
+/* Services laid in running bond */
+.bond {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  padding: 6px;
+  background: var(--line);
+  border-radius: 4px;
+}
+.brick, .half { background: var(--surface); border-radius: 2px; min-width: 0; }
+.half { background: repeating-linear-gradient(135deg, transparent 0 7px, color-mix(in srgb, var(--line) 55%, transparent) 7px 8px), var(--surface); }
+.brick { grid-column: span 2; padding: 24px 24px 26px; display: grid; gap: 8px; align-content: start; transition: background-color .2s ease; }
+.brick:hover { background: color-mix(in srgb, var(--surface) 88%, var(--brick)); }
+.brick h3 { font-weight: 800; font-size: 1.55rem; line-height: 1; text-transform: uppercase; }
+.brick p { color: var(--muted); font-size: .95rem; }
+.brick .tag { font: 500 .68rem/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--brick); }
+.r1a { grid-column: 1 / span 2; } .r1b { grid-column: 3 / span 2; } .r1c { grid-column: 5 / span 2; } .h1 { grid-column: 7; }
+.h2 { grid-column: 1; } .r2a { grid-column: 2 / span 2; } .r2b { grid-column: 4 / span 2; } .r2c { grid-column: 6 / span 2; }
+@media (max-width: 860px) {
+  .bond { grid-template-columns: 1fr 1fr; }
+  .bond > .brick { grid-column: auto; }
+  .half { display: none; }
+}
+@media (max-width: 520px) { .bond { grid-template-columns: 1fr; } }
+
+/* Creosote stages */
+.stages { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.stage { display: grid; gap: 14px; align-content: start; min-width: 0; }
+.swatch { aspect-ratio: 16 / 9; max-width: 100%; border-radius: 4px; position: relative; overflow: hidden; }
+.swatch span { position: absolute; left: 12px; bottom: 10px; font: 500 .68rem/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: #efe7dc; text-shadow: 0 1px 2px #000; }
+.s1 { background:
+  radial-gradient(circle at 20% 30%, #5b5550 0 1.5px, transparent 2px) 0 0 / 9px 11px,
+  radial-gradient(circle at 70% 60%, #3b3734 0 1px, transparent 1.5px) 0 0 / 7px 6px,
+  linear-gradient(160deg, #4a4643, #2c2a28); }
+.s2 { background:
+  radial-gradient(ellipse at 30% 40%, #5a3a1f 0 3px, transparent 4px) 0 0 / 17px 13px,
+  radial-gradient(ellipse at 60% 70%, #24170e 0 2.5px, transparent 3.5px) 0 0 / 11px 15px,
+  linear-gradient(170deg, #3a2618, #1d130c); }
+.s3 { background:
+  linear-gradient(115deg, transparent 30%, rgba(255,240,220,.22) 42%, transparent 50%),
+  radial-gradient(ellipse at 70% 20%, rgba(255,220,180,.18), transparent 40%),
+  linear-gradient(180deg, #120c08, #050302 70%, #1b120b); }
+.stage-head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.stage h3 { font-weight: 800; font-size: 1.7rem; line-height: 1; text-transform: uppercase; }
+.risk { font: 500 .68rem/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; padding: 5px 7px; border-radius: 2px; border: 1px solid currentColor; }
+.risk.low { color: var(--muted); }
+.risk.mid { color: var(--ember); }
+.risk.high { color: var(--brick); background: color-mix(in srgb, var(--brick) 12%, transparent); }
+.stage p { color: var(--muted); font-size: .95rem; }
+.stage p b { color: var(--fg); font-weight: 600; }
+@media (max-width: 860px) { .stages { grid-template-columns: 1fr; } .swatch { aspect-ratio: 3 / 1; } }
+
+/* Visit steps */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); counter-reset: step; border-top: 2px solid var(--fg); }
+.steps li { counter-increment: step; padding: 22px 22px 0 0; display: grid; gap: 8px; align-content: start; min-width: 0; }
+.steps li + li { padding-left: 22px; border-left: 1px solid var(--line); }
+.steps li::before { content: "Step " counter(step); font: 500 .7rem/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--brick); }
+.steps h3 { font-weight: 800; font-size: 1.5rem; line-height: 1; text-transform: uppercase; }
+.steps p { color: var(--muted); font-size: .95rem; }
+@media (max-width: 860px) {
+  .steps { grid-template-columns: 1fr 1fr; row-gap: 26px; }
+  .steps li:nth-child(3) { padding-left: 0; border-left: 0; }
+}
+@media (max-width: 520px) {
+  .steps { grid-template-columns: 1fr; }
+  .steps li, .steps li + li { padding-left: 0; border-left: 0; }
+}
+
+/* Booking band */
+.band { background: var(--band-bg); color: var(--band-fg); position: relative; overflow: hidden; }
+.band::before {
+  content: ""; position: absolute; inset: auto 0 0 0; height: 10px;
+  background: repeating-linear-gradient(90deg, var(--brick) 0 46px, var(--band-bg) 46px 50px);
+  opacity: .9;
+}
+.band .wrap { padding-block: clamp(56px, 8vw, 96px); display: grid; grid-template-columns: 1.3fr 1fr; gap: 40px; align-items: end; }
+.band h2 { font-weight: 900; font-size: clamp(2.6rem, 6.4vw, 5rem); line-height: .9; text-transform: uppercase; }
+.band h2 em { font-style: normal; color: var(--ember); }
+.band p { color: var(--band-muted); font-size: 1.05rem; max-width: 34em; margin-top: 18px; }
+.band .cta-col { display: grid; gap: 12px; justify-items: start; }
+.band .btn-ghost { color: var(--band-fg); border-color: var(--band-fg); }
+.band .btn-ghost:hover { color: var(--ember); border-color: var(--ember); }
+.band .hours { font: 500 .72rem/1.6 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--band-muted); }
+@media (max-width: 860px) { .band .wrap { grid-template-columns: 1fr; } }
+
+/* Footer */
+.foot .wrap { padding-block: 28px 36px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 14px; color: var(--muted); font-size: .88rem; }
+.foot nav { display: flex; gap: 20px; flex-wrap: wrap; }
+.foot a { text-decoration: none; }
+.foot a:hover { color: var(--fg); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0s !important; animation: none !important; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="The Chimney Sweeper home">
+      <svg viewBox="0 0 30 36" aria-hidden="true">
+        <g fill="currentColor">
+          <circle cx="15" cy="6" r="3.2"/>
+          <path d="M15 0.8v2M15 9.2v2M9.8 6h2M18.2 6h2M11.3 2.3l1.4 1.4M17.3 8.3l1.4 1.4M18.7 2.3l-1.4 1.4M12.7 8.3l-1.4 1.4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          <rect x="14.3" y="9" width="1.4" height="6"/>
+        </g>
+        <rect x="6" y="14" width="18" height="4" rx="0.5" fill="var(--brick)"/>
+        <g fill="var(--brick)">
+          <rect x="8" y="19.5" width="6.5" height="3.6"/><rect x="15.5" y="19.5" width="6.5" height="3.6"/>
+          <rect x="8" y="24.4" width="3" height="3.6"/><rect x="12" y="24.4" width="6" height="3.6"/><rect x="19" y="24.4" width="3" height="3.6"/>
+          <rect x="8" y="29.3" width="6.5" height="3.6"/><rect x="15.5" y="29.3" width="6.5" height="3.6"/>
+        </g>
+      </svg>
+      <span>The Chimney Sweeper<small>Sweep · Inspect · Repair</small></span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#services">Services</a>
+      <a href="#creosote">Creosote</a>
+      <a href="#visit">Your visit</a>
+      <a class="btn btn-primary" href="#book">Book a sweep</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-copy">
+        <p class="eyebrow">Chimney sweeping · Inspections · Repairs</p>
+        <h1>Swept clean before the <em>first fire.</em></h1>
+        <p class="lead">Every fire leaves creosote on the inside of your flue, and creosote burns. We brush it out, vacuum every flake, and send you <strong>camera footage of a clean chimney</strong> before we leave.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#book">Book a sweep</a>
+          <a class="btn btn-ghost" href="tel:+15550147700">Call <span class="num">(555) 014-7700</span></a>
+        </div>
+        <ul class="assurances">
+          <li>Drop cloths and HEPA vacuum</li>
+          <li>Camera inspection with every sweep</li>
+          <li>Photo report the same day</li>
+        </ul>
+      </div>
+
+      <div class="flue-wrap">
+        <div class="flue" id="flue" role="img" aria-label="Interactive view inside a sooty chimney flue. Drag across it to sweep the soot off the bricks.">
+          <canvas id="bricks"></canvas>
+          <canvas id="soot"></canvas>
+          <canvas id="dust"></canvas>
+          <div class="hud" aria-hidden="true">
+            <div class="tl"><i class="rec"></i>Flue cam</div>
+            <div class="tr">Depth 14 ft</div>
+            <div class="bl" id="hudStage">Stage 2 creosote</div>
+            <div class="br">8 × 12 clay liner</div>
+            <i class="corner c1"></i><i class="corner c2"></i><i class="corner c3"></i><i class="corner c4"></i>
+          </div>
+          <div class="clean-msg" aria-live="polite">Flue clear<small>That's the view after every visit.</small></div>
+          <svg class="brush" id="brush" viewBox="0 0 76 76" aria-hidden="true">
+            <g stroke="#2a2522" stroke-width="2" stroke-linecap="round">
+              <path d="M38 6v64M6 38h64M15.4 15.4l45.2 45.2M60.6 15.4L15.4 60.6M25.8 8.6l24.4 58.8M50.2 8.6L25.8 67.4M8.6 25.8l58.8 24.4M67.4 25.8L8.6 50.2"/>
+            </g>
+            <circle cx="38" cy="38" r="31" fill="none" stroke="#f4efe6" stroke-width="1.5" stroke-dasharray="3 4" opacity=".8"/>
+            <circle cx="38" cy="38" r="6" fill="#f4efe6" stroke="#2a2522" stroke-width="2"/>
+          </svg>
+        </div>
+        <div class="meter-row">
+          <div class="meter">
+            <div class="meter-label"><span>Flue clean</span><b id="pct">0%</b></div>
+            <div class="meter-track"><div class="meter-fill" id="fill"></div></div>
+          </div>
+          <button class="mini" id="sweepAll" type="button">Sweep the rest</button>
+          <button class="mini" id="resetSoot" type="button">Add soot back</button>
+        </div>
+        <p class="flue-hint">Drag across the flue to sweep it. This is roughly what our rotary brushes do to your chimney.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="facts" aria-label="Chimney safety facts">
+    <div class="wrap">
+      <div class="fact">
+        <span class="big">⅛ inch</span>
+        <p>of soot or creosote on the flue walls is enough buildup to call for a cleaning.</p>
+        <cite>Chimney Safety Institute of America</cite>
+      </div>
+      <div class="fact">
+        <span class="big">Once a year</span>
+        <p>Chimneys, fireplaces and vents should be inspected annually, even ones you rarely use.</p>
+        <cite>NFPA 211</cite>
+      </div>
+      <div class="fact">
+        <span class="big">Level 1–3</span>
+        <p>Three standard inspection levels, from a visual check of what's reachable to opening up walls.</p>
+        <cite>NFPA 211</cite>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="services">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Services</p>
+        <h2>Everything from the firebox to the cap</h2>
+        <p>One crew handles the whole stack, so the person who finds the problem is the person who fixes it.</p>
+      </div>
+      <div class="bond">
+        <article class="brick r1a">
+          <span class="tag">Most booked</span>
+          <h3>Chimney sweep</h3>
+          <p>Rotary brushes and rods clear soot and creosote from the smoke chamber, damper and full length of the flue.</p>
+        </article>
+        <article class="brick r1b">
+          <span class="tag">Level 1 · 2 · 3</span>
+          <h3>Inspections</h3>
+          <p>Annual Level 1 checks, Level 2 camera scans for home sales and after a chimney fire, Level 3 when damage is hidden.</p>
+        </article>
+        <article class="brick r1c">
+          <span class="tag">Keep it out</span>
+          <h3>Caps &amp; dampers</h3>
+          <p>Stainless caps keep out rain, birds and squirrels. Top-sealing dampers stop the draft when the fire is out.</p>
+        </article>
+        <div class="half h1" aria-hidden="true"></div>
+        <div class="half h2" aria-hidden="true"></div>
+        <article class="brick r2a">
+          <span class="tag">Masonry</span>
+          <h3>Crown &amp; brick repair</h3>
+          <p>Cracked crowns, spalling brick and failed mortar joints rebuilt before water gets inside the stack.</p>
+        </article>
+        <article class="brick r2b">
+          <span class="tag">Relining</span>
+          <h3>Liner installation</h3>
+          <p>Stainless steel liners sized to your stove or insert, for cracked clay tiles or a new appliance.</p>
+        </article>
+        <article class="brick r2c">
+          <span class="tag">Fire safety</span>
+          <h3>Dryer vents</h3>
+          <p>Lint-packed dryer vents cleared from the machine to the outside hood. Faster drying, lower fire risk.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="creosote" style="background: var(--surface); border-block: 1px solid var(--line);">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Know your creosote</p>
+        <h2>Not all soot is the same</h2>
+        <p>Creosote hardens the longer it's left alone. The earlier we catch it, the faster and cheaper it comes out.</p>
+      </div>
+      <div class="stages">
+        <div class="stage">
+          <div class="swatch s1"><span>Stage 1</span></div>
+          <div class="stage-head"><h3>Flaky soot</h3><span class="risk low">Normal</span></div>
+          <p>Dry, dusty and black. <b>A standard sweep</b> brushes it out in one visit. This is where an annual cleaning keeps you.</p>
+        </div>
+        <div class="stage">
+          <div class="swatch s2"><span>Stage 2</span></div>
+          <div class="stage-head"><h3>Crunchy tar</h3><span class="risk mid">Watch it</span></div>
+          <p>Shiny black flakes, like puffed cereal. Comes from smoldering fires and wet wood. <b>Needs rotary tools</b> to break it up.</p>
+        </div>
+        <div class="stage">
+          <div class="swatch s3"><span>Stage 3</span></div>
+          <div class="stage-head"><h3>Glazed creosote</h3><span class="risk high">Fire risk</span></div>
+          <p>A hard, glassy coat that drips and pools. Highly flammable. <b>Removed with chemical treatment</b> and specialty rotary heads.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="visit">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Your visit</p>
+        <h2>What happens when we show up</h2>
+        <p>Most sweeps take about an hour. You don't need to move furniture or be on the roof.</p>
+      </div>
+      <ol class="steps">
+        <li>
+          <h3>Cover up</h3>
+          <p>Drop cloths go down from the door to the hearth. The firebox gets sealed and a HEPA vacuum runs the whole time.</p>
+        </li>
+        <li>
+          <h3>Sweep</h3>
+          <p>Rotary brushes work up through the damper and smoke shelf to the top of the flue, then we vacuum the debris.</p>
+        </li>
+        <li>
+          <h3>Inspect</h3>
+          <p>A camera runs the full length of the liner looking for cracks, gaps and leftover glaze.</p>
+        </li>
+        <li>
+          <h3>Report</h3>
+          <p>You get photos, the footage and a plain-language write-up. Any repair comes as a written estimate, never a surprise.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="band" id="book">
+    <div class="wrap">
+      <div>
+        <h2>Book before the <em>first cold night.</em></h2>
+        <p>The week the weather turns, everyone remembers their fireplace at once. An early-fall sweep means yours is ready when you are.</p>
+      </div>
+      <div class="cta-col">
+        <a class="btn btn-primary" href="tel:+15550147700">Call <span class="num">(555) 014-7700</span></a>
+        <a class="btn btn-ghost" href="#visit">See what a visit includes</a>
+        <p class="hours">Mon–Sat · 8 am – 6 pm</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <span>© 2026 The Chimney Sweeper</span>
+    <nav aria-label="Footer">
+      <a href="#services">Services</a>
+      <a href="#creosote">Creosote</a>
+      <a href="#visit">Your visit</a>
+      <a href="#book">Book</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const stage = document.getElementById('flue');
+  const brickC = document.getElementById('bricks');
+  const sootC = document.getElementById('soot');
+  const dustC = document.getElementById('dust');
+  const bctx = brickC.getContext('2d');
+  const sctx = sootC.getContext('2d');
+  const dctx = dustC.getContext('2d');
+  const brush = document.getElementById('brush');
+  const pctEl = document.getElementById('pct');
+  const fill = document.getElementById('fill');
+  const hudStage = document.getElementById('hudStage');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const CELL = 12;
+  let W = 0, H = 0, R = 30;
+  let cells, cellsX, cellsY, cleared = 0, total = 1, done = false;
+  let particles = [], dustRaf = null, autoRaf = null;
+
+  function rng(seed) {
+    return () => {
+      seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+      let t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+
+  function size() {
+    const r = stage.getBoundingClientRect();
+    W = Math.max(1, Math.round(r.width));
+    H = Math.max(1, Math.round(r.height));
+    R = Math.max(22, Math.min(36, W / 13));
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    for (const [c, ctx] of [[brickC, bctx], [sootC, sctx], [dustC, dctx]]) {
+      c.width = Math.round(W * dpr);
+      c.height = Math.round(H * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+  }
+
+  function drawBricks() {
+    const rand = rng(7);
+    const bh = 22, bw = 60, m = 4;
+    const palette = [[156, 58, 38], [168, 68, 43], [140, 52, 32], [177, 78, 49], [150, 58, 40], [127, 47, 29], [165, 72, 47], [118, 50, 36]];
+    bctx.fillStyle = '#8d857b';
+    bctx.fillRect(0, 0, W, H);
+    for (let i = 0; i < 3000; i++) {
+      bctx.fillStyle = rand() < .5 ? 'rgba(255,255,255,.08)' : 'rgba(0,0,0,.1)';
+      bctx.fillRect(rand() * W, rand() * H, 1.5, 1.5);
+    }
+    let row = 0;
+    for (let y = 0; y < H + bh; y += bh + m, row++) {
+      const off = row % 2 ? -(bw + m) / 2 : 0;
+      for (let x = off; x < W + bw; x += bw + m) {
+        const c = palette[Math.floor(rand() * palette.length)];
+        const k = .88 + rand() * .22;
+        bctx.fillStyle = `rgb(${c[0] * k | 0},${c[1] * k | 0},${c[2] * k | 0})`;
+        bctx.beginPath();
+        bctx.roundRect ? bctx.roundRect(x, y, bw, bh, 2) : bctx.rect(x, y, bw, bh);
+        bctx.fill();
+        bctx.fillStyle = 'rgba(255,230,210,.10)';
+        bctx.fillRect(x + 1, y + 1, bw - 2, 2);
+        bctx.fillStyle = 'rgba(0,0,0,.14)';
+        bctx.fillRect(x + 1, y + bh - 3, bw - 2, 2);
+        for (let s = 0; s < 14; s++) {
+          bctx.fillStyle = rand() < .5 ? 'rgba(0,0,0,.18)' : 'rgba(255,220,190,.12)';
+          bctx.fillRect(x + rand() * bw, y + rand() * bh, 1 + rand() * 1.5, 1 + rand() * 1.5);
+        }
+      }
+    }
+    const g = bctx.createRadialGradient(W / 2, H / 2, Math.min(W, H) * .2, W / 2, H / 2, Math.max(W, H) * .75);
+    g.addColorStop(0, 'rgba(0,0,0,0)');
+    g.addColorStop(1, 'rgba(0,0,0,.45)');
+    bctx.fillStyle = g;
+    bctx.fillRect(0, 0, W, H);
+  }
+
+  function drawSoot() {
+    const rand = rng(31);
+    sctx.globalCompositeOperation = 'source-over';
+    sctx.clearRect(0, 0, W, H);
+    sctx.fillStyle = '#17130f';
+    sctx.fillRect(0, 0, W, H);
+    // faint brick courses showing through
+    sctx.strokeStyle = 'rgba(255,255,255,.035)';
+    sctx.lineWidth = 2;
+    for (let y = 24, row = 0; y < H; y += 26, row++) {
+      sctx.beginPath(); sctx.moveTo(0, y); sctx.lineTo(W, y); sctx.stroke();
+    }
+    // creosote patches
+    for (let i = 0; i < 18; i++) {
+      const x = rand() * W, y = rand() * H, r = 30 + rand() * 90;
+      const g = sctx.createRadialGradient(x, y, 0, x, y, r);
+      g.addColorStop(0, `rgba(${70 + rand() * 30 | 0},${44 + rand() * 16 | 0},20,.38)`);
+      g.addColorStop(1, 'rgba(40,25,10,0)');
+      sctx.fillStyle = g;
+      sctx.fillRect(x - r, y - r, r * 2, r * 2);
+    }
+    // drips
+    for (let i = 0; i < 46; i++) {
+      const x = rand() * W, y = rand() * H * .8, len = 30 + rand() * 160;
+      const g = sctx.createLinearGradient(x, y, x, y + len);
+      g.addColorStop(0, 'rgba(0,0,0,.55)');
+      g.addColorStop(1, 'rgba(0,0,0,0)');
+      sctx.strokeStyle = g;
+      sctx.lineWidth = 1.5 + rand() * 6;
+      sctx.lineCap = 'round';
+      sctx.beginPath(); sctx.moveTo(x, y); sctx.lineTo(x + (rand() - .5) * 4, y + len); sctx.stroke();
+    }
+    // grain and glossy flakes
+    for (let i = 0; i < W * H / 22; i++) {
+      const v = rand();
+      sctx.fillStyle = v < .55 ? 'rgba(0,0,0,.35)' : v < .93 ? 'rgba(92,80,68,.32)' : 'rgba(210,180,140,.18)';
+      sctx.fillRect(rand() * W, rand() * H, 1 + rand() * 1.6, 1 + rand() * 1.6);
+    }
+  }
+
+  function resetCells() {
+    cellsX = Math.ceil(W / CELL);
+    cellsY = Math.ceil(H / CELL);
+    cells = new Uint8Array(cellsX * cellsY);
+    cleared = 0;
+    total = cells.length;
+    done = false;
+    stage.classList.remove('is-clean');
+    update();
+  }
+
+  function stamp(x, y, dust) {
+    sctx.globalCompositeOperation = 'destination-out';
+    const g = sctx.createRadialGradient(x, y, 0, x, y, R);
+    g.addColorStop(0, 'rgba(0,0,0,1)');
+    g.addColorStop(.55, 'rgba(0,0,0,1)');
+    g.addColorStop(1, 'rgba(0,0,0,0)');
+    sctx.fillStyle = g;
+    sctx.beginPath(); sctx.arc(x, y, R, 0, Math.PI * 2); sctx.fill();
+    // bristle scratches past the edge
+    sctx.fillStyle = 'rgba(0,0,0,.7)';
+    for (let i = 0; i < 8; i++) {
+      const a = Math.random() * Math.PI * 2, d = R * (.7 + Math.random() * .45);
+      sctx.fillRect(x + Math.cos(a) * d, y + Math.sin(a) * d, 2, 2);
+    }
+    // mark coverage
+    const rr = R * .62;
+    const x0 = Math.max(0, Math.floor((x - rr) / CELL)), x1 = Math.min(cellsX - 1, Math.floor((x + rr) / CELL));
+    const y0 = Math.max(0, Math.floor((y - rr) / CELL)), y1 = Math.min(cellsY - 1, Math.floor((y + rr) / CELL));
+    for (let cy = y0; cy <= y1; cy++) {
+      for (let cx = x0; cx <= x1; cx++) {
+        const px = cx * CELL + CELL / 2 - x, py = cy * CELL + CELL / 2 - y;
+        const i = cy * cellsX + cx;
+        if (!cells[i] && px * px + py * py <= rr * rr) { cells[i] = 1; cleared++; }
+      }
+    }
+    if (dust && !reduce) {
+      for (let i = 0; i < 3; i++) {
+        particles.push({
+          x: x + (Math.random() - .5) * R * 1.4, y: y + (Math.random() - .5) * R,
+          vx: (Math.random() - .5) * .8, vy: Math.random() * .6,
+          s: 1 + Math.random() * 2.6, life: 1
+        });
+      }
+      if (!dustRaf) dustRaf = requestAnimationFrame(tickDust);
+    }
+  }
+
+  function tickDust() {
+    dctx.clearRect(0, 0, W, H);
+    particles = particles.filter(p => p.life > 0 && p.y < H + 10);
+    for (const p of particles) {
+      p.vy += .09; p.x += p.vx; p.y += p.vy; p.life -= .012;
+      dctx.fillStyle = `rgba(22,18,14,${Math.max(0, p.life)})`;
+      dctx.fillRect(p.x, p.y, p.s, p.s);
+    }
+    if (particles.length > 400) particles.splice(0, particles.length - 400);
+    dustRaf = particles.length ? requestAnimationFrame(tickDust) : null;
+  }
+
+  function strokeTo(a, b, dust) {
+    const dx = b.x - a.x, dy = b.y - a.y;
+    const dist = Math.hypot(dx, dy);
+    const steps = Math.max(1, Math.ceil(dist / (R * .3)));
+    for (let i = 1; i <= steps; i++) stamp(a.x + dx * i / steps, a.y + dy * i / steps, dust && i === steps);
+    update();
+  }
+
+  function update() {
+    const pct = done ? 100 : Math.min(100, Math.round(cleared / total * 100));
+    pctEl.textContent = pct + '%';
+    fill.style.transform = `scaleX(${pct / 100})`;
+    hudStage.textContent = done ? 'Clear · ready to burn' : pct < 35 ? 'Stage 2 creosote' : 'Stage 1 soot';
+    if (!done && pct >= 88) finish();
+  }
+
+  function finish() {
+    done = true;
+    stage.classList.add('is-clean');
+    update();
+  }
+
+  function moveBrush(p) {
+    brush.style.transform = `translate(${p.x - 38}px, ${p.y - 38}px) rotate(${(p.x + p.y) * .8}deg)`;
+  }
+
+  // ----- pointer sweeping -----
+  let drawing = false, last = null;
+  const pos = e => { const r = stage.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; };
+  stage.addEventListener('pointerdown', e => {
+    cancelAuto();
+    drawing = true;
+    last = pos(e);
+    stage.setPointerCapture(e.pointerId);
+    if (e.pointerType !== 'mouse') { brush.classList.add('on'); }
+    moveBrush(last);
+    strokeTo(last, last, true);
+  });
+  stage.addEventListener('pointermove', e => {
+    const p = pos(e);
+    if (e.pointerType === 'mouse') brush.classList.add('on');
+    moveBrush(p);
+    if (!drawing) return;
+    strokeTo(last, p, true);
+    last = p;
+  });
+  const end = e => { drawing = false; if (e.pointerType !== 'mouse') brush.classList.remove('on'); };
+  stage.addEventListener('pointerup', end);
+  stage.addEventListener('pointercancel', end);
+  stage.addEventListener('pointerleave', () => { if (!drawing) brush.classList.remove('on'); });
+
+  // ----- scripted passes -----
+  function passes(y0, y1) {
+    const pts = [];
+    const stepY = R * 1.15;
+    let dir = 1;
+    for (let y = y0; y <= y1; y += stepY, dir *= -1) {
+      const a = dir > 0 ? R * .4 : W - R * .4, b = dir > 0 ? W - R * .4 : R * .4;
+      pts.push({ x: a, y }, { x: b, y });
+    }
+    return pts;
+  }
+
+  function runPath(pts, duration, then) {
+    cancelAuto();
+    if (reduce || duration === 0) {
+      for (let i = 1; i < pts.length; i++) strokeTo(pts[i - 1], pts[i], false);
+      then && then();
+      return;
+    }
+    const lens = [0];
+    for (let i = 1; i < pts.length; i++) lens.push(lens[i - 1] + Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y));
+    const totalLen = lens[lens.length - 1];
+    const t0 = performance.now();
+    let prev = pts[0], seg = 1;
+    brush.classList.add('on');
+    const tick = now => {
+      const t = Math.min(1, (now - t0) / duration);
+      const e = t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+      const d = e * totalLen;
+      while (seg < pts.length - 1 && lens[seg] < d) {
+        strokeTo(prev, pts[seg], true); // don't cut corners at the end of a pass
+        prev = pts[seg];
+        seg++;
+      }
+      const a = pts[seg - 1], b = pts[seg];
+      const k = (d - lens[seg - 1]) / Math.max(1, lens[seg] - lens[seg - 1]);
+      const p = { x: a.x + (b.x - a.x) * k, y: a.y + (b.y - a.y) * k };
+      strokeTo(prev, p, true);
+      prev = p;
+      moveBrush(p);
+      if (t < 1) { autoRaf = requestAnimationFrame(tick); }
+      else { autoRaf = null; brush.classList.remove('on'); then && then(); }
+    };
+    autoRaf = requestAnimationFrame(tick);
+  }
+
+  function cancelAuto() {
+    if (autoRaf) { cancelAnimationFrame(autoRaf); autoRaf = null; brush.classList.remove('on'); }
+  }
+
+  function demo(animated) {
+    runPath(passes(H * .3, H * .3 + R * 2.4), animated ? 1700 : 0);
+  }
+
+  document.getElementById('sweepAll').addEventListener('click', () => {
+    if (done) return;
+    runPath(passes(R * .5, H), 1500, finish);
+  });
+  document.getElementById('resetSoot').addEventListener('click', () => {
+    cancelAuto();
+    drawSoot();
+    resetCells();
+  });
+
+  function init(animated) {
+    cancelAuto();
+    size();
+    drawBricks();
+    drawSoot();
+    resetCells();
+    demo(animated);
+  }
+
+  let lastW = 0;
+  new ResizeObserver(entries => {
+    const w = Math.round(entries[0].contentRect.width);
+    if (Math.abs(w - lastW) < 2) return;
+    const first = lastW === 0;
+    lastW = w;
+    init(first);
+  }).observe(stage);
+})();
+</script>
+</body>
+</html>
