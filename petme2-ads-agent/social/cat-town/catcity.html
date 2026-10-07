@@ -584,6 +584,47 @@ const STRAY = (() => { const S = EP.strays; if (!S || !S.n || !F) return null; c
       P.push({ x: x - dz * sd, y: 0, z: z + dx * sd, yaw: hash01(j * 19) * 6.28 }); } }
   m.instanceColor.needsUpdate = true; window.__crowd = [CS.x, CS.z]; return { m, P, at: S.at || [], sign, signAt: S.signAt ?? (S.at || [])[12] ?? 0, sc: S.scale || 1.15 }; })();
 
+// ---------- "Be OK" video extras: EP.strays.rain (strays fall from the sky around Mango's square, then EP.strays.shopAt they are packed on/around the fish supermarket),
+// EP.strays.peek = { at, dur, from: [x, z], to: [x, z] } (one extra cat slides in next to Mango), EP.dance = { bpm, stop } (Mango dances facing the camera, freezes at stop), EP.bonk (a fish falls on Mango's head) ----------
+if (STRAY && EP.strays.rain) { const S = EP.strays, n = S.n, P = [], P2 = [];
+  for (let j = 0, tries = 0; P.length < n && tries < 20000; tries++) { const a = hash01(tries * 7 + 1) * TAU, r = 5 + Math.sqrt(hash01(tries * 13 + 5)) * (SQ.plaza - 7), x = Math.cos(a) * r, z = Math.sin(a) * r * .8;
+    if (Math.min(Math.hypot(x - SQ.C, z), Math.hypot(x + SQ.C, z)) < SQ.wall + 1.2 || P.some(o => Math.hypot(o.x - x, o.z - z) < 2.3)) continue;
+    P.push({ x, y: null, z, yaw: Math.atan2(-x, -z) + Math.PI + (hash01(tries) - .5) * 1.2 }); }
+  const sp = SPOTS[landmarks.length] || SPOTS[0], ry = sp.ry, cr = Math.cos(ry), sr = Math.sin(ry), W = (X, Y, Z, yj = 0) => { const lx = X * FISH_BIG * .8, lz = (Z * FISH_BIG + FISH_BACK) * .8;
+    return { x: sp.x + lx * cr + lz * sr, y: Y * FISH_BIG * .8, z: sp.z - lx * sr + lz * cr, yaw: ry + yj }; };
+  const L = [];
+  for (let i = 0; i < 7; i++) for (let k = 0; k < 4; k++) L.push(W(-7.6 + i * 2.53 + (k % 2) * .9, 8.25, -5.8 + k * 2.9, (hash01(i * 9 + k) - .5) * 1.4));   // roof: 28
+  for (let i = 0; i < 9; i++) L.push(W(-8 + i * 2, 6.95, 5.0, (hash01(i + 40) - .5) * .8));                                                       // awning: 9
+  for (const x of [-6.2, 6.2]) for (let i = 0; i < 3; i++) L.push(W(x - 1.6 + i * 1.6, 2.05, 7.3, (hash01(i + x) - .5) * .6));                    // on the ice counters with the fish: 6
+  L.push(W(.3, 14.3, -1.5, .3));                                                                                                                   // on the giant roof fish: 1
+  for (let i = 0; i < 4; i++) for (let k = 0; k < 2; k++) L.push(W(-1.4 + (i % 2) * 2.8, .4, 4.9 + k * 1.3 + (i >> 1) * 2.6, (hash01(i * 3 + k) - .5) * 1.2));   // the doorway: 8
+  for (let i = 0; i < 14 && L.length < n; i++) L.push(W(-9.8 + i * 1.5, .4, 9.7 + (i % 2) * .9, (hash01(i + 77) - .5) * 1.4));                   // front row: up to 14
+  while (L.length < n) { const q = L.length; L.push(W(q % 2 ? 9.6 : -9.6, .4, 4.8 + (q % 4) * 1.2, 0)); }
+  STRAY.P = P; STRAY.P2 = L.slice(0, n); STRAY.rain = true; STRAY.shopAt = S.shopAt ?? 1e9;
+  if (S.peek) { STRAY.peek = S.peek; STRAY.pm = IM(CAT_SIT, 1); STRAY.pm.frustumCulled = false; STRAY.pm.setColorAt(0, col.set('#8A8F98')); STRAY.pm.instanceColor.needsUpdate = true; } }
+window.__nbpos = [NBpos.x, NBpos.z, (SPOTS[landmarks.length] || SPOTS[0]).ry];
+const DANCE = EP.dance || null, BONK = (() => { if (EP.bonk == null) return null; const f = new THREE.Group(), c = mat('#FF8A2A');
+  const b = new THREE.Mesh(new THREE.SphereGeometry(1, 14, 10), c); b.scale.set(1.6, .8, .45); f.add(b); const tl = new THREE.Mesh(new THREE.ConeGeometry(.75, 1.1, 3).rotateZ(Math.PI / 2), c); tl.position.set(-1.9, 0, 0); f.add(tl);
+  [-.46, .46].forEach(zz => { const e = new THREE.Mesh(new THREE.SphereGeometry(.2, 8, 6), mat('#FFFFFF')); e.position.set(1, .2, zz); f.add(e); const p2 = new THREE.Mesh(new THREE.SphereGeometry(.11, 6, 5), mat('#1B2333')); p2.position.set(1.08, .22, zz * 1.1); f.add(p2); });
+  f.scale.setScalar(.75); f.visible = false; scene.add(f); return f; })();
+const FACE = (() => { if (!EP.dance) return null;   // "Be OK" video: a happy face (eyes, pink nose, smile) on dancing Mango (CAT_GEO head) and on the peeking stray (CAT_SIT head)
+  const f = (hz, hy) => merge([paint(B(.08, .1, .03).translate(-.11, hy + .07, hz), '#1B2333'), paint(B(.08, .1, .03).translate(.11, hy + .07, hz), '#1B2333'), paint(B(.07, .05, .03).translate(0, hy - .01, hz + .005), '#FF8FA3'),
+    paint(B(.06, .03, .03).translate(-.05, hy - .07, hz), '#1B2333'), paint(B(.06, .03, .03).translate(.05, hy - .07, hz), '#1B2333'), paint(B(.04, .03, .03).translate(-.09, hy - .05, hz), '#1B2333'), paint(B(.04, .03, .03).translate(.09, hy - .05, hz), '#1B2333')]);
+  const m = new THREE.MeshStandardMaterial({ vertexColors: true, flatShading: true }), A = IM(f(.725, .84), 1, false, m), Bm = IM(f(.345, 1.02), 1, false, m); A.frustumCulled = Bm.frustumCulled = false; A.setMatrixAt(0, ZERO); Bm.setMatrixAt(0, ZERO); return { A, B: Bm }; })();
+function danceMango(t, anim, S, D, R) {   // Mango bounces on the beat facing the camera, a spin every 8 beats; freezes (holds the pose) at DANCE.stop
+  const a = Math.min(anim, DANCE.stop ?? 1e9), b = a * (DANCE.bpm || 116) / 60, face = Math.atan2(camera.position.x, camera.position.z), frozen = anim >= (DANCE.stop ?? 1e9);
+  let yaw = face + .5 * Math.sin(Math.PI * b), y = .52 + 1.1 * Math.abs(Math.sin(Math.PI * b)), roll = .28 * Math.sin(Math.PI * b), sy = 1 + .14 * Math.cos(2 * Math.PI * b);
+  if (Math.floor(b) % 8 === 7) yaw += TAU * ease(frac(b));
+  if (frozen) { yaw = face + .15; roll = .12; }
+  if (BONK) { const tb = EP.bonk, u = t - tb;   // fish falls 0.6 s, bonk, bounces off to the side and lies on the ground
+    if (u >= -.6 && u < 0) { const k = 1 + u / .6; BONK.visible = true; BONK.position.set(0, 40 - (40 - (y + 3.6)) * k * k, 0); BONK.rotation.set(0, face + Math.PI / 2, 1.2 * k); }
+    else if (u >= 0 && u < .7) { BONK.visible = true; BONK.position.set(2.6 * u / .7, y + 3.6 + 4 * u - 9 * u * u, 1.2 * u); BONK.rotation.set(0, face + Math.PI / 2, 1.2 + 9 * u); }
+    else if (u >= .7) { BONK.visible = true; BONK.position.set(2.6, .45, .84); BONK.rotation.set(Math.PI / 2, face + Math.PI / 2, 0); }
+    else BONK.visible = false;
+    if (u >= 0 && u < .6) { sy *= 1 - .35 * Math.exp(-u * 7) * Math.cos(u * 30); } }
+  putCat(S, WB.mSit, 0, .52, 0, yaw, 0); putCat(D, WB.mDrink, 0, .52, 0, yaw, 0); putCat(WALK, 0, 0, y, 0, yaw, 2.6, 0, roll, sy); putCat(FACE.A, 0, 0, y, 0, yaw, 2.6, 0, roll, sy); FACE.A.instanceMatrix.needsUpdate = true;
+  R.setMatrixAt(2 * WB.N, ZERO); R.setMatrixAt(2 * WB.N + 1, ZERO); }
+
 // ---------- cat taxis: a few humans pushing cats in strollers ----------
 const TAXIS = [];
 { const nT = Math.min(26, Math.floor(F / 120) + (F > 0 ? 2 : 0));
@@ -764,7 +805,7 @@ function updateExtras(t, anim) {
   // loungers on the lawns (sit / loaf, a slow head-turn now and then)
   WB.lounge.forEach((l, j) => putCat(l.pm, l.i, l.x, .54, l.z, l.yaw + .25 * Math.sin(anim * .3 + j), 1.15 * popK(t, l.rank), 0, 0, 1 + .03 * Math.sin(anim * 1.3 + j)));
   // Mango, the host in the waist of the 8: sits facing the town, turns left to drink at the fountain, back, turns right to eat at the feeder, back
-  { const u = mod(anim, P + 6); let mode = 0, yaw = .35 * Math.sin(anim * .6), D0 = -1;
+  if (DANCE) danceMango(t, anim, S, D, R); else { const u = mod(anim, P + 6); let mode = 0, yaw = .35 * Math.sin(anim * .6), D0 = -1;
     if (wave) { const l0 = FW + 3 + WB.N * .1; mode = anim >= l0 && anim < l0 + .5 ? 1 : 2; yaw = -Math.PI / 2; D0 = -1; }
     else if (u >= 8 && u < 8.6) { mode = 1; yaw = -ease((u - 8) / .6) * Math.PI / 2; }
     else if (u >= 8.6 && u < 13) { mode = 2; yaw = -Math.PI / 2; D0 = -1; }
@@ -954,7 +995,15 @@ window.renderFrame = (t, anim = t) => {
   if (NB) { const bt = NEWB.at; if (!NEWB.slow) { NB.visible = t >= bt; gk = back((t - bt) / .9); NB.scale.set(Math.max(.001, .8 * (.6 + .4 * gk)), Math.max(.001, .8 * gk), Math.max(.001, .8 * (.6 + .4 * gk))); }
     CONF.visible = t >= bEnd + .4 && t < bEnd + 4.4;
     if (CONF.visible) { const u = t - bEnd - .4; confData.forEach((d, i) => { cm.compose(V(NBpos.x + d.vx * u, 22 + d.vy * u - 8.8 * u * u, NBpos.z + d.vz * u), Q.setFromEuler(EU.set(d.r + u * 5, d.r * 2 + u * 3, 0)), V(1.4, 1.4, 1.4)); CONF.setMatrixAt(i, cm); }); CONF.instanceMatrix.needsUpdate = true; } }
-  if (STRAY) { let ns = 0; STRAY.P.forEach((p, j) => { const a = STRAY.at[j] ?? 1e9, k = t >= a ? STRAY.sc * back((t - a) / .4) : 0; if (t >= a) ns++;
+  if (STRAY && STRAY.rain) { let ns = 0; const inShop = t >= STRAY.shopAt; STRAY.P.forEach((p0, j) => { const a = STRAY.at[j] ?? 1e9, p = inShop ? STRAY.P2[j] : p0, u = t - a; if (t >= a) ns++;
+      if (!inShop && u < -.6) { STRAY.m.setMatrixAt(j, ZERO); return; } const k = STRAY.sc, fall = !inShop && u < 0 ? 34 * (u / .6) ** 2 : 0, sq = !inShop && u >= 0 && u < .5 ? 1 - .4 * Math.exp(-u * 9) * Math.cos(u * 25) : 1;
+      if (p.y == null) p.y = Hy(p.x, p.z); cm.compose(V(p.x, p.y + fall, p.z), Q.setFromEuler(EU.set(0, p.yaw + (inShop ? .25 * Math.sin(anim * .7 + j) : 0), 0)), V(k, k * sq, k)); STRAY.m.setMatrixAt(j, cm); });
+    STRAY.m.instanceMatrix.needsUpdate = true; window.__strays = ns;
+    if (STRAY.peek) { const pk = STRAY.peek, e = ease(Math.min(1, Math.max(0, (t - pk.at) / (pk.dur || 1.2)))), x = pk.from[0] + (pk.to[0] - pk.from[0]) * e, z = pk.from[1] + (pk.to[1] - pk.from[1]) * e;
+      if (t < pk.at) STRAY.pm.setMatrixAt(0, ZERO); else { cm.compose(V(x, .52, z), Q.setFromEuler(EU.set(0, Math.atan2(camera.position.x - x, camera.position.z - z), 0)), V(1.7, 1.7, 1.7)); STRAY.pm.setMatrixAt(0, cm); }
+      if (FACE) { if (t < pk.at) FACE.B.setMatrixAt(0, ZERO); else FACE.B.setMatrixAt(0, cm); FACE.B.instanceMatrix.needsUpdate = true; }
+      STRAY.pm.instanceMatrix.needsUpdate = true; } }
+  else if (STRAY) { let ns = 0; STRAY.P.forEach((p, j) => { const a = STRAY.at[j] ?? 1e9, k = t >= a ? STRAY.sc * back((t - a) / .4) : 0; if (t >= a) ns++;
       if (k <= 0) { STRAY.m.setMatrixAt(j, ZERO); return; } cm.compose(V(p.x, p.y, p.z), Q.setFromEuler(EU.set(0, p.yaw, 0)), V(k, k, k)); STRAY.m.setMatrixAt(j, cm); });
     STRAY.m.instanceMatrix.needsUpdate = true; window.__strays = ns;
     if (STRAY.sign) { const e = (t - STRAY.signAt) / .4; STRAY.sign.visible = e > 0; STRAY.sign.scale.setScalar(Math.max(.001, back(e))); } }
