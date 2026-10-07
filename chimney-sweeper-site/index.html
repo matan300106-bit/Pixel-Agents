@@ -373,10 +373,9 @@ section.block .wrap { padding-block: clamp(56px, 8vw, 104px); display: grid; gap
             <div class="meter-label"><span>Flue clean</span><b id="pct">0%</b></div>
             <div class="meter-track"><div class="meter-fill" id="fill"></div></div>
           </div>
-          <button class="mini" id="sweepAll" type="button">Sweep the rest</button>
-          <button class="mini" id="resetSoot" type="button">Add soot back</button>
+          <button class="mini" id="playPause" type="button" aria-pressed="false">Pause</button>
         </div>
-        <p class="flue-hint">Drag across the flue to sweep it. This is roughly what our rotary brushes do to your chimney.</p>
+        <p class="flue-hint">The brush clears the flue on its own, pass by pass, the way our rotary brushes clean your chimney. Drag across it to take a turn.</p>
       </div>
     </div>
   </section>
@@ -546,6 +545,8 @@ section.block .wrap { padding-block: clamp(56px, 8vw, 104px); display: grid; gap
   let W = 0, H = 0, R = 30;
   let cells, cellsX, cellsY, cleared = 0, total = 1, done = false;
   let particles = [], dustRaf = null, autoRaf = null;
+  let autoRunning = false, paused = false, loopTimer = null, idleTimer = null;
+  const SWEEP_MS = 6500, SHOW_CLEAN_MS = 2800, SOOT_RETURN_MS = 1200;
 
   function rng(seed) {
     return () => {
@@ -719,7 +720,7 @@ section.block .wrap { padding-block: clamp(56px, 8vw, 104px); display: grid; gap
     pctEl.textContent = pct + '%';
     fill.style.transform = `scaleX(${pct / 100})`;
     hudStage.textContent = done ? 'Clear · ready to burn' : pct < 35 ? 'Stage 2 creosote' : 'Stage 1 soot';
-    if (!done && pct >= 88) finish();
+    if (!done && !autoRunning && pct >= 88) finish();
   }
 
   function finish() {
@@ -737,6 +738,7 @@ section.block .wrap { padding-block: clamp(56px, 8vw, 104px); display: grid; gap
   const pos = e => { const r = stage.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; };
   stage.addEventListener('pointerdown', e => {
     cancelAuto();
+    clearTimeout(idleTimer);
     drawing = true;
     last = pos(e);
     stage.setPointerCapture(e.pointerId);
@@ -752,7 +754,14 @@ section.block .wrap { padding-block: clamp(56px, 8vw, 104px); display: grid; gap
     strokeTo(last, p, true);
     last = p;
   });
-  const end = e => { drawing = false; if (e.pointerType !== 'mouse') brush.classList.remove('on'); };
+  const end = e => {
+    if (!drawing) return;
+    drawing = false;
+    if (e.pointerType !== 'mouse') brush.classList.remove('on');
+    // hand the brush back to the automatic sweep after a short pause
+    clearTimeout(idleTimer);
+    if (!paused) idleTimer = setTimeout(() => (done ? resoot() : sweepFull()), 3500);
+  };
   stage.addEventListener('pointerup', end);
   stage.addEventListener('pointercancel', end);
   stage.addEventListener('pointerleave', () => { if (!drawing) brush.classList.remove('on'); });
@@ -781,11 +790,11 @@ section.block .wrap { padding-block: clamp(56px, 8vw, 104px); display: grid; gap
     const totalLen = lens[lens.length - 1];
     const t0 = performance.now();
     let prev = pts[0], seg = 1;
+    autoRunning = true;
     brush.classList.add('on');
     const tick = now => {
       const t = Math.min(1, (now - t0) / duration);
-      const e = t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-      const d = e * totalLen;
+      const d = t * totalLen;
       while (seg < pts.length - 1 && lens[seg] < d) {
         strokeTo(prev, pts[seg], true); // don't cut corners at the end of a pass
         prev = pts[seg];
@@ -798,36 +807,51 @@ section.block .wrap { padding-block: clamp(56px, 8vw, 104px); display: grid; gap
       prev = p;
       moveBrush(p);
       if (t < 1) { autoRaf = requestAnimationFrame(tick); }
-      else { autoRaf = null; brush.classList.remove('on'); then && then(); }
+      else { autoRaf = null; autoRunning = false; brush.classList.remove('on'); then && then(); }
     };
     autoRaf = requestAnimationFrame(tick);
   }
 
   function cancelAuto() {
+    clearTimeout(loopTimer);
+    autoRunning = false;
     if (autoRaf) { cancelAnimationFrame(autoRaf); autoRaf = null; brush.classList.remove('on'); }
   }
 
-  function demo(animated) {
-    runPath(passes(H * .3, H * .3 + R * 2.4), animated ? 1700 : 0);
+  // ----- automatic loop: sweep everything, show it clean, soot comes back, repeat -----
+  function sweepFull() {
+    if (paused) return;
+    runPath(passes(R * .5, H), reduce ? 0 : SWEEP_MS, () => {
+      finish();
+      if (!reduce) loopTimer = setTimeout(resoot, SHOW_CLEAN_MS);
+    });
   }
 
-  document.getElementById('sweepAll').addEventListener('click', () => {
-    if (done) return;
-    runPath(passes(R * .5, H), 1500, finish);
-  });
-  document.getElementById('resetSoot').addEventListener('click', () => {
-    cancelAuto();
+  function resoot() {
+    if (paused) return;
     drawSoot();
     resetCells();
+    loopTimer = setTimeout(sweepFull, SOOT_RETURN_MS);
+  }
+
+  const playBtn = document.getElementById('playPause');
+  playBtn.addEventListener('click', () => {
+    paused = !paused;
+    playBtn.textContent = paused ? 'Play' : 'Pause';
+    playBtn.setAttribute('aria-pressed', String(paused));
+    clearTimeout(idleTimer);
+    if (paused) cancelAuto();
+    else if (done) resoot();
+    else sweepFull();
   });
 
-  function init(animated) {
+  function init(first) {
     cancelAuto();
     size();
     drawBricks();
     drawSoot();
     resetCells();
-    demo(animated);
+    if (!paused) loopTimer = setTimeout(sweepFull, first ? 500 : 0);
   }
 
   let lastW = 0;
