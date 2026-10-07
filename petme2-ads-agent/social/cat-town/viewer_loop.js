@@ -1,7 +1,7 @@
 window.__noCam = true;
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.target.set(-10, 2, 0); if (innerWidth < 700) camera.position.set(150, 125, 165); else camera.position.set(190, 100, 150);
-controls.enableDamping = true; controls.maxPolarAngle = Math.PI * .47; controls.minDistance = 12; controls.maxDistance = 900;
+controls.enableDamping = true; controls.dampingFactor = .14; controls.rotateSpeed = 1.1; controls.zoomSpeed = 1.2; controls.maxPolarAngle = Math.PI * .47; controls.minDistance = 12; controls.maxDistance = 900;
 controls.autoRotate = true; controls.autoRotateSpeed = .35; renderer.domElement.addEventListener('pointerdown', () => { controls.autoRotate = false; });
 const fit = () => { W = stage.clientWidth; H = stage.clientHeight; renderer.setSize(W, H); camera.aspect = W / H; camera.fov = W / H < .8 ? 55 : 42; camera.updateProjectionMatrix(); };
 addEventListener('resize', fit); fit();
@@ -21,9 +21,14 @@ const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches; if (reduc
 let last = performance.now(), onScreen = true;
 // phones: draw at most 30 frames a second; everywhere: stop drawing while the city is scrolled off screen or the tab is hidden
 new IntersectionObserver(es => { onScreen = es[0].isIntersecting; }, { threshold: 0.01 }).observe(stage);
-const FRAME_MS = LITE ? 33 : 0;
-function loop(now) { requestAnimationFrame(loop); if (!onScreen || document.hidden || now - last < FRAME_MS) return;
-  const dt = Math.min(.05, (now - last) / 1000); last = now; ANIM += reduce ? 0 : dt;
+// smooth: full frame rate on every device (the old 30 fps cap on phones made dragging feel stuck); if a phone can't keep up,
+// drop the render resolution a step instead (checked every 2 s), and go back up when it has headroom.
+let perfN = 0, perfT = 0, prMax = renderer.getPixelRatio(), prNow = prMax;
+const adapt = dt => { perfN++; perfT += dt; if (perfT < 2) return; const fps = perfN / perfT; perfN = 0; perfT = 0;
+  const next = fps < 40 ? Math.max(.75, prNow - .25) : fps > 56 ? Math.min(prMax, prNow + .25) : prNow;
+  if (next !== prNow) { prNow = next; renderer.setPixelRatio(prNow); renderer.setSize(W, H); } };
+function loop(now) { requestAnimationFrame(loop); if (!onScreen || document.hidden) { last = now; return; }
+  const dt = Math.min(.05, (now - last) / 1000); last = now; adapt(dt); ANIM += reduce ? 0 : dt;
   if (playing) { cur = Math.min(FMAX, cur + Math.max(4, cur * .35) * dt * 2.2); target = cur; slider.value = Math.round(cur); if (cur >= FMAX) setPlay(false); }
   else cur += (target - cur) * Math.min(1, dt * 8);
   if (Math.abs(target - cur) < .5) cur = target;
@@ -112,9 +117,9 @@ function resCard(n) { const r = RES[n], ig = clean(r.ig), tt = clean(r.tt), titl
   return `<div class="info__icon">🏠</div><div><b class="info__title">${esc(title)}</b><span class="info__line">Cat #${(n + 1).toLocaleString('en-US')} · moved in on day ${esc(r.day || 1)}</span>${more ? `<span class="info__line">${esc(more)}</span>` : ''}<span class="info__line">${KIND[l.kind]} · ${DIST[l.d]} district</span></div>`; }
 if (RES) { const form = $('find'), q = $('findQ'); form.hidden = false;
   { const u = new Date(EP.live.updated), el = $('upd');   // "Updated <date, time> · Next update in a few hours" (very small, under the counter)
-    if (el && !isNaN(u)) { el.textContent = 'Updated ' + u.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' }) + ' · Next update in a few hours'; el.hidden = false; } } const placeLow = () => { const op = infoBox.offsetParent || form.offsetParent, base = op && getComputedStyle(infoBox).position !== 'fixed' ? op.getBoundingClientRect().top : 0, y = Math.round(form.getBoundingClientRect().bottom - base + 10) + 'px';
+    if (el && !isNaN(u)) { el.textContent = 'Updated ' + u.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' }) + ' · Next update in a few hours'; el.hidden = false; } } const topEl = $('countN').parentElement, placeLow = () => { const op = infoBox.offsetParent || topEl.offsetParent, base = op && getComputedStyle(infoBox).position !== 'fixed' ? op.getBoundingClientRect().top : 0, y = Math.round(topEl.getBoundingClientRect().bottom - base + 10) + 'px';
     infoBox.style.top = y; const h = $('hint'); if (h) h.style.top = y; };
-  placeLow(); addEventListener('resize', placeLow); requestAnimationFrame(placeLow);
+  placeLow(); addEventListener('resize', placeLow); requestAnimationFrame(placeLow); syncDock(); requestAnimationFrame(syncDock);
   form.addEventListener('submit', e => { e.preventDefault(); const w = clean(q.value); if (!w) return; q.blur();
     let n = RES.findIndex(r => clean(r.ig) === w || clean(r.tt) === w || clean(r.name) === w);
     if (n < 0 && w.length >= 3) n = RES.findIndex(r => clean(r.name).includes(w) || clean(r.ig).includes(w) || clean(r.tt).includes(w));

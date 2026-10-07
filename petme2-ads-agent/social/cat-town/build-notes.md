@@ -165,3 +165,11 @@ Owner ask: fountain and feeder each in its own circle, side by side like an 8; c
 - /cat-town already redirects to /pages/cat-town (UrlRedirect 606478794964), so the short link works.
 - Uploaded to new copy 188916498644 (old copy 188909420756 had been deleted, so a duplicate worked). Tested with sample residents in the test browser only.
 - Owner (00:40): small "Updated <date, time> · Next update in a few hours" line under the counter. Comes from the metafield's `updated` field (ISO time, e.g. `2026-10-07T00:50:00Z`), shown in the visitor's own time zone. Set `updated` every time the resident list changes.
+
+## Update 2026-10-07 (smooth): performance pass + search at the bottom
+
+- Owner: page and movement feel stuck. Measured in the test browser (live mode, 400x860): 286 KB of instance data uploaded per frame, 109 draw calls, ~3 ms JS per frame, plus a 30 fps cap on phones.
+- Fixes: (1) before each render, instanced meshes with `count` below their capacity upload only `count` matrices (`addUpdateRange`) - pose meshes hold 800 slots but use a few dozen; (2) the street-cat loop stops at the first cat not yet in town and sets `catMesh.count` (cats appear in house order); (3) no 30 fps cap: full frame rate, and `adapt()` steps the pixel ratio down (min .75) if fps < 40 over 2 s, back up when > 56; (4) OrbitControls dampingFactor .14, rotate 1.1, zoom 1.2; (5) removed `backdrop-filter` from the dock and pad (blur over a canvas that redraws every frame is slow on phones).
+- Result in test: 26 KB/frame, ~1.2 ms JS per frame. Growth stills unchanged.
+- "Find your cat house" moved into the bottom dock; the info card/hint now sit under the top block.
+- Uploaded to new copy 188917547220 (the owner had published 188916498644).

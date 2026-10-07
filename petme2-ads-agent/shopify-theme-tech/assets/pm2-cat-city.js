@@ -265,7 +265,7 @@ function landmark(kind, sign) {
   return g;
 }
 
-let FWATER = null;
+let FWATER = null; let RANGED = null;
 // ---------- Mango's square + the PETME2 Stainless Steel Cat Water Fountain (3.2L), giant, low-poly ----------
 // bowl: brushed steel, slightly wider at the top; flat top plate with ring grooves; pump cap; goose-neck spout; clear stream onto the plate;
 // front: dark oval water-level window with "PETME2" above it. The water-bar ring (wall/water/lip) is part of the same tap group.
@@ -836,7 +836,9 @@ window.renderFrame = (t, anim = t) => {
   // Mango strolls around the fountain
   catMesh.setMatrixAt(0, ZERO);   // Mango now hosts the Water Bar (WALK / pose meshes), no more road patrol
   const fT = anim - FEED.t0, feedOn = fT >= 0 && fT < FEED_DUR;
+  let kEnd = F;
   for (let k = 0; k < F; k++) { const w = CATW[k], a0 = APPEAR[k] < 0 ? -1 : APPEAR[k] + .3, vis = a0 < 0 || t >= a0;
+    if (!vis) { kEnd = k; break; }   // cats appear in house order: stop at the first one not in town yet (catMesh.count below hides the rest)
     const s = vis ? 1.15 * (a0 < 0 ? 1 : back((t - a0) / .4)) : 0, l = houseLots[k];
     if (w.nap) { cm.compose(V(l.x, w.roofY, l.z), Q.setFromEuler(EU.set(0, l.ry + Math.sin(anim * .3 + k) * .4, 0)), V(s, s * .8, s)); catMesh.setMatrixAt(k + 1, cm); }
     else { const [x, z, dx, dz] = walkPos(w.rd, w.s0, w.L, w.v, w.ph, anim);
@@ -846,7 +848,8 @@ window.renderFrame = (t, anim = t) => {
         px += (gx - px) * gw; pz += (gz - pz) * gw; yaw = fT < FEED_DUR - 2.5 ? Math.atan2(-px, -pz) : Math.atan2(px, pz); bob = gw < 1 ? .25 : .06; }
       cm.compose(V(px, Math.abs(Math.sin(anim * (gw > 0 && gw < 1 ? 16 : 9) + k)) * bob, pz), Q.setFromEuler(EU.set(0, yaw, 0)), V(s, s, s)); catMesh.setMatrixAt(k + 1, cm); }
     if (HW && k % 2 === 0) HWX.hat.setMatrixAt(k >> 1, s > 0 ? M2.multiplyMatrices(cm, HWX.hatL) : ZERO); }
-  catMesh.instanceMatrix.needsUpdate = true;
+  if (HW) for (let k = kEnd + (kEnd & 1); k < F; k += 2) HWX.hat.setMatrixAt(k >> 1, ZERO);
+  catMesh.count = kEnd + 1; catMesh.instanceMatrix.needsUpdate = true;
   TAXIS.forEach((tx, i) => { const a0 = APPEAR[tx.n]; tx.g.visible = a0 < 0 || t >= a0 + .5; if (!tx.g.visible) return;
     const [x, z, dx, dz] = walkPos(tx.rd, tx.s0, tx.L, tx.v, tx.ph, anim);
     tx.g.position.set(x - dz * 2.4 * tx.side, 0, z + dx * 2.4 * tx.side); tx.g.rotation.y = Math.atan2(dx, dz);
@@ -857,6 +860,9 @@ window.renderFrame = (t, anim = t) => {
   if (NB) { const bt = NEWB.at; NB.visible = t >= bt; gk = back((t - bt) / .9); NB.scale.set(Math.max(.001, .8 * (.6 + .4 * gk)), Math.max(.001, .8 * gk), Math.max(.001, .8 * (.6 + .4 * gk)));
     CONF.visible = t >= bt + .4 && t < bt + 4.4;
     if (CONF.visible) { const u = t - bt - .4; confData.forEach((d, i) => { cm.compose(V(NBpos.x + d.vx * u, 22 + d.vy * u - 8.8 * u * u, NBpos.z + d.vz * u), Q.setFromEuler(EU.set(d.r + u * 5, d.r * 2 + u * 3, 0)), V(1.4, 1.4, 1.4)); CONF.setMatrixAt(i, cm); }); CONF.instanceMatrix.needsUpdate = true; } }
+  // upload only the used part of each instanced mesh (pose meshes hold 800 slots but use a few dozen): big win on phones
+  if (!RANGED) { RANGED = []; scene.traverse(o => { if (o.isInstancedMesh) RANGED.push(o); }); }
+  for (const m of RANGED) if (m.count < m.instanceMatrix.count) { const a = m.instanceMatrix; a.clearUpdateRanges(); a.addUpdateRange(0, Math.max(1, m.count) * 16); }
   renderer.render(scene, camera);
 
   // ---- UI ----
@@ -893,7 +899,7 @@ window.renderFrame = (t, anim = t) => {
 window.__noCam = true;
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.target.set(-10, 2, 0); if (innerWidth < 700) camera.position.set(150, 125, 165); else camera.position.set(190, 100, 150);
-controls.enableDamping = true; controls.maxPolarAngle = Math.PI * .47; controls.minDistance = 12; controls.maxDistance = 900;
+controls.enableDamping = true; controls.dampingFactor = .14; controls.rotateSpeed = 1.1; controls.zoomSpeed = 1.2; controls.maxPolarAngle = Math.PI * .47; controls.minDistance = 12; controls.maxDistance = 900;
 controls.autoRotate = true; controls.autoRotateSpeed = .35; renderer.domElement.addEventListener('pointerdown', () => { controls.autoRotate = false; });
 const fit = () => { W = stage.clientWidth; H = stage.clientHeight; renderer.setSize(W, H); camera.aspect = W / H; camera.fov = W / H < .8 ? 55 : 42; camera.updateProjectionMatrix(); };
 addEventListener('resize', fit); fit();
@@ -913,9 +919,14 @@ const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches; if (reduc
 let last = performance.now(), onScreen = true;
 // phones: draw at most 30 frames a second; everywhere: stop drawing while the city is scrolled off screen or the tab is hidden
 new IntersectionObserver(es => { onScreen = es[0].isIntersecting; }, { threshold: 0.01 }).observe(stage);
-const FRAME_MS = LITE ? 33 : 0;
-function loop(now) { requestAnimationFrame(loop); if (!onScreen || document.hidden || now - last < FRAME_MS) return;
-  const dt = Math.min(.05, (now - last) / 1000); last = now; ANIM += reduce ? 0 : dt;
+// smooth: full frame rate on every device (the old 30 fps cap on phones made dragging feel stuck); if a phone can't keep up,
+// drop the render resolution a step instead (checked every 2 s), and go back up when it has headroom.
+let perfN = 0, perfT = 0, prMax = renderer.getPixelRatio(), prNow = prMax;
+const adapt = dt => { perfN++; perfT += dt; if (perfT < 2) return; const fps = perfN / perfT; perfN = 0; perfT = 0;
+  const next = fps < 40 ? Math.max(.75, prNow - .25) : fps > 56 ? Math.min(prMax, prNow + .25) : prNow;
+  if (next !== prNow) { prNow = next; renderer.setPixelRatio(prNow); renderer.setSize(W, H); } };
+function loop(now) { requestAnimationFrame(loop); if (!onScreen || document.hidden) { last = now; return; }
+  const dt = Math.min(.05, (now - last) / 1000); last = now; adapt(dt); ANIM += reduce ? 0 : dt;
   if (playing) { cur = Math.min(FMAX, cur + Math.max(4, cur * .35) * dt * 2.2); target = cur; slider.value = Math.round(cur); if (cur >= FMAX) setPlay(false); }
   else cur += (target - cur) * Math.min(1, dt * 8);
   if (Math.abs(target - cur) < .5) cur = target;
@@ -1004,9 +1015,9 @@ function resCard(n) { const r = RES[n], ig = clean(r.ig), tt = clean(r.tt), titl
   return `<div class="info__icon">\ud83c\udfe0</div><div><b class="info__title">${esc(title)}</b><span class="info__line">Cat #${(n + 1).toLocaleString('en-US')} \u00b7 moved in on day ${esc(r.day || 1)}</span>${more ? `<span class="info__line">${esc(more)}</span>` : ''}<span class="info__line">${KIND[l.kind]} \u00b7 ${DIST[l.d]} district</span></div>`; }
 if (RES) { const form = $('find'), q = $('findQ'); form.hidden = false;
   { const u = new Date(EP.live.updated), el = $('upd');   // "Updated <date, time> \u00b7 Next update in a few hours" (very small, under the counter)
-    if (el && !isNaN(u)) { el.textContent = 'Updated ' + u.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' }) + ' \u00b7 Next update in a few hours'; el.hidden = false; } } const placeLow = () => { const op = infoBox.offsetParent || form.offsetParent, base = op && getComputedStyle(infoBox).position !== 'fixed' ? op.getBoundingClientRect().top : 0, y = Math.round(form.getBoundingClientRect().bottom - base + 10) + 'px';
+    if (el && !isNaN(u)) { el.textContent = 'Updated ' + u.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' }) + ' \u00b7 Next update in a few hours'; el.hidden = false; } } const topEl = $('countN').parentElement, placeLow = () => { const op = infoBox.offsetParent || topEl.offsetParent, base = op && getComputedStyle(infoBox).position !== 'fixed' ? op.getBoundingClientRect().top : 0, y = Math.round(topEl.getBoundingClientRect().bottom - base + 10) + 'px';
     infoBox.style.top = y; const h = $('hint'); if (h) h.style.top = y; };
-  placeLow(); addEventListener('resize', placeLow); requestAnimationFrame(placeLow);
+  placeLow(); addEventListener('resize', placeLow); requestAnimationFrame(placeLow); syncDock(); requestAnimationFrame(syncDock);
   form.addEventListener('submit', e => { e.preventDefault(); const w = clean(q.value); if (!w) return; q.blur();
     let n = RES.findIndex(r => clean(r.ig) === w || clean(r.tt) === w || clean(r.name) === w);
     if (n < 0 && w.length >= 3) n = RES.findIndex(r => clean(r.name).includes(w) || clean(r.ig).includes(w) || clean(r.tt).includes(w));
