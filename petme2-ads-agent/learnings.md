@@ -20,3 +20,8 @@ What worked and what did not. Newest at the top.
 ## 2026-10-07 — bid raise too big
 Raising all bids +30%/to suggested (up to $1.50) + dynamic up&down + TOS +50% spent the full ~$92/day budget in ~1 hour.
 Lesson: raise bids in small steps (max +15-20% at once), keep "down only" until a keyword has orders, and don't stack strategy + placement + bid raises on the same day.
+
+## 2026-10-07 — L7D reports (Sep 30–Oct 6)
+Old campaigns: 272 clicks, 22 orders (8.1% CVR), ACOS 47%. Pausing them on Oct 4 for the V2 rebuild killed traffic (new campaigns ~15 clicks in 2 days).
+Top of search converts 14.4% (ACOS 37%) vs product pages 5.6% and rest of search 2.5%.
+2L fountain broad campaigns converted ~15% even at $19.99.
