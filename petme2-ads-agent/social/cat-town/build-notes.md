@@ -123,3 +123,60 @@ Owner asks: "make a real fountain, like what we actually sell", "make a bigger c
 - At 360 px the "Play growth" button wraps to a second row of the dock (that row was not changed here); the pad moves up with the dock height (`--dockH`).
 - The feeder hides part of the fountain from some angles of the default `q_fountain` camera; `q_fountain_feeder` frames both.
 - The starer's "look up" is a whole-body tilt (cats have no separate head in the pose kit).
+
+## Update 2026-10-06 (night): figure 8 "food & drink stops"
+
+Owner ask: fountain and feeder each in its own circle, side by side like an 8; cats walk in from the streets and gather (drink around the fountain, eat around the feeder); more cats; Mango hosts between the circles.
+
+- `SQ` is now `{ plaza: 33, laneX: 29.8, laneZ: 18.4, C: 11.5, island: 12.8, lawn: 12, wall: 9.4 }`. Two islands + lawns at x = ±C make the 8; the roundabout lane is an oval (`laneR(a)`), and the 6 inner avenues start at the oval's edge.
+- Fountain group sits at x = −C (its Water Bar ring is part of it); `FT.tip` / `FT.hit` are world coordinates. Feeder group sits at x = +C on the lawn, facing +z, with its own "food bar" ring (white walls, kibble trough with 260 kibble pieces, blue lip). Tapping either still opens its card.
+- Build 1 rewritten: `WB.N = 26` spots per circle (the side facing the other circle is left for Mango). Each cat walks in from the plaza edge along the ring's normal, drinks/eats 14 s, turns, walks out beside its in-path (34 s loop). Fountain and feeder ranks alternate (1, 2, 3 …), so a small city shows both. 10 loungers (sit/loaf) per lawn unlock after the spots. WALK slots: 0 Mango, 30–55 drinkers, 56–81 eaters (WALK has 90). Ripples: drinkers 0–51, Mango 52–53, stream 54–59.
+- Mango sits at the waist (0, 0) facing +z, turns left to drink at the fountain, back, turns right to eat at the feeder, back (36 s loop).
+- Removed the old feeder regulars (2 eaters + starer). Hero circle row moved to angles 3.75–3.99 r 27, hero box to angle 2.0 r 27, bus stop to angle 5.0 r 27 (off the oval lane and off the avenues). Inner garden band follows `SQ.plaza + 2.5`.
+- New cameras: `q_food_stops.json`, `q_food_stops_close.json`; `q_square_top.json` raised to y 118 to fit the whole 8. Older `q_circles`, `q_box`, `q_busstop`, `q_fountain*` cameras still point at the old spots.
+- Checks: stills `q_food_stops`, `q_square_top`, `p_day1`, `p_1000`; viewer at 400x860 (touch): loads, home button, tapping fountain and feeder opens the right cards, no page errors.
+- Uploaded to theme copy 188910403796 (only `assets/pm2-cat-city.js` changed; checksums match).
+
+## Update 2026-10-06 (late night): shop button, Halloween, feeding time
+
+- Fountain and feeder cards have a "See it in the shop" button (`.info__shop`, product URLs in `viewer_loop.js`).
+- Halloween (`HW`): on Oct 24-31 automatically, or with `?halloween=1` / `EP.halloween`. Pumpkins at every house, witch hats on every other street cat, loungers and Mango, a 12 black-cat parade on the oval lane (WALK 90-101, unlocks at rank 13), candy-colored kibble, "Trick or treat!" sign over the feeder.
+- Feeding time (`FEED`, 14 s): tapping the feeder (food) or fountain (water) calls `window.feedTime(kind)`; the viewer also runs it every 45 s, alternating. Street cats near the square walk to the plaza edge, the matching spot cats rush in; kibble rains onto the food bar, or water arcs into the Water Bar ring. Preview with `EP.feed = {kind, at}`.
+- `build_viewer.py` now escapes all non-ASCII (HTML entities outside scripts, `\uXXXX` inside), so symbols show right even when no charset is sent.
+- Size chips fly closer on small towns (Day 1 now opens near the fountain and feeder). Big Mochi fits the 400x860 phone view.
+- Cameras: `q_hw.json`, `q_hw_wide.json`, `q_feed_food.json`, `q_feed_water.json`.
+- The store has 20 themes (Shopify's limit), so `themeDuplicate` returns null. Uploaded to the unpublished copy 188910403796 instead (renamed). Theme names must be 50 characters or fewer.
+- Owner feedback (same night): the whole city rushing in looked funny. Now only about 1 in 3 street cats within 75 of the square walk over (`l.r < 75 && hash01(k*7+3) < .3`); the circle's own drinkers/eaters still gather. Card notes say "the cats nearby".
+
+## Update 2026-10-06 (go-live): Mango only
+
+- Owner: go live with 0 cats, only Mango. `build_viewer.py` data now has `"live": {"followers": 0}`. In live mode the viewer sets the slider to that number, hides the slider, size chips and Play growth, and starts the camera close on the square (84 phone / 70 desktop) while followers < 100.
+- To grow the real town later: raise `live.followers` in `build_viewer.py` (and add real handles), rebuild, upload. Remove `live` to bring back the growth demo.
+- Uploaded to 188910403796, renamed "PETME2 — Cat Town LIVE (Mango only)". Owner publishes it.
+- Owner (23:17): remove "Save postcard" from the website. The button is now hidden in `viewer_loop.js`; in live mode the whole top row of the dock is hidden. Built files: pm2-cat-city.js md5 fd90ca427b11917c73349200268b9a3f (liquid unchanged). Owner had already published 188910403796, so this change needs an unpublished copy (188909420756 matches live except the Cat Town files) and a re-publish. Upload not done yet: the write was blocked by a permission check, waiting for the owner's OK.
+
+## Update 2026-10-07: real live version + "Find your cat house"
+
+- Data: page metafield `cattown.town` (JSON, definition "Cat Town residents" on the Cat Town page). Shape: `{"start": "2026-10-07", "residents": [{"name": "...", "ig": "...", "tt": "...", "day": 1}, ...]}`. List order = move-in order; Cat # = position. The section prints it as `window.CITY_LIVE`; `build_viewer.py` (LIVE_JS) turns it into `EP.live.residents/followers/day` before the engine starts. Updating the metafield changes the page right away, no theme publish.
+- Counter: residents + Mango, "Day N" = days since `start` + 1 (counts up by itself).
+- Search under the counter: exact match on Instagram / TikTok handle (with or without @) or name, then partial match (3+ letters). Hit: camera flies to the house, pin + ring, card (@handle, cat #, moved in on day X, name/TikTok, house kind). Miss: "Not in Cat Town yet / Follow @petme2 to move in!". The card/hint are placed under the search box by JS (`placeLow`).
+- Save postcard button hidden; in live mode the dock top row, slider, chips and Play growth are hidden.
+- `viewer.html` now has a viewport meta, so local phone tests match real phones.
+- /cat-town already redirects to /pages/cat-town (UrlRedirect 606478794964), so the short link works.
+- Uploaded to new copy 188916498644 (old copy 188909420756 had been deleted, so a duplicate worked). Tested with sample residents in the test browser only.
+- Owner (00:40): small "Updated <date, time> · Next update in a few hours" line under the counter. Comes from the metafield's `updated` field (ISO time, e.g. `2026-10-07T00:50:00Z`), shown in the visitor's own time zone. Set `updated` every time the resident list changes.
+
+## Update 2026-10-07 (smooth): performance pass + search at the bottom
+
+- Owner: page and movement feel stuck. Measured in the test browser (live mode, 400x860): 286 KB of instance data uploaded per frame, 109 draw calls, ~3 ms JS per frame, plus a 30 fps cap on phones.
+- Fixes: (1) before each render, instanced meshes with `count` below their capacity upload only `count` matrices (`addUpdateRange`) - pose meshes hold 800 slots but use a few dozen; (2) the street-cat loop stops at the first cat not yet in town and sets `catMesh.count` (cats appear in house order); (3) no 30 fps cap: full frame rate, and `adapt()` steps the pixel ratio down (min .75) if fps < 40 over 2 s, back up when > 56; (4) OrbitControls dampingFactor .14, rotate 1.1, zoom 1.2; (5) removed `backdrop-filter` from the dock and pad (blur over a canvas that redraws every frame is slow on phones).
+- Result in test: 26 KB/frame, ~1.2 ms JS per frame. Growth stills unchanged.
+- "Find your cat house" moved into the bottom dock; the info card/hint now sit under the top block.
+- Uploaded to new copy 188917547220 (the owner had published 188916498644).
+- Owner: the fountain/feeder card was too big. Compact card: max-width 340px, padding 9/38/9/11, icon 22px, title 15.5px, lines 12.5px, note 11.5px, smaller shop and close buttons. Uploaded to 188917547220 (liquid only).
+- Owner: Mango-themed fountain/feeder card text (viewer_loop.js info lines). Uploaded to new copy 188917874900 (owner had published 188917547220).
+- Owner: hide the arrow pad (joystick) for now. `"pad": False` in build_viewer.py data; viewer_loop.js hides `#pad` when `EP.pad === false`. Set it to True to bring it back. Touch is unchanged: one finger rotates, two fingers pinch zoom/pan, double-tap flies there; arrow keys still work on a computer. Uploaded to 188917874900 (still unpublished), checksums verified.
+- Owner: search placeholder now "Search @yourname" ("Find your cat house: @yourname" was cut off at 400px). Uploaded to 188917874900 (liquid only), checksum verified.
+- Owner: pop-up lower, smaller, not pushy. `.info` now uses `bottom: dockH + 26px` (just above the dock); placeLow only moves the hint now. max-width 300px, icon 18px, title 14px, lines 12px, note 11px, softer shadow. Shop link is plain underlined text "See it in our shop" instead of a filled button. Uploaded to 188917874900, checksums verified.
+- Owner: remove the fountain/feeder pop-up for now. `"shopCards": False` in build_viewer.py; tapping them still starts water/feeding time but shows no card. Set True to bring the (low, small, soft) card back. Uploaded to 188917874900, checksums verified.
+- Owner: the Cat Town feeder is product `2-in-1-feeder-1` (not smart-feeder-white). Shop link updated (pop-up still off). Uploaded to 188917874900, checksum verified.

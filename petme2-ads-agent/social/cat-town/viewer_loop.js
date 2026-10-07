@@ -1,27 +1,39 @@
 window.__noCam = true;
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.target.set(-10, 2, 0); if (innerWidth < 700) camera.position.set(150, 125, 165); else camera.position.set(190, 100, 150);
-controls.enableDamping = true; controls.maxPolarAngle = Math.PI * .47; controls.minDistance = 12; controls.maxDistance = 900;
+controls.enableDamping = true; controls.dampingFactor = .14; controls.rotateSpeed = 1.1; controls.zoomSpeed = 1.2; controls.maxPolarAngle = Math.PI * .47; controls.minDistance = 12; controls.maxDistance = 900;
 controls.autoRotate = true; controls.autoRotateSpeed = .35; renderer.domElement.addEventListener('pointerdown', () => { controls.autoRotate = false; });
 const fit = () => { W = stage.clientWidth; H = stage.clientHeight; renderer.setSize(W, H); camera.aspect = W / H; camera.fov = W / H < .8 ? 55 : 42; camera.updateProjectionMatrix(); };
 addEventListener('resize', fit); fit();
-const slider = $('grow'), FMAX = +slider.max, tOf = f => f <= 0 ? -1 : EP.newFrom + (EP.newTo - EP.newFrom) * Math.pow((f - .5) / FN, .8) + 1e-6;
-let target = +slider.value, cur = target, playing = false, ANIM = 0;
+const slider = $('grow'), tOf = f => f <= 0 ? -1 : EP.newFrom + (EP.newTo - EP.newFrom) * Math.pow((f - .5) / FN, .8) + 1e-6;
+if (EP.live) {   // live page: the real town today (EP.live.followers cats besides Mango); no growth demo controls
+  slider.max = slider.value = EP.live.followers; [slider, $('play'), ...slider.parentElement.querySelectorAll('.row, .chips')].forEach(e => { e.hidden = true; e.style.display = 'none'; });
+  if (EP.live.followers < 100) { controls.autoRotate = true; controls.target.set(0, 3, 0); camera.position.set(0, 3, 0).add(new THREE.Vector3(.55, .5, .67).setLength(innerWidth < 700 ? 84 : 70)); } }
+const FMAX = +slider.max;
+let target = +slider.value, cur = target, playing = false, ANIM = 0, nextFeed = 7, feedKind = 'food';
 const setPlay = on => { playing = on; $('play').textContent = on ? 'Pause' : 'Play growth'; };
 slider.addEventListener('input', () => { target = +slider.value; setPlay(false); });
-document.querySelectorAll('[data-f]').forEach(b => b.addEventListener('click', () => { target = +b.dataset.f; slider.value = target; setPlay(false); }));
+document.querySelectorAll('[data-f]').forEach(b => b.addEventListener('click', () => { target = +b.dataset.f; slider.value = target; setPlay(false);
+  const d = { 0: 62, 100: 115, 250: 170, 500: 220 }[target];   // small city: fly in close so Day 1 isn't a speck
+  if (d) { stopSpin(); const off = camera.position.clone().sub(controls.target).setLength(d); if (off.y < d * .45) off.setY(d * .45).setLength(d); flyTo(new THREE.Vector3(0, 3, 0), new THREE.Vector3(0, 3, 0).add(off), .9); } }));
 $('play').addEventListener('click', () => { if (playing) return setPlay(false); if (cur >= FMAX - 1) cur = 0; setPlay(true); });
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches; if (reduce) controls.autoRotate = false;
 let last = performance.now(), onScreen = true;
 // phones: draw at most 30 frames a second; everywhere: stop drawing while the city is scrolled off screen or the tab is hidden
 new IntersectionObserver(es => { onScreen = es[0].isIntersecting; }, { threshold: 0.01 }).observe(stage);
-const FRAME_MS = LITE ? 33 : 0;
-function loop(now) { requestAnimationFrame(loop); if (!onScreen || document.hidden || now - last < FRAME_MS) return;
-  const dt = Math.min(.05, (now - last) / 1000); last = now; ANIM += reduce ? 0 : dt;
+// smooth: full frame rate on every device (the old 30 fps cap on phones made dragging feel stuck); if a phone can't keep up,
+// drop the render resolution a step instead (checked every 2 s), and go back up when it has headroom.
+let perfN = 0, perfT = 0, prMax = renderer.getPixelRatio(), prNow = prMax;
+const adapt = dt => { perfN++; perfT += dt; if (perfT < 2) return; const fps = perfN / perfT; perfN = 0; perfT = 0;
+  const next = fps < 40 ? Math.max(.75, prNow - .25) : fps > 56 ? Math.min(prMax, prNow + .25) : prNow;
+  if (next !== prNow) { prNow = next; renderer.setPixelRatio(prNow); renderer.setSize(W, H); } };
+function loop(now) { requestAnimationFrame(loop); if (!onScreen || document.hidden) { last = now; return; }
+  const dt = Math.min(.05, (now - last) / 1000); last = now; adapt(dt); ANIM += reduce ? 0 : dt;
   if (playing) { cur = Math.min(FMAX, cur + Math.max(4, cur * .35) * dt * 2.2); target = cur; slider.value = Math.round(cur); if (cur >= FMAX) setPlay(false); }
   else cur += (target - cur) * Math.min(1, dt * 8);
   if (Math.abs(target - cur) < .5) cur = target;
   slider.setAttribute('aria-valuetext', Math.round(cur) + ' followers');
+  if (ANIM >= nextFeed) { window.feedTime(feedKind); feedKind = feedKind === 'food' ? 'water' : 'food'; nextFeed += 45; }   // feeding time every 45 s (first one soon after load)
   navStep(now, dt); controls.update(); window.renderFrame(tOf(Math.round(cur)), ANIM); }
 
 // ---------- move around like a game: D-pad, + / -, back to the center, arrow keys, double-tap to fly there ----------
@@ -88,14 +100,35 @@ const LM_UNLOCK = (EP.landmarks || []).map(l => l.unlock);
 const LM_TXT = { petshop: 'Toys, treats and fresh water for every cat in town.', cityhall: 'Mayor Mango works here (mostly naps).', cafe: 'Built by the most-liked comment.', statue: 'A golden Mango. He posed for 3 seconds.', market: 'Fresh fish every morning.', pool: 'Nobody swims. Everyone watches.', custom: 'Built by the most-liked comment.' };
 landmarks.forEach((lm, k) => { if (LMG[k]) LMG[k][0].userData.info = { icon: '🏛️', title: lm.sign, line: LM_TXT[lm.kind] || 'Built by the most-liked comment.', note: LM_UNLOCK[k] ? 'Unlocked at ' + LM_UNLOCK[k].toLocaleString('en-US') + ' cats' : '' }; });
 if (typeof MO !== 'undefined' && MO.g) MO.g.userData.info = { icon: '😴', title: 'Big Mochi', line: 'The sleeping mountain cat. Please do not wake her.', note: 'Unlocked at 1,000 cats' };
-if (typeof FT !== 'undefined' && FT.g) FT.g.userData.info = { icon: '💧', title: 'PETME2 Stainless Steel Fountain', line: 'Mango’s Water Bar: fresh moving water for every cat in town.', note: 'Mango is the host.', pinY: 18 };
-if (typeof FD !== 'undefined' && FD.g) FD.g.userData.info = { icon: '🍽️', title: 'PETME2 Dual Bowl Feeder', line: 'Breakfast at 7, dinner at 6. The cats are always early.', note: '', pinY: 15.5 };
+if (typeof FT !== 'undefined' && FT.g) FT.g.userData.info = { icon: '💧', title: 'PETME2 Stainless Steel Fountain', line: 'Mango’s favorite drinking spot. The water keeps moving, so Mango keeps coming back for more.', note: 'Tap again for water time: the cats nearby come to drink.', pinY: 18, shop: 'https://www.petme2.com/products/water-fountain', feed: 'water' };
+if (typeof FD !== 'undefined' && FD.g) FD.g.userData.info = { icon: '🍽️', title: 'PETME2 Dual Bowl Feeder', line: 'Mango’s dinner table. Meals come right on time, so Mango never has to beg.', note: 'Feeding time! The cats nearby are coming to eat.', pinY: 15.5, shop: 'https://www.petme2.com/products/2-in-1-feeder-1', feed: 'food' };
 if (typeof BS !== 'undefined' && BS.g) BS.g.userData.info = { icon: '🚏', title: 'Nap Bus Stop', line: 'NEXT NAP: 5 MIN. The bus has never come. Nobody minds.', note: '' };
 const infoBox = $('info'), infoBody = $('infoBody');
 const PIN = new THREE.Mesh(new THREE.ConeGeometry(.9, 1.8, 4).rotateX(Math.PI), new THREE.MeshBasicMaterial({ color: '#FFC93C' })); PIN.visible = false; scene.add(PIN);
 let pinY = 0;
 const showInfo = (html, pos, y) => { infoBody.innerHTML = html; infoBox.hidden = false; { const h = $('hint'); if (h) h.hidden = true; } if (pos) { PIN.position.set(pos.x, y, pos.z); pinY = y; PIN.visible = true; } else PIN.visible = false; controls.autoRotate = false; };
 const hideInfo = () => { infoBox.hidden = true; PIN.visible = false; };
+// ---------- live town: real residents (page metafield) + "Find your cat house" ----------
+const RES = EP.live ? EP.live.residents : null;
+const clean = v => String(v || '').trim().replace(/^@+/, '').toLowerCase();
+const esc = v => String(v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+function resCard(n) { const r = RES[n], ig = clean(r.ig), tt = clean(r.tt), title = ig ? '@' + ig : tt ? '@' + tt : r.name, l = houseLots[n];
+  const more = [ig && r.name ? r.name : '', ig && tt ? 'TikTok @' + tt : ''].filter(Boolean).join(' · ');
+  return `<div class="info__icon">🏠</div><div><b class="info__title">${esc(title)}</b><span class="info__line">Cat #${(n + 1).toLocaleString('en-US')} · moved in on day ${esc(r.day || 1)}</span>${more ? `<span class="info__line">${esc(more)}</span>` : ''}<span class="info__line">${KIND[l.kind]} · ${DIST[l.d]} district</span></div>`; }
+if (EP.pad === false) { const pd = $('pad'); if (pd) { pd.hidden = true; pd.style.display = 'none'; } }   // owner 2026-10-07: hide the arrow pad for now (set "pad": true in build_viewer.py to bring it back)
+if (RES) { const form = $('find'), q = $('findQ'); form.hidden = false;
+  { const u = new Date(EP.live.updated), el = $('upd');   // "Updated <date, time> · Next update in a few hours" (very small, under the counter)
+    if (el && !isNaN(u)) { el.textContent = 'Updated ' + u.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' }) + ' · Next update in a few hours'; el.hidden = false; } } const topEl = $('countN').parentElement, placeLow = () => { const op = infoBox.offsetParent || topEl.offsetParent, base = op && getComputedStyle(infoBox).position !== 'fixed' ? op.getBoundingClientRect().top : 0, y = Math.round(topEl.getBoundingClientRect().bottom - base + 10) + 'px';
+    const h = $('hint'); if (h) h.style.top = y; };   // info card sits low, just above the dock (CSS); only the hint goes under the top block
+  placeLow(); addEventListener('resize', placeLow); requestAnimationFrame(placeLow); syncDock(); requestAnimationFrame(syncDock);
+  form.addEventListener('submit', e => { e.preventDefault(); const w = clean(q.value); if (!w) return; q.blur();
+    let n = RES.findIndex(r => clean(r.ig) === w || clean(r.tt) === w || clean(r.name) === w);
+    if (n < 0 && w.length >= 3) n = RES.findIndex(r => clean(r.name).includes(w) || clean(r.ig).includes(w) || clean(r.tt).includes(w));
+    if (n < 0 || !houseLots[n]) { showInfo('<div class="info__icon">🐾</div><div><b class="info__title">Not in Cat Town yet</b><span class="info__line">Follow @petme2 to move in!</span></div>', null); return; }
+    const l = houseLots[n], tgt = new THREE.Vector3(l.x, 0, l.z), off = camera.position.clone().sub(controls.target).setY(0);
+    if (off.lengthSq() < 1) off.set(0, 0, 1); off.setLength(42).setY(36);
+    stopSpin(); flyTo(tgt, tgt.clone().add(off), 1.1); showInfo(resCard(n), l, l.kind === 'C' ? 3.4 : 4.4);
+    MARK.position.set(l.x, .3, l.z); MARK.visible = true; markT = performance.now(); }); }
 $('infoClose').addEventListener('click', hideInfo);
 const ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
 let downX = 0, downY = 0, lastTap = { t: 0, x: 0, y: 0 }, tapTimer = 0;
@@ -121,11 +154,13 @@ function tapAt(nx, ny) {
     if (map && h.instanceId != null && map[h.instanceId] >= 0) { const n = map[h.instanceId], l = houseLots[n];
       if (APPEAR[n] >= 0 && tNow < APPEAR[n]) continue;
       const day = Math.max(1, Math.round(EP.dayRange[0] + (EP.dayRange[1] - EP.dayRange[0]) * (n + 1) / Math.max(1, F)));
+      if (RES) { showInfo(resCard(n), l, l.kind === 'C' ? 3.4 : 4.4); return; }
       showInfo(`<div class="info__icon">🏠</div><div><b class="info__title">@${handleOf(n)}</b><span class="info__line">Cat #${(n + 1).toLocaleString('en-US')} · moved in on day ${day}</span><span class="info__line">${KIND[l.kind]} · ${DIST[l.d]} district</span>${EP.handles ? '' : '<span class="info__note">Example name. Real followers’ Instagram names show here.</span>'}</div>`, l, l.kind === 'C' ? 3.4 : 4.4);
       return; }
     let o = h.object; while (o && !o.userData.info) o = o.parent;
     if (o && o.visible) { const I = o.userData.info, p = new THREE.Vector3(); o.getWorldPosition(p);
-      showInfo(`<div class="info__icon">${I.icon}</div><div><b class="info__title">${I.title}</b><span class="info__line">${I.line}</span>${I.note ? `<span class="info__note">${I.note}</span>` : ''}</div>`, p, I.pinY || (o === (typeof MO !== 'undefined' && MO.g) ? 60 : 16)); return; }
+      if (I.feed) { window.feedTime(I.feed); if (EP.shopCards === false) { hideInfo(); return; } }   // owner 2026-10-07: no fountain/feeder pop-up for now (set "shopCards": True in build_viewer.py to bring it back)
+      showInfo(`<div class="info__icon">${I.icon}</div><div><b class="info__title">${I.title}</b><span class="info__line">${I.line}</span>${I.note ? `<span class="info__note">${I.note}</span>` : ''}${I.shop ? `<a class="info__shop" href="${I.shop}">See it in our shop</a>` : ''}</div>`, p, I.pinY || (o === (typeof MO !== 'undefined' && MO.g) ? 60 : 16)); return; }
     const pt = h.point;
     if (pt.y > 25 && Math.hypot(pt.x, pt.z) < 450) { showInfo(`<div class="info__icon">🐟</div><div><b class="info__title">Fish balloon</b><span class="info__line">Sky tours for cats. Two passengers, zero pilots.</span></div>`, null); return; }
     if (pt.x > COAST_X - 10 && pt.y > 1) { showInfo(`<div class="info__icon">🔴</div><div><b class="info__title">Red Dot Lighthouse</b><span class="info__line">Cats have chased this dot since day 1. Nobody has caught it.</span><span class="info__note">Unlocked at 500 cats</span></div>`, null); return; }
@@ -140,6 +175,7 @@ document.body.classList.add('ready');
 // "Save postcard": render the current view into a 1080x1350 card and show it as an image (the page sandbox blocks scripted downloads,
 // so the visitor long-presses / right-clicks the image to save it).
 const pcBox = $('pcBox'), pcBtn = $('postcard');
+pcBtn.hidden = true; pcBtn.style.display = 'none';   // owner 2026-10-06: no "Save postcard" on the website
 const closePC = () => { pcBox.hidden = true; pcBtn.focus(); };
 pcBtn.addEventListener('click', async () => {
   controls.update(); window.renderFrame(tOf(Math.round(cur)), ANIM);
