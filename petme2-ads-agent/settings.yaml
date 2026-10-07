@@ -2,7 +2,7 @@
 status: approved            # suggested | approved (owner sets "approved") - owner approved in chat 2026-10-04
 mode: supervised            # audit | supervised | auto - set by owner's instruction in chat 2026-10-04
 ads_source: browser         # browser (now) | ads_api (later)
-daily_spend_cap: 100        # total $ per day - owner: "increase budgets, lets start spend and see results" (chat 2026-10-07); was 60
+daily_spend_cap: 120        # owner 2026-10-07: 2 sales, "increase budgets on them" (was 100, before that 60)
 max_bid: 1.50           # highest $ per click allowed - owner raised in chat 2026-10-04
 max_budget_increase_without_approval: 25%
 max_bid_change_per_day: 20%

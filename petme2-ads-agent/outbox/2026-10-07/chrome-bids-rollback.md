@@ -7,8 +7,8 @@ You are helping PETME2 on **Amazon Ads** (advertising.amazon.com, US marketplace
 
 ## Rules
 - Work only in **Campaign Manager → Sponsored Products**.
-- Change **only** bids, bidding strategy and placements, as listed below.
-- Do **not** change daily budgets.
+- Change **only** bids, bidding strategy, placements and the budgets in Step 6, as listed below.
+- Change daily budgets **only** as in Step 6.
 - Do **not** create, delete, archive or rename anything.
 - Do **not** change prices, listings, products or negatives.
 - Before changing anything, write down what you see (Step 1).
@@ -27,7 +27,7 @@ Set **every** enabled campaign to **Dynamic bids – down only**.
 
 ## Step 3: Placements
 In every enabled campaign:
-- **Top of search (first page): +20%**
+- **Top of search (first page): +10%**
 - **Product pages: 0%**
 - Rest of search: 0%
 
@@ -50,6 +50,8 @@ For every enabled keyword and product target (skip "Waiting For Stock"):
 
 Never go below **$0.30**. Round to 2 decimals.
 
+**Do NOT lower** a keyword/target that got **1 or more orders today**. Keep its bid as it is.
+
 **Examples:**
 - Camera feeder, current $1.50 → 1.50 × 0.70 = $1.05 → above $1.00 max → **$1.00**
 - Dual feeder, current $1.04 → 1.04 × 0.70 = **$0.73**
@@ -58,6 +60,12 @@ Never go below **$0.30**. Round to 2 decimals.
 ## Step 5: Auto campaign (Discovery)
 Set close match, loose match, substitutes and complements to **$0.55** each ($0.40 in small-fountain-only ad groups).
 
+## Step 6: More budget for the campaigns that sold
+We had **2 sales today**. Find the campaign(s) with **1 or more orders today** (from Step 1).
+- Each of those campaigns: **daily budget × 1.5** (example $20 → $30), max **$35** per campaign.
+- Do not change the budget of campaigns with 0 orders.
+- Total of all enabled campaigns must stay at or under **$120/day**.
+
 ---
 
 ## Report back (copy this format)
@@ -65,4 +73,5 @@ Set close match, loose match, substitutes and complements to **$0.55** each ($0.
 2. **Top spenders:** campaign | keyword/target | bid | clicks | spend | orders
 3. **Bid changes:** campaign | ad group | keyword/target | old bid | new bid
 4. **Strategy and placements** per campaign, after the change
-5. Any warning or error you saw
+5. **Budget changes:** campaign | orders today | old budget | new budget
+6. Any warning or error you saw
