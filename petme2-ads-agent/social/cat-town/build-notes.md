@@ -189,3 +189,4 @@ Owner ask: fountain and feeder each in its own circle, side by side like an 8; c
 - Uploaded to new copy 188939337940 "PETME2 — Cat Town Day 2 fish supermarket", checksums verified. Owner publishes.
 - Video: `episodes/day-2-fish/` (README there).
 - Owner (14:44): "I need a bigger fishmarket". The `fishmarket` model is now 1.55x (`EP.fishBig`, default 1.55) and set back 4 units (`EP.fishBack`) so it stays off the road. Video build shot re-framed. Uploaded to 188939337940 (JS only), checksum verified.
+- Owner (16:24): slower build with animations + show the town populated. Engine: `newBuild.slow` (seconds) drops each piece of the shop in one by one, then sign + confetti; house lots stay 19+ away from a fishmarket spot (`BIG_SPOTS`, also on the website). Video: 128 followers houses (`followersBefore`), progress bar overlay, 21.7 s.

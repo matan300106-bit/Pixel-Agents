@@ -105,6 +105,7 @@ for (let b = 0; b < 7; b++) for (let i = 0; i < 6; i++) { const a = i * Math.PI 
   SPOTS.push({ x, z, r, ry: Math.atan2(-x, -z) }); }
 SPOTS.sort((a, b) => a.r - b.r); SPOTS.forEach(s => hadd(spotHash, s));
 const usedSpots = landmarks.length + (NEWB ? 1 : 0);
+const BIG_SPOTS = [...landmarks.map((l, k) => l.kind === 'fishmarket' ? SPOTS[k] : null), NEWB && NEWB.kind === 'fishmarket' ? SPOTS[landmarks.length] : null].filter(Boolean);
 // house lots along every street, facing the street
 const DISTRICT = a => Math.floor((((a - .26) % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2) / (Math.PI / 3));
 const cand = [], lotHash = new Map();
@@ -115,6 +116,7 @@ ROADS.forEach((rd, ri) => { const total = rd.cum[rd.cum.length - 1];
       if (near(roadHash, lx, lz, 4.5, o => (o.ri === ri && Math.abs(o.i - 1 - idx) < 3) ? undefined : false)) continue;
       if (any(lotHash, lx, lz, 4.4)) continue;
       if (near(spotHash, lx, lz, 10.5, () => false)) continue;
+      if (BIG_SPOTS.some(q => Math.hypot(q.x - lx, q.z - lz) < 19)) continue;   // the big fish supermarket needs more room
       const o = { x: lx, z: lz, ry: Math.atan2(-nx * side, -nz * side), r, ri, s, side, d: DISTRICT(Math.atan2(lz, lx)), key: r + (rd.kind === 'ring' ? 5 : 0) + hash01(cand.length) * 6 };
       cand.push(o); hadd(lotHash, o); } } });
 cand.sort((a, b) => a.key - b.key);
@@ -272,12 +274,13 @@ function landmark(kind, sign) {
     [-6.2, 6.2].forEach((x, j) => { q(B(5.2, 1.5, 2.4), '#2F5FE0', x, .95, 7.3); q(B(5.2, .35, 2.4), '#F4FBFF', x, 1.85, 7.3);       // ice counters with fish
       ['#FF9F43', '#C7D3E0', '#FF7A9A'].forEach((c, i) => { const f = fish(c, .42, x - 1.45 + i * 1.6, 2.2, 7.3 + (i % 2 ? .35 : -.35)); f.rotation.x = Math.PI / 2; }); });   // lying on the ice
     const inner = new THREE.Group(); [...g.children].forEach(c => inner.add(c)); inner.scale.setScalar(FISH_BIG); inner.position.z = FISH_BACK; g.add(inner);   // owner: bigger
+    g.userData.parts = [...inner.children]; g.userData.parts.forEach(c => { c.userData.y0 = c.position.y; c.userData.s0 = c.scale.clone(); });   // slow build: pieces drop in one by one
     sy = 17 * FISH_BIG + 1; }
   else if (kind === 'statue') { q(B(6, 4, 6), '#E7EDF7', 0, 2, 0); cat('#FFC93C', 7, 0, 4, 0); }
   else if (kind === 'pool') { q(B(17, 1, 12), '#E7EDF7', 0, .5, 0); q(B(15, .3, 10), '#5AB3F0', 0, 1.05, 0); }
   else if (kind === 'reserved') { const p = q(Cyl(.25, .25, 5, 6), '#8A5A3B', 0, 2.5, 0); for (let i = 0; i < 5; i++) q(new THREE.ConeGeometry(.5, 1.2, 8), '#FF8A2A', -6 + i * 3, .6, 8); sy = 6.5; }
   else { q(B(15, 9, 12), '#FFFFFF', 0, 4.5, 0); q(new THREE.ConeGeometry(11, 5, 4).rotateY(Math.PI / 4), '#FFC93C', 0, 11.5, 0); q(B(3, 4.5, .3), '#1B2333', 0, 2.25, 6.1); [-4, 4].forEach(x => q(new THREE.ConeGeometry(1.4, 3.2, 3), '#FFC93C', x, 13, 4)); }
-  if (sign) { const s = textSign(sign, kind === 'reserved' ? 9 : 14, kind === 'reserved' ? '#FF8A2A' : '#2F5FE0'); s.position.set(0, sy, 0); g.add(s); signs.push(s); }
+  if (sign) { const s = textSign(sign, kind === 'reserved' ? 9 : 14, kind === 'reserved' ? '#FF8A2A' : '#2F5FE0'); s.position.set(0, sy, 0); g.add(s); signs.push(s); g.userData.sign = s; }
   return g;
 }
 
@@ -875,9 +878,15 @@ window.renderFrame = (t, anim = t) => {
   signs.forEach(s => { const wp = s.getWorldPosition(new THREE.Vector3()); s.lookAt(camera.position.x, wp.y, camera.position.z); });
   let gk = 0;
   if (LOT) LOT.visible = t < NEWB.at;
-  if (NB) { const bt = NEWB.at; NB.visible = t >= bt; gk = back((t - bt) / .9); NB.scale.set(Math.max(.001, .8 * (.6 + .4 * gk)), Math.max(.001, .8 * gk), Math.max(.001, .8 * (.6 + .4 * gk)));
-    CONF.visible = t >= bt + .4 && t < bt + 4.4;
-    if (CONF.visible) { const u = t - bt - .4; confData.forEach((d, i) => { cm.compose(V(NBpos.x + d.vx * u, 22 + d.vy * u - 8.8 * u * u, NBpos.z + d.vz * u), Q.setFromEuler(EU.set(d.r + u * 5, d.r * 2 + u * 3, 0)), V(1.4, 1.4, 1.4)); CONF.setMatrixAt(i, cm); }); CONF.instanceMatrix.needsUpdate = true; } }
+  if (NB && NEWB.slow && NB.userData.parts) {   // slow build (videos): each piece drops in from above and pops, the sign + confetti come last
+    const bt = NEWB.at, dur = NEWB.slow, P = NB.userData.parts, N = P.length; NB.visible = t >= bt; NB.scale.setScalar(.8); gk = t >= bt + dur ? 1 : .001;
+    P.forEach((c, i) => { const e = Math.min(1, Math.max(0, (t - (bt + i * (dur - .7) / N)) / .5)); c.visible = e > 0;
+      c.position.y = c.userData.y0 + (1 - ease(e)) * 16; const k = Math.max(.001, back(e)); c.scale.copy(c.userData.s0).multiplyScalar(k); });
+    if (NB.userData.sign) { const e = (t - bt - dur) / .4; NB.userData.sign.visible = e > 0; NB.userData.sign.scale.setScalar(Math.max(.001, back(e))); } }
+  const bEnd = NEWB ? NEWB.at + (NEWB.slow || 0) : 0;
+  if (NB) { const bt = NEWB.at; if (!NEWB.slow) { NB.visible = t >= bt; gk = back((t - bt) / .9); NB.scale.set(Math.max(.001, .8 * (.6 + .4 * gk)), Math.max(.001, .8 * gk), Math.max(.001, .8 * (.6 + .4 * gk))); }
+    CONF.visible = t >= bEnd + .4 && t < bEnd + 4.4;
+    if (CONF.visible) { const u = t - bEnd - .4; confData.forEach((d, i) => { cm.compose(V(NBpos.x + d.vx * u, 22 + d.vy * u - 8.8 * u * u, NBpos.z + d.vz * u), Q.setFromEuler(EU.set(d.r + u * 5, d.r * 2 + u * 3, 0)), V(1.4, 1.4, 1.4)); CONF.setMatrixAt(i, cm); }); CONF.instanceMatrix.needsUpdate = true; } }
   // upload only the used part of each instanced mesh (pose meshes hold 800 slots but use a few dozen): big win on phones
   if (!RANGED) { RANGED = []; scene.traverse(o => { if (o.isInstancedMesh) RANGED.push(o); }); }
   for (const m of RANGED) if (m.count < m.instanceMatrix.count) { const a = m.instanceMatrix; a.clearUpdateRanges(); a.addUpdateRange(0, Math.max(1, m.count) * 16); }
@@ -910,7 +919,7 @@ window.renderFrame = (t, anim = t) => {
   newTags.forEach(tg => { const l = houseLots[tg.k]; if (!l) return; const a = APPEAR[tg.k] + .25;
     const p = proj(V(l.x, 4.6, l.z)); const vis = APPEAR[tg.k] >= 0 && t >= a && t < ms - .25 && p.ok; tg.el.style.display = vis ? 'block' : 'none';
     if (vis) { tg.el.style.left = Math.min(Math.max(p.x, 250), 830) + 'px'; tg.el.style.top = p.y + 'px'; tg.el.style.transform = `translate(-50%,-100%) scale(${back((t - a) / .35)})`; } });
-  if (NEWB) { const a = NEWB.at + .8, p = proj(NBpos.clone().add(V(0, 22 * Math.max(.001, gk), 0))); const vis = t >= a && t < ST[3] && p.ok; buildTag.style.display = vis ? 'block' : 'none';
+  if (NEWB) { const a = NEWB.at + (NEWB.slow || 0) + .8, p = proj(NBpos.clone().add(V(0, 22 * Math.max(.001, gk), 0))); const vis = t >= a && t < ST[3] && p.ok; buildTag.style.display = vis ? 'block' : 'none';
     if (vis) { buildTag.style.left = Math.min(Math.max(p.x, 250), 830) + 'px'; buildTag.style.top = p.y + 'px'; buildTag.style.transform = `translate(-50%,-100%) scale(${back((t - a) / .35)})`; } }
   $('end').style.opacity = endK; $('end').style.transform = `scale(${.9 + .1 * back((t - ST[3]) / .5)})`;
 };

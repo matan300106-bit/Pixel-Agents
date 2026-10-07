@@ -47,6 +47,10 @@
       if (kind === 'statue') { x = 200; y = 1180; }
       if (kind === 'card') { x = 96; y = 1064; }
       h += `<div class="ex" style="left:${x}px;top:${y}px;transform:rotate(-6deg) scale(${k})">EXAMPLE</div>`; }
+    if (D.build && T >= D.build[0] - .15 && T < D.build[1] + .5) {   // slow build: progress bar under the headline
+      const k = Math.min(1, Math.max(0, (T - D.build[0]) / (D.build[1] - D.build[0]))), pct = Math.round(100 * k), done = k >= 1;
+      h += `<div style="position:absolute;left:170px;right:170px;top:640px;text-align:center;font-weight:900;font-size:46px;color:#fff;-webkit-text-stroke:9px #1B2333;paint-order:stroke fill">${done ? '✅ 100%' : '🚧 Building... ' + pct + '%'}</div>
+        <div style="position:absolute;left:170px;right:170px;top:712px;height:38px;border-radius:999px;background:rgba(27,35,51,.85);border:5px solid #fff;overflow:hidden"><div style="height:100%;width:${100 * k}%;background:${done ? '#5BB98C' : '#FFD23F'}"></div></div>`; }
     const line = D.lines.find(l => !l.hide && T >= l.s - .05 && T < l.e + .3);
     if (line) h += `<div class="cap">${line.words.map(w => `<span class="${T >= w.s && T < w.e + .05 ? 'on' : ''}">${w.w}</span>`).join(' ')}</div>`;
     ov.innerHTML = b + `<div style="opacity:${end}">${h}</div>`;

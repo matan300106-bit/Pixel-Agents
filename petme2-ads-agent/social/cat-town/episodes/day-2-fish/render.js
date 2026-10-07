@@ -4,7 +4,7 @@ const { chromium } = require('playwright'); const fs = require('fs'); const path
 const [dir, mode, a, b] = process.argv.slice(2); const DIR = path.resolve(dir), REL = path.basename(DIR);
 const D = JSON.parse(fs.readFileSync(DIR + '/text.json'));
 // one page; Mango anim = T, last segment loops to frame 0
-const SEG = T => T < 17.6 ? ['e1', 0] : ['e1', -D.duration];
+const SEG = T => T < 21.0 ? ['e1', 0] : ['e1', -D.duration];
 (async () => {
   const Ts = mode === 'test' ? a.split(',').map(Number) : [...Array(+b - +a).keys()].map(i => (i + +a) / 30);
   const br = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium', args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
