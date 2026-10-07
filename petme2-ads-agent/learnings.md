@@ -16,3 +16,7 @@ What worked and what did not. Newest at the top.
 - Owner published new titles/bullets/descriptions/backend for 8 listings at once (verified live via SP-API except B0GHKN9DBR, still old).
 - Baseline ranks saved in research/seo/rank-baseline-2026-10-04.md. Check ranks ~2026-10-11 (7 days) with a new Helium 10 Cerebro export.
 - Because all changed on the same day, we can't attribute rank moves to one listing — compare per product vs baseline.
+
+## 2026-10-07 — bid raise too big
+Raising all bids +30%/to suggested (up to $1.50) + dynamic up&down + TOS +50% spent the full ~$92/day budget in ~1 hour.
+Lesson: raise bids in small steps (max +15-20% at once), keep "down only" until a keyword has orders, and don't stack strategy + placement + bid raises on the same day.
