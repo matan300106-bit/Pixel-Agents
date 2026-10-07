@@ -914,7 +914,7 @@ window.renderFrame = (t, anim = t) => {
 
   // ---- UI ----
   const cats = shown + 1; window.__shown = cats;
-  const dayNow = EP.dayRange ? Math.round(EP.dayRange[0] + (EP.dayRange[1] - EP.dayRange[0]) * Math.min(1, shown / Math.max(1, F))) : DAY;
+  const dayNow = EP.live && EP.live.day ? EP.live.day : EP.dayRange ? Math.round(EP.dayRange[0] + (EP.dayRange[1] - EP.dayRange[0]) * Math.min(1, shown / Math.max(1, F))) : DAY;
   $('countN').textContent = cats.toLocaleString('en-US'); $('countL').textContent = `${cats === 1 ? 'cat' : 'cats'} · Day ${dayNow}`;
   if (STILL || window.__noCam) { $('count').style.opacity = 1; $('sub').style.opacity = 0; return; }
   const ms = EP.milestone ?? 1e9, pulse = t >= ms ? 1 + .25 * Math.max(0, 1 - (t - ms) / .35) : 1;

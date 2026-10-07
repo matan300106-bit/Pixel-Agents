@@ -103,6 +103,24 @@ const PIN = new THREE.Mesh(new THREE.ConeGeometry(.9, 1.8, 4).rotateX(Math.PI), 
 let pinY = 0;
 const showInfo = (html, pos, y) => { infoBody.innerHTML = html; infoBox.hidden = false; { const h = $('hint'); if (h) h.hidden = true; } if (pos) { PIN.position.set(pos.x, y, pos.z); pinY = y; PIN.visible = true; } else PIN.visible = false; controls.autoRotate = false; };
 const hideInfo = () => { infoBox.hidden = true; PIN.visible = false; };
+// ---------- live town: real residents (page metafield) + "Find your cat house" ----------
+const RES = EP.live ? EP.live.residents : null;
+const clean = v => String(v || '').trim().replace(/^@+/, '').toLowerCase();
+const esc = v => String(v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+function resCard(n) { const r = RES[n], ig = clean(r.ig), tt = clean(r.tt), title = ig ? '@' + ig : tt ? '@' + tt : r.name, l = houseLots[n];
+  const more = [ig && r.name ? r.name : '', ig && tt ? 'TikTok @' + tt : ''].filter(Boolean).join(' · ');
+  return `<div class="info__icon">🏠</div><div><b class="info__title">${esc(title)}</b><span class="info__line">Cat #${(n + 1).toLocaleString('en-US')} · moved in on day ${esc(r.day || 1)}</span>${more ? `<span class="info__line">${esc(more)}</span>` : ''}<span class="info__line">${KIND[l.kind]} · ${DIST[l.d]} district</span></div>`; }
+if (RES) { const form = $('find'), q = $('findQ'); form.hidden = false; const placeLow = () => { const op = infoBox.offsetParent || form.offsetParent, base = op && getComputedStyle(infoBox).position !== 'fixed' ? op.getBoundingClientRect().top : 0, y = Math.round(form.getBoundingClientRect().bottom - base + 10) + 'px';
+    infoBox.style.top = y; const h = $('hint'); if (h) h.style.top = y; };
+  placeLow(); addEventListener('resize', placeLow); requestAnimationFrame(placeLow);
+  form.addEventListener('submit', e => { e.preventDefault(); const w = clean(q.value); if (!w) return; q.blur();
+    let n = RES.findIndex(r => clean(r.ig) === w || clean(r.tt) === w || clean(r.name) === w);
+    if (n < 0 && w.length >= 3) n = RES.findIndex(r => clean(r.name).includes(w) || clean(r.ig).includes(w) || clean(r.tt).includes(w));
+    if (n < 0 || !houseLots[n]) { showInfo('<div class="info__icon">🐾</div><div><b class="info__title">Not in Cat Town yet</b><span class="info__line">Follow @petme2 to move in!</span></div>', null); return; }
+    const l = houseLots[n], tgt = new THREE.Vector3(l.x, 0, l.z), off = camera.position.clone().sub(controls.target).setY(0);
+    if (off.lengthSq() < 1) off.set(0, 0, 1); off.setLength(42).setY(36);
+    stopSpin(); flyTo(tgt, tgt.clone().add(off), 1.1); showInfo(resCard(n), l, l.kind === 'C' ? 3.4 : 4.4);
+    MARK.position.set(l.x, .3, l.z); MARK.visible = true; markT = performance.now(); }); }
 $('infoClose').addEventListener('click', hideInfo);
 const ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
 let downX = 0, downY = 0, lastTap = { t: 0, x: 0, y: 0 }, tapTimer = 0;
@@ -128,6 +146,7 @@ function tapAt(nx, ny) {
     if (map && h.instanceId != null && map[h.instanceId] >= 0) { const n = map[h.instanceId], l = houseLots[n];
       if (APPEAR[n] >= 0 && tNow < APPEAR[n]) continue;
       const day = Math.max(1, Math.round(EP.dayRange[0] + (EP.dayRange[1] - EP.dayRange[0]) * (n + 1) / Math.max(1, F)));
+      if (RES) { showInfo(resCard(n), l, l.kind === 'C' ? 3.4 : 4.4); return; }
       showInfo(`<div class="info__icon">🏠</div><div><b class="info__title">@${handleOf(n)}</b><span class="info__line">Cat #${(n + 1).toLocaleString('en-US')} · moved in on day ${day}</span><span class="info__line">${KIND[l.kind]} · ${DIST[l.d]} district</span>${EP.handles ? '' : '<span class="info__note">Example name. Real followers’ Instagram names show here.</span>'}</div>`, l, l.kind === 'C' ? 3.4 : 4.4);
       return; }
     let o = h.object; while (o && !o.userData.info) o = o.parent;

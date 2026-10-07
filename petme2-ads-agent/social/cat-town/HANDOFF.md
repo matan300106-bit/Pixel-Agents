@@ -27,7 +27,10 @@ An Instagram series + interactive web page: a low-poly 3D **city built for cats*
 - Picture page: https://claude.ai/artifact/J5eZctn7UsJmcoA4QQBSMF
 - Shopify page: petme2.com/pages/cat-town (page template `page.cat-town`, section `pm2-cat-town`).
   - LIVE theme now (owner published it 2026-10-06): `PETME2 — Cat Town fountain + feeder + controls` (188909420756).
-  - Preview theme: `PETME2 — Cat Town LIVE (Mango only)` (188910403796) → live mode: 0 followers, only Mango, no growth controls; plus figure 8, shop buttons, Halloween, feeding time. Preview: https://petme2.com/pages/cat-town?preview_theme_id=188910403796
+  - LIVE theme (owner published 2026-10-06 night): `PETME2 — Cat Town LIVE (Mango only)` (188910403796).
+  - Preview theme: `PETME2 — Cat Town real live + search` (188916498644) → residents from the page metafield `cattown.town`, real counter + Day N, Find your cat house. Preview: https://petme2.com/pages/cat-town?preview_theme_id=188916498644
+  - Short link https://petme2.com/cat-town redirects to /pages/cat-town.
+  - Add residents: Shopify admin > Online Store > Pages > Cat Town > Metafields > Cat Town residents (JSON). See build-notes 2026-10-07.
   - The store is at Shopify's 20-theme limit: a new duplicate fails silently. Reuse an unpublished Cat Town copy, or ask the owner to delete old drafts.
   - Theme writes only to UNPUBLISHED copies (live theme writes are blocked). If the owner publishes the copy, duplicate the live theme again and write to the new copy. Upload big files via `stagedUploadsCreate` (curl POST) + `themeFilesUpsert` with body type URL, then verify `checksumMd5`. Log every change in `../../changes-log.csv`.
 
@@ -35,7 +38,7 @@ An Instagram series + interactive web page: a low-poly 3D **city built for cats*
 Voice: edge-tts `en-US-AvaMultilingualNeural` rate +6% with WordBoundary timings (Composio remote workbench); original synth music + pop SFX; mix with ffmpeg sidechain; render frames headless → H.264; deliver via Shopify Files link. Needs real data from the owner: new follower count, top comments with likes, Instagram handle (@petme2 unconfirmed). Do not post anything without owner approval.
 
 ## Status (2026-10-06 night, Cat Town session in the "Cat Town" project)
-Live: real fountain + feeder + controls (growth demo). Preview 188910403796 = go-live version with only Mango (see build-notes "go-live"). Owner asked to go live; waiting for him to publish it.
+Live: Mango-only town (188910403796). Preview 188916498644 = real live version with resident search (build-notes 2026-10-07). Waiting for the owner to publish.
 Note: this cloud container can't open petme2.com (proxy blocks it), so live-page checks are done locally with `viewer.html` + Playwright.
 
 ## Open polish items

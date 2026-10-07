@@ -1,3 +1,4 @@
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cat Town</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Nunito+Sans:wght@400;600;700&display=swap">
@@ -42,6 +43,11 @@
   .info__title { display: block; font: 900 19px var(--display); color: var(--ink); overflow-wrap: anywhere; }
   .info__line { display: block; font-size: 14px; color: var(--muted); margin-top: 2px; }
   .info__shop { display: inline-block; margin-top: 10px; padding: 8px 14px; border-radius: 999px; background: var(--brand); color: #fff; font-weight: 800; font-size: 13px; text-decoration: none; }
+  .find { pointer-events: auto; display: flex; gap: 6px; width: 100%; max-width: 360px; margin-top: 4px; }
+  .find[hidden] { display: none; }
+  .find input { flex: 1; min-width: 0; font: 700 16px var(--body); color: #1B2333; background: #fff; border: 2px solid #1B2333; border-radius: 999px; padding: 9px 16px; box-shadow: 0 6px 20px rgba(0,0,0,.12); }
+  .find input:focus { outline: 3px solid var(--sun); outline-offset: 1px; }
+  .find button { font: 900 15px var(--display); color: #fff; background: var(--brand); border: 2px solid #1B2333; border-radius: 999px; padding: 9px 16px; cursor: pointer; }
   .info__note { display: block; font-size: 12px; color: var(--brand); margin-top: 6px; font-weight: 700; }
   #infoClose { position: absolute; top: 8px; right: 8px; width: 32px; height: 32px; padding: 0; border-radius: 50%; font-size: 14px; }
   /* move-around pad (bottom right, above the dock) + first-visit hint */
@@ -60,7 +66,7 @@
 </style>
 <div id="stage"></div>
 <div class="loading">Building Cat Town&#8230;</div>
-<div class="top"><span class="pill">&#128062; PETME2 Cat Town</span><b id="countN">1</b><span id="countL">cat &#183; day 1</span></div>
+<div class="top"><span class="pill">&#128062; PETME2 Cat Town</span><b id="countN">1</b><span id="countL">cat &#183; day 1</span><form class="find" id="find" role="search" hidden><input id="findQ" type="search" placeholder="Find your cat house" aria-label="Find your cat house: your name, Instagram or TikTok" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search"><button type="submit">Find</button></form></div>
 <div class="dock">
   <div class="row"><label for="grow">Followers <small>drag to grow the city</small></label><button id="postcard" type="button">Save postcard</button><button id="play" type="button">Play growth</button></div>
   <input id="grow" type="range" min="0" max="1000" step="1" value="1000" aria-label="Followers">
@@ -84,6 +90,10 @@ import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 try { await document.fonts.load('900 100px Nunito'); await document.fonts.load('800 100px Nunito'); } catch (e) {}   // sign canvases need the font before they draw
 const EP = window.CITY;
+if (EP.live) {   // live town: residents come from the page metafield (window.CITY_LIVE = { start: 'YYYY-MM-DD', residents: [{ name, ig, tt, day }] })
+  const L = window.CITY_LIVE || {}, R = (Array.isArray(L.residents) ? L.residents : []).filter(r => r && (r.name || r.ig || r.tt));
+  const st = new Date((L.start || '') + 'T00:00:00'), dn = isNaN(st) ? 1 : Math.floor((Date.now() - st) / 864e5) + 1;
+  EP.live.residents = R; EP.live.followers = R.length; EP.live.day = Math.max(1, dn); EP.followersNew = Math.max(EP.followersNew || 0, R.length); }
 const $ = id => document.getElementById(id);
 const ease = t => t < 0 ? 0 : t > 1 ? 1 : 1 - Math.pow(1 - t, 3);
 const inout = t => t < 0 ? 0 : t > 1 ? 1 : t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
@@ -937,7 +947,7 @@ window.renderFrame = (t, anim = t) => {
 
   // ---- UI ----
   const cats = shown + 1; window.__shown = cats;
-  const dayNow = EP.dayRange ? Math.round(EP.dayRange[0] + (EP.dayRange[1] - EP.dayRange[0]) * Math.min(1, shown / Math.max(1, F))) : DAY;
+  const dayNow = EP.live && EP.live.day ? EP.live.day : EP.dayRange ? Math.round(EP.dayRange[0] + (EP.dayRange[1] - EP.dayRange[0]) * Math.min(1, shown / Math.max(1, F))) : DAY;
   $('countN').textContent = cats.toLocaleString('en-US'); $('countL').textContent = `${cats === 1 ? 'cat' : 'cats'} \u00b7 Day ${dayNow}`;
   if (STILL || window.__noCam) { $('count').style.opacity = 1; $('sub').style.opacity = 0; return; }
   const ms = EP.milestone ?? 1e9, pulse = t >= ms ? 1 + .25 * Math.max(0, 1 - (t - ms) / .35) : 1;
@@ -1071,6 +1081,24 @@ const PIN = new THREE.Mesh(new THREE.ConeGeometry(.9, 1.8, 4).rotateX(Math.PI), 
 let pinY = 0;
 const showInfo = (html, pos, y) => { infoBody.innerHTML = html; infoBox.hidden = false; { const h = $('hint'); if (h) h.hidden = true; } if (pos) { PIN.position.set(pos.x, y, pos.z); pinY = y; PIN.visible = true; } else PIN.visible = false; controls.autoRotate = false; };
 const hideInfo = () => { infoBox.hidden = true; PIN.visible = false; };
+// ---------- live town: real residents (page metafield) + "Find your cat house" ----------
+const RES = EP.live ? EP.live.residents : null;
+const clean = v => String(v || '').trim().replace(/^@+/, '').toLowerCase();
+const esc = v => String(v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+function resCard(n) { const r = RES[n], ig = clean(r.ig), tt = clean(r.tt), title = ig ? '@' + ig : tt ? '@' + tt : r.name, l = houseLots[n];
+  const more = [ig && r.name ? r.name : '', ig && tt ? 'TikTok @' + tt : ''].filter(Boolean).join(' \u00b7 ');
+  return `<div class="info__icon">\ud83c\udfe0</div><div><b class="info__title">${esc(title)}</b><span class="info__line">Cat #${(n + 1).toLocaleString('en-US')} \u00b7 moved in on day ${esc(r.day || 1)}</span>${more ? `<span class="info__line">${esc(more)}</span>` : ''}<span class="info__line">${KIND[l.kind]} \u00b7 ${DIST[l.d]} district</span></div>`; }
+if (RES) { const form = $('find'), q = $('findQ'); form.hidden = false; const placeLow = () => { const op = infoBox.offsetParent || form.offsetParent, base = op && getComputedStyle(infoBox).position !== 'fixed' ? op.getBoundingClientRect().top : 0, y = Math.round(form.getBoundingClientRect().bottom - base + 10) + 'px';
+    infoBox.style.top = y; const h = $('hint'); if (h) h.style.top = y; };
+  placeLow(); addEventListener('resize', placeLow); requestAnimationFrame(placeLow);
+  form.addEventListener('submit', e => { e.preventDefault(); const w = clean(q.value); if (!w) return; q.blur();
+    let n = RES.findIndex(r => clean(r.ig) === w || clean(r.tt) === w || clean(r.name) === w);
+    if (n < 0 && w.length >= 3) n = RES.findIndex(r => clean(r.name).includes(w) || clean(r.ig).includes(w) || clean(r.tt).includes(w));
+    if (n < 0 || !houseLots[n]) { showInfo('<div class="info__icon">\ud83d\udc3e</div><div><b class="info__title">Not in Cat Town yet</b><span class="info__line">Follow @petme2 to move in!</span></div>', null); return; }
+    const l = houseLots[n], tgt = new THREE.Vector3(l.x, 0, l.z), off = camera.position.clone().sub(controls.target).setY(0);
+    if (off.lengthSq() < 1) off.set(0, 0, 1); off.setLength(42).setY(36);
+    stopSpin(); flyTo(tgt, tgt.clone().add(off), 1.1); showInfo(resCard(n), l, l.kind === 'C' ? 3.4 : 4.4);
+    MARK.position.set(l.x, .3, l.z); MARK.visible = true; markT = performance.now(); }); }
 $('infoClose').addEventListener('click', hideInfo);
 const ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
 let downX = 0, downY = 0, lastTap = { t: 0, x: 0, y: 0 }, tapTimer = 0;
@@ -1096,6 +1124,7 @@ function tapAt(nx, ny) {
     if (map && h.instanceId != null && map[h.instanceId] >= 0) { const n = map[h.instanceId], l = houseLots[n];
       if (APPEAR[n] >= 0 && tNow < APPEAR[n]) continue;
       const day = Math.max(1, Math.round(EP.dayRange[0] + (EP.dayRange[1] - EP.dayRange[0]) * (n + 1) / Math.max(1, F)));
+      if (RES) { showInfo(resCard(n), l, l.kind === 'C' ? 3.4 : 4.4); return; }
       showInfo(`<div class="info__icon">\ud83c\udfe0</div><div><b class="info__title">@${handleOf(n)}</b><span class="info__line">Cat #${(n + 1).toLocaleString('en-US')} \u00b7 moved in on day ${day}</span><span class="info__line">${KIND[l.kind]} \u00b7 ${DIST[l.d]} district</span>${EP.handles ? '' : '<span class="info__note">Example name. Real followers\u2019 Instagram names show here.</span>'}</div>`, l, l.kind === 'C' ? 3.4 : 4.4);
       return; }
     let o = h.object; while (o && !o.userData.info) o = o.parent;

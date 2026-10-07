@@ -10,6 +10,12 @@ def R(a, b):
 R("import * as THREE from 'three';\nimport { mergeGeometries } from './node_modules/three/examples/jsm/utils/BufferGeometryUtils.js';",
   "import * as THREE from 'three';\nimport { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';\nimport { OrbitControls } from 'three/addons/controls/OrbitControls.js';")
 js = re.sub(r"const EP = await \(await fetch\(.*?\)\)\.json\(\);", "const EP = window.CITY;", js)
+LIVE_JS = """const EP = window.CITY;
+if (EP.live) {   // live town: residents come from the page metafield (window.CITY_LIVE = { start: 'YYYY-MM-DD', residents: [{ name, ig, tt, day }] })
+  const L = window.CITY_LIVE || {}, R = (Array.isArray(L.residents) ? L.residents : []).filter(r => r && (r.name || r.ig || r.tt));
+  const st = new Date((L.start || '') + 'T00:00:00'), dn = isNaN(st) ? 1 : Math.floor((Date.now() - st) / 864e5) + 1;
+  EP.live.residents = R; EP.live.followers = R.length; EP.live.day = Math.max(1, dn); EP.followersNew = Math.max(EP.followersNew || 0, R.length); }"""
+js = js.replace("const EP = window.CITY;", LIVE_JS, 1)
 R("const W = 1080, H = 1920;", "const stage = document.getElementById('stage'); let W = stage.clientWidth, H = stage.clientHeight;")
 R("renderer.setSize(W, H); renderer.setPixelRatio(1);", "renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, LITE ? 1.25 : 2)); renderer.setSize(W, H);")
 R("document.body.prepend(renderer.domElement);", "stage.appendChild(renderer.domElement);")

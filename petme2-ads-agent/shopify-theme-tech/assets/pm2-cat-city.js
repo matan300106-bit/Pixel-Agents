@@ -4,6 +4,10 @@ import { mergeGeometries } from 'https://cdn.jsdelivr.net/npm/three@0.170.0/exam
 import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/controls/OrbitControls.js/+esm';
 try { await document.fonts.load('900 100px Nunito'); await document.fonts.load('800 100px Nunito'); } catch (e) {}   // sign canvases need the font before they draw
 const EP = window.CITY;
+if (EP.live) {   // live town: residents come from the page metafield (window.CITY_LIVE = { start: 'YYYY-MM-DD', residents: [{ name, ig, tt, day }] })
+  const L = window.CITY_LIVE || {}, R = (Array.isArray(L.residents) ? L.residents : []).filter(r => r && (r.name || r.ig || r.tt));
+  const st = new Date((L.start || '') + 'T00:00:00'), dn = isNaN(st) ? 1 : Math.floor((Date.now() - st) / 864e5) + 1;
+  EP.live.residents = R; EP.live.followers = R.length; EP.live.day = Math.max(1, dn); EP.followersNew = Math.max(EP.followersNew || 0, R.length); }
 const ROOT = document.querySelector('[data-cat-city]'); const $ = id => document.getElementById('pcc-' + id);
 const ease = t => t < 0 ? 0 : t > 1 ? 1 : 1 - Math.pow(1 - t, 3);
 const inout = t => t < 0 ? 0 : t > 1 ? 1 : t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
@@ -857,7 +861,7 @@ window.renderFrame = (t, anim = t) => {
 
   // ---- UI ----
   const cats = shown + 1; window.__shown = cats;
-  const dayNow = EP.dayRange ? Math.round(EP.dayRange[0] + (EP.dayRange[1] - EP.dayRange[0]) * Math.min(1, shown / Math.max(1, F))) : DAY;
+  const dayNow = EP.live && EP.live.day ? EP.live.day : EP.dayRange ? Math.round(EP.dayRange[0] + (EP.dayRange[1] - EP.dayRange[0]) * Math.min(1, shown / Math.max(1, F))) : DAY;
   $('countN').textContent = cats.toLocaleString('en-US'); $('countL').textContent = `${cats === 1 ? 'cat' : 'cats'} \u00b7 Day ${dayNow}`;
   if (STILL || window.__noCam) { $('count').style.opacity = 1; $('sub').style.opacity = 0; return; }
   const ms = EP.milestone ?? 1e9, pulse = t >= ms ? 1 + .25 * Math.max(0, 1 - (t - ms) / .35) : 1;
@@ -991,6 +995,24 @@ const PIN = new THREE.Mesh(new THREE.ConeGeometry(.9, 1.8, 4).rotateX(Math.PI), 
 let pinY = 0;
 const showInfo = (html, pos, y) => { infoBody.innerHTML = html; infoBox.hidden = false; { const h = $('hint'); if (h) h.hidden = true; } if (pos) { PIN.position.set(pos.x, y, pos.z); pinY = y; PIN.visible = true; } else PIN.visible = false; controls.autoRotate = false; };
 const hideInfo = () => { infoBox.hidden = true; PIN.visible = false; };
+// ---------- live town: real residents (page metafield) + "Find your cat house" ----------
+const RES = EP.live ? EP.live.residents : null;
+const clean = v => String(v || '').trim().replace(/^@+/, '').toLowerCase();
+const esc = v => String(v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+function resCard(n) { const r = RES[n], ig = clean(r.ig), tt = clean(r.tt), title = ig ? '@' + ig : tt ? '@' + tt : r.name, l = houseLots[n];
+  const more = [ig && r.name ? r.name : '', ig && tt ? 'TikTok @' + tt : ''].filter(Boolean).join(' \u00b7 ');
+  return `<div class="info__icon">\ud83c\udfe0</div><div><b class="info__title">${esc(title)}</b><span class="info__line">Cat #${(n + 1).toLocaleString('en-US')} \u00b7 moved in on day ${esc(r.day || 1)}</span>${more ? `<span class="info__line">${esc(more)}</span>` : ''}<span class="info__line">${KIND[l.kind]} \u00b7 ${DIST[l.d]} district</span></div>`; }
+if (RES) { const form = $('find'), q = $('findQ'); form.hidden = false; const placeLow = () => { const op = infoBox.offsetParent || form.offsetParent, base = op && getComputedStyle(infoBox).position !== 'fixed' ? op.getBoundingClientRect().top : 0, y = Math.round(form.getBoundingClientRect().bottom - base + 10) + 'px';
+    infoBox.style.top = y; const h = $('hint'); if (h) h.style.top = y; };
+  placeLow(); addEventListener('resize', placeLow); requestAnimationFrame(placeLow);
+  form.addEventListener('submit', e => { e.preventDefault(); const w = clean(q.value); if (!w) return; q.blur();
+    let n = RES.findIndex(r => clean(r.ig) === w || clean(r.tt) === w || clean(r.name) === w);
+    if (n < 0 && w.length >= 3) n = RES.findIndex(r => clean(r.name).includes(w) || clean(r.ig).includes(w) || clean(r.tt).includes(w));
+    if (n < 0 || !houseLots[n]) { showInfo('<div class="info__icon">\ud83d\udc3e</div><div><b class="info__title">Not in Cat Town yet</b><span class="info__line">Follow @petme2 to move in!</span></div>', null); return; }
+    const l = houseLots[n], tgt = new THREE.Vector3(l.x, 0, l.z), off = camera.position.clone().sub(controls.target).setY(0);
+    if (off.lengthSq() < 1) off.set(0, 0, 1); off.setLength(42).setY(36);
+    stopSpin(); flyTo(tgt, tgt.clone().add(off), 1.1); showInfo(resCard(n), l, l.kind === 'C' ? 3.4 : 4.4);
+    MARK.position.set(l.x, .3, l.z); MARK.visible = true; markT = performance.now(); }); }
 $('infoClose').addEventListener('click', hideInfo);
 const ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
 let downX = 0, downY = 0, lastTap = { t: 0, x: 0, y: 0 }, tapTimer = 0;
@@ -1016,6 +1038,7 @@ function tapAt(nx, ny) {
     if (map && h.instanceId != null && map[h.instanceId] >= 0) { const n = map[h.instanceId], l = houseLots[n];
       if (APPEAR[n] >= 0 && tNow < APPEAR[n]) continue;
       const day = Math.max(1, Math.round(EP.dayRange[0] + (EP.dayRange[1] - EP.dayRange[0]) * (n + 1) / Math.max(1, F)));
+      if (RES) { showInfo(resCard(n), l, l.kind === 'C' ? 3.4 : 4.4); return; }
       showInfo(`<div class="info__icon">\ud83c\udfe0</div><div><b class="info__title">@${handleOf(n)}</b><span class="info__line">Cat #${(n + 1).toLocaleString('en-US')} \u00b7 moved in on day ${day}</span><span class="info__line">${KIND[l.kind]} \u00b7 ${DIST[l.d]} district</span>${EP.handles ? '' : '<span class="info__note">Example name. Real followers\u2019 Instagram names show here.</span>'}</div>`, l, l.kind === 'C' ? 3.4 : 4.4);
       return; }
     let o = h.object; while (o && !o.userData.info) o = o.parent;

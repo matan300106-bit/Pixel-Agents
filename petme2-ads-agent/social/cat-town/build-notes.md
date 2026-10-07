@@ -154,3 +154,13 @@ Owner ask: fountain and feeder each in its own circle, side by side like an 8; c
 - To grow the real town later: raise `live.followers` in `build_viewer.py` (and add real handles), rebuild, upload. Remove `live` to bring back the growth demo.
 - Uploaded to 188910403796, renamed "PETME2 — Cat Town LIVE (Mango only)". Owner publishes it.
 - Owner (23:17): remove "Save postcard" from the website. The button is now hidden in `viewer_loop.js`; in live mode the whole top row of the dock is hidden. Built files: pm2-cat-city.js md5 fd90ca427b11917c73349200268b9a3f (liquid unchanged). Owner had already published 188910403796, so this change needs an unpublished copy (188909420756 matches live except the Cat Town files) and a re-publish. Upload not done yet: the write was blocked by a permission check, waiting for the owner's OK.
+
+## Update 2026-10-07: real live version + "Find your cat house"
+
+- Data: page metafield `cattown.town` (JSON, definition "Cat Town residents" on the Cat Town page). Shape: `{"start": "2026-10-07", "residents": [{"name": "...", "ig": "...", "tt": "...", "day": 1}, ...]}`. List order = move-in order; Cat # = position. The section prints it as `window.CITY_LIVE`; `build_viewer.py` (LIVE_JS) turns it into `EP.live.residents/followers/day` before the engine starts. Updating the metafield changes the page right away, no theme publish.
+- Counter: residents + Mango, "Day N" = days since `start` + 1 (counts up by itself).
+- Search under the counter: exact match on Instagram / TikTok handle (with or without @) or name, then partial match (3+ letters). Hit: camera flies to the house, pin + ring, card (@handle, cat #, moved in on day X, name/TikTok, house kind). Miss: "Not in Cat Town yet / Follow @petme2 to move in!". The card/hint are placed under the search box by JS (`placeLow`).
+- Save postcard button hidden; in live mode the dock top row, slider, chips and Play growth are hidden.
+- `viewer.html` now has a viewport meta, so local phone tests match real phones.
+- /cat-town already redirects to /pages/cat-town (UrlRedirect 606478794964), so the short link works.
+- Uploaded to new copy 188916498644 (old copy 188909420756 had been deleted, so a duplicate worked). Tested with sample residents in the test browser only.
