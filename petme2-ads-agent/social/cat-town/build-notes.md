@@ -174,3 +174,4 @@ Owner ask: fountain and feeder each in its own circle, side by side like an 8; c
 - "Find your cat house" moved into the bottom dock; the info card/hint now sit under the top block.
 - Uploaded to new copy 188917547220 (the owner had published 188916498644).
 - Owner: the fountain/feeder card was too big. Compact card: max-width 340px, padding 9/38/9/11, icon 22px, title 15.5px, lines 12.5px, note 11.5px, smaller shop and close buttons. Uploaded to 188917547220 (liquid only).
+- Owner: Mango-themed fountain/feeder card text (viewer_loop.js info lines). Uploaded to new copy 188917874900 (owner had published 188917547220).
