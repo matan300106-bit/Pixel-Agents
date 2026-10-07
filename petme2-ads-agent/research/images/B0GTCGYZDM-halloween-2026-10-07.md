@@ -20,3 +20,9 @@ Research: research/halloween/market.md. Owner chose 1 product only (camera feede
 QA: OCR text matches prompts; product checked by eye on thumbnails (ribbed frosted hopper, black pill panel with gear/mic/lens, PETME2 wordmark, steel bowl) — consistent in all 9.
 No night vision, no "#1", no prices, no health claims, no candy/candles near cats.
 After Oct 31: swap PT02/PT04 to holiday-travel versions (see market.md §3.4). Not yet made.
+
+## MAIN fix (owner: "looks bad quality", wants cat & dog in Halloween costume)
+Zip: https://cdn.shopify.com/s/files/1/0792/1716/4500/files/petme2-camera-feeder-MAIN-fixed.zip?v=1791389020
+- MAIN-A-clean: regenerated (job 4b44359e) + 4K upscale (4958a215), bg flood-filled to 255, 3000x3000 JPG q95. Fill 97.6% h. Amazon-safe MAIN.
+- MAIN-B-halloween-cat-dog: regenerated (cd9d96c7) + 4K upscale (092ba38b): kitten in witch hat + Pomeranian in pumpkin costume, white bg, 3000x3000.
+  Amazon MAIN rules allow only the product (no animals/props) -> risk of suppression if used as MAIN. Recommended as image #2; use as MAIN on Shopify/Brand Store.
