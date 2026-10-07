@@ -188,3 +188,4 @@ Owner ask: fountain and feeder each in its own circle, side by side like an 8; c
 - Engine extras for videos: comment `likes: null` = heart only (no number), `name` shows a display name instead of @handle, `newBuild.byName`, `EP.lotSign` puts a "Your idea here?" sign on the empty lot until the build pops.
 - Uploaded to new copy 188939337940 "PETME2 — Cat Town Day 2 fish supermarket", checksums verified. Owner publishes.
 - Video: `episodes/day-2-fish/` (README there).
+- Owner (14:44): "I need a bigger fishmarket". The `fishmarket` model is now 1.55x (`EP.fishBig`, default 1.55) and set back 4 units (`EP.fishBack`) so it stays off the road. Video build shot re-framed. Uploaded to 188939337940 (JS only), checksum verified.
