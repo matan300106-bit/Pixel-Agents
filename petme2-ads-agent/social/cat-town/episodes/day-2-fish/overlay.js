@@ -33,7 +33,8 @@
     let h = '', b = '';
     const goal = T >= D.goal[0] && T < D.goal[1];
     b += `<div class="brand"><span>🐾 PETME2 CAT TOWN</span></div>`;
-    b += goal ? `<div class="cnt"><b class="g">1,000</b><span>cats · THE GOAL</span></div>` : `<div class="cnt"><b>${D.cats}</b><span>${D.cats === 1 ? 'cat' : 'cats'} · Day ${D.day}</span></div>`;
+    const fol = D.followers ? (T >= D.roll[0] && T < D.roll[1] ? Math.round(D.followers * Math.pow((T - D.roll[0]) / (D.roll[1] - D.roll[0]), 2)) : D.followers) : 0;   // follower count rolls up while the voice says it
+    b += goal ? `<div class="cnt"><b class="g">1,000</b><span>cats · THE GOAL</span></div>` : D.followers ? `<div class="cnt"><b class="${T >= D.roll[0] && T < D.roll[1] + 1 ? 'g' : ''}">${fol}</b><span>followers · Day ${D.day}</span></div>` : `<div class="cnt"><b>${D.cats}</b><span>${D.cats === 1 ? 'cat' : 'cats'} · Day ${D.day}</span></div>`;
     const beat = D.beats.find(x => T >= x.s && T < x.e);
     if (beat) { const k = beat.still ? 1 : back((T - beat.s) / .3); h += `<div class="big" style="transform:scale(${.6 + .4 * k});opacity:${beat.still ? 1 : Math.min(1, (T - beat.s) / .1)}">${beat.html}</div>`;
       if (beat.small && T >= beat.ss) h += `<div class="small" style="${beat.smallTop ? 'top:' + beat.smallTop + 'px;' : ''}transform:scale(${back((T - beat.ss) / .3)})">${beat.small}</div>`;
