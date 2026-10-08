@@ -42,3 +42,13 @@ Top of search is expensive per click but converts 2.5× better.
 2. **Small fountains: do NOT pause.** At $19.99 they converted at about 15% (2L) and cost about $6.50 per order. That is a small loss per sale (profit before ads is about $2.40–3) but it builds rank and reviews. At $24.99 it becomes profitable. **Fix the price.**
 3. **New PETME2 campaigns:** keep them, but with smaller budgets ($50/day total), because they barely serve.
 4. **Top of search:** the owner wants +10%, so keep +10% on the new campaigns. Leave the old campaigns' placement settings as they were.
+
+## Oct 7 orders (SP-API, all channels: ads + organic)
+| Time (PT) | Product | Qty | Price |
+|---|---|---|---|
+| 12:54 | Stainless 3.2L fountain (QY-HHE8-0H1B) | 1 | $39.99 |
+| 13:20 | Dual feeder black (93-E8EG-20UY) | 1 | $49.99 |
+| 13:20 | Stainless 3.2L fountain | 1 | $39.99 |
+| 17:15 | Dual feeder black | 1 | $49.99 |
+Total: 4 orders, about $180 in sales, against about $92 in ad spend (both totals are estimates). It is not yet confirmed how many orders came from ads; Amazon attributes them within 1–3 days.
+Oct 4–6 had 7 orders, all organic or from the old campaigns before they were paused: 2 stainless, 2 dual white, 1 5L, 2 small fountains.
