@@ -1,0 +1,36 @@
+{%- comment -%} PETME2 tech spec strip: big numbers + short labels. {%- endcomment -%}
+<div class="color-{{ section.settings.color_scheme }} gradient pm2-specs">
+  <div class="page-width pm2-specs__grid">
+    {%- for block in section.blocks -%}
+      <div class="pm2-specs__item" {{ block.shopify_attributes }}>
+        <span class="pm2-specs__big">{{ block.settings.big }}</span>
+        <span class="pm2-specs__label">{{ block.settings.label }}</span>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+<style>
+  .pm2-specs { padding: 44px 0; border-top: 1px solid rgba(var(--color-foreground), .06); border-bottom: 1px solid rgba(var(--color-foreground), .06); }
+  .pm2-specs__grid { display: grid; grid-template-columns: repeat({{ section.blocks.size | at_least: 1 }}, minmax(0, 1fr)); gap: 24px; }
+  .pm2-specs__item { display: flex; flex-direction: column; gap: 6px; min-width: 0; padding-left: 16px; border-left: 3px solid rgba(var(--color-button), .85); border-radius: 2px; }
+  .pm2-specs__big { font-family: var(--font-heading-family); font-weight: 700; font-size: clamp(26px, 3.2vw, 44px); line-height: 1.05; letter-spacing: -.02em; color: rgb(var(--color-foreground)); overflow-wrap: anywhere; }
+  .pm2-specs__label { font-size: 14px; line-height: 1.35; letter-spacing: .04em; text-transform: uppercase; color: rgba(var(--color-foreground), .65); }
+  @media (max-width: 749px) {
+    .pm2-specs { padding: 28px 0; }
+    .pm2-specs__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 16px; }
+    .pm2-specs__item { padding-left: 12px; }
+    .pm2-specs__label { font-size: 13px; }
+  }
+</style>
+{% schema %}
+{
+  "name": "PETME2 spec strip",
+  "settings": [{ "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" }],
+  "blocks": [{ "type": "spec", "name": "Spec", "settings": [
+    { "type": "text", "id": "big", "label": "Big text", "default": "1080P" },
+    { "type": "text", "id": "label", "label": "Label", "default": "HD camera" }
+  ] }],
+  "max_blocks": 5,
+  "presets": [{ "name": "PETME2 spec strip" }]
+}
+{% endschema %}

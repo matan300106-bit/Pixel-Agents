@@ -1,0 +1,313 @@
+{
+  "B0GHLSQMJ9": {
+    "title": "PETME2 Automatic Cat Feeder for 2 Cats, 3L Dual Bowl Automatic Dog Feeder with App Control, Timed Pet Food Dispenser for Dry Food, 304 Stainless Steel Bowls, Anti-Jam, Portion Control - White",
+    "bullets": [
+      "FAIR MEALS FOR 2 CATS: Stop food stealing at mealtime. This automatic cat feeder splits every meal evenly into two stainless steel bowls, so two cats, or a cat and a small dog, get the same portion at the same time. A dual cat feeder and dog food dispenser for multi-pet homes.",
+      "APP CONTROL FROM ANYWHERE: Set meal times and portions from your phone in the Tuya Smart app [CONFIRM: WiFi band, 2.4GHz only]. This wifi automatic cat feeder with app control keeps meals on time while you work or travel. [CONFIRM: real 2-way audio or voice recording only]",
+      "TIMED FEEDING, PRECISE PORTIONS: Schedule up to 10 meals per day with up to 12 portions per meal [CONFIRM: about 15 g per portion]. A timed cat feeder for dry food that keeps a steady routine and helps stop overeating, and a timed dog feeder for small breeds too.",
+      "3L STORAGE, ANTI-JAM, FRESH KIBBLE: This 3L cat food dispenser means fewer refills [CONFIRM: capacity in cups and days of food for 2 cats]. A 4-compartment anti-jam design dispenses kibble smoothly, and a silicone seal, desiccant box and sealed outlet help keep dry food fresh.",
+      "EASY CLEAN 304 STAINLESS STEEL BOWLS: The raised bowls of this cat feeding station are a hygienic choice over plastic, and the parts come apart for washing [CONFIRM: which parts are dishwasher safe]. In the box: main unit, bowl base, 2 bowls, 3L container, desiccant box, adapter, manual."
+    ],
+    "description": "Two cats, one feeder, no more food fights. The PETME2 3L dual bowl automatic cat feeder splits each meal evenly between two stainless steel bowls, so every pet gets a fair share at the same time. It works for two cats, or for a cat and a small dog. Plan the whole day in the Tuya Smart app. Set up to 10 meals per day and up to 12 portions per meal, change times on the go, and keep feeding on schedule while you are at work or away for the weekend. As a timed cat feeder for dry food, it helps build a steady eating routine and helps prevent overeating and begging. The 3L food container cuts down on refills. Inside, a 4-compartment anti-jam design keeps kibble moving smoothly to both bowls. A triple freshness lock (silicone seal, desiccant box and sealed outlet) helps keep dry food crunchy between meals. The raised 304 stainless steel bowls are a hygienic choice over plastic and easy to wipe clean. The parts detach for washing. In the box: main unit, dual bowl feeding base, 2 stainless steel bowls, 3L food container, desiccant box, power adapter and user manual. Set the feeder on a flat, stable indoor surface, fill it with dry kibble, connect the adapter and pair it with the app. Note for the owner: [CONFIRM: 2-way audio or voice recording] [CONFIRM: battery backup and battery type] [CONFIRM: grams per portion]",
+    "backend": "auto self feeding station double two timer schedule programmable smart wifi elevated kitty kitten puppy multiple large capacity kibble atomatic comedero automatico gatos dispensador comida perros alimentador comedor electric meal",
+    "attributes": {
+      "color": "White",
+      "capacity": "3 Liters",
+      "number_of_bowls": "2",
+      "material": "Plastic body [CONFIRM: ABS/food-grade plastic]; 304 stainless steel bowls",
+      "special_feature": [
+        "Dual bowl even split for 2 pets",
+        "App control (Tuya Smart)",
+        "Timed feeding up to 10 meals per day",
+        "Up to 12 portions per meal",
+        "Anti-jam 4-compartment design",
+        "Silicone seal and desiccant freshness lock",
+        "Detachable, easy clean"
+      ],
+      "target_species": [
+        "Cat",
+        "Dog (small)"
+      ],
+      "power_source": "Corded electric (AC adapter) [CONFIRM: battery backup and battery type]",
+      "connectivity": "WiFi, app [CONFIRM: 2.4GHz only]",
+      "food_type": "Dry food (kibble)",
+      "recommended_uses": "Indoor; multiple pets",
+      "care_instructions": "Dishwasher safe [CONFIRM: which parts]",
+      "included_components": [
+        "Main unit",
+        "Dual bowl feeding base",
+        "2 x stainless steel bowls",
+        "3L food container",
+        "Desiccant box",
+        "Power adapter",
+        "User manual"
+      ],
+      "item_type_keyword": "pet-self-feeders",
+      "fix_notes": "Replace long feature text in included_components with short component names. Set batteries_required/included only after CONFIRM."
+    },
+    "images": [
+      "MAIN: white unit on pure white, both stainless bowls visible, no text or props.",
+      "Two cats eating side by side, overlay \"Even split for 2 cats\" (exact keyword \"automatic cat feeder for 2 cats\").",
+      "Phone with app schedule screen: \"Up to 10 meals a day, up to 12 portions per meal\".",
+      "Cutaway: 4-compartment anti-jam rotor plus seal, desiccant box and sealed outlet (\"Triple freshness lock\").",
+      "Exploded parts and dimensions (15.5 x 7.2 x 10.8 in), 304 stainless bowls, what is in the box; A+ comparison vs the 5L and camera feeders."
+    ],
+    "confirm": [
+      "2-way audio: real live 2-way audio, voice recording only, or neither? (current title claims 2 Way Audio; no bullet or attribute backs it)",
+      "Battery backup / dual power: yes or no; battery type and count; included? (attributes say batteries not required/included; parent bullet says it works in power or internet outages)",
+      "WiFi band (2.4GHz only?)",
+      "Grams per portion (parent says about 15 g) and capacity in cups; days of food for 2 cats",
+      "Which parts are dishwasher safe",
+      "Body material (ABS? food-grade plastic?)",
+      "Noise level in dB if \"quiet\" is to be claimed",
+      "Warranty length",
+      "Dry food only (yes per listing) and indoor only (yes per listing): confirm"
+    ]
+  },
+  "B0GHMCG8Q9": {
+    "title": "PETME2 Automatic Cat Feeder for 2 Cats, 3L Dual Bowl Automatic Dog Feeder with App Control, Timed Pet Food Dispenser for Dry Food, 304 Stainless Steel Bowls, Anti-Jam, Portion Control - Black",
+    "bullets": [
+      "FAIR MEALS FOR 2 CATS: Stop food stealing at mealtime. This automatic cat feeder splits every meal evenly into two stainless steel bowls, so two cats, or a cat and a small dog, get the same portion at the same time. A dual cat feeder and dog food dispenser for multi-pet homes.",
+      "APP CONTROL FROM ANYWHERE: Set meal times and portions from your phone in the Tuya Smart app [CONFIRM: WiFi band, 2.4GHz only]. This wifi automatic cat feeder with app control keeps meals on time while you work or travel. [CONFIRM: real 2-way audio or voice recording only]",
+      "TIMED FEEDING, PRECISE PORTIONS: Schedule up to 10 meals per day with up to 12 portions per meal [CONFIRM: about 15 g per portion]. A timed cat feeder for dry food that keeps a steady routine and helps stop overeating, and a timed dog feeder for small breeds too.",
+      "3L STORAGE, ANTI-JAM, FRESH KIBBLE: This 3L cat food dispenser means fewer refills [CONFIRM: capacity in cups and days of food for 2 cats]. A 4-compartment anti-jam design dispenses kibble smoothly, and a silicone seal, desiccant box and sealed outlet help keep dry food fresh.",
+      "EASY CLEAN 304 STAINLESS STEEL BOWLS: The raised bowls of this cat feeding station are a hygienic choice over plastic, and the parts come apart for washing [CONFIRM: which parts are dishwasher safe]. In the box: main unit, bowl base, 2 bowls, 3L container, desiccant box, adapter, manual."
+    ],
+    "description": "Two cats, one feeder, no more food fights. The PETME2 3L dual bowl automatic cat feeder splits each meal evenly between two stainless steel bowls, so every pet gets a fair share at the same time. It works for two cats, or for a cat and a small dog. Plan the whole day in the Tuya Smart app. Set up to 10 meals per day and up to 12 portions per meal, change times on the go, and keep feeding on schedule while you are at work or away for the weekend. As a timed cat feeder for dry food, it helps build a steady eating routine and helps prevent overeating and begging. The 3L food container cuts down on refills. Inside, a 4-compartment anti-jam design keeps kibble moving smoothly to both bowls. A triple freshness lock (silicone seal, desiccant box and sealed outlet) helps keep dry food crunchy between meals. The raised 304 stainless steel bowls are a hygienic choice over plastic and easy to wipe clean. The parts detach for washing. In the box: main unit, dual bowl feeding base, 2 stainless steel bowls, 3L food container, desiccant box, power adapter and user manual. Set the feeder on a flat, stable indoor surface, fill it with dry kibble, connect the adapter and pair it with the app. Note for the owner: [CONFIRM: 2-way audio or voice recording] [CONFIRM: battery backup and battery type] [CONFIRM: grams per portion]",
+    "backend": "auto self feeding station double two timer schedule programmable smart wifi elevated kitty kitten puppy multiple large capacity kibble atomatic comedero automatico gatos dispensador comida perros alimentador comedor electric meal",
+    "attributes": {
+      "color": "Black",
+      "capacity": "3 Liters",
+      "number_of_bowls": "2",
+      "material": "Plastic body [CONFIRM: ABS/food-grade plastic]; 304 stainless steel bowls",
+      "special_feature": [
+        "Dual bowl even split for 2 pets",
+        "App control (Tuya Smart)",
+        "Timed feeding up to 10 meals per day",
+        "Up to 12 portions per meal",
+        "Anti-jam 4-compartment design",
+        "Silicone seal and desiccant freshness lock",
+        "Detachable, easy clean"
+      ],
+      "target_species": [
+        "Cat",
+        "Dog (small)"
+      ],
+      "power_source": "Corded electric (AC adapter) [CONFIRM: battery backup and battery type]",
+      "connectivity": "WiFi, app [CONFIRM: 2.4GHz only]",
+      "food_type": "Dry food (kibble)",
+      "recommended_uses": "Indoor; multiple pets",
+      "care_instructions": "Dishwasher safe [CONFIRM: which parts]",
+      "included_components": [
+        "Main unit",
+        "Dual bowl feeding base",
+        "2 x stainless steel bowls",
+        "3L food container",
+        "Desiccant box",
+        "Power adapter",
+        "User manual"
+      ],
+      "item_type_keyword": "pet-self-feeders",
+      "fix_notes": "Replace long feature text in included_components with short component names. Set batteries_required/included only after CONFIRM."
+    },
+    "images": [
+      "MAIN: black unit on pure white, both stainless bowls visible, no text or props.",
+      "Two cats eating side by side, overlay \"Even split for 2 cats\" (exact keyword \"automatic cat feeder for 2 cats\").",
+      "Phone with app schedule screen: \"Up to 10 meals a day, up to 12 portions per meal\".",
+      "Cutaway: 4-compartment anti-jam rotor plus seal, desiccant box and sealed outlet (\"Triple freshness lock\").",
+      "Exploded parts and dimensions (15.5 x 7.2 x 10.8 in), 304 stainless bowls, what is in the box; A+ comparison vs the 5L and camera feeders."
+    ],
+    "confirm": [
+      "2-way audio: real live 2-way audio, voice recording only, or neither? (current title claims 2 Way Audio; no bullet or attribute backs it)",
+      "Battery backup / dual power: yes or no; battery type and count; included? (attributes say batteries not required/included; parent bullet says it works in power or internet outages)",
+      "WiFi band (2.4GHz only?)",
+      "Grams per portion (parent says about 15 g) and capacity in cups; days of food for 2 cats",
+      "Which parts are dishwasher safe",
+      "Body material (ABS? food-grade plastic?)",
+      "Noise level in dB if \"quiet\" is to be claimed",
+      "Warranty length",
+      "Dry food only (yes per listing) and indoor only (yes per listing): confirm"
+    ]
+  },
+  "B0H3L6VXV6": {
+    "title": "PETME2 Automatic Cat Feeder for 2 Cats, 3L Dual Bowl Automatic Dog Feeder with App Control, Timed Pet Food Dispenser for Dry Food, 304 Stainless Steel Bowls, Anti-Jam, Portion Control",
+    "bullets": [
+      "FAIR MEALS FOR 2 CATS: Stop food stealing at mealtime. This automatic cat feeder splits every meal evenly into two stainless steel bowls, so two cats, or a cat and a small dog, get the same portion at the same time. A dual cat feeder and dog food dispenser for multi-pet homes.",
+      "APP CONTROL FROM ANYWHERE: Set meal times and portions from your phone in the Tuya Smart app [CONFIRM: WiFi band, 2.4GHz only]. This wifi automatic cat feeder with app control keeps meals on time while you work or travel. [CONFIRM: real 2-way audio or voice recording only]",
+      "TIMED FEEDING, PRECISE PORTIONS: Schedule up to 10 meals per day with up to 12 portions per meal [CONFIRM: about 15 g per portion]. A timed cat feeder for dry food that keeps a steady routine and helps stop overeating, and a timed dog feeder for small breeds too.",
+      "3L STORAGE, ANTI-JAM, FRESH KIBBLE: This 3L cat food dispenser means fewer refills [CONFIRM: capacity in cups and days of food for 2 cats]. A 4-compartment anti-jam design dispenses kibble smoothly, and a silicone seal, desiccant box and sealed outlet help keep dry food fresh.",
+      "EASY CLEAN 304 STAINLESS STEEL BOWLS: The raised bowls of this cat feeding station are a hygienic choice over plastic, and the parts come apart for washing [CONFIRM: which parts are dishwasher safe]. In the box: main unit, bowl base, 2 bowls, 3L container, desiccant box, adapter, manual."
+    ],
+    "description": "Two cats, one feeder, no more food fights. The PETME2 3L dual bowl automatic cat feeder splits each meal evenly between two stainless steel bowls, so every pet gets a fair share at the same time. It works for two cats, or for a cat and a small dog. Plan the whole day in the Tuya Smart app. Set up to 10 meals per day and up to 12 portions per meal, change times on the go, and keep feeding on schedule while you are at work or away for the weekend. As a timed cat feeder for dry food, it helps build a steady eating routine and helps prevent overeating and begging. The 3L food container cuts down on refills. Inside, a 4-compartment anti-jam design keeps kibble moving smoothly to both bowls. A triple freshness lock (silicone seal, desiccant box and sealed outlet) helps keep dry food crunchy between meals. The raised 304 stainless steel bowls are a hygienic choice over plastic and easy to wipe clean. The parts detach for washing. In the box: main unit, dual bowl feeding base, 2 stainless steel bowls, 3L food container, desiccant box, power adapter and user manual. Set the feeder on a flat, stable indoor surface, fill it with dry kibble, connect the adapter and pair it with the app. Note for the owner: [CONFIRM: 2-way audio or voice recording] [CONFIRM: battery backup and battery type] [CONFIRM: grams per portion]",
+    "backend": "auto self feeding station double two timer schedule programmable smart wifi elevated kitty kitten puppy multiple large capacity kibble atomatic comedero automatico gatos dispensador comida perros alimentador comedor electric meal",
+    "attributes": {
+      "color": "(none on parent; variation theme COLOR: White, Black)",
+      "capacity": "3 Liters",
+      "number_of_bowls": "2",
+      "material": "Plastic body [CONFIRM: ABS/food-grade plastic]; 304 stainless steel bowls",
+      "special_feature": [
+        "Dual bowl even split for 2 pets",
+        "App control (Tuya Smart)",
+        "Timed feeding up to 10 meals per day",
+        "Up to 12 portions per meal",
+        "Anti-jam 4-compartment design",
+        "Silicone seal and desiccant freshness lock",
+        "Detachable, easy clean"
+      ],
+      "target_species": [
+        "Cat",
+        "Dog (small)"
+      ],
+      "power_source": "Corded electric (AC adapter) [CONFIRM: battery backup and battery type]",
+      "connectivity": "WiFi, app [CONFIRM: 2.4GHz only]",
+      "food_type": "Dry food (kibble)",
+      "recommended_uses": "Indoor; multiple pets",
+      "care_instructions": "Dishwasher safe [CONFIRM: which parts]",
+      "included_components": [
+        "Main unit",
+        "Dual bowl feeding base",
+        "2 x stainless steel bowls",
+        "3L food container",
+        "Desiccant box",
+        "Power adapter",
+        "User manual"
+      ],
+      "item_type_keyword": "pet-self-feeders",
+      "fix_notes": "Replace long feature text in included_components with short component names. Set batteries_required/included only after CONFIRM."
+    },
+    "images": [
+      "Parent ASIN: images are served from the child ASINs; no separate set needed.",
+      "Two cats eating side by side, overlay \"Even split for 2 cats\" (exact keyword \"automatic cat feeder for 2 cats\").",
+      "Phone with app schedule screen: \"Up to 10 meals a day, up to 12 portions per meal\".",
+      "Cutaway: 4-compartment anti-jam rotor plus seal, desiccant box and sealed outlet (\"Triple freshness lock\").",
+      "Exploded parts and dimensions (15.5 x 7.2 x 10.8 in), 304 stainless bowls, what is in the box; A+ comparison vs the 5L and camera feeders."
+    ],
+    "confirm": [
+      "2-way audio: real live 2-way audio, voice recording only, or neither? (current title claims 2 Way Audio; no bullet or attribute backs it)",
+      "Battery backup / dual power: yes or no; battery type and count; included? (attributes say batteries not required/included; parent bullet says it works in power or internet outages)",
+      "WiFi band (2.4GHz only?)",
+      "Grams per portion (parent says about 15 g) and capacity in cups; days of food for 2 cats",
+      "Which parts are dishwasher safe",
+      "Body material (ABS? food-grade plastic?)",
+      "Noise level in dB if \"quiet\" is to be claimed",
+      "Warranty length",
+      "Dry food only (yes per listing) and indoor only (yes per listing): confirm"
+    ],
+    "note": "Parent B0H3L6VXV6: title only matters for search/browse; bullets and description shown here mirror the children so the family stays consistent."
+  },
+  "B0GHH8L59K": {
+    "title": "PETME2 Automatic Cat Feeder for 2 Cats, 5L WiFi Elevated Dual Bowl Feeding Station with App Control and Voice Recording, Automatic Dog Feeder, Stainless Steel Bowls, Timed Pet Food Dispenser",
+    "bullets": [
+      "FEEDS 2 CATS EQUALLY: This automatic cat feeder for 2 cats splits every meal evenly between two stainless steel bowls, so each pet gets a fair share and food stealing stops. A double cat feeder that also works as an automatic dog feeder and dog feeding station for small dogs.",
+      "WIFI APP SCHEDULING: Plan meals and custom portions from your phone [CONFIRM: WiFi band, 2.4GHz only]. This wifi automatic cat feeder with app control keeps meals on time while you work or travel. [CONFIRM: meals per day, portions per meal, grams per portion]",
+      "VOICE RECORDING AT MEALTIME: Record your own short message and the feeder plays it to call your pets to every meal, building a calm routine while you are away. This is a recorded mealtime call, not live 2-way audio. [CONFIRM: recording length in seconds]",
+      "5L ELEVATED CAT FEEDING STATION: This 5L cat food dispenser means fewer refills [CONFIRM: capacity in cups and days of food], and the raised bowls give cats a comfortable eating height. An anti-jam chute and motor help dry kibble dispense smoothly at every timed meal.",
+      "EASY TO CLEAN: Stainless steel bowls are a hygienic choice over plastic, and the bowls and food container detach for quick washing. In the box: main unit, 2 bowls, food container, power adapter and manual. [CONFIRM: battery backup yes/no and battery type]"
+    ],
+    "description": "Feed two pets at once without the fights. The PETME2 5L WiFi automatic cat feeder for 2 cats splits each meal evenly between two stainless steel bowls on an elevated feeding station, so every cat, or a cat and a small dog, gets the same portion at the same time. Use the app to plan meal times and custom portions from anywhere, and keep feeding on schedule while you are at work or traveling. As a timed feeder for dry kibble, it helps build a steady routine and helps prevent overeating. Record your own voice message and the feeder plays it at mealtime to call your pets to eat. It is a recorded call, not live 2-way audio. The large 5L food container means fewer refills. An anti-jam chute and motor keep kibble moving smoothly to both bowls. The raised design gives cats a comfortable eating height. The stainless steel bowls are a hygienic choice over plastic, and the bowls and food container detach for quick washing. In the box: main unit, 2 feeding bowls, food storage container, power adapter and user manual. Place the feeder on a flat, stable indoor surface, fill it with dry food, connect the adapter and set your schedule in the app. Note for the owner: [CONFIRM: meals per day and portions] [CONFIRM: battery backup] [CONFIRM: dry food only, indoor only]",
+    "backend": "auto self double two timer schedule programmable smart large capacity kibble dry kitty kitten puppy multiple atomatic meal comedero automatico gatos dispensador comida perros alimentador comedor electric",
+    "attributes": {
+      "color": "White",
+      "capacity": "5 Liters",
+      "number_of_bowls": "2",
+      "material": "Plastic body [CONFIRM: type]; stainless steel bowls",
+      "special_feature": [
+        "Dual bowl even split for 2 pets",
+        "WiFi app scheduling",
+        "Voice recording mealtime call",
+        "Elevated feeding station",
+        "Anti-jam chute",
+        "Detachable, easy clean"
+      ],
+      "target_species": [
+        "Cat",
+        "Dog (small)"
+      ],
+      "power_source": "Corded electric (AC adapter) [CONFIRM: battery backup and battery type]",
+      "connectivity": "WiFi, app [CONFIRM: 2.4GHz only]",
+      "food_type": "Dry food (kibble) - remove \"Wet Food\"",
+      "recommended_uses": "Indoor; multiple pets - remove \"Outdoor\" and \"Wet Food\" from recommended_uses_for_product",
+      "model_name": "Set a real model name (currently \"PETME2\") [CONFIRM: model]",
+      "included_components": [
+        "Main unit",
+        "2 feeding bowls",
+        "Food storage container",
+        "Power adapter",
+        "User manual"
+      ],
+      "item_type_keyword": "pet-self-feeders"
+    },
+    "images": [
+      "MAIN: white elevated unit on pure white, both bowls visible, no text.",
+      "Two cats at the raised bowls, overlay \"Even split for 2 cats\" and \"Elevated feeding station\".",
+      "Phone app schedule screen plus voice recording icon: \"Record your mealtime call\".",
+      "5L capacity shot with the kibble level visible; add cups/days only after CONFIRM.",
+      "Exploded parts (detachable bowls and container), dimensions 18.42 x 7.87 x 15.62 in, what is in the box; A+ row comparing 3L dual / 5L / camera."
+    ],
+    "confirm": [
+      "Battery backup / dual power: yes or no, battery type and count (current title claims Dual Power Options; batteries not included per attributes)",
+      "Meals per day, portions per meal, grams per portion",
+      "Capacity in cups and days of food",
+      "WiFi band (2.4GHz only?)",
+      "Voice recording length (seconds)",
+      "Dry food only and indoor only: remove Wet Food/Outdoor from attributes?",
+      "Dishwasher safe parts; body material",
+      "Noise level in dB, warranty length"
+    ]
+  },
+  "B0GTCGYZDM": {
+    "title": "PETME2 Automatic Cat Feeder with Camera, 3L WiFi Cat Food Dispenser with 1080P HD Video and 2-Way Audio, App Control, Automatic Dog Feeder for Small Dogs, Timed Portions, Anti-Jam",
+    "bullets": [
+      "WATCH EVERY MEAL IN 1080P: This automatic cat feeder with camera streams live 1080p HD video to your phone, so you can see when and how much your pet eats. A cat feeder with camera for cats and small dogs. [CONFIRM: night vision yes/no, field of view]",
+      "TALK WITH 2-WAY AUDIO: Hear your pet and talk back through the app to calm an anxious kitty or call your dog to dinner. A pet feeder with camera and two-way audio that keeps you close to home while you work or travel, and a smart automatic dog feeder with camera.",
+      "APP SCHEDULING, PORTION CONTROL: Set meal times and portions in the app over WiFi [CONFIRM: 2.4GHz only], or tap once to serve a meal on demand. A timed cat feeder for dry food that keeps a steady routine. [CONFIRM: meals per day, portions per meal, grams per portion]",
+      "ANTI-JAM 3L STORAGE, FRESH FOOD: This 3L dog food dispenser holds dry kibble for fewer refills [CONFIRM: capacity in cups and days of food]. The anti-jam system detects and reverses kibble blockages, and moisture seals with a desiccant box help keep food fresh and crunchy.",
+      "BACKUP POWER, EASY CLEAN: Runs on the power adapter, with backup battery support to keep meals going during a power outage [CONFIRM: battery type and count, batteries not included]. The stainless steel bowl is easy to clean and dishwasher safe [CONFIRM: which parts]."
+    ],
+    "description": "See, hear and feed your pet from anywhere. The PETME2 3L automatic cat feeder with camera combines a 1080p HD camera, 2-way audio and app scheduling in one compact feeder for cats and small dogs. Open the app to watch a live view of mealtime and check that your pet is eating. Talk through the 2-way audio to calm a nervous kitty or call your dog to dinner. Set meal times and portion sizes in the app, or tap once to serve an extra meal on demand. As a timed feeder for dry kibble, it helps keep a healthy, steady routine and helps prevent overeating. The 3L container means fewer refills. The anti-jam system detects and reverses kibble blockages, so food keeps flowing. Moisture seals and a desiccant box help keep dry food fresh and crunchy. The stainless steel bowl is a hygienic choice over plastic and easy to wash. The feeder runs on the power adapter, with backup battery support to help keep feeding on schedule during a power outage. Place it on a flat, stable indoor surface, fill it with dry food, connect power and pair it with the app over WiFi. Note for the owner: [CONFIRM: night vision] [CONFIRM: battery type, batteries included] [CONFIRM: WiFi band] [CONFIRM: what is in the box]",
+    "backend": "pet auto self monitor cam live view talk two schedule timer programmable smart electric kitty kitten puppy dry kibble atomatic meal comedero automatico gatos dispensador comida perros alimentador comedor station feeding",
+    "attributes": {
+      "color": "White",
+      "capacity": "3 Liters",
+      "number_of_bowls": "1",
+      "material": "Plastic body [CONFIRM: type]; stainless steel bowl",
+      "special_feature": [
+        "1080p HD camera with live view",
+        "2-way audio",
+        "WiFi app scheduling and portion control",
+        "Anti-jam that detects and reverses blockages",
+        "Moisture seals and desiccant box",
+        "Adapter plus backup battery support"
+      ],
+      "target_species": [
+        "Cat",
+        "Dog (small)"
+      ],
+      "power_source": "Corded electric (AC adapter) with battery backup [CONFIRM: battery type/count; included]",
+      "connectivity": "WiFi, app [CONFIRM: 2.4GHz only]",
+      "food_type": "Dry food (kibble)",
+      "recommended_uses": "Indoor",
+      "care_instructions": "Dishwasher safe [CONFIRM: which parts]",
+      "special_feature_fix": "Replace the copied text \"Feed your cat or small dog at the same time with balanced portions\" (that is the dual model)",
+      "included_components": "[CONFIRM] Main unit, stainless steel bowl, desiccant box, power adapter, user manual (currently lists only the main unit)",
+      "item_type_keyword": "pet-self-feeders"
+    },
+    "images": [
+      "MAIN: white unit on pure white, camera lens and bowl visible, no text.",
+      "Phone showing the live 1080p view of a cat eating, overlay \"Automatic cat feeder with camera\".",
+      "2-way audio scene: owner talking via phone, cat looking up at the feeder.",
+      "Anti-jam detect-and-reverse diagram plus seal and desiccant box cutaway.",
+      "Power adapter plus battery backup graphic (only after CONFIRM), size 6.8 x 7.0 x 11.0 in, in the box; no night vision image unless confirmed."
+    ],
+    "confirm": [
+      "Night vision: yes or no (6 of 8 competitors claim it; do not add without proof)",
+      "Battery backup: battery type and count; included or not (attributes say not included; bullets say switches to backup batteries)",
+      "WiFi band (2.4GHz only?)",
+      "Meals per day, portions per meal, grams per portion",
+      "Capacity in cups and days of food",
+      "What is in the box (bowl, adapter, desiccant box?)",
+      "Dishwasher safe parts; body material",
+      "Camera field of view, cloud/SD storage, noise level in dB, warranty length"
+    ]
+  }
+}

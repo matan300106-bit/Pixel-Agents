@@ -1,0 +1,534 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<!-- PETME2 Cat Town (city engine). Modern cat city on a coast with mountains.
+     Reads a city/episode JSON (window.EPISODE, default city.json). window.renderFrame(t) draws time t.
+     Rules: followers 1-100 get cat houses, 101+ get apartments in cat towers (20 per tower, grows a floor at a time).
+     Landmarks (PETME2 shop at 10 followers, City Hall at 100, then comment builds) take reserved blocks in order. -->
+<style>
+  @font-face { font-family: Nunito; font-weight: 800; src: url(node_modules/@fontsource/nunito/files/nunito-latin-800-normal.woff2) format('woff2'); }
+  @font-face { font-family: Nunito; font-weight: 900; src: url(node_modules/@fontsource/nunito/files/nunito-latin-900-normal.woff2) format('woff2'); }
+  html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #CFE8F7; font-family: Nunito, sans-serif; }
+  canvas { position: absolute; inset: 0; }
+  .ui { position: absolute; inset: 0; pointer-events: none; }
+  .stroke { color: #fff; -webkit-text-stroke: 12px #1B2333; paint-order: stroke fill; }
+  .count { position: absolute; top: 130px; left: 0; right: 0; text-align: center; }
+  .count b { display: block; font-weight: 900; font-size: 150px; line-height: 1; }
+  .count span { display: inline-block; margin-top: 10px; background: #1B2333; color: #fff; font-weight: 900; font-size: 36px; padding: 8px 26px; border-radius: 999px; }
+  .title { position: absolute; top: 640px; left: 0; right: 0; text-align: center; font-weight: 900; font-size: 210px; line-height: 1; color: #FFD23F; -webkit-text-stroke: 16px #1B2333; paint-order: stroke fill; text-shadow: 0 16px 0 rgba(27,35,51,.35); }
+  .sub { position: absolute; left: 40px; right: 40px; top: 1400px; text-align: center; font-weight: 900; font-size: 82px; line-height: 1.1; }
+  .sub .w { display: inline-block; margin: 0 10px; color: #fff; -webkit-text-stroke: 12px #1B2333; paint-order: stroke fill; }
+  .sub .w.on { color: #FFD23F; }
+  .tag { position: absolute; transform: translate(-50%, -100%); background: #1B2333; color: #fff; font-weight: 900; font-size: 40px; line-height: 1.2; padding: 14px 26px; border-radius: 20px; text-align: center; white-space: nowrap; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+  .tag small { display: block; font-size: 32px; color: #FFD23F; font-weight: 800; }
+  .tag:after { content: ''; position: absolute; left: 50%; bottom: -12px; margin-left: -12px; border: 12px solid transparent; border-bottom: 0; border-top-color: #1B2333; }
+  .cm { position: absolute; left: 90px; right: 90px; top: 760px; }
+  .cm__label { display: inline-block; background: #1B2333; color: #FFD23F; font-weight: 900; font-size: 30px; padding: 8px 20px; border-radius: 999px; margin: 0 0 14px 6px; }
+  .cm__win { height: 196px; overflow: hidden; border-radius: 34px; box-shadow: 0 18px 50px rgba(20,40,90,.3); }
+  .card { height: 196px; box-sizing: border-box; background: #fff; display: flex; align-items: center; gap: 24px; padding: 0 34px; }
+  .card__av { flex: 0 0 84px; height: 84px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 900; font-size: 40px; }
+  .card__body { flex: 1; min-width: 0; }
+  .card__name { font-weight: 800; font-size: 30px; color: #6B7280; }
+  .card__text { font-weight: 900; font-size: 44px; color: #111; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .card__like { flex: 0 0 auto; text-align: center; font-weight: 900; font-size: 34px; color: #6B7280; }
+  .card__like svg { width: 54px; height: 54px; display: block; margin: 0 auto 2px; }
+  .card.win { background: #FFF6D6; box-shadow: inset 0 0 0 6px #FFC93C; }
+  .card.win .card__like { color: #ED4956; }
+  .crown { position: absolute; right: 30px; top: -6px; background: #FFC93C; color: #1B2333; font-weight: 900; font-size: 30px; padding: 8px 18px; border-radius: 999px; box-shadow: 0 8px 20px rgba(0,0,0,.2); }
+  .end { position: absolute; top: 560px; left: 60px; right: 60px; text-align: center; }
+  .end h2 { margin: 0; font-weight: 900; font-size: 128px; line-height: 1.02; color: #FFD23F; -webkit-text-stroke: 14px #1B2333; paint-order: stroke fill; }
+  .end .pills { margin-top: 30px; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .end .pills div { background: rgba(255,255,255,.96); color: #1B2333; font-weight: 900; font-size: 40px; padding: 12px 30px; border-radius: 999px; box-shadow: 0 10px 30px rgba(20,40,90,.2); }
+  .end .pills div b { color: #2F5FE0; }
+  .brand { position: absolute; top: 60px; left: 0; right: 0; text-align: center; }
+  .brand span { display: inline-block; background: rgba(255,255,255,.92); color: #2F5FE0; font-weight: 900; font-size: 30px; letter-spacing: .08em; padding: 8px 22px; border-radius: 999px; }
+</style>
+</head>
+<body>
+<div class="ui">
+  <div class="brand" id="brand"><span>🐾 PETME2 CAT TOWN</span></div>
+  <div class="count" id="count"><b class="stroke" id="countN">0</b><span id="countL">cats · Day 1</span></div>
+  <div class="title" id="title" style="opacity:0"></div>
+  <div class="cm" id="cm" style="opacity:0"><div class="cm__label">🏆 Most-liked comment builds it</div><div class="cm__win"><div id="cmList"></div></div><div class="crown" id="crown" style="opacity:0">👑 MOST LIKED</div></div>
+  <div id="tags"></div>
+  <div class="end" id="end" style="opacity:0"><h2>What do we build tomorrow?</h2><div class="pills"><div>New follower = <b>a new cat + home</b></div><div>Top comment <b>builds anything</b></div><div>@petme2</div></div></div>
+  <div class="sub" id="sub"></div>
+</div>
+<script type="importmap">{ "imports": { "three": "./node_modules/three/build/three.module.js" } }</script>
+<script type="module">
+import * as THREE from 'three';
+import { mergeGeometries } from './node_modules/three/examples/jsm/utils/BufferGeometryUtils.js';
+const EP = await (await fetch((window.EPISODE || new URLSearchParams(location.search).get('ep') || 'city.json') + '?' + Date.now())).json();
+const $ = id => document.getElementById(id);
+const ease = t => t < 0 ? 0 : t > 1 ? 1 : 1 - Math.pow(1 - t, 3);
+const inout = t => t < 0 ? 0 : t > 1 ? 1 : t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+const back = t => { if (t <= 0) return 0; if (t >= 1) return 1; const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2); };
+let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+const V = (x, y, z) => new THREE.Vector3(x, y, z);
+const STILL = !!EP.still;
+
+// ---------- renderer ----------
+const W = 1080, H = 1920;
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setSize(W, H); renderer.setPixelRatio(1);
+renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+document.body.prepend(renderer.domElement);
+const scene = new THREE.Scene();
+{ const c = document.createElement('canvas'); c.width = 4; c.height = 512; const g = c.getContext('2d');
+  const gr = g.createLinearGradient(0, 0, 0, 512); gr.addColorStop(0, '#78B9EE'); gr.addColorStop(.62, '#CDE7F7'); gr.addColorStop(1, '#E8F3FA');
+  g.fillStyle = gr; g.fillRect(0, 0, 4, 512); const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; scene.background = tex; }
+scene.fog = new THREE.Fog('#DCEEF8', 300, 1100);
+const camera = new THREE.PerspectiveCamera(42, W / H, 0.5, 3000);
+scene.add(new THREE.HemisphereLight('#FFFFFF', '#B5D48A', 1.15));
+const sun = new THREE.DirectionalLight('#FFF1DA', 2.3); sun.castShadow = true; sun.shadow.mapSize.set(4096, 4096); sun.shadow.bias = -0.0004; sun.shadow.normalBias = .4;
+scene.add(sun); scene.add(sun.target);
+
+const mats = {};
+const mat = (c, extra = {}) => { const k = c + JSON.stringify(extra); return mats[k] || (mats[k] = new THREE.MeshStandardMaterial({ color: c, flatShading: true, roughness: .9, ...extra })); };
+const mesh = (g, c, cast = true) => { const m = new THREE.Mesh(g, mat(c)); m.castShadow = cast; m.receiveShadow = true; return m; };
+const B = (w, h, d) => new THREE.BoxGeometry(w, h, d);
+const Cyl = (a, b, h, s = 12) => new THREE.CylinderGeometry(a, b, h, s);
+const col = new THREE.Color();
+const LM = (x, y, z, ry = 0, s = 1) => new THREE.Matrix4().compose(V(x, y, z), new THREE.Quaternion().setFromEuler(new THREE.Euler(0, ry, 0)), V(s, s, s));
+
+// ---------- counts ----------
+const F0 = EP.followersBefore || 0, FN = EP.followersNew || 0, F = F0 + FN;   // followers (Mango is cat #0, not a follower)
+const HOUSE_MAX = 1e9, PER_TOWER = 20, FLOOR_H = 3.1;   // every follower gets their own small cat house (towers kept for later)
+const nHouses = Math.min(F, HOUSE_MAX), nApts = Math.max(0, F - HOUSE_MAX);
+// towers have different heights (7-15 floors, 2 apartments per floor) for a real skyline
+const CAP = [], TSTART = []; { let a = 0, i = 0; while (a < nApts) { TSTART.push(a); CAP.push(2 * (7 + ((i * 2654435761 >>> 0) % 9))); a += CAP[i]; i++; } }
+const nTowers = CAP.length;
+const APT_T = new Int32Array(Math.max(1, nApts)); TSTART.forEach((s0, i) => { for (let k = s0; k < Math.min(nApts, s0 + CAP[i]); k++) APT_T[k] = i; });
+// appear time per follower index (0-based); -1 = already there
+const APPEAR = new Float32Array(F).fill(-1);
+
+// ---------- city layout ----------
+const BLOCK = 26, ROAD = 5, LOT = 6.6, COAST_X = 128;
+const blocks = [];
+for (let i = -24; i <= 24; i++) for (let j = -24; j <= 24; j++) {
+  if (!i && !j) continue; if (i * BLOCK + BLOCK / 2 + ROAD > COAST_X - 8) continue;
+  blocks.push({ i, j, d: Math.hypot(i * 1.05, j) + Math.max(Math.abs(i), Math.abs(j)) * .01 });
+}
+blocks.sort((a, b) => a.d - b.d || Math.atan2(a.j, a.i) - Math.atan2(b.j, b.i));
+const LM_SLOTS = new Set([1, 4, 7, 11, 16, 22, 29, 37, 46, 56, 67, 79, 92, 106, 121, 137, 154, 172]);
+const landmarks = [...(EP.landmarks || [])];
+const NEWB = EP.newBuild || null;
+const lmBlocks = []; const homeBlocks = [];
+{ let k = 0, lmUsed = 0; const needHomeBlocks = Math.ceil(nHouses / 12) + Math.ceil(nTowers / 4);
+  const needLm = landmarks.length + (NEWB ? 1 : 0);
+  for (; k < blocks.length && (homeBlocks.length < needHomeBlocks || lmBlocks.length < needLm); k++) {
+    if (LM_SLOTS.has(k)) { lmBlocks.push(blocks[k]); continue; }
+    homeBlocks.push(blocks[k]);
+  } }
+// houses: 12 small cat houses around the edge of each block (all face a street), a tiny cat park in the middle
+const houseLots = [], towerLots = [];
+{ const O = [-7.5, -2.5, 2.5, 7.5], order = [];
+  O.forEach(a => order.push([a, 7.5])); [2.5, -2.5].forEach(c => order.push([7.5, c])); [...O].reverse().forEach(a => order.push([a, -7.5])); [-2.5, 2.5].forEach(c => order.push([-7.5, c]));
+  const nhb = Math.ceil(nHouses / 12);
+  homeBlocks.slice(0, nhb).forEach(b => order.forEach(([a, c]) => { if (houseLots.length >= nHouses) return;
+    const ry = Math.abs(c) === 7.5 ? (c > 0 ? 0 : Math.PI) : (a > 0 ? Math.PI / 2 : -Math.PI / 2);
+    houseLots.push({ x: b.i * BLOCK + a, z: b.j * BLOCK + c, ry, block: b }); }));
+  homeBlocks.slice(nhb).forEach(b => [[-1, -1], [1, 1], [1, -1], [-1, 1]].forEach(([a, c]) => { if (towerLots.length >= nTowers) return;
+    towerLots.push({ x: b.i * BLOCK + a * 6.2, z: b.j * BLOCK + c * 6.2, block: b, hue: (towerLots.length * 7) % 5 }); }));
+}
+const usedBlocks = [...homeBlocks.slice(0, Math.ceil(nHouses / 12) + Math.ceil(nTowers / 4)), ...lmBlocks];
+usedBlocks.forEach(b => b.active = true);
+const maxR = usedBlocks.length ? Math.max(...usedBlocks.map(b => Math.hypot(b.i, b.j))) : 0;
+// reserved (empty) lots inside the city get a "your idea here" sign
+const reserved = EP.noReserved ? [] : blocks.filter((b, k) => LM_SLOTS.has(k) && !lmBlocks.includes(b) && Math.hypot(b.i, b.j) <= maxR + .01);
+reserved.forEach(b => b.active = true);
+const active = blocks.filter(b => b.active);
+const CR = Math.max(40, (maxR + .7) * BLOCK);
+const ACT = new Set(active.map(b => b.i + ',' + b.j));
+const isCity = (x, z, m = 4) => { if (Math.abs(x) < BLOCK / 2 + m && Math.abs(z) < BLOCK / 2 + m) return true;
+  const i = Math.round(x / BLOCK), j = Math.round(z / BLOCK);
+  for (let di = -1; di <= 1; di++) for (let dj = -1; dj <= 1; dj++) { const bi = i + di, bj = j + dj; if (ACT.has(bi + ',' + bj) && Math.abs(x - bi * BLOCK) < BLOCK / 2 + m && Math.abs(z - bj * BLOCK) < BLOCK / 2 + m) return true; }
+  return Math.abs(z - BLOCK / 2) < 6 && x > 0 && x < COAST_X + 10; };   // beach road
+// growth mode: every follower appears in order (city grows outward); used for 'how the city grows' videos
+const GROW = EP.order === 'index';
+if (GROW) for (let k = F0; k < F; k++) APPEAR[k] = EP.newFrom + (EP.newTo - EP.newFrom) * Math.pow((k - F0 + .5) / FN, .8);
+const lmAt = k => (landmarks[k] && landmarks[k].at != null) ? landmarks[k].at : -1;
+const blockT = new Map();   // block -> time it starts being built (-1 = already there)
+const setBT = (b, t) => { const o = blockT.has(b) ? blockT.get(b) : 1e9; blockT.set(b, Math.min(o, t < 0 ? -1 : t)); };
+if (GROW) { houseLots.forEach((l, n) => setBT(l.block, APPEAR[n])); towerLots.forEach((l, ti) => setBT(l.block, APPEAR[HOUSE_MAX + TSTART[ti]]));
+  landmarks.forEach((lm, k) => setBT(lmBlocks[k], lmAt(k) - .3)); }
+const bT = b => blockT.has(b) ? blockT.get(b) : -1;
+const SHR = Math.max(CR, 120);
+sun.position.set(SHR * .6, SHR * 1.4, SHR * .9); Object.assign(sun.shadow.camera, { left: -SHR - 40, right: SHR + 40, top: SHR + 40, bottom: -SHR - 40, near: 1, far: SHR * 4 }); sun.shadow.camera.updateProjectionMatrix();
+
+// ---------- ground, beach, sea, mountains ----------
+{ const g = new THREE.PlaneGeometry(1600, 1600, 160, 160); g.rotateX(-Math.PI / 2);
+  const pos = g.attributes.position, cl = [];
+  const cA = new THREE.Color('#A9D27A'), cB = new THREE.Color('#D3DFA0'), cC = new THREE.Color('#8CC56A'), sand = new THREE.Color('#EBD9A6'), tmp = new THREE.Color();
+  for (let i = 0; i < pos.count; i++) { const x = pos.getX(i), z = pos.getZ(i);
+    const n = Math.sin(x * .021) * Math.cos(z * .017) + .6 * Math.sin((x + z) * .043) + .35 * Math.cos(x * .09 - z * .07);
+    tmp.copy(cA).lerp(cB, THREE.MathUtils.clamp(.5 + n * .45, 0, 1)); if (n > 1.1) tmp.lerp(cC, .5);
+    const cx = COAST_X + Math.sin(z * .012) * 14;           // wavy coastline
+    if (x > cx - 6) tmp.lerp(sand, THREE.MathUtils.clamp((x - cx + 6) / 8, 0, 1));
+    let y = 0; if (x > cx + 22) y = -(x - cx - 22) * .14; const r = Math.hypot(x, z); if (r > 720) y = Math.min(y, -(r - 720) * .1);
+    pos.setY(i, y); cl.push(tmp.r, tmp.g, tmp.b); }
+  g.setAttribute('color', new THREE.Float32BufferAttribute(cl, 3)); g.computeVertexNormals();
+  const ground = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 1 })); ground.receiveShadow = true; scene.add(ground);
+  const sea = new THREE.Mesh(new THREE.PlaneGeometry(8000, 8000), new THREE.MeshStandardMaterial({ color: '#4FA8E3', roughness: .35, metalness: .05 })); sea.rotation.x = -Math.PI / 2; sea.position.y = -1.6; scene.add(sea);
+  const foam = new THREE.Mesh(new THREE.PlaneGeometry(14, 1600), new THREE.MeshBasicMaterial({ color: '#DDF2FB', transparent: true, opacity: .55 })); foam.rotation.x = -Math.PI / 2; foam.position.set(COAST_X + 34, -1.45, 0); scene.add(foam);
+  // mountains behind the city (away from the sea)
+  for (let k = 0; k < 40; k++) { const a = Math.PI * .58 + k / 39 * Math.PI * .95 + (rnd() - .5) * .06, r = 560 + rnd() * 110;
+    const h = 80 + rnd() * 130, cg = new THREE.ConeGeometry(60 + rnd() * 60, h, 7, 3); const p = cg.attributes.position;
+    for (let i = 0; i < p.count; i++) if (p.getY(i) < h / 2 - .1) { p.setX(i, p.getX(i) * (1 + (rnd() - .5) * .35)); p.setZ(i, p.getZ(i) * (1 + (rnd() - .5) * .35)); p.setY(i, p.getY(i) + (rnd() - .5) * h * .08); }
+    cg.computeVertexNormals(); const m = new THREE.Mesh(cg, mat(rnd() > .5 ? '#9DB895' : '#AFC4A2')); m.position.set(Math.cos(a) * r, h / 2 - 6, Math.sin(a) * r); scene.add(m); }
+  // a few sailboats
+  for (let k = 0; k < 7; k++) { const g2 = new THREE.Group(); const hull = mesh(B(2, 1, 6), '#FFFFFF'); hull.position.y = -.9; g2.add(hull);
+    const sail = mesh(new THREE.ConeGeometry(2, 6, 3), k % 2 ? '#FFFFFF' : '#FFC93C'); sail.position.y = 2.6; g2.add(sail);
+    g2.position.set(COAST_X + 80 + rnd() * 260, 0, -300 + rnd() * 600); g2.rotation.y = rnd() * 3; scene.add(g2); }
+}
+
+// ---------- roads ----------
+const roadMat = mat('#3D4350'), lineMat = new THREE.MeshBasicMaterial({ color: '#FFFFFF' });
+const segs = new Map();
+const addSeg = (key, s0, t) => { const o = segs.get(key); if (!o || o[3] > t) segs.set(key, [...s0, t]); };
+for (const b of active) { const x0 = b.i * BLOCK, z0 = b.j * BLOCK, h = BLOCK / 2, t = bT(b);
+  addSeg(`h${b.i},${b.j}`, [x0, z0 - h, 'x'], t); addSeg(`h${b.i},${b.j + 1}`, [x0, z0 + h, 'x'], t);
+  addSeg(`v${b.i},${b.j}`, [x0 - h, z0, 'z'], t); addSeg(`v${b.i + 1},${b.j}`, [x0 + h, z0, 'z'], t); }
+[[0, -BLOCK / 2, 'x'], [0, BLOCK / 2, 'x'], [-BLOCK / 2, 0, 'z'], [BLOCK / 2, 0, 'z']].forEach((s, k) => segs.set('c' + k, [...s, -1]));
+for (let i = 1; i * BLOCK < COAST_X + 4; i++) segs.set(`h${i},1`, [i * BLOCK, BLOCK / 2, 'x', -1]);   // road to the beach
+const roadList = [...segs.values()];
+const ROADM = {}; { const rm = new THREE.InstancedMesh(B(1, .12, 1), roadMat, roadList.length); rm.receiveShadow = true; ROADM.rm = rm;
+  const pawGeo = mergeGeometries([Cyl(.55, .55, .03, 12).toNonIndexed().translate(0, 0, .15), ...[[-.55, -.55], [-.2, -.85], [.2, -.85], [.55, -.55]].map(([x, z]) => Cyl(.2, .2, .03, 8).toNonIndexed().translate(x, 0, z))].map(g => { g.deleteAttribute('uv'); return g; }));
+  const dash = new THREE.InstancedMesh(pawGeo, lineMat, roadList.length * 4);
+  const M = new THREE.Matrix4(); let d = 0;
+  roadList.forEach(([x, z, ax], k) => {
+    M.compose(V(x, .06, z), new THREE.Quaternion(), ax === 'x' ? V(BLOCK + ROAD, 1, ROAD) : V(ROAD, 1, BLOCK + ROAD)); rm.setMatrixAt(k, M);
+    for (let q = 0; q < 4; q++) { const o = -BLOCK / 2 + 3.5 + q * 6.4; M.compose(V(ax === 'x' ? x + o : x, .13, ax === 'z' ? z + o : z), new THREE.Quaternion().setFromEuler(new THREE.Euler(0, ax === 'x' ? -Math.PI / 2 + (q % 2) * .35 : (q % 2) * .35, 0)), V(.9, 1, .9)); dash.setMatrixAt(d++, M); } });
+  scene.add(rm, dash); ROADM.dash = dash;
+  if (active.length) { const pm = new THREE.InstancedMesh(B(BLOCK - ROAD, .1, BLOCK - ROAD), mat('#E6E1D3'), active.length); pm.receiveShadow = true;
+    active.forEach((b, k) => { M.makeTranslation(b.i * BLOCK, .05, b.j * BLOCK); pm.setMatrixAt(k, M); }); scene.add(pm); ROADM.pm = pm; }
+  ROADM.base = { rm: [], dash: [], pm: [] }; const tmpM = new THREE.Matrix4();
+  for (let k = 0; k < roadList.length; k++) { rm.getMatrixAt(k, tmpM); ROADM.base.rm.push([tmpM.clone(), roadList[k][3]]); for (let q = 0; q < 4; q++) { dash.getMatrixAt(k * 4 + q, tmpM); ROADM.base.dash.push([tmpM.clone(), roadList[k][3]]); } }
+  if (ROADM.pm) active.forEach((b, k) => { ROADM.pm.getMatrixAt(k, tmpM); ROADM.base.pm.push([tmpM.clone(), bT(b)]); });
+}
+
+// ---------- cat geometry ----------
+function makeCatGeo() {
+  const parts = [];
+  const add = (g, x, y, z, rx = 0) => { g = g.toNonIndexed(); g.deleteAttribute('uv'); if (rx) g.rotateX(rx); g.translate(x, y, z); parts.push(g); };
+  add(B(.5, .45, .9), 0, .45, 0); add(B(.48, .42, .42), 0, .82, .5);
+  add(new THREE.ConeGeometry(.1, .22, 4), -.15, 1.13, .48); add(new THREE.ConeGeometry(.1, .22, 4), .15, 1.13, .48);
+  add(B(.1, .1, .6), 0, .78, -.62, -.7);
+  [[-.16, .3], [.16, .3], [-.16, -.3], [.16, -.3]].forEach(([x, z]) => add(B(.12, .3, .12), x, .15, z));
+  return mergeGeometries(parts);
+}
+const CAT_GEO = makeCatGeo();
+
+// ---------- center: roundabout + Mango's PETME2 fountain ----------
+{ const plaza = mesh(Cyl(BLOCK / 2 - 1, BLOCK / 2 - 1, .14, 32), '#3D4350', false); plaza.position.y = .07; scene.add(plaza);
+  const island = mesh(Cyl(7.5, 7.5, .5, 8), '#F1E6CF'); island.position.y = .25; scene.add(island);
+  const ring = new THREE.Mesh(new THREE.RingGeometry(9.6, 9.9, 48), lineMat); ring.rotation.x = -Math.PI / 2; ring.position.y = .16; scene.add(ring);
+  // stylised PETME2 cat fountain: white base, blue bowl, water dome, cat ears
+  const base = mesh(Cyl(4.4, 4.8, 1.2, 16), '#FFFFFF'); base.position.y = 1.1; scene.add(base);
+  const bowl = mesh(Cyl(4.0, 3.6, 1.6, 16), '#2F5FE0'); bowl.position.y = 2.5; scene.add(bowl);
+  const water = new THREE.Mesh(new THREE.SphereGeometry(3.2, 16, 8, 0, Math.PI * 2, 0, Math.PI / 2), new THREE.MeshStandardMaterial({ color: '#7FD0FF', roughness: .2, transparent: true, opacity: .85 })); water.position.y = 3.3; scene.add(water);
+  [-1.8, 1.8].forEach(x => { const e = mesh(new THREE.ConeGeometry(.9, 1.8, 3), '#2F5FE0'); e.position.set(x, 3.9, -2.2); scene.add(e); });
+  const sign = textSign('PETME2', 7, '#2F5FE0'); sign.position.set(0, 7.4, 0); scene.add(sign); window.__signs = [sign];
+}
+
+// ---------- cat houses: one per follower, 3 cat styles ----------
+// A) cat-face house (ears on the roof, eye windows, pink nose, round cat-flap door)  B) cardboard box house  C) felt cat-cave pod with ears
+const PASTEL = ['#FFFFFF', '#FFE8D6', '#E7F0FF', '#FDE2E8', '#E3F6EC', '#FFF4CC', '#EDE4FF'];
+const ROOFC = ['#2F5FE0', '#F28C28', '#E85D5D', '#5BB98C', '#9B6FE0', '#3B3B44', '#FFC93C'];
+const FELT = ['#8E8E9A', '#F4A7B9', '#9AD8C8', '#C9B6F2', '#F6C86B', '#7FB6E8'];
+const NH = Math.max(1, houseLots.length);
+const kindOf = n => { const h = (n * 2654435761 >>> 0) % 100; return h < 52 ? 'A' : h < 76 ? 'B' : 'C'; };
+const cntK = { A: 0, B: 0, C: 0 }; houseLots.forEach((l, n) => cntK[kindOf(n)]++);
+const IM = (geo, n, cast = true) => { const m = new THREE.InstancedMesh(geo, mat('#ffffff'), Math.max(1, n)); m.castShadow = cast; m.receiveShadow = true; m.count = n; scene.add(m); return m; };
+const half = new THREE.SphereGeometry(1.9, 14, 8, 0, Math.PI * 2, 0, Math.PI / 2);
+const HP = {
+  body: IM(B(3.6, 2.4, 3.2), cntK.A), roof: IM(B(3.9, .35, 3.5), cntK.A),
+  ear: IM(new THREE.ConeGeometry(.6, 1.2, 3), cntK.A * 2 + cntK.C * 2),
+  eye: IM(Cyl(.36, .36, .08, 14).rotateX(Math.PI / 2), cntK.A * 2, false), pupil: IM(B(.1, .5, .1), cntK.A * 2, false),
+  nose: IM(new THREE.ConeGeometry(.16, .2, 3).rotateZ(Math.PI), cntK.A, false),
+  door: IM(Cyl(.5, .5, .1, 14).rotateX(Math.PI / 2), NH, false),
+  box: IM(B(3.3, 2.5, 3.1), cntK.B), flap: IM(B(3.3, .06, 1.1), cntK.B * 2), tape: IM(B(.5, .02, 3.12), cntK.B, false),
+  pod: IM(half, cntK.C),
+};
+const houseParts = []; const hc = Object.fromEntries(Object.keys(HP).map(k => [k, 0]));
+const LR = (x, y, z, rx = 0, ry = 0, rz = 0) => new THREE.Matrix4().compose(V(x, y, z), new THREE.Quaternion().setFromEuler(new THREE.Euler(rx, ry, rz)), V(1, 1, 1));
+houseLots.forEach((l, n) => { const h = (n * 2246822519 >>> 0) % 1000 / 1000, kind = kindOf(n);
+  const p = []; const put = (k, m, c) => { const i = hc[k]++; if (c) HP[k].setColorAt(i, col.set(c)); p.push([HP[k], i, m]); };
+  if (kind === 'A') { const wall = PASTEL[Math.floor(h * 71) % PASTEL.length], roof = ROOFC[Math.floor(h * 53) % ROOFC.length], eyeC = h < .5 ? '#B8E05A' : '#FFD23F';
+    put('body', LR(0, 1.2, 0), wall); put('roof', LR(0, 2.57, 0), roof); put('ear', LR(-1.2, 3.3, .6), roof); put('ear', LR(1.2, 3.3, .6), roof);
+    put('eye', LR(-.8, 1.62, 1.61), eyeC); put('eye', LR(.8, 1.62, 1.61), eyeC); put('pupil', LR(-.8, 1.62, 1.67), '#1B2333'); put('pupil', LR(.8, 1.62, 1.67), '#1B2333');
+    put('nose', LR(0, 1.2, 1.63), '#F28FA6'); put('door', LR(0, .48, 1.62, 0, 0, 0).multiply(new THREE.Matrix4().makeScale(.85, .85, 1)), '#1B2333'); }
+  else if (kind === 'B') { put('box', LR(0, 1.25, 0), h < .5 ? '#C99A62' : '#D6AE76');
+    put('flap', LR(0, 2.62, 1.3, .55), '#BC8C55'); put('flap', LR(0, 2.62, -1.3, -.55), '#BC8C55'); put('tape', LR(0, 2.51, 0), '#E9D3A8'); put('door', LR(0, .7, 1.57), '#3A2A1C'); }
+  else { const c = FELT[Math.floor(h * 61) % FELT.length]; put('pod', LR(0, 0, 0), c); put('ear', LR(-.85, 2.05, 0), c); put('ear', LR(.85, 2.05, 0), c); put('door', LR(0, .7, 1.72, -.35), '#1B2333'); }
+  houseParts.push(p); });
+Object.values(HP).forEach(m => { if (m.instanceColor) m.instanceColor.needsUpdate = true; });
+const T = new THREE.Matrix4(), M2 = new THREE.Matrix4();
+function placeHouse(n, s) { const l = houseLots[n]; if (!l) return;
+  T.compose(V(l.x, 0, l.z), new THREE.Quaternion().setFromEuler(new THREE.Euler(0, l.ry, 0)), V(s, Math.max(s, .001), s));
+  for (const [m, i, lm] of houseParts[n]) { M2.multiplyMatrices(T, lm); m.setMatrixAt(i, M2); } }
+
+// ---------- cat towers (followers 101+) ----------
+const TOWER_W = ['#FFFFFF', '#EEF1F6', '#E3ECF7', '#F7F3EA', '#DDE4EC'];
+const TOWER_ACC = ['#2F5FE0', '#FFC93C', '#E85D5D', '#5BB98C', '#9B6FE0'];
+const FLOORS_MAX = 15;
+const NF = Math.max(1, nTowers * FLOORS_MAX);
+const TP = {
+  floor: new THREE.InstancedMesh(B(8, FLOOR_H, 8), mat('#ffffff'), NF),
+  band: new THREE.InstancedMesh(B(8.3, .35, 8.3), mat('#ffffff'), NF),
+  win: new THREE.InstancedMesh(B(2.4, 1.5, .1), mat('#ffffff'), NF * 8),
+  cap: new THREE.InstancedMesh(B(8.6, .7, 8.6), mat('#ffffff'), Math.max(1, nTowers)),
+  ear: new THREE.InstancedMesh(new THREE.ConeGeometry(1.1, 2.4, 3), mat('#ffffff'), Math.max(1, nTowers * 2)),
+  lobby: new THREE.InstancedMesh(Cyl(1, 1, .1, 14).rotateX(Math.PI / 2), mat('#1B2333'), Math.max(1, nTowers)),
+};
+Object.values(TP).forEach(m => { m.castShadow = m !== TP.win; m.receiveShadow = true; scene.add(m); });
+const aptTower = k => APT_T[k];
+const WIN_OFF = [[-1.9, 4.06, 0], [1.9, 4.06, 0], [-1.9, -4.06, Math.PI], [1.9, -4.06, Math.PI], [4.06, -1.9, Math.PI / 2], [4.06, 1.9, Math.PI / 2], [-4.06, -1.9, -Math.PI / 2], [-4.06, 1.9, -Math.PI / 2]];
+const LIT = new THREE.Color('#FFD86B'), GLASS = new THREE.Color('#9FD3FF');
+function towerAptsAt(ti, t) { // how many apartments of tower ti are filled at time t (fractional for growth)
+  const first = TSTART[ti], last = Math.min(nApts, first + CAP[ti]); let n = 0, grow = 1;
+  for (let k = first; k < last; k++) { const a = APPEAR[HOUSE_MAX + k]; if (a < 0 || t >= a) { n++; if (a >= 0) grow = Math.min(1, (t - a) / .5); } }
+  return { n, grow }; }
+function placeTower(ti, t, glowT) {
+  const l = towerLots[ti], { n, grow } = towerAptsAt(ti, t); const floors = Math.ceil(n / 2);
+  for (let f = 0; f < FLOORS_MAX; f++) { const idx = ti * FLOORS_MAX + f; const on = f < floors;
+    const top = f === floors - 1, gy = top ? ease(grow) : 1, s = on ? 1 : 0;
+    const y = f * FLOOR_H + FLOOR_H / 2;
+    T.compose(V(l.x, y - (1 - gy) * FLOOR_H / 2, l.z), new THREE.Quaternion(), V(s, Math.max(.001, s * gy), s)); TP.floor.setMatrixAt(idx, T);
+    T.compose(V(l.x, (f + 1) * FLOOR_H * (top ? gy : 1), l.z), new THREE.Quaternion(), V(s, s, s)); TP.band.setMatrixAt(idx, T);
+    for (let w = 0; w < 8; w++) { const [ox, oz, ry] = WIN_OFF[w]; T.compose(V(l.x + ox, y, l.z + oz), new THREE.Quaternion().setFromEuler(new THREE.Euler(0, ry, 0)), V(s, Math.max(.001, s * gy), s)); TP.win.setMatrixAt(idx * 8 + w, T);
+      const lit = glowT && top && t - glowT < 1.5; TP.win.setColorAt(idx * 8 + w, lit ? LIT : (w + f + ti) % 5 === 0 ? LIT : GLASS); } }
+  const H2 = Math.max(floors - 1 + ease(grow), 0) * FLOOR_H, s = floors ? 1 : 0;
+  T.compose(V(l.x, H2 + .35, l.z), new THREE.Quaternion(), V(s, s, s)); TP.cap.setMatrixAt(ti, T);
+  T.compose(V(l.x - 2.6, H2 + 1.9, l.z + 2.6), new THREE.Quaternion(), V(s, s, s)); TP.ear.setMatrixAt(ti * 2, T);
+  T.compose(V(l.x + 2.6, H2 + 1.9, l.z + 2.6), new THREE.Quaternion(), V(s, s, s)); TP.ear.setMatrixAt(ti * 2 + 1, T);
+  T.compose(V(l.x, 1.1, l.z + 4.06), new THREE.Quaternion(), V(s, s, s)); TP.lobby.setMatrixAt(ti, T);
+}
+towerLots.forEach((l, ti) => { const fc = col.set(TOWER_W[l.hue]); for (let f = 0; f < FLOORS_MAX; f++) { TP.floor.setColorAt(ti * FLOORS_MAX + f, fc); TP.band.setColorAt(ti * FLOORS_MAX + f, col.set(TOWER_ACC[l.hue])); col.set(TOWER_W[l.hue]); }
+  TP.cap.setColorAt(ti, col.set(TOWER_ACC[l.hue])); TP.ear.setColorAt(ti * 2, col); TP.ear.setColorAt(ti * 2 + 1, col); });
+[TP.floor, TP.band, TP.cap, TP.ear].forEach(m => { if (m.instanceColor) m.instanceColor.needsUpdate = true; });
+TP.floor.count = TP.band.count = nTowers * FLOORS_MAX; TP.win.count = nTowers * FLOORS_MAX * 8; TP.cap.count = TP.lobby.count = nTowers; TP.ear.count = nTowers * 2;
+
+// ---------- cats: Mango + one per follower ----------
+const CAT_COLORS = ['#8E8E9A', '#3B3B44', '#FFFFFF', '#D9A066', '#C47A4A', '#E8D5B5', '#2B2B30', '#B0B0B8'];
+const catMesh = new THREE.InstancedMesh(CAT_GEO, mat('#ffffff'), F + 1); catMesh.castShadow = true; catMesh.receiveShadow = true; scene.add(catMesh);
+catMesh.setColorAt(0, col.set('#F28C28'));
+for (let n = 1; n <= F; n++) catMesh.setColorAt(n, col.set(CAT_COLORS[(n * 5 + 3) % CAT_COLORS.length]));
+catMesh.instanceColor.needsUpdate = true;
+const homeOf = k => k < HOUSE_MAX ? { x: houseLots[k].x, z: houseLots[k].z, r: 2.4, roof: k % 3 === 0 ? (kindOf(k) === 'A' ? 2.75 : kindOf(k) === 'B' ? 2.55 : 1.85) : 0 } : (() => { const l = towerLots[aptTower(k - HOUSE_MAX)]; return { x: l.x, z: l.z, r: 5.6 + ((k - HOUSE_MAX) % 3) * .7 }; })();
+
+// ---------- trees + palms ----------
+{ const spots = [];
+  for (let k = 0; k < 12000 && spots.length < 4200; k++) { const a = rnd() * Math.PI * 2, r = 22 + Math.pow(rnd(), .8) * 620; const x = Math.cos(a) * r, z = Math.sin(a) * r;
+    if (x > COAST_X - 12 + Math.sin(z * .012) * 14) continue; if (isCity(x, z, 5)) continue; spots.push([x, z, .7 + rnd() * .8, rnd() < .7]); }
+  const round = spots.filter(t => t[3]), cone = spots.filter(t => !t[3]);
+  const trunk = new THREE.InstancedMesh(Cyl(.35, .45, 2.4, 6), mat('#8A5A3B'), spots.length);
+  const ball = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(2.4, 0), mat('#ffffff'), round.length);
+  const cn = new THREE.InstancedMesh(new THREE.ConeGeometry(1.8, 5, 7), mat('#ffffff'), cone.length);
+  [trunk, ball, cn].forEach(m => { m.castShadow = true; m.receiveShadow = true; scene.add(m); });
+  const greens = ['#3E9B4F', '#4FA65A', '#2F8A45', '#5DB563'];
+  spots.forEach(([x, z, s], k) => { T.compose(V(x, 1.2 * s, z), new THREE.Quaternion(), V(s, s, s)); trunk.setMatrixAt(k, T); });
+  round.forEach(([x, z, s], k) => { T.compose(V(x, 3.6 * s, z), new THREE.Quaternion().setFromEuler(new THREE.Euler(0, k, 0)), V(s, s * .9, s)); ball.setMatrixAt(k, T); ball.setColorAt(k, col.set(greens[k % 4])); });
+  cone.forEach(([x, z, s], k) => { T.compose(V(x, 4.4 * s, z), new THREE.Quaternion(), V(s, s, s)); cn.setMatrixAt(k, T); cn.setColorAt(k, col.set(greens[(k + 1) % 4])); });
+  // tiny cat park in the middle of every house block: grass, yarn ball / scratching post / cat tree, and a fish street lamp on the corner
+  { const hb = [...new Set(houseLots.map(l => l.block))]; const n = hb.length;
+    const grass = IM(B(9.4, .12, 9.4), n, false), yarn = IM(new THREE.IcosahedronGeometry(1.3, 1), n), post = IM(Cyl(.45, .5, 3.4, 8), n), plat = IM(Cyl(1.4, 1.4, .3, 10), n * 2),
+      tuft = IM(new THREE.ConeGeometry(.35, 1.1, 5), n * 6), lampP = IM(Cyl(.12, .14, 4.2, 6), n), fish = IM(mergeGeometries([new THREE.SphereGeometry(.55, 10, 8).scale(1.5, .8, .45).toNonIndexed(), new THREE.ConeGeometry(.5, .7, 3).rotateZ(Math.PI / 2).translate(-1.05, 0, 0).toNonIndexed()].map(g => { g.deleteAttribute('uv'); return g; })), n, false);
+    fish.material = new THREE.MeshStandardMaterial({ color: '#ffffff', emissive: '#FFB347', emissiveIntensity: .35, flatShading: true });
+    const YARN = ['#E85D5D', '#F4A7B9', '#7FB6E8', '#9B6FE0', '#FFC93C'];
+    hb.forEach((b, i) => { const x = b.i * BLOCK, z = b.j * BLOCK, h = (i * 2654435761 >>> 0) % 3;
+      T.makeTranslation(x, .12, z); grass.setMatrixAt(i, T); grass.setColorAt(i, col.set('#9FD47F'));
+      T.compose(V(x + (h === 0 ? 0 : 2.4), 1.3, z + (h === 0 ? 0 : -2)), new THREE.Quaternion(), V(1, 1, 1).multiplyScalar(h === 0 ? 1 : .7)); yarn.setMatrixAt(i, T); yarn.setColorAt(i, col.set(YARN[i % 5]));
+      T.compose(V(x - 1.8, 1.7, z + 1.4), new THREE.Quaternion(), V(1, h === 2 ? 1.5 : 1, 1)); post.setMatrixAt(i, T); post.setColorAt(i, col.set('#D9C2A3'));
+      T.makeTranslation(x - 1.8, h === 2 ? 5.2 : 3.5, z + 1.4); plat.setMatrixAt(i * 2, T); plat.setColorAt(i * 2, col.set('#2F5FE0'));
+      T.compose(V(x - 1.8, h === 2 ? 2.6 : -9, z + 1.4), new THREE.Quaternion(), V(.8, 1, .8)); plat.setMatrixAt(i * 2 + 1, T); plat.setColorAt(i * 2 + 1, col.set('#8FA9D9'));
+      for (let q = 0; q < 6; q++) { T.makeTranslation(x + Math.cos(q * 1.05 + i) * 3.4, .6, z + Math.sin(q * 1.05 + i) * 3.4); tuft.setMatrixAt(i * 6 + q, T); tuft.setColorAt(i * 6 + q, col.set(q % 2 ? '#5DB563' : '#7CCB6A')); }
+      T.makeTranslation(x - BLOCK / 2 + 3.2, 2.1, z - BLOCK / 2 + 3.2); lampP.setMatrixAt(i, T); lampP.setColorAt(i, col.set('#3B3B44'));
+      T.compose(V(x - BLOCK / 2 + 3.2, 4.5, z - BLOCK / 2 + 3.2), new THREE.Quaternion().setFromEuler(new THREE.Euler(0, i, 0)), V(1, 1, 1)); fish.setMatrixAt(i, T); fish.setColorAt(i, col.set(i % 2 ? '#FF9F43' : '#FFC93C')); });
+    [grass, yarn, post, plat, tuft, lampP, fish].forEach(m => { if (m.instanceColor) m.instanceColor.needsUpdate = true; });
+    const tmp = new THREE.Matrix4(); window.__park = [[grass, 1], [yarn, 1], [post, 1], [plat, 2], [tuft, 6], [lampP, 1], [fish, 1]].map(([m, k]) => ({ m, base: [...Array(n * k).keys()].map(i => { m.getMatrixAt(i, tmp); return [tmp.clone(), bT(hb[Math.floor(i / k)])]; }) })); }
+  // a small park with trees in the middle of each tower block
+  const tb = [...new Set(towerLots.map(l => l.block))]; const pk = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(2.2, 0), mat('#4FA65A'), Math.max(1, tb.length * 3)); pk.castShadow = true; pk.count = tb.length * 3; scene.add(pk);
+  const pg = new THREE.InstancedMesh(B(8, .12, 8), mat('#8CC56A'), Math.max(1, tb.length)); pg.count = tb.length; pg.receiveShadow = true; scene.add(pg);
+  tb.forEach((b, i) => { T.makeTranslation(b.i * BLOCK, .14, b.j * BLOCK); pg.setMatrixAt(i, T); [[-1.8, -1.4], [1.9, .6], [-.4, 2.1]].forEach(([dx, dz], q) => { T.compose(V(b.i * BLOCK + dx, 2.6, b.j * BLOCK + dz), new THREE.Quaternion(), V(.8, .9, .8)); pk.setMatrixAt(i * 3 + q, T); }); });
+  // palms along the beach
+  const NP = 70, pt = new THREE.InstancedMesh(Cyl(.25, .35, 6, 6), mat('#A8784F'), NP), pl = new THREE.InstancedMesh(new THREE.ConeGeometry(3, 1.2, 6), mat('#3E9B4F'), NP);
+  [pt, pl].forEach(m => { m.castShadow = true; scene.add(m); });
+  for (let k = 0; k < NP; k++) { const z = -420 + k * 12 + rnd() * 5, x = COAST_X + Math.sin(z * .012) * 14 + 2 + rnd() * 10; if (Math.abs(z - BLOCK / 2) < 8) { T.makeScale(0, 0, 0); pt.setMatrixAt(k, T); pl.setMatrixAt(k, T); continue; }
+    T.compose(V(x, 3, z), new THREE.Quaternion().setFromEuler(new THREE.Euler(.12, 0, .1)), V(1, 1, 1)); pt.setMatrixAt(k, T); T.compose(V(x + .4, 6.2, z + .3), new THREE.Quaternion(), V(1, 1, 1)); pl.setMatrixAt(k, T); }
+}
+
+// ---------- cars ----------
+const carGeo = mergeGeometries([B(2.2, 1, 4).toNonIndexed().translate(0, .8, 0), B(1.9, .8, 2).toNonIndexed().translate(0, 1.6, -.3), new THREE.ConeGeometry(.35, .6, 3).toNonIndexed().translate(-.6, 2.25, -.3), new THREE.ConeGeometry(.35, .6, 3).toNonIndexed().translate(.6, 2.25, -.3)].map(g => { g.deleteAttribute('uv'); return g; }));
+const NCARS = Math.min(80, 6 + Math.floor(roadList.length * .5));
+const carMesh = new THREE.InstancedMesh(carGeo, mat('#ffffff'), NCARS); carMesh.castShadow = true; scene.add(carMesh);
+const CAR_C = ['#E85D5D', '#2F5FE0', '#FFC93C', '#FFFFFF', '#3B3B44', '#5BB98C'];
+const CARS = []; for (let k = 0; k < NCARS; k++) { CARS.push({ ring: k < 6, a0: k / 6 * Math.PI * 2, lane: roadList[(k * 37) % roadList.length], off: rnd(), sp: .05 + rnd() * .06, dir: rnd() < .5 ? 1 : -1 }); carMesh.setColorAt(k, col.set(CAR_C[k % 6])); }
+carMesh.instanceColor.needsUpdate = true;
+
+// ---------- landmarks ----------
+function textSign(text, w = 12, border = '#2F5FE0') {
+  const c = document.createElement('canvas'); c.width = 1024; c.height = 220;
+  const g = c.getContext('2d'); g.fillStyle = '#FFFFFF'; g.beginPath(); g.roundRect(6, 6, 1012, 208, 60); g.fill();
+  g.lineWidth = 12; g.strokeStyle = border; g.stroke();
+  g.fillStyle = '#1B2333'; g.font = '900 104px Nunito'; g.textAlign = 'center'; g.textBaseline = 'middle';
+  let s = text.toUpperCase(); while (g.measureText(s).width > 940 && s.length > 4) s = s.slice(0, -2);
+  g.fillText(s, 512, 116);
+  const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 8;
+  return new THREE.Mesh(new THREE.PlaneGeometry(w, w * 220 / 1024), new THREE.MeshBasicMaterial({ map: tex, transparent: true }));
+}
+const signs = [];
+function landmark(kind, sign) {
+  const g = new THREE.Group();
+  const q = (geo, c, x, y, z) => { const m = mesh(geo, c); m.position.set(x, y, z); g.add(m); return m; };
+  const cat = (c, s, x, y, z) => { const m = new THREE.Mesh(CAT_GEO, mat(c)); m.scale.setScalar(s); m.position.set(x, y, z); m.castShadow = true; g.add(m); return m; };
+  let sy = 17;
+  if (kind === 'petshop') { q(B(13, 5.5, 9), '#FFFFFF', 0, 2.75, 0); q(B(14, .6, 10), '#2F5FE0', 0, 5.8, 0); for (let i = 0; i < 7; i++) { const s = q(B(2, .3, 2.6), i % 2 ? '#FFFFFF' : '#2F5FE0', -6 + i * 2, 4.6, 5.4); s.rotation.x = .5; }
+    q(B(8, 2.6, .2), '#9FD3FF', -1.5, 2.2, 4.55); q(B(1.8, 3.4, .2), '#1B2333', 4.5, 1.7, 4.55); q(Cyl(1.3, 1.1, 1, 12), '#2F5FE0', 0, 6.6, 0); [-1.4, 1.4].forEach(x => q(new THREE.ConeGeometry(.5, 1.1, 3), '#2F5FE0', x, 7.4, -.6)); sy = 11; }
+  else if (kind === 'cityhall') { q(B(20, 9, 13), '#FFFFFF', 0, 4.5, 0); q(B(22, 1, 15), '#E9E3CF', 0, .5, 0); for (let i = 0; i < 6; i++) q(Cyl(.6, .6, 8, 10), '#F4F5F7', -7.5 + i * 3, 4.5, 7.2);
+    q(B(22, 1.2, 15), '#E9E3CF', 0, 9.6, 0); q(new THREE.SphereGeometry(5, 16, 8, 0, Math.PI * 2, 0, Math.PI / 2), '#2F5FE0', 0, 10.2, 0); [-3, 3].forEach(x => q(new THREE.ConeGeometry(1.4, 3.4, 3), '#2F5FE0', x, 15, 1));
+    q(Cyl(.15, .15, 7, 6), '#8A8F98', 0, 18.5, 0); q(B(3.2, 2, .1), '#FFC93C', 1.6, 21, 0);
+    q(B(6, 2.4, 6), '#E7EDF7', 0, 1.2, 12); cat('#F28C28', 5, 0, 2.4, 12).rotation.y = 0; q(B(4.4, 1.6, .2), '#1B2333', 0, 5.6, 14.3); sy = 25; }
+  else if (kind === 'cafe') { q(B(16, 7, 12), '#FFF4E6', 0, 3.5, 0); for (let i = 0; i < 8; i++) { const s = q(B(2, .4, 3.4), i % 2 ? '#FFFFFF' : '#E85D5D', -7 + i * 2, 6.4, 7); s.rotation.x = .45; } q(Cyl(1.6, 1.2, 2.4, 14), '#FFFFFF', 0, 8.2, 0); }
+  else if (kind === 'market') { q(B(16, 3, 9), '#C98B5A', 0, 1.5, 0); const r = q(B(18, .5, 11), '#2F5FE0', 0, 7.6, 0); r.rotation.x = -.12; }
+  else if (kind === 'statue') { q(B(6, 4, 6), '#E7EDF7', 0, 2, 0); cat('#FFC93C', 7, 0, 4, 0); }
+  else if (kind === 'pool') { q(B(17, 1, 12), '#E7EDF7', 0, .5, 0); q(B(15, .3, 10), '#5AB3F0', 0, 1.05, 0); }
+  else if (kind === 'reserved') { const p = q(Cyl(.25, .25, 5, 6), '#8A5A3B', 0, 2.5, 0); for (let i = 0; i < 5; i++) q(new THREE.ConeGeometry(.5, 1.2, 8), '#FF8A2A', -6 + i * 3, .6, 8); sy = 6.5; }
+  else { q(B(15, 9, 12), '#FFFFFF', 0, 4.5, 0); q(new THREE.ConeGeometry(11, 5, 4).rotateY(Math.PI / 4), '#FFC93C', 0, 11.5, 0); q(B(3, 4.5, .3), '#1B2333', 0, 2.25, 6.1); [-4, 4].forEach(x => q(new THREE.ConeGeometry(1.4, 3.2, 3), '#FFC93C', x, 13, 4)); }
+  if (sign) { const s = textSign(sign, kind === 'reserved' ? 9 : 14, kind === 'reserved' ? '#FF8A2A' : '#2F5FE0'); s.position.set(0, sy, 0); g.add(s); signs.push(s); }
+  return g;
+}
+const LMG = []; landmarks.forEach((lm, k) => { const b = lmBlocks[k]; const g = landmark(lm.kind, lm.sign); g.position.set(b.i * BLOCK, 0, b.j * BLOCK); g.rotation.y = b.j >= 0 ? 0 : Math.PI; scene.add(g); LMG.push([g, lmAt(k)]); });
+reserved.forEach(b => { if (NEWB && lmBlocks[landmarks.length] === b) return; const g = landmark('reserved', 'Your idea here?'); g.position.set(b.i * BLOCK, 0, b.j * BLOCK); g.rotation.y = b.j >= 0 ? 0 : Math.PI; scene.add(g); });
+let NB = null, NBpos = V(0, 0, 0);
+if (NEWB) { const b = lmBlocks[landmarks.length]; NB = landmark(NEWB.kind, NEWB.sign); NBpos = V(b.i * BLOCK, 0, b.j * BLOCK); NB.position.copy(NBpos); NB.rotation.y = b.j >= 0 ? 0 : Math.PI; NB.visible = false; scene.add(NB); }
+if (window.__signs) signs.push(...window.__signs);
+const CONF = new THREE.InstancedMesh(new THREE.PlaneGeometry(1, .6), new THREE.MeshBasicMaterial({ color: '#ffffff', side: THREE.DoubleSide }), 260);
+const confData = []; for (let k = 0; k < 260; k++) { confData.push({ vx: (rnd() - .5) * 30, vy: 10 + rnd() * 22, vz: (rnd() - .5) * 30, r: rnd() * 6 }); CONF.setColorAt(k, col.set(['#FFC93C', '#E85D5D', '#2F5FE0', '#5BB98C', '#FFFFFF', '#9B6FE0'][k % 6])); }
+CONF.instanceColor.needsUpdate = true; CONF.visible = false; scene.add(CONF);
+
+// ---------- appear times for the new followers ----------
+const ST = EP.starts || [0, 0, 0, 0];
+const homePos = k => homeOf(k);
+let NEWL = null;
+if (FN > 0 && !GROW) {
+  const ids = [...Array(FN).keys()].map(i => F0 + i);
+  const pos = ids.map(k => homePos(k));
+  // flyover target: the newest home with the largest z (toward the camera side), fallback last
+  const ti = pos.reduce((bi, p, i) => (p.z > pos[bi].z ? i : bi), 0); NEWL = pos[ti];
+  const near = ids.map((k, i) => ({ k, d: Math.hypot(pos[i].x - NEWL.x, pos[i].z - NEWL.z) })).sort((a, b) => a.d - b.d);
+  const nearL = near.filter(o => o.d < 48), farL = near.filter(o => o.d >= 48);
+  [nearL, farL].forEach(L2 => L2.forEach((o, i) => APPEAR[o.k] = EP.newFrom + (EP.newTo - EP.newFrom) * (i + .5) / L2.length));
+}
+houseLots.forEach((l, n) => placeHouse(n, APPEAR[n] < 0 ? 1 : 0));
+towerLots.forEach((l, ti) => placeTower(ti, -1));
+Object.values(TP).forEach(m => { m.instanceMatrix.needsUpdate = true; if (m.instanceColor) m.instanceColor.needsUpdate = true; });
+
+// ---------- camera ----------
+const RD = BLOCK / 2;
+const FX = NEWL ? NEWL.x + 9 : RD, FZ = NEWL ? NEWL.z : CR;
+const vv = a => V(...a);
+const SH = STILL ? [] : EP.shots ? EP.shots.map(s => ({ t0: s.t0, t1: s.t1, p0: vv(s.p0), p1: vv(s.p1), l0: vv(s.l0), l1: vv(s.l1), f: s.inout ? inout : ease })) : [
+  { t0: 0, t1: ST[1], p0: V(14, 120, 150), p1: V(46, 74, 98), l0: V(0, 3, 0), l1: V(0, 4, 0) },
+  { t0: ST[1], t1: EP.milestone - .2, p0: V(FX, 16, FZ - 95), p1: V(FX, 34, FZ - 52), l0: V(FX, 2, FZ - 20), l1: V(FX - 10, 0, FZ + 4) },
+  { t0: EP.milestone - .2, t1: ST[2], p0: V(FX, 34, FZ - 52), p1: V(-CR * .55, CR * 1.25, CR * 1.45), l0: V(FX - 10, 0, FZ + 4), l1: V(0, 0, -CR * .1), f: inout },
+  { t0: ST[2], t1: (NEWB ? NEWB.at : ST[3]) - .25, p0: V(-CR * .55, CR * 1.25, CR * 1.45), p1: V(CR * .9, CR * 1.1, CR * 1.3), l0: V(0, 0, -CR * .1), l1: NBpos.clone().multiplyScalar(.4), f: inout },
+  { t0: (NEWB ? NEWB.at : ST[3]) - .25, t1: ST[3], p0: NBpos.clone().add(V(40, 22, 52)), p1: NBpos.clone().add(V(32, 34, 42)), l0: NBpos.clone().add(V(0, 6, 0)), l1: NBpos.clone().add(V(0, 9, 0)) },
+  { t0: ST[3], t1: EP.duration, p0: NBpos.clone().add(V(60, 50, 110)), p1: V(CR * .5, CR * .95 + 40, CR * 1.55 + 60), l0: NBpos.clone().add(V(0, 10, 0)), l1: V(NBpos.x * .5, 10, NBpos.z * .5), f: inout },
+];
+
+// ---------- UI ----------
+const DAY = EP.day || 1;
+$('title').textContent = EP.title || ('DAY ' + DAY);
+const CHUNKS = [];
+(EP.words || []).forEach((w, i) => { const last = CHUNKS[CHUNKS.length - 1], prev = EP.words[i - 1];
+  if (!last || last.words.length >= 3 || w.line !== prev.line || w.s - prev.e > .3) CHUNKS.push({ i: CHUNKS.length, s: w.s, words: [w] }); else last.words.push(w); });
+CHUNKS.forEach((c, i) => { const lw = c.words[c.words.length - 1], nx = CHUNKS[i + 1]; c.until = nx ? Math.min(nx.s, lw.e + .45) : lw.e + .6; });
+const HEART = f => `<svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-9.6-9.1C.9 8.6 2.9 5 6.4 5c2 0 3.5 1.1 4.3 2.4h2.6C14.1 6.1 15.6 5 17.6 5c3.5 0 5.5 3.6 4 6.9C19.5 16.4 12 21 12 21z" fill="${f ? '#ED4956' : 'none'}" stroke="${f ? '#ED4956' : '#8A8F98'}" stroke-width="2"/></svg>`;
+const AV = ['#2F5FE0', '#E85D5D', '#5BB98C', '#9B6FE0', '#F2A65A', '#1B2333'];
+const fmt = n => n >= 1000 ? (n / 1000).toFixed(1).replace('.0', '') + 'K' : String(n);
+const CM = EP.comments;
+if (CM) $('cmList').innerHTML = CM.list.map((c, i) => `<div class="card"><div class="card__av" style="background:${AV[i % 6]}">${c.by[0].toUpperCase()}</div><div class="card__body"><div class="card__name">@${c.by}</div><div class="card__text">${c.text}</div></div><div class="card__like"><span data-h>${HEART(false)}</span><span data-l>${fmt(c.likes)}</span></div></div>`).join('');
+const tagsEl = $('tags');
+const newTags = (EP.residents || []).map(r => { const d = document.createElement('div'); d.className = 'tag'; d.innerHTML = `@${r.by}<small>🐱 Cat #${r.n.toLocaleString('en-US')} moved in</small>`; tagsEl.appendChild(d); return { el: d, k: r.n - 1 }; });
+const buildTag = document.createElement('div'); buildTag.className = 'tag'; if (NEWB) buildTag.innerHTML = `@${NEWB.by}<small>🏗️ built the ${NEWB.name}</small>`; buildTag.style.display = 'none'; tagsEl.appendChild(buildTag);
+const proj = v => { const p = v.clone().project(camera); return { x: (p.x + 1) / 2 * W, y: (1 - p.y) / 2 * H, ok: p.z < 1 && p.x > -1 && p.x < 1 && p.y > -1 && p.y < 1 }; };
+if (EP.hideUI) document.querySelector('.ui').style.display = 'none';
+
+const cm = new THREE.Matrix4();
+window.renderFrame = (t) => {
+  if (STILL) { camera.position.set(...EP.still.pos); camera.lookAt(V(...EP.still.look)); }
+  else { const sh = SH.find(s => t >= s.t0 && t < s.t1) || SH[SH.length - 1]; const k = (sh.f || ease)((t - sh.t0) / (sh.t1 - sh.t0));
+    camera.position.lerpVectors(sh.p0, sh.p1, k); camera.lookAt(new THREE.Vector3().lerpVectors(sh.l0, sh.l1, k)); }
+  camera.updateMatrixWorld();
+  let shown = 0;
+  for (let k = 0; k < F; k++) { const a = APPEAR[k]; if (a < 0 || t >= a) shown++; if (a >= 0 && k < HOUSE_MAX) placeHouse(k, back((t - a) / .55)); }
+  if (FN) { Object.values(HP).forEach(m => m.instanceMatrix.needsUpdate = true);
+    const tset = new Set(); for (let k = Math.max(F0, HOUSE_MAX); k < F; k++) tset.add(aptTower(k - HOUSE_MAX));
+    tset.forEach(ti => { let g = 0; for (let k = TSTART[ti]; k < Math.min(nApts, TSTART[ti] + CAP[ti]); k++) { const a = APPEAR[HOUSE_MAX + k]; if (a >= 0 && t >= a) g = Math.max(g, a); } placeTower(ti, t, g); });
+    Object.values(TP).forEach(m => { m.instanceMatrix.needsUpdate = true; if (m.instanceColor) m.instanceColor.needsUpdate = true; }); }
+  if (GROW) {
+    const Z = new THREE.Matrix4().makeScale(0, 0, 0);
+    [['rm', ROADM.rm], ['dash', ROADM.dash], ['pm', ROADM.pm]].forEach(([k, m]) => { if (!m) return; ROADM.base[k].forEach(([bm, t0], i) => { if (t0 < 0) { m.setMatrixAt(i, bm); return; } const s = ease((t - t0) / .5); if (s <= 0) m.setMatrixAt(i, Z); else { const sm = bm.clone().multiply(new THREE.Matrix4().makeScale(1, s, 1)); m.setMatrixAt(i, sm); } }); m.instanceMatrix.needsUpdate = true; });
+    (window.__park || []).forEach(({ m, base }) => { base.forEach(([bm, t0], i) => { if (t0 < 0) return; const s2 = ease((t - t0 - .2) / .5); m.setMatrixAt(i, s2 <= 0 ? Z : bm.clone().multiply(new THREE.Matrix4().makeScale(1, s2, 1))); }); m.instanceMatrix.needsUpdate = true; });
+    LMG.forEach(([g, a]) => { if (a < 0) return; g.visible = t >= a; const k2 = back((t - a) / .7); g.scale.set(Math.max(.001, .6 + .4 * k2), Math.max(.001, k2), Math.max(.001, .6 + .4 * k2)); });
+  }
+  // Mango walks around the fountain; followers' cats around their homes
+  { const a = t * .4; cm.compose(V(Math.cos(a) * 6.2, .5 + Math.abs(Math.sin(t * 8)) * .1, Math.sin(a) * 6.2), new THREE.Quaternion().setFromEuler(new THREE.Euler(0, -a, 0)), V(2.6, 2.6, 2.6)); catMesh.setMatrixAt(0, cm); }
+  for (let k = 0; k < F; k++) { const h = homeOf(k), a0 = APPEAR[k] < 0 ? -1 : APPEAR[k] + .3, vis = a0 < 0 || t >= a0;
+    const s = vis ? 1.15 * (a0 < 0 ? 1 : back((t - a0) / .4)) : 0;
+    if (h.roof) { const ry = houseLots[k].ry + Math.sin(t * .3 + k) * .4; cm.compose(V(h.x, h.roof, h.z), new THREE.Quaternion().setFromEuler(new THREE.Euler(0, ry, 0)), V(s, s * .8, s)); catMesh.setMatrixAt(k + 1, cm); continue; }   // roof nappers
+    const ang = t * (.35 + (k % 5) * .06) + k * 2.399, x = h.x + Math.cos(ang) * h.r, z = h.z + Math.sin(ang) * h.r;
+    cm.compose(V(x, Math.abs(Math.sin(t * 9 + k)) * .1, z), new THREE.Quaternion().setFromEuler(new THREE.Euler(0, -ang, 0)), V(s, s, s)); catMesh.setMatrixAt(k + 1, cm); }
+  catMesh.instanceMatrix.needsUpdate = true;
+  CARS.forEach((c, k) => { let x, z, ry;
+    if (c.ring) { const a = c.a0 + t * .35; x = Math.cos(a) * 10.6; z = Math.sin(a) * 10.6; ry = -a; }
+    else { const [lx, lz, ax, lt] = c.lane; if (lt > t) { cm.makeScale(0, 0, 0); carMesh.setMatrixAt(k, cm); return; } const u = ((c.off + t * c.sp * c.dir) % 1 + 1) % 1, o = (u - .5) * (BLOCK + ROAD), side = c.dir * 1.2;
+      if (ax === 'x') { x = lx + o; z = lz + side; ry = c.dir > 0 ? Math.PI / 2 : -Math.PI / 2; } else { x = lx + side; z = lz + o; ry = c.dir > 0 ? 0 : Math.PI; } }
+    cm.compose(V(x, 0, z), new THREE.Quaternion().setFromEuler(new THREE.Euler(0, ry, 0)), V(.8, .8, .8)); carMesh.setMatrixAt(k, cm); });
+  carMesh.instanceMatrix.needsUpdate = true;
+  signs.forEach(s => { const wp = s.getWorldPosition(new THREE.Vector3()); s.lookAt(camera.position.x, wp.y, camera.position.z); });
+  let gk = 0;
+  if (NEWB) { const bt = NEWB.at; NB.visible = t >= bt; gk = back((t - bt) / .9); NB.scale.set(Math.max(.001, .6 + .4 * gk), Math.max(.001, gk), Math.max(.001, .6 + .4 * gk));
+    CONF.visible = t >= bt + .4 && t < bt + 4.4;
+    if (CONF.visible) { const u = t - bt - .4; confData.forEach((d, i) => { cm.compose(V(NBpos.x + d.vx * u, 22 + d.vy * u - 8.8 * u * u, NBpos.z + d.vz * u), new THREE.Quaternion().setFromEuler(new THREE.Euler(d.r + u * 5, d.r * 2 + u * 3, 0)), V(1.4, 1.4, 1.4)); CONF.setMatrixAt(i, cm); }); CONF.instanceMatrix.needsUpdate = true; } }
+  renderer.render(scene, camera);
+
+  // ---- UI ----
+  const cats = shown + 1;
+  const dayNow = EP.dayRange ? Math.round(EP.dayRange[0] + (EP.dayRange[1] - EP.dayRange[0]) * Math.min(1, shown / Math.max(1, F))) : DAY;
+  $('countN').textContent = cats.toLocaleString('en-US'); $('countL').textContent = `${cats === 1 ? 'cat' : 'cats'} · Day ${dayNow}`;
+  if (STILL) { $('count').style.opacity = 1; $('sub').style.opacity = 0; return; }
+  const ms = EP.milestone ?? 1e9, pulse = t >= ms ? 1 + .25 * Math.max(0, 1 - (t - ms) / .35) : 1;
+  $('countN').style.transform = `scale(${pulse})`; $('countN').style.color = t >= ms && t < ms + 2.5 ? '#FFD23F' : '#fff';
+  const endK = ease((t - ST[3]) / .5);
+  const cf = EP.countFrom ?? ST[1]; $('count').style.opacity = (t < cf - .1 ? 0 : ease((t - cf + .1) / .3)) * (1 - endK);
+  $('brand').style.opacity = 1 - ease((t - ST[1]) / .3) + endK;
+  const ti = t < ST[1] ? back((t - .15) / .5) : 1 - ease((t - ST[1] + .2) / .3);
+  $('title').style.opacity = Math.min(1, Math.max(0, ti)); $('title').style.transform = `scale(${Math.max(0, ti)})`;
+  const ch = CHUNKS.find(c => t >= c.s && t < c.until), subEl = $('sub');
+  if (ch) { if (subEl.dataset.k !== String(ch.i)) { subEl.innerHTML = ch.words.map(w => `<span class="w">${w.w}</span>`).join(' '); subEl.dataset.k = ch.i; }
+    subEl.style.opacity = 1; subEl.style.transform = `scale(${.9 + .1 * Math.min(1, (t - ch.s) / .1)})`;
+    subEl.querySelectorAll('.w').forEach((el, j) => { const w = ch.words[j]; el.classList.toggle('on', t >= w.s && t < Math.max(w.e, w.s + .12)); });
+  } else { subEl.style.opacity = 0; subEl.dataset.k = ''; }
+  if (CM) { const C = CM.t, upK = ease((t - C.up) / .35), dnK = ease((t - C.down) / .3), el = $('cm');
+    el.style.opacity = upK * (1 - dnK); el.style.transform = `translateX(${(1 - upK) * 260 - dnK * 260}px) scale(${.9 + .1 * upK})`;
+    const rows = $('cmList').children, sc = inout((t - C.scroll) / (C.stop - C.scroll)); $('cmList').style.transform = `translateY(${-196 * CM.win * sc}px)`;
+    const on = t >= C.stop, win = rows[CM.win]; win.classList.toggle('win', on);
+    $('crown').style.opacity = on ? 1 : 0; $('crown').style.transform = `scale(${on ? back((t - C.stop) / .35) : 0})`;
+    win.querySelector('[data-h]').innerHTML = HEART(on); win.querySelector('[data-h] svg').style.transform = `scale(${on ? 1 + .5 * Math.max(0, 1 - (t - C.stop) / .3) : 1})`;
+    const fin = CM.list[CM.win].likes, from = Math.round(fin * .55); win.querySelector('[data-l]').textContent = fmt(on ? Math.round(from + (fin - from) * ease((t - C.stop) / 1.2)) : from); }
+  newTags.forEach(tg => { const a = APPEAR[tg.k] + .25, h = homeOf(tg.k); const top = tg.k < HOUSE_MAX ? 4.6 : (Math.ceil((tg.k - HOUSE_MAX - TSTART[aptTower(tg.k - HOUSE_MAX)] + 1) / 2)) * FLOOR_H + 4;
+    const p = proj(V(h.x, top, h.z)); const vis = APPEAR[tg.k] >= 0 && t >= a && t < ms - .25 && p.ok; tg.el.style.display = vis ? 'block' : 'none';
+    if (vis) { tg.el.style.left = Math.min(Math.max(p.x, 250), 830) + 'px'; tg.el.style.top = p.y + 'px'; tg.el.style.transform = `translate(-50%,-100%) scale(${back((t - a) / .35)})`; } });
+  if (NEWB) { const a = NEWB.at + .8, p = proj(NBpos.clone().add(V(0, 26 * Math.max(.001, gk), 0))); const vis = t >= a && t < ST[3] && p.ok; buildTag.style.display = vis ? 'block' : 'none';
+    if (vis) { buildTag.style.left = Math.min(Math.max(p.x, 250), 830) + 'px'; buildTag.style.top = p.y + 'px'; buildTag.style.transform = `translate(-50%,-100%) scale(${back((t - a) / .35)})`; } }
+  $('end').style.opacity = endK; $('end').style.transform = `scale(${.9 + .1 * back((t - ST[3]) / .5)})`;
+};
+await document.fonts.ready;
+window.ready = true;
+</script>
+</body>
+</html>

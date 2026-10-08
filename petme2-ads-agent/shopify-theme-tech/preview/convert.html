@@ -1,0 +1,657 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PETME2 conversion features preview</title>
+<link rel="stylesheet" href="vendor/nunito.css">
+<link rel="stylesheet" href="vendor/base.css">
+<style>
+.color-scheme-1{--color-background:255,255,255;--gradient-background:#FFFFFF;--color-foreground:27,37,64;--color-button:47,95,224;--color-button-text:255,255,255;--color-secondary-button:255,255,255;--color-secondary-button-text:27,37,64;--color-link:27,37,64;--color-shadow:0,0,0;--color-badge-foreground:27,37,64;--color-badge-background:255,255,255;--color-badge-border:27,37,64}
+.color-scheme-2{--color-background:47,95,224;--gradient-background:#2F5FE0;--color-foreground:255,255,255;--color-button:255,255,255;--color-button-text:47,95,224;--color-secondary-button:47,95,224;--color-secondary-button-text:255,255,255;--color-link:255,255,255;--color-shadow:0,0,0;--color-badge-foreground:255,255,255;--color-badge-background:47,95,224;--color-badge-border:255,255,255}
+.color-scheme-3{--color-background:255,255,255;--gradient-background:#FFFFFF;--color-foreground:27,37,64;--color-button:47,95,224;--color-button-text:255,255,255;--color-secondary-button:255,255,255;--color-secondary-button-text:27,37,64;--color-link:27,37,64;--color-shadow:0,0,0;--color-badge-foreground:27,37,64;--color-badge-background:255,255,255;--color-badge-border:27,37,64}
+.color-scheme-4{--color-background:244,246,250;--gradient-background:#F4F6FA;--color-foreground:27,37,64;--color-button:47,95,224;--color-button-text:255,255,255;--color-secondary-button:244,246,250;--color-secondary-button-text:27,37,64;--color-link:27,37,64;--color-shadow:0,0,0;--color-badge-foreground:27,37,64;--color-badge-background:244,246,250;--color-badge-border:27,37,64}
+.color-scheme-5{--color-background:233,246,239;--gradient-background:#E9F6EF;--color-foreground:27,37,64;--color-button:47,95,224;--color-button-text:255,255,255;--color-secondary-button:233,246,239;--color-secondary-button-text:27,37,64;--color-link:27,37,64;--color-shadow:0,0,0;--color-badge-foreground:27,37,64;--color-badge-background:233,246,239;--color-badge-border:27,37,64}
+
+:root{--font-body-family:'Nunito Sans',system-ui,sans-serif;--font-body-style:normal;--font-body-weight:400;--font-body-weight-bold:700;--font-heading-family:Nunito,sans-serif;--font-heading-style:normal;--font-heading-weight:800;--font-body-scale:1;--font-heading-scale:1.05;--page-width:120rem;--page-width-margin:0rem;--buttons-radius:40px;--buttons-radius-outset:40px;--buttons-border-width:0px;--buttons-border-opacity:1;--buttons-shadow-opacity:0;--buttons-shadow-visible:0;--buttons-shadow-horizontal-offset:0px;--buttons-shadow-vertical-offset:4px;--buttons-shadow-blur-radius:5px;--buttons-border-offset:0px;--inputs-radius:999px;--spacing-sections-desktop:0px;--spacing-sections-mobile:0px}
+*,*::before,*::after{box-sizing:inherit}html{box-sizing:border-box;font-size:calc(var(--font-body-scale)*62.5%);height:100%}
+body{margin:0;font-family:var(--font-body-family);font-size:1.5rem;letter-spacing:.06rem;line-height:calc(1 + .8/var(--font-body-scale));overflow-x:clip}@media screen and (min-width:750px){body{font-size:1.6rem}}
+h1,h2,h3,.h1,.h2{font-family:var(--font-heading-family);font-weight:800}
+.h-label{font:700 1.2rem/1 system-ui;letter-spacing:.08em;text-transform:uppercase;color:#8a93a8;padding:2.4rem 0 .4rem}
+/* Dawn-like product mock */
+.mock-product{display:grid;gap:2.4rem;padding:2rem 0}
+.mock-gallery{aspect-ratio:1;border-radius:24px;background:linear-gradient(135deg,#eef4ff,#dfe8fb);display:grid;place-items:center;color:#3366E6;font:800 2rem Nunito}
+.product__info-container>*+*{margin-top:1.4rem}
+.product__title h1{margin:0;font-family:Nunito;font-weight:800;font-size:2.8rem;line-height:1.15}
+.mock-price{font-size:2rem;font-weight:700}.mock-price s{font-size:1.5rem;opacity:.6;margin-left:.8rem}
+.mock-sel{display:flex;gap:.8rem;flex-wrap:wrap}.mock-sel button{min-height:44px;padding:0 1.8rem;border-radius:999px;border:1.5px solid rgba(27,37,64,.25);background:#fff;font:600 1.5rem inherit;cursor:pointer}
+.mock-sel button[aria-pressed=true]{background:#1B2540;color:#fff;border-color:#1B2540}
+.product-form__submit{width:100%;min-height:5.2rem;border-radius:999px}
+.mock-desc{color:rgba(27,37,64,.75)}
+@media(min-width:750px){.mock-product{grid-template-columns:55% 1fr;gap:5rem;align-items:start}}
+</style>
+<script>
+  window.Shopify = { designMode: false };
+  window.PM2_POPUPS = {"default":"<section id=\"shopify-section-template--x__pm2_popup_6\" class=\"shopify-section pm2-pop-section\"><div\n    class=\"pm2-pop\"\n    id=\"PM2Pop-template--x__pm2_popup_6\"\n    data-pm2-pop\n    data-section-id=\"template--x__pm2_popup_6\"\n    data-form-id=\"PM2Popup-template--x__pm2_popup_6\"\n    data-delay=\"12\"\n    data-desktop-delay=\"20\"\n    data-scroll=\"40\"\n    data-cap-days=\"14\"\n    data-mobile=\"true\"\n    hidden\n  >\n    <div class=\"pm2-pop__backdrop\" data-pm2-pop-close></div>\n    <div\n      class=\"pm2-pop__panel color-scheme-3 gradient\"\n      role=\"dialog\"\n      aria-modal=\"true\"\n      aria-labelledby=\"PM2PopTitle-template--x__pm2_popup_6\"\n      aria-describedby=\"PM2PopText-template--x__pm2_popup_6\"\n      tabindex=\"-1\"\n      data-pm2-pop-panel\n    >\n      <button type=\"button\" class=\"pm2-pop__x\" data-pm2-pop-close aria-label=\"Close\">\n        <svg viewBox=\"0 0 24 24\" width=\"20\" height=\"20\" aria-hidden=\"true\" focusable=\"false\"><path d=\"M6 6l12 12M18 6L6 18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\"/></svg>\n      </button><div class=\"pm2-pop__body\"><form method=\"post\" action=\"/contact#PM2Popup-template--x__pm2_popup_6\" id=\"PM2Popup-template--x__pm2_popup_6\" accept-charset=\"UTF-8\" class=\"pm2-pop__form\"><input type=\"hidden\" name=\"form_type\" value=\"customer\"><input type=\"hidden\" name=\"utf8\" value=\"✓\"><p class=\"pm2-pop__eyebrow\">Welcome to PETME2</p><h2 class=\"pm2-pop__title\" id=\"PM2PopTitle-template--x__pm2_popup_6\">Get 10% off your first order</h2>\n            <p class=\"pm2-pop__text\" id=\"PM2PopText-template--x__pm2_popup_6\">Join our emails for pet-care tips. Your code shows right after you sign up.</p><input type=\"hidden\" name=\"contact[tags]\" value=\"newsletter,welcome10\">\n            <div class=\"pm2-pop__row\">\n              <label class=\"visually-hidden\" for=\"PM2PopEmail-template--x__pm2_popup_6\">Email</label>\n              <input\n                class=\"pm2-pop__input\"\n                id=\"PM2PopEmail-template--x__pm2_popup_6\"\n                type=\"email\"\n                name=\"contact[email]\"\n                value=\"\"\n                placeholder=\"Your email\"\n                autocomplete=\"email\"\n                autocorrect=\"off\"\n                autocapitalize=\"off\"\n                spellcheck=\"false\"\n                required\n                aria-required=\"true\"\n                \n              >\n              <button type=\"submit\" class=\"button pm2-pop__submit\">Get 10% off</button>\n            </div><p class=\"pm2-pop__consent\">\n              By signing up you agree to receive marketing emails from PETME2. Unsubscribe anytime.\n                <a href=\"/policies/privacy-policy\">Privacy policy</a>.</p>\n            <button type=\"button\" class=\"pm2-pop__dismiss\" data-pm2-pop-close>No thanks</button></form></div>\n    </div>\n  </div>\n\n  <script>\n    (function () {\n      var root = document.getElementById(\"PM2Pop-template--x__pm2_popup_6\");\n      if (!root || root.dataset.pm2Ready) return;\n      root.dataset.pm2Ready = '1';\n      var KEY = 'pm2_welcome_popup';\n      var SKEY = 'pm2_welcome_popup_seen';\n      var panel = root.querySelector('[data-pm2-pop-panel]');\n      var design = !!(window.Shopify && window.Shopify.designMode);\n      var d = root.dataset;\n      var isOpen = false, lastFocus = null, armed = true, timers = [], pendingTimer = null;\n\n      function read() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } }\n      function write(o) { try { localStorage.setItem(KEY, JSON.stringify(o)); } catch (e) {} }\n      function seen() { try { return sessionStorage.getItem(SKEY) === '1'; } catch (e) { return false; } }\n      function markSeen() { try { sessionStorage.setItem(SKEY, '1'); } catch (e) {} }\n      function desktop() { return window.matchMedia('(min-width: 750px) and (hover: hover) and (pointer: fine)').matches; }\n\n      function blockedPath() {\n        return /^(\\/[a-z]{2}(-[a-z]{2})?)?\\/(cart|checkout|checkouts|account|password|challenge)(\\/|$|\\?)/i.test(location.pathname);\n      }\n      function capped() {\n        var st = read();\n        if (st.signedUp) return true;\n        var days = parseFloat(d.capDays) || 14;\n        return !!(st.closedAt && Date.now() - st.closedAt < days * 864e5);\n      }\n      function otherUiOpen() {\n        return !!document.querySelector('cart-drawer.active, cart-drawer.is-open, cart-notification .active, .cart-notification.active, details[open] > .menu-drawer, .menu-drawer-container[open]')\n          || document.body.classList.contains('overflow-hidden');\n      }\n\n      function focusables() {\n        return Array.prototype.filter.call(\n          panel.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]):not([type=\"hidden\"]), select, textarea, [tabindex]:not([tabindex=\"-1\"])'),\n          function (el) { return el.offsetParent !== null || el === document.activeElement; }\n        );\n      }\n      function onKey(e) {\n        if (!isOpen) return;\n        if (e.key === 'Escape' || e.key === 'Esc') { e.preventDefault(); close(true); return; }\n        if (e.key !== 'Tab') return;\n        var f = focusables();\n        if (!f.length) { e.preventDefault(); panel.focus(); return; }\n        var first = f[0], last = f[f.length - 1];\n        if (e.shiftKey && (document.activeElement === first || document.activeElement === panel)) { e.preventDefault(); last.focus(); }\n        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }\n      }\n      function onFocusIn(e) { if (isOpen && !root.contains(e.target)) panel.focus(); }\n\n      function open(focusEl) {\n        if (isOpen) return;\n        isOpen = true; armed = false;\n        clearTimers();\n        lastFocus = document.activeElement;\n        root.hidden = false;\n        document.documentElement.classList.add('pm2-pop-lock');\n        requestAnimationFrame(function () { requestAnimationFrame(function () { root.classList.add('is-open'); }); });\n        (focusEl || panel).focus({ preventScroll: true });\n        document.addEventListener('keydown', onKey, true);\n        document.addEventListener('focusin', onFocusIn);\n        if (!design) markSeen();\n      }\n      function close(remember) {\n        if (!isOpen) return;\n        isOpen = false;\n        root.classList.remove('is-open');\n        document.documentElement.classList.remove('pm2-pop-lock');\n        document.removeEventListener('keydown', onKey, true);\n        document.removeEventListener('focusin', onFocusIn);\n        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;\n        setTimeout(function () { if (!isOpen) root.hidden = true; }, reduce ? 0 : 320);\n        if (remember && !design) {\n          var st = read();\n          if (!st.signedUp) { st.closedAt = Date.now(); write(st); }\n        }\n        if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });\n      }\n\n      root.addEventListener('click', function (e) {\n        var t = e.target.closest('[data-pm2-pop-close]');\n        if (t) { e.preventDefault(); close(true); return; }\n        var c = e.target.closest('[data-pm2-copy]');\n        if (c) copy(c);\n      });\n\n      function copy(btn) {\n        var code = btn.getAttribute('data-pm2-copy');\n        var label = btn.querySelector('[data-pm2-copy-label]');\n        var live = root.querySelector('[data-pm2-copy-status]');\n        function done(ok) {\n          if (label) label.textContent = ok ? 'Copied!' : 'Press and hold to copy';\n          if (live) live.textContent = ok ? 'Code ' + code + ' copied' : '';\n          btn.classList.toggle('is-copied', ok);\n          setTimeout(function () { if (label) label.textContent = 'Copy code'; btn.classList.remove('is-copied'); }, 2500);\n        }\n        if (navigator.clipboard && window.isSecureContext) {\n          navigator.clipboard.writeText(code).then(function () { done(true); }, fallback);\n        } else { fallback(); }\n        function fallback() {\n          var ta = document.createElement('textarea');\n          ta.value = code; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';\n          document.body.appendChild(ta); ta.select();\n          var ok = false; try { ok = document.execCommand('copy'); } catch (e) {}\n          document.body.removeChild(ta); done(ok); btn.focus();\n        }\n      }\n\n      function clearTimers() {\n        timers.forEach(clearTimeout); timers = [];\n        if (pendingTimer) { clearInterval(pendingTimer); pendingTimer = null; }\n        window.removeEventListener('scroll', onScroll);\n        document.removeEventListener('mouseout', onLeave);\n      }\n      function trigger() {\n        if (!armed || isOpen) return;\n        if (!otherUiOpen()) { open(); return; }\n        if (pendingTimer) return;\n        var tries = 0;\n        pendingTimer = setInterval(function () {\n          tries++;\n          if (!armed || isOpen || tries > 60) { clearInterval(pendingTimer); pendingTimer = null; return; }\n          if (!otherUiOpen()) { clearInterval(pendingTimer); pendingTimer = null; open(); }\n        }, 1000);\n      }\n      function onScroll() {\n        var h = document.documentElement.scrollHeight - window.innerHeight;\n        if (h > 0 && window.scrollY / h >= (parseFloat(d.scroll) || 40) / 100) trigger();\n      }\n      function onLeave(e) {\n        if (!e.relatedTarget && e.clientY <= 0) trigger();\n      }\n\n      // Opened as the result of our own signup form post (success shows the code, error shows the message).\n      var state = root.querySelector('[data-pm2-pop-state]');\n      var mine = location.hash === '#' + d.formId;\n      if (state && mine) {\n        if (state.getAttribute('data-pm2-pop-state') === 'success') {\n          var st0 = read(); st0.signedUp = true; write(st0);\n        }\n        open(state.getAttribute('data-pm2-pop-state') === 'error' ? root.querySelector('input[type=\"email\"]') : null);\n        return;\n      }\n\n      if (design) {\n        document.addEventListener('shopify:section:select', function (e) { if (e.detail.sectionId === d.sectionId) { armed = true; open(); } });\n        document.addEventListener('shopify:section:deselect', function (e) { if (e.detail.sectionId === d.sectionId) close(false); });\n        return;\n      }\n      if (blockedPath() || capped() || seen()) return;\n      if (desktop()) {\n        timers.push(setTimeout(trigger, (parseFloat(d.desktopDelay) || 20) * 1000));\n        timers.push(setTimeout(function () { document.addEventListener('mouseout', onLeave); }, 3000));\n      } else {\n        if (d.mobile !== 'true') return;\n        timers.push(setTimeout(trigger, (parseFloat(d.delay) || 12) * 1000));\n        window.addEventListener('scroll', onScroll, { passive: true });\n      }\n    })();\n  <\/script>\n\n  <style>\n    .pm2-pop[hidden] { display: none; }\n    .pm2-pop {\n      position: fixed; inset: 0; z-index: 990;\n      display: flex; align-items: flex-end; justify-content: center;\n    }\n    html.pm2-pop-lock { overflow: hidden; }\n    .pm2-pop > .pm2-pop__backdrop {\n      display: block; position: absolute; inset: 0; background: rgba(17, 24, 39, .16);\n      opacity: 0; transition: opacity .3s ease;\n    }\n    .pm2-pop__panel {\n      box-sizing: border-box; position: relative; width: 100%; max-height: min(62vh, 48rem); overflow: auto; overscroll-behavior: contain;\n      padding: 2.2rem 2rem calc(1.4rem + env(safe-area-inset-bottom));\n      border-radius: 24px 24px 0 0;\n      background-attachment: scroll;\n      --pm2-pop-shadow: 0 -14px 40px -14px rgba(17, 24, 39, .35);\n      box-shadow: var(--pm2-pop-shadow);\n      transform: translateY(100%); transition: transform .32s cubic-bezier(.2, .8, .2, 1);\n      outline: none;\n      color: rgb(var(--color-foreground));\n    }\n    .pm2-pop.is-open .pm2-pop__backdrop { opacity: 1; }\n    .pm2-pop.is-open .pm2-pop__panel { transform: none; }\n    .pm2-pop__panel::before {\n      content: ''; position: absolute; top: .8rem; left: 50%; width: 4rem; height: .4rem; margin-left: -2rem;\n      border-radius: 999px; background: rgba(var(--color-foreground), .14);\n    }\n    .pm2-pop__x {\n      position: absolute; top: .8rem; right: .8rem; z-index: 2;\n      display: grid; place-items: center; width: 44px; height: 44px; padding: 0;\n      border: 0; border-radius: 999px; cursor: pointer;\n      background: rgba(var(--color-foreground), .06); color: rgb(var(--color-foreground));\n      transition: background .2s ease;\n    }\n    .pm2-pop__x:hover { background: rgba(var(--color-foreground), .12); }\n    .pm2-pop__media { display: none; }\n    .pm2-pop__body { min-width: 0; }\n    .pm2-pop__eyebrow, .pm2-pop__title { padding-right: 4.4rem; }\n    .pm2-pop__form { margin: 0; }\n    .pm2-pop__eyebrow {\n      display: inline-flex; align-items: center; gap: .5rem; margin: 0 0 .6rem;\n      font-size: 1.3rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;\n      color: rgb(var(--color-button));\n    }\n    .pm2-pop__title {\n      margin: 0; font-family: var(--font-heading-family); font-weight: 800;\n      font-size: 2.3rem; line-height: 1.15; letter-spacing: -.01em; color: rgb(var(--color-foreground));\n    }\n    .pm2-pop__text { margin: .6rem 0 1.4rem; font-size: 1.5rem; line-height: 1.45; letter-spacing: normal; color: rgba(var(--color-foreground), .75); }\n    .pm2-pop__row { display: flex; gap: .8rem; }\n    .pm2-pop__input {\n      box-sizing: border-box; flex: 1 1 auto; min-width: 0; height: 4.8rem; padding: 0 1.6rem;\n      border: 1.5px solid rgba(var(--color-foreground), .22); border-radius: 999px;\n      background: rgb(var(--color-background)); color: rgb(var(--color-foreground));\n      font: inherit; font-size: 1.6rem; letter-spacing: normal;\n    }\n    .pm2-pop__input:focus { outline: 2px solid rgb(var(--color-button)); outline-offset: 1px; border-color: transparent; }\n    .pm2-pop__input[aria-invalid=\"true\"] { border-color: #c2412d; }\n    .pm2-pop .button.pm2-pop__submit,\n    .pm2-pop .button.pm2-pop__shop {\n      flex: 0 0 auto; min-height: 4.8rem; min-width: 0; padding: 0 1.8rem; border-radius: 999px;\n      font-weight: 700; font-size: 1.5rem; letter-spacing: normal; white-space: nowrap;\n    }\n    .pm2-pop .button.pm2-pop__submit::after, .pm2-pop .button.pm2-pop__shop::after { border-radius: 999px; }\n    .pm2-pop .button.pm2-pop__shop { display: flex; width: 100%; margin-top: 1rem; text-decoration: none; }\n    .pm2-pop__error { margin: .8rem 0 0; font-size: 1.35rem; color: #b3261e; }\n    .pm2-pop__consent { margin: .8rem 0 0; font-size: 1.2rem; letter-spacing: normal; line-height: 1.45; color: rgba(var(--color-foreground), .62); }\n    .pm2-pop__consent a { color: inherit; text-underline-offset: .2em; }\n    .pm2-pop__dismiss {\n      display: block; min-height: 44px; margin: .2rem auto -.6rem; padding: 0 1.6rem;\n      border: 0; background: none; cursor: pointer; font: inherit; font-size: 1.4rem; font-weight: 600;\n      color: rgba(var(--color-foreground), .7); text-decoration: underline; text-underline-offset: .25em;\n    }\n    .pm2-pop__code {\n      display: flex; align-items: center; gap: .8rem; flex-wrap: wrap;\n      padding: .8rem .8rem .8rem 1.6rem;\n      border: 2px dashed rgba(var(--color-button), .55); border-radius: 18px;\n      background: rgba(var(--color-button), .06);\n    }\n    .pm2-pop__code-label { width: 100%; font-size: 1.2rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: rgba(var(--color-foreground), .6); }\n    .pm2-pop__code-value { flex: 1 1 auto; font-size: 2.2rem; font-weight: 800; letter-spacing: .08em; color: rgb(var(--color-foreground)); font-family: var(--font-heading-family); }\n    .pm2-pop__copy {\n      display: inline-flex; align-items: center; gap: .6rem; min-height: 44px; padding: 0 1.6rem;\n      border: 0; border-radius: 999px; cursor: pointer; font: inherit; font-size: 1.4rem; font-weight: 700;\n      background: rgb(var(--color-background)); color: rgb(var(--color-foreground));\n      box-shadow: inset 0 0 0 1.5px rgba(var(--color-foreground), .2);\n    }\n    .pm2-pop__copy.is-copied { background: rgb(var(--color-button)); color: rgb(var(--color-button-text)); box-shadow: none; }\n    .pm2-pop__fine { margin: .8rem 0 0; font-size: 1.2rem; text-align: center; color: rgba(var(--color-foreground), .6); }\n    .pm2-pop__or { margin: 1.4rem 0 .8rem; font-size: 1.4rem; font-weight: 600; }\n    .pm2-pop :focus-visible { outline: 2px solid rgb(var(--color-button)); outline-offset: 2px; }\n    .pm2-pop .pm2-pop__panel:focus, .pm2-pop .pm2-pop__panel:focus-visible { outline: none; box-shadow: var(--pm2-pop-shadow); }\n\n    @media screen and (max-width: 360px) {\n      .pm2-pop__row { flex-wrap: wrap; }\n      .pm2-pop .button.pm2-pop__submit { width: 100%; }\n    }\n\n    @media screen and (min-width: 750px) {\n      .pm2-pop { align-items: center; padding: 2.4rem; }\n      .pm2-pop > .pm2-pop__backdrop { background: rgba(17, 24, 39, .45); }\n      .pm2-pop__panel {\n        width: 100%; max-width: 48rem; max-height: calc(100vh - 4.8rem);\n        padding: 3.6rem 3.6rem 2.4rem; border-radius: 24px;\n        --pm2-pop-shadow: 0 30px 80px -24px rgba(17, 24, 39, .45);\n        transform: translateY(16px) scale(.98); opacity: 0;\n        transition: transform .3s cubic-bezier(.2, .8, .2, 1), opacity .25s ease;\n      }\n      .pm2-pop.is-open .pm2-pop__panel { opacity: 1; }\n      .pm2-pop__panel::before { display: none; }\n      .pm2-pop__x { top: 1.2rem; right: 1.2rem; }\n      .pm2-pop__title { font-size: 3rem; }\n      .pm2-pop__text { font-size: 1.6rem; }\n      .pm2-pop--has-image .pm2-pop__panel {\n        max-width: 78rem; padding: 0; display: grid; grid-template-columns: 42% 1fr; overflow: hidden;\n      }\n      .pm2-pop--has-image .pm2-pop__media { display: block; position: relative; min-height: 100%; }\n      .pm2-pop--has-image .pm2-pop__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }\n      .pm2-pop--has-image .pm2-pop__body { padding: 4rem 3.6rem 2.4rem; overflow: auto; }\n    }\n    @media (prefers-reduced-motion: reduce) {\n      .pm2-pop__panel, .pm2-pop__backdrop { transition: none; }\n    }\n  </style>\n</section>","success":"<section id=\"shopify-section-template--x__pm2_popup_7\" class=\"shopify-section pm2-pop-section\"><div\n    class=\"pm2-pop\"\n    id=\"PM2Pop-template--x__pm2_popup_7\"\n    data-pm2-pop\n    data-section-id=\"template--x__pm2_popup_7\"\n    data-form-id=\"PM2Popup-template--x__pm2_popup_7\"\n    data-delay=\"12\"\n    data-desktop-delay=\"20\"\n    data-scroll=\"40\"\n    data-cap-days=\"14\"\n    data-mobile=\"true\"\n    hidden\n  >\n    <div class=\"pm2-pop__backdrop\" data-pm2-pop-close></div>\n    <div\n      class=\"pm2-pop__panel color-scheme-3 gradient\"\n      role=\"dialog\"\n      aria-modal=\"true\"\n      aria-labelledby=\"PM2PopTitle-template--x__pm2_popup_7\"\n      aria-describedby=\"PM2PopText-template--x__pm2_popup_7\"\n      tabindex=\"-1\"\n      data-pm2-pop-panel\n    >\n      <button type=\"button\" class=\"pm2-pop__x\" data-pm2-pop-close aria-label=\"Close\">\n        <svg viewBox=\"0 0 24 24\" width=\"20\" height=\"20\" aria-hidden=\"true\" focusable=\"false\"><path d=\"M6 6l12 12M18 6L6 18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\"/></svg>\n      </button><div class=\"pm2-pop__body\"><form method=\"post\" action=\"/contact#PM2Popup-template--x__pm2_popup_7\" id=\"PM2Popup-template--x__pm2_popup_7\" accept-charset=\"UTF-8\" class=\"pm2-pop__form\"><input type=\"hidden\" name=\"form_type\" value=\"customer\"><input type=\"hidden\" name=\"utf8\" value=\"✓\"><span hidden data-pm2-pop-state=\"success\"></span>\n            <p class=\"pm2-pop__eyebrow\">\n              <svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" aria-hidden=\"true\" focusable=\"false\"><path d=\"M5 12.5l4.2 4.2L19 7\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>\n              You're on the list\n            </p>\n            <h2 class=\"pm2-pop__title\" id=\"PM2PopTitle-template--x__pm2_popup_7\">Here&#39;s your 10% off</h2>\n            <p class=\"pm2-pop__text\" id=\"PM2PopText-template--x__pm2_popup_7\">Use this code at checkout on your first order.</p>\n            <div class=\"pm2-pop__code\">\n      <span class=\"pm2-pop__code-label\">Your code</span>\n      <span class=\"pm2-pop__code-value\" id=\"PM2PopCode-template--x__pm2_popup_7\">WELCOME10</span>\n      <button type=\"button\" class=\"pm2-pop__copy\" data-pm2-copy=\"WELCOME10\" aria-describedby=\"PM2PopCode-template--x__pm2_popup_7\">\n        <svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" aria-hidden=\"true\" focusable=\"false\"><rect x=\"8.5\" y=\"8.5\" width=\"11\" height=\"11\" rx=\"2.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\"/><path d=\"M15.5 5.5v-.5a2 2 0 0 0-2-2h-8a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\"/></svg>\n        <span data-pm2-copy-label>Copy code</span>\n      </button>\n    </div>\n    <p class=\"pm2-pop__live visually-hidden\" aria-live=\"polite\" data-pm2-copy-status></p>\n    <a class=\"button pm2-pop__shop\" href=\"/discount/WELCOME10?redirect=/collections/all\">Shop now</a><p class=\"pm2-pop__fine\">The code is added at checkout when you shop from this link.</p></form></div>\n    </div>\n  </div>\n\n  <script>\n    (function () {\n      var root = document.getElementById(\"PM2Pop-template--x__pm2_popup_7\");\n      if (!root || root.dataset.pm2Ready) return;\n      root.dataset.pm2Ready = '1';\n      var KEY = 'pm2_welcome_popup';\n      var SKEY = 'pm2_welcome_popup_seen';\n      var panel = root.querySelector('[data-pm2-pop-panel]');\n      var design = !!(window.Shopify && window.Shopify.designMode);\n      var d = root.dataset;\n      var isOpen = false, lastFocus = null, armed = true, timers = [], pendingTimer = null;\n\n      function read() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } }\n      function write(o) { try { localStorage.setItem(KEY, JSON.stringify(o)); } catch (e) {} }\n      function seen() { try { return sessionStorage.getItem(SKEY) === '1'; } catch (e) { return false; } }\n      function markSeen() { try { sessionStorage.setItem(SKEY, '1'); } catch (e) {} }\n      function desktop() { return window.matchMedia('(min-width: 750px) and (hover: hover) and (pointer: fine)').matches; }\n\n      function blockedPath() {\n        return /^(\\/[a-z]{2}(-[a-z]{2})?)?\\/(cart|checkout|checkouts|account|password|challenge)(\\/|$|\\?)/i.test(location.pathname);\n      }\n      function capped() {\n        var st = read();\n        if (st.signedUp) return true;\n        var days = parseFloat(d.capDays) || 14;\n        return !!(st.closedAt && Date.now() - st.closedAt < days * 864e5);\n      }\n      function otherUiOpen() {\n        return !!document.querySelector('cart-drawer.active, cart-drawer.is-open, cart-notification .active, .cart-notification.active, details[open] > .menu-drawer, .menu-drawer-container[open]')\n          || document.body.classList.contains('overflow-hidden');\n      }\n\n      function focusables() {\n        return Array.prototype.filter.call(\n          panel.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]):not([type=\"hidden\"]), select, textarea, [tabindex]:not([tabindex=\"-1\"])'),\n          function (el) { return el.offsetParent !== null || el === document.activeElement; }\n        );\n      }\n      function onKey(e) {\n        if (!isOpen) return;\n        if (e.key === 'Escape' || e.key === 'Esc') { e.preventDefault(); close(true); return; }\n        if (e.key !== 'Tab') return;\n        var f = focusables();\n        if (!f.length) { e.preventDefault(); panel.focus(); return; }\n        var first = f[0], last = f[f.length - 1];\n        if (e.shiftKey && (document.activeElement === first || document.activeElement === panel)) { e.preventDefault(); last.focus(); }\n        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }\n      }\n      function onFocusIn(e) { if (isOpen && !root.contains(e.target)) panel.focus(); }\n\n      function open(focusEl) {\n        if (isOpen) return;\n        isOpen = true; armed = false;\n        clearTimers();\n        lastFocus = document.activeElement;\n        root.hidden = false;\n        document.documentElement.classList.add('pm2-pop-lock');\n        requestAnimationFrame(function () { requestAnimationFrame(function () { root.classList.add('is-open'); }); });\n        (focusEl || panel).focus({ preventScroll: true });\n        document.addEventListener('keydown', onKey, true);\n        document.addEventListener('focusin', onFocusIn);\n        if (!design) markSeen();\n      }\n      function close(remember) {\n        if (!isOpen) return;\n        isOpen = false;\n        root.classList.remove('is-open');\n        document.documentElement.classList.remove('pm2-pop-lock');\n        document.removeEventListener('keydown', onKey, true);\n        document.removeEventListener('focusin', onFocusIn);\n        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;\n        setTimeout(function () { if (!isOpen) root.hidden = true; }, reduce ? 0 : 320);\n        if (remember && !design) {\n          var st = read();\n          if (!st.signedUp) { st.closedAt = Date.now(); write(st); }\n        }\n        if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });\n      }\n\n      root.addEventListener('click', function (e) {\n        var t = e.target.closest('[data-pm2-pop-close]');\n        if (t) { e.preventDefault(); close(true); return; }\n        var c = e.target.closest('[data-pm2-copy]');\n        if (c) copy(c);\n      });\n\n      function copy(btn) {\n        var code = btn.getAttribute('data-pm2-copy');\n        var label = btn.querySelector('[data-pm2-copy-label]');\n        var live = root.querySelector('[data-pm2-copy-status]');\n        function done(ok) {\n          if (label) label.textContent = ok ? 'Copied!' : 'Press and hold to copy';\n          if (live) live.textContent = ok ? 'Code ' + code + ' copied' : '';\n          btn.classList.toggle('is-copied', ok);\n          setTimeout(function () { if (label) label.textContent = 'Copy code'; btn.classList.remove('is-copied'); }, 2500);\n        }\n        if (navigator.clipboard && window.isSecureContext) {\n          navigator.clipboard.writeText(code).then(function () { done(true); }, fallback);\n        } else { fallback(); }\n        function fallback() {\n          var ta = document.createElement('textarea');\n          ta.value = code; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';\n          document.body.appendChild(ta); ta.select();\n          var ok = false; try { ok = document.execCommand('copy'); } catch (e) {}\n          document.body.removeChild(ta); done(ok); btn.focus();\n        }\n      }\n\n      function clearTimers() {\n        timers.forEach(clearTimeout); timers = [];\n        if (pendingTimer) { clearInterval(pendingTimer); pendingTimer = null; }\n        window.removeEventListener('scroll', onScroll);\n        document.removeEventListener('mouseout', onLeave);\n      }\n      function trigger() {\n        if (!armed || isOpen) return;\n        if (!otherUiOpen()) { open(); return; }\n        if (pendingTimer) return;\n        var tries = 0;\n        pendingTimer = setInterval(function () {\n          tries++;\n          if (!armed || isOpen || tries > 60) { clearInterval(pendingTimer); pendingTimer = null; return; }\n          if (!otherUiOpen()) { clearInterval(pendingTimer); pendingTimer = null; open(); }\n        }, 1000);\n      }\n      function onScroll() {\n        var h = document.documentElement.scrollHeight - window.innerHeight;\n        if (h > 0 && window.scrollY / h >= (parseFloat(d.scroll) || 40) / 100) trigger();\n      }\n      function onLeave(e) {\n        if (!e.relatedTarget && e.clientY <= 0) trigger();\n      }\n\n      // Opened as the result of our own signup form post (success shows the code, error shows the message).\n      var state = root.querySelector('[data-pm2-pop-state]');\n      var mine = location.hash === '#' + d.formId;\n      if (state && mine) {\n        if (state.getAttribute('data-pm2-pop-state') === 'success') {\n          var st0 = read(); st0.signedUp = true; write(st0);\n        }\n        open(state.getAttribute('data-pm2-pop-state') === 'error' ? root.querySelector('input[type=\"email\"]') : null);\n        return;\n      }\n\n      if (design) {\n        document.addEventListener('shopify:section:select', function (e) { if (e.detail.sectionId === d.sectionId) { armed = true; open(); } });\n        document.addEventListener('shopify:section:deselect', function (e) { if (e.detail.sectionId === d.sectionId) close(false); });\n        return;\n      }\n      if (blockedPath() || capped() || seen()) return;\n      if (desktop()) {\n        timers.push(setTimeout(trigger, (parseFloat(d.desktopDelay) || 20) * 1000));\n        timers.push(setTimeout(function () { document.addEventListener('mouseout', onLeave); }, 3000));\n      } else {\n        if (d.mobile !== 'true') return;\n        timers.push(setTimeout(trigger, (parseFloat(d.delay) || 12) * 1000));\n        window.addEventListener('scroll', onScroll, { passive: true });\n      }\n    })();\n  <\/script>\n\n  <style>\n    .pm2-pop[hidden] { display: none; }\n    .pm2-pop {\n      position: fixed; inset: 0; z-index: 990;\n      display: flex; align-items: flex-end; justify-content: center;\n    }\n    html.pm2-pop-lock { overflow: hidden; }\n    .pm2-pop > .pm2-pop__backdrop {\n      display: block; position: absolute; inset: 0; background: rgba(17, 24, 39, .16);\n      opacity: 0; transition: opacity .3s ease;\n    }\n    .pm2-pop__panel {\n      box-sizing: border-box; position: relative; width: 100%; max-height: min(62vh, 48rem); overflow: auto; overscroll-behavior: contain;\n      padding: 2.2rem 2rem calc(1.4rem + env(safe-area-inset-bottom));\n      border-radius: 24px 24px 0 0;\n      background-attachment: scroll;\n      --pm2-pop-shadow: 0 -14px 40px -14px rgba(17, 24, 39, .35);\n      box-shadow: var(--pm2-pop-shadow);\n      transform: translateY(100%); transition: transform .32s cubic-bezier(.2, .8, .2, 1);\n      outline: none;\n      color: rgb(var(--color-foreground));\n    }\n    .pm2-pop.is-open .pm2-pop__backdrop { opacity: 1; }\n    .pm2-pop.is-open .pm2-pop__panel { transform: none; }\n    .pm2-pop__panel::before {\n      content: ''; position: absolute; top: .8rem; left: 50%; width: 4rem; height: .4rem; margin-left: -2rem;\n      border-radius: 999px; background: rgba(var(--color-foreground), .14);\n    }\n    .pm2-pop__x {\n      position: absolute; top: .8rem; right: .8rem; z-index: 2;\n      display: grid; place-items: center; width: 44px; height: 44px; padding: 0;\n      border: 0; border-radius: 999px; cursor: pointer;\n      background: rgba(var(--color-foreground), .06); color: rgb(var(--color-foreground));\n      transition: background .2s ease;\n    }\n    .pm2-pop__x:hover { background: rgba(var(--color-foreground), .12); }\n    .pm2-pop__media { display: none; }\n    .pm2-pop__body { min-width: 0; }\n    .pm2-pop__eyebrow, .pm2-pop__title { padding-right: 4.4rem; }\n    .pm2-pop__form { margin: 0; }\n    .pm2-pop__eyebrow {\n      display: inline-flex; align-items: center; gap: .5rem; margin: 0 0 .6rem;\n      font-size: 1.3rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;\n      color: rgb(var(--color-button));\n    }\n    .pm2-pop__title {\n      margin: 0; font-family: var(--font-heading-family); font-weight: 800;\n      font-size: 2.3rem; line-height: 1.15; letter-spacing: -.01em; color: rgb(var(--color-foreground));\n    }\n    .pm2-pop__text { margin: .6rem 0 1.4rem; font-size: 1.5rem; line-height: 1.45; letter-spacing: normal; color: rgba(var(--color-foreground), .75); }\n    .pm2-pop__row { display: flex; gap: .8rem; }\n    .pm2-pop__input {\n      box-sizing: border-box; flex: 1 1 auto; min-width: 0; height: 4.8rem; padding: 0 1.6rem;\n      border: 1.5px solid rgba(var(--color-foreground), .22); border-radius: 999px;\n      background: rgb(var(--color-background)); color: rgb(var(--color-foreground));\n      font: inherit; font-size: 1.6rem; letter-spacing: normal;\n    }\n    .pm2-pop__input:focus { outline: 2px solid rgb(var(--color-button)); outline-offset: 1px; border-color: transparent; }\n    .pm2-pop__input[aria-invalid=\"true\"] { border-color: #c2412d; }\n    .pm2-pop .button.pm2-pop__submit,\n    .pm2-pop .button.pm2-pop__shop {\n      flex: 0 0 auto; min-height: 4.8rem; min-width: 0; padding: 0 1.8rem; border-radius: 999px;\n      font-weight: 700; font-size: 1.5rem; letter-spacing: normal; white-space: nowrap;\n    }\n    .pm2-pop .button.pm2-pop__submit::after, .pm2-pop .button.pm2-pop__shop::after { border-radius: 999px; }\n    .pm2-pop .button.pm2-pop__shop { display: flex; width: 100%; margin-top: 1rem; text-decoration: none; }\n    .pm2-pop__error { margin: .8rem 0 0; font-size: 1.35rem; color: #b3261e; }\n    .pm2-pop__consent { margin: .8rem 0 0; font-size: 1.2rem; letter-spacing: normal; line-height: 1.45; color: rgba(var(--color-foreground), .62); }\n    .pm2-pop__consent a { color: inherit; text-underline-offset: .2em; }\n    .pm2-pop__dismiss {\n      display: block; min-height: 44px; margin: .2rem auto -.6rem; padding: 0 1.6rem;\n      border: 0; background: none; cursor: pointer; font: inherit; font-size: 1.4rem; font-weight: 600;\n      color: rgba(var(--color-foreground), .7); text-decoration: underline; text-underline-offset: .25em;\n    }\n    .pm2-pop__code {\n      display: flex; align-items: center; gap: .8rem; flex-wrap: wrap;\n      padding: .8rem .8rem .8rem 1.6rem;\n      border: 2px dashed rgba(var(--color-button), .55); border-radius: 18px;\n      background: rgba(var(--color-button), .06);\n    }\n    .pm2-pop__code-label { width: 100%; font-size: 1.2rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: rgba(var(--color-foreground), .6); }\n    .pm2-pop__code-value { flex: 1 1 auto; font-size: 2.2rem; font-weight: 800; letter-spacing: .08em; color: rgb(var(--color-foreground)); font-family: var(--font-heading-family); }\n    .pm2-pop__copy {\n      display: inline-flex; align-items: center; gap: .6rem; min-height: 44px; padding: 0 1.6rem;\n      border: 0; border-radius: 999px; cursor: pointer; font: inherit; font-size: 1.4rem; font-weight: 700;\n      background: rgb(var(--color-background)); color: rgb(var(--color-foreground));\n      box-shadow: inset 0 0 0 1.5px rgba(var(--color-foreground), .2);\n    }\n    .pm2-pop__copy.is-copied { background: rgb(var(--color-button)); color: rgb(var(--color-button-text)); box-shadow: none; }\n    .pm2-pop__fine { margin: .8rem 0 0; font-size: 1.2rem; text-align: center; color: rgba(var(--color-foreground), .6); }\n    .pm2-pop__or { margin: 1.4rem 0 .8rem; font-size: 1.4rem; font-weight: 600; }\n    .pm2-pop :focus-visible { outline: 2px solid rgb(var(--color-button)); outline-offset: 2px; }\n    .pm2-pop .pm2-pop__panel:focus, .pm2-pop .pm2-pop__panel:focus-visible { outline: none; box-shadow: var(--pm2-pop-shadow); }\n\n    @media screen and (max-width: 360px) {\n      .pm2-pop__row { flex-wrap: wrap; }\n      .pm2-pop .button.pm2-pop__submit { width: 100%; }\n    }\n\n    @media screen and (min-width: 750px) {\n      .pm2-pop { align-items: center; padding: 2.4rem; }\n      .pm2-pop > .pm2-pop__backdrop { background: rgba(17, 24, 39, .45); }\n      .pm2-pop__panel {\n        width: 100%; max-width: 48rem; max-height: calc(100vh - 4.8rem);\n        padding: 3.6rem 3.6rem 2.4rem; border-radius: 24px;\n        --pm2-pop-shadow: 0 30px 80px -24px rgba(17, 24, 39, .45);\n        transform: translateY(16px) scale(.98); opacity: 0;\n        transition: transform .3s cubic-bezier(.2, .8, .2, 1), opacity .25s ease;\n      }\n      .pm2-pop.is-open .pm2-pop__panel { opacity: 1; }\n      .pm2-pop__panel::before { display: none; }\n      .pm2-pop__x { top: 1.2rem; right: 1.2rem; }\n      .pm2-pop__title { font-size: 3rem; }\n      .pm2-pop__text { font-size: 1.6rem; }\n      .pm2-pop--has-image .pm2-pop__panel {\n        max-width: 78rem; padding: 0; display: grid; grid-template-columns: 42% 1fr; overflow: hidden;\n      }\n      .pm2-pop--has-image .pm2-pop__media { display: block; position: relative; min-height: 100%; }\n      .pm2-pop--has-image .pm2-pop__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }\n      .pm2-pop--has-image .pm2-pop__body { padding: 4rem 3.6rem 2.4rem; overflow: auto; }\n    }\n    @media (prefers-reduced-motion: reduce) {\n      .pm2-pop__panel, .pm2-pop__backdrop { transition: none; }\n    }\n  </style>\n</section>","error":"<section id=\"shopify-section-template--x__pm2_popup_8\" class=\"shopify-section pm2-pop-section\"><div\n    class=\"pm2-pop\"\n    id=\"PM2Pop-template--x__pm2_popup_8\"\n    data-pm2-pop\n    data-section-id=\"template--x__pm2_popup_8\"\n    data-form-id=\"PM2Popup-template--x__pm2_popup_8\"\n    data-delay=\"12\"\n    data-desktop-delay=\"20\"\n    data-scroll=\"40\"\n    data-cap-days=\"14\"\n    data-mobile=\"true\"\n    hidden\n  >\n    <div class=\"pm2-pop__backdrop\" data-pm2-pop-close></div>\n    <div\n      class=\"pm2-pop__panel color-scheme-3 gradient\"\n      role=\"dialog\"\n      aria-modal=\"true\"\n      aria-labelledby=\"PM2PopTitle-template--x__pm2_popup_8\"\n      aria-describedby=\"PM2PopText-template--x__pm2_popup_8\"\n      tabindex=\"-1\"\n      data-pm2-pop-panel\n    >\n      <button type=\"button\" class=\"pm2-pop__x\" data-pm2-pop-close aria-label=\"Close\">\n        <svg viewBox=\"0 0 24 24\" width=\"20\" height=\"20\" aria-hidden=\"true\" focusable=\"false\"><path d=\"M6 6l12 12M18 6L6 18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\"/></svg>\n      </button><div class=\"pm2-pop__body\"><form method=\"post\" action=\"/contact#PM2Popup-template--x__pm2_popup_8\" id=\"PM2Popup-template--x__pm2_popup_8\" accept-charset=\"UTF-8\" class=\"pm2-pop__form\"><input type=\"hidden\" name=\"form_type\" value=\"customer\"><input type=\"hidden\" name=\"utf8\" value=\"✓\"><span hidden data-pm2-pop-state=\"error\"></span><p class=\"pm2-pop__eyebrow\">Welcome to PETME2</p><h2 class=\"pm2-pop__title\" id=\"PM2PopTitle-template--x__pm2_popup_8\">Get 10% off your first order</h2>\n            <p class=\"pm2-pop__text\" id=\"PM2PopText-template--x__pm2_popup_8\">Join our emails for pet-care tips. Your code shows right after you sign up.</p><input type=\"hidden\" name=\"contact[tags]\" value=\"newsletter,welcome10\">\n            <div class=\"pm2-pop__row\">\n              <label class=\"visually-hidden\" for=\"PM2PopEmail-template--x__pm2_popup_8\">Email</label>\n              <input\n                class=\"pm2-pop__input\"\n                id=\"PM2PopEmail-template--x__pm2_popup_8\"\n                type=\"email\"\n                name=\"contact[email]\"\n                value=\"bad@\"\n                placeholder=\"Your email\"\n                autocomplete=\"email\"\n                autocorrect=\"off\"\n                autocapitalize=\"off\"\n                spellcheck=\"false\"\n                required\n                aria-required=\"true\"\n                aria-invalid=\"true\" aria-describedby=\"PM2PopErr-template--x__pm2_popup_8\"\n              >\n              <button type=\"submit\" class=\"button pm2-pop__submit\">Get 10% off</button>\n            </div><p class=\"pm2-pop__error\" id=\"PM2PopErr-template--x__pm2_popup_8\" role=\"alert\">\n                Email is invalid\n              </p><p class=\"pm2-pop__consent\">\n              By signing up you agree to receive marketing emails from PETME2. Unsubscribe anytime.\n                <a href=\"/policies/privacy-policy\">Privacy policy</a>.</p>\n            <button type=\"button\" class=\"pm2-pop__dismiss\" data-pm2-pop-close>No thanks</button></form></div>\n    </div>\n  </div>\n\n  <script>\n    (function () {\n      var root = document.getElementById(\"PM2Pop-template--x__pm2_popup_8\");\n      if (!root || root.dataset.pm2Ready) return;\n      root.dataset.pm2Ready = '1';\n      var KEY = 'pm2_welcome_popup';\n      var SKEY = 'pm2_welcome_popup_seen';\n      var panel = root.querySelector('[data-pm2-pop-panel]');\n      var design = !!(window.Shopify && window.Shopify.designMode);\n      var d = root.dataset;\n      var isOpen = false, lastFocus = null, armed = true, timers = [], pendingTimer = null;\n\n      function read() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } }\n      function write(o) { try { localStorage.setItem(KEY, JSON.stringify(o)); } catch (e) {} }\n      function seen() { try { return sessionStorage.getItem(SKEY) === '1'; } catch (e) { return false; } }\n      function markSeen() { try { sessionStorage.setItem(SKEY, '1'); } catch (e) {} }\n      function desktop() { return window.matchMedia('(min-width: 750px) and (hover: hover) and (pointer: fine)').matches; }\n\n      function blockedPath() {\n        return /^(\\/[a-z]{2}(-[a-z]{2})?)?\\/(cart|checkout|checkouts|account|password|challenge)(\\/|$|\\?)/i.test(location.pathname);\n      }\n      function capped() {\n        var st = read();\n        if (st.signedUp) return true;\n        var days = parseFloat(d.capDays) || 14;\n        return !!(st.closedAt && Date.now() - st.closedAt < days * 864e5);\n      }\n      function otherUiOpen() {\n        return !!document.querySelector('cart-drawer.active, cart-drawer.is-open, cart-notification .active, .cart-notification.active, details[open] > .menu-drawer, .menu-drawer-container[open]')\n          || document.body.classList.contains('overflow-hidden');\n      }\n\n      function focusables() {\n        return Array.prototype.filter.call(\n          panel.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]):not([type=\"hidden\"]), select, textarea, [tabindex]:not([tabindex=\"-1\"])'),\n          function (el) { return el.offsetParent !== null || el === document.activeElement; }\n        );\n      }\n      function onKey(e) {\n        if (!isOpen) return;\n        if (e.key === 'Escape' || e.key === 'Esc') { e.preventDefault(); close(true); return; }\n        if (e.key !== 'Tab') return;\n        var f = focusables();\n        if (!f.length) { e.preventDefault(); panel.focus(); return; }\n        var first = f[0], last = f[f.length - 1];\n        if (e.shiftKey && (document.activeElement === first || document.activeElement === panel)) { e.preventDefault(); last.focus(); }\n        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }\n      }\n      function onFocusIn(e) { if (isOpen && !root.contains(e.target)) panel.focus(); }\n\n      function open(focusEl) {\n        if (isOpen) return;\n        isOpen = true; armed = false;\n        clearTimers();\n        lastFocus = document.activeElement;\n        root.hidden = false;\n        document.documentElement.classList.add('pm2-pop-lock');\n        requestAnimationFrame(function () { requestAnimationFrame(function () { root.classList.add('is-open'); }); });\n        (focusEl || panel).focus({ preventScroll: true });\n        document.addEventListener('keydown', onKey, true);\n        document.addEventListener('focusin', onFocusIn);\n        if (!design) markSeen();\n      }\n      function close(remember) {\n        if (!isOpen) return;\n        isOpen = false;\n        root.classList.remove('is-open');\n        document.documentElement.classList.remove('pm2-pop-lock');\n        document.removeEventListener('keydown', onKey, true);\n        document.removeEventListener('focusin', onFocusIn);\n        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;\n        setTimeout(function () { if (!isOpen) root.hidden = true; }, reduce ? 0 : 320);\n        if (remember && !design) {\n          var st = read();\n          if (!st.signedUp) { st.closedAt = Date.now(); write(st); }\n        }\n        if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });\n      }\n\n      root.addEventListener('click', function (e) {\n        var t = e.target.closest('[data-pm2-pop-close]');\n        if (t) { e.preventDefault(); close(true); return; }\n        var c = e.target.closest('[data-pm2-copy]');\n        if (c) copy(c);\n      });\n\n      function copy(btn) {\n        var code = btn.getAttribute('data-pm2-copy');\n        var label = btn.querySelector('[data-pm2-copy-label]');\n        var live = root.querySelector('[data-pm2-copy-status]');\n        function done(ok) {\n          if (label) label.textContent = ok ? 'Copied!' : 'Press and hold to copy';\n          if (live) live.textContent = ok ? 'Code ' + code + ' copied' : '';\n          btn.classList.toggle('is-copied', ok);\n          setTimeout(function () { if (label) label.textContent = 'Copy code'; btn.classList.remove('is-copied'); }, 2500);\n        }\n        if (navigator.clipboard && window.isSecureContext) {\n          navigator.clipboard.writeText(code).then(function () { done(true); }, fallback);\n        } else { fallback(); }\n        function fallback() {\n          var ta = document.createElement('textarea');\n          ta.value = code; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';\n          document.body.appendChild(ta); ta.select();\n          var ok = false; try { ok = document.execCommand('copy'); } catch (e) {}\n          document.body.removeChild(ta); done(ok); btn.focus();\n        }\n      }\n\n      function clearTimers() {\n        timers.forEach(clearTimeout); timers = [];\n        if (pendingTimer) { clearInterval(pendingTimer); pendingTimer = null; }\n        window.removeEventListener('scroll', onScroll);\n        document.removeEventListener('mouseout', onLeave);\n      }\n      function trigger() {\n        if (!armed || isOpen) return;\n        if (!otherUiOpen()) { open(); return; }\n        if (pendingTimer) return;\n        var tries = 0;\n        pendingTimer = setInterval(function () {\n          tries++;\n          if (!armed || isOpen || tries > 60) { clearInterval(pendingTimer); pendingTimer = null; return; }\n          if (!otherUiOpen()) { clearInterval(pendingTimer); pendingTimer = null; open(); }\n        }, 1000);\n      }\n      function onScroll() {\n        var h = document.documentElement.scrollHeight - window.innerHeight;\n        if (h > 0 && window.scrollY / h >= (parseFloat(d.scroll) || 40) / 100) trigger();\n      }\n      function onLeave(e) {\n        if (!e.relatedTarget && e.clientY <= 0) trigger();\n      }\n\n      // Opened as the result of our own signup form post (success shows the code, error shows the message).\n      var state = root.querySelector('[data-pm2-pop-state]');\n      var mine = location.hash === '#' + d.formId;\n      if (state && mine) {\n        if (state.getAttribute('data-pm2-pop-state') === 'success') {\n          var st0 = read(); st0.signedUp = true; write(st0);\n        }\n        open(state.getAttribute('data-pm2-pop-state') === 'error' ? root.querySelector('input[type=\"email\"]') : null);\n        return;\n      }\n\n      if (design) {\n        document.addEventListener('shopify:section:select', function (e) { if (e.detail.sectionId === d.sectionId) { armed = true; open(); } });\n        document.addEventListener('shopify:section:deselect', function (e) { if (e.detail.sectionId === d.sectionId) close(false); });\n        return;\n      }\n      if (blockedPath() || capped() || seen()) return;\n      if (desktop()) {\n        timers.push(setTimeout(trigger, (parseFloat(d.desktopDelay) || 20) * 1000));\n        timers.push(setTimeout(function () { document.addEventListener('mouseout', onLeave); }, 3000));\n      } else {\n        if (d.mobile !== 'true') return;\n        timers.push(setTimeout(trigger, (parseFloat(d.delay) || 12) * 1000));\n        window.addEventListener('scroll', onScroll, { passive: true });\n      }\n    })();\n  <\/script>\n\n  <style>\n    .pm2-pop[hidden] { display: none; }\n    .pm2-pop {\n      position: fixed; inset: 0; z-index: 990;\n      display: flex; align-items: flex-end; justify-content: center;\n    }\n    html.pm2-pop-lock { overflow: hidden; }\n    .pm2-pop > .pm2-pop__backdrop {\n      display: block; position: absolute; inset: 0; background: rgba(17, 24, 39, .16);\n      opacity: 0; transition: opacity .3s ease;\n    }\n    .pm2-pop__panel {\n      box-sizing: border-box; position: relative; width: 100%; max-height: min(62vh, 48rem); overflow: auto; overscroll-behavior: contain;\n      padding: 2.2rem 2rem calc(1.4rem + env(safe-area-inset-bottom));\n      border-radius: 24px 24px 0 0;\n      background-attachment: scroll;\n      --pm2-pop-shadow: 0 -14px 40px -14px rgba(17, 24, 39, .35);\n      box-shadow: var(--pm2-pop-shadow);\n      transform: translateY(100%); transition: transform .32s cubic-bezier(.2, .8, .2, 1);\n      outline: none;\n      color: rgb(var(--color-foreground));\n    }\n    .pm2-pop.is-open .pm2-pop__backdrop { opacity: 1; }\n    .pm2-pop.is-open .pm2-pop__panel { transform: none; }\n    .pm2-pop__panel::before {\n      content: ''; position: absolute; top: .8rem; left: 50%; width: 4rem; height: .4rem; margin-left: -2rem;\n      border-radius: 999px; background: rgba(var(--color-foreground), .14);\n    }\n    .pm2-pop__x {\n      position: absolute; top: .8rem; right: .8rem; z-index: 2;\n      display: grid; place-items: center; width: 44px; height: 44px; padding: 0;\n      border: 0; border-radius: 999px; cursor: pointer;\n      background: rgba(var(--color-foreground), .06); color: rgb(var(--color-foreground));\n      transition: background .2s ease;\n    }\n    .pm2-pop__x:hover { background: rgba(var(--color-foreground), .12); }\n    .pm2-pop__media { display: none; }\n    .pm2-pop__body { min-width: 0; }\n    .pm2-pop__eyebrow, .pm2-pop__title { padding-right: 4.4rem; }\n    .pm2-pop__form { margin: 0; }\n    .pm2-pop__eyebrow {\n      display: inline-flex; align-items: center; gap: .5rem; margin: 0 0 .6rem;\n      font-size: 1.3rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;\n      color: rgb(var(--color-button));\n    }\n    .pm2-pop__title {\n      margin: 0; font-family: var(--font-heading-family); font-weight: 800;\n      font-size: 2.3rem; line-height: 1.15; letter-spacing: -.01em; color: rgb(var(--color-foreground));\n    }\n    .pm2-pop__text { margin: .6rem 0 1.4rem; font-size: 1.5rem; line-height: 1.45; letter-spacing: normal; color: rgba(var(--color-foreground), .75); }\n    .pm2-pop__row { display: flex; gap: .8rem; }\n    .pm2-pop__input {\n      box-sizing: border-box; flex: 1 1 auto; min-width: 0; height: 4.8rem; padding: 0 1.6rem;\n      border: 1.5px solid rgba(var(--color-foreground), .22); border-radius: 999px;\n      background: rgb(var(--color-background)); color: rgb(var(--color-foreground));\n      font: inherit; font-size: 1.6rem; letter-spacing: normal;\n    }\n    .pm2-pop__input:focus { outline: 2px solid rgb(var(--color-button)); outline-offset: 1px; border-color: transparent; }\n    .pm2-pop__input[aria-invalid=\"true\"] { border-color: #c2412d; }\n    .pm2-pop .button.pm2-pop__submit,\n    .pm2-pop .button.pm2-pop__shop {\n      flex: 0 0 auto; min-height: 4.8rem; min-width: 0; padding: 0 1.8rem; border-radius: 999px;\n      font-weight: 700; font-size: 1.5rem; letter-spacing: normal; white-space: nowrap;\n    }\n    .pm2-pop .button.pm2-pop__submit::after, .pm2-pop .button.pm2-pop__shop::after { border-radius: 999px; }\n    .pm2-pop .button.pm2-pop__shop { display: flex; width: 100%; margin-top: 1rem; text-decoration: none; }\n    .pm2-pop__error { margin: .8rem 0 0; font-size: 1.35rem; color: #b3261e; }\n    .pm2-pop__consent { margin: .8rem 0 0; font-size: 1.2rem; letter-spacing: normal; line-height: 1.45; color: rgba(var(--color-foreground), .62); }\n    .pm2-pop__consent a { color: inherit; text-underline-offset: .2em; }\n    .pm2-pop__dismiss {\n      display: block; min-height: 44px; margin: .2rem auto -.6rem; padding: 0 1.6rem;\n      border: 0; background: none; cursor: pointer; font: inherit; font-size: 1.4rem; font-weight: 600;\n      color: rgba(var(--color-foreground), .7); text-decoration: underline; text-underline-offset: .25em;\n    }\n    .pm2-pop__code {\n      display: flex; align-items: center; gap: .8rem; flex-wrap: wrap;\n      padding: .8rem .8rem .8rem 1.6rem;\n      border: 2px dashed rgba(var(--color-button), .55); border-radius: 18px;\n      background: rgba(var(--color-button), .06);\n    }\n    .pm2-pop__code-label { width: 100%; font-size: 1.2rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: rgba(var(--color-foreground), .6); }\n    .pm2-pop__code-value { flex: 1 1 auto; font-size: 2.2rem; font-weight: 800; letter-spacing: .08em; color: rgb(var(--color-foreground)); font-family: var(--font-heading-family); }\n    .pm2-pop__copy {\n      display: inline-flex; align-items: center; gap: .6rem; min-height: 44px; padding: 0 1.6rem;\n      border: 0; border-radius: 999px; cursor: pointer; font: inherit; font-size: 1.4rem; font-weight: 700;\n      background: rgb(var(--color-background)); color: rgb(var(--color-foreground));\n      box-shadow: inset 0 0 0 1.5px rgba(var(--color-foreground), .2);\n    }\n    .pm2-pop__copy.is-copied { background: rgb(var(--color-button)); color: rgb(var(--color-button-text)); box-shadow: none; }\n    .pm2-pop__fine { margin: .8rem 0 0; font-size: 1.2rem; text-align: center; color: rgba(var(--color-foreground), .6); }\n    .pm2-pop__or { margin: 1.4rem 0 .8rem; font-size: 1.4rem; font-weight: 600; }\n    .pm2-pop :focus-visible { outline: 2px solid rgb(var(--color-button)); outline-offset: 2px; }\n    .pm2-pop .pm2-pop__panel:focus, .pm2-pop .pm2-pop__panel:focus-visible { outline: none; box-shadow: var(--pm2-pop-shadow); }\n\n    @media screen and (max-width: 360px) {\n      .pm2-pop__row { flex-wrap: wrap; }\n      .pm2-pop .button.pm2-pop__submit { width: 100%; }\n    }\n\n    @media screen and (min-width: 750px) {\n      .pm2-pop { align-items: center; padding: 2.4rem; }\n      .pm2-pop > .pm2-pop__backdrop { background: rgba(17, 24, 39, .45); }\n      .pm2-pop__panel {\n        width: 100%; max-width: 48rem; max-height: calc(100vh - 4.8rem);\n        padding: 3.6rem 3.6rem 2.4rem; border-radius: 24px;\n        --pm2-pop-shadow: 0 30px 80px -24px rgba(17, 24, 39, .45);\n        transform: translateY(16px) scale(.98); opacity: 0;\n        transition: transform .3s cubic-bezier(.2, .8, .2, 1), opacity .25s ease;\n      }\n      .pm2-pop.is-open .pm2-pop__panel { opacity: 1; }\n      .pm2-pop__panel::before { display: none; }\n      .pm2-pop__x { top: 1.2rem; right: 1.2rem; }\n      .pm2-pop__title { font-size: 3rem; }\n      .pm2-pop__text { font-size: 1.6rem; }\n      .pm2-pop--has-image .pm2-pop__panel {\n        max-width: 78rem; padding: 0; display: grid; grid-template-columns: 42% 1fr; overflow: hidden;\n      }\n      .pm2-pop--has-image .pm2-pop__media { display: block; position: relative; min-height: 100%; }\n      .pm2-pop--has-image .pm2-pop__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }\n      .pm2-pop--has-image .pm2-pop__body { padding: 4rem 3.6rem 2.4rem; overflow: auto; }\n    }\n    @media (prefers-reduced-motion: reduce) {\n      .pm2-pop__panel, .pm2-pop__backdrop { transition: none; }\n    }\n  </style>\n</section>","noemail":"<section id=\"shopify-section-template--x__pm2_popup_11\" class=\"shopify-section pm2-pop-section\"><div\n    class=\"pm2-pop\"\n    id=\"PM2Pop-template--x__pm2_popup_11\"\n    data-pm2-pop\n    data-section-id=\"template--x__pm2_popup_11\"\n    data-form-id=\"PM2Popup-template--x__pm2_popup_11\"\n    data-delay=\"12\"\n    data-desktop-delay=\"20\"\n    data-scroll=\"40\"\n    data-cap-days=\"14\"\n    data-mobile=\"true\"\n    hidden\n  >\n    <div class=\"pm2-pop__backdrop\" data-pm2-pop-close></div>\n    <div\n      class=\"pm2-pop__panel color-scheme-3 gradient\"\n      role=\"dialog\"\n      aria-modal=\"true\"\n      aria-labelledby=\"PM2PopTitle-template--x__pm2_popup_11\"\n      aria-describedby=\"PM2PopText-template--x__pm2_popup_11\"\n      tabindex=\"-1\"\n      data-pm2-pop-panel\n    >\n      <button type=\"button\" class=\"pm2-pop__x\" data-pm2-pop-close aria-label=\"Close\">\n        <svg viewBox=\"0 0 24 24\" width=\"20\" height=\"20\" aria-hidden=\"true\" focusable=\"false\"><path d=\"M6 6l12 12M18 6L6 18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\"/></svg>\n      </button><div class=\"pm2-pop__body\"><form method=\"post\" action=\"/contact#PM2Popup-template--x__pm2_popup_11\" id=\"PM2Popup-template--x__pm2_popup_11\" accept-charset=\"UTF-8\" class=\"pm2-pop__form\"><input type=\"hidden\" name=\"form_type\" value=\"customer\"><input type=\"hidden\" name=\"utf8\" value=\"✓\"><p class=\"pm2-pop__eyebrow\">Welcome to PETME2</p><h2 class=\"pm2-pop__title\" id=\"PM2PopTitle-template--x__pm2_popup_11\">Get 10% off your first order</h2>\n            <p class=\"pm2-pop__text\" id=\"PM2PopText-template--x__pm2_popup_11\">Join our emails for pet-care tips. Your code shows right after you sign up.</p><div class=\"pm2-pop__code\">\n      <span class=\"pm2-pop__code-label\">Your code</span>\n      <span class=\"pm2-pop__code-value\" id=\"PM2PopCode-template--x__pm2_popup_11\">WELCOME10</span>\n      <button type=\"button\" class=\"pm2-pop__copy\" data-pm2-copy=\"WELCOME10\" aria-describedby=\"PM2PopCode-template--x__pm2_popup_11\">\n        <svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" aria-hidden=\"true\" focusable=\"false\"><rect x=\"8.5\" y=\"8.5\" width=\"11\" height=\"11\" rx=\"2.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\"/><path d=\"M15.5 5.5v-.5a2 2 0 0 0-2-2h-8a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\"/></svg>\n        <span data-pm2-copy-label>Copy code</span>\n      </button>\n    </div>\n    <p class=\"pm2-pop__live visually-hidden\" aria-live=\"polite\" data-pm2-copy-status></p>\n    <a class=\"button pm2-pop__shop\" href=\"/discount/WELCOME10?redirect=/collections/all\">Shop now</a><p class=\"pm2-pop__fine\">The code is added at checkout when you shop from this link.</p>\n              <p class=\"pm2-pop__or\">Want tips and new arrivals? Join our emails:</p><input type=\"hidden\" name=\"contact[tags]\" value=\"newsletter,welcome10\">\n            <div class=\"pm2-pop__row\">\n              <label class=\"visually-hidden\" for=\"PM2PopEmail-template--x__pm2_popup_11\">Email</label>\n              <input\n                class=\"pm2-pop__input\"\n                id=\"PM2PopEmail-template--x__pm2_popup_11\"\n                type=\"email\"\n                name=\"contact[email]\"\n                value=\"\"\n                placeholder=\"Your email\"\n                autocomplete=\"email\"\n                autocorrect=\"off\"\n                autocapitalize=\"off\"\n                spellcheck=\"false\"\n                required\n                aria-required=\"true\"\n                \n              >\n              <button type=\"submit\" class=\"button pm2-pop__submit\">Get 10% off</button>\n            </div><p class=\"pm2-pop__consent\">\n              By signing up you agree to receive marketing emails from PETME2. Unsubscribe anytime.\n                <a href=\"/policies/privacy-policy\">Privacy policy</a>.</p>\n            <button type=\"button\" class=\"pm2-pop__dismiss\" data-pm2-pop-close>No thanks</button></form></div>\n    </div>\n  </div>\n\n  <script>\n    (function () {\n      var root = document.getElementById(\"PM2Pop-template--x__pm2_popup_11\");\n      if (!root || root.dataset.pm2Ready) return;\n      root.dataset.pm2Ready = '1';\n      var KEY = 'pm2_welcome_popup';\n      var SKEY = 'pm2_welcome_popup_seen';\n      var panel = root.querySelector('[data-pm2-pop-panel]');\n      var design = !!(window.Shopify && window.Shopify.designMode);\n      var d = root.dataset;\n      var isOpen = false, lastFocus = null, armed = true, timers = [], pendingTimer = null;\n\n      function read() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } }\n      function write(o) { try { localStorage.setItem(KEY, JSON.stringify(o)); } catch (e) {} }\n      function seen() { try { return sessionStorage.getItem(SKEY) === '1'; } catch (e) { return false; } }\n      function markSeen() { try { sessionStorage.setItem(SKEY, '1'); } catch (e) {} }\n      function desktop() { return window.matchMedia('(min-width: 750px) and (hover: hover) and (pointer: fine)').matches; }\n\n      function blockedPath() {\n        return /^(\\/[a-z]{2}(-[a-z]{2})?)?\\/(cart|checkout|checkouts|account|password|challenge)(\\/|$|\\?)/i.test(location.pathname);\n      }\n      function capped() {\n        var st = read();\n        if (st.signedUp) return true;\n        var days = parseFloat(d.capDays) || 14;\n        return !!(st.closedAt && Date.now() - st.closedAt < days * 864e5);\n      }\n      function otherUiOpen() {\n        return !!document.querySelector('cart-drawer.active, cart-drawer.is-open, cart-notification .active, .cart-notification.active, details[open] > .menu-drawer, .menu-drawer-container[open]')\n          || document.body.classList.contains('overflow-hidden');\n      }\n\n      function focusables() {\n        return Array.prototype.filter.call(\n          panel.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]):not([type=\"hidden\"]), select, textarea, [tabindex]:not([tabindex=\"-1\"])'),\n          function (el) { return el.offsetParent !== null || el === document.activeElement; }\n        );\n      }\n      function onKey(e) {\n        if (!isOpen) return;\n        if (e.key === 'Escape' || e.key === 'Esc') { e.preventDefault(); close(true); return; }\n        if (e.key !== 'Tab') return;\n        var f = focusables();\n        if (!f.length) { e.preventDefault(); panel.focus(); return; }\n        var first = f[0], last = f[f.length - 1];\n        if (e.shiftKey && (document.activeElement === first || document.activeElement === panel)) { e.preventDefault(); last.focus(); }\n        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }\n      }\n      function onFocusIn(e) { if (isOpen && !root.contains(e.target)) panel.focus(); }\n\n      function open(focusEl) {\n        if (isOpen) return;\n        isOpen = true; armed = false;\n        clearTimers();\n        lastFocus = document.activeElement;\n        root.hidden = false;\n        document.documentElement.classList.add('pm2-pop-lock');\n        requestAnimationFrame(function () { requestAnimationFrame(function () { root.classList.add('is-open'); }); });\n        (focusEl || panel).focus({ preventScroll: true });\n        document.addEventListener('keydown', onKey, true);\n        document.addEventListener('focusin', onFocusIn);\n        if (!design) markSeen();\n      }\n      function close(remember) {\n        if (!isOpen) return;\n        isOpen = false;\n        root.classList.remove('is-open');\n        document.documentElement.classList.remove('pm2-pop-lock');\n        document.removeEventListener('keydown', onKey, true);\n        document.removeEventListener('focusin', onFocusIn);\n        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;\n        setTimeout(function () { if (!isOpen) root.hidden = true; }, reduce ? 0 : 320);\n        if (remember && !design) {\n          var st = read();\n          if (!st.signedUp) { st.closedAt = Date.now(); write(st); }\n        }\n        if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });\n      }\n\n      root.addEventListener('click', function (e) {\n        var t = e.target.closest('[data-pm2-pop-close]');\n        if (t) { e.preventDefault(); close(true); return; }\n        var c = e.target.closest('[data-pm2-copy]');\n        if (c) copy(c);\n      });\n\n      function copy(btn) {\n        var code = btn.getAttribute('data-pm2-copy');\n        var label = btn.querySelector('[data-pm2-copy-label]');\n        var live = root.querySelector('[data-pm2-copy-status]');\n        function done(ok) {\n          if (label) label.textContent = ok ? 'Copied!' : 'Press and hold to copy';\n          if (live) live.textContent = ok ? 'Code ' + code + ' copied' : '';\n          btn.classList.toggle('is-copied', ok);\n          setTimeout(function () { if (label) label.textContent = 'Copy code'; btn.classList.remove('is-copied'); }, 2500);\n        }\n        if (navigator.clipboard && window.isSecureContext) {\n          navigator.clipboard.writeText(code).then(function () { done(true); }, fallback);\n        } else { fallback(); }\n        function fallback() {\n          var ta = document.createElement('textarea');\n          ta.value = code; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';\n          document.body.appendChild(ta); ta.select();\n          var ok = false; try { ok = document.execCommand('copy'); } catch (e) {}\n          document.body.removeChild(ta); done(ok); btn.focus();\n        }\n      }\n\n      function clearTimers() {\n        timers.forEach(clearTimeout); timers = [];\n        if (pendingTimer) { clearInterval(pendingTimer); pendingTimer = null; }\n        window.removeEventListener('scroll', onScroll);\n        document.removeEventListener('mouseout', onLeave);\n      }\n      function trigger() {\n        if (!armed || isOpen) return;\n        if (!otherUiOpen()) { open(); return; }\n        if (pendingTimer) return;\n        var tries = 0;\n        pendingTimer = setInterval(function () {\n          tries++;\n          if (!armed || isOpen || tries > 60) { clearInterval(pendingTimer); pendingTimer = null; return; }\n          if (!otherUiOpen()) { clearInterval(pendingTimer); pendingTimer = null; open(); }\n        }, 1000);\n      }\n      function onScroll() {\n        var h = document.documentElement.scrollHeight - window.innerHeight;\n        if (h > 0 && window.scrollY / h >= (parseFloat(d.scroll) || 40) / 100) trigger();\n      }\n      function onLeave(e) {\n        if (!e.relatedTarget && e.clientY <= 0) trigger();\n      }\n\n      // Opened as the result of our own signup form post (success shows the code, error shows the message).\n      var state = root.querySelector('[data-pm2-pop-state]');\n      var mine = location.hash === '#' + d.formId;\n      if (state && mine) {\n        if (state.getAttribute('data-pm2-pop-state') === 'success') {\n          var st0 = read(); st0.signedUp = true; write(st0);\n        }\n        open(state.getAttribute('data-pm2-pop-state') === 'error' ? root.querySelector('input[type=\"email\"]') : null);\n        return;\n      }\n\n      if (design) {\n        document.addEventListener('shopify:section:select', function (e) { if (e.detail.sectionId === d.sectionId) { armed = true; open(); } });\n        document.addEventListener('shopify:section:deselect', function (e) { if (e.detail.sectionId === d.sectionId) close(false); });\n        return;\n      }\n      if (blockedPath() || capped() || seen()) return;\n      if (desktop()) {\n        timers.push(setTimeout(trigger, (parseFloat(d.desktopDelay) || 20) * 1000));\n        timers.push(setTimeout(function () { document.addEventListener('mouseout', onLeave); }, 3000));\n      } else {\n        if (d.mobile !== 'true') return;\n        timers.push(setTimeout(trigger, (parseFloat(d.delay) || 12) * 1000));\n        window.addEventListener('scroll', onScroll, { passive: true });\n      }\n    })();\n  <\/script>\n\n  <style>\n    .pm2-pop[hidden] { display: none; }\n    .pm2-pop {\n      position: fixed; inset: 0; z-index: 990;\n      display: flex; align-items: flex-end; justify-content: center;\n    }\n    html.pm2-pop-lock { overflow: hidden; }\n    .pm2-pop > .pm2-pop__backdrop {\n      display: block; position: absolute; inset: 0; background: rgba(17, 24, 39, .16);\n      opacity: 0; transition: opacity .3s ease;\n    }\n    .pm2-pop__panel {\n      box-sizing: border-box; position: relative; width: 100%; max-height: min(62vh, 48rem); overflow: auto; overscroll-behavior: contain;\n      padding: 2.2rem 2rem calc(1.4rem + env(safe-area-inset-bottom));\n      border-radius: 24px 24px 0 0;\n      background-attachment: scroll;\n      --pm2-pop-shadow: 0 -14px 40px -14px rgba(17, 24, 39, .35);\n      box-shadow: var(--pm2-pop-shadow);\n      transform: translateY(100%); transition: transform .32s cubic-bezier(.2, .8, .2, 1);\n      outline: none;\n      color: rgb(var(--color-foreground));\n    }\n    .pm2-pop.is-open .pm2-pop__backdrop { opacity: 1; }\n    .pm2-pop.is-open .pm2-pop__panel { transform: none; }\n    .pm2-pop__panel::before {\n      content: ''; position: absolute; top: .8rem; left: 50%; width: 4rem; height: .4rem; margin-left: -2rem;\n      border-radius: 999px; background: rgba(var(--color-foreground), .14);\n    }\n    .pm2-pop__x {\n      position: absolute; top: .8rem; right: .8rem; z-index: 2;\n      display: grid; place-items: center; width: 44px; height: 44px; padding: 0;\n      border: 0; border-radius: 999px; cursor: pointer;\n      background: rgba(var(--color-foreground), .06); color: rgb(var(--color-foreground));\n      transition: background .2s ease;\n    }\n    .pm2-pop__x:hover { background: rgba(var(--color-foreground), .12); }\n    .pm2-pop__media { display: none; }\n    .pm2-pop__body { min-width: 0; }\n    .pm2-pop__eyebrow, .pm2-pop__title { padding-right: 4.4rem; }\n    .pm2-pop__form { margin: 0; }\n    .pm2-pop__eyebrow {\n      display: inline-flex; align-items: center; gap: .5rem; margin: 0 0 .6rem;\n      font-size: 1.3rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;\n      color: rgb(var(--color-button));\n    }\n    .pm2-pop__title {\n      margin: 0; font-family: var(--font-heading-family); font-weight: 800;\n      font-size: 2.3rem; line-height: 1.15; letter-spacing: -.01em; color: rgb(var(--color-foreground));\n    }\n    .pm2-pop__text { margin: .6rem 0 1.4rem; font-size: 1.5rem; line-height: 1.45; letter-spacing: normal; color: rgba(var(--color-foreground), .75); }\n    .pm2-pop__row { display: flex; gap: .8rem; }\n    .pm2-pop__input {\n      box-sizing: border-box; flex: 1 1 auto; min-width: 0; height: 4.8rem; padding: 0 1.6rem;\n      border: 1.5px solid rgba(var(--color-foreground), .22); border-radius: 999px;\n      background: rgb(var(--color-background)); color: rgb(var(--color-foreground));\n      font: inherit; font-size: 1.6rem; letter-spacing: normal;\n    }\n    .pm2-pop__input:focus { outline: 2px solid rgb(var(--color-button)); outline-offset: 1px; border-color: transparent; }\n    .pm2-pop__input[aria-invalid=\"true\"] { border-color: #c2412d; }\n    .pm2-pop .button.pm2-pop__submit,\n    .pm2-pop .button.pm2-pop__shop {\n      flex: 0 0 auto; min-height: 4.8rem; min-width: 0; padding: 0 1.8rem; border-radius: 999px;\n      font-weight: 700; font-size: 1.5rem; letter-spacing: normal; white-space: nowrap;\n    }\n    .pm2-pop .button.pm2-pop__submit::after, .pm2-pop .button.pm2-pop__shop::after { border-radius: 999px; }\n    .pm2-pop .button.pm2-pop__shop { display: flex; width: 100%; margin-top: 1rem; text-decoration: none; }\n    .pm2-pop__error { margin: .8rem 0 0; font-size: 1.35rem; color: #b3261e; }\n    .pm2-pop__consent { margin: .8rem 0 0; font-size: 1.2rem; letter-spacing: normal; line-height: 1.45; color: rgba(var(--color-foreground), .62); }\n    .pm2-pop__consent a { color: inherit; text-underline-offset: .2em; }\n    .pm2-pop__dismiss {\n      display: block; min-height: 44px; margin: .2rem auto -.6rem; padding: 0 1.6rem;\n      border: 0; background: none; cursor: pointer; font: inherit; font-size: 1.4rem; font-weight: 600;\n      color: rgba(var(--color-foreground), .7); text-decoration: underline; text-underline-offset: .25em;\n    }\n    .pm2-pop__code {\n      display: flex; align-items: center; gap: .8rem; flex-wrap: wrap;\n      padding: .8rem .8rem .8rem 1.6rem;\n      border: 2px dashed rgba(var(--color-button), .55); border-radius: 18px;\n      background: rgba(var(--color-button), .06);\n    }\n    .pm2-pop__code-label { width: 100%; font-size: 1.2rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: rgba(var(--color-foreground), .6); }\n    .pm2-pop__code-value { flex: 1 1 auto; font-size: 2.2rem; font-weight: 800; letter-spacing: .08em; color: rgb(var(--color-foreground)); font-family: var(--font-heading-family); }\n    .pm2-pop__copy {\n      display: inline-flex; align-items: center; gap: .6rem; min-height: 44px; padding: 0 1.6rem;\n      border: 0; border-radius: 999px; cursor: pointer; font: inherit; font-size: 1.4rem; font-weight: 700;\n      background: rgb(var(--color-background)); color: rgb(var(--color-foreground));\n      box-shadow: inset 0 0 0 1.5px rgba(var(--color-foreground), .2);\n    }\n    .pm2-pop__copy.is-copied { background: rgb(var(--color-button)); color: rgb(var(--color-button-text)); box-shadow: none; }\n    .pm2-pop__fine { margin: .8rem 0 0; font-size: 1.2rem; text-align: center; color: rgba(var(--color-foreground), .6); }\n    .pm2-pop__or { margin: 1.4rem 0 .8rem; font-size: 1.4rem; font-weight: 600; }\n    .pm2-pop :focus-visible { outline: 2px solid rgb(var(--color-button)); outline-offset: 2px; }\n    .pm2-pop .pm2-pop__panel:focus, .pm2-pop .pm2-pop__panel:focus-visible { outline: none; box-shadow: var(--pm2-pop-shadow); }\n\n    @media screen and (max-width: 360px) {\n      .pm2-pop__row { flex-wrap: wrap; }\n      .pm2-pop .button.pm2-pop__submit { width: 100%; }\n    }\n\n    @media screen and (min-width: 750px) {\n      .pm2-pop { align-items: center; padding: 2.4rem; }\n      .pm2-pop > .pm2-pop__backdrop { background: rgba(17, 24, 39, .45); }\n      .pm2-pop__panel {\n        width: 100%; max-width: 48rem; max-height: calc(100vh - 4.8rem);\n        padding: 3.6rem 3.6rem 2.4rem; border-radius: 24px;\n        --pm2-pop-shadow: 0 30px 80px -24px rgba(17, 24, 39, .45);\n        transform: translateY(16px) scale(.98); opacity: 0;\n        transition: transform .3s cubic-bezier(.2, .8, .2, 1), opacity .25s ease;\n      }\n      .pm2-pop.is-open .pm2-pop__panel { opacity: 1; }\n      .pm2-pop__panel::before { display: none; }\n      .pm2-pop__x { top: 1.2rem; right: 1.2rem; }\n      .pm2-pop__title { font-size: 3rem; }\n      .pm2-pop__text { font-size: 1.6rem; }\n      .pm2-pop--has-image .pm2-pop__panel {\n        max-width: 78rem; padding: 0; display: grid; grid-template-columns: 42% 1fr; overflow: hidden;\n      }\n      .pm2-pop--has-image .pm2-pop__media { display: block; position: relative; min-height: 100%; }\n      .pm2-pop--has-image .pm2-pop__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }\n      .pm2-pop--has-image .pm2-pop__body { padding: 4rem 3.6rem 2.4rem; overflow: auto; }\n    }\n    @media (prefers-reduced-motion: reduce) {\n      .pm2-pop__panel, .pm2-pop__backdrop { transition: none; }\n    }\n  </style>\n</section>"};
+</script>
+</head>
+<body class="color-scheme-3 gradient">
+<main>
+<div class="page-width"><p class="h-label">Product page — badges move under Add to cart</p></div>
+<section class="shopify-section"><div class="page-width">
+  <div class="mock-product">
+    <div class="mock-gallery">Product photo</div>
+    <product-info>
+      <div class="product__info-container">
+        <div class="product__title"><h1>PETME2 Smart Pet Water Fountain 2.5L</h1></div>
+        <div class="mock-price" id="mock-price">$39.99 <s>$49.99</s></div>
+        <div class="mock-sel" role="group" aria-label="Color">
+          <button type="button" aria-pressed="true" data-v="4101" data-p="$39.99 <s>$49.99</s>">White</button>
+          <button type="button" aria-pressed="false" data-v="4102" data-p="$39.99">Grey</button>
+          <button type="button" aria-pressed="false" data-v="4103" data-p="$37.99 <s>$44.99</s>">Blue</button>
+        </div>
+        <div><product-form class="product-form"><form method="post" action="/cart/add" id="product-form-main"><input type="hidden" name="id" value="4101"><button type="button" class="product-form__submit button button--full-width">Add to cart</button></form></product-form></div>
+        <div class="mock-desc"><p>Quiet pump, 2.5L tank, easy to clean. (Mock description block.)</p></div>
+      </div>
+    </product-info>
+  </div>
+</div></section>
+<section id="shopify-section-template--x__pm2_trust_badges_1" class="shopify-section section pm2-tb-section"><div
+  class="pm2-tb-wrap color-scheme-3 gradient"
+  id="pm2-tb-template--x__pm2_trust_badges_1"
+  data-pm2-tb
+  data-section-id="template--x__pm2_trust_badges_1"
+  data-pm2-tb-move
+>
+  <div class="page-width pm2-tb-outer" style="--pm2-pt: 12px; --pm2-pb: 12px;">
+    <div class="pm2-tb pm2-tb--card" data-pm2-tb-inner><p class="pm2-tb__line pm2-tb__line--save" data-pm2-tb-save >
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M3.5 12.6V4.5a1 1 0 0 1 1-1h8.1l8 8a1.4 1.4 0 0 1 0 2l-6.1 6.1a1.4 1.4 0 0 1-2 0z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><circle cx="8.3" cy="8.3" r="1.6" fill="currentColor"/></svg>
+            <span>You save <strong data-pm2-tb-save-amount>$10.00</strong></span>
+          </p><p class="pm2-tb__line pm2-tb__line--stock" data-pm2-tb-stock >
+            <span class="pm2-tb__dot" aria-hidden="true"></span>
+            <span>Only <span data-pm2-tb-qty>3</span> left in stock</span>
+          </p><script type="application/json" data-pm2-tb-variants>
+          {"4101":{"q":3,"save":"$10.00","s":1000},"4102":{"q":0,"save":"$0.00","s":0},"4103":{"q":0,"save":"$7.00","s":700}}
+        </script><ul class="pm2-tb__list" role="list"><li class="pm2-tb__item" >
+              <span class="pm2-tb__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M2.5 6.5h11v9h-11zM13.5 9.5h4l3 3.2v2.8h-7"/><circle cx="6.5" cy="17" r="1.9"/><circle cx="17" cy="17" r="1.9"/></svg>
+              </span>
+              <span class="pm2-tb__text">
+                <span class="pm2-tb__title">Free U.S. shipping</span></span>
+            </li><li class="pm2-tb__item" >
+              <span class="pm2-tb__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v4.5h-4.5"/><path d="M14 9.5c-.4-.7-1.2-1-2-1-1.2 0-2.1.6-2.1 1.6 0 2.3 4.3 1.2 4.3 3.6 0 1-1 1.7-2.2 1.7-.9 0-1.8-.4-2.2-1.1M12 7.3v1.2M12 15.4v1.3"/></svg>
+              </span>
+              <span class="pm2-tb__text">
+                <span class="pm2-tb__title">30-day money-back guarantee</span></span>
+            </li><li class="pm2-tb__item" >
+              <span class="pm2-tb__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7"/><path d="M12 14.5v2"/></svg>
+              </span>
+              <span class="pm2-tb__text">
+                <span class="pm2-tb__title">Secure checkout</span></span>
+            </li><li class="pm2-tb__item" >
+              <span class="pm2-tb__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M3.5 7.5L12 3.5l8.5 4v9L12 20.5l-8.5-4z"/><path d="M3.5 7.5L12 11.5l8.5-4M12 11.5v9"/><path d="M7.8 5.5l8.4 4"/></svg>
+              </span>
+              <span class="pm2-tb__text">
+                <span class="pm2-tb__title">Fulfilled by Amazon</span></span>
+            </li></ul><p class="pm2-tb__note">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z" fill="none" stroke="currentColor" stroke-width="1.9"/><circle cx="12" cy="10" r="2.2" fill="none" stroke="currentColor" stroke-width="1.9"/></svg>
+          Ships fast from Amazon&#39;s U.S. network
+        </p></div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var wrap = document.getElementById("pm2-tb-template--x__pm2_trust_badges_1");
+    if (!wrap) return;
+    var inner = wrap.querySelector('[data-pm2-tb-inner]');
+    var data = {};
+    var json = wrap.querySelector('[data-pm2-tb-variants]');
+    if (json) { try { data = JSON.parse(json.textContent); } catch (e) { data = {}; } }
+
+    function update(id) {
+      var v = data[String(id)];
+      var stock = inner.querySelector('[data-pm2-tb-stock]');
+      var save = inner.querySelector('[data-pm2-tb-save]');
+      if (stock) {
+        var q = v ? v.q : 0;
+        stock.hidden = !(q > 0);
+        var qn = stock.querySelector('[data-pm2-tb-qty]'); if (qn && q > 0) qn.textContent = q;
+      }
+      if (save) {
+        var ok = v && v.s > 0;
+        save.hidden = !ok;
+        var a = save.querySelector('[data-pm2-tb-save-amount]'); if (a && ok) a.textContent = v.save;
+      }
+    }
+    if (json) {
+      document.addEventListener('change', function (e) {
+        var t = e.target;
+        if (t && t.name === 'id' && t.closest && t.closest('form[action*="/cart/add"]') && !t.closest('[data-pm2-tb]')) update(t.value);
+      });
+    }
+
+    // Product page: place the badges right under Dawn's buy buttons (inside the product info column).
+    if (!wrap.hasAttribute('data-pm2-tb-move')) return;
+    var placed = false;
+    function host() {
+      var form = document.querySelector('product-info product-form, .product__info-container product-form');
+      if (!form) return null;
+      var block = form.closest('.product__info-container > *') || form;
+      return block;
+    }
+    function place() {
+      var h = host();
+      if (!h) return;
+      if (inner.parentNode && h.nextElementSibling === inner) return;
+      document.querySelectorAll('[data-pm2-tb-moved="' + wrap.dataset.sectionId + '"]').forEach(function (n) { if (n !== inner) n.remove(); });
+      inner.setAttribute('data-pm2-tb-moved', wrap.dataset.sectionId);
+      inner.classList.add('pm2-tb--in-product');
+      h.insertAdjacentElement('afterend', inner);
+      wrap.classList.add('pm2-tb-wrap--moved');
+      placed = true;
+    }
+    function init() {
+      place();
+      var info = document.querySelector('product-info');
+      if (!info || !('MutationObserver' in window)) return;
+      var queued = false;
+      new MutationObserver(function () {
+        if (queued) return; queued = true;
+        requestAnimationFrame(function () { queued = false; if (placed && !document.contains(inner)) place(); });
+      }).observe(info, { childList: true, subtree: true });
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+    else init();
+  })();
+</script>
+
+<style>
+  .pm2-tb-outer { padding-top: var(--pm2-pt); padding-bottom: var(--pm2-pb); }
+  .pm2-tb-wrap--moved { display: none; }
+  .pm2-tb { container-type: inline-size; color: rgb(var(--color-foreground)); }
+  .pm2-tb--in-product { margin: 1.6rem 0 0.4rem; background: none; }
+  .pm2-tb__line {
+    display: flex; align-items: center; gap: .8rem; margin: 0 0 1rem;
+    font-size: 1.45rem; line-height: 1.35; letter-spacing: normal;
+  }
+  .pm2-tb__line[hidden] { display: none; }
+  .pm2-tb__line--save svg { flex: 0 0 auto; color: rgb(var(--color-button)); }
+  .pm2-tb__line--save strong { font-weight: 800; }
+  .pm2-tb__line--stock { font-weight: 700; color: #a34a00; }
+  .pm2-tb__dot { flex: 0 0 auto; width: .9rem; height: .9rem; border-radius: 999px; background: #e07b00; box-shadow: 0 0 0 4px rgba(224, 123, 0, .18); }
+  .pm2-tb__list {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .8rem;
+  }
+  @container (min-width: 720px) {
+    .pm2-tb__list { grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); grid-auto-flow: column; gap: 1.2rem; }
+  }
+  .pm2-tb__item {
+    display: flex; align-items: center; gap: 1rem; min-width: 0; min-height: 5.6rem;
+    padding: .9rem 1.2rem; border-radius: 20px;
+    font-size: 1.35rem; line-height: 1.3; letter-spacing: normal;
+  }
+  .pm2-tb--card .pm2-tb__item {
+    background: rgba(var(--color-button), .06);
+    box-shadow: inset 0 0 0 1px rgba(var(--color-foreground), .06);
+  }
+  .pm2-tb--plain .pm2-tb__item { padding-left: 0; padding-right: 0; }
+  .pm2-tb__icon {
+    flex: 0 0 auto; display: grid; place-items: center; width: 38px; height: 38px; border-radius: 999px;
+    background: rgb(var(--color-background)); color: rgb(var(--color-button));
+    box-shadow: 0 4px 12px -6px rgba(var(--color-foreground), .35);
+  }
+  .pm2-tb__text { display: flex; flex-direction: column; min-width: 0; overflow-wrap: anywhere; }
+  .pm2-tb__title { font-weight: 700; }
+  .pm2-tb__sub { font-size: 1.2rem; color: rgba(var(--color-foreground), .66); }
+  .pm2-tb__note {
+    display: flex; align-items: center; gap: .6rem; margin: 1rem 0 0;
+    font-size: 1.3rem; line-height: 1.4; color: rgba(var(--color-foreground), .7); letter-spacing: normal;
+  }
+  .pm2-tb__note svg { flex: 0 0 auto; color: rgb(var(--color-button)); }
+  @container (min-width: 720px) {
+    .pm2-tb__note, .pm2-tb__line { justify-content: center; }
+  }
+</style>
+
+
+</section>
+<section id="shopify-section-template--x__pm2_guarantee_4" class="shopify-section section pm2-g-section"><div class="pm2-g-wrap">
+  <div class="page-width pm2-g-outer" style="--pm2-pt: 36px; --pm2-pb: 36px;">
+    <div class="pm2-g pm2-g--card color-scheme-4 gradient">
+      <span class="pm2-g__icon" aria-hidden="true">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M24 6l14 5.6v10.2c0 9-6 15.8-14 18.2-8-2.4-14-9.2-14-18.2V11.6z"/><path d="M17.5 23.5l4.6 4.6 8.4-8.6"/></svg>
+      </span>
+      <div class="pm2-g__body"><h2 class="pm2-g__title h2">Love it or your money back</h2><p class="pm2-g__text">Try it for 30 days. If you or your pet aren&#39;t happy, we&#39;ll refund you.</p><ul class="pm2-g__points" role="list"><li><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M2.5 6.5h11v9h-11zM13.5 9.5h4l3 3.2v2.8h-7" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><circle cx="6.5" cy="17" r="1.9" fill="none" stroke="currentColor" stroke-width="1.9"/><circle cx="17" cy="17" r="1.9" fill="none" stroke="currentColor" stroke-width="1.9"/></svg>Free U.S. shipping</li><li><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M20 12a8 8 0 1 1-2.6-5.9M20 4v4.5h-4.5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>30-day money-back</li><li><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><rect x="5" y="10.5" width="14" height="10" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7" fill="none" stroke="currentColor" stroke-width="1.9"/></svg>Secure checkout</li></ul></div><a
+          class="button pm2-g__btn"
+          href="/collections/all"
+        >Shop fountains</a></div>
+  </div>
+</div>
+
+<style>
+  .pm2-g-outer { padding-top: var(--pm2-pt); padding-bottom: var(--pm2-pb); }
+  .pm2-g {
+    display: grid; grid-template-columns: auto 1fr; gap: 1.6rem 2rem; align-items: start;
+    color: rgb(var(--color-foreground));
+  }
+  .pm2-g--card {
+    padding: 2.8rem 2.2rem; border-radius: 24px;
+    box-shadow: 0 18px 40px -28px rgba(17, 24, 39, .45), inset 0 0 0 1px rgba(var(--color-foreground), .05);
+  }
+  .pm2-g__icon {
+    display: grid; place-items: center; width: 64px; height: 64px; border-radius: 999px;
+    background: rgb(var(--color-background)); color: rgb(var(--color-button));
+    box-shadow: 0 8px 22px -10px rgba(var(--color-foreground), .4), inset 0 0 0 1px rgba(var(--color-foreground), .06);
+  }
+  .pm2-g--card .pm2-g__icon { background: rgba(var(--color-button), .1); box-shadow: none; }
+  .pm2-g__body { min-width: 0; }
+  .pm2-g__title { margin: 0; font-weight: 800; line-height: 1.15; letter-spacing: -.01em; text-wrap: balance; }
+  .pm2-g__text { margin: .8rem 0 0; font-size: 1.6rem; line-height: 1.5; color: rgba(var(--color-foreground), .75); max-width: 56rem; }
+  .pm2-g__points {
+    list-style: none; margin: 1.4rem 0 0; padding: 0;
+    display: flex; flex-wrap: wrap; gap: .8rem 1.8rem;
+    font-size: 1.4rem; font-weight: 700; letter-spacing: normal;
+  }
+  .pm2-g__points li { display: inline-flex; align-items: center; gap: .6rem; }
+  .pm2-g__points svg { flex: 0 0 auto; color: rgb(var(--color-button)); }
+  .pm2-g .button.pm2-g__btn { box-sizing: border-box; max-width: 100%; grid-column: 1 / -1; min-height: 4.8rem; border-radius: 999px; font-weight: 700; text-decoration: none; }
+  .pm2-g .button.pm2-g__btn::after { border-radius: 999px; }
+  @media screen and (max-width: 749px) {
+    .pm2-g { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+    .pm2-g__points { justify-content: center; }
+    .pm2-g .button.pm2-g__btn { justify-self: stretch; width: auto; min-width: 0; }
+  }
+  @media screen and (min-width: 750px) {
+    .pm2-g { grid-template-columns: auto 1fr auto; align-items: center; gap: 2.8rem; }
+    .pm2-g--card { padding: 3.6rem 4rem; }
+    .pm2-g__icon { width: 84px; height: 84px; }
+    .pm2-g__icon svg { width: 48px; height: 48px; }
+    .pm2-g .button.pm2-g__btn { grid-column: auto; padding: 0 3rem; }
+  }
+</style>
+
+
+</section>
+<div class="page-width"><p class="h-label">Homepage — trust badges row (no product)</p></div>
+<section id="shopify-section-template--x__pm2_trust_badges_2" class="shopify-section section pm2-tb-section"><div
+  class="pm2-tb-wrap color-scheme-3 gradient"
+  id="pm2-tb-template--x__pm2_trust_badges_2"
+  data-pm2-tb
+  data-section-id="template--x__pm2_trust_badges_2"
+  
+>
+  <div class="page-width pm2-tb-outer" style="--pm2-pt: 12px; --pm2-pb: 12px;">
+    <div class="pm2-tb pm2-tb--card" data-pm2-tb-inner><ul class="pm2-tb__list" role="list"><li class="pm2-tb__item" >
+              <span class="pm2-tb__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M2.5 6.5h11v9h-11zM13.5 9.5h4l3 3.2v2.8h-7"/><circle cx="6.5" cy="17" r="1.9"/><circle cx="17" cy="17" r="1.9"/></svg>
+              </span>
+              <span class="pm2-tb__text">
+                <span class="pm2-tb__title">Free U.S. shipping</span></span>
+            </li><li class="pm2-tb__item" >
+              <span class="pm2-tb__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v4.5h-4.5"/><path d="M14 9.5c-.4-.7-1.2-1-2-1-1.2 0-2.1.6-2.1 1.6 0 2.3 4.3 1.2 4.3 3.6 0 1-1 1.7-2.2 1.7-.9 0-1.8-.4-2.2-1.1M12 7.3v1.2M12 15.4v1.3"/></svg>
+              </span>
+              <span class="pm2-tb__text">
+                <span class="pm2-tb__title">30-day money-back guarantee</span></span>
+            </li><li class="pm2-tb__item" >
+              <span class="pm2-tb__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7"/><path d="M12 14.5v2"/></svg>
+              </span>
+              <span class="pm2-tb__text">
+                <span class="pm2-tb__title">Secure checkout</span></span>
+            </li><li class="pm2-tb__item" >
+              <span class="pm2-tb__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M3.5 7.5L12 3.5l8.5 4v9L12 20.5l-8.5-4z"/><path d="M3.5 7.5L12 11.5l8.5-4M12 11.5v9"/><path d="M7.8 5.5l8.4 4"/></svg>
+              </span>
+              <span class="pm2-tb__text">
+                <span class="pm2-tb__title">Fulfilled by Amazon</span></span>
+            </li></ul></div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var wrap = document.getElementById("pm2-tb-template--x__pm2_trust_badges_2");
+    if (!wrap) return;
+    var inner = wrap.querySelector('[data-pm2-tb-inner]');
+    var data = {};
+    var json = wrap.querySelector('[data-pm2-tb-variants]');
+    if (json) { try { data = JSON.parse(json.textContent); } catch (e) { data = {}; } }
+
+    function update(id) {
+      var v = data[String(id)];
+      var stock = inner.querySelector('[data-pm2-tb-stock]');
+      var save = inner.querySelector('[data-pm2-tb-save]');
+      if (stock) {
+        var q = v ? v.q : 0;
+        stock.hidden = !(q > 0);
+        var qn = stock.querySelector('[data-pm2-tb-qty]'); if (qn && q > 0) qn.textContent = q;
+      }
+      if (save) {
+        var ok = v && v.s > 0;
+        save.hidden = !ok;
+        var a = save.querySelector('[data-pm2-tb-save-amount]'); if (a && ok) a.textContent = v.save;
+      }
+    }
+    if (json) {
+      document.addEventListener('change', function (e) {
+        var t = e.target;
+        if (t && t.name === 'id' && t.closest && t.closest('form[action*="/cart/add"]') && !t.closest('[data-pm2-tb]')) update(t.value);
+      });
+    }
+
+    // Product page: place the badges right under Dawn's buy buttons (inside the product info column).
+    if (!wrap.hasAttribute('data-pm2-tb-move')) return;
+    var placed = false;
+    function host() {
+      var form = document.querySelector('product-info product-form, .product__info-container product-form');
+      if (!form) return null;
+      var block = form.closest('.product__info-container > *') || form;
+      return block;
+    }
+    function place() {
+      var h = host();
+      if (!h) return;
+      if (inner.parentNode && h.nextElementSibling === inner) return;
+      document.querySelectorAll('[data-pm2-tb-moved="' + wrap.dataset.sectionId + '"]').forEach(function (n) { if (n !== inner) n.remove(); });
+      inner.setAttribute('data-pm2-tb-moved', wrap.dataset.sectionId);
+      inner.classList.add('pm2-tb--in-product');
+      h.insertAdjacentElement('afterend', inner);
+      wrap.classList.add('pm2-tb-wrap--moved');
+      placed = true;
+    }
+    function init() {
+      place();
+      var info = document.querySelector('product-info');
+      if (!info || !('MutationObserver' in window)) return;
+      var queued = false;
+      new MutationObserver(function () {
+        if (queued) return; queued = true;
+        requestAnimationFrame(function () { queued = false; if (placed && !document.contains(inner)) place(); });
+      }).observe(info, { childList: true, subtree: true });
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+    else init();
+  })();
+</script>
+
+<style>
+  .pm2-tb-outer { padding-top: var(--pm2-pt); padding-bottom: var(--pm2-pb); }
+  .pm2-tb-wrap--moved { display: none; }
+  .pm2-tb { container-type: inline-size; color: rgb(var(--color-foreground)); }
+  .pm2-tb--in-product { margin: 1.6rem 0 0.4rem; background: none; }
+  .pm2-tb__line {
+    display: flex; align-items: center; gap: .8rem; margin: 0 0 1rem;
+    font-size: 1.45rem; line-height: 1.35; letter-spacing: normal;
+  }
+  .pm2-tb__line[hidden] { display: none; }
+  .pm2-tb__line--save svg { flex: 0 0 auto; color: rgb(var(--color-button)); }
+  .pm2-tb__line--save strong { font-weight: 800; }
+  .pm2-tb__line--stock { font-weight: 700; color: #a34a00; }
+  .pm2-tb__dot { flex: 0 0 auto; width: .9rem; height: .9rem; border-radius: 999px; background: #e07b00; box-shadow: 0 0 0 4px rgba(224, 123, 0, .18); }
+  .pm2-tb__list {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .8rem;
+  }
+  @container (min-width: 720px) {
+    .pm2-tb__list { grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); grid-auto-flow: column; gap: 1.2rem; }
+  }
+  .pm2-tb__item {
+    display: flex; align-items: center; gap: 1rem; min-width: 0; min-height: 5.6rem;
+    padding: .9rem 1.2rem; border-radius: 20px;
+    font-size: 1.35rem; line-height: 1.3; letter-spacing: normal;
+  }
+  .pm2-tb--card .pm2-tb__item {
+    background: rgba(var(--color-button), .06);
+    box-shadow: inset 0 0 0 1px rgba(var(--color-foreground), .06);
+  }
+  .pm2-tb--plain .pm2-tb__item { padding-left: 0; padding-right: 0; }
+  .pm2-tb__icon {
+    flex: 0 0 auto; display: grid; place-items: center; width: 38px; height: 38px; border-radius: 999px;
+    background: rgb(var(--color-background)); color: rgb(var(--color-button));
+    box-shadow: 0 4px 12px -6px rgba(var(--color-foreground), .35);
+  }
+  .pm2-tb__text { display: flex; flex-direction: column; min-width: 0; overflow-wrap: anywhere; }
+  .pm2-tb__title { font-weight: 700; }
+  .pm2-tb__sub { font-size: 1.2rem; color: rgba(var(--color-foreground), .66); }
+  .pm2-tb__note {
+    display: flex; align-items: center; gap: .6rem; margin: 1rem 0 0;
+    font-size: 1.3rem; line-height: 1.4; color: rgba(var(--color-foreground), .7); letter-spacing: normal;
+  }
+  .pm2-tb__note svg { flex: 0 0 auto; color: rgb(var(--color-button)); }
+  @container (min-width: 720px) {
+    .pm2-tb__note, .pm2-tb__line { justify-content: center; }
+  }
+</style>
+
+
+</section>
+<div class="page-width"><p class="h-label">Homepage — guarantee as full-width band</p></div>
+<section id="shopify-section-template--x__pm2_guarantee_5" class="shopify-section section pm2-g-section"><div class="pm2-g-wrap color-scheme-5 gradient">
+  <div class="page-width pm2-g-outer" style="--pm2-pt: 36px; --pm2-pb: 36px;">
+    <div class="pm2-g pm2-g--band">
+      <span class="pm2-g__icon" aria-hidden="true">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M24 40s-15-8.6-15-19.2A8.4 8.4 0 0 1 24 15.6a8.4 8.4 0 0 1 15 5.2C39 31.4 24 40 24 40z"/></svg>
+      </span>
+      <div class="pm2-g__body"><h2 class="pm2-g__title h2">Love it or your money back</h2><p class="pm2-g__text">Try it for 30 days. If you or your pet aren&#39;t happy, we&#39;ll refund you.</p><ul class="pm2-g__points" role="list"><li><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M2.5 6.5h11v9h-11zM13.5 9.5h4l3 3.2v2.8h-7" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><circle cx="6.5" cy="17" r="1.9" fill="none" stroke="currentColor" stroke-width="1.9"/><circle cx="17" cy="17" r="1.9" fill="none" stroke="currentColor" stroke-width="1.9"/></svg>Free U.S. shipping</li><li><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M20 12a8 8 0 1 1-2.6-5.9M20 4v4.5h-4.5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>30-day money-back</li><li><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><rect x="5" y="10.5" width="14" height="10" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7" fill="none" stroke="currentColor" stroke-width="1.9"/></svg>Secure checkout</li></ul></div></div>
+  </div>
+</div>
+
+<style>
+  .pm2-g-outer { padding-top: var(--pm2-pt); padding-bottom: var(--pm2-pb); }
+  .pm2-g {
+    display: grid; grid-template-columns: auto 1fr; gap: 1.6rem 2rem; align-items: start;
+    color: rgb(var(--color-foreground));
+  }
+  .pm2-g--card {
+    padding: 2.8rem 2.2rem; border-radius: 24px;
+    box-shadow: 0 18px 40px -28px rgba(17, 24, 39, .45), inset 0 0 0 1px rgba(var(--color-foreground), .05);
+  }
+  .pm2-g__icon {
+    display: grid; place-items: center; width: 64px; height: 64px; border-radius: 999px;
+    background: rgb(var(--color-background)); color: rgb(var(--color-button));
+    box-shadow: 0 8px 22px -10px rgba(var(--color-foreground), .4), inset 0 0 0 1px rgba(var(--color-foreground), .06);
+  }
+  .pm2-g--card .pm2-g__icon { background: rgba(var(--color-button), .1); box-shadow: none; }
+  .pm2-g__body { min-width: 0; }
+  .pm2-g__title { margin: 0; font-weight: 800; line-height: 1.15; letter-spacing: -.01em; text-wrap: balance; }
+  .pm2-g__text { margin: .8rem 0 0; font-size: 1.6rem; line-height: 1.5; color: rgba(var(--color-foreground), .75); max-width: 56rem; }
+  .pm2-g__points {
+    list-style: none; margin: 1.4rem 0 0; padding: 0;
+    display: flex; flex-wrap: wrap; gap: .8rem 1.8rem;
+    font-size: 1.4rem; font-weight: 700; letter-spacing: normal;
+  }
+  .pm2-g__points li { display: inline-flex; align-items: center; gap: .6rem; }
+  .pm2-g__points svg { flex: 0 0 auto; color: rgb(var(--color-button)); }
+  .pm2-g .button.pm2-g__btn { box-sizing: border-box; max-width: 100%; grid-column: 1 / -1; min-height: 4.8rem; border-radius: 999px; font-weight: 700; text-decoration: none; }
+  .pm2-g .button.pm2-g__btn::after { border-radius: 999px; }
+  @media screen and (max-width: 749px) {
+    .pm2-g { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+    .pm2-g__points { justify-content: center; }
+    .pm2-g .button.pm2-g__btn { justify-self: stretch; width: auto; min-width: 0; }
+  }
+  @media screen and (min-width: 750px) {
+    .pm2-g { grid-template-columns: auto 1fr auto; align-items: center; gap: 2.8rem; }
+    .pm2-g--card { padding: 3.6rem 4rem; }
+    .pm2-g__icon { width: 84px; height: 84px; }
+    .pm2-g__icon svg { width: 48px; height: 48px; }
+    .pm2-g .button.pm2-g__btn { grid-column: auto; padding: 0 3rem; }
+  }
+</style>
+
+
+</section>
+<div class="page-width"><p class="h-label">Cart — plain badges</p></div>
+<section id="shopify-section-template--x__pm2_trust_badges_3" class="shopify-section section pm2-tb-section"><div
+  class="pm2-tb-wrap color-scheme-3 gradient"
+  id="pm2-tb-template--x__pm2_trust_badges_3"
+  data-pm2-tb
+  data-section-id="template--x__pm2_trust_badges_3"
+  
+>
+  <div class="page-width pm2-tb-outer" style="--pm2-pt: 12px; --pm2-pb: 12px;">
+    <div class="pm2-tb pm2-tb--plain" data-pm2-tb-inner><ul class="pm2-tb__list" role="list"><li class="pm2-tb__item" >
+              <span class="pm2-tb__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M2.5 6.5h11v9h-11zM13.5 9.5h4l3 3.2v2.8h-7"/><circle cx="6.5" cy="17" r="1.9"/><circle cx="17" cy="17" r="1.9"/></svg>
+              </span>
+              <span class="pm2-tb__text">
+                <span class="pm2-tb__title">Free U.S. shipping</span></span>
+            </li><li class="pm2-tb__item" >
+              <span class="pm2-tb__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v4.5h-4.5"/><path d="M14 9.5c-.4-.7-1.2-1-2-1-1.2 0-2.1.6-2.1 1.6 0 2.3 4.3 1.2 4.3 3.6 0 1-1 1.7-2.2 1.7-.9 0-1.8-.4-2.2-1.1M12 7.3v1.2M12 15.4v1.3"/></svg>
+              </span>
+              <span class="pm2-tb__text">
+                <span class="pm2-tb__title">30-day money-back guarantee</span></span>
+            </li><li class="pm2-tb__item" >
+              <span class="pm2-tb__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7"/><path d="M12 14.5v2"/></svg>
+              </span>
+              <span class="pm2-tb__text">
+                <span class="pm2-tb__title">Secure checkout</span></span>
+            </li><li class="pm2-tb__item" >
+              <span class="pm2-tb__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M3.5 7.5L12 3.5l8.5 4v9L12 20.5l-8.5-4z"/><path d="M3.5 7.5L12 11.5l8.5-4M12 11.5v9"/><path d="M7.8 5.5l8.4 4"/></svg>
+              </span>
+              <span class="pm2-tb__text">
+                <span class="pm2-tb__title">Fulfilled by Amazon</span></span>
+            </li></ul><p class="pm2-tb__note">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z" fill="none" stroke="currentColor" stroke-width="1.9"/><circle cx="12" cy="10" r="2.2" fill="none" stroke="currentColor" stroke-width="1.9"/></svg>
+          Ships fast from Amazon&#39;s U.S. network
+        </p></div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var wrap = document.getElementById("pm2-tb-template--x__pm2_trust_badges_3");
+    if (!wrap) return;
+    var inner = wrap.querySelector('[data-pm2-tb-inner]');
+    var data = {};
+    var json = wrap.querySelector('[data-pm2-tb-variants]');
+    if (json) { try { data = JSON.parse(json.textContent); } catch (e) { data = {}; } }
+
+    function update(id) {
+      var v = data[String(id)];
+      var stock = inner.querySelector('[data-pm2-tb-stock]');
+      var save = inner.querySelector('[data-pm2-tb-save]');
+      if (stock) {
+        var q = v ? v.q : 0;
+        stock.hidden = !(q > 0);
+        var qn = stock.querySelector('[data-pm2-tb-qty]'); if (qn && q > 0) qn.textContent = q;
+      }
+      if (save) {
+        var ok = v && v.s > 0;
+        save.hidden = !ok;
+        var a = save.querySelector('[data-pm2-tb-save-amount]'); if (a && ok) a.textContent = v.save;
+      }
+    }
+    if (json) {
+      document.addEventListener('change', function (e) {
+        var t = e.target;
+        if (t && t.name === 'id' && t.closest && t.closest('form[action*="/cart/add"]') && !t.closest('[data-pm2-tb]')) update(t.value);
+      });
+    }
+
+    // Product page: place the badges right under Dawn's buy buttons (inside the product info column).
+    if (!wrap.hasAttribute('data-pm2-tb-move')) return;
+    var placed = false;
+    function host() {
+      var form = document.querySelector('product-info product-form, .product__info-container product-form');
+      if (!form) return null;
+      var block = form.closest('.product__info-container > *') || form;
+      return block;
+    }
+    function place() {
+      var h = host();
+      if (!h) return;
+      if (inner.parentNode && h.nextElementSibling === inner) return;
+      document.querySelectorAll('[data-pm2-tb-moved="' + wrap.dataset.sectionId + '"]').forEach(function (n) { if (n !== inner) n.remove(); });
+      inner.setAttribute('data-pm2-tb-moved', wrap.dataset.sectionId);
+      inner.classList.add('pm2-tb--in-product');
+      h.insertAdjacentElement('afterend', inner);
+      wrap.classList.add('pm2-tb-wrap--moved');
+      placed = true;
+    }
+    function init() {
+      place();
+      var info = document.querySelector('product-info');
+      if (!info || !('MutationObserver' in window)) return;
+      var queued = false;
+      new MutationObserver(function () {
+        if (queued) return; queued = true;
+        requestAnimationFrame(function () { queued = false; if (placed && !document.contains(inner)) place(); });
+      }).observe(info, { childList: true, subtree: true });
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+    else init();
+  })();
+</script>
+
+<style>
+  .pm2-tb-outer { padding-top: var(--pm2-pt); padding-bottom: var(--pm2-pb); }
+  .pm2-tb-wrap--moved { display: none; }
+  .pm2-tb { container-type: inline-size; color: rgb(var(--color-foreground)); }
+  .pm2-tb--in-product { margin: 1.6rem 0 0.4rem; background: none; }
+  .pm2-tb__line {
+    display: flex; align-items: center; gap: .8rem; margin: 0 0 1rem;
+    font-size: 1.45rem; line-height: 1.35; letter-spacing: normal;
+  }
+  .pm2-tb__line[hidden] { display: none; }
+  .pm2-tb__line--save svg { flex: 0 0 auto; color: rgb(var(--color-button)); }
+  .pm2-tb__line--save strong { font-weight: 800; }
+  .pm2-tb__line--stock { font-weight: 700; color: #a34a00; }
+  .pm2-tb__dot { flex: 0 0 auto; width: .9rem; height: .9rem; border-radius: 999px; background: #e07b00; box-shadow: 0 0 0 4px rgba(224, 123, 0, .18); }
+  .pm2-tb__list {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .8rem;
+  }
+  @container (min-width: 720px) {
+    .pm2-tb__list { grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); grid-auto-flow: column; gap: 1.2rem; }
+  }
+  .pm2-tb__item {
+    display: flex; align-items: center; gap: 1rem; min-width: 0; min-height: 5.6rem;
+    padding: .9rem 1.2rem; border-radius: 20px;
+    font-size: 1.35rem; line-height: 1.3; letter-spacing: normal;
+  }
+  .pm2-tb--card .pm2-tb__item {
+    background: rgba(var(--color-button), .06);
+    box-shadow: inset 0 0 0 1px rgba(var(--color-foreground), .06);
+  }
+  .pm2-tb--plain .pm2-tb__item { padding-left: 0; padding-right: 0; }
+  .pm2-tb__icon {
+    flex: 0 0 auto; display: grid; place-items: center; width: 38px; height: 38px; border-radius: 999px;
+    background: rgb(var(--color-background)); color: rgb(var(--color-button));
+    box-shadow: 0 4px 12px -6px rgba(var(--color-foreground), .35);
+  }
+  .pm2-tb__text { display: flex; flex-direction: column; min-width: 0; overflow-wrap: anywhere; }
+  .pm2-tb__title { font-weight: 700; }
+  .pm2-tb__sub { font-size: 1.2rem; color: rgba(var(--color-foreground), .66); }
+  .pm2-tb__note {
+    display: flex; align-items: center; gap: .6rem; margin: 1rem 0 0;
+    font-size: 1.3rem; line-height: 1.4; color: rgba(var(--color-foreground), .7); letter-spacing: normal;
+  }
+  .pm2-tb__note svg { flex: 0 0 auto; color: rgb(var(--color-button)); }
+  @container (min-width: 720px) {
+    .pm2-tb__note, .pm2-tb__line { justify-content: center; }
+  }
+</style>
+
+
+</section>
+<div style="height:40vh"></div>
+</main>
+<script>
+  (function(){
+    var input=document.querySelector('#product-form-main input[name=id]');
+    document.querySelectorAll('.mock-sel button').forEach(function(b){b.addEventListener('click',function(){
+      document.querySelectorAll('.mock-sel button').forEach(function(x){x.setAttribute('aria-pressed',x===b)});
+      document.getElementById('mock-price').innerHTML=b.dataset.p;
+      input.value=b.dataset.v;input.dispatchEvent(new Event('change',{bubbles:true}));
+    })});
+  })();
+  var pm2P=(new URLSearchParams(location.search)).get('popup')||'default';
+  document.write(window.PM2_POPUPS[pm2P]||'');
+</script>
+</body></html>
