@@ -52,3 +52,32 @@ Top of search is expensive per click but converts 2.5× better.
 | 17:15 | Dual feeder black | 1 | $49.99 |
 Total: 4 orders, about $180 in sales, against about $92 in ad spend (both totals are estimates). It is not yet confirmed how many orders came from ads; Amazon attributes them within 1–3 days.
 Oct 4–6 had 7 orders, all organic or from the old campaigns before they were paused: 2 stainless, 2 dual white, 1 5L, 2 small fountains.
+
+## WHY WE LOST MONEY (Sep 30 – Oct 6, before the Oct 7 raise)
+Profit per unit before ads, at the price actually sold (price − 15% referral − FBA − product cost):
+small fountain $19.99 → $3.29 · dual $49.99 → $13.43 · 5L $45.99 → $4.84 · stainless $39.99 → $15.09 · camera $52.99 → $14.65
+
+| Product | Ad spend | Orders | Ad cost per order | Profit per unit | Net |
+|---|---|---|---|---|---|
+| Small fountains | $153.52 | 15 | $10.23 | $3.29 | **−$104.17** |
+| Dual feeder | $76.09 | 3 | $25.36 | $13.43 | −$35.80 |
+| 5L feeder | $26.75 | 2 | $13.38 | $4.84 | −$17.07 |
+| Camera feeder | $12.64 | 0 | – | $14.65 | −$12.64 |
+| New PETME2 campaigns | $7.04 | 0 | – | – | −$7.04 |
+| Stainless (Veken) | $24.22 | 2 | $12.11 | $15.09 | **+$5.96** |
+| **Total** | **$300.26** | **22** | $13.65 | | **−$170.76** |
+
+Oct 7 (bid raise): about $92 spent, 4 orders (2 stainless + 2 dual, about $57 profit even if all came from ads) → about −$35 more.
+
+Causes:
+1. **Small fountains are too cheap for ads.** At $19.99 a sale earns $3.29, but each sale cost about $10 in clicks (about 12 clicks at about $0.83). 15 of the 22 ad orders were small fountains, so this caused 61% of the loss.
+2. **The 5L sold at $45.99** with $4.84 profit, so every ad sale lost money. It is now $54.99 (about $12.50 profit).
+3. **Feeder clicks were too expensive:** the 3L campaign paid $2.04 per click; "automatic dog feeder" alone wasted $23.
+4. **Bad campaigns kept running:** Steel-Tray (−$35), camera and 3L-Brd-3 (about −$25) had 0–1 orders.
+5. **Oct 7:** raising bids, Amazon's bid-up setting and placement boosts all on the same day spent $92 in about 1 hour.
+6. **Prices still not raised on Amazon:** camera, dual and small fountains are $2–5 below plan, which cuts profit per sale.
+
+Only the stainless fountain made money with ads (~$12 per order vs $15 profit). It is the product to grow.
+Note: ad sales also help organic rank and reviews, so not all of this is "lost", but the ads did not pay for themselves.
+
+Fix (in chrome-oct8-v2.md, revised): small-fountain campaigns stay paused until $24.99 and lower CPC; restart only 3L-Brd-4 (cap $1.10), Veken (stainless), 5L-5/6 (cap $0.95); new-campaign small-fountain cap $0.35; block wasted searches.
