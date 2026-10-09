@@ -7,7 +7,9 @@ const EP = window.CITY;
 if (EP.live) {   // live town: residents come from the page metafield (window.CITY_LIVE = { start: 'YYYY-MM-DD', residents: [{ name, ig, tt, day }], updated: ISO time })
   const L = window.CITY_LIVE || {}, R = (Array.isArray(L.residents) ? L.residents : []).filter(r => r && (r.name || r.ig || r.tt));
   const st = new Date((L.start || '') + 'T00:00:00'), dn = isNaN(st) ? 1 : Math.floor((Date.now() - st) / 864e5) + 1;
-  EP.live.residents = R; EP.live.updated = L.updated || ''; EP.live.followers = R.length; EP.live.day = Math.max(1, dn); EP.followersNew = Math.max(EP.followersNew || 0, R.length); }
+  const CN = EP.counts || {}, HN = Math.max(R.length, +(L.followers ?? CN.followers) || 0), LK = +(L.likes ?? CN.likes) || 0;   // counts (metafield wins, else the theme's): followers = houses (more than the named residents is fine), likes = cats
+  EP.live.residents = R; EP.live.updated = L.updated || ''; EP.live.followers = HN; EP.live.day = Math.max(1, dn); EP.followersNew = Math.max(EP.followersNew || 0, HN);
+  if (LK > HN + 1) EP.strays = { n: LK - 1 - HN, at: [], crowd: Math.max(0, Math.min(60, LK - 1 - HN - 12)), crowdSpot: (EP.landmarks || []).length + 1, sign: 'No home yet', signAt: -1e9, always: true }; }
 const ROOT = document.querySelector('[data-cat-city]'); const $ = id => document.getElementById('pcc-' + id);
 const ease = t => t < 0 ? 0 : t > 1 ? 1 : 1 - Math.pow(1 - t, 3);
 const inout = t => t < 0 ? 0 : t > 1 ? 1 : t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
@@ -579,7 +581,7 @@ const STRAY = (() => { const S = EP.strays; if (!S || !S.n || !F) return null; c
     else if (j < 12 || j % 2 === 0) { const k = j < 12 ? roofs[j % roofs.length] : roofs[(12 + j * 7) % roofs.length], l = houseLots[k]; P.push({ x: l.x, y: CATW[k].roofY, z: l.z, yaw: hash01(j * 13) * 6.28 }); }   // the nearest roofs first (crowded close-up)
     else { const rd = ROADS[j % ROADS.length], tot = rd.cum[rd.cum.length - 1], [x, z, dx, dz] = sampleRoad(rd, 2 + hash01(j * 31 + 7) * Math.max(1, tot - 4)), sd = hash01(j * 17) < .5 ? 1.3 : -1.3;
       P.push({ x: x - dz * sd, y: 0, z: z + dx * sd, yaw: hash01(j * 19) * 6.28 }); } }
-  m.instanceColor.needsUpdate = true; window.__crowd = [CS.x, CS.z]; return { m, P, at: S.at || [], sign, signAt: S.signAt ?? (S.at || [])[12] ?? 0, sc: S.scale || 1.15 }; })();
+  m.instanceColor.needsUpdate = true; window.__crowd = [CS.x, CS.z]; return { m, P, at: S.at || [], always: !!S.always, sign, signAt: S.signAt ?? (S.at || [])[12] ?? 0, sc: S.scale || 1.15 }; })();
 
 // ---------- cat taxis: a few humans pushing cats in strollers ----------
 const TAXIS = [];
@@ -951,7 +953,7 @@ window.renderFrame = (t, anim = t) => {
   if (NB) { const bt = NEWB.at; if (!NEWB.slow) { NB.visible = t >= bt; gk = back((t - bt) / .9); NB.scale.set(Math.max(.001, .8 * (.6 + .4 * gk)), Math.max(.001, .8 * gk), Math.max(.001, .8 * (.6 + .4 * gk))); }
     CONF.visible = t >= bEnd + .4 && t < bEnd + 4.4;
     if (CONF.visible) { const u = t - bEnd - .4; confData.forEach((d, i) => { cm.compose(V(NBpos.x + d.vx * u, 22 + d.vy * u - 8.8 * u * u, NBpos.z + d.vz * u), Q.setFromEuler(EU.set(d.r + u * 5, d.r * 2 + u * 3, 0)), V(1.4, 1.4, 1.4)); CONF.setMatrixAt(i, cm); }); CONF.instanceMatrix.needsUpdate = true; } }
-  if (STRAY) { let ns = 0; STRAY.P.forEach((p, j) => { const a = STRAY.at[j] ?? 1e9, k = t >= a ? STRAY.sc * back((t - a) / .4) : 0; if (t >= a) ns++;
+  if (STRAY) { let ns = 0; STRAY.P.forEach((p, j) => { const a = STRAY.at[j] ?? (STRAY.always ? -1e9 : 1e9), k = t >= a ? STRAY.sc * back((t - a) / .4) : 0; if (t >= a) ns++;
       if (k <= 0) { STRAY.m.setMatrixAt(j, ZERO); return; } cm.compose(V(p.x, p.y, p.z), Q.setFromEuler(EU.set(0, p.yaw, 0)), V(k, k, k)); STRAY.m.setMatrixAt(j, cm); });
     STRAY.m.instanceMatrix.needsUpdate = true; window.__strays = ns;
     if (STRAY.sign) { const e = (t - STRAY.signAt) / .4; STRAY.sign.visible = e > 0; STRAY.sign.scale.setScalar(Math.max(.001, back(e))); } }
@@ -972,7 +974,7 @@ window.renderFrame = (t, anim = t) => {
   renderer.render(scene, camera);
 
   // ---- UI ----
-  const cats = shown + 1; window.__shown = cats;
+  const cats = shown + 1 + (STRAY && STRAY.always ? window.__strays || 0 : 0); window.__shown = shown + 1;   // website: likes beyond the houses are cats with no home yet
   const dayNow = EP.live && EP.live.day ? EP.live.day : EP.dayRange ? Math.round(EP.dayRange[0] + (EP.dayRange[1] - EP.dayRange[0]) * Math.min(1, shown / Math.max(1, F))) : DAY;
   $('countN').textContent = cats.toLocaleString('en-US'); $('countL').textContent = `${cats === 1 ? 'cat' : 'cats'} \u00b7 Day ${dayNow}`;
   if (STILL || window.__noCam) { $('count').style.opacity = 1; $('sub').style.opacity = 0; return; }
@@ -1120,7 +1122,8 @@ const hideInfo = () => { infoBox.hidden = true; PIN.visible = false; };
 const RES = EP.live ? EP.live.residents : null;
 const clean = v => String(v || '').trim().replace(/^@+/, '').toLowerCase();
 const esc = v => String(v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-function resCard(n) { const r = RES[n], ig = clean(r.ig), tt = clean(r.tt), title = ig ? '@' + ig : tt ? '@' + tt : r.name, l = houseLots[n];
+function resCard(n) { if (!RES[n]) return `<div class="info__icon">\ud83c\udfe0</div><div><b class="info__title">New neighbor</b><span class="info__line">Cat #${(n + 1).toLocaleString('en-US')} \u00b7 name coming soon</span><span class="info__line">${KIND[houseLots[n].kind]} \u00b7 ${DIST[houseLots[n].d]} district</span></div>`;
+  const r = RES[n], ig = clean(r.ig), tt = clean(r.tt), title = ig ? '@' + ig : tt ? '@' + tt : r.name, l = houseLots[n];
   const more = [ig && r.name ? r.name : '', ig && tt ? 'TikTok @' + tt : ''].filter(Boolean).join(' \u00b7 ');
   return `<div class="info__icon">\ud83c\udfe0</div><div><b class="info__title">${esc(title)}</b><span class="info__line">Cat #${(n + 1).toLocaleString('en-US')} \u00b7 moved in on day ${esc(r.day || 1)}</span>${more ? `<span class="info__line">${esc(more)}</span>` : ''}<span class="info__line">${KIND[l.kind]} \u00b7 ${DIST[l.d]} district</span></div>`; }
 if (EP.pad === false) { const pd = $('pad'); if (pd) { pd.hidden = true; pd.style.display = 'none'; } }   // owner 2026-10-07: hide the arrow pad for now (set "pad": true in build_viewer.py to bring it back)

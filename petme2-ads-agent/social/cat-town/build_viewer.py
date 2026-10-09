@@ -14,7 +14,9 @@ LIVE_JS = """const EP = window.CITY;
 if (EP.live) {   // live town: residents come from the page metafield (window.CITY_LIVE = { start: 'YYYY-MM-DD', residents: [{ name, ig, tt, day }], updated: ISO time })
   const L = window.CITY_LIVE || {}, R = (Array.isArray(L.residents) ? L.residents : []).filter(r => r && (r.name || r.ig || r.tt));
   const st = new Date((L.start || '') + 'T00:00:00'), dn = isNaN(st) ? 1 : Math.floor((Date.now() - st) / 864e5) + 1;
-  EP.live.residents = R; EP.live.updated = L.updated || ''; EP.live.followers = R.length; EP.live.day = Math.max(1, dn); EP.followersNew = Math.max(EP.followersNew || 0, R.length); }"""
+  const CN = EP.counts || {}, HN = Math.max(R.length, +(L.followers ?? CN.followers) || 0), LK = +(L.likes ?? CN.likes) || 0;   // counts (metafield wins, else the theme's): followers = houses (more than the named residents is fine), likes = cats
+  EP.live.residents = R; EP.live.updated = L.updated || ''; EP.live.followers = HN; EP.live.day = Math.max(1, dn); EP.followersNew = Math.max(EP.followersNew || 0, HN);
+  if (LK > HN + 1) EP.strays = { n: LK - 1 - HN, at: [], crowd: Math.max(0, Math.min(60, LK - 1 - HN - 12)), crowdSpot: (EP.landmarks || []).length + 1, sign: 'No home yet', signAt: -1e9, always: true }; }"""
 js = js.replace("const EP = window.CITY;", LIVE_JS, 1)
 R("const W = 1080, H = 1920;", "const stage = document.getElementById('stage'); let W = stage.clientWidth, H = stage.clientHeight;")
 R("renderer.setSize(W, H); renderer.setPixelRatio(1);", "renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, LITE ? 1.25 : 2)); renderer.setSize(W, H);")
@@ -22,13 +24,12 @@ R("document.body.prepend(renderer.domElement);", "stage.appendChild(renderer.dom
 R("sun.shadow.mapSize.set(4096, 4096);", "sun.shadow.mapSize.set(2048, 2048);")
 LOOP = open('viewer_loop.js').read()
 R("await document.fonts.ready;\nwindow.ready = true;", LOOP)
-data = {"live": {"followers": 0}, "pad": False, "shopCards": False, "day": 1, "followersBefore": 0, "followersNew": 1000, "order": "index", "newFrom": 0, "newTo": 100, "noReserved": True, "dayRange": [1, 40], "landmarks": []}
+data = {"live": {"followers": 0}, "pad": False, "shopCards": False, "day": 1, "followersBefore": 0, "followersNew": 1000, "order": "index", "newFrom": 0, "newTo": 100, "noReserved": True, "dayRange": [1, 40], "landmarks": [],
+        "counts": {"followers": 253, "likes": 467}}   # Day 3 (Oct 8, Matan): 253 followers = houses, 467 likes = cats
 # Real top-comment builds (always there, first spots = right in front of Mango). Day 2: "add a fish supermarket" by PIKA. Day 3: "make a cat arcade!" by francisco12321.
 for k, sg, note in [("fishmarket", "Fish Supermarket", "Top comment on Day 2, idea by PIKA"), ("arcade", "Cat Arcade", "Top comment on Day 3, idea by francisco12321")]:
     data["landmarks"].append({"kind": k, "sign": sg, "at": 0, "note": note})
-for k, sg, f in [("petshop", "PETME2 Pet Shop", 10), ("cafe", "Cat Café", 40), ("statue", "Mango Statue", 70), ("cityhall", "City Hall", 100), ("market", "Toy Market", 250),
-                 ("pool", "Cat Pool", 400), ("custom", "Cat Airport", 700), ("custom", "Cat Cinema", 900)]:
-    data["landmarks"].append({"kind": k, "sign": sg, "at": 100 * ((f - .5) / 1000) ** .8, "unlock": f})
+# Owner 2026-10-09: no example stores in town, only what the most-liked comments chose.
 head = re.sub(r"<script>window.CAT_VIEWER.*?</script>|<script>window.CITY = .*?</script>", lambda m: "<script>window.CAT_VIEWER = true; window.CAT_LITE = matchMedia('(pointer: coarse)').matches || innerWidth < 820; window.CITY = " + json.dumps(data, ensure_ascii=False) + ";</script>", head, flags=re.S)
 if '.info__shop' not in head:
     head = head.replace("  .info__note {", "  .info__shop { display: inline-block; margin-top: 10px; padding: 8px 14px; border-radius: 999px; background: var(--brand); color: #fff; font-weight: 800; font-size: 13px; text-decoration: none; }\n  .info__note {", 1)

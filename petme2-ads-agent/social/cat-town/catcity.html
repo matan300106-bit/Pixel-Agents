@@ -632,7 +632,7 @@ const STRAY = (() => { const S = EP.strays; if (!S || !S.n || !F) return null; c
     else if (j < 12 || j % 2 === 0) { const k = j < 12 ? roofs[j % roofs.length] : roofs[(12 + j * 7) % roofs.length], l = houseLots[k]; P.push({ x: l.x, y: CATW[k].roofY, z: l.z, yaw: hash01(j * 13) * 6.28 }); }   // the nearest roofs first (crowded close-up)
     else { const rd = ROADS[j % ROADS.length], tot = rd.cum[rd.cum.length - 1], [x, z, dx, dz] = sampleRoad(rd, 2 + hash01(j * 31 + 7) * Math.max(1, tot - 4)), sd = hash01(j * 17) < .5 ? 1.3 : -1.3;
       P.push({ x: x - dz * sd, y: 0, z: z + dx * sd, yaw: hash01(j * 19) * 6.28 }); } }
-  m.instanceColor.needsUpdate = true; window.__crowd = [CS.x, CS.z]; return { m, P, at: S.at || [], sign, signAt: S.signAt ?? (S.at || [])[12] ?? 0, sc: S.scale || 1.15 }; })();
+  m.instanceColor.needsUpdate = true; window.__crowd = [CS.x, CS.z]; return { m, P, at: S.at || [], always: !!S.always, sign, signAt: S.signAt ?? (S.at || [])[12] ?? 0, sc: S.scale || 1.15 }; })();
 
 // ---------- cat taxis: a few humans pushing cats in strollers ----------
 const TAXIS = [];
@@ -1004,7 +1004,7 @@ window.renderFrame = (t, anim = t) => {
   if (NB) { const bt = NEWB.at; if (!NEWB.slow) { NB.visible = t >= bt; gk = back((t - bt) / .9); NB.scale.set(Math.max(.001, .8 * (.6 + .4 * gk)), Math.max(.001, .8 * gk), Math.max(.001, .8 * (.6 + .4 * gk))); }
     CONF.visible = t >= bEnd + .4 && t < bEnd + 4.4;
     if (CONF.visible) { const u = t - bEnd - .4; confData.forEach((d, i) => { cm.compose(V(NBpos.x + d.vx * u, 22 + d.vy * u - 8.8 * u * u, NBpos.z + d.vz * u), Q.setFromEuler(EU.set(d.r + u * 5, d.r * 2 + u * 3, 0)), V(1.4, 1.4, 1.4)); CONF.setMatrixAt(i, cm); }); CONF.instanceMatrix.needsUpdate = true; } }
-  if (STRAY) { let ns = 0; STRAY.P.forEach((p, j) => { const a = STRAY.at[j] ?? 1e9, k = t >= a ? STRAY.sc * back((t - a) / .4) : 0; if (t >= a) ns++;
+  if (STRAY) { let ns = 0; STRAY.P.forEach((p, j) => { const a = STRAY.at[j] ?? (STRAY.always ? -1e9 : 1e9), k = t >= a ? STRAY.sc * back((t - a) / .4) : 0; if (t >= a) ns++;
       if (k <= 0) { STRAY.m.setMatrixAt(j, ZERO); return; } cm.compose(V(p.x, p.y, p.z), Q.setFromEuler(EU.set(0, p.yaw, 0)), V(k, k, k)); STRAY.m.setMatrixAt(j, cm); });
     STRAY.m.instanceMatrix.needsUpdate = true; window.__strays = ns;
     if (STRAY.sign) { const e = (t - STRAY.signAt) / .4; STRAY.sign.visible = e > 0; STRAY.sign.scale.setScalar(Math.max(.001, back(e))); } }
@@ -1025,7 +1025,7 @@ window.renderFrame = (t, anim = t) => {
   renderer.render(scene, camera);
 
   // ---- UI ----
-  const cats = shown + 1; window.__shown = cats;
+  const cats = shown + 1 + (STRAY && STRAY.always ? window.__strays || 0 : 0); window.__shown = shown + 1;   // website: likes beyond the houses are cats with no home yet
   const dayNow = EP.live && EP.live.day ? EP.live.day : EP.dayRange ? Math.round(EP.dayRange[0] + (EP.dayRange[1] - EP.dayRange[0]) * Math.min(1, shown / Math.max(1, F))) : DAY;
   $('countN').textContent = cats.toLocaleString('en-US'); $('countL').textContent = `${cats === 1 ? 'cat' : 'cats'} · Day ${dayNow}`;
   if (STILL || window.__noCam) { $('count').style.opacity = 1; $('sub').style.opacity = 0; return; }

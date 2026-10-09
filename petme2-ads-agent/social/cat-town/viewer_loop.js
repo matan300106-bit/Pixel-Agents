@@ -116,7 +116,8 @@ const hideInfo = () => { infoBox.hidden = true; PIN.visible = false; };
 const RES = EP.live ? EP.live.residents : null;
 const clean = v => String(v || '').trim().replace(/^@+/, '').toLowerCase();
 const esc = v => String(v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-function resCard(n) { const r = RES[n], ig = clean(r.ig), tt = clean(r.tt), title = ig ? '@' + ig : tt ? '@' + tt : r.name, l = houseLots[n];
+function resCard(n) { if (!RES[n]) return `<div class="info__icon">🏠</div><div><b class="info__title">New neighbor</b><span class="info__line">Cat #${(n + 1).toLocaleString('en-US')} · name coming soon</span><span class="info__line">${KIND[houseLots[n].kind]} · ${DIST[houseLots[n].d]} district</span></div>`;
+  const r = RES[n], ig = clean(r.ig), tt = clean(r.tt), title = ig ? '@' + ig : tt ? '@' + tt : r.name, l = houseLots[n];
   const more = [ig && r.name ? r.name : '', ig && tt ? 'TikTok @' + tt : ''].filter(Boolean).join(' · ');
   return `<div class="info__icon">🏠</div><div><b class="info__title">${esc(title)}</b><span class="info__line">Cat #${(n + 1).toLocaleString('en-US')} · moved in on day ${esc(r.day || 1)}</span>${more ? `<span class="info__line">${esc(more)}</span>` : ''}<span class="info__line">${KIND[l.kind]} · ${DIST[l.d]} district</span></div>`; }
 if (EP.pad === false) { const pd = $('pad'); if (pd) { pd.hidden = true; pd.style.display = 'none'; } }   // owner 2026-10-07: hide the arrow pad for now (set "pad": true in build_viewer.py to bring it back)
