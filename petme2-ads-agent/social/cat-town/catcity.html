@@ -603,7 +603,9 @@ houseLots.forEach((l, n) => placeHouse(n, APPEAR[n] < 0 ? 1 : 0));
 
 // ---------- landmarks ----------
 const LMG = [];
-landmarks.forEach((lm, k) => { const s = SPOTS[k]; if (!s) return; const g = landmark(lm.kind, lm.sign); g.scale.setScalar(.8); g.position.set(s.x, 0, s.z); g.rotation.y = s.ry; scene.add(g); LMG.push([g, s.t]); });
+landmarks.forEach((lm, k) => { const s = SPOTS[k]; if (!s) return; const g = landmark(lm.kind, lm.sign);
+  if (g.userData.arc) { g.userData.arc.neon.forEach(m => m.color.set(m.userData.on)); g.userData.arc.lights.forEach(L => L.intensity = 120); }   // a finished arcade (website): neon always on
+  g.scale.setScalar(.8); g.position.set(s.x, 0, s.z); g.rotation.y = s.ry; scene.add(g); LMG.push([g, s.t]); });
 if (!EP.noReserved) SPOTS.forEach((s, k) => { if (k < usedSpots || k > usedSpots + 1 || s.t === Infinity) return; const g = landmark('reserved', 'Your idea here?'); g.position.set(s.x, 0, s.z); g.rotation.y = s.ry; scene.add(g); LMG.push([g, s.t]); });
 let NB = null, NBpos = V(0, 0, 0), LOT = null;
 if (NEWB && SPOTS[landmarks.length]) { const s = SPOTS[landmarks.length]; NB = landmark(NEWB.kind, NEWB.sign); NB.scale.setScalar(.8); NBpos = V(s.x, 0, s.z); NB.position.copy(NBpos); NB.rotation.y = s.ry; NB.visible = false; scene.add(NB);

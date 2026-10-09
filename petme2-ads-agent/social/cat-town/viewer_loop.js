@@ -9,8 +9,8 @@ const slider = $('grow'), tOf = f => f <= 0 ? -1 : EP.newFrom + (EP.newTo - EP.n
 if (EP.live) {   // live page: the real town today (EP.live.followers cats besides Mango); no growth demo controls
   slider.max = slider.value = EP.live.followers; [slider, $('play'), ...slider.parentElement.querySelectorAll('.row, .chips')].forEach(e => { e.hidden = true; e.style.display = 'none'; });
   if (EP.live.followers < 100) { controls.autoRotate = true;
-    // newest real top-comment build (landmarks with at: 0) in view behind Mango's square on load
-    const lb = (EP.landmarks || [])[0] && EP.landmarks[0].at === 0 && LMG[0] ? LMG[0][0].position : null, h = lb ? Math.hypot(lb.x, lb.z) : 1;
+    // newest real top-comment build (last landmark with at: 0) in view behind Mango's square on load
+    const nb = (EP.landmarks || []).reduce((m, l, k) => l.at === 0 && LMG[k] ? k : m, -1), lb = nb >= 0 ? LMG[nb][0].position : null, h = lb ? Math.hypot(lb.x, lb.z) : 1;
     const d = lb ? new THREE.Vector3(-lb.x / h * .86, .5, -lb.z / h * .86) : new THREE.Vector3(.55, .5, .67), tg = lb ? new THREE.Vector3(lb.x * .3, 3, lb.z * .3) : new THREE.Vector3(0, 3, 0);
     controls.target.copy(tg); camera.position.copy(tg).add(d.setLength(innerWidth < 700 ? 84 : 70)); } }
 const FMAX = +slider.max;
@@ -101,8 +101,8 @@ const handleOf = n => (EP.handles && EP.handles[n]) || ('demo.' + HA[Math.floor(
 const KIND = { A: 'Cat-face house', B: 'Cardboard box house', C: 'Cat-cave pod' };
 const DIST = ['Blue Whisker', 'Box Town', 'Pastel Pods', 'Catnip Green', 'Purple Purr', 'Tuxedo Row'];
 const LM_UNLOCK = (EP.landmarks || []).map(l => l.unlock);
-const LM_TXT = { petshop: 'Toys, treats and fresh water for every cat in town.', cityhall: 'Mayor Mango works here (mostly naps).', cafe: 'Built by the most-liked comment.', statue: 'A golden Mango. He posed for 3 seconds.', market: 'Yarn, boxes and squeaky mice.', fishmarket: 'Fresh fish for every cat in town. Mango is first in line.', pool: 'Nobody swims. Everyone watches.', custom: 'Built by the most-liked comment.' };
-landmarks.forEach((lm, k) => { if (LMG[k]) LMG[k][0].userData.info = { icon: lm.kind === 'fishmarket' ? '🐟' : '🏛️', title: lm.sign, line: LM_TXT[lm.kind] || 'Built by the most-liked comment.', note: lm.note ? lm.note : LM_UNLOCK[k] ? 'Unlocked at ' + LM_UNLOCK[k].toLocaleString('en-US') + ' cats' : '' }; });
+const LM_TXT = { petshop: 'Toys, treats and fresh water for every cat in town.', cityhall: 'Mayor Mango works here (mostly naps).', cafe: 'Built by the most-liked comment.', statue: 'A golden Mango. He posed for 3 seconds.', market: 'Yarn, boxes and squeaky mice.', fishmarket: 'Fresh fish for every cat in town. Mango is first in line.', arcade: 'Claw machine, games and neon. Mango won a fish here.', pool: 'Nobody swims. Everyone watches.', custom: 'Built by the most-liked comment.' };
+landmarks.forEach((lm, k) => { if (LMG[k]) LMG[k][0].userData.info = { icon: lm.kind === 'fishmarket' ? '🐟' : lm.kind === 'arcade' ? '🕹️' : '🏛️', title: lm.sign, line: LM_TXT[lm.kind] || 'Built by the most-liked comment.', note: lm.note ? lm.note : LM_UNLOCK[k] ? 'Unlocked at ' + LM_UNLOCK[k].toLocaleString('en-US') + ' cats' : '' }; });
 if (typeof MO !== 'undefined' && MO.g) MO.g.userData.info = { icon: '😴', title: 'Big Mochi', line: 'The sleeping mountain cat. Please do not wake her.', note: 'Unlocked at 1,000 cats' };
 if (typeof FT !== 'undefined' && FT.g) FT.g.userData.info = { icon: '💧', title: 'PETME2 Stainless Steel Fountain', line: 'Mango’s favorite drinking spot. The water keeps moving, so Mango keeps coming back for more.', note: 'Tap again for water time: the cats nearby come to drink.', pinY: 18, shop: 'https://www.petme2.com/products/water-fountain', feed: 'water' };
 if (typeof FD !== 'undefined' && FD.g) FD.g.userData.info = { icon: '🍽️', title: 'PETME2 Dual Bowl Feeder', line: 'Mango’s dinner table. Meals come right on time, so Mango never has to beg.', note: 'Feeding time! The cats nearby are coming to eat.', pinY: 15.5, shop: 'https://www.petme2.com/products/2-in-1-feeder-1', feed: 'food' };

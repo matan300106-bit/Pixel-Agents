@@ -30,8 +30,14 @@ const scene = new THREE.Scene();
   const gr = g.createLinearGradient(0, 0, 0, 512); gr.addColorStop(0, '#78B9EE'); gr.addColorStop(.62, '#CDE7F7'); gr.addColorStop(1, '#E8F3FA');
   g.fillStyle = gr; g.fillRect(0, 0, 4, 512); const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; scene.background = tex; }
 scene.fog = new THREE.Fog('#DCEEF8', 320, 1150);
+const SKY = scene.background, SKYc = SKY.image, DAY_C = ['#78B9EE', '#CDE7F7', '#E8F3FA', '#DCEEF8'], DUSK_C = ['#2B2A6B', '#B4609A', '#FFB07A', '#8E6C9A'];
+let duskK = -1; const _c1 = new THREE.Color(), _c2 = new THREE.Color();
+const mixC = (a, b, k) => '#' + _c1.set(a).lerp(_c2.set(b), k).getHexString();
+function duskAt(k) { if (k === duskK) return; duskK = k; const g = SKYc.getContext('2d'), gr = g.createLinearGradient(0, 0, 0, 512);   // videos: day -> evening (sky, fog, sun, ambient)
+  gr.addColorStop(0, mixC(DAY_C[0], DUSK_C[0], k)); gr.addColorStop(.62, mixC(DAY_C[1], DUSK_C[1], k)); gr.addColorStop(1, mixC(DAY_C[2], DUSK_C[2], k)); g.fillStyle = gr; g.fillRect(0, 0, 4, 512); SKY.needsUpdate = true;
+  scene.fog.color.set(mixC(DAY_C[3], DUSK_C[3], k)); HEMI.intensity = 1.15 - .8 * k; HEMI.color.set(mixC('#FFFFFF', '#9C8CFF', k)); sun.intensity = 2.3 - 1.6 * k; sun.color.set(mixC('#FFF1DA', '#FF8A5A', k)); }
 const camera = new THREE.PerspectiveCamera(42, W / H, 0.5, 3000);
-scene.add(new THREE.HemisphereLight('#FFFFFF', '#B5D48A', 1.15));
+const HEMI = new THREE.HemisphereLight('#FFFFFF', '#B5D48A', 1.15); scene.add(HEMI);
 const sun = new THREE.DirectionalLight('#FFF1DA', 2.3); sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048); sun.shadow.bias = -0.0004; sun.shadow.normalBias = .4;
 scene.add(sun); scene.add(sun.target);
 const mats = {};
@@ -103,9 +109,9 @@ for (let b = 0; b < 7; b++) for (let i = 0; i < 6; i++) { const a = i * Math.PI 
   if (near(roadHash, x, z, 8, o => (ROADS[o.ri].kind === 'ring' && Math.abs(Math.hypot(o.x, o.z) - (r - 11)) < 4) ? undefined : false)) continue;
   if (SPOTS.some(s => Math.hypot(s.x - x, s.z - z) < 34)) continue;
   SPOTS.push({ x, z, r, ry: Math.atan2(-x, -z) }); }
-SPOTS.sort((a, b) => a.r - b.r); SPOTS.forEach(s => hadd(spotHash, s));
+SPOTS.sort((a, b) => a.r - b.r); SPOTS.forEach(s => hadd(spotHash, s)); window.__spots = SPOTS.map(s => [Math.round(s.x * 10) / 10, Math.round(s.z * 10) / 10, Math.round(s.ry * 100) / 100]);
 const usedSpots = landmarks.length + (NEWB ? 1 : 0);
-const BIG_SPOTS = [...landmarks.map((l, k) => l.kind === 'fishmarket' ? SPOTS[k] : null), NEWB && NEWB.kind === 'fishmarket' ? SPOTS[landmarks.length] : null].filter(Boolean);
+const BIG_SPOTS = [...landmarks.map((l, k) => (l.kind === 'fishmarket' || l.kind === 'arcade') ? SPOTS[k] : null), NEWB && (NEWB.kind === 'fishmarket' || NEWB.kind === 'arcade') ? SPOTS[landmarks.length] : null].filter(Boolean);
 // house lots along every street, facing the street
 const DISTRICT = a => Math.floor((((a - .26) % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2) / (Math.PI / 3));
 const cand = [], lotHash = new Map();
@@ -137,6 +143,8 @@ else if (FN > 0) {
   const a = nr.filter(o => o.d < 48), b = nr.filter(o => o.d >= 48);
   [a, b].forEach(L2 => L2.forEach((o, i) => APPEAR[o.k] = EP.newFrom + (EP.newTo - EP.newFrom) * (i + .5) / L2.length));
 }
+if (Array.isArray(EP.appear)) EP.appear.forEach((a, i) => { if (F0 + i < F) APPEAR[F0 + i] = a; });   // videos: exact pop time per new house
+window.__lots = houseLots.map(l => [Math.round(l.x * 10) / 10, Math.round(l.z * 10) / 10]);
 const timeNear = (x, z, r) => { let t = Infinity; near(houseHash, x, z, r, h => { t = Math.min(t, APPEAR[h.n]); }); return t; };
 const lmAt = k => (landmarks[k] && landmarks[k].at != null) ? landmarks[k].at : -1;
 PIECES.forEach(p => { p.t = Math.hypot(p.x, p.z) < SQ.plaza + 5 ? -1 : timeNear(p.x, p.z, 12); });
@@ -276,11 +284,53 @@ function landmark(kind, sign) {
     const inner = new THREE.Group(); [...g.children].forEach(c => inner.add(c)); inner.scale.setScalar(FISH_BIG); inner.position.z = FISH_BACK; g.add(inner);   // owner: bigger
     g.userData.parts = [...inner.children]; g.userData.parts.forEach(c => { c.userData.y0 = c.position.y; c.userData.s0 = c.scale.clone(); });   // slow build: pieces drop in one by one
     sy = 17 * FISH_BIG + 1; }
+  else if (kind === 'arcade') {   // Day 3 top comment (francisco12321): "make a cat arcade!" Parts (slow build order): floor, walls, roof + cat head, claw machine, game cabinets, neon. Neon is dim until EP.newBuild.lightsAt.
+    const A = { neon: [], glow: [], lights: [], cats: [] }, P = [], part = () => { const pg = new THREE.Group(); g.add(pg); P.push(pg); return pg; };
+    const qp = (pg, geo, c, x, y, z) => { const m = mesh(geo, c); m.position.set(x, y, z); pg.add(m); return m; };
+    const neon = (pg, geo, on, x, y, z) => { const mt = new THREE.MeshBasicMaterial({ color: '#3A3350', toneMapped: false }); mt.userData.on = on; A.neon.push(mt); const m = new THREE.Mesh(geo, mt); m.position.set(x, y, z); pg.add(m); return m; };
+    const p0 = part(); qp(p0, B(23, .4, 21), '#2B2340', 0, .2, 2.5);                                                     // floor + checker walk-in
+    for (let i = 0; i < 6; i++) for (let j = 0; j < 4; j++) if ((i + j) % 2 === 0) qp(p0, B(1.6, .1, 1.6), '#FFFFFF', -4 + i * 1.6, .45, 5.6 + j * 1.6);
+    const p1 = part(); qp(p1, B(18, 7.5, 11), '#6C4BD8', 0, 4.15, -1.5); qp(p1, B(18.1, 1, 11.1), '#4A2FA0', 0, .9, -1.5);   // walls
+    qp(p1, B(4, 4.8, .2), '#1B2333', 0, 2.8, 4.05);
+    [-5.8, 5.8].forEach(x => neon(p1, B(4.6, 3, .2), '#7FE8FF', x, 4.1, 4.06));                                           // windows glow cyan
+    const p2 = part(); qp(p2, B(18.8, .9, 11.8), '#2B2340', 0, 8.3, -1.5);                                              // roof + giant cat head
+    const hd = neon(p2, new THREE.SphereGeometry(2.6, 14, 10), '#FF4FB0', 0, 11.6, -1.5); hd.scale.set(1.15, .95, .7);
+    [-1.6, 1.6].forEach(x => { const e = neon(p2, new THREE.ConeGeometry(1.1, 2.2, 4), '#FF4FB0', x, 14.1, -1.5); e.rotation.z = x > 0 ? -.3 : .3; });
+    [-.9, .9].forEach(x => qp(p2, new THREE.SphereGeometry(.42, 8, 6), '#1B2333', x, 12.1, .3)); qp(p2, B(.5, .3, .3), '#1B2333', 0, 11.2, .4);
+    qp(p2, Cyl(.25, .25, 2.6, 6), '#8A8F98', 0, 9.6, -1.5);
+    const p3 = part(), CX = -6.4, CZ = 7.4;                                                                            // claw machine
+    qp(p3, B(3.4, 2.6, 3.4), '#FF5FA2', CX, 1.3, CZ); qp(p3, B(3.6, .9, 3.6), '#FF5FA2', CX, 6.6, CZ);
+    const gl = new THREE.Mesh(B(3.2, 3.4, 3.2), new THREE.MeshStandardMaterial({ color: '#CFF6FF', transparent: true, opacity: .28, roughness: .1 })); gl.position.set(CX, 4.4, CZ); p3.add(gl);
+    [-1.6, 1.6].forEach(dx => [-1.6, 1.6].forEach(dz => qp(p3, B(.2, 3.4, .2), '#FFFFFF', CX + dx, 4.4, CZ + dz)));
+    ['#FFC93C', '#5BB98C', '#2F5FE0', '#FFFFFF', '#9B6FE0', '#E85D5D', '#FFC93C'].forEach((c, i) => qp(p3, new THREE.SphereGeometry(.42, 8, 6), c, CX - 1.1 + (i % 4) * .75, 2.95 + (i > 3 ? .45 : 0), CZ - .9 + (i % 3) * .8));
+    const prize = new THREE.Group(); { const m = new THREE.Mesh(new THREE.SphereGeometry(1, 12, 8), mat('#FF8A2A')); m.scale.set(.75, .4, .25); prize.add(m);
+      const tl = new THREE.Mesh(new THREE.ConeGeometry(.35, .5, 3).rotateZ(Math.PI / 2), mat('#FF8A2A')); tl.position.x = -.85; prize.add(tl); }
+    prize.position.set(CX + .2, 3.2, CZ + .5); p3.add(prize);
+    const claw = new THREE.Group(); claw.add(new THREE.Mesh(Cyl(.07, .07, 2.4, 6), mat('#C9CED6'))).position.y = 1.2;
+    const prongs = [0, 1, 2].map(i => { const pr = new THREE.Mesh(B(.12, .7, .12), mat('#C9CED6')); const pv = new THREE.Group(); pv.rotation.y = i * 2.094; pr.position.set(0, -.3, .3); pv.add(pr); claw.add(pv); return pr; });
+    claw.position.set(CX + .2, 5.6, CZ + .5); p3.add(claw);
+    neon(p3, B(3.7, .25, .25), '#FFE14F', CX, 7.1, CZ + 1.8);
+    const mc = new THREE.Mesh(CAT_SIT, mat('#F28C28')); mc.scale.setScalar(1.6); mc.position.set(CX + .2, .4, CZ + 3.2); mc.rotation.y = Math.PI; mc.castShadow = true; p3.add(mc);   // Mango at the claw machine
+    A.claw = { claw, prongs, prize, home: prize.position.clone(), cx: CX + .2, cz: CZ, mango: mc };
+    const p4 = part();                                                                                               // two game cabinets with cats playing
+    [[3.4, '#2F5FE0', '#5BFF9C'], [7.2, '#FFC93C', '#FF7AD9']].forEach(([x, c, sc], i) => { qp(p4, B(2.4, 4.4, 2), c, x, 2.6, 6.6); qp(p4, B(2.6, .5, 1.3), '#1B2333', x, 3.2, 7.9);
+      neon(p4, B(1.9, 1.5, .1), sc, x, 4.2, 7.65); qp(p4, Cyl(.08, .08, .6, 6), '#1B2333', x - .5, 3.7, 8.1); qp(p4, new THREE.SphereGeometry(.2, 8, 6), '#E85D5D', x - .5, 4.0, 8.1);
+      const ct = new THREE.Mesh(CAT_SIT, mat(['#3B3B44', '#FFFFFF'][i])); ct.scale.setScalar(1.5); ct.position.set(x, .4, 9.6); ct.rotation.y = Math.PI; ct.castShadow = true; p4.add(ct); });
+    const p5 = part();                                                                                               // neon strips + stars
+    neon(p5, B(18.9, .35, .35), '#FF4FB0', 0, 7.75, 4.2); neon(p5, B(18.9, .35, .35), '#4FE3FF', 0, 1.5, 4.2);
+    [-9.2, 9.2].forEach(x => neon(p5, B(.35, 6.6, .35), x < 0 ? '#4FE3FF' : '#FF4FB0', x, 4.6, 4.2));
+    neon(p5, B(5, .3, .3), '#FFE14F', 0, 5.6, 4.2);
+    [[-4.5, 10.3], [4.5, 10.3], [-8, 9.4], [8, 9.4]].forEach(([x, y]) => { const st = neon(p5, new THREE.OctahedronGeometry(.75, 0), '#FFE14F', x, y, 4.2); st.scale.z = .4; });
+    for (let i = 0; i < 10; i++) { const ct = new THREE.Mesh(CAT_GEO, mat(CAT_COLORS[(i * 4 + 1) % CAT_COLORS.length])); ct.scale.setScalar(0); ct.castShadow = true; g.add(ct); A.cats.push(ct); }   // cats run in when it opens
+    [['#FF4FB0', -6, 6], ['#4FE3FF', 6, 6], ['#B98CFF', 0, 9]].forEach(([c, x, z]) => { const L = new THREE.PointLight(c, 0, 32, 1.6); L.position.set(x, 5, z); g.add(L); A.lights.push(L); });
+    const inner = new THREE.Group(); [...g.children].forEach(c => inner.add(c)); inner.scale.setScalar(EP.arcadeBig || 1.45); inner.position.z = -4; g.add(inner);
+    g.userData.parts = P; P.forEach(c => { c.userData.y0 = c.position.y; c.userData.s0 = c.scale.clone(); }); g.userData.arc = A;
+    sy = 17 * (EP.arcadeBig || 1.45) + 2; }
   else if (kind === 'statue') { q(B(6, 4, 6), '#E7EDF7', 0, 2, 0); cat('#FFC93C', 7, 0, 4, 0); }
   else if (kind === 'pool') { q(B(17, 1, 12), '#E7EDF7', 0, .5, 0); q(B(15, .3, 10), '#5AB3F0', 0, 1.05, 0); }
   else if (kind === 'reserved') { const p = q(Cyl(.25, .25, 5, 6), '#8A5A3B', 0, 2.5, 0); for (let i = 0; i < 5; i++) q(new THREE.ConeGeometry(.5, 1.2, 8), '#FF8A2A', -6 + i * 3, .6, 8); sy = 6.5; }
   else { q(B(15, 9, 12), '#FFFFFF', 0, 4.5, 0); q(new THREE.ConeGeometry(11, 5, 4).rotateY(Math.PI / 4), '#FFC93C', 0, 11.5, 0); q(B(3, 4.5, .3), '#1B2333', 0, 2.25, 6.1); [-4, 4].forEach(x => q(new THREE.ConeGeometry(1.4, 3.2, 3), '#FFC93C', x, 13, 4)); }
-  if (sign) { const s = textSign(sign, kind === 'reserved' ? 9 : 14, kind === 'reserved' ? '#FF8A2A' : '#2F5FE0'); s.position.set(0, sy, 0); g.add(s); signs.push(s); g.userData.sign = s; }
+  if (sign) { const s = textSign(sign, kind === 'reserved' ? 9 : 14, kind === 'reserved' ? '#FF8A2A' : kind === 'arcade' ? '#FF3EA5' : '#2F5FE0'); s.position.set(0, sy, 0); g.add(s); signs.push(s); g.userData.sign = s; }
   return g;
 }
 
@@ -500,7 +550,9 @@ houseLots.forEach((l, n) => placeHouse(n, APPEAR[n] < 0 ? 1 : 0));
 
 // ---------- landmarks ----------
 const LMG = [];
-landmarks.forEach((lm, k) => { const s = SPOTS[k]; if (!s) return; const g = landmark(lm.kind, lm.sign); g.scale.setScalar(.8); g.position.set(s.x, 0, s.z); g.rotation.y = s.ry; scene.add(g); LMG.push([g, s.t]); });
+landmarks.forEach((lm, k) => { const s = SPOTS[k]; if (!s) return; const g = landmark(lm.kind, lm.sign);
+  if (g.userData.arc) { g.userData.arc.neon.forEach(m => m.color.set(m.userData.on)); g.userData.arc.lights.forEach(L => L.intensity = 120); }   // a finished arcade (website): neon always on
+  g.scale.setScalar(.8); g.position.set(s.x, 0, s.z); g.rotation.y = s.ry; scene.add(g); LMG.push([g, s.t]); });
 if (!EP.noReserved) SPOTS.forEach((s, k) => { if (k < usedSpots || k > usedSpots + 1 || s.t === Infinity) return; const g = landmark('reserved', 'Your idea here?'); g.position.set(s.x, 0, s.z); g.rotation.y = s.ry; scene.add(g); LMG.push([g, s.t]); });
 let NB = null, NBpos = V(0, 0, 0), LOT = null;
 if (NEWB && SPOTS[landmarks.length]) { const s = SPOTS[landmarks.length]; NB = landmark(NEWB.kind, NEWB.sign); NB.scale.setScalar(.8); NBpos = V(s.x, 0, s.z); NB.position.copy(NBpos); NB.rotation.y = s.ry; NB.visible = false; scene.add(NB);
@@ -516,6 +568,18 @@ for (let n = 1; n <= F; n++) catMesh.setColorAt(n, col.set(CAT_COLORS[(n * 5 + 3
 catMesh.instanceColor.needsUpdate = true;
 const CATW = houseLots.map((l, k) => ({ rd: ROADS[l.ri], s0: l.s, L: 10 + hash01(k * 3 + 1) * 40, v: 1.4 + hash01(k * 5 + 2) * 1.6, ph: hash01(k * 11 + 7), side: hash01(k * 19) < .5 ? 1 : -1, nap: k % 5 === 0,
   roofY: l.kind === 'A' ? 2.75 : l.kind === 'B' ? 2.55 : 1.85 }));
+// ---------- strays (videos): extra cats with no house of their own (likes > followers), sitting on roofs and streets; EP.strays = { n, at: [pop time per cat], near: [x, z] } ----------
+const STRAY = (() => { const S = EP.strays; if (!S || !S.n || !F) return null; const m = IM(CAT_SIT, S.n), P = [], nr = S.near || [0, 0]; m.frustumCulled = false;
+  const CN = S.crowd || 0, CS = SPOTS[S.crowdSpot ?? 1] || { x: 0, z: 60, ry: 0 }; let sign = null;
+  if (CN && S.sign) { sign = landmark('reserved', S.sign); sign.position.set(CS.x, 0, CS.z); sign.rotation.y = CS.ry || 0; sign.visible = false; scene.add(sign); }
+  const roofs = houseLots.map((l, k) => ({ k, d: Math.hypot(l.x - nr[0], l.z - nr[1]) })).filter(o => o.k % 5 !== 0).sort((a, b) => a.d - b.d).map(o => o.k);
+  for (let j = 0; j < S.n; j++) { m.setColorAt(j, col.set(CAT_COLORS[(j * 3 + 1) % CAT_COLORS.length])); m.setMatrixAt(j, ZERO);
+    if (j >= 12 && j < 12 + CN) { const i = j - 12, ring = Math.floor((Math.sqrt(8 * i / 6 + 1) - 1) / 2) + 1, first = 3 * ring * (ring - 1), a = (i - first) / (6 * ring) * 6.283 + ring * .4;   // the homeless crowd: hex rings around the spot
+      P.push({ x: CS.x + Math.cos(a) * 2.3 * ring, y: 0, z: CS.z + Math.sin(a) * 2.3 * ring, yaw: Math.atan2(CS.x + Math.cos(a) * 2.3 * ring - CS.x, CS.z + Math.sin(a) * 2.3 * ring - CS.z) + Math.PI + (hash01(j) - .5) * .8 }); }
+    else if (j < 12 || j % 2 === 0) { const k = j < 12 ? roofs[j % roofs.length] : roofs[(12 + j * 7) % roofs.length], l = houseLots[k]; P.push({ x: l.x, y: CATW[k].roofY, z: l.z, yaw: hash01(j * 13) * 6.28 }); }   // the nearest roofs first (crowded close-up)
+    else { const rd = ROADS[j % ROADS.length], tot = rd.cum[rd.cum.length - 1], [x, z, dx, dz] = sampleRoad(rd, 2 + hash01(j * 31 + 7) * Math.max(1, tot - 4)), sd = hash01(j * 17) < .5 ? 1.3 : -1.3;
+      P.push({ x: x - dz * sd, y: 0, z: z + dx * sd, yaw: hash01(j * 19) * 6.28 }); } }
+  m.instanceColor.needsUpdate = true; window.__crowd = [CS.x, CS.z]; return { m, P, at: S.at || [], sign, signAt: S.signAt ?? (S.at || [])[12] ?? 0, sc: S.scale || 1.15 }; })();
 
 // ---------- cat taxis: a few humans pushing cats in strollers ----------
 const TAXIS = [];
@@ -880,13 +944,28 @@ window.renderFrame = (t, anim = t) => {
   if (LOT) LOT.visible = t < NEWB.at;
   if (NB && NEWB.slow && NB.userData.parts) {   // slow build (videos): each piece drops in from above and pops, the sign + confetti come last
     const bt = NEWB.at, dur = NEWB.slow, P = NB.userData.parts, N = P.length; NB.visible = t >= bt; NB.scale.setScalar(.8); gk = t >= bt + dur ? 1 : .001;
-    P.forEach((c, i) => { const e = Math.min(1, Math.max(0, (t - (bt + i * (dur - .7) / N)) / .5)); c.visible = e > 0;
+    P.forEach((c, i) => { const e = Math.min(1, Math.max(0, (t - (NEWB.partsAt ? NEWB.partsAt[i] ?? bt : bt + i * (dur - .7) / N)) / .5)); c.visible = e > 0;
       c.position.y = c.userData.y0 + (1 - ease(e)) * 16; const k = Math.max(.001, back(e)); c.scale.copy(c.userData.s0).multiplyScalar(k); });
     if (NB.userData.sign) { const e = (t - bt - dur) / .4; NB.userData.sign.visible = e > 0; NB.userData.sign.scale.setScalar(Math.max(.001, back(e))); } }
   const bEnd = NEWB ? NEWB.at + (NEWB.slow || 0) : 0;
   if (NB) { const bt = NEWB.at; if (!NEWB.slow) { NB.visible = t >= bt; gk = back((t - bt) / .9); NB.scale.set(Math.max(.001, .8 * (.6 + .4 * gk)), Math.max(.001, .8 * gk), Math.max(.001, .8 * (.6 + .4 * gk))); }
     CONF.visible = t >= bEnd + .4 && t < bEnd + 4.4;
     if (CONF.visible) { const u = t - bEnd - .4; confData.forEach((d, i) => { cm.compose(V(NBpos.x + d.vx * u, 22 + d.vy * u - 8.8 * u * u, NBpos.z + d.vz * u), Q.setFromEuler(EU.set(d.r + u * 5, d.r * 2 + u * 3, 0)), V(1.4, 1.4, 1.4)); CONF.setMatrixAt(i, cm); }); CONF.instanceMatrix.needsUpdate = true; } }
+  if (STRAY) { let ns = 0; STRAY.P.forEach((p, j) => { const a = STRAY.at[j] ?? 1e9, k = t >= a ? STRAY.sc * back((t - a) / .4) : 0; if (t >= a) ns++;
+      if (k <= 0) { STRAY.m.setMatrixAt(j, ZERO); return; } cm.compose(V(p.x, p.y, p.z), Q.setFromEuler(EU.set(0, p.yaw, 0)), V(k, k, k)); STRAY.m.setMatrixAt(j, cm); });
+    STRAY.m.instanceMatrix.needsUpdate = true; window.__strays = ns;
+    if (STRAY.sign) { const e = (t - STRAY.signAt) / .4; STRAY.sign.visible = e > 0; STRAY.sign.scale.setScalar(Math.max(.001, back(e))); } }
+  if (EP.dusk) duskAt(Math.min(1, Math.max(0, (t - EP.dusk.from) / (EP.dusk.to - EP.dusk.from))));
+  if (NB && NB.userData.arc) { const A = NB.userData.arc, la = NEWB.lightsAt ?? 1e9, on = t >= la, fl = on ? (t - la < .5 ? (Math.floor((t - la) * 16) % 2 ? .25 : 1) : 1) : 0;   // neon flickers on
+    A.neon.forEach(m => m.color.set(fl > .5 ? m.userData.on : '#3A3350')); A.lights.forEach(L => L.intensity = on ? 260 * fl : 0);
+    const oa = NEWB.openAt ?? 1e9; A.cats.forEach((c, i) => { const u = (t - oa - i * .22) / 1.3; if (u <= 0 || u >= 1) { c.scale.setScalar(0); return; }
+      const sx = (i % 2 ? 1 : -1) * (3 + (i % 5) * 1.6); c.position.set(sx * (1 - u), Math.abs(Math.sin(anim * 14 + i)) * .3, 22 - 18 * u); c.rotation.y = Math.atan2(-sx, -18) ; c.scale.setScalar(1.4 * Math.min(1, (1 - u) * 6)); });
+    const C = A.claw, ca = EP.clawAt ?? 1e9, u = t - ca; let cy = 5.6, grip = 0, held = false;
+    if (u > 0 && u < .7) cy = 5.6 - 2.1 * ease(u / .7); else if (u >= .7 && u < 1.0) { cy = 3.5; grip = (u - .7) / .3; } else if (u >= 1.0 && u < 1.8) { cy = 3.5 + 2.1 * ease((u - 1) / .8); grip = 1; held = true; } else if (u >= 1.8) { grip = 0; }
+    C.claw.position.y = cy; C.prongs.forEach(pr => { pr.rotation.x = -.5 + .5 * (u > 0 && u < 1.8 ? grip : 0); });
+    if (u < .9) C.prize.position.copy(C.home); else if (held) C.prize.position.set(C.cx, cy - .45, C.home.z);
+    else if (u >= 1.8) { const v = Math.min(1, (u - 1.8) / .6); C.prize.position.set(C.cx, 5.1 - 4.4 * v + 3.2 * Math.sin(Math.PI * v), C.home.z + 1.8 + 1.4 * v); C.prize.rotation.z = v * 6; }
+    C.mango.position.y = .4 + (u >= 2.4 && u < 3.4 ? Math.abs(Math.sin((u - 2.4) * 9)) * .9 : 0); }
   // upload only the used part of each instanced mesh (pose meshes hold 800 slots but use a few dozen): big win on phones
   if (!RANGED) { RANGED = []; scene.traverse(o => { if (o.isInstancedMesh) RANGED.push(o); }); }
   for (const m of RANGED) if (m.count < m.instanceMatrix.count) { const a = m.instanceMatrix; a.clearUpdateRanges(); a.addUpdateRange(0, Math.max(1, m.count) * 16); }
@@ -934,8 +1013,8 @@ const slider = $('grow'), tOf = f => f <= 0 ? -1 : EP.newFrom + (EP.newTo - EP.n
 if (EP.live) {   // live page: the real town today (EP.live.followers cats besides Mango); no growth demo controls
   slider.max = slider.value = EP.live.followers; [slider, $('play'), ...slider.parentElement.querySelectorAll('.row, .chips')].forEach(e => { e.hidden = true; e.style.display = 'none'; });
   if (EP.live.followers < 100) { controls.autoRotate = true;
-    // newest real top-comment build (landmarks with at: 0) in view behind Mango's square on load
-    const lb = (EP.landmarks || [])[0] && EP.landmarks[0].at === 0 && LMG[0] ? LMG[0][0].position : null, h = lb ? Math.hypot(lb.x, lb.z) : 1;
+    // newest real top-comment build (last landmark with at: 0) in view behind Mango's square on load
+    const nb = (EP.landmarks || []).reduce((m, l, k) => l.at === 0 && LMG[k] ? k : m, -1), lb = nb >= 0 ? LMG[nb][0].position : null, h = lb ? Math.hypot(lb.x, lb.z) : 1;
     const d = lb ? new THREE.Vector3(-lb.x / h * .86, .5, -lb.z / h * .86) : new THREE.Vector3(.55, .5, .67), tg = lb ? new THREE.Vector3(lb.x * .3, 3, lb.z * .3) : new THREE.Vector3(0, 3, 0);
     controls.target.copy(tg); camera.position.copy(tg).add(d.setLength(innerWidth < 700 ? 84 : 70)); } }
 const FMAX = +slider.max;
@@ -1026,8 +1105,8 @@ const handleOf = n => (EP.handles && EP.handles[n]) || ('demo.' + HA[Math.floor(
 const KIND = { A: 'Cat-face house', B: 'Cardboard box house', C: 'Cat-cave pod' };
 const DIST = ['Blue Whisker', 'Box Town', 'Pastel Pods', 'Catnip Green', 'Purple Purr', 'Tuxedo Row'];
 const LM_UNLOCK = (EP.landmarks || []).map(l => l.unlock);
-const LM_TXT = { petshop: 'Toys, treats and fresh water for every cat in town.', cityhall: 'Mayor Mango works here (mostly naps).', cafe: 'Built by the most-liked comment.', statue: 'A golden Mango. He posed for 3 seconds.', market: 'Yarn, boxes and squeaky mice.', fishmarket: 'Fresh fish for every cat in town. Mango is first in line.', pool: 'Nobody swims. Everyone watches.', custom: 'Built by the most-liked comment.' };
-landmarks.forEach((lm, k) => { if (LMG[k]) LMG[k][0].userData.info = { icon: lm.kind === 'fishmarket' ? '\ud83d\udc1f' : '\ud83c\udfdb\ufe0f', title: lm.sign, line: LM_TXT[lm.kind] || 'Built by the most-liked comment.', note: lm.note ? lm.note : LM_UNLOCK[k] ? 'Unlocked at ' + LM_UNLOCK[k].toLocaleString('en-US') + ' cats' : '' }; });
+const LM_TXT = { petshop: 'Toys, treats and fresh water for every cat in town.', cityhall: 'Mayor Mango works here (mostly naps).', cafe: 'Built by the most-liked comment.', statue: 'A golden Mango. He posed for 3 seconds.', market: 'Yarn, boxes and squeaky mice.', fishmarket: 'Fresh fish for every cat in town. Mango is first in line.', arcade: 'Claw machine, games and neon. Mango won a fish here.', pool: 'Nobody swims. Everyone watches.', custom: 'Built by the most-liked comment.' };
+landmarks.forEach((lm, k) => { if (LMG[k]) LMG[k][0].userData.info = { icon: lm.kind === 'fishmarket' ? '\ud83d\udc1f' : lm.kind === 'arcade' ? '\ud83d\udd79\ufe0f' : '\ud83c\udfdb\ufe0f', title: lm.sign, line: LM_TXT[lm.kind] || 'Built by the most-liked comment.', note: lm.note ? lm.note : LM_UNLOCK[k] ? 'Unlocked at ' + LM_UNLOCK[k].toLocaleString('en-US') + ' cats' : '' }; });
 if (typeof MO !== 'undefined' && MO.g) MO.g.userData.info = { icon: '\ud83d\ude34', title: 'Big Mochi', line: 'The sleeping mountain cat. Please do not wake her.', note: 'Unlocked at 1,000 cats' };
 if (typeof FT !== 'undefined' && FT.g) FT.g.userData.info = { icon: '\ud83d\udca7', title: 'PETME2 Stainless Steel Fountain', line: 'Mango\u2019s favorite drinking spot. The water keeps moving, so Mango keeps coming back for more.', note: 'Tap again for water time: the cats nearby come to drink.', pinY: 18, shop: 'https://www.petme2.com/products/water-fountain', feed: 'water' };
 if (typeof FD !== 'undefined' && FD.g) FD.g.userData.info = { icon: '\ud83c\udf7d\ufe0f', title: 'PETME2 Dual Bowl Feeder', line: 'Mango\u2019s dinner table. Meals come right on time, so Mango never has to beg.', note: 'Feeding time! The cats nearby are coming to eat.', pinY: 15.5, shop: 'https://www.petme2.com/products/2-in-1-feeder-1', feed: 'food' };
