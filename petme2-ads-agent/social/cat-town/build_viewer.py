@@ -25,7 +25,7 @@ R("sun.shadow.mapSize.set(4096, 4096);", "sun.shadow.mapSize.set(2048, 2048);")
 LOOP = open('viewer_loop.js').read()
 R("await document.fonts.ready;\nwindow.ready = true;", LOOP)
 data = {"live": {"followers": 0}, "pad": False, "shopCards": False, "day": 1, "followersBefore": 0, "followersNew": 1000, "order": "index", "newFrom": 0, "newTo": 100, "noReserved": True, "dayRange": [1, 40], "landmarks": [],
-        "counts": {"followers": 253, "likes": 467}}   # Day 3 (Oct 8, Matan): 253 followers = houses, 467 likes = cats
+        "counts": {"followers": 253, "likes": 467}, "feedWalk": True, "feedDur": 30}   # owner 2026-10-09: on a fountain/feeder tap the cats walk over slowly   # Day 3 (Oct 8, Matan): 253 followers = houses, 467 likes = cats
 # Real top-comment builds (always there, first spots = right in front of Mango). Day 2: "add a fish supermarket" by PIKA. Day 3: "make a cat arcade!" by francisco12321.
 for k, sg, note in [("fishmarket", "Fish Supermarket", "Top comment on Day 2, idea by PIKA"), ("arcade", "Cat Arcade", "Top comment on Day 3, idea by francisco12321")]:
     data["landmarks"].append({"kind": k, "sign": sg, "at": 0, "note": note})

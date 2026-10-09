@@ -85,7 +85,7 @@
 <div class="info" id="info" hidden role="status"><div id="infoBody"></div><button id="infoClose" type="button" aria-label="Close">&#10005;</button></div>
 <div class="pc" id="pcBox" hidden role="dialog" aria-modal="true" aria-labelledby="pcHint"><div class="pc__card"><img id="pcImg" alt="Your Cat Town postcard"><p id="pcHint">Your Cat Town postcard. Long-press it (phone) or right-click it (computer) to save.</p><div class="pc__row"><button id="pcClose" type="button">Close</button></div></div></div>
 <div hidden><div id="title"></div><div id="cmList"></div><div id="crown"></div><div id="tags"></div><div id="sub"></div><div id="end"></div><div id="cm"></div><div id="brand"></div><div id="count"></div></div>
-<script>window.CAT_VIEWER = true; window.CAT_LITE = matchMedia('(pointer: coarse)').matches || innerWidth < 820; window.CITY = {"live": {"followers": 0}, "pad": false, "shopCards": false, "day": 1, "followersBefore": 0, "followersNew": 1000, "order": "index", "newFrom": 0, "newTo": 100, "noReserved": true, "dayRange": [1, 40], "landmarks": [{"kind": "fishmarket", "sign": "Fish Supermarket", "at": 0, "note": "Top comment on Day 2, idea by PIKA"}, {"kind": "arcade", "sign": "Cat Arcade", "at": 0, "note": "Top comment on Day 3, idea by francisco12321"}], "counts": {"followers": 253, "likes": 467}};</script>
+<script>window.CAT_VIEWER = true; window.CAT_LITE = matchMedia('(pointer: coarse)').matches || innerWidth < 820; window.CITY = {"live": {"followers": 0}, "pad": false, "shopCards": false, "day": 1, "followersBefore": 0, "followersNew": 1000, "order": "index", "newFrom": 0, "newTo": 100, "noReserved": true, "dayRange": [1, 40], "landmarks": [{"kind": "fishmarket", "sign": "Fish Supermarket", "at": 0, "note": "Top comment on Day 2, idea by PIKA"}, {"kind": "arcade", "sign": "Cat Arcade", "at": 0, "note": "Top comment on Day 3, idea by francisco12321"}], "counts": {"followers": 253, "likes": 467}, "feedWalk": true, "feedDur": 30};</script>
 <script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/" } }</script>
 <script type="module">
 import * as THREE from 'three';
@@ -150,7 +150,7 @@ const NEWB = EP.newBuild || null;
 // Halloween week: Oct 24-31 (visitor's date), or forced with EP.halloween / ?halloween=1 (previews, videos)
 const _today = new Date(), HW = !!(EP.halloween || /[?&]halloween=1/.test(location.search) || (_today.getMonth() === 9 && _today.getDate() >= 24));
 // Feeding time: kibble rains on the food bar (kind 'food') or the fountain gushes (kind 'water'); every cat in town runs to the square for FEED_DUR s
-const FEED = { t0: -1e9, kind: 'food' }, FEED_DUR = 14; let LAST_ANIM = 0;
+const FEED = { t0: -1e9, kind: 'food' }, FEED_DUR = EP.feedDur || 14; let LAST_ANIM = 0;
 if (EP.feed) { FEED.t0 = EP.feed.at; FEED.kind = EP.feed.kind || 'food'; }
 window.feedTime = kind => { FEED.kind = kind; FEED.t0 = LAST_ANIM; };
 
@@ -735,6 +735,9 @@ if (HW) { const g = merge([Cyl(.44, .44, .05, 12).translate(0, .025, 0), new THR
   for (let j = 0; j < 12; j++) WALK.setColorAt(90 + j, col.set(j % 4 === 3 ? '#3B3B44' : '#1E1E24')); }
 // ---------- feeding time FX: 90 kibble bits (food) or water arcs (water) ----------
 const FX = IM(new THREE.IcosahedronGeometry(.2, 0), 90, false, new THREE.MeshStandardMaterial({ color: '#FFFFFF', flatShading: true, roughness: .6 })); FX.frustumCulled = false;
+// website feeding time FX: a splash burst out of the fountain (or a kibble pop out of the feeder) + ripple rings rolling out over the square
+const SPL = IM(new THREE.IcosahedronGeometry(.3, 0), 64, false, new THREE.MeshStandardMaterial({ color: '#CFEFFF', emissive: '#4FB3EA', emissiveIntensity: .35, flatShading: true, roughness: .3 })); SPL.frustumCulled = false; for (let i = 0; i < 64; i++) SPL.setMatrixAt(i, ZERO);
+const RINGS = [0, 1, 2, 3].map(() => { const m = new THREE.Mesh(new THREE.RingGeometry(.8, 1, 56).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: '#FFFFFF', transparent: true, opacity: 0, depthWrite: false, fog: false, toneMapped: false })); m.visible = false; scene.add(m); return m; });
 for (let i = 0; i < 90; i++) FX.setMatrixAt(i, ZERO);
 
 // ---------- Build 2 (hero row) + Build 3 (hero box) on the plaza ----------
@@ -833,7 +836,8 @@ function updateExtras(t, anim) {
     let mode = 0, x = s.p[0], z = s.p[1], y = .54, yaw = s.yawC, sc = 1.15 * k;
     if (k > 0) {
       if (feeding && s.drink === fDrink && ff < FEED_DUR - 1) {   // feeding time: everybody runs in at once and stays
-        if (ff < 2.4) { const [px, pz, dx, dz] = sampleRoad(s.pin, ease(ff / 2.4) * s.pin.len); x = px; z = pz; yaw = Math.atan2(dx, dz); y = Hy(px, pz) + Math.abs(Math.sin(anim * 16 + s.w)) * .25; sc *= back(ff / .3); mode = 1; }
+        const wIn = EP.feedWalk ? 4.5 + (s.m % 5) * .5 : 2.4, fw = ff;
+        if (fw < wIn) { const [px, pz, dx, dz] = sampleRoad(s.pin, (EP.feedWalk ? fw / wIn : ease(fw / wIn)) * s.pin.len); x = px; z = pz; yaw = Math.atan2(dx, dz); y = Hy(px, pz) + Math.abs(Math.sin(anim * (EP.feedWalk ? 11 : 16) + s.w)) * (EP.feedWalk ? .15 : .25); sc *= back(fw / .3); mode = 1; }
         else mode = 2; }
       else if (wave && s.drink) { const l0 = FW + 3 + (s.m - 1) * .1; mode = anim >= l0 && anim < l0 + .5 ? 1 : 2; }
       else { const u = mod(anim + s.ph, PW);
@@ -896,6 +900,14 @@ function updateExtras(t, anim) {
           XM.compose(XV.set(x, 18 - 17.2 * u * u, z), XQ.setFromEuler(XE.set(u * 5, i, 0)), XS.setScalar(1.1)); FX.setMatrixAt(i, XM); } }
       if (fDrink) FT.stream.scale.x = FT.stream.scale.z = 2; }
     FX.instanceMatrix.needsUpdate = true; }
+  if (EP.feedWalk) { const cx = fDrink ? -SQ.C : SQ.C, on = feeding;
+    for (let i = 0; i < 64; i++) { const u = ff - (i % 4) * .08;   // burst: drops (or kibble) fly up and out, bounce once on the square
+      if (!on || u < 0 || u > 1.9) { SPL.setMatrixAt(i, ZERO); continue; }
+      const a = i * 2.39996, vr = 3 + (i % 7) * .9, vy = 9 + (i % 5) * 1.6, x0 = fDrink ? FT.tip.x : cx, y0 = fDrink ? FT.tip.y : 6, z0 = fDrink ? FT.tip.z : 0, y = Math.max(.3, y0 + vy * u - 9.8 * u * u);
+      XM.compose(XV.set(x0 + Math.cos(a) * vr * u, y, z0 + Math.sin(a) * vr * u), XQ.setFromEuler(XE.set(u * 6, i, 0)), XS.setScalar((fDrink ? 1 : .8) * Math.min(1, (1.9 - u) * 3))); SPL.setMatrixAt(i, XM); }
+    SPL.material.color.set(fDrink ? '#CFEFFF' : '#A8703F'); SPL.material.emissive.set(fDrink ? '#4FB3EA' : '#000000'); SPL.instanceMatrix.needsUpdate = true;
+    RINGS.forEach((m, j) => { const u = on && ff < 7 ? ((ff - j * .45) % 1.8) / 1.8 : -1; m.visible = u >= 0 && ff >= j * .45; if (!m.visible) return;
+      m.position.set(cx, .9, 0); m.scale.setScalar(SQ.wall + 1 + u * 18); m.material.opacity = .7 * (1 - u) * (1 - u) * (1 - smooth(5, 7, ff)); m.material.color.set(fDrink ? '#3FA9F5' : '#F2A65A'); }); }
   // Build 2: hero circle row (3 identical sitters + the one that walks in late)
   { const kt = popK(t, UNLOCK.circles);
     ROW.forEach(([x, z], c) => { if (kt <= 0) TAPE.setMatrixAt(TAPE_H + c, ZERO); else { XM.compose(XV.set(x, .16, z), QI, XS.set(kt, 1, kt)); TAPE.setMatrixAt(TAPE_H + c, XM); } });
@@ -986,6 +998,19 @@ if (EP.hideUI) document.querySelector('.ui').style.display = 'none';
 const cm = new THREE.Matrix4(), Q = new THREE.Quaternion(), EU = new THREE.Euler();
 const tri = u => { u = u - Math.floor(u); return u < .5 ? u * 2 : 2 - u * 2; };
 let lastT = null;
+function feedPath(w, k, fT) {   // website feeding time: a cat walks (not runs) from where it was, in toward the square, then to a spot around the fountain (water) or feeder (food); drinks; walks home
+  const cx = FEED.kind === 'water' ? -SQ.C : SQ.C, side = (o, a) => { const [x, z, dx, dz] = walkPos(w.rd, w.s0, w.L, w.v, w.ph, a); return [x - dz * 3 * w.side, z + dx * 3 * w.side]; };
+  const S = side(0, FEED.t0), E = side(0, FEED.t0 + FEED_DUR), ga = Math.atan2(S[1], S[0] - cx) + (hash01(k * 3 + 2) - .5) * .5, gr = SQ.wall + 1.6 + hash01(k * 5 + 1) * 3;
+  const G = [cx + Math.cos(ga) * gr, Math.sin(ga) * gr], mid = p => { const a = Math.atan2(p[1], p[0]), r = SQ.plaza + 4; return [Math.cos(a) * r, Math.sin(a) * r]; };
+  const path = p => { const M = mid(p), d1 = Math.hypot(M[0] - p[0], M[1] - p[1]), d2 = Math.hypot(G[0] - M[0], G[1] - M[1]); return { M, d1, d2, L: d1 + d2 }; };
+  const at = (p, P, s) => s <= P.d1 ? [p[0] + (P.M[0] - p[0]) * s / P.d1, p[1] + (P.M[1] - p[1]) * s / P.d1, P.M[0] - p[0], P.M[1] - p[1]] : [P.M[0] + (G[0] - P.M[0]) * Math.min(1, (s - P.d1) / P.d2), P.M[1] + (G[1] - P.M[1]) * Math.min(1, (s - P.d1) / P.d2), G[0] - P.M[0], G[1] - P.M[1]];
+  const v = 4.2 + hash01(k * 17) * 1.2, d = hash01(k * 13 + 5) * 3, A = path(S), B = path(E), tIn = A.L / v, tOut = B.L / v, back0 = FEED_DUR - tOut - .3;
+  if (d + tIn + 2 > back0) return null;   // too far to make it: stays home
+  const step = (t) => Math.abs(Math.sin(t * 11 + k)) * .16;
+  if (fT < d) return null;
+  if (fT < d + tIn) { const [x, z, dx, dz] = at(S, A, (fT - d) * v); return [x, z, Math.atan2(dx, dz), step(fT)]; }
+  if (fT < back0) { const sway = Math.sin(fT * 1.7 + k) * .25; return [G[0], G[1], Math.atan2(cx - G[0], -G[1]) + sway, .03 * Math.abs(Math.sin(fT * 9 + k))]; }   // at the bowl: head bobs while it drinks
+  const [x, z, dx, dz] = at(E, B, Math.max(0, B.L - (fT - back0) * v)); return [x, z, Math.atan2(-dx, -dz), step(fT)]; }
 function walkPos(rd, s0, L, v, ph, anim) {     // ping-pong along a street: from place A to place B and back
   const total = rd.cum[rd.cum.length - 1], u = anim * v / (2 * L) + ph, f = tri(u), dir = (u - Math.floor(u)) < .5 ? 1 : -1;
   const s = Math.max(1, Math.min(total - 1, s0 - L / 2 + f * L)); const [x, z, dx, dz] = sampleRoad(rd, s); return [x, z, dx * dir, dz * dir];
@@ -1018,7 +1043,9 @@ window.renderFrame = (t, anim = t) => {
     if (w.nap) { cm.compose(V(l.x, w.roofY, l.z), Q.setFromEuler(EU.set(0, l.ry + Math.sin(anim * .3 + k) * .4, 0)), V(s, s * .8, s)); catMesh.setMatrixAt(k + 1, cm); }
     else { const [x, z, dx, dz] = walkPos(w.rd, w.s0, w.L, w.v, w.ph, anim);
       let px = x - dz * 3 * w.side, pz = z + dx * 3 * w.side, yaw = Math.atan2(dx, dz), bob = .1;
-      const gw = feedOn && l.r < 75 && hash01(k * 7 + 3) < .3 ? smooth(0, 2.2 + l.r / 60, fT) * (1 - smooth(FEED_DUR - 2.5, FEED_DUR, fT)) : 0;   // feeding time: a few nearby cats (about 1 in 3, close to the square) trot over, then go home
+      const FWK = EP.feedWalk && feedOn && l.r < 70 && hash01(k * 7 + 3) < .35 ? feedPath(w, k, fT) : null;
+      if (FWK) { px = FWK[0]; pz = FWK[1]; yaw = FWK[2]; bob = FWK[3]; }
+      const gw = !EP.feedWalk && feedOn && l.r < 75 && hash01(k * 7 + 3) < .3 ? smooth(0, 2.2 + l.r / 60, fT) * (1 - smooth(FEED_DUR - 2.5, FEED_DUR, fT)) : 0;   // feeding time: a few nearby cats (about 1 in 3, close to the square) trot over, then go home
       if (gw > 0) { const ga = Math.atan2(pz, px) + (hash01(k * 3 + 2) - .5) * .25, gr = SQ.plaza + 1 + hash01(k * 5 + 1) * 6, gx = Math.cos(ga) * gr, gz = Math.sin(ga) * gr;
         px += (gx - px) * gw; pz += (gz - pz) * gw; yaw = fT < FEED_DUR - 2.5 ? Math.atan2(-px, -pz) : Math.atan2(px, pz); bob = gw < 1 ? .25 : .06; }
       cm.compose(V(px, Math.abs(Math.sin(anim * (gw > 0 && gw < 1 ? 16 : 9) + k)) * bob, pz), Q.setFromEuler(EU.set(0, yaw, 0)), V(s, s, s)); catMesh.setMatrixAt(k + 1, cm); }
@@ -1246,6 +1273,11 @@ renderer.domElement.addEventListener('pointerup', e => {
     MARK.position.set(gp.x, .3, gp.z); MARK.visible = true; markT = performance.now(); return; }
   tapTimer = setTimeout(() => tapAt(nx, ny), 250);   // single tap: wait a moment so a double tap can cancel it (and the scene raycast doesn't block the 2nd tap)
 });
+let toastEl = null, toastT = 0;
+function feedToast(kind) {   // a small pill under the counter: what is happening
+  if (!toastEl) { toastEl = document.createElement('div'); toastEl.style.cssText = 'position:absolute;left:50%;top:150px;transform:translateX(-50%);z-index:6;background:#fff;color:#1B2333;font:800 15px Nunito,sans-serif;padding:9px 16px;border-radius:999px;box-shadow:0 8px 24px rgba(20,40,90,.18);pointer-events:none;transition:opacity .4s;white-space:nowrap'; renderer.domElement.parentElement.appendChild(toastEl); }
+  toastEl.textContent = kind === 'water' ? '\ud83d\udca7 Water time! The cats are walking over' : '\ud83c\udf7d\ufe0f Dinner time! The cats are walking over'; toastEl.style.opacity = 1;
+  clearTimeout(toastT); toastT = setTimeout(() => { toastEl.style.opacity = 0; }, 4500); }
 function tapAt(nx, ny) {
   ndc.set(nx, ny); ray.setFromCamera(ndc, camera);
   const tNow = tOf(Math.round(cur));
@@ -1259,7 +1291,10 @@ function tapAt(nx, ny) {
       return; }
     let o = h.object; while (o && !o.userData.info) o = o.parent;
     if (o && o.visible) { const I = o.userData.info, p = new THREE.Vector3(); o.getWorldPosition(p);
-      if (I.feed) { window.feedTime(I.feed); if (EP.shopCards === false) { hideInfo(); return; } }   // owner 2026-10-07: no fountain/feeder pop-up for now (set "shopCards": True in build_viewer.py to bring it back)
+      if (I.feed) { window.feedTime(I.feed); feedToast(I.feed);
+        const tg = new THREE.Vector3(I.feed === 'water' ? -11.5 : 11.5, 2, 0), off = camera.position.clone().sub(controls.target).setY(0).setLength(80); off.y = 85;   // pull back so you can see the cats walking over
+        if (typeof stopSpin === 'function') stopSpin(); flyTo(tg, tg.clone().add(off), 1.6);
+        if (EP.shopCards === false) { hideInfo(); return; } }   // owner 2026-10-07: no fountain/feeder pop-up for now (set "shopCards": True in build_viewer.py to bring it back)
       showInfo(`<div class="info__icon">${I.icon}</div><div><b class="info__title">${I.title}</b><span class="info__line">${I.line}</span>${I.note ? `<span class="info__note">${I.note}</span>` : ''}${I.shop ? `<a class="info__shop" href="${I.shop}">See it in our shop</a>` : ''}</div>`, p, I.pinY || (o === (typeof MO !== 'undefined' && MO.g) ? 60 : 16)); return; }
     const pt = h.point;
     if (pt.y > 25 && Math.hypot(pt.x, pt.z) < 450) { showInfo(`<div class="info__icon">\ud83d\udc1f</div><div><b class="info__title">Fish balloon</b><span class="info__line">Sky tours for cats. Two passengers, zero pilots.</span></div>`, null); return; }

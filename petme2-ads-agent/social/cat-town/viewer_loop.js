@@ -151,6 +151,11 @@ renderer.domElement.addEventListener('pointerup', e => {
     MARK.position.set(gp.x, .3, gp.z); MARK.visible = true; markT = performance.now(); return; }
   tapTimer = setTimeout(() => tapAt(nx, ny), 250);   // single tap: wait a moment so a double tap can cancel it (and the scene raycast doesn't block the 2nd tap)
 });
+let toastEl = null, toastT = 0;
+function feedToast(kind) {   // a small pill under the counter: what is happening
+  if (!toastEl) { toastEl = document.createElement('div'); toastEl.style.cssText = 'position:absolute;left:50%;top:150px;transform:translateX(-50%);z-index:6;background:#fff;color:#1B2333;font:800 15px Nunito,sans-serif;padding:9px 16px;border-radius:999px;box-shadow:0 8px 24px rgba(20,40,90,.18);pointer-events:none;transition:opacity .4s;white-space:nowrap'; renderer.domElement.parentElement.appendChild(toastEl); }
+  toastEl.textContent = kind === 'water' ? '💧 Water time! The cats are walking over' : '🍽️ Dinner time! The cats are walking over'; toastEl.style.opacity = 1;
+  clearTimeout(toastT); toastT = setTimeout(() => { toastEl.style.opacity = 0; }, 4500); }
 function tapAt(nx, ny) {
   ndc.set(nx, ny); ray.setFromCamera(ndc, camera);
   const tNow = tOf(Math.round(cur));
@@ -164,7 +169,10 @@ function tapAt(nx, ny) {
       return; }
     let o = h.object; while (o && !o.userData.info) o = o.parent;
     if (o && o.visible) { const I = o.userData.info, p = new THREE.Vector3(); o.getWorldPosition(p);
-      if (I.feed) { window.feedTime(I.feed); if (EP.shopCards === false) { hideInfo(); return; } }   // owner 2026-10-07: no fountain/feeder pop-up for now (set "shopCards": True in build_viewer.py to bring it back)
+      if (I.feed) { window.feedTime(I.feed); feedToast(I.feed);
+        const tg = new THREE.Vector3(I.feed === 'water' ? -11.5 : 11.5, 2, 0), off = camera.position.clone().sub(controls.target).setY(0).setLength(80); off.y = 85;   // pull back so you can see the cats walking over
+        if (typeof stopSpin === 'function') stopSpin(); flyTo(tg, tg.clone().add(off), 1.6);
+        if (EP.shopCards === false) { hideInfo(); return; } }   // owner 2026-10-07: no fountain/feeder pop-up for now (set "shopCards": True in build_viewer.py to bring it back)
       showInfo(`<div class="info__icon">${I.icon}</div><div><b class="info__title">${I.title}</b><span class="info__line">${I.line}</span>${I.note ? `<span class="info__note">${I.note}</span>` : ''}${I.shop ? `<a class="info__shop" href="${I.shop}">See it in our shop</a>` : ''}</div>`, p, I.pinY || (o === (typeof MO !== 'undefined' && MO.g) ? 60 : 16)); return; }
     const pt = h.point;
     if (pt.y > 25 && Math.hypot(pt.x, pt.z) < 450) { showInfo(`<div class="info__icon">🐟</div><div><b class="info__title">Fish balloon</b><span class="info__line">Sky tours for cats. Two passengers, zero pilots.</span></div>`, null); return; }
