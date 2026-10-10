@@ -1,0 +1,32 @@
+You are working in my Amazon Seller Central (sellercentral.amazon.com), US marketplace.
+GOAL: Update the listing text of ONE product. Do NOT click Submit/Save until I say "submit".
+RULES: Change only the fields below. Do not change price, images, variations, stock, or any other product. If asked to log in, enter a code, or solve a captcha: stop and tell me. If a field is locked or shows an error, stop and tell me exactly what it says.
+
+Product: SKU LW-EZAJ-KKZD / ASIN B0GHLSQMJ9 (3L Dual Bowl App Feeder (White)).
+
+TITLE (Item Name):
+PETME2 Automatic Cat Feeder for 2 Cats, 3L Dual Bowl Automatic Dog Feeder with App Control, Timed Pet Food Dispenser for Dry Food, 304 Stainless Steel Bowls, 2-Way Audio, Dual Power - White
+
+BULLET POINTS (5 boxes, one per box; delete any extra old bullet boxes 6-10):
+FAIR MEALS FOR 2 CATS: Stop food stealing at mealtime. This automatic cat feeder for 2 cats splits every meal evenly into two stainless steel bowls, so two cats, or a cat and a small dog, get the same portion at the same time. It is an automatic cat feeder 2 cats can share without fights. Many cat automatic feeders have a single bowl, but this dual automatic cat feeder and double cat feeder serves both pets at once, and it also works as a dog food dispenser.
+APP CONTROL AND 2-WAY AUDIO: Set meal times and portions from your phone in the companion smart app, and use 2-way audio to talk with your pets while you are away. With WiFi automatic cat feeder app control, you can change the plan from the office or on vacation. Once set, the cat feeder automatic schedule runs every day. This automatic cat feeder with app scheduling is an auto cat feeder and cat food dispenser that keeps meals on time while you work or travel.
+TIMED FEEDING, PRECISE PORTIONS: Schedule up to 10 meals per day with up to 12 portions per meal, about 15 g per portion. This timed cat feeder keeps a steady routine with consistent portions. Like other timed cat feeders for dry food, it also suits small dogs as a timed dog feeder or an automatic dog feeder with timer. Set a dog feeder automatic schedule once, and a small breed gets the same portion at the same times every day.
+3L STORAGE, ANTI-JAM, DUAL POWER: The 3L container means fewer refills, and a 4-compartment anti-jam design dispenses kibble smoothly. A silicone seal, desiccant box and sealed outlet help keep food fresh and crunchy, making this a self feeding cat food dispenser and cat dry food dispenser that holds kibble between refills. Battery backup keeps meals on schedule during a power outage (batteries not included).
+EASY CLEAN 304 STAINLESS STEEL BOWLS: The raised stainless steel bowls wipe clean easily, and the dishwasher safe parts come apart for washing. The elevated cat feeding station design gives cats a comfortable eating height, and it works just as well as a dog feeding station or pet feeding station for a cat and a small dog side by side. One unit serves as a cat food feeder and dog food feeder, a cat automatic feeder and dog automatic feeder in one.
+
+PRODUCT DESCRIPTION:
+Two cats, one feeder, no more food fights. The PETME2 3L dual bowl automatic cat feeder splits each meal evenly between two stainless steel bowls, so every pet gets a fair share at the same time. This double automatic cat feeder suits two cats, or a cat and a small dog. Plan the whole day in the companion smart app. Set up to 10 meals per day and up to 12 portions per meal (about 15 g per portion). Use 2-way audio to talk with your pets while you are at work or away for the weekend. Most cat and dog automatic feeders fill one bowl. This automatic pet feeder for cats fills two at once. Turn on the cat food dispenser automatic schedule, and portions stay the same every day. The 3L food container cuts down on refills. A 4-compartment anti-jam design keeps kibble moving smoothly to both bowls, and a triple freshness lock (silicone seal, desiccant box and sealed outlet) helps keep dry food crunchy. Dual power keeps feeding on schedule. Run it on the power adapter, with battery backup during a power outage (batteries not included). Made from food-grade materials, the quiet feeder has parts that detach for washing and are dishwasher safe. Like other automatic cat feeders, it works on a timer, but this cat auto feeder serves two bowls. As an automatic cat food dispenser, it measures each portion for you. It is also an automatic food dispenser for cats and a small dog, so one pet feeder covers both. Use it as a cat self feeder on busy days, or as a self feeder for cats when you travel overnight. This automatic cat food feeder is a cat food automatic feeder and auto pet feeder in one. For a small dog, it is an auto dog feeder and automatic dog food dispenser, and the dog food dispenser automatic schedule keeps meals on time. The pet feeder automatic schedule keeps a steady routine for every pet. In the box: main unit, dual bowl feeding base, 2 stainless steel bowls, 3L food container, desiccant box, power adapter and user manual.
+
+SEARCH TERMS / Generic Keywords (backend, one box):
+auto self feeding station double two timer schedule programmable smart wifi elevated kitty kitten puppy multiple large capacity kibble portion jam backup battery remote meal electric comedero automatico gatos dispensador comida perros alimentador
+
+ATTRIBUTES (only if the field exists; replace long sentences with these short values):
+- Special Feature: Dual bowl even split for 2 pets, App control, 2-way audio, Dual power (adapter plus battery backup), Up to 10 meals per day, up to 12 portions per meal, Anti-jam 4-compartment design, Silicone seal and desiccant freshness lock
+- Included Components: Main unit, Dual bowl feeding base, 2 x stainless steel bowls, 3L food container, Desiccant box, Power adapter, User manual
+
+STEPS:
+1. Catalog -> Manage All Inventory -> search SKU LW-EZAJ-KKZD -> Edit.
+2. FIRST: copy the CURRENT values of these fields into your reply, so I have a backup.
+3. Replace the fields with the text above EXACTLY (copy, do not rewrite).
+4. STOP before saving. Show me a short summary of what you changed and wait for me to say "submit".
+5. After I say "submit": Save and finish, then tell me if Amazon shows any error or warning.

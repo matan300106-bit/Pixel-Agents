@@ -1,0 +1,16 @@
+{
+  "saved_at": "2026-10-04",
+  "note": "Backup before page content update. Bodies of about-us, faq, contact were empty. Live theme Horizon (gid://shopify/OnlineStoreTheme/156057010388).",
+  "pages": [
+    {"id":"gid://shopify/Page/129642725588","title":"Contact","handle":"contact","body":"","isPublished":true,"templateSuffix":"contact","seo_title":null,"seo_description":null},
+    {"id":"gid://shopify/Page/139341758676","title":"About Us","handle":"about-us","body":"","isPublished":true,"templateSuffix":"about-us","seo_title":null,"seo_description":null},
+    {"id":"gid://shopify/Page/139811193044","title":"FAQ","handle":"faq","body":"","isPublished":true,"templateSuffix":"faq","seo_title":null,"seo_description":null}
+  ],
+  "unchanged_pages_for_reference": ["data-sharing-opt-out","accessibility-statement","privacy-policy (body is accessibility text, not a privacy policy)","term-of-services (body is accessibility text, not terms)"],
+  "menu_information_before": {"id":"gid://shopify/Menu/264407482580","title":"Information","handle":"information","items":[
+    {"id":"gid://shopify/MenuItem/639365710036","title":"FAQ","type":"PAGE","resourceId":"gid://shopify/Page/139811193044","url":"/pages/faq"},
+    {"id":"gid://shopify/MenuItem/642501411028","title":"Privacy Policy","type":"PAGE","resourceId":"gid://shopify/Page/139811029204","url":"/pages/privacy-policy"},
+    {"id":"gid://shopify/MenuItem/642501443796","title":"Term of Service","type":"PAGE","resourceId":"gid://shopify/Page/139811061972","url":"/pages/term-of-services"},
+    {"id":"gid://shopify/MenuItem/642501476564","title":"Accessibility","type":"PAGE","resourceId":"gid://shopify/Page/139810210004","url":"/pages/accessibility-statement"}
+  ]}
+}

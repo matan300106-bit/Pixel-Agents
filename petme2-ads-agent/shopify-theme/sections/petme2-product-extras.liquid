@@ -1,0 +1,135 @@
+{%- comment -%}
+  PETME2 product extras: feature icons, what's in the box, FAQ, and a "complete the setup" pair.
+  Feeder or fountain is chosen from product.type. "In the box" comes from metafield custom.in_the_box (one item per line).
+{%- endcomment -%}
+{%- assign is_fountain = false -%}
+{%- assign t = product.type | downcase -%}
+{%- if t contains 'fountain' or product.handle contains 'fountain' -%}{%- assign is_fountain = true -%}{%- endif -%}
+
+{%- if is_fountain -%}
+  {%- assign feats = section.settings.fountain_features | newline_to_br | split: '<br />' -%}
+  {%- assign pair = section.settings.pair_for_fountain -%}
+  {%- assign faq_prefix = 'f' -%}
+{%- else -%}
+  {%- assign feats = section.settings.feeder_features | newline_to_br | split: '<br />' -%}
+  {%- assign pair = section.settings.pair_for_feeder -%}
+  {%- assign faq_prefix = 'd' -%}
+{%- endif -%}
+
+<section class="pm2-px">
+  <div class="pm2-px__inner">
+    <ul class="pm2-px__feats">
+      {%- for f in feats -%}
+        {%- assign parts = f | strip | split: '::' -%}
+        {%- if parts[0] == blank -%}{%- continue -%}{%- endif -%}
+        <li>
+          <span class="pm2-px__dot" aria-hidden="true"></span>
+          <strong>{{ parts[0] | strip }}</strong>
+          {%- if parts[1] -%}<small>{{ parts[1] | strip }}</small>{%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+
+    <div class="pm2-px__cols">
+      {%- assign box = product.metafields.custom.in_the_box.value -%}
+      {%- if box != blank -%}
+        <div class="pm2-px__box">
+          <h3>What's in the box</h3>
+          <ul>
+            {%- assign items = box | newline_to_br | split: '<br />' -%}
+            {%- for i in items -%}{%- if i != blank -%}<li>{{ i | strip }}</li>{%- endif -%}{%- endfor -%}
+          </ul>
+        </div>
+      {%- endif -%}
+
+      <div class="pm2-px__faq">
+        <h3>Questions</h3>
+        {%- for n in (1..5) -%}
+          {%- assign qk = faq_prefix | append: 'q' | append: n -%}
+          {%- assign ak = faq_prefix | append: 'a' | append: n -%}
+          {%- if section.settings[qk] != blank -%}
+            <details>
+              <summary>{{ section.settings[qk] }}</summary>
+              <div>{{ section.settings[ak] }}</div>
+            </details>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    {%- if pair != blank and pair.id != product.id -%}
+      <div class="pm2-px__pair">
+        <a href="{{ pair.url }}" class="pm2-px__pairimg">{%- if pair.featured_image -%}{{ pair.featured_image | image_url: width: 300 | image_tag: loading: 'lazy', alt: pair.title }}{%- endif -%}</a>
+        <div>
+          <p class="pm2-px__eyebrow">{{ section.settings.pair_eyebrow }}</p>
+          <a href="{{ pair.url }}" class="pm2-px__pairname">{{ pair.title }}</a>
+          <p class="pm2-px__pairprice">{{ pair.price | money }}</p>
+        </div>
+        <a class="pm2-btn" href="{{ pair.url }}">{{ section.settings.pair_button }}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  .pm2-px { background: #fff; color: #111; padding: 72px 0; }
+  .pm2-px__inner { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+  .pm2-px__feats { list-style: none; margin: 0 0 56px; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: #e9e7e3; border: 1px solid #e9e7e3; }
+  .pm2-px__feats li { background: #f6f5f3; padding: 26px 22px; }
+  .pm2-px__feats strong { display: block; font-weight: 500; font-size: 15px; margin-top: 12px; }
+  .pm2-px__feats small { display: block; opacity: .65; font-size: 13px; line-height: 1.5; margin-top: 4px; }
+  .pm2-px__dot { display: block; width: 8px; height: 8px; background: #111; border-radius: 50%; }
+  .pm2-px__cols { display: grid; grid-template-columns: 1fr 1.6fr; gap: 56px; }
+  .pm2-px__cols h3 { font-weight: 400; font-size: 24px; margin: 0 0 18px; }
+  .pm2-px__box ul { margin: 0; padding: 0; list-style: none; }
+  .pm2-px__box li { padding: 10px 0; border-bottom: 1px solid #e9e7e3; font-size: 14.5px; }
+  .pm2-px__faq details { border-bottom: 1px solid #e9e7e3; }
+  .pm2-px__faq summary { cursor: pointer; padding: 16px 28px 16px 0; font-size: 15px; list-style: none; position: relative; }
+  .pm2-px__faq summary::-webkit-details-marker { display: none; }
+  .pm2-px__faq summary::after { content: '+'; position: absolute; right: 4px; top: 13px; font-size: 20px; font-weight: 300; }
+  .pm2-px__faq details[open] summary::after { content: '–'; }
+  .pm2-px__faq details div { padding: 0 0 18px; opacity: .75; font-size: 14px; line-height: 1.6; }
+  .pm2-px__pair { margin-top: 56px; display: grid; grid-template-columns: 110px 1fr auto; gap: 24px; align-items: center; background: #f6f5f3; padding: 20px 24px; }
+  .pm2-px__pairimg { display: block; aspect-ratio: 1; background: #fff; }
+  .pm2-px__pairimg img { width: 100%; height: 100%; object-fit: contain; }
+  .pm2-px__eyebrow { text-transform: uppercase; letter-spacing: .14em; font-size: 11.5px; opacity: .6; margin: 0 0 6px; }
+  .pm2-px__pairname { color: #111; text-decoration: none; font-weight: 500; }
+  .pm2-px__pairprice { margin: 4px 0 0; opacity: .7; font-size: 14px; }
+  .pm2-btn { display: inline-block; background: #111; color: #fff; text-decoration: none; padding: 11px 22px; font-size: 13px; letter-spacing: .04em; }
+  @media (max-width: 899px) {
+    .pm2-px { padding: 52px 0; }
+    .pm2-px__feats { grid-template-columns: repeat(2, 1fr); }
+    .pm2-px__cols { grid-template-columns: 1fr; gap: 40px; }
+    .pm2-px__pair { grid-template-columns: 80px 1fr; }
+    .pm2-px__pair .pm2-btn { grid-column: 1 / -1; text-align: center; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "PETME2 product extras",
+  "settings": [
+    { "type": "header", "content": "Feature icons (one per line: Title :: small text)" },
+    { "type": "textarea", "id": "feeder_features", "label": "Feeder features" },
+    { "type": "textarea", "id": "fountain_features", "label": "Fountain features" },
+    { "type": "header", "content": "Feeder FAQ" },
+    { "type": "text", "id": "dq1", "label": "Q1" }, { "type": "textarea", "id": "da1", "label": "A1" },
+    { "type": "text", "id": "dq2", "label": "Q2" }, { "type": "textarea", "id": "da2", "label": "A2" },
+    { "type": "text", "id": "dq3", "label": "Q3" }, { "type": "textarea", "id": "da3", "label": "A3" },
+    { "type": "text", "id": "dq4", "label": "Q4" }, { "type": "textarea", "id": "da4", "label": "A4" },
+    { "type": "text", "id": "dq5", "label": "Q5" }, { "type": "textarea", "id": "da5", "label": "A5" },
+    { "type": "header", "content": "Fountain FAQ" },
+    { "type": "text", "id": "fq1", "label": "Q1" }, { "type": "textarea", "id": "fa1", "label": "A1" },
+    { "type": "text", "id": "fq2", "label": "Q2" }, { "type": "textarea", "id": "fa2", "label": "A2" },
+    { "type": "text", "id": "fq3", "label": "Q3" }, { "type": "textarea", "id": "fa3", "label": "A3" },
+    { "type": "text", "id": "fq4", "label": "Q4" }, { "type": "textarea", "id": "fa4", "label": "A4" },
+    { "type": "text", "id": "fq5", "label": "Q5" }, { "type": "textarea", "id": "fa5", "label": "A5" },
+    { "type": "header", "content": "Complete the setup" },
+    { "type": "text", "id": "pair_eyebrow", "label": "Eyebrow", "default": "Complete the setup" },
+    { "type": "text", "id": "pair_button", "label": "Button", "default": "View" },
+    { "type": "product", "id": "pair_for_feeder", "label": "Show on feeder pages" },
+    { "type": "product", "id": "pair_for_fountain", "label": "Show on fountain pages" }
+  ],
+  "presets": [{ "name": "PETME2 product extras" }]
+}
+{% endschema %}

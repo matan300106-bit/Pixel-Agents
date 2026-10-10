@@ -1,0 +1,20 @@
+You are working in my Amazon Seller Central (sellercentral.amazon.com), US marketplace.
+GOAL: Change the selling price of 4 products. Do NOT save anything until I say "submit".
+RULES: Change ONLY "Your Price" (and the List Price only if I approve, see step 2). Do not change anything else. Do not touch any other SKU. If asked to log in, enter a code or solve a captcha: stop and tell me. If Amazon shows a warning (for example "price outside expected range"), stop and show me the exact message.
+
+STEP 1 - BACKUP (read only): Catalog -> Manage All Inventory. For each SKU below write the CURRENT "Your Price", "List Price", any active Sale Price, coupon or deal.
+
+| SKU | Product | New "Your Price" |
+|---|---|---|
+| QO-7VBS-CVT4 | 5L WiFi feeder (B0GHH8L59K) | 49.99 |
+| L6-L3S1-I7Q6 | Cat water fountain 2L (B0GHKN9DBR) | 21.99 |
+| SD-85ET-IOZ3 | 2.2L transparent fountain (B0GHLBGCP3) | 21.99 |
+| JE-LQEW-9EHL | Fountain with stainless tray (B0GHKRYV6W) | 21.99 |
+
+STEP 2 - LIST PRICE: if any of these 4 has a List Price more than 30% above the new price (for example $65.99), show it and suggest removing it. Do not remove until I say so.
+
+STEP 3 - Show me a table: SKU | old price | new price | list price | sale price/coupon/deal | warnings. Then STOP and wait for "submit".
+
+STEP 4 - After I say "submit": change "Your Price" for each SKU, save, and report any error. If a SKU has an active Sale Price or deal, tell me first instead of changing it.
+
+FINAL: show the table with the NEW live prices.

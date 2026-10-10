@@ -1,0 +1,61 @@
+
+== 3L dual feeder (B0GHLSQMJ9) now $49.99
+  cost+ship $23.16 | FBA $8.06 | referral 15% | typical CPC (H10, top10 kw) $0.94 -> ad cost per ad sale ~$9.35 (10% conv.)
+  competitors: min $36.08 median $49.99 max $94.99 | top sellers: oneisall $49.99, PETLIBRO $94.99, Nityers $79.99
+   price $ 48.00: profit before ads $  9.58 | if ALL sales from ads $  0.23 | if HALF from ads $  4.91
+   price $ 49.99: profit before ads $ 11.27 | if ALL sales from ads $  1.92 | if HALF from ads $  6.60
+   price $ 51.50: profit before ads $ 12.56 | if ALL sales from ads $  3.21 | if HALF from ads $  7.88
+  -> break-even even if every sale comes from ads: $48.00 | healthy (15% margin, half sales from ads): $51.50
+
+== 5L WiFi feeder (B0GHH8L59K) now $45.99
+  cost+ship $24.26 | FBA $12.25 | referral 15% | typical CPC (H10, top10 kw) $0.94 -> ad cost per ad sale ~$9.35 (10% conv.)
+  competitors: min $31.99 median $51.99 max $69.99 | top sellers: ANDOLL HOME $31.99, PETLIBRO $68.5, oneisall $69.99
+   price $ 45.99: profit before ads $  2.58 | if ALL sales from ads $ -6.77 | if HALF from ads $ -2.09
+   price $ 51.99: profit before ads $  7.68 | if ALL sales from ads $ -1.67 | if HALF from ads $  3.01
+   price $ 54.00: profit before ads $  9.39 | if ALL sales from ads $  0.04 | if HALF from ads $  4.72
+   price $ 59.00: profit before ads $ 13.64 | if ALL sales from ads $  4.29 | if HALF from ads $  8.96
+  -> break-even even if every sale comes from ads: $54.00 | healthy (15% margin, half sales from ads): $59.00
+
+== Camera feeder (B0GTCGYZDM) now $52.99
+  cost+ship $24.26 | FBA $8.39 | referral 15% | typical CPC (H10, top10 kw) $0.94 -> ad cost per ad sale ~$9.35 (10% conv.)
+  competitors: min $59.99 median $84.85 max $129.99 | top sellers: PETLIBRO $85.49, PETLIBRO $109.53, Yuposl $66.99
+   price $ 49.50: profit before ads $  9.43 | if ALL sales from ads $  0.08 | if HALF from ads $  4.75
+   price $ 52.99: profit before ads $ 12.39 | if ALL sales from ads $  3.04 | if HALF from ads $  7.72
+   price $ 53.50: profit before ads $ 12.83 | if ALL sales from ads $  3.48 | if HALF from ads $  8.15
+   price $ 84.85: profit before ads $ 39.47 | if ALL sales from ads $ 30.12 | if HALF from ads $ 34.80
+  -> break-even even if every sale comes from ads: $49.50 | healthy (15% margin, half sales from ads): $53.50
+
+== Stainless fountain (B0DR7FCLZR) now $39.99
+  cost+ship $13.23 | FBA $6.9 | referral 15% | typical CPC (H10, top10 kw) $0.88 -> ad cost per ad sale ~$8.80 (10% conv.)
+  competitors: min $16.19 median $26.49 max $74.39 | top sellers: Veken $27.99, PETLIBRO $74.39, Neareal $33.24
+   price $ 26.49: profit before ads $  2.39 | if ALL sales from ads $ -6.41 | if HALF from ads $ -2.01
+   price $ 34.50: profit before ads $  9.19 | if ALL sales from ads $  0.39 | if HALF from ads $  4.79
+   price $ 35.50: profit before ads $ 10.04 | if ALL sales from ads $  1.25 | if HALF from ads $  5.65
+   price $ 39.99: profit before ads $ 13.86 | if ALL sales from ads $  5.06 | if HALF from ads $  9.46
+  -> break-even even if every sale comes from ads: $34.50 | healthy (15% margin, half sales from ads): $35.50
+
+== $19.99 fountain 2L (B0GHKN9DBR) now $19.99
+  cost+ship $7.72 | FBA $6.76 | referral 15% | typical CPC (H10, top10 kw) $0.88 -> ad cost per ad sale ~$8.75 (10% conv.)
+  competitors: min $13.99 median $28.49 max $99.99 | top sellers: Veken $13.99, PETLIBRO $78.63, Dwarfuarm $99.99
+   price $ 19.99: profit before ads $  2.51 | if ALL sales from ads $ -6.24 | if HALF from ads $ -1.86
+   price $ 27.00: profit before ads $  8.47 | if ALL sales from ads $ -0.28 | if HALF from ads $  4.10
+   price $ 27.50: profit before ads $  8.90 | if ALL sales from ads $  0.15 | if HALF from ads $  4.52
+   price $ 28.49: profit before ads $  9.74 | if ALL sales from ads $  0.99 | if HALF from ads $  5.36
+  -> break-even even if every sale comes from ads: $27.50 | healthy (15% margin, half sales from ads): $27.00
+
+== 2.2L transparent (B0GHLBGCP3) now $19.99
+  cost+ship $7.72 | FBA $6.9 | referral 15% | typical CPC (H10, top10 kw) $0.88 -> ad cost per ad sale ~$8.75 (10% conv.)
+  competitors: min $13.99 median $28.49 max $99.99 | top sellers: Veken $13.99, PETLIBRO $78.63, Dwarfuarm $99.99
+   price $ 19.99: profit before ads $  2.37 | if ALL sales from ads $ -6.38 | if HALF from ads $ -2.00
+   price $ 27.50: profit before ads $  8.76 | if ALL sales from ads $  0.01 | if HALF from ads $  4.38
+   price $ 28.49: profit before ads $  9.60 | if ALL sales from ads $  0.85 | if HALF from ads $  5.22
+  -> break-even even if every sale comes from ads: $27.50 | healthy (15% margin, half sales from ads): $27.50
+
+== Fountain w tray (B0GHKRYV6W) now $19.99
+  cost+ship $7.72 | FBA $6.31 | referral 15% | typical CPC (H10, top10 kw) $0.88 -> ad cost per ad sale ~$8.80 (10% conv.)
+  competitors: min $13.99 median $28.49 max $99.99 | top sellers: Veken $13.99, PETLIBRO $78.63, Dwarfuarm $99.99
+   price $ 19.99: profit before ads $  2.96 | if ALL sales from ads $ -5.84 | if HALF from ads $ -1.44
+   price $ 26.50: profit before ads $  8.50 | if ALL sales from ads $ -0.30 | if HALF from ads $  4.10
+   price $ 27.00: profit before ads $  8.92 | if ALL sales from ads $  0.12 | if HALF from ads $  4.52
+   price $ 28.49: profit before ads $ 10.19 | if ALL sales from ads $  1.39 | if HALF from ads $  5.79
+  -> break-even even if every sale comes from ads: $27.00 | healthy (15% margin, half sales from ads): $26.50
