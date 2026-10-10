@@ -15,6 +15,7 @@ CRa, CRb, CRc, CRl = W(CR, -8, 27, 31), W(CR, -6, 24, 27), W(CR, -3, 20, 22), W(
 CRw0, CRw1 = W(CR, -10, 32, 40), W(CR, -5, 23, 27)
 TOP0, TOP1, TOPl = [60, 150, 130], [25, 125, 150], [0, 0, 10]
 ROOF0, ROOF1, ROOFl = [-10, 55, 85], [-28, 40, 62], [-45, 0, 20]
+MID, MIDl = [0, 48, 45], [20, 0, 30]
 LN0, LN1, LNl = W(LN, 3, 6, 18), W(LN, 2, 4.5, 13.5), W(LN, 0, 1.6, 5)
 CM0, CM1, CMl = W(ST, -34, 32, 60), W(ST, -30, 28, 54), W(ST, 0, 8, 0)
 BLD0, BLD1, BLDl = W(ST, -38, 34, 64), W(ST, -26, 26, 52), W(ST, 0, 11, -2)
@@ -28,7 +29,8 @@ S = [
  (9.0, 12.0, ROOF0, ROOF1, ROOFl, ROOFl, 0),        # 479 cats
  (12.0, 13.0, ROOF1, CRw0, ROOFl, CRl, 1),          # the crowd
  (13.0, 17.2, CRw0, CRw1, CRl, CRl, 0),             # 479 - 261 = 218
- (17.2, 17.95, CRw1, LN0, CRl, LNl, 1),             # one stray alone on an empty lot
+ (17.2, 17.55, CRw1, MID, CRl, MIDl, 1),            # one stray alone on an empty lot (arc high over the roofs)
+ (17.55, 17.95, MID, LN0, MIDl, LNl, 1),
  (17.95, 18.75, LN0, LN1, LNl, LNl, 0),
  (18.75, 20.0, LN1, CM0, LNl, CMl, 1),              # Tilly's comment, over to the studio lot
  (20.0, 22.35, CM0, CM1, CMl, CMl, 0),
