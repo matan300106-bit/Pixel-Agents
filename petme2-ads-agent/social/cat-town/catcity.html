@@ -164,7 +164,8 @@ for (let b = 0; b < 7; b++) for (let i = 0; i < 6; i++) { const a = i * Math.PI 
   SPOTS.push({ x, z, r, ry: Math.atan2(-x, -z) }); }
 SPOTS.sort((a, b) => a.r - b.r); SPOTS.forEach(s => hadd(spotHash, s)); window.__spots = SPOTS.map(s => [Math.round(s.x * 10) / 10, Math.round(s.z * 10) / 10, Math.round(s.ry * 100) / 100]);
 const usedSpots = landmarks.length + (NEWB ? 1 : 0);
-const BIG_SPOTS = [...landmarks.map((l, k) => (l.kind === 'fishmarket' || l.kind === 'arcade') ? SPOTS[k] : null), NEWB && (NEWB.kind === 'fishmarket' || NEWB.kind === 'arcade') ? SPOTS[landmarks.length] : null].filter(Boolean);
+const BIGK = k => k === 'fishmarket' || k === 'arcade' || k === 'artstudio';
+const BIG_SPOTS = [...landmarks.map((l, k) => BIGK(l.kind) ? SPOTS[k] : null), NEWB && BIGK(NEWB.kind) ? SPOTS[landmarks.length] : null].filter(Boolean);
 // house lots along every street, facing the street
 const DISTRICT = a => Math.floor((((a - .26) % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2) / (Math.PI / 3));
 const cand = [], lotHash = new Map();
@@ -379,11 +380,44 @@ function landmark(kind, sign) {
     const inner = new THREE.Group(); [...g.children].forEach(c => inner.add(c)); inner.scale.setScalar(EP.arcadeBig || 1.45); inner.position.z = -4; g.add(inner);
     g.userData.parts = P; P.forEach(c => { c.userData.y0 = c.position.y; c.userData.s0 = c.scale.clone(); }); g.userData.arc = A;
     sy = 17 * (EP.arcadeBig || 1.45) + 2; }
+  else if (kind === 'artstudio') {   // Day 4 top comment (Tilly): "build an art studio and the cats at the studio build mango a statue". Parts (slow build order): yard, studio walls + big window, roof + giant palette, easels, pedestal.
+    // EP.newBuild.openAt: painter cats run in and sit at the easels; EP.statueAt: the Mango statue rises on the pedestal (2.4 s).
+    const S = { cats: [], seats: [] }, P = [], part = () => { const pg = new THREE.Group(); g.add(pg); P.push(pg); return pg; };
+    const qp = (pg, geo, c, x, y, z) => { const m = mesh(geo, c); m.position.set(x, y, z); pg.add(m); return m; };
+    const CZ = 7;                                                                                                    // the yard centre (statue)
+    const p0 = part(); qp(p0, B(24, .4, 22), '#F3E3C3', 0, .2, 3);                                                   // yard: warm wood floor + paint splats
+    [['#FF5FA2', -7, 11], ['#4FB3FF', 8, 12], ['#FFD23F', -3, 13.2], ['#5BB98C', 5, 9.6], ['#9B6FE0', -9, 6]].forEach(([c, x, z]) => { const sp = qp(p0, Cyl(1.1, 1.1, .08, 10), c, x, .45, z); sp.scale.z = .7; });
+    const p1 = part(); qp(p1, B(18, 7.5, 9), '#FFF7EC', 0, 4.15, -4); qp(p1, B(18.1, 1, 9.1), '#FF8FB8', 0, .9, -4);   // studio building
+    qp(p1, B(10, 4.6, .2), '#BFE6FF', -2.5, 4.2, .56); [-7.4, -2.5, 2.4].forEach(x => qp(p1, B(.3, 4.8, .3), '#FFFFFF', x, 4.2, .6)); qp(p1, B(10.2, .3, .3), '#FFFFFF', -2.5, 6.6, .6);
+    qp(p1, B(3, 4.8, .2), '#8A5A3B', 5.8, 2.8, .56);
+    const p2 = part(); qp(p2, B(19, .9, 10), '#9B6FE0', 0, 8.3, -4);                                                 // roof + giant palette + brush
+    const pal = qp(p2, Cyl(3.6, 3.6, .5, 20), '#F2D3A0', 0, 12.2, -4); pal.rotation.x = Math.PI / 2; pal.scale.z = .78;
+    [['#E85D5D', -1.8, 13.2], ['#FFD23F', 0, 14], ['#4FB3FF', 1.8, 13.2], ['#5BB98C', 2.1, 11.6], ['#FF5FA2', -2.1, 11.6]].forEach(([c, x, y]) => qp(p2, new THREE.SphereGeometry(.62, 10, 8), c, x, y, -3.6));
+    const br = qp(p2, Cyl(.22, .22, 6, 8), '#8A5A3B', 3.4, 12.6, -3.4); br.rotation.z = -.7; const tip = qp(p2, new THREE.ConeGeometry(.45, 1.2, 8), '#FF5FA2', 5.7, 14.6, -3.4); tip.rotation.z = -.7;
+    qp(p2, Cyl(.25, .25, 3, 6), '#8A8F98', 0, 9.6, -4);
+    const face = (bg) => { const c = document.createElement('canvas'); c.width = c.height = 128; const x = c.getContext('2d'); x.fillStyle = bg; x.fillRect(0, 0, 128, 128);   // a painting of Mango
+      x.fillStyle = '#F28C28'; x.beginPath(); x.arc(64, 72, 34, 0, 7); x.fill(); x.beginPath(); x.moveTo(34, 56); x.lineTo(40, 18); x.lineTo(60, 42); x.fill(); x.beginPath(); x.moveTo(94, 56); x.lineTo(88, 18); x.lineTo(68, 42); x.fill();
+      x.fillStyle = '#1B2333'; x.beginPath(); x.arc(52, 68, 5, 0, 7); x.arc(76, 68, 5, 0, 7); x.fill(); x.fillStyle = '#FF7A9A'; x.beginPath(); x.arc(64, 80, 4, 0, 7); x.fill();
+      x.lineWidth = 8; x.strokeStyle = '#C98B5A'; x.strokeRect(4, 4, 120, 120); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return new THREE.MeshStandardMaterial({ map: t, roughness: .9 }); };
+    const p3 = part(), BG = ['#BFE6FF', '#FFF1B8', '#FFD6E7', '#D9F7C9', '#E6DAFF', '#FFE2C2'];   // easels in a half ring around the statue, each with a cat painting Mango
+    [200, 235, 305, 340, 165, 15].forEach((deg, i) => { const a = deg * Math.PI / 180, ex = Math.cos(a) * 6.2, ez = CZ + Math.sin(a) * 6.2, yaw = Math.atan2(-Math.cos(a), -Math.sin(a));
+      const eg = new THREE.Group(); eg.position.set(ex, .4, ez); eg.rotation.y = yaw; p3.add(eg);
+      [-.6, .6].forEach(dx => { const l = mesh(B(.18, 3.6, .18), '#8A5A3B'); l.position.set(dx, 1.8, -.1); l.rotation.x = -.12; eg.add(l); });
+      const cv = new THREE.Mesh(B(2.2, 2.2, .12), [mat('#FFFFFF'), mat('#FFFFFF'), mat('#FFFFFF'), mat('#FFFFFF'), mat('#FFFFFF'), face(BG[i])]); cv.position.set(0, 2.9, .05); cv.rotation.x = -.12; cv.rotation.y = Math.PI; cv.castShadow = true; eg.add(cv);
+      S.seats.push({ x: Math.cos(a) * 8.1, z: CZ + Math.sin(a) * 8.1, yaw }); });
+    const p4 = part(); qp(p4, B(4.2, 2.6, 4.2), '#F4F5F7', 0, 1.7, CZ); qp(p4, B(4.8, .5, 4.8), '#DCE1EA', 0, .55, CZ); qp(p4, B(4.6, .4, 4.6), '#DCE1EA', 0, 3.2, CZ);   // pedestal
+    const sg = new THREE.Group(); sg.position.set(0, 3.4, CZ); g.add(sg);                                            // the Mango statue (gold), rises at EP.statueAt
+    const st = new THREE.Mesh(CAT_SIT, mat('#FFC93C', { metalness: .55, roughness: .35 })); st.scale.setScalar(4.2); st.rotation.y = 0; st.castShadow = true; sg.add(st); sg.scale.setScalar(0); S.statue = sg;
+    const mg = new THREE.Mesh(CAT_SIT, mat('#F28C28')); mg.scale.setScalar(1.7); mg.position.set(1.2, .4, CZ + 6.4); mg.rotation.y = Math.PI; mg.castShadow = true; g.add(mg); S.mango = mg;   // Mango looks up at his statue
+    for (let i = 0; i < 6; i++) { const w = new THREE.Mesh(CAT_GEO, mat(CAT_COLORS[(i * 4 + 2) % CAT_COLORS.length])), sit = new THREE.Mesh(CAT_SIT, w.material); [w, sit].forEach(m => { m.castShadow = true; m.scale.setScalar(0); g.add(m); }); S.cats.push({ w, sit }); }
+    const inner = new THREE.Group(); [...g.children].forEach(c => inner.add(c)); inner.scale.setScalar(EP.studioBig || 1.45); inner.position.z = -2; g.add(inner);
+    g.userData.parts = P; P.forEach(c => { c.userData.y0 = c.position.y; c.userData.s0 = c.scale.clone(); }); g.userData.studio = S;
+    sy = 17 * (EP.studioBig || 1.45) + 2; }
   else if (kind === 'statue') { q(B(6, 4, 6), '#E7EDF7', 0, 2, 0); cat('#FFC93C', 7, 0, 4, 0); }
   else if (kind === 'pool') { q(B(17, 1, 12), '#E7EDF7', 0, .5, 0); q(B(15, .3, 10), '#5AB3F0', 0, 1.05, 0); }
   else if (kind === 'reserved') { const p = q(Cyl(.25, .25, 5, 6), '#8A5A3B', 0, 2.5, 0); for (let i = 0; i < 5; i++) q(new THREE.ConeGeometry(.5, 1.2, 8), '#FF8A2A', -6 + i * 3, .6, 8); sy = 6.5; }
   else { q(B(15, 9, 12), '#FFFFFF', 0, 4.5, 0); q(new THREE.ConeGeometry(11, 5, 4).rotateY(Math.PI / 4), '#FFC93C', 0, 11.5, 0); q(B(3, 4.5, .3), '#1B2333', 0, 2.25, 6.1); [-4, 4].forEach(x => q(new THREE.ConeGeometry(1.4, 3.2, 3), '#FFC93C', x, 13, 4)); }
-  if (sign) { const s = textSign(sign, kind === 'reserved' ? 9 : 14, kind === 'reserved' ? '#FF8A2A' : kind === 'arcade' ? '#FF3EA5' : '#2F5FE0'); s.position.set(0, sy, 0); g.add(s); signs.push(s); g.userData.sign = s; }
+  if (sign) { const s = textSign(sign, kind === 'reserved' ? 9 : 14, kind === 'reserved' ? '#FF8A2A' : kind === 'arcade' ? '#FF3EA5' : kind === 'artstudio' ? '#9B6FE0' : '#2F5FE0'); s.position.set(0, sy, 0); g.add(s); signs.push(s); g.userData.sign = s; }
   return g;
 }
 
@@ -633,6 +667,15 @@ const STRAY = (() => { const S = EP.strays; if (!S || !S.n || !F) return null; c
     else { const rd = ROADS[j % ROADS.length], tot = rd.cum[rd.cum.length - 1], [x, z, dx, dz] = sampleRoad(rd, 2 + hash01(j * 31 + 7) * Math.max(1, tot - 4)), sd = hash01(j * 17) < .5 ? 1.3 : -1.3;
       P.push({ x: x - dz * sd, y: 0, z: z + dx * sd, yaw: hash01(j * 19) * 6.28 }); } }
   m.instanceColor.needsUpdate = true; window.__crowd = [CS.x, CS.z]; return { m, P, at: S.at || [], always: !!S.always, sign, signAt: S.signAt ?? (S.at || [])[12] ?? 0, sc: S.scale || 1.15 }; })();
+
+// ---------- videos: one stray waits alone on an empty lot; a house pops, the cat runs in. EP.lone = { spot, at, houseAt, runAt, sign } ----------
+const LONE = (() => { const L = EP.lone; if (!L) return null; const s = SPOTS[L.spot ?? 4]; if (!s) return null; const g = new THREE.Group(); g.position.set(s.x, 0, s.z); g.rotation.y = s.ry; scene.add(g);
+  const h = new THREE.Group(); g.add(h); const hm = (geo, c, x, y, z) => { const m = mesh(geo, c); m.position.set(x, y, z); h.add(m); return m; };
+  hm(B(7, 4.6, 6), '#FFE3A3', 0, 2.3, -2); const rf = hm(new THREE.ConeGeometry(5.6, 3.4, 4).rotateY(Math.PI / 4), '#E85D5D', 0, 6.3, -2); rf.scale.z = .85;
+  hm(B(1.8, 2.8, .2), '#8A5A3B', 0, 1.4, 1.02); hm(B(1.6, 1.4, .2), '#BFE6FF', -2.2, 2.8, 1.02); hm(B(1.6, 1.4, .2), '#BFE6FF', 2.2, 2.8, 1.02); h.scale.setScalar(0);
+  const sign = L.sign ? textSign(L.sign, 9, '#FF8A2A') : null; if (sign) { sign.position.set(0, 9.6, -2); g.add(sign); signs.push(sign); sign.visible = false; }
+  const c = CAT_COLORS[0], sit = mesh(CAT_SIT, c), walk = mesh(CAT_GEO, c); [sit, walk].forEach(m => { m.scale.setScalar(0); g.add(m); });
+  window.__lone = [s.x, s.z, s.ry]; return { L, h, sign, sit, walk }; })();
 
 // ---------- cat taxis: a few humans pushing cats in strollers ----------
 const TAXIS = [];
@@ -1046,6 +1089,19 @@ window.renderFrame = (t, anim = t) => {
     if (u < .9) C.prize.position.copy(C.home); else if (held) C.prize.position.set(C.cx, cy - .45, C.home.z);
     else if (u >= 1.8) { const v = Math.min(1, (u - 1.8) / .6); C.prize.position.set(C.cx, 5.1 - 4.4 * v + 3.2 * Math.sin(Math.PI * v), C.home.z + 1.8 + 1.4 * v); C.prize.rotation.z = v * 6; }
     C.mango.position.y = .4 + (u >= 2.4 && u < 3.4 ? Math.abs(Math.sin((u - 2.4) * 9)) * .9 : 0); }
+  if (NB && NB.userData.studio) { const S = NB.userData.studio, oa = NEWB.openAt ?? 1e9;   // painter cats run in and sit at the easels; the Mango statue rises
+    S.cats.forEach((c, i) => { const st = S.seats[i], u = (t - oa - i * .2) / 1.4, sx = (i % 2 ? 1 : -1) * (2 + i), sz = 24;
+      if (u <= 0) { c.w.scale.setScalar(0); c.sit.scale.setScalar(0); return; }
+      if (u < 1) { const e = ease(u); c.w.position.set(sx + (st.x - sx) * e, Math.abs(Math.sin(anim * 14 + i)) * .3, sz + (st.z - sz) * e); c.w.rotation.y = Math.atan2(st.x - sx, st.z - sz); c.w.scale.setScalar(1.5); c.sit.scale.setScalar(0); return; }
+      c.w.scale.setScalar(0); c.sit.scale.setScalar(1.5); c.sit.position.set(st.x, .4, st.z); c.sit.rotation.set(0, st.yaw + Math.sin(anim * 5 + i) * .12, Math.sin(anim * 7 + i * 2) * .06); });   // painting: a little sway
+    const sa = EP.statueAt ?? 1e9, e = (t - sa) / 2.4; S.statue.scale.set(Math.max(.001, back(Math.min(1, e * 1.4))), Math.max(.001, ease(e)), Math.max(.001, back(Math.min(1, e * 1.4)))); S.statue.visible = e > 0;
+    S.statue.rotation.y = e > 0 && e < 1 ? (1 - ease(e)) * 3.1 : 0;
+    S.mango.position.y = .4 + (t - sa > 2.4 && t - sa < 3.6 ? Math.abs(Math.sin((t - sa - 2.4) * 9)) * .9 : 0); }
+  if (LONE) { const L = LONE.L, a = L.at ?? -1e9, ha = L.houseAt ?? 1e9, ra = L.runAt ?? 1e9;
+    LONE.sit.scale.setScalar(t >= a && t < ra ? 1.6 * back((t - a) / .4) : 0); LONE.sit.position.set(0, 0, 5.5); LONE.sit.rotation.y = Math.sin(anim * 1.3) * .25;
+    LONE.h.scale.setScalar(Math.max(.001, back((t - ha) / .5))); LONE.h.visible = t >= ha;
+    if (LONE.sign) { const e = (t - ha - .3) / .4; LONE.sign.visible = e > 0; LONE.sign.scale.setScalar(Math.max(.001, back(e))); }
+    const u = (t - ra) / .9; if (u > 0 && u < 1) { LONE.walk.scale.setScalar(1.6 * Math.min(1, (1 - u) * 4)); LONE.walk.position.set(0, Math.abs(Math.sin(anim * 14)) * .3, 5.5 - 4.4 * ease(u)); LONE.walk.rotation.y = Math.PI; } else LONE.walk.scale.setScalar(0); }
   // upload only the used part of each instanced mesh (pose meshes hold 800 slots but use a few dozen): big win on phones
   if (!RANGED) { RANGED = []; scene.traverse(o => { if (o.isInstancedMesh) RANGED.push(o); }); }
   for (const m of RANGED) if (m.count < m.instanceMatrix.count) { const a = m.instanceMatrix; a.clearUpdateRanges(); a.addUpdateRange(0, Math.max(1, m.count) * 16); }
