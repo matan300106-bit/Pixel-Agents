@@ -14,4 +14,7 @@ Source: SP-API BSR (lower = better). Helium 10 keyword ranks: waiting for a new 
 
 B0GHKN9DBR new title: ✅ LIVE ("PETME2 Cat Water Fountain, 68oz/2L Quiet Water Fountains for Cats Indoor, Red Light Low Level Alert…").
 
-Reading: BSR follows recent sales. Stainless fountain sales jumped (14 orders Oct 6–9) → best rank ever. Small fountains, 5L and dual got fewer sales after their ad campaigns were paused on Oct 4 → rank dropped. This is mostly an ads/sales effect, not an SEO (title) effect. Keyword-rank change needs the Helium 10 export.
+Reading: BSR follows recent sales. Stainless fountain sales jumped (15 orders Oct 6–9) → best rank ever. Small fountains, 5L and dual got fewer sales after their ad campaigns were paused on Oct 4 → rank dropped. This is mostly an ads/sales effect, not an SEO (title) effect. Keyword-rank change needs the Helium 10 export.
+
+
+Evening re-check (checker agent, Oct 11): all ranks slightly worse after 0 sales on Oct 10. Stainless cat #853 / dog #299, dual #465, camera #869 (still better than Oct 4 #931), 5L #636, 2L #1,476, clear #2,044, tray #2,340.

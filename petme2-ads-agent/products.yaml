@@ -45,7 +45,7 @@ products:
   - asin: B0GHH8L59K
     sku: QO-7VBS-CVT4
     title: "5L WiFi dual feeder"
-    price: 49.99   # launch price plan 2026-10-04 (step-up every ~2 weeks)
+    price: 54.99   # LIVE price checked 2026-10-11 (SP-API); profit fields below were computed at 49.99
     product_cost: 22
     shipping_per_unit: 2.26
     amazon_fees: 19.75   # referral 7.5 + FBA 12.25
@@ -72,7 +72,7 @@ products:
   - asin: B0GHKN9DBR
     sku: L6-L3S1-I7Q6
     title: "fountain"
-    price: 21.99   # launch price plan 2026-10-04 (step-up every ~2 weeks)
+    price: 19.99   # LIVE price checked 2026-10-11 (SP-API); plan: raise to 24.99. Profit fields below were computed at 21.99
     product_cost: 7
     shipping_per_unit: 0.72
     amazon_fees: 10.06   # referral 3.3 + FBA 6.76
@@ -85,7 +85,7 @@ products:
   - asin: B0GHLBGCP3
     sku: SD-85ET-IOZ3
     title: "2.2L smart fountain"
-    price: 21.99   # launch price plan 2026-10-04 (step-up every ~2 weeks)
+    price: 19.99   # LIVE price checked 2026-10-11 (SP-API); plan: raise to 24.99. Profit fields below were computed at 21.99
     product_cost: 7
     shipping_per_unit: 0.72
     amazon_fees: 10.2   # referral 3.3 + FBA 6.9
@@ -98,7 +98,7 @@ products:
   - asin: B0GHKRYV6W
     sku: JE-LQEW-9EHL
     title: "fountain with filters"
-    price: 21.99   # launch price plan 2026-10-04 (step-up every ~2 weeks)
+    price: 19.99   # LIVE price checked 2026-10-11 (SP-API); plan: raise to 24.99. Profit fields below were computed at 21.99
     product_cost: 7
     shipping_per_unit: 0.72
     amazon_fees: 9.61   # referral 3.3 + FBA 6.31
