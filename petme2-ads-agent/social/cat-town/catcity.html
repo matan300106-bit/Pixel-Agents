@@ -690,6 +690,7 @@ houseLots.forEach((l, n) => placeHouse(n, APPEAR[n] < 0 ? 1 : 0));
 const LMG = [];
 landmarks.forEach((lm, k) => { const s = SPOTS[k]; if (!s) return; const g = landmark(lm.kind, lm.sign);
   if (g.userData.arc) { g.userData.arc.neon.forEach(m => m.color.set(m.userData.on)); g.userData.arc.lights.forEach(L => L.intensity = 120); }   // a finished arcade (website): neon always on
+  if (g.userData.pizza) { const Z = g.userData.pizza; Z.climb.forEach((c, i) => c.scale.setScalar(i === 4 ? 1.3 : 1.4)); Z.blob.visible = true; }   // a finished pizza: cats on the slice, one naps in the cheese, cheese on Mango's face
   if (g.userData.studio) { const S = g.userData.studio; S.statue.scale.setScalar(1); S.cats.forEach((c, i) => { const st = S.seats[i]; c.sit.scale.setScalar(1.5); c.sit.position.set(st.x, .4, st.z); c.sit.rotation.y = st.yaw; }); }   // a finished studio: statue up, painters at the easels
   g.scale.setScalar(.8); g.position.set(s.x, 0, s.z); g.rotation.y = s.ry; scene.add(g); LMG.push([g, s.t]); });
 if (!EP.noReserved) SPOTS.forEach((s, k) => { if (k < usedSpots || k > usedSpots + 1 || s.t === Infinity) return; const g = landmark('reserved', 'Your idea here?'); g.position.set(s.x, 0, s.z); g.rotation.y = s.ry; scene.add(g); LMG.push([g, s.t]); });

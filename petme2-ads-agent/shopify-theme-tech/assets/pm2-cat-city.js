@@ -113,7 +113,8 @@ for (let b = 0; b < 7; b++) for (let i = 0; i < 6; i++) { const a = i * Math.PI 
   SPOTS.push({ x, z, r, ry: Math.atan2(-x, -z) }); }
 SPOTS.sort((a, b) => a.r - b.r); SPOTS.forEach(s => hadd(spotHash, s)); window.__spots = SPOTS.map(s => [Math.round(s.x * 10) / 10, Math.round(s.z * 10) / 10, Math.round(s.ry * 100) / 100]);
 const usedSpots = landmarks.length + (NEWB ? 1 : 0);
-const BIG_SPOTS = [...landmarks.map((l, k) => (l.kind === 'fishmarket' || l.kind === 'arcade') ? SPOTS[k] : null), NEWB && (NEWB.kind === 'fishmarket' || NEWB.kind === 'arcade') ? SPOTS[landmarks.length] : null].filter(Boolean);
+const BIGK = k => k === 'fishmarket' || k === 'arcade' || k === 'artstudio' || k === 'pizza';
+const BIG_SPOTS = [...landmarks.map((l, k) => BIGK(l.kind) ? SPOTS[k] : null), NEWB && BIGK(NEWB.kind) ? SPOTS[landmarks.length] : null].filter(Boolean);
 // house lots along every street, facing the street
 const DISTRICT = a => Math.floor((((a - .26) % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2) / (Math.PI / 3));
 const cand = [], lotHash = new Map();
@@ -328,11 +329,95 @@ function landmark(kind, sign) {
     const inner = new THREE.Group(); [...g.children].forEach(c => inner.add(c)); inner.scale.setScalar(EP.arcadeBig || 1.45); inner.position.z = -4; g.add(inner);
     g.userData.parts = P; P.forEach(c => { c.userData.y0 = c.position.y; c.userData.s0 = c.scale.clone(); }); g.userData.arc = A;
     sy = 17 * (EP.arcadeBig || 1.45) + 2; }
+  else if (kind === 'artstudio') {   // Day 4 top comment (Tilly): "build an art studio and the cats at the studio build mango a statue". Parts (slow build order): yard, studio walls + big window, roof + giant palette, easels, pedestal.
+    // EP.newBuild.openAt: painter cats run in and sit at the easels; EP.statueAt: the Mango statue rises on the pedestal (2.4 s).
+    const S = { cats: [], seats: [] }, P = [], part = () => { const pg = new THREE.Group(); g.add(pg); P.push(pg); return pg; };
+    const qp = (pg, geo, c, x, y, z) => { const m = mesh(geo, c); m.position.set(x, y, z); pg.add(m); return m; };
+    const CZ = 7;                                                                                                    // the yard centre (statue)
+    const p0 = part(); qp(p0, B(24, .4, 22), '#F3E3C3', 0, .2, 3);                                                   // yard: warm wood floor + paint splats
+    [['#FF5FA2', -7, 11], ['#4FB3FF', 8, 12], ['#FFD23F', -3, 13.2], ['#5BB98C', 5, 9.6], ['#9B6FE0', -9, 6]].forEach(([c, x, z]) => { const sp = qp(p0, Cyl(1.1, 1.1, .08, 10), c, x, .45, z); sp.scale.z = .7; });
+    const p1 = part(); qp(p1, B(18, 7.5, 9), '#FFF7EC', 0, 4.15, -4); qp(p1, B(18.1, 1, 9.1), '#FF8FB8', 0, .9, -4);   // studio building
+    qp(p1, B(10, 4.6, .2), '#BFE6FF', -2.5, 4.2, .56); [-7.4, -2.5, 2.4].forEach(x => qp(p1, B(.3, 4.8, .3), '#FFFFFF', x, 4.2, .6)); qp(p1, B(10.2, .3, .3), '#FFFFFF', -2.5, 6.6, .6);
+    qp(p1, B(3, 4.8, .2), '#8A5A3B', 5.8, 2.8, .56);
+    const p2 = part(); qp(p2, B(19, .9, 10), '#9B6FE0', 0, 8.3, -4);                                                 // roof + giant palette + brush
+    const pal = qp(p2, Cyl(3.6, 3.6, .5, 20), '#F2D3A0', 0, 12.2, -4); pal.rotation.x = Math.PI / 2; pal.scale.z = .78;
+    [['#E85D5D', -1.8, 13.2], ['#FFD23F', 0, 14], ['#4FB3FF', 1.8, 13.2], ['#5BB98C', 2.1, 11.6], ['#FF5FA2', -2.1, 11.6]].forEach(([c, x, y]) => qp(p2, new THREE.SphereGeometry(.62, 10, 8), c, x, y, -3.6));
+    const br = qp(p2, Cyl(.22, .22, 6, 8), '#8A5A3B', 3.4, 12.6, -3.4); br.rotation.z = -.7; const tip = qp(p2, new THREE.ConeGeometry(.45, 1.2, 8), '#FF5FA2', 5.7, 14.6, -3.4); tip.rotation.z = -.7;
+    qp(p2, Cyl(.25, .25, 3, 6), '#8A8F98', 0, 9.6, -4);
+    const face = (bg) => { const c = document.createElement('canvas'); c.width = c.height = 128; const x = c.getContext('2d'); x.fillStyle = bg; x.fillRect(0, 0, 128, 128);   // a painting of Mango
+      x.fillStyle = '#F28C28'; x.beginPath(); x.arc(64, 72, 34, 0, 7); x.fill(); x.beginPath(); x.moveTo(34, 56); x.lineTo(40, 18); x.lineTo(60, 42); x.fill(); x.beginPath(); x.moveTo(94, 56); x.lineTo(88, 18); x.lineTo(68, 42); x.fill();
+      x.fillStyle = '#1B2333'; x.beginPath(); x.arc(52, 68, 5, 0, 7); x.arc(76, 68, 5, 0, 7); x.fill(); x.fillStyle = '#FF7A9A'; x.beginPath(); x.arc(64, 80, 4, 0, 7); x.fill();
+      x.lineWidth = 8; x.strokeStyle = '#C98B5A'; x.strokeRect(4, 4, 120, 120); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return new THREE.MeshStandardMaterial({ map: t, roughness: .9 }); };
+    const p3 = part(), BG = ['#BFE6FF', '#FFF1B8', '#FFD6E7', '#D9F7C9', '#E6DAFF', '#FFE2C2'];   // easels in a half ring around the statue, each with a cat painting Mango
+    [200, 235, 305, 340, 165, 15].forEach((deg, i) => { const a = deg * Math.PI / 180, ex = Math.cos(a) * 6.2, ez = CZ + Math.sin(a) * 6.2, yaw = Math.atan2(-Math.cos(a), -Math.sin(a));
+      const eg = new THREE.Group(); eg.position.set(ex, .4, ez); eg.rotation.y = yaw; p3.add(eg);
+      [-.6, .6].forEach(dx => { const l = mesh(B(.18, 3.6, .18), '#8A5A3B'); l.position.set(dx, 1.8, -.1); l.rotation.x = -.12; eg.add(l); });
+      const cv = new THREE.Mesh(B(2.2, 2.2, .12), [mat('#FFFFFF'), mat('#FFFFFF'), mat('#FFFFFF'), mat('#FFFFFF'), mat('#FFFFFF'), face(BG[i])]); cv.position.set(0, 2.9, .05); cv.rotation.x = -.12; cv.rotation.y = Math.PI; cv.castShadow = true; eg.add(cv);
+      S.seats.push({ x: Math.cos(a) * 8.1, z: CZ + Math.sin(a) * 8.1, yaw }); });
+    const p4 = part(); qp(p4, B(4.2, 2.6, 4.2), '#F4F5F7', 0, 1.7, CZ); qp(p4, B(4.8, .5, 4.8), '#DCE1EA', 0, .55, CZ); qp(p4, B(4.6, .4, 4.6), '#DCE1EA', 0, 3.2, CZ);   // pedestal
+    const sg = new THREE.Group(); sg.position.set(0, 3.4, CZ); g.add(sg);                                            // the Mango statue (gold), rises at EP.statueAt
+    const st = new THREE.Mesh(CAT_SIT, mat('#FFC93C', { metalness: .55, roughness: .35 })); st.scale.setScalar(4.2); st.rotation.y = 0; st.castShadow = true; sg.add(st); sg.scale.setScalar(0); S.statue = sg;
+    const mg = new THREE.Mesh(CAT_SIT, mat('#F28C28')); mg.scale.setScalar(1.7); mg.position.set(1.2, .4, CZ + 6.4); mg.rotation.y = Math.PI; mg.castShadow = true; g.add(mg); S.mango = mg;   // Mango looks up at his statue
+    for (let i = 0; i < 6; i++) { const w = new THREE.Mesh(CAT_GEO, mat(CAT_COLORS[(i * 4 + 2) % CAT_COLORS.length])), sit = new THREE.Mesh(CAT_SIT, w.material); [w, sit].forEach(m => { m.castShadow = true; m.scale.setScalar(0); g.add(m); }); S.cats.push({ w, sit }); }
+    const inner = new THREE.Group(); [...g.children].forEach(c => inner.add(c)); inner.scale.setScalar(EP.studioBig || 1.45); inner.position.z = -2; g.add(inner);
+    g.userData.parts = P; P.forEach(c => { c.userData.y0 = c.position.y; c.userData.s0 = c.scale.clone(); }); g.userData.studio = S;
+    sy = 17 * (EP.studioBig || 1.45) + 2; }
+  else if (kind === 'pizza') {   // Day 5 top comment (MrFireman): "a giant slice of pizza with every single piece of topping on it". Parts (slow build order): stand, crust, sauce, cheese, then one part per topping (pepperoni ... pineapple, fish on top).
+    // EP.newBuild.openAt: cats climb on the slice, one naps in the cheese; EP.pizza = { lookAt: [t0, t1] Mango faces the camera, walkAt: one cat walks off (pineapple), biteAt, turnAt: Mango turns to the camera with cheese on his face }.
+    const Z = { cats: [], climb: [] }, P = [], part = par => { const pg = new THREE.Group(); par.add(pg); P.push(pg); return pg; };
+    const qp = (pg, geo, c, x, y, z) => { const m = mesh(geo, c); m.position.set(x, y, z); pg.add(m); return m; };
+    const TIP = 10, LEN = 21, TILT = .42, TOP = 1.45;                                                                // slice lies tip-first toward the street, the crust end raised on a stand
+    const sl = new THREE.Group(); sl.position.set(0, 1.1, TIP); sl.rotation.x = TILT; g.add(sl);
+    const tri = (i0, w, l, arc) => { const s = new THREE.Shape(); s.moveTo(0, i0); s.lineTo(-w, l); s.quadraticCurveTo(0, l + arc, w, l); s.lineTo(0, i0); return s; };
+    const slab = (s, d) => new THREE.ExtrudeGeometry(s, { depth: d, bevelEnabled: false, curveSegments: 16 }).rotateX(-Math.PI / 2);   // shape y -> world -z, thickness along +y
+    const cY = Math.sin(TILT) * LEN + 1.1, cZ = TIP - Math.cos(TILT) * LEN;
+    const p0 = part(g); [-6.5, 6.5].forEach(x => qp(p0, Cyl(.55, .7, cY, 8), '#8A5A3B', x, cY / 2, cZ + 1.2)); qp(p0, B(15, .8, 1.4), '#8A5A3B', 0, cY - .6, cZ + 1.2);   // display stand
+    qp(p0, B(22, .3, 26), '#F4F5F7', 0, .15, 0); [-10.6, 10.6].forEach(x => qp(p0, B(.5, .5, 26), '#E85D5D', x, .4, 0));             // plate-white lot with red trim
+    const p1 = part(sl); qp(p1, slab(tri(0, 9, LEN, 2.5), .9), '#E9B96E', 0, 0, 0);                                   // crust
+    qp(p1, new THREE.TubeGeometry(new THREE.QuadraticBezierCurve3(new THREE.Vector3(-9.4, .9, -LEN - .1), new THREE.Vector3(0, .9, -LEN - 2.9), new THREE.Vector3(9.4, .9, -LEN - .1)), 24, 1.35, 8), '#D9984A', 0, 0, 0);
+    const p2 = part(sl); qp(p2, slab(tri(1.2, 8.2, LEN - .5, 2.2), .25), '#D7372A', 0, .9, 0);                       // sauce
+    const p3 = part(sl); qp(p3, slab(tri(1.9, 7.8, LEN - .9, 2.1), .35), '#FFD45C', 0, 1.1, 0);                       // cheese + drips over the edges
+    [.3, .55, .8].forEach(u => [-1, 1].forEach(sd => { const d = qp(p3, B(.9, 1.7 - u, .6), '#FFD45C', sd * (9 * u + .1), .55, -LEN * u); d.rotation.y = sd * .4; }));
+    let hs = 7; const rnd2 = () => (hs = (hs * 9301 + 49297) % 233280) / 233280;
+    const spot = () => { const u = .14 + .8 * Math.sqrt(rnd2()); return [(rnd2() * 2 - 1) * Math.max(.3, 7.6 * u - 1.4), -LEN * u]; };
+    const top = (n, make) => { const pg = part(sl); for (let i = 0; i < n; i++) { const [x, z] = spot(), m = make(pg, i); m.position.x += x; m.position.z += z; m.position.y += TOP; m.rotation.y = rnd2() * 6.28; } return pg; };
+    const grp = (pg, ...ms) => { const o = new THREE.Group(); ms.forEach(m => o.add(m)); pg.add(o); return o; };
+    const at = (m, x, y, z) => { m.position.set(x, y, z); return m; };
+    top(9, pg => grp(pg, at(mesh(Cyl(1.25, 1.25, .3, 14), '#B5282B'), 0, .15, 0), at(mesh(Cyl(.3, .3, .32, 6), '#8E1E21'), .4, .16, .3)));   // pepperoni
+    top(7, pg => grp(pg, at(mesh(new THREE.SphereGeometry(.8, 10, 6, 0, 6.29, 0, 1.6), '#D8C3A5'), 0, .35, 0), at(mesh(Cyl(.3, .35, .5, 6), '#F1E6D6'), 0, .2, 0)));   // mushrooms
+    top(10, pg => { const m = grp(pg, at(mesh(new THREE.TorusGeometry(.42, .2, 6, 12), '#2B2B30'), 0, .15, 0)); m.children[0].rotation.x = Math.PI / 2; return m; });   // olives
+    top(7, pg => { const m = grp(pg, at(mesh(new THREE.TorusGeometry(.75, .17, 5, 14), '#3DAA4D'), 0, .12, 0)); m.children[0].rotation.x = Math.PI / 2; m.children[0].scale.y = .7; return m; });   // green peppers
+    top(7, pg => { const m = grp(pg, at(mesh(new THREE.TorusGeometry(.8, .12, 5, 16), '#B07CC6'), 0, .1, 0)); m.children[0].rotation.x = Math.PI / 2; return m; });   // red onion rings
+    top(16, pg => grp(pg, at(mesh(new THREE.SphereGeometry(.28, 6, 5), '#FFE14F'), 0, .2, 0)));                         // corn
+    top(6, pg => grp(pg, at(mesh(B(2.4, .28, .75), '#B9473F'), 0, .14, 0), at(mesh(B(2.4, .3, .22), '#F4C7B0'), 0, .15, .1)));   // bacon
+    top(6, pg => grp(pg, at(mesh(Cyl(1.05, 1.05, .25, 14), '#E8432F'), 0, .13, 0), at(mesh(Cyl(.55, .55, .27, 10), '#F7907E'), 0, .14, 0)));   // tomato
+    top(8, pg => grp(pg, at(mesh(Cyl(.5, .5, .25, 10), '#2E8B3A'), 0, .13, 0), at(mesh(Cyl(.25, .25, .27, 6), '#CDE8A0'), 0, .14, 0)));   // jalape\u00f1o
+    top(7, pg => { const m = grp(pg, at(mesh(new THREE.SphereGeometry(.6, 8, 5), '#3E9E3E'), 0, .1, 0)); m.children[0].scale.set(1, .2, .55); return m; });   // basil
+    const pp = top(6, pg => grp(pg, at(mesh(B(.9, .6, .9), '#FFD93B'), 0, .3, 0)));                                     // pineapple: chunks + one giant ring
+    const ring = mesh(new THREE.TorusGeometry(2.2, .75, 8, 20), '#FFD93B'); ring.rotation.x = Math.PI / 2; ring.position.set(0, TOP + .5, -LEN * .48); pp.add(ring);
+    const fp = part(sl), fish = new THREE.Group(); { const m = mesh(new THREE.SphereGeometry(1, 14, 10), '#FF8A2A'); m.scale.set(1.6, .8, .45); fish.add(m);   // the fish on top (from the fish supermarket)
+      const tl = mesh(new THREE.ConeGeometry(.75, 1.1, 3).rotateZ(Math.PI / 2), '#FF8A2A'); tl.position.set(-1.9, 0, 0); fish.add(tl);
+      [-.46, .46].forEach(zz => { fish.add(at(mesh(new THREE.SphereGeometry(.2, 8, 6), '#FFFFFF'), 1, .2, zz)); fish.add(at(mesh(new THREE.SphereGeometry(.11, 6, 5), '#1B2333'), 1.08, .22, zz * 1.1)); }); }
+    fish.scale.setScalar(2.1); fish.rotation.set(Math.PI / 2, 0, .5); fish.position.set(1.2, TOP + 1.1, -LEN * .7); fp.add(fish);
+    const SEATS = [[-5.5, 14.5, .3], [-2.6, 16, .1], [2.6, 16, -.1], [5.5, 14.5, -.3], [-8, 12.5, .5], [8, 12.5, -.5]];   // spectators in front of the lot, looking at it
+    SEATS.forEach(([x, z, r], i) => { const c = new THREE.Mesh(CAT_SIT, mat(CAT_COLORS[(i * 4 + 3) % CAT_COLORS.length])); c.scale.setScalar(1.5); c.position.set(x, .4, z); c.rotation.y = Math.PI + r; c.castShadow = true; g.add(c); Z.cats.push({ m: c, x, z, r }); });
+    Z.walk = new THREE.Mesh(CAT_GEO, Z.cats[1].m.material); Z.walk.castShadow = true; Z.walk.scale.setScalar(0); g.add(Z.walk);
+    [[-3.5, .3], [3.8, .38], [-1.8, .62], [2.6, .78]].forEach(([x, u], i) => { const c = new THREE.Mesh(CAT_SIT, mat(CAT_COLORS[(i * 2 + 1) % CAT_COLORS.length])); c.castShadow = true; c.scale.setScalar(0); c.position.set(x, TOP + .3, -LEN * u); c.rotation.y = i % 2 ? .4 : -.4; sl.add(c); Z.climb.push(c); });
+    const nap = new THREE.Mesh(CAT_LOAF, mat('#FFFFFF')); nap.castShadow = true; nap.scale.setScalar(0); nap.position.set(-4.4, TOP + .2, -LEN * .55); nap.rotation.y = 2.2; sl.add(nap); Z.climb.push(nap);
+    const mg = new THREE.Group(); mg.position.set(0, .4, TIP + 2.9); mg.rotation.y = Math.PI; g.add(mg); Z.mango = mg;   // Mango at the tip of the slice
+    const mb = new THREE.Mesh(CAT_SIT, mat('#F28C28')); mb.scale.setScalar(1.7); mb.castShadow = true; mg.add(mb);
+    [-.17, .17].forEach(x => mg.add(at(mesh(new THREE.SphereGeometry(.075, 8, 6), '#1B2333'), x, 1.8, .57))); mg.add(at(mesh(new THREE.SphereGeometry(.05, 6, 5), '#FF7A9A'), 0, 1.68, .58));   // a little face for the close-ups
+    const blob = new THREE.Group(); blob.add(at(mesh(new THREE.SphereGeometry(.2, 10, 8), '#FFD45C'), .1, 1.56, .6)); blob.add(at(mesh(Cyl(.06, .04, .35, 6), '#FFD45C'), .16, 1.4, .62)); blob.children[0].scale.set(1.4, .7, .5); blob.visible = false; mg.add(blob); Z.blob = blob;
+    const str = mesh(Cyl(.07, .07, 1, 6), '#FFD45C'); str.rotation.x = Math.PI / 2; str.visible = false; mg.add(str); Z.str = str;
+    const dust = []; for (let i = 0; i < 18; i++) { const d = new THREE.Mesh(new THREE.SphereGeometry(1, 7, 5), mat('#FFF4E0')); d.scale.setScalar(0); g.add(d); dust.push({ m: d, a: i / 18 * 6.283 }); } Z.dust = dust; Z.dustC = [0, cZ * .4];
+    const inner = new THREE.Group(); [...g.children].forEach(c => inner.add(c)); inner.scale.setScalar(EP.pizzaBig || 1.45); inner.position.z = -2; g.add(inner);
+    g.userData.parts = P; P.forEach(c => { c.userData.y0 = c.position.y; c.userData.s0 = c.scale.clone(); }); g.userData.pizza = Z;
+    sy = cY * (EP.pizzaBig || 1.45) + 7; }
   else if (kind === 'statue') { q(B(6, 4, 6), '#E7EDF7', 0, 2, 0); cat('#FFC93C', 7, 0, 4, 0); }
   else if (kind === 'pool') { q(B(17, 1, 12), '#E7EDF7', 0, .5, 0); q(B(15, .3, 10), '#5AB3F0', 0, 1.05, 0); }
   else if (kind === 'reserved') { const p = q(Cyl(.25, .25, 5, 6), '#8A5A3B', 0, 2.5, 0); for (let i = 0; i < 5; i++) q(new THREE.ConeGeometry(.5, 1.2, 8), '#FF8A2A', -6 + i * 3, .6, 8); sy = 6.5; }
   else { q(B(15, 9, 12), '#FFFFFF', 0, 4.5, 0); q(new THREE.ConeGeometry(11, 5, 4).rotateY(Math.PI / 4), '#FFC93C', 0, 11.5, 0); q(B(3, 4.5, .3), '#1B2333', 0, 2.25, 6.1); [-4, 4].forEach(x => q(new THREE.ConeGeometry(1.4, 3.2, 3), '#FFC93C', x, 13, 4)); }
-  if (sign) { const s = textSign(sign, kind === 'reserved' ? 9 : 14, kind === 'reserved' ? '#FF8A2A' : kind === 'arcade' ? '#FF3EA5' : '#2F5FE0'); s.position.set(0, sy, 0); g.add(s); signs.push(s); g.userData.sign = s; }
+  if (sign) { const s = textSign(sign, kind === 'reserved' ? 9 : 14, kind === 'reserved' ? '#FF8A2A' : kind === 'arcade' ? '#FF3EA5' : kind === 'artstudio' ? '#9B6FE0' : kind === 'pizza' ? '#E85D5D' : '#2F5FE0'); s.position.set(0, sy, 0); g.add(s); signs.push(s); g.userData.sign = s; }
   return g;
 }
 
@@ -554,11 +639,15 @@ houseLots.forEach((l, n) => placeHouse(n, APPEAR[n] < 0 ? 1 : 0));
 const LMG = [];
 landmarks.forEach((lm, k) => { const s = SPOTS[k]; if (!s) return; const g = landmark(lm.kind, lm.sign);
   if (g.userData.arc) { g.userData.arc.neon.forEach(m => m.color.set(m.userData.on)); g.userData.arc.lights.forEach(L => L.intensity = 120); }   // a finished arcade (website): neon always on
+  if (g.userData.pizza) { const Z = g.userData.pizza; Z.climb.forEach((c, i) => c.scale.setScalar(i === 4 ? 1.3 : 1.4)); Z.blob.visible = true; }   // a finished pizza: cats on the slice, one naps in the cheese, cheese on Mango's face
+  if (g.userData.studio) { const S = g.userData.studio; S.statue.scale.setScalar(1); S.cats.forEach((c, i) => { const st = S.seats[i]; c.sit.scale.setScalar(1.5); c.sit.position.set(st.x, .4, st.z); c.sit.rotation.y = st.yaw; }); }   // a finished studio: statue up, painters at the easels
   g.scale.setScalar(.8); g.position.set(s.x, 0, s.z); g.rotation.y = s.ry; scene.add(g); LMG.push([g, s.t]); });
 if (!EP.noReserved) SPOTS.forEach((s, k) => { if (k < usedSpots || k > usedSpots + 1 || s.t === Infinity) return; const g = landmark('reserved', 'Your idea here?'); g.position.set(s.x, 0, s.z); g.rotation.y = s.ry; scene.add(g); LMG.push([g, s.t]); });
 let NB = null, NBpos = V(0, 0, 0), LOT = null;
 if (NEWB && SPOTS[landmarks.length]) { const s = SPOTS[landmarks.length]; NB = landmark(NEWB.kind, NEWB.sign); NB.scale.setScalar(.8); NBpos = V(s.x, 0, s.z); NB.position.copy(NBpos); NB.rotation.y = s.ry; NB.visible = false; scene.add(NB);
   if (EP.lotSign) { LOT = landmark('reserved', EP.lotSign); LOT.position.copy(NBpos); LOT.rotation.y = s.ry; scene.add(LOT); } }   // videos: a sign on the empty lot until the build pops
+window.__NB = NB;
+if (EP.idea && SPOTS[EP.idea.spot]) { const s = SPOTS[EP.idea.spot], g = landmark('reserved', EP.idea.sign); g.position.set(s.x, 0, s.z); g.rotation.y = s.ry; scene.add(g); }   // videos: an extra empty lot with a sign (next day's idea)
 const CONF = new THREE.InstancedMesh(new THREE.PlaneGeometry(1, .6), new THREE.MeshBasicMaterial({ color: '#ffffff', side: THREE.DoubleSide }), 260);
 const confData = []; for (let k = 0; k < 260; k++) { confData.push({ vx: (rnd() - .5) * 30, vy: 10 + rnd() * 22, vz: (rnd() - .5) * 30, r: rnd() * 6 }); CONF.setColorAt(k, col.set(['#FFC93C', '#E85D5D', '#2F5FE0', '#5BB98C', '#FFFFFF', '#9B6FE0'][k % 6])); }
 CONF.instanceColor.needsUpdate = true; CONF.visible = false; scene.add(CONF);
@@ -582,6 +671,15 @@ const STRAY = (() => { const S = EP.strays; if (!S || !S.n || !F) return null; c
     else { const rd = ROADS[j % ROADS.length], tot = rd.cum[rd.cum.length - 1], [x, z, dx, dz] = sampleRoad(rd, 2 + hash01(j * 31 + 7) * Math.max(1, tot - 4)), sd = hash01(j * 17) < .5 ? 1.3 : -1.3;
       P.push({ x: x - dz * sd, y: 0, z: z + dx * sd, yaw: hash01(j * 19) * 6.28 }); } }
   m.instanceColor.needsUpdate = true; window.__crowd = [CS.x, CS.z]; return { m, P, at: S.at || [], always: !!S.always, sign, signAt: S.signAt ?? (S.at || [])[12] ?? 0, sc: S.scale || 1.15 }; })();
+
+// ---------- videos: one stray waits alone on an empty lot; a house pops, the cat runs in. EP.lone = { spot, at, houseAt, runAt, sign } ----------
+const LONE = (() => { const L = EP.lone; if (!L) return null; const s = SPOTS[L.spot ?? 4]; if (!s) return null; const g = new THREE.Group(); g.position.set(s.x, 0, s.z); g.rotation.y = s.ry; scene.add(g);
+  const h = new THREE.Group(); g.add(h); const hm = (geo, c, x, y, z) => { const m = mesh(geo, c); m.position.set(x, y, z); h.add(m); return m; };
+  hm(B(7, 4.6, 6), '#FFE3A3', 0, 2.3, -2); const rf = hm(new THREE.ConeGeometry(5.6, 3.4, 4).rotateY(Math.PI / 4), '#E85D5D', 0, 6.3, -2); rf.scale.z = .85;
+  hm(B(1.8, 2.8, .2), '#8A5A3B', 0, 1.4, 1.02); hm(B(1.6, 1.4, .2), '#BFE6FF', -2.2, 2.8, 1.02); hm(B(1.6, 1.4, .2), '#BFE6FF', 2.2, 2.8, 1.02); h.scale.setScalar(0);
+  const sign = L.sign ? textSign(L.sign, 9, '#FF8A2A') : null; if (sign) { sign.position.set(0, 9.6, -2); g.add(sign); signs.push(sign); sign.visible = false; }
+  const c = CAT_COLORS[0], sit = mesh(CAT_SIT, c), walk = mesh(CAT_GEO, c); [sit, walk].forEach(m => { m.scale.setScalar(0); g.add(m); });
+  window.__lone = [s.x, s.z, s.ry]; return { L, h, sign, sit, walk }; })();
 
 // ---------- cat taxis: a few humans pushing cats in strollers ----------
 const TAXIS = [];
@@ -970,7 +1068,7 @@ window.renderFrame = (t, anim = t) => {
   updateExtras(t, anim);
   signs.forEach(s => { const wp = s.getWorldPosition(new THREE.Vector3()); s.lookAt(camera.position.x, wp.y, camera.position.z); });
   let gk = 0;
-  if (LOT) LOT.visible = t < NEWB.at;
+  if (LOT) LOT.visible = t < (EP.lotUntil ?? NEWB.at);
   if (NB && NEWB.slow && NB.userData.parts) {   // slow build (videos): each piece drops in from above and pops, the sign + confetti come last
     const bt = NEWB.at, dur = NEWB.slow, P = NB.userData.parts, N = P.length; NB.visible = t >= bt; NB.scale.setScalar(.8); gk = t >= bt + dur ? 1 : .001;
     P.forEach((c, i) => { const e = Math.min(1, Math.max(0, (t - (NEWB.partsAt ? NEWB.partsAt[i] ?? bt : bt + i * (dur - .7) / N)) / .5)); c.visible = e > 0;
@@ -995,6 +1093,34 @@ window.renderFrame = (t, anim = t) => {
     if (u < .9) C.prize.position.copy(C.home); else if (held) C.prize.position.set(C.cx, cy - .45, C.home.z);
     else if (u >= 1.8) { const v = Math.min(1, (u - 1.8) / .6); C.prize.position.set(C.cx, 5.1 - 4.4 * v + 3.2 * Math.sin(Math.PI * v), C.home.z + 1.8 + 1.4 * v); C.prize.rotation.z = v * 6; }
     C.mango.position.y = .4 + (u >= 2.4 && u < 3.4 ? Math.abs(Math.sin((u - 2.4) * 9)) * .9 : 0); }
+  if (NB && NB.userData.studio) { const S = NB.userData.studio, oa = NEWB.openAt ?? 1e9;   // painter cats run in and sit at the easels; the Mango statue rises
+    S.cats.forEach((c, i) => { const st = S.seats[i], u = (t - oa - i * .2) / 1.4, sx = (i % 2 ? 1 : -1) * (2 + i), sz = 24;
+      if (u <= 0) { c.w.scale.setScalar(0); c.sit.scale.setScalar(0); return; }
+      if (u < 1) { const e = ease(u); c.w.position.set(sx + (st.x - sx) * e, Math.abs(Math.sin(anim * 14 + i)) * .3, sz + (st.z - sz) * e); c.w.rotation.y = Math.atan2(st.x - sx, st.z - sz); c.w.scale.setScalar(1.5); c.sit.scale.setScalar(0); return; }
+      c.w.scale.setScalar(0); c.sit.scale.setScalar(1.5); c.sit.position.set(st.x, .4, st.z); c.sit.rotation.set(0, st.yaw + Math.sin(anim * 5 + i) * .12, Math.sin(anim * 7 + i * 2) * .06); });   // painting: a little sway
+    const sa = EP.statueAt ?? 1e9, e = (t - sa) / 2.4; S.statue.scale.set(Math.max(.001, back(Math.min(1, e * 1.4))), Math.max(.001, ease(e)), Math.max(.001, back(Math.min(1, e * 1.4)))); S.statue.visible = e > 0;
+    S.statue.rotation.y = e > 0 && e < 1 ? (1 - ease(e)) * 3.1 : 0;
+    S.mango.position.y = .4 + (t - sa > 2.4 && t - sa < 3.6 ? Math.abs(Math.sin((t - sa - 2.4) * 9)) * .9 : 0); }
+  if (NB && NB.userData.pizza) { const Z = NB.userData.pizza, PZ = EP.pizza || {}, pa = NEWB.partsAt || [], land = (pa[1] ?? 1e9) + .45, oa = NEWB.openAt ?? 1e9;   // spectators hop when the crust lands, one walks off at the pineapple, cats climb on, Mango bites
+    const wa = PZ.walkAt ?? 1e9;
+    Z.cats.forEach((c, i) => { const hop = t >= land && t < land + .7 ? Math.abs(Math.sin((t - land) * 9 + i)) * 1.1 : 0, cheer = t >= oa - .4 && t < oa + 1.4 ? Math.abs(Math.sin((t - oa) * 11 + i * 2)) * .8 : 0;
+      c.m.position.y = .4 + hop + cheer; c.m.visible = !(i === 1 && t >= wa); });
+    const u = (t - wa) / 2.2; if (u > 0 && u < 1) { const c = Z.cats[1]; Z.walk.scale.setScalar(1.5 * Math.min(1, (1 - u) * 5)); Z.walk.position.set(c.x + 2 * u, Math.abs(Math.sin(anim * 12)) * .25, c.z + 9 * u); Z.walk.rotation.y = .2; } else Z.walk.scale.setScalar(0);
+    Z.climb.forEach((c, i) => { const e = (t - oa - .3 - i * .28) / .45; c.scale.setScalar(Math.max(.001, (i === 4 ? 1.3 : 1.4) * back(e))); c.visible = e > 0; });
+    const dt = t - land; Z.dust.forEach((d, i) => { if (dt < 0 || dt > 1.4) { d.m.scale.setScalar(0); return; } const r = 6 + 12 * ease(dt / 1.2); d.m.position.set(Z.dustC[0] + Math.cos(d.a) * r, .8 + dt * 1.5, Z.dustC[1] + Math.sin(d.a) * r * .8); d.m.scale.setScalar(Math.max(.001, 1.6 * (1 - dt / 1.4) + .2)); });
+    const lk = PZ.lookAt || [1e9, 1e9], ba = PZ.biteAt ?? 1e9, ta = PZ.turnAt ?? 1e9;
+    let ry = Math.PI, z = 12.9, y = .4;
+    if (t >= lk[0] && t < lk[1]) ry = Math.PI - Math.PI * Math.min(1, (t - lk[0]) / .25) * Math.min(1, (lk[1] - t) / .25);
+    const bu = t - ba; if (bu > 0 && bu < 1.1) { z = 12.9 - 1.3 * Math.sin(Math.PI * Math.min(1, bu / .55)) * (bu < .55 ? 1 : 0); }
+    if (bu > .55 && bu < 1.05) { const k = Math.min(1, (bu - .55) / .45); Z.str.visible = true; Z.str.scale.set(1, .4 + 2.6 * k, 1); Z.str.position.set(0, 1.25, .6 + (.4 + 2.6 * k) / 2); } else Z.str.visible = false;   // cheese string stretches, then snaps
+    Z.blob.visible = bu > .55;
+    if (t >= ta) { const k = ease((t - ta) / .35); ry = Math.PI * (1 - k); y = .4 + (t - ta > .6 && t - ta < 1.6 ? Math.abs(Math.sin((t - ta - .6) * 9)) * .7 : 0); }
+    Z.mango.rotation.y = ry; Z.mango.position.set(0, y, z); }
+  if (LONE) { const L = LONE.L, a = L.at ?? -1e9, ha = L.houseAt ?? 1e9, ra = L.runAt ?? 1e9;
+    LONE.sit.scale.setScalar(t >= a && t < ra ? 1.6 * back((t - a) / .4) : 0); LONE.sit.position.set(0, 0, 5.5); LONE.sit.rotation.y = Math.sin(anim * 1.3) * .25;
+    LONE.h.scale.setScalar(Math.max(.001, back((t - ha) / .5))); LONE.h.visible = t >= ha;
+    if (LONE.sign) { const e = (t - ha - .3) / .4; LONE.sign.visible = e > 0; LONE.sign.scale.setScalar(Math.max(.001, back(e))); }
+    const u = (t - ra) / .9; if (u > 0 && u < 1) { LONE.walk.scale.setScalar(1.6 * Math.min(1, (1 - u) * 4)); LONE.walk.position.set(0, Math.abs(Math.sin(anim * 14)) * .3, 5.5 - 4.4 * ease(u)); LONE.walk.rotation.y = Math.PI; } else LONE.walk.scale.setScalar(0); }
   // upload only the used part of each instanced mesh (pose meshes hold 800 slots but use a few dozen): big win on phones
   if (!RANGED) { RANGED = []; scene.traverse(o => { if (o.isInstancedMesh) RANGED.push(o); }); }
   for (const m of RANGED) if (m.count < m.instanceMatrix.count) { const a = m.instanceMatrix; a.clearUpdateRanges(); a.addUpdateRange(0, Math.max(1, m.count) * 16); }
@@ -1134,8 +1260,8 @@ const handleOf = n => (EP.handles && EP.handles[n]) || ('demo.' + HA[Math.floor(
 const KIND = { A: 'Cat-face house', B: 'Cardboard box house', C: 'Cat-cave pod' };
 const DIST = ['Blue Whisker', 'Box Town', 'Pastel Pods', 'Catnip Green', 'Purple Purr', 'Tuxedo Row'];
 const LM_UNLOCK = (EP.landmarks || []).map(l => l.unlock);
-const LM_TXT = { petshop: 'Toys, treats and fresh water for every cat in town.', cityhall: 'Mayor Mango works here (mostly naps).', cafe: 'Built by the most-liked comment.', statue: 'A golden Mango. He posed for 3 seconds.', market: 'Yarn, boxes and squeaky mice.', fishmarket: 'Fresh fish for every cat in town. Mango is first in line.', arcade: 'Claw machine, games and neon. Mango won a fish here.', pool: 'Nobody swims. Everyone watches.', custom: 'Built by the most-liked comment.' };
-landmarks.forEach((lm, k) => { if (LMG[k]) LMG[k][0].userData.info = { icon: lm.kind === 'fishmarket' ? '\ud83d\udc1f' : lm.kind === 'arcade' ? '\ud83d\udd79\ufe0f' : '\ud83c\udfdb\ufe0f', title: lm.sign, line: LM_TXT[lm.kind] || 'Built by the most-liked comment.', note: lm.note ? lm.note : LM_UNLOCK[k] ? 'Unlocked at ' + LM_UNLOCK[k].toLocaleString('en-US') + ' cats' : '' }; });
+const LM_TXT = { petshop: 'Toys, treats and fresh water for every cat in town.', cityhall: 'Mayor Mango works here (mostly naps).', cafe: 'Built by the most-liked comment.', statue: 'A golden Mango. He posed for 3 seconds.', market: 'Yarn, boxes and squeaky mice.', fishmarket: 'Fresh fish for every cat in town. Mango is first in line.', arcade: 'Claw machine, games and neon. Mango won a fish here.', artstudio: 'The cats paint here. They made Mango a gold statue.', pizza: 'Every single topping. Yes, even pineapple. And a fish.', pool: 'Nobody swims. Everyone watches.', custom: 'Built by the most-liked comment.' };
+landmarks.forEach((lm, k) => { if (LMG[k]) LMG[k][0].userData.info = { icon: lm.kind === 'fishmarket' ? '\ud83d\udc1f' : lm.kind === 'arcade' ? '\ud83d\udd79\ufe0f' : lm.kind === 'artstudio' ? '\ud83c\udfa8' : lm.kind === 'pizza' ? '\ud83c\udf55' : '\ud83c\udfdb\ufe0f', title: lm.sign, line: LM_TXT[lm.kind] || 'Built by the most-liked comment.', note: lm.note ? lm.note : LM_UNLOCK[k] ? 'Unlocked at ' + LM_UNLOCK[k].toLocaleString('en-US') + ' cats' : '' }; });
 if (typeof MO !== 'undefined' && MO.g) MO.g.userData.info = { icon: '\ud83d\ude34', title: 'Big Mochi', line: 'The sleeping mountain cat. Please do not wake her.', note: 'Unlocked at 1,000 cats' };
 if (typeof FT !== 'undefined' && FT.g) FT.g.userData.info = { icon: '\ud83d\udca7', title: 'PETME2 Stainless Steel Fountain', line: 'Mango\u2019s favorite drinking spot. The water keeps moving, so Mango keeps coming back for more.', note: 'Tap again for water time: the cats nearby come to drink.', pinY: 18, shop: 'https://www.petme2.com/products/water-fountain', feed: 'water' };
 if (typeof FD !== 'undefined' && FD.g) FD.g.userData.info = { icon: '\ud83c\udf7d\ufe0f', title: 'PETME2 Dual Bowl Feeder', line: 'Mango\u2019s dinner table. Meals come right on time, so Mango never has to beg.', note: 'Feeding time! The cats nearby are coming to eat.', pinY: 15.5, shop: 'https://www.petme2.com/products/2-in-1-feeder-1', feed: 'food' };
