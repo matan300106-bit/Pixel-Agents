@@ -481,3 +481,14 @@ Bid cap is $0.50.
 - **Not in this plan, but it hurts trust:**
   - The list prices of $99.99 / $89.99 / $65.99 are 1.7–3 × the sale price. Set realistic list prices (pricing decision).
   - Image fixes (the 5L's gray legs, the transparent's see-through level) come after this plan, if conversion stays low.
+
+## Guardian check (2026-10-12): PASS WITH FIXES, all applied
+1. Camera: "Tap to Feed" removed from title and special_feature until confirmed. New title in JSON.
+2. 5L: "20 Cups" removed (5L ≈ 21.1 cups, not a stated fact). New title in JSON.
+3. Tray: "Power cable" moved to needs_confirmation; "medium" removed from backend.
+4. Oct 13 ads prompt must first set Sites = Amazon only on Feeders | Exact, 5L-Feeder-Brd-6, 2.2L-Steel-Tray-Broad-New-14, 2L-Brd-11, Transparent-Brd-10.
+5. 3-day rule: new exact keywords for 2L-Brd-11 and Transparent-Brd-10 go in at the Thu Oct 15 check-in, not Oct 13.
+6. Camera 5% coupon moved to Oct 26.
+7. 2L: whole listing edit moved to Oct 26.
+8. No model_name changes this round.
+Hard gate: the Helium 10 baseline must be in before the Oct 13 ads prompt goes out.

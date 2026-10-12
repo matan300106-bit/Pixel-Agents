@@ -668,3 +668,4 @@ date,item,before,after,reason,agent
 2026-10-12,Daily watch,none,no alerts; no changes,daily routine,guardian
 2026-10-12,Mon ramp check-in,none,no new change: bids/budgets changed last night (Oct 11 PT); 3-day rule; next check Thu Oct 15 with fresh reports,ramp routine,guardian
 2026-10-12,PETME2 | Discovery | Auto,ENABLED $15,PAUSED (by owner),owner decision; ACOS 54% Oct 4-10; all products still advertised elsewhere,owner
+2026-10-12,Organic plan 5 flat listings (planned),Oct 4 copy live,"plan.md + listing-drafts.json (guardian PASS WITH FIXES, 8 fixes applied); order: H10 baseline -> ads Oct 13 -> 1 listing edit/ASIN Oct 14-15 (2L Oct 26)",owner: improve organic rank of flat products,manager

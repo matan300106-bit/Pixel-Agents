@@ -4,13 +4,14 @@
     "by": "strategy agent (read only, nothing changed on Amazon)",
     "base": "live copy = research/seo/final/listings-final.json (Oct 4 rewrite, live word for word per keyword agent); old attributes from research/seo/current-listings.json (still unfixed on Oct 12 per keyword agent)",
     "how_to_apply": "One edit per ASIN in Seller Central (title + bullets + description + search terms + attributes together). Use the plain 'new' values now; use '*_if_confirmed' values only after the owner/supplier confirms the fact.",
-    "rules_checked": "titles <=200 chars, head keyword in first 80, no word >2x (except for/and/with), no competitor brands; backend <=249 bytes, no title words, no repeats, no brands"
+    "rules_checked": "titles <=200 chars, head keyword in first 80, no word >2x (except for/and/with), no competitor brands; backend <=249 bytes, no title words, no repeats, no brands",
+    "guardian": "PASS WITH FIXES 2026-10-12; fixes 1-8 applied"
   },
   "B0GHH8L59K": {
     "sku": "QO-7VBS-CVT4",
     "product": "5L WiFi dual-bowl elevated feeder",
     "title_old": "PETME2 Automatic Cat Feeder for 2 Cats, 5L Elevated Feeding Station with WiFi App and Voice Recording, Automatic Dog Feeder, Stainless Steel Dual Bowls, Timed Pet Food Dispenser, Dual Power",
-    "title_new": "PETME2 Elevated Automatic Cat Feeder for 2 Cats, 5L/20 Cups WiFi App Control, Double Bowl Cat Food Dispenser with Voice Recording, Stainless Steel Bowls, Automatic Dog Feeder for Small Dogs",
+    "title_new": "PETME2 Elevated Automatic Cat Feeder for 2 Cats, 5L WiFi App Control, Double Bowl Cat Food Dispenser with Voice Recording, Stainless Steel Bowls, Automatic Dog Feeder for Small Dogs",
     "title_why": "Keeps the #49 phrase 'automatic cat feeder for 2 cats' intact and adds 'elevated automatic cat feeder' (#20, missing as a phrase) and 'cat food dispenser' (23k SV) in one phrase. Drops 'Dual Power' (unconfirmed) and 'Timed Pet Food Dispenser' (SV 39). 'Elevated cat feeding station' stays exact in bullet 4.",
     "bullets_changes": [
       {
@@ -123,7 +124,7 @@
     "sku": "2H-2T1T-CJC3",
     "product": "3L camera feeder",
     "title_old": "PETME2 Automatic Cat Feeder with Camera, 3L WiFi Cat Food Dispenser with 1080P HD Video and 2-Way Audio, App Control, Automatic Dog Feeder for Small Dogs, Timed Portions, Anti-Jam, Dual Power",
-    "title_new": "PETME2 Automatic Cat Feeder with Camera 1080P HD Video, 2-Way Audio, 3L WiFi Cat Food Dispenser with Camera App Control, Tap to Feed, Anti-Jam, Automatic Dog Feeder for Small Dogs",
+    "title_new": "PETME2 Automatic Cat Feeder with Camera 1080P HD Video, 2-Way Audio, 3L WiFi Cat Food Dispenser with Camera App Control, Portion Control, Anti-Jam, Automatic Dog Feeder for Small Dogs",
     "title_why": "Adds exact 'cat food dispenser with camera' (#86) and 'automatic cat feeder with camera 1080p' (#86) while keeping 'automatic cat feeder with camera' first. Puts the 1080P + 2-Way Audio hooks inside the mobile 80 chars. Adds true 'Tap to Feed'. Drops 'Dual Power' (unconfirmed) and 'Timed Portions' (no SV).",
     "bullets_changes": [
       {
@@ -159,7 +160,7 @@
           "1080P HD Camera with Live View",
           "2-Way Audio",
           "WiFi App Scheduling and Portion Control",
-          "Tap to Feed on Demand",
+          "",
           "Anti-Jam Detect and Reverse",
           "Moisture Seals and Desiccant Box"
         ],
@@ -199,8 +200,10 @@
       "What is in the box: power adapter? manual? -> included_components_if_confirmed",
       "Night vision: our facts say NO. Never add it unless the supplier proves it",
       "Meals per day and grams per portion -> add to bullet 3",
-      "Does it keep feeding on schedule when WiFi is down? (A+ / image idea only)"
-    ]
+      "Does it keep feeding on schedule when WiFi is down? (A+ / image idea only)",
+      "Tap to feed on demand from the app?"
+    ],
+    "schedule": "Listing edit Oct 14-15. 5% coupon moved to Oct 26 (not same week; break-even CPC ~$0.54 with coupon)."
   },
   "B0GHKN9DBR": {
     "sku": "L6-L3S1-I7Q6",
@@ -234,16 +237,6 @@
         "old": "2L Portable Water Capacity - Compact size with reliable daily hydration",
         "new": "2L Compact Water Capacity - Slim size for small spaces",
         "note": "'Portable' suggests cordless"
-      },
-      {
-        "attribute": "model_name",
-        "old": [
-          "WaterFountain14"
-        ],
-        "new": [
-          "WaterFountain14-2L"
-        ],
-        "note": "optional: same model name as the tray fountain B0GHKRYV6W"
       }
     ],
     "needs_confirmation": [
@@ -251,7 +244,8 @@
       "Is there NO filter and NO filter slot at all? -> title_new_if_no_filter_confirmed + backend 'filterless nofilter' + bullet 5 line 'No filter to buy: rinse and refill weekly.' (filterless cat water fountain 11,089 SV, the biggest new niche)",
       "Measured noise (dB)? -> 'runs at under XX dB' in bullet 4",
       "Is it 2L (68oz) or 2.2L? It shares model name WaterFountain14 with the 2.2L tray fountain"
-    ]
+    ],
+    "schedule": "Whole listing edit moved to Oct 26 (title only live since ~Oct 5-11; price changes Oct 12 and Oct 20)."
   },
   "B0GHLBGCP3": {
     "sku": "SD-85ET-IOZ3",
@@ -363,7 +357,7 @@
       }
     ],
     "search_terms_old": "plastic metal dish bowl kitty kitten waterer drinking flowing running circulating auto easy clean small inside indoor level window refill shutoff dispenser hydration bebedero gatos fuente agua perros acero inoxidable filtered animal",
-    "search_terms_new": "dish size breed puppy hydration drinker silent medium auto bebedero gatos fuente agua perros acero inoxidable fonte filtro gato",
+    "search_terms_new": "dish size breed puppy hydration drinker silent auto bebedero gatos fuente agua perros acero inoxidable fonte filtro gato",
     "attributes_changes": [
       {
         "attribute": "included_components",
@@ -377,8 +371,7 @@
         "new": [
           "Fountain main unit",
           "Stainless steel drinking tray",
-          "Filter cartridge",
-          "Power cable"
+          "Filter cartridge"
         ],
         "new_if_confirmed": "add 'User manual', 'Water reservoir' and the real filter count",
         "note": "now holds feature text copied from the 2L, incl. a 'Red Light Alert' this model may not have"
@@ -407,16 +400,6 @@
           "Stainless Steel"
         ],
         "note": "body is plastic; list it first"
-      },
-      {
-        "attribute": "model_name",
-        "old": [
-          "WaterFountain14"
-        ],
-        "new": [
-          "WaterFountain14-Tray"
-        ],
-        "note": "optional: shared with the 2L"
       }
     ],
     "needs_confirmation": [
@@ -424,7 +407,8 @@
       "Is the low-water alert an LED light? -> add 'LED' (e.g. 'LED Low Level Alert'); the old ad group was built on 'cat water fountain with led indicator'",
       "Is the plastic BPA-free / food-grade? Only then add it back",
       "Full box list (manual? reservoir?) -> included_components",
-      "Measured noise (dB)? -> 'at under XX dB' in bullet 5"
+      "Measured noise (dB)? -> 'at under XX dB' in bullet 5",
+      "Is a power cable/adapter included in the box?"
     ]
   }
 }
