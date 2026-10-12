@@ -492,3 +492,10 @@ Bid cap is $0.50.
 7. 2L: whole listing edit moved to Oct 26.
 8. No model_name changes this round.
 Hard gate: the Helium 10 baseline must be in before the Oct 13 ads prompt goes out.
+
+## Baseline result (Oct 12 Cerebro) changes the plan
+- Camera: ranks went UP on almost every camera keyword since Oct 4 (#151→#35, #127→#57, #102→#36, #86→#42). The title works: **hold the title change**, fix only the wrong attributes. More ad traffic (Oct 13) should push it further.
+- 5L: down on 9 of 13 tracked keywords (e.g. "elevated automatic cat feeder" #20→#54). Its ads were at $0.20–0.25 since Oct 4, so sales stopped. Ads first (Oct 13), title edit Oct 14–15 keeps the ranked phrases.
+- 2L: mixed. Down on "plastic" phrases (#29→#45), up on "led indicator" (#112→#27), "small" (#128→#60), "running water bowl" (#158→#94). Edit Oct 26 as planned.
+- Transparent: flat (all #90–300). Tray: barely ranked (5 keywords in the top 100). Both need traffic + the honest text fixes.
+- Full table: baseline-2026-10-12.md.
