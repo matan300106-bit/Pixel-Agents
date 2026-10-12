@@ -118,6 +118,9 @@
       "Voice recording length (seconds) -> 'Record your own message of up to X seconds' in bullet 3",
       "Body material plastic? (for the material attribute)",
       "Keep 'Wet Food' and 'Outdoor' in recommended uses? (we suggest remove)"
+    ],
+    "owner_confirmed_2026_10_12": [
+      "Battery backup: YES (owner) -> 'Dual Power' allowed; battery type unknown -> do not name a battery type"
     ]
   },
   "B0GTCGYZDM": {
@@ -203,7 +206,11 @@
       "Does it keep feeding on schedule when WiFi is down? (A+ / image idea only)",
       "Tap to feed on demand from the app?"
     ],
-    "schedule": "HOLD the title: Oct 12 baseline shows the Oct 4 title working (camera keywords up 5-116 places, e.g. 'automatic pet feeder with camera' #151->#35, 'cat food dispenser with camera' #86->#42). Oct 14-15: fix attributes only (special_feature, included_components). Re-check title Oct 26. Coupon Oct 26."
+    "schedule": "HOLD the title: Oct 12 baseline shows the Oct 4 title working (camera keywords up 5-116 places, e.g. 'automatic pet feeder with camera' #151->#35, 'cat food dispenser with camera' #86->#42). Oct 14-15: fix attributes only (special_feature, included_components). Re-check title Oct 26. Coupon Oct 26.",
+    "owner_confirmed_2026_10_12": [
+      "Tap to feed from the app: YES (owner) -> allowed in bullets/special_feature",
+      "WiFi band: answer unclear ('yes') -> do not state 2.4/5 GHz"
+    ]
   },
   "B0GHKN9DBR": {
     "sku": "L6-L3S1-I7Q6",
@@ -245,7 +252,11 @@
       "Measured noise (dB)? -> 'runs at under XX dB' in bullet 4",
       "Is it 2L (68oz) or 2.2L? It shares model name WaterFountain14 with the 2.2L tray fountain"
     ],
-    "schedule": "Whole listing edit moved to Oct 26 (title only live since ~Oct 5-11; price changes Oct 12 and Oct 20)."
+    "schedule": "Whole listing edit moved to Oct 26 (title only live since ~Oct 5-11; price changes Oct 12 and Oct 20).",
+    "owner_confirmed_2026_10_12": [
+      "LED low-water light: YES (owner 2026-10-12) -> use title_new_if_led_confirmed",
+      "Filter: answer unclear ('Yes, LED light') -> do NOT use 'filterless'/'no filter' until owner says clearly"
+    ]
   },
   "B0GHLBGCP3": {
     "sku": "SD-85ET-IOZ3",
@@ -320,6 +331,10 @@
       "Does this model have a low-water light? -> 'A low water light tells you when to refill.' in bullet 1",
       "Measured noise (dB)?",
       "Is there a replacement filter pack (ASIN) we can name? (top review complaint)"
+    ],
+    "owner_confirmed_2026_10_12": [
+      "4-layer filter: YES (owner) -> use title_new_if_4layer_confirmed",
+      "Power: USB cable + wall adapter, both (owner) -> 'USB powered' allowed, mention adapter"
     ]
   },
   "B0GHKRYV6W": {
@@ -409,6 +424,10 @@
       "Full box list (manual? reservoir?) -> included_components",
       "Measured noise (dB)? -> 'at under XX dB' in bullet 5",
       "Is a power cable/adapter included in the box?"
+    ],
+    "owner_confirmed_2026_10_12": [
+      "Power adapter included: YES (owner) -> add to included_components",
+      "Filters included: YES (owner); exact count unknown -> no number in title"
     ]
   }
 }
