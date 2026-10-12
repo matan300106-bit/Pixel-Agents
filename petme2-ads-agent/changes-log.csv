@@ -662,3 +662,6 @@ date,item,before,after,reason,agent
 2026-10-12,Oct 12 Chrome prompt v3 Step 6 (planned),"small fountain campaigns paused","2L-Brd-11 $5, 2L-Brd-12 $4, Transparent-Brd-10 $3, bid cap $0.50, down only; enable any paused PETME2 product ads; total $120",owner: ads on every product for reviews,manager
 2026-10-12,Price prompt small fountains (planned),"$19.99 x3","$21.99 x3 (price plan step 1); camera/dual/5L/stainless unchanged",price plan step 1; reviews priority so no bigger jump,manager
 2026-10-12,All SP campaigns Sites setting (planned),unknown,Amazon only (no third-party sites),owner: Sites ONLY Amazon for all products,manager
+2026-10-12,Oct 12 ads prompt v3 (DONE by Chrome),see plan,see reports/2026-10-12-chrome-results.md (9 bid changes + Veken on + 3 small-fountain campaigns on; total $120),owner ran Chrome prompt,manager
+2026-10-12,Small fountain sale price x3 (DONE),"$19.99 sale / $27.99 regular","$21.99 sale (ends Oct 20) / $27.99 regular",price plan step 1,manager
+2026-10-12,Sites Amazon only (4 of 49 DONE),Increase reach off-Amazon,Limit reach to Amazon (Veken + 3 paused),owner rule; 45 left,manager
