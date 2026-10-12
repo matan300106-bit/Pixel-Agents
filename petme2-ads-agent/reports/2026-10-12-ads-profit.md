@@ -32,3 +32,19 @@ Ad sales by campaign were matched to products by price (Competitors $179.96 = 2 
 - Each campaign: cost per order must stay under the product's profit (stainless $13.86, dual $11.27).
 - A keyword with spend ≥ its product's profit and 0 orders gets −20%. A search term at 1.5 × target cost per sale ($17 for stainless) with 0 orders becomes a negative.
 - Raise bids or budget only where ACOS is under 28% (stainless) or 18% (dual).
+
+## From the Oct 4–10 detail reports (search term, targeting, placement)
+**Placements**
+| Placement | Clicks | Spend | Orders | Conversion | ACOS |
+|---|---|---|---|---|---|
+| Rest of search | 118 | $108.47 | 8 | 6.8% | **34%** (about break-even) |
+| Top of search | 32 | $58.04 | 2 | 6.3% | 58% |
+| Product pages | 78 | $66.03 | 2 | **2.6%** | **83%** (waste) |
+Keyword Test alone spent $33.63 on product pages with 0 orders. Amazon can't turn product pages off. Lower base bids cut them most.
+
+**Losers:** "cat water fountain" (exact) $19.84 with 0 orders · competitor B0GDCZCXMY $23.75 for 1 order · several stainless clicks cost $1.43–$2.48, above the $1.10 cap (the Oct 7 rollback caps were never applied).
+**Winners:** "stainless steel dog water fountain" (exact): 3 orders from $10.71 (ACOS 9%) · dual feeder competitor B09S8WMJY9: 2 orders from $4.51 · "dog drinking fountain": 1 order from $1.
+**No search term reached $17 with 0 orders,** so no negatives this time. The 1-order terms (water fountain for dogs inside, dog drinking fountain indoor, selene/celine water fountain for dogs, petsafe water fountain) need a 2nd order before harvesting.
+**Mobile:** 76% of sessions are on the mobile app, so the main image and the first 3 images matter most.
+
+Oct 12 prompt v3: −20% on the 2 losers, "water fountain for dogs" left at $1.10 until Oct 14 (3-day rule; $14.34 per order is about break-even), bids above $1.10 down 20% (not below $1.10), +15% on the 9%-ACOS winner, Veken restart only if its settings are safe.
