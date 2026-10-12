@@ -1,11 +1,12 @@
-# PETME2 Amazon Ads: Oct 12 (cut the waste, back the winners, restart Veken safely)
+# PETME2 Amazon Ads: Oct 12 (cut the waste, back the winners, ads on every product)
 Version 3. Built from the Oct 4–10 search term, targeting and placement reports. Replaces the earlier Oct 12 versions.
 
 You are helping PETME2 on Amazon Ads (advertising.amazon.com, US). Sponsored Products only.
 
 ## Rules
-- Change ONLY the bids listed in Steps 2–4 and Veken in Step 5. No new campaigns. No deletes or archives. No price or listing changes.
-- Do NOT change any budget (except Veken), bidding strategy or placement.
+- **Never pause any product, ad, ad group or campaign.** The owner wants ads on every product to build reviews.
+- Change ONLY the bids listed in Steps 2–4, Veken in Step 5 and Step 6. No new campaigns. No deletes or archives. No price or listing changes.
+- Do NOT change any budget (except Steps 5 and 6), bidding strategy or placement.
 - Never click "Apply" / "Apply all" on Amazon's recommendations.
 - No bid may move more than 20% today. Never go below $0.30.
 - Write down every bid BEFORE you change it.
@@ -40,11 +41,25 @@ Campaign **Veken** (paused).
 - **First check its settings.** If its strategy is "Dynamic bids – up and down" OR any placement is above +10%: do NOT enable it. Write the settings down and report.
 - Otherwise: set it to **ENABLED**, daily budget **$10**. Make sure its ad group and the product ad (B0DR7FCLZR) are enabled.
 - Any target bid above $1.00: new bid = old × 0.80, but not below $1.00. Do not raise anything.
-Total of all enabled budgets after: **$108** if Veken is on (16 + 30 + 12 + 15 + 20 + 5 + 10). Never above $120.
+
+## Step 6: Ads on EVERY product (owner: build reviews)
+a) Check that each of these 8 products has at least one **enabled and delivering** product ad in an enabled ad group of an enabled campaign:
+B0DR7FCLZR stainless · B0GHKN9DBR 2L · B0GHLBGCP3 clear 2.2L · B0GHKRYV6W tray 2.2L · B0GHMCG8Q9 dual black · B0GHLSQMJ9 dual white · B0GHH8L59K 5L · B0GTCGYZDM camera.
+If a product ad or ad group in a PETME2 campaign is paused: **enable it** (do not change its bids).
+b) Restart these old small-fountain campaigns (they sold well before), with **low bids**:
+| Campaign | State | Daily budget | Bid cap |
+|---|---|---|---|
+| 2L-Fountain-Brd-11 | ENABLED | **$5** | $0.50 |
+| 2L-Fountain-Brd-12 | ENABLED | **$4** | $0.50 |
+| Transparent-Fountain-Brd-10 | ENABLED | **$3** | $0.50 |
+Bid cap: any keyword/target bid above $0.50 → set it to $0.50 (here more than −20% is OK: these campaigns were paused, so no clicks are lost). Do not raise anything. Check strategy: if it is "up and down", set it to **Dynamic bids – down only**. Placements: Top of search max +10%, product pages 0%.
+
+Total of all enabled budgets after: **$120** (16 + 30 + 12 + 15 + 20 + 5 + Veken 10 + 5 + 4 + 3). If Veken stayed paused: $110. Never above $120.
 
 ## Report back
 1. Every changed bid: campaign | ad group | keyword/target | old bid | new bid | step
 2. Veken: state | budget | strategy | placements | targets with old/new bid | any "not delivering" reason
-3. All enabled campaigns | budget. Total = $___
-4. Today's spend so far
-5. Any warning or error
+3. Step 6: each of the 8 ASINs | campaign/ad group where it is advertised | delivering? (yes/no + reason). Restarted campaigns: state | budget | strategy | placements | old/new bids
+4. All enabled campaigns | budget. Total = $___
+5. Today's spend so far
+6. Any warning or error

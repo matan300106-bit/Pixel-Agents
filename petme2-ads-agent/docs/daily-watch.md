@@ -23,7 +23,8 @@ Read only. The watch never changes Amazon, Shopify or ads. Changes still go thro
 
 ## Guardian (after the 3 agents)
 Raise an ALERT when:
-- Stock under 21 days (lower bids 30%) or under 10 days (pause ads).
+- Stock under 21 days (lower bids 30%) or under 10 days (tell the owner; never pause without asking).
+- Any of the 8 products without an enabled, delivering ad (owner: ads on every product to build reviews).
 - Lost the Buy Box, a price changed without a plan, or a listing problem.
 - Orders fell by 50% or more vs the 7-day average (2 days in a row).
 - Ad spend above $180 in one day (1.5 × cap), or ACOS doubled.
