@@ -654,3 +654,5 @@ date,item,before,after,reason,agent
 2026-10-11,daily watch routine,none,trig_01PZLbYUCuoSZ5jbEFbigZ6w daily 9:41 NY + docs/daily-watch.md,owner: have agents checking daily,manager
 2026-10-11,products.yaml prices (records only),"5L 49.99, small fountains 21.99","5L 54.99, small fountains 19.99 = live SP-API prices",checker agent found file out of date; no Amazon change,manager
 2026-10-11,Business report read,none,reports/2026-10-11-business-report.md,owner uploaded child-ASIN business report; dual feeder converts 10-13% with low traffic,manager
+2026-10-12,Oct 12 Chrome prompt (planned),"Keyword Test ACOS 66%; Feeders Exact no traffic; Veken paused","Keyword Test: water fountain for dogs 1.10->1.00, -20% $14+/0 orders, neg exact $12+/0; Feeders Exact dual +20% cap 1.05; Veken enabled $10 cap 1.00; total $108",Chrome report Oct 11 + business report WoW,manager
+2026-10-12,Oct 12 Chrome prompt v2 (guardian fixes),"v1","dropped dual +20% (break-even CPC $0.81); negatives at $17+; Veken -20% steps, not enabled if up-and-down or placement >10%; skip keywords changed Oct 11",guardian audit PASS WITH FIXES,guardian
