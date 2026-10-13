@@ -1,0 +1,2039 @@
+{
+  "generated": "2026-10-04",
+  "status": "plan only - nothing changed on Amazon",
+  "inputs": [
+    "research/seo/final/listings-final.json",
+    "research/seo/current-listings.json",
+    "research/seo/competitors-summary.md",
+    "research/seo/competitors-listings.json",
+    "research/seo/keyword-banks.json",
+    "products.yaml"
+  ],
+  "rules": {
+    "main_image": [
+      "Pure white background RGB 255,255,255",
+      "Product fills 85% or more of the frame",
+      "No text, logos, badges, watermarks, insets",
+      "Real photo of only what is sold; no props not included",
+      "1000 px minimum longest side for zoom; we use 2000 x 2000 px",
+      "JPEG preferred; TIFF/PNG ok; max 10,000 px"
+    ],
+    "secondary": [
+      "Use all 8 secondary slots (PT01-PT08) + 1 video",
+      "Mix: hero infographic, lifestyle, feature close-ups, size/scale, how-to/cleaning, in-the-box, own-brand comparison",
+      "Mobile first: over 55-60% of Amazon visits are on phones; images must read at thumbnail size",
+      "Text on secondary images is allowed; keep it short and true"
+    ],
+    "video": [
+      "15-60 s (aim 30-45 s), 1920 x 1080 recommended (min 1280 x 720), MP4/MOV, 16:9",
+      "Captions if anyone speaks; no URLs, prices, reviews, star ratings or promo overlays",
+      "Listings with video report 30-80% higher conversion (industry estimate)"
+    ],
+    "aplus": [
+      "Basic A+: up to 5 modules per page (Premium A+: up to 7, needs Brand Story on all ASINs + 5 approved A+ in 12 months)",
+      "No prices, discounts, 'sale', shipping or time-limited offers",
+      "No guarantees or warranty promises",
+      "No competitor names or comparisons to other brands; comparison chart = own products only (up to 6)",
+      "No unproven claims ('best', '#1'), no health/medical claims, no seller contact info or links",
+      "Images RGB JPG/PNG, under 2 MB each, 72 dpi min; no animated GIF",
+      "Text limits: four-image module about 300 characters per block; sidebar about 400; our copy stays well under (headline <= 50, body <= 250 characters)"
+    ],
+    "brand_story": [
+      "Hero 1464 x 625 px (3000 x 600 px also used in 2026)",
+      "ASIN cards / focus image 362 x 453 px",
+      "Up to 7 cards; links to own ASINs only",
+      "Same no-promo, no-competitor rules as A+"
+    ]
+  },
+  "products": [
+    {
+      "key": "dual_3l",
+      "name": "3L Dual Bowl App Feeder",
+      "asins": [
+        "B0GHLSQMJ9",
+        "B0GHMCG8Q9"
+      ],
+      "parent": "B0H3L6VXV6",
+      "color_note": "One plan for both colors. Shoot the white (B0GHLSQMJ9) and black (B0GHMCG8Q9) units in the same poses and use the same text. Each ASIN shows only its own color. For the black unit, use rim light so the edges do not disappear; for the white unit, use a soft shadow under it (the background still stays pure white). The parent B0H3L6VXV6 needs no image set.",
+      "top_keywords": [
+        "automatic cat feeder (187k)",
+        "automatic dog feeder (32k)",
+        "cat food dispenser (23k)",
+        "automatic cat feeder 2 cats (4.7k, rank #62)",
+        "timed cat feeder (3.3k)",
+        "automatic feeder cat dry food (3.3k)",
+        "dog feeding station (7.6k)"
+      ],
+      "true_facts": [
+        "Even split into 2 bowls",
+        "App control (WiFi) + 2-way audio",
+        "Up to 10 meals a day, up to 12 portions per meal, about 15 g per portion",
+        "3L container",
+        "4-compartment anti-jam",
+        "Silicone seal + desiccant box + sealed outlet",
+        "Battery backup (batteries not included)",
+        "304 stainless steel bowls, raised",
+        "Dishwasher safe parts",
+        "15.5 x 7.2 x 10.8 in",
+        "In the box: main unit, dual bowl base, 2 bowls, 3L container, desiccant box, power adapter, manual"
+      ],
+      "do_not_show": [
+        "'Cat Treat Dispenser' (old black title)",
+        "Night vision or camera",
+        "5GHz WiFi",
+        "Days of food or cups (not verified)",
+        "dB numbers",
+        "Wet food"
+      ],
+      "slots": [
+        {
+          "slot": "MAIN",
+          "purpose": "Win the click in search",
+          "show": "Unit at a 3/4 front angle, lid closed, both empty stainless bowls clearly visible. Pure white RGB 255, product fills 85-90% of the frame, no text, no kibble, no props.",
+          "headline": "",
+          "callouts": [],
+          "proves": "Dual bowls = 'automatic cat feeder for 2 cats' at thumbnail size"
+        },
+        {
+          "slot": "PT01",
+          "purpose": "Hero infographic: what it is in 2 seconds",
+          "show": "Product on a light background with 3 icons.",
+          "headline": "Automatic Cat Feeder for 2 Cats",
+          "callouts": [
+            "Even split, 2 bowls",
+            "App + 2-way audio",
+            "3L food storage"
+          ],
+          "proves": "automatic cat feeder 2 cats; title claim"
+        },
+        {
+          "slot": "PT02",
+          "purpose": "Main benefit: no food fights",
+          "show": "Two cats eating side by side at the same time; small arrows show kibble dropping into both bowls.",
+          "headline": "Same Meal, Same Time",
+          "callouts": [
+            "Stops food stealing",
+            "Cat + small dog OK"
+          ],
+          "proves": "Bullet 1: even split; dual automatic cat feeder"
+        },
+        {
+          "slot": "PT03",
+          "purpose": "Prove timed feeding numbers",
+          "show": "Hand holding a phone with the real app schedule screen; 3 big number badges.",
+          "headline": "Plan Meals From Your Phone",
+          "callouts": [
+            "Up to 10 meals/day",
+            "Up to 12 portions/meal",
+            "About 15 g per portion"
+          ],
+          "proves": "Bullet 3: timed cat feeder, automatic cat feeder with app"
+        },
+        {
+          "slot": "PT04",
+          "purpose": "Our gap vs most competitors (they only record 10 s)",
+          "show": "Owner at work talking into a phone; at home a cat looks up at the feeder; sound-wave graphic between them.",
+          "headline": "Talk to Your Cats Anytime",
+          "callouts": [
+            "2-way audio",
+            "Hear them, talk back"
+          ],
+          "proves": "Bullet 2: app control and 2-way audio"
+        },
+        {
+          "slot": "PT05",
+          "purpose": "Trust: food stays fresh, no jams",
+          "show": "Clean cutaway of the 4-compartment rotor, silicone seal, desiccant box and sealed outlet, with labels.",
+          "headline": "Fresh Food, No Jams",
+          "callouts": [
+            "4-compartment anti-jam",
+            "Seal + desiccant box",
+            "Sealed food outlet"
+          ],
+          "proves": "Bullet 4: cat dry food dispenser, anti-jam"
+        },
+        {
+          "slot": "PT06",
+          "purpose": "Remove the fear of power cuts",
+          "show": "Split image: adapter plugged in / lights out at home, feeder still serving a meal. Battery icon.",
+          "headline": "Meals Stay on Schedule",
+          "callouts": [
+            "Power adapter included",
+            "Battery backup for outages",
+            "Batteries not included"
+          ],
+          "proves": "Bullet 4: dual power"
+        },
+        {
+          "slot": "PT07",
+          "purpose": "Size + cleaning",
+          "show": "Line drawing with 15.5 x 7.2 x 10.8 in, a cat silhouette for scale; inset of bowls in a dishwasher rack.",
+          "headline": "Easy to Clean, Easy to Fit",
+          "callouts": [
+            "304 stainless steel bowls",
+            "Dishwasher safe parts",
+            "15.5 x 7.2 x 10.8 in"
+          ],
+          "proves": "Bullet 5: 304 stainless steel bowls, elevated feeding station"
+        },
+        {
+          "slot": "PT08",
+          "purpose": "What's in the box (cuts returns)",
+          "show": "Flat lay of every part, each with a small text label.",
+          "headline": "Everything in the Box",
+          "callouts": [
+            "Main unit + 3L container",
+            "2 steel bowls + base",
+            "Adapter, desiccant, manual"
+          ],
+          "proves": "Description 'In the box' list"
+        },
+        {
+          "slot": "VIDEO",
+          "purpose": "Show it working (30-45 s, 1920 x 1080, captions on)",
+          "show": "Fill kibble > set a schedule in the app > feeder drops food into BOTH bowls > two cats eat > owner talks through 2-way audio > bowls into dishwasher. End card: product + 'Automatic Cat Feeder for 2 Cats'.",
+          "headline": "Automatic Cat Feeder for 2 Cats",
+          "callouts": [
+            "Even split",
+            "App + 2-way audio"
+          ],
+          "proves": "All 5 bullets in motion"
+        }
+      ],
+      "aplus": [
+        {
+          "module": "Standard Image & Dark Text Overlay (970 x 300) or Standard Header Image with Text (970 x 600)",
+          "image_idea": "Wide kitchen shot, feeder on the floor, two cats eating together.",
+          "headline": "Two Cats. One Feeder. Fair Meals.",
+          "body": "The PETME2 3L dual bowl feeder splits every meal evenly between two stainless steel bowls, so each pet gets the same portion at the same time."
+        },
+        {
+          "module": "Standard Four Image & Text (4 x 220 x 220)",
+          "image_idea": "4 square close-ups: bowls, phone app, rotor, battery icon.",
+          "blocks": [
+            [
+              "Even Split",
+              "Every meal goes into both bowls at once. Two cats, or a cat and a small dog, eat side by side."
+            ],
+            [
+              "App Scheduling",
+              "Up to 10 meals a day and up to 12 portions per meal, about 15 g per portion."
+            ],
+            [
+              "Anti-Jam + Fresh",
+              "A 4-compartment design keeps kibble moving. A seal, desiccant box and sealed outlet help keep food crunchy."
+            ],
+            [
+              "Dual Power",
+              "Runs on the adapter, with battery backup during a power outage. Batteries not included."
+            ]
+          ]
+        },
+        {
+          "module": "Standard Single Image & Sidebar (image 300 x 400, sidebar text)",
+          "image_idea": "Phone with app + cat at feeder, sound waves.",
+          "headline": "Talk With Your Pets While You Are Away",
+          "body": "Use 2-way audio in the app to hear your pets and talk back. Change meal times from work or on a trip."
+        },
+        {
+          "module": "Standard Three Images & Text (3 x 300 x 300)",
+          "image_idea": "3 steps: fill, connect, schedule.",
+          "blocks": [
+            [
+              "1. Fill",
+              "Pour dry kibble into the 3L container."
+            ],
+            [
+              "2. Connect",
+              "Plug in the adapter and pair the feeder with the app over WiFi."
+            ],
+            [
+              "3. Schedule",
+              "Set meal times and portions. The plan runs every day."
+            ]
+          ]
+        },
+        {
+          "module": "Standard Comparison Chart",
+          "chart": "FEEDER_CHART"
+        },
+        {
+          "module": "(Optional 6th/7th if your account allows 7 modules) Standard Single Left Image (300 x 300)",
+          "image_idea": "Bowls coming apart, dishwasher.",
+          "headline": "Easy-Clean 304 Stainless Steel Bowls",
+          "body": "The raised steel bowls wipe clean, and the parts come apart and are dishwasher safe."
+        }
+      ],
+      "existing_images": {
+        "B0GHLSQMJ9": {
+          "image_count": 9,
+          "slots_used": [
+            "MAIN",
+            "PT01",
+            "PT02",
+            "PT03",
+            "PT04",
+            "PT05",
+            "PT06",
+            "PT07",
+            "PT08"
+          ],
+          "slots_empty": []
+        },
+        "B0GHMCG8Q9": {
+          "image_count": 9,
+          "slots_used": [
+            "MAIN",
+            "PT01",
+            "PT02",
+            "PT03",
+            "PT04",
+            "PT05",
+            "PT06",
+            "PT07",
+            "PT08"
+          ],
+          "slots_empty": []
+        }
+      }
+    },
+    {
+      "key": "wifi_5l",
+      "name": "5L WiFi Elevated Dual Feeder",
+      "asins": [
+        "B0GHH8L59K"
+      ],
+      "parent": null,
+      "color_note": "White only.",
+      "top_keywords": [
+        "automatic cat feeder (187k)",
+        "automatic dog feeder (32k)",
+        "cat food dispenser (23k)",
+        "automatic cat feeder 2 cats (4.7k, rank #64)",
+        "timed cat feeder (3.3k)",
+        "dog feeding station (7.6k)"
+      ],
+      "true_facts": [
+        "Even split into 2 stainless steel bowls",
+        "5L container",
+        "Elevated feeding station, raised bowls",
+        "WiFi app scheduling with custom portions",
+        "Voice recording: a recorded mealtime call, NOT 2-way audio",
+        "Anti-jam chute and motor",
+        "Battery backup (batteries not included)",
+        "Bowls and food container detach for washing",
+        "18.42 x 7.87 x 15.62 in",
+        "In the box: main unit, 2 bowls, food storage container, power adapter, manual"
+      ],
+      "do_not_show": [
+        "2-way audio or 'talk to your pet live'",
+        "Meals per day / grams (not verified)",
+        "Dishwasher safe (not verified)",
+        "See-through tank unless it is clear",
+        "5GHz WiFi"
+      ],
+      "slots": [
+        {
+          "slot": "MAIN",
+          "purpose": "Win the click",
+          "show": "Elevated unit 3/4 front, both bowls visible, pure white RGB 255, 85-90% fill, no text or props.",
+          "headline": "",
+          "callouts": [],
+          "proves": "Elevated + 2 bowls visible at thumbnail size"
+        },
+        {
+          "slot": "PT01",
+          "purpose": "Hero infographic",
+          "show": "Product with 3 icons.",
+          "headline": "Automatic Cat Feeder for 2 Cats",
+          "callouts": [
+            "5L food storage",
+            "Raised dual bowls",
+            "WiFi app scheduling"
+          ],
+          "proves": "automatic cat feeder 2 cats; title"
+        },
+        {
+          "slot": "PT02",
+          "purpose": "Main benefit",
+          "show": "Two cats eating at the raised bowls at the same height.",
+          "headline": "Raised Bowls, Fair Meals",
+          "callouts": [
+            "Even split to 2 bowls",
+            "Comfortable eating height"
+          ],
+          "proves": "Bullets 1 + 4: elevated cat feeding station"
+        },
+        {
+          "slot": "PT03",
+          "purpose": "App scheduling",
+          "show": "Phone with the real schedule screen, owner on a trip (suitcase).",
+          "headline": "Schedule Meals From Anywhere",
+          "callouts": [
+            "Set times and portions",
+            "Change plans on the go"
+          ],
+          "proves": "Bullet 2: WiFi automatic cat feeder, app"
+        },
+        {
+          "slot": "PT04",
+          "purpose": "Voice call (be exact: recorded)",
+          "show": "Owner recording into phone; later the feeder plays it and a cat walks over.",
+          "headline": "Your Voice Calls Them",
+          "callouts": [
+            "Record a mealtime call",
+            "Plays at every meal"
+          ],
+          "proves": "Bullet 3: voice recording"
+        },
+        {
+          "slot": "PT05",
+          "purpose": "Capacity + reliability",
+          "show": "Side view of the 5L container next to a 1L measuring cup for scale; anti-jam chute arrow.",
+          "headline": "Big 5L Tank, Fewer Refills",
+          "callouts": [
+            "5L food container",
+            "Anti-jam chute + motor"
+          ],
+          "proves": "Bullet 4: 5L, anti-jam"
+        },
+        {
+          "slot": "PT06",
+          "purpose": "Power cuts",
+          "show": "Same layout as the 3L feeder power image (brand consistency).",
+          "headline": "Meals Stay on Schedule",
+          "callouts": [
+            "Adapter + battery backup",
+            "Batteries not included"
+          ],
+          "proves": "Bullet 5: dual power"
+        },
+        {
+          "slot": "PT07",
+          "purpose": "Size + cleaning + box",
+          "show": "Dimension drawing 18.42 x 7.87 x 15.62 in; exploded bowls and container; in-box row.",
+          "headline": "Bowls and Tank Come Apart",
+          "callouts": [
+            "Stainless steel bowls",
+            "18.42 x 7.87 x 15.62 in",
+            "Adapter + manual included"
+          ],
+          "proves": "Bullet 5 + 'In the box'"
+        },
+        {
+          "slot": "PT08",
+          "purpose": "EMPTY SLOT - fill it: cross-sell PETME2 feeders",
+          "show": "Simple 3-column chart of our own feeders (same rows as the A+ chart).",
+          "headline": "Which PETME2 Feeder Fits You?",
+          "callouts": [
+            "2 bowls or 1",
+            "5L or 3L",
+            "Camera or voice call"
+          ],
+          "proves": "Own-brand comparison (allowed)"
+        },
+        {
+          "slot": "VIDEO",
+          "purpose": "30-40 s, captions",
+          "show": "Fill 5L tank > set schedule in app > record a call > meal drops into both raised bowls > two cats come and eat > bowls lift out for washing.",
+          "headline": "Feeds 2 Cats Equally",
+          "callouts": [
+            "5L tank",
+            "Voice call"
+          ],
+          "proves": "Bullets 1-5"
+        }
+      ],
+      "aplus": [
+        {
+          "module": "Standard Header Image with Text (970 x 600)",
+          "image_idea": "Two cats at the raised bowls in a bright room.",
+          "headline": "Raised Bowls for Two Pets",
+          "body": "The PETME2 5L feeder splits each meal evenly between two stainless steel bowls on an elevated feeding station."
+        },
+        {
+          "module": "Standard Four Image & Text (4 x 220 x 220)",
+          "image_idea": "Bowls, phone, mic icon, tank.",
+          "blocks": [
+            [
+              "Even Split",
+              "Each pet gets the same portion at the same time."
+            ],
+            [
+              "WiFi App",
+              "Plan meal times and custom portions from your phone."
+            ],
+            [
+              "Voice Call",
+              "Record your own message. The feeder plays it at mealtime. It is not live 2-way audio."
+            ],
+            [
+              "5L Tank",
+              "A large container means fewer refills. An anti-jam chute keeps kibble moving."
+            ]
+          ]
+        },
+        {
+          "module": "Standard Single Left Image (300 x 300)",
+          "image_idea": "Power adapter + battery icon.",
+          "headline": "Keeps Feeding in a Power Outage",
+          "body": "Run it on the power adapter, with backup batteries for outages. Batteries not included."
+        },
+        {
+          "module": "Standard Three Images & Text (3 x 300 x 300)",
+          "image_idea": "Fill, connect, schedule.",
+          "blocks": [
+            [
+              "1. Fill",
+              "Pour dry kibble into the 5L container."
+            ],
+            [
+              "2. Connect",
+              "Plug in and pair with the app over WiFi."
+            ],
+            [
+              "3. Schedule",
+              "Set times and portions once. Meals run every day."
+            ]
+          ]
+        },
+        {
+          "module": "Standard Comparison Chart",
+          "chart": "FEEDER_CHART"
+        }
+      ],
+      "existing_images": {
+        "B0GHH8L59K": {
+          "image_count": 8,
+          "slots_used": [
+            "MAIN",
+            "PT01",
+            "PT02",
+            "PT03",
+            "PT04",
+            "PT05",
+            "PT06",
+            "PT07"
+          ],
+          "slots_empty": [
+            "PT08"
+          ]
+        }
+      }
+    },
+    {
+      "key": "camera",
+      "name": "3L Feeder with Camera",
+      "asins": [
+        "B0GTCGYZDM"
+      ],
+      "parent": null,
+      "color_note": "White only.",
+      "top_keywords": [
+        "automatic cat feeder with camera (6.4k, rank #121)",
+        "automatic cat feeder (187k)",
+        "automatic dog feeder (32k)",
+        "auto cat feeder (8.8k, rank #160)",
+        "cat food dispenser (23k)",
+        "automatic dog feeder with camera (rank #102)"
+      ],
+      "true_facts": [
+        "1080p HD live video in the app",
+        "2-way audio",
+        "WiFi app scheduling and portion control",
+        "Tap to feed a meal on demand",
+        "3L container",
+        "Anti-jam detects and reverses blockages",
+        "Moisture seals + desiccant box",
+        "Battery backup (batteries not included)",
+        "Stainless steel bowl, dishwasher safe",
+        "One bowl (single pet)",
+        "6.8 x 7.0 x 11.0 in"
+      ],
+      "do_not_show": [
+        "Night vision or a dark-room live view (not verified)",
+        "Motion alerts, cloud/SD recording",
+        "'For 2 cats' or 2 bowls",
+        "Meals per day or grams (not verified)",
+        "In-the-box photo until components are confirmed",
+        "5GHz WiFi"
+      ],
+      "slots": [
+        {
+          "slot": "MAIN",
+          "purpose": "Win the click",
+          "show": "Unit 3/4 front so the camera lens and bowl are both clear, pure white RGB 255, 85-90% fill, no text.",
+          "headline": "",
+          "callouts": [],
+          "proves": "Camera lens visible = 'with camera' at thumbnail size"
+        },
+        {
+          "slot": "PT01",
+          "purpose": "Hero infographic",
+          "show": "Product + 3 icons (camera, speech, WiFi).",
+          "headline": "Automatic Cat Feeder with Camera",
+          "callouts": [
+            "1080p HD live video",
+            "2-way audio",
+            "3L WiFi feeder"
+          ],
+          "proves": "automatic cat feeder with camera; title"
+        },
+        {
+          "slot": "PT02",
+          "purpose": "Prove the camera",
+          "show": "Phone screen with a real 1080p live view of a cat eating, in daylight.",
+          "headline": "Watch Every Meal Live",
+          "callouts": [
+            "1080p HD on your phone",
+            "See when your pet eats"
+          ],
+          "proves": "Bullet 1: 1080P"
+        },
+        {
+          "slot": "PT03",
+          "purpose": "2-way audio",
+          "show": "Owner speaks into phone; cat at the feeder looks up; sound waves.",
+          "headline": "Hear Them. Talk Back.",
+          "callouts": [
+            "Calm a nervous cat",
+            "Call your dog to dinner"
+          ],
+          "proves": "Bullet 2: 2-way audio"
+        },
+        {
+          "slot": "PT04",
+          "purpose": "Scheduling",
+          "show": "Phone with schedule screen and a big 'feed now' button highlighted.",
+          "headline": "Set Meals in the App",
+          "callouts": [
+            "Timed meals + portions",
+            "Tap to feed now"
+          ],
+          "proves": "Bullet 3: timed cat feeder, programmable"
+        },
+        {
+          "slot": "PT05",
+          "purpose": "Anti-jam + freshness",
+          "show": "Diagram: kibble jam > motor reverses > food flows; inset of seal and desiccant box.",
+          "headline": "Kibble Keeps Flowing",
+          "callouts": [
+            "Detects + reverses jams",
+            "Seals + desiccant box"
+          ],
+          "proves": "Bullet 4: anti-jam, fresh food"
+        },
+        {
+          "slot": "PT06",
+          "purpose": "Power cuts",
+          "show": "Same layout as other feeders.",
+          "headline": "Meals Stay on Schedule",
+          "callouts": [
+            "Adapter + battery backup",
+            "Batteries not included"
+          ],
+          "proves": "Bullet 5: dual power"
+        },
+        {
+          "slot": "PT07",
+          "purpose": "Size + small dogs + cleaning",
+          "show": "Dimension drawing 6.8 x 7.0 x 11.0 in next to a cat and a small dog; bowl in dishwasher inset.",
+          "headline": "For Cats and Small Dogs",
+          "callouts": [
+            "6.8 x 7.0 x 11.0 in",
+            "Dishwasher safe steel bowl"
+          ],
+          "proves": "automatic dog feeder with camera; bullet 5"
+        },
+        {
+          "slot": "PT08",
+          "purpose": "Cross-sell PETME2 feeders",
+          "show": "3-column own-brand chart.",
+          "headline": "Which PETME2 Feeder Fits You?",
+          "callouts": [
+            "Camera or no camera",
+            "1 bowl or 2"
+          ],
+          "proves": "Own-brand comparison"
+        },
+        {
+          "slot": "VIDEO",
+          "purpose": "30-45 s, captions, include real screen recording",
+          "show": "Owner at work opens app > live 1080p view > talks through 2-way audio > taps 'feed now' > cat eats. Show set-up in 3 steps.",
+          "headline": "See, Hear and Feed",
+          "callouts": [
+            "1080p live view",
+            "2-way audio"
+          ],
+          "proves": "Bullets 1-3"
+        }
+      ],
+      "aplus": [
+        {
+          "module": "Standard Header Image with Text (970 x 600)",
+          "image_idea": "Split: owner in office with phone / cat eating at home.",
+          "headline": "See, Hear and Feed From Anywhere",
+          "body": "The PETME2 3L feeder with camera puts a 1080p HD live view, 2-way audio and meal scheduling in one app."
+        },
+        {
+          "module": "Standard Four Image & Text (4 x 220 x 220)",
+          "image_idea": "Camera, speech, calendar, gear icons over close-ups.",
+          "blocks": [
+            [
+              "1080p Live View",
+              "Watch mealtime on your phone and check that your pet is eating."
+            ],
+            [
+              "2-Way Audio",
+              "Hear your pet and talk back to calm them or call them to eat."
+            ],
+            [
+              "App Scheduling",
+              "Set meal times and portions, or tap once to serve a meal now."
+            ],
+            [
+              "Anti-Jam",
+              "The system detects a kibble jam and reverses to keep food flowing."
+            ]
+          ]
+        },
+        {
+          "module": "Standard Single Left Image (300 x 300)",
+          "image_idea": "Seal + desiccant + battery icon.",
+          "headline": "Fresh Food, Steady Meals",
+          "body": "Moisture seals and a desiccant box help keep kibble fresh. Battery backup keeps meals on time in an outage (batteries not included)."
+        },
+        {
+          "module": "Standard Three Images & Text (3 x 300 x 300)",
+          "image_idea": "Set-up steps.",
+          "blocks": [
+            [
+              "1. Place",
+              "Set it on a flat, stable indoor surface."
+            ],
+            [
+              "2. Fill + Plug In",
+              "Add dry kibble and connect power."
+            ],
+            [
+              "3. Pair",
+              "Connect to the app over WiFi and set meals."
+            ]
+          ]
+        },
+        {
+          "module": "Standard Comparison Chart",
+          "chart": "FEEDER_CHART"
+        }
+      ],
+      "existing_images": {
+        "B0GTCGYZDM": {
+          "image_count": 9,
+          "slots_used": [
+            "MAIN",
+            "PT01",
+            "PT02",
+            "PT03",
+            "PT04",
+            "PT05",
+            "PT06",
+            "PT07",
+            "PT08"
+          ],
+          "slots_empty": []
+        }
+      }
+    },
+    {
+      "key": "stainless_32l",
+      "name": "3.2L Stainless Steel Fountain",
+      "asins": [
+        "B0DR7FCLZR"
+      ],
+      "parent": null,
+      "color_note": "Silver stainless steel only.",
+      "top_keywords": [
+        "cat water fountain (319k)",
+        "dog water fountain (98k)",
+        "cat water fountain stainless steel (79k)",
+        "stainless steel cat water fountain (70k)",
+        "water fountains for cats indoor (50k)",
+        "cat water fountain with filtration (4.5k)"
+      ],
+      "true_facts": [
+        "108oz / 3.2L",
+        "2 flow modes: faucet stream or gentle bubbling",
+        "Stainless steel base / drinking surface, rust-resistant",
+        "4-layer filter (cotton mesh, activated carbon, ion-exchange resin, fine pad) + high-density sponge",
+        "Replace filter every 2-3 weeks",
+        "Quiet DC 5V pump, AC adapter + USB cable",
+        "LED light shows water level at night; switch on cable turns it off",
+        "360-degree raised rim",
+        "Detachable parts are dishwasher safe",
+        "Cats and dogs (small to medium)"
+      ],
+      "do_not_show": [
+        "'Luxury', '2026', 'Premium'",
+        "'304' until grade confirmed",
+        "dB numbers until measured",
+        "'BPA-free' (removed from new listing)",
+        "Health claims (kidney, UTI, 'prevents disease')",
+        "'Heavy metals' removal",
+        "Number of filters (not confirmed)",
+        "Warranty badge"
+      ],
+      "slots": [
+        {
+          "slot": "MAIN",
+          "purpose": "Win the click vs cheaper steel fountains",
+          "show": "Fountain filled, faucet stream running, steel evenly lit with soft reflections, pure white RGB 255, 85-90% fill, no text, LED off.",
+          "headline": "",
+          "callouts": [],
+          "proves": "Steel + running water = 'stainless steel cat water fountain'"
+        },
+        {
+          "slot": "PT01",
+          "purpose": "Hero infographic",
+          "show": "Product with 4 icons.",
+          "headline": "Stainless Steel Cat Water Fountain",
+          "callouts": [
+            "108oz / 3.2L",
+            "2 flow modes",
+            "4-layer filter"
+          ],
+          "proves": "cat water fountain stainless steel; title"
+        },
+        {
+          "slot": "PT02",
+          "purpose": "Unique combo: 2 flow modes",
+          "show": "Split image: left faucet stream with a cat drinking, right bubbling with a small dog drinking.",
+          "headline": "Two Flow Modes",
+          "callouts": [
+            "Faucet stream",
+            "Gentle bubbling",
+            "For cats and dogs"
+          ],
+          "proves": "Bullet 1; dog water fountain"
+        },
+        {
+          "slot": "PT03",
+          "purpose": "Steel, not plastic",
+          "show": "Macro of the brushed steel drinking surface with water drops; small inset of a cloth wiping it.",
+          "headline": "Steel Where Pets Drink",
+          "callouts": [
+            "Rust-resistant stainless steel",
+            "Wipes clean easily"
+          ],
+          "proves": "Bullet 2: stainless steel cat water fountain"
+        },
+        {
+          "slot": "PT04",
+          "purpose": "Filtration",
+          "show": "Exploded filter: 4 labeled layers + sponge, water-flow arrows.",
+          "headline": "4-Layer Filter + Sponge",
+          "callouts": [
+            "Traps hair and debris",
+            "Helps reduce odors",
+            "Change every 2-3 weeks"
+          ],
+          "proves": "Bullet 3: cat water fountain with filtration"
+        },
+        {
+          "slot": "PT05",
+          "purpose": "EMPTY SLOT - fill it first: capacity + rim",
+          "show": "Fountain next to a normal cat bowl for scale; '108oz' water-level graphic; arrow around the 360-degree raised rim.",
+          "headline": "108oz for Multi-Pet Homes",
+          "callouts": [
+            "3.2L, fewer refills",
+            "360-degree raised rim"
+          ],
+          "proves": "Bullet 5: 108oz capacity"
+        },
+        {
+          "slot": "PT06",
+          "purpose": "LED at night",
+          "show": "Dark room, soft LED glow, water level clearly visible, cat silhouette.",
+          "headline": "See the Water Level at Night",
+          "callouts": [
+            "LED light",
+            "Off switch on the cable"
+          ],
+          "proves": "Bullet 4: LED light"
+        },
+        {
+          "slot": "PT07",
+          "purpose": "Quiet + power",
+          "show": "Calm bedroom, cat asleep near the fountain; inset of the DC 5V pump, adapter and USB cable.",
+          "headline": "Quiet DC 5V Pump",
+          "callouts": [
+            "Runs day and night",
+            "AC adapter + USB cable"
+          ],
+          "proves": "Bullet 4: quiet, water fountains for cats indoor"
+        },
+        {
+          "slot": "PT08",
+          "purpose": "Cleaning + box",
+          "show": "Parts in a dishwasher rack; flat lay with labels: base, pump, filter with sponge, LED module, adapter, USB cable, manual.",
+          "headline": "Dishwasher Safe Parts",
+          "callouts": [
+            "Comes apart for washing",
+            "Everything in the box"
+          ],
+          "proves": "Bullet 5: dishwasher safe; 'In the box'"
+        },
+        {
+          "slot": "VIDEO",
+          "purpose": "30-45 s, captions",
+          "show": "Assemble in 4 moves > switch faucet to bubbling > cat and dog drink > filter layers > LED at night > parts into dishwasher.",
+          "headline": "Two Flow Modes, Stainless Steel",
+          "callouts": [
+            "108oz / 3.2L",
+            "LED light"
+          ],
+          "proves": "Bullets 1-5"
+        }
+      ],
+      "aplus": [
+        {
+          "module": "Standard Header Image with Text (970 x 600)",
+          "image_idea": "Cat drinking from faucet stream in a bright kitchen.",
+          "headline": "Fresh Moving Water in Stainless Steel",
+          "body": "The PETME2 108oz / 3.2L fountain gives cats and dogs a steel drinking surface and two flow modes."
+        },
+        {
+          "module": "Standard Four Image & Text (4 x 220 x 220)",
+          "image_idea": "Faucet, steel macro, filter, LED.",
+          "blocks": [
+            [
+              "Two Flow Modes",
+              "Switch between a running faucet stream and a gentle bubbling flow."
+            ],
+            [
+              "Stainless Steel",
+              "A rust-resistant steel surface that wipes clean easily."
+            ],
+            [
+              "4-Layer Filter",
+              "Cotton mesh, activated carbon, ion-exchange resin and a fine pad, plus a sponge. Replace every 2-3 weeks."
+            ],
+            [
+              "LED Light",
+              "See the water level in a dark room. A switch on the cable turns it off."
+            ]
+          ]
+        },
+        {
+          "module": "Standard Single Left Image (300 x 300)",
+          "image_idea": "Raised rim close-up with water.",
+          "headline": "108oz Capacity, Raised Rim",
+          "body": "The 3.2L reservoir means fewer refills for multi-pet homes. A 360-degree raised rim helps stop splashes."
+        },
+        {
+          "module": "Standard Three Images & Text (3 x 300 x 300)",
+          "image_idea": "Quiet pump, dishwasher, cat + dog.",
+          "blocks": [
+            [
+              "Quiet Pump",
+              "Low-voltage DC 5V pump with AC adapter and USB cable."
+            ],
+            [
+              "Dishwasher Safe",
+              "Detachable parts go in the dishwasher."
+            ],
+            [
+              "Cats and Dogs",
+              "Suits cats and small to medium dogs."
+            ]
+          ]
+        },
+        {
+          "module": "Standard Comparison Chart",
+          "chart": "FOUNTAIN_CHART"
+        }
+      ],
+      "existing_images": {
+        "B0DR7FCLZR": {
+          "image_count": 8,
+          "slots_used": [
+            "MAIN",
+            "PT01",
+            "PT02",
+            "PT03",
+            "PT04",
+            "PT06",
+            "PT07",
+            "PT08"
+          ],
+          "slots_empty": [
+            "PT05"
+          ]
+        }
+      }
+    },
+    {
+      "key": "slim_2l",
+      "name": "2L Slim Fountain (red light alert)",
+      "asins": [
+        "B0GHKN9DBR"
+      ],
+      "parent": null,
+      "color_note": "White only (drop 'Luxury' from the color name).",
+      "top_keywords": [
+        "cat water fountain (319k)",
+        "water fountains for cats indoor (50k, rank #236)",
+        "cat water dispenser (17.5k)",
+        "automatic water dispenser for cats (8.8k)",
+        "small cat water fountain",
+        "plastic cat water fountain (rank #29, protect)"
+      ],
+      "true_facts": [
+        "68oz / 2L",
+        "Red light low water alert",
+        "Visible water level window",
+        "Anti-dry: pump powers off when water is low",
+        "Quiet pump",
+        "Slim, light, easy to move",
+        "Comes apart quickly to wash",
+        "DC 5V",
+        "In the box: main unit, reservoir, power cable, manual"
+      ],
+      "do_not_show": [
+        "Any filter (not listed)",
+        "Stainless steel",
+        "'Anti-dry heating' (there is no heater)",
+        "dB numbers",
+        "Health claims"
+      ],
+      "slots": [
+        {
+          "slot": "MAIN",
+          "purpose": "Win the click",
+          "show": "Slim white body, water gently flowing, pure white RGB 255, 85-90% fill, no text.",
+          "headline": "",
+          "callouts": [],
+          "proves": "Slim shape = small cat water fountain"
+        },
+        {
+          "slot": "PT01",
+          "purpose": "Hero infographic",
+          "show": "Product + 3 icons.",
+          "headline": "Quiet Cat Water Fountain, 2L",
+          "callouts": [
+            "68oz / 2L",
+            "Red light low water alert",
+            "Anti-dry pump shut-off"
+          ],
+          "proves": "cat water fountain; title"
+        },
+        {
+          "slot": "PT02",
+          "purpose": "Why moving water",
+          "show": "Cat drinking from the fountain; an untouched still bowl blurred in the back.",
+          "headline": "Moving Water Cats Like",
+          "callouts": [
+            "Water keeps moving",
+            "Easy upgrade from a bowl"
+          ],
+          "proves": "Bullet 1: automatic cat water fountain"
+        },
+        {
+          "slot": "PT03",
+          "purpose": "Red light alert",
+          "show": "Close-up of the red light ON next to a low reservoir.",
+          "headline": "Red Light = Time to Refill",
+          "callouts": [
+            "Low water alert",
+            "No guessing"
+          ],
+          "proves": "Bullet 2: red light"
+        },
+        {
+          "slot": "PT04",
+          "purpose": "Level window",
+          "show": "Window close-up with a 'full / refill' line graphic.",
+          "headline": "Check the Level at a Glance",
+          "callouts": [
+            "Visible water window",
+            "68oz / 2L reservoir"
+          ],
+          "proves": "Bullet 2: visible window"
+        },
+        {
+          "slot": "PT05",
+          "purpose": "Anti-dry",
+          "show": "Simple 2-step diagram: water low > pump stops.",
+          "headline": "Pump Stops When Water Is Low",
+          "callouts": [
+            "Automatic shut-off",
+            "Helps protect the pump"
+          ],
+          "proves": "Bullet 3: anti-dry"
+        },
+        {
+          "slot": "PT06",
+          "purpose": "Small spaces",
+          "show": "Apartment bedroom at night, fountain on the floor, cat drinking.",
+          "headline": "Slim and Quiet for Small Spaces",
+          "callouts": [
+            "Fits bedrooms and apartments",
+            "Light, easy to move"
+          ],
+          "proves": "Bullet 4: water fountains for cats indoor"
+        },
+        {
+          "slot": "PT07",
+          "purpose": "Clean + set up + box",
+          "show": "3 steps (open, rinse, refill) + flat lay with labels: unit, reservoir, cable, manual.",
+          "headline": "Easy to Clean and Set Up",
+          "callouts": [
+            "Comes apart quickly",
+            "Fill, plug in, ready"
+          ],
+          "proves": "Bullet 5"
+        },
+        {
+          "slot": "PT08",
+          "purpose": "Cross-sell PETME2 fountains",
+          "show": "4-column own-brand chart (same as A+).",
+          "headline": "Which PETME2 Fountain Fits You?",
+          "callouts": [
+            "2L to 3.2L",
+            "Plastic or steel"
+          ],
+          "proves": "Own-brand comparison"
+        },
+        {
+          "slot": "VIDEO",
+          "purpose": "20-30 s, captions",
+          "show": "Fill > plug in > water flows > cat drinks > water drops > red light on and pump stops > refill.",
+          "headline": "Red Light Tells You When",
+          "callouts": [
+            "68oz / 2L",
+            "Anti-dry shut-off"
+          ],
+          "proves": "Bullets 2-3"
+        }
+      ],
+      "aplus": [
+        {
+          "module": "Standard Header Image with Text (970 x 600)",
+          "image_idea": "Cat drinking in a cozy apartment corner.",
+          "headline": "Fresh Moving Water for Indoor Cats",
+          "body": "The PETME2 68oz / 2L fountain keeps water gently moving, because many cats prefer it to a still bowl."
+        },
+        {
+          "module": "Standard Four Image & Text (4 x 220 x 220)",
+          "image_idea": "Red light, window, pump icon, slim body.",
+          "blocks": [
+            [
+              "Red Light Alert",
+              "A red light comes on when the water runs low."
+            ],
+            [
+              "Level Window",
+              "See how much water is left at a glance."
+            ],
+            [
+              "Anti-Dry",
+              "The pump powers off when the water is too low."
+            ],
+            [
+              "Slim + Quiet",
+              "Fits bedrooms, kitchens and small apartments."
+            ]
+          ]
+        },
+        {
+          "module": "Standard Single Left Image (300 x 300)",
+          "image_idea": "Small dog drinking.",
+          "headline": "For Cats, Kittens and Small Dogs",
+          "body": "One compact fountain that cats and small dogs can share."
+        },
+        {
+          "module": "Standard Three Images & Text (3 x 300 x 300)",
+          "image_idea": "Set-up steps.",
+          "blocks": [
+            [
+              "1. Place",
+              "Set it on a flat, stable surface."
+            ],
+            [
+              "2. Fill",
+              "Fill the reservoir with fresh water."
+            ],
+            [
+              "3. Plug In",
+              "Connect the power cable. Done."
+            ]
+          ]
+        },
+        {
+          "module": "Standard Comparison Chart",
+          "chart": "FOUNTAIN_CHART"
+        }
+      ],
+      "existing_images": {
+        "B0GHKN9DBR": {
+          "image_count": 9,
+          "slots_used": [
+            "MAIN",
+            "PT01",
+            "PT02",
+            "PT03",
+            "PT04",
+            "PT05",
+            "PT06",
+            "PT07",
+            "PT08"
+          ],
+          "slots_empty": []
+        }
+      }
+    },
+    {
+      "key": "clear_22l",
+      "name": "2.2L Transparent Fountain",
+      "asins": [
+        "B0GHLBGCP3"
+      ],
+      "parent": null,
+      "color_note": "Clear base with white top.",
+      "top_keywords": [
+        "cat water fountain (319k)",
+        "dog water fountain (98k)",
+        "water fountains for cats indoor (50k)",
+        "cat water fountain with filtration (4.5k)",
+        "filtered dog water fountain (2.9k)",
+        "small dog water fountain (2.5k)"
+      ],
+      "true_facts": [
+        "74oz / 2.2L",
+        "Transparent body shows water level",
+        "4-layer filter cartridge included",
+        "Quiet pump",
+        "Anti-dry protection",
+        "USB powered, no batteries",
+        "Assembles in minutes, comes apart for washing",
+        "In the box: main unit, reservoir, filter cartridge, power cable, manual"
+      ],
+      "do_not_show": [
+        "Low water light (not verified)",
+        "Stainless steel",
+        "dB numbers",
+        "Health claims",
+        "List price $65.99 / strike-through"
+      ],
+      "slots": [
+        {
+          "slot": "MAIN",
+          "purpose": "Win the click",
+          "show": "Clear body with visible blue-tinted water (real water, no color added if not true), white top, pure white RGB 255, 85-90% fill, no text.",
+          "headline": "",
+          "callouts": [],
+          "proves": "Clear tank visible at thumbnail = transparent fountain"
+        },
+        {
+          "slot": "PT01",
+          "purpose": "Hero infographic",
+          "show": "Product + 3 icons.",
+          "headline": "Transparent Cat Water Fountain, 2.2L",
+          "callouts": [
+            "74oz / 2.2L",
+            "4-layer filter included",
+            "Quiet pump"
+          ],
+          "proves": "title; cat water fountain with filtration"
+        },
+        {
+          "slot": "PT02",
+          "purpose": "See the level",
+          "show": "Close-up of the water line through the clear tank, kitchen in the back.",
+          "headline": "See the Level, Refill on Time",
+          "callouts": [
+            "Clear tank",
+            "No lifting the lid"
+          ],
+          "proves": "Bullet 1"
+        },
+        {
+          "slot": "PT03",
+          "purpose": "Filter",
+          "show": "Cartridge out of the unit, 4 labeled layers, flow arrows.",
+          "headline": "4-Layer Filter in the Box",
+          "callouts": [
+            "Catches hair and debris",
+            "Helps reduce odors",
+            "Replace regularly"
+          ],
+          "proves": "Bullet 2: filtered dog water fountain"
+        },
+        {
+          "slot": "PT04",
+          "purpose": "Moving water",
+          "show": "Cat drinking from the gentle flow.",
+          "headline": "Flowing Water Cats Like",
+          "callouts": [
+            "Water keeps circulating",
+            "Upgrade from a still bowl"
+          ],
+          "proves": "Bullet 3"
+        },
+        {
+          "slot": "PT05",
+          "purpose": "Quiet + anti-dry",
+          "show": "Calm living room; small shield icon on the pump.",
+          "headline": "Quiet Pump for Calm Homes",
+          "callouts": [
+            "Bedroom friendly",
+            "Anti-dry protection"
+          ],
+          "proves": "Bullet 4: quiet cat water fountain"
+        },
+        {
+          "slot": "PT06",
+          "purpose": "Small dogs",
+          "show": "Small dog and kitten drinking together.",
+          "headline": "For Cats, Kittens, Small Dogs",
+          "callouts": [
+            "Indoor use",
+            "74oz for fewer refills"
+          ],
+          "proves": "small dog water fountain; kitten water fountain"
+        },
+        {
+          "slot": "PT07",
+          "purpose": "Set-up + box",
+          "show": "3 steps + flat lay with labels: unit, reservoir, filter, cable, manual.",
+          "headline": "Set Up in Minutes",
+          "callouts": [
+            "Comes apart for washing",
+            "USB powered, no batteries"
+          ],
+          "proves": "Bullet 5"
+        },
+        {
+          "slot": "PT08",
+          "purpose": "Cross-sell PETME2 fountains",
+          "show": "4-column own-brand chart.",
+          "headline": "Which PETME2 Fountain Fits You?",
+          "callouts": [
+            "2L to 3.2L",
+            "Plastic or steel"
+          ],
+          "proves": "Own-brand comparison"
+        },
+        {
+          "slot": "VIDEO",
+          "purpose": "20-30 s, captions",
+          "show": "Assemble > insert filter > fill > water circulates > look at water line through the clear tank > cat drinks.",
+          "headline": "See It, Fill It",
+          "callouts": [
+            "Clear tank",
+            "4-layer filter"
+          ],
+          "proves": "Bullets 1-3"
+        }
+      ],
+      "aplus": [
+        {
+          "module": "Standard Header Image with Text (970 x 600)",
+          "image_idea": "Clear fountain on a kitchen floor, water line visible, cat drinking.",
+          "headline": "See the Water. Refill on Time.",
+          "body": "The PETME2 74oz / 2.2L fountain has a clear body, so you can check the water level from across the room."
+        },
+        {
+          "module": "Standard Four Image & Text (4 x 220 x 220)",
+          "image_idea": "Tank, filter, pump, USB plug.",
+          "blocks": [
+            [
+              "Clear Tank",
+              "See exactly how much water is left."
+            ],
+            [
+              "4-Layer Filter",
+              "Included in the box. Helps catch hair, debris and odors."
+            ],
+            [
+              "Quiet Pump",
+              "Runs in the background in bedrooms and living rooms."
+            ],
+            [
+              "USB Powered",
+              "No batteries needed. Anti-dry protection helps guard the pump."
+            ]
+          ]
+        },
+        {
+          "module": "Standard Single Left Image (300 x 300)",
+          "image_idea": "Kitten and small dog.",
+          "headline": "For Cats, Kittens and Small Dogs",
+          "body": "A compact indoor fountain with gently circulating water."
+        },
+        {
+          "module": "Standard Three Images & Text (3 x 300 x 300)",
+          "image_idea": "Set-up steps.",
+          "blocks": [
+            [
+              "1. Assemble",
+              "Put the parts together in minutes."
+            ],
+            [
+              "2. Add Filter + Water",
+              "Insert the filter and fill the tank."
+            ],
+            [
+              "3. Plug In",
+              "Connect the USB power cable."
+            ]
+          ]
+        },
+        {
+          "module": "Standard Comparison Chart",
+          "chart": "FOUNTAIN_CHART"
+        }
+      ],
+      "existing_images": {
+        "B0GHLBGCP3": {
+          "image_count": 9,
+          "slots_used": [
+            "MAIN",
+            "PT01",
+            "PT02",
+            "PT03",
+            "PT04",
+            "PT05",
+            "PT06",
+            "PT07",
+            "PT08"
+          ],
+          "slots_empty": []
+        }
+      }
+    },
+    {
+      "key": "tray_22l",
+      "name": "2.2L Fountain with Stainless Steel Tray",
+      "asins": [
+        "B0GHKRYV6W"
+      ],
+      "parent": null,
+      "color_note": "White body with stainless steel tray.",
+      "top_keywords": [
+        "cat water fountain (319k)",
+        "dog water fountain (98k)",
+        "water fountains for cats indoor (50k)",
+        "cat water fountain with filtration (4.5k)",
+        "dog fountain stainless steel (2.9k, backend)",
+        "small cat water fountain"
+      ],
+      "true_facts": [
+        "Stainless steel drinking tray; body is plastic",
+        "4-layer filtration, filters included (count not confirmed)",
+        "74oz / 2.2L, about 7-10 days of water depending on pets",
+        "Visible water level window",
+        "Low water alert",
+        "Pump shuts off when water is low",
+        "Quiet submerged pump",
+        "Fully detachable"
+      ],
+      "do_not_show": [
+        "A red light (listing says do not show one)",
+        "'Stainless steel fountain' (only the tray is steel)",
+        "'Heavy metals' or 'chin acne' claims",
+        "A filter count until confirmed",
+        "dB numbers"
+      ],
+      "slots": [
+        {
+          "slot": "MAIN",
+          "purpose": "Win the click",
+          "show": "Top-down 3/4 angle so the steel tray is clearly visible on the white body, water flowing, pure white RGB 255, 85-90% fill.",
+          "headline": "",
+          "callouts": [],
+          "proves": "Steel tray visible at thumbnail"
+        },
+        {
+          "slot": "PT01",
+          "purpose": "Hero infographic",
+          "show": "Product + 3 icons.",
+          "headline": "Cat Fountain With Stainless Steel Tray",
+          "callouts": [
+            "74oz / 2.2L",
+            "4-layer filtration",
+            "Filters included"
+          ],
+          "proves": "title"
+        },
+        {
+          "slot": "PT02",
+          "purpose": "Steel tray (honest)",
+          "show": "Close-up of the steel tray with water; small label 'light plastic body'.",
+          "headline": "Pets Drink From Steel",
+          "callouts": [
+            "Stainless steel drinking tray",
+            "Wipes clean easily",
+            "Light plastic body"
+          ],
+          "proves": "Bullet 1"
+        },
+        {
+          "slot": "PT03",
+          "purpose": "Filter",
+          "show": "Exploded 4 layers + the included filters.",
+          "headline": "4-Layer Filtration, Filters Included",
+          "callouts": [
+            "Traps fur and debris",
+            "Helps reduce odors"
+          ],
+          "proves": "Bullet 2: cat water fountain with filtration"
+        },
+        {
+          "slot": "PT04",
+          "purpose": "Refill alerts (3 icons)",
+          "show": "Window + alert icon + pump-off icon; no red light drawn.",
+          "headline": "Know When to Refill",
+          "callouts": [
+            "Visible level window",
+            "Low water alert",
+            "Pump stops when low"
+          ],
+          "proves": "Bullet 4"
+        },
+        {
+          "slot": "PT05",
+          "purpose": "Capacity",
+          "show": "7-day calendar strip next to the fountain.",
+          "headline": "About 7-10 Days of Water",
+          "callouts": [
+            "74oz / 2.2L",
+            "Depends on your pets"
+          ],
+          "proves": "Bullet 3"
+        },
+        {
+          "slot": "PT06",
+          "purpose": "Quiet",
+          "show": "Timid cat drinking calmly at night.",
+          "headline": "Quiet Pump for Shy Cats",
+          "callouts": [
+            "Submerged pump",
+            "Low noise"
+          ],
+          "proves": "Bullet 5: quiet cat water fountain"
+        },
+        {
+          "slot": "PT07",
+          "purpose": "Clean + box",
+          "show": "All parts laid out apart, labels: unit, tray, reservoir, filters, cable, manual.",
+          "headline": "Fully Detachable, Easy Clean",
+          "callouts": [
+            "Every part comes apart",
+            "Easy to carry"
+          ],
+          "proves": "Bullet 5"
+        },
+        {
+          "slot": "PT08",
+          "purpose": "Cross-sell PETME2 fountains",
+          "show": "4-column own-brand chart.",
+          "headline": "Which PETME2 Fountain Fits You?",
+          "callouts": [
+            "2L to 3.2L",
+            "Plastic or steel"
+          ],
+          "proves": "Own-brand comparison"
+        },
+        {
+          "slot": "VIDEO",
+          "purpose": "20-30 s, captions",
+          "show": "Lift steel tray off > rinse > insert filter > fill > water flows over the tray > cat drinks > level window close-up.",
+          "headline": "Steel Tray, Fresh Water",
+          "callouts": [
+            "4-layer filter",
+            "74oz / 2.2L"
+          ],
+          "proves": "Bullets 1-3"
+        }
+      ],
+      "aplus": [
+        {
+          "module": "Standard Header Image with Text (970 x 600)",
+          "image_idea": "Cat drinking from the steel tray.",
+          "headline": "A Stainless Steel Tray Where Pets Drink",
+          "body": "The PETME2 74oz / 2.2L fountain pairs a light plastic body with a stainless steel drinking tray."
+        },
+        {
+          "module": "Standard Four Image & Text (4 x 220 x 220)",
+          "image_idea": "Tray, filter, window, pump.",
+          "blocks": [
+            [
+              "Steel Tray",
+              "Wipes clean easily between washes."
+            ],
+            [
+              "4-Layer Filter",
+              "Helps trap fur, debris and odors. Filters come in the box."
+            ],
+            [
+              "Refill Alerts",
+              "A level window and a low water alert. The pump shuts off when water is low."
+            ],
+            [
+              "Quiet Pump",
+              "A submerged pump with low noise for timid cats."
+            ]
+          ]
+        },
+        {
+          "module": "Standard Single Left Image (300 x 300)",
+          "image_idea": "Calendar + fountain.",
+          "headline": "About 7-10 Days of Water",
+          "body": "The 2.2L reservoir means fewer refills. The exact time depends on your pets."
+        },
+        {
+          "module": "Standard Three Images & Text (3 x 300 x 300)",
+          "image_idea": "Set-up steps.",
+          "blocks": [
+            [
+              "1. Place",
+              "Set it on a flat, stable surface."
+            ],
+            [
+              "2. Fill",
+              "Add the filter and fill with water."
+            ],
+            [
+              "3. Plug In",
+              "Connect the power. Water starts to flow."
+            ]
+          ]
+        },
+        {
+          "module": "Standard Comparison Chart",
+          "chart": "FOUNTAIN_CHART"
+        }
+      ],
+      "existing_images": {
+        "B0GHKRYV6W": {
+          "image_count": 9,
+          "slots_used": [
+            "MAIN",
+            "PT01",
+            "PT02",
+            "PT03",
+            "PT04",
+            "PT05",
+            "PT06",
+            "PT07",
+            "PT08"
+          ],
+          "slots_empty": []
+        }
+      }
+    }
+  ],
+  "comparison_charts": {
+    "feeders": {
+      "module": "Standard Comparison Chart (up to 6 products; image 150 x 300 px per product)",
+      "title": "Which PETME2 Feeder Fits Your Home?",
+      "columns": [
+        "3L Dual Bowl Feeder (B0GHLSQMJ9 white / B0GHMCG8Q9 black)",
+        "5L WiFi Elevated Dual Feeder (B0GHH8L59K)",
+        "3L Feeder with Camera (B0GTCGYZDM)"
+      ],
+      "rows": [
+        [
+          "Food storage",
+          "3L",
+          "5L",
+          "3L"
+        ],
+        [
+          "Bowls",
+          "2, even split",
+          "2, even split",
+          "1"
+        ],
+        [
+          "Bowl material",
+          "304 stainless steel",
+          "Stainless steel",
+          "Stainless steel"
+        ],
+        [
+          "WiFi app scheduling",
+          "Yes",
+          "Yes",
+          "Yes"
+        ],
+        [
+          "Meals per day",
+          "Up to 10 (up to 12 portions)",
+          "Custom schedule",
+          "Custom schedule"
+        ],
+        [
+          "Talk to your pet",
+          "2-way audio",
+          "Recorded mealtime call",
+          "2-way audio"
+        ],
+        [
+          "Camera",
+          "No",
+          "No",
+          "1080p HD live view"
+        ],
+        [
+          "Raised bowls",
+          "Yes",
+          "Yes, elevated station",
+          "No"
+        ],
+        [
+          "Anti-jam",
+          "4-compartment design",
+          "Anti-jam chute + motor",
+          "Detects + reverses jams"
+        ],
+        [
+          "Dual power",
+          "Adapter + battery backup*",
+          "Adapter + battery backup*",
+          "Adapter + battery backup*"
+        ],
+        [
+          "Cleaning",
+          "Dishwasher safe parts",
+          "Bowls + tank detach",
+          "Dishwasher safe bowl"
+        ],
+        [
+          "Size (L x W x H)",
+          "15.5 x 7.2 x 10.8 in",
+          "18.42 x 7.87 x 15.62 in",
+          "6.8 x 7.0 x 11.0 in"
+        ]
+      ],
+      "footnote": "*Batteries not included.",
+      "check_before_publish": [
+        "Camera row 'Raised bowls = No': confirm the camera feeder bowl is not raised.",
+        "If 5L / camera meals per day become known, replace 'Custom schedule' with the number.",
+        "Price is shown by Amazon automatically; never type a price into the chart."
+      ]
+    },
+    "fountains": {
+      "module": "Standard Comparison Chart (up to 6 products; image 150 x 300 px per product)",
+      "title": "Which PETME2 Fountain Fits Your Pet?",
+      "columns": [
+        "3.2L Stainless Steel Fountain (B0DR7FCLZR)",
+        "2L Slim Fountain (B0GHKN9DBR)",
+        "2.2L Transparent Fountain (B0GHLBGCP3)",
+        "2.2L Fountain with Steel Tray (B0GHKRYV6W)"
+      ],
+      "rows": [
+        [
+          "Capacity",
+          "108oz / 3.2L",
+          "68oz / 2L",
+          "74oz / 2.2L",
+          "74oz / 2.2L"
+        ],
+        [
+          "Pet drinks from",
+          "Stainless steel",
+          "Plastic",
+          "Plastic",
+          "Stainless steel tray"
+        ],
+        [
+          "Body",
+          "Stainless steel base",
+          "Slim white plastic",
+          "Clear plastic, white top",
+          "White plastic"
+        ],
+        [
+          "Filter",
+          "4-layer + sponge",
+          "-",
+          "4-layer cartridge, included",
+          "4-layer, filters included"
+        ],
+        [
+          "Flow",
+          "2 modes: faucet or bubbling",
+          "Gentle moving water",
+          "Gentle circulating water",
+          "Gentle circulating water"
+        ],
+        [
+          "See the water level",
+          "LED light (night)",
+          "Water level window",
+          "Clear tank",
+          "Water level window"
+        ],
+        [
+          "Low water help",
+          "-",
+          "Red light alert + pump shut-off",
+          "Anti-dry protection",
+          "Low water alert + pump shut-off"
+        ],
+        [
+          "Cleaning",
+          "Dishwasher safe parts",
+          "Comes apart quickly",
+          "Comes apart for washing",
+          "Fully detachable"
+        ],
+        [
+          "Power",
+          "DC 5V, adapter + USB cable",
+          "DC 5V, power cable",
+          "USB powered",
+          "DC 5V, power cable"
+        ]
+      ],
+      "footnote": "'-' = not a listed feature of that model.",
+      "check_before_publish": [
+        "2L B0GHKN9DBR filter cell: owner to confirm if it uses a filter. If yes, write the filter type; if no, keep '-'.",
+        "3.2L stainless 'Low water help': listing does not state anti-dry or a low-water alert. Keep '-' unless the owner confirms.",
+        "Write '304 stainless steel' on B0DR7FCLZR only after the owner confirms the grade."
+      ]
+    }
+  },
+  "brand_story": {
+    "where": "Brand Story carousel (Seller Central > A+ Content Manager > Start creating > Brand Story). One story, applied to all 8 child ASINs.",
+    "modules": [
+      {
+        "module": "Background image with text (hero)",
+        "image_size": "1464 x 625 px (newer 3000 x 600 px also accepted; keep text inside the center safe area)",
+        "image_idea": "Bright, real living room. A white PETME2 dual feeder on the left, the stainless fountain on the right, two cats between them. Soft light, lots of empty space on the left for the logo and text.",
+        "headline": "Fresh Water. Fair Meals. Less Worry.",
+        "text": "PETME2 makes automatic feeders and water fountains for busy homes with cats and small dogs."
+      },
+      {
+        "module": "Logo and description",
+        "image_size": "Logo 315 x 145 px (or 600 x 180 px)",
+        "headline": "Made for Busy Pet Homes",
+        "text": "Set meals from your phone, keep water moving all day, and spend less time on daily chores. PETME2 feeders and fountains are simple to set up and easy to clean."
+      },
+      {
+        "module": "ASIN showcase card 1",
+        "image_size": "362 x 453 px",
+        "links_to": "B0GHLSQMJ9 (3L dual feeder)",
+        "image_idea": "Two cats eating side by side from the dual feeder.",
+        "card_text": "Automatic Feeders for 2 Cats"
+      },
+      {
+        "module": "ASIN showcase card 2",
+        "image_size": "362 x 453 px",
+        "links_to": "B0GTCGYZDM (camera feeder)",
+        "image_idea": "Phone showing the live view of a cat at the camera feeder.",
+        "card_text": "Feeder with 1080p Camera"
+      },
+      {
+        "module": "ASIN showcase card 3",
+        "image_size": "362 x 453 px",
+        "links_to": "B0DR7FCLZR (3.2L stainless fountain)",
+        "image_idea": "Cat drinking from the faucet stream of the steel fountain.",
+        "card_text": "Stainless Steel Water Fountain"
+      },
+      {
+        "module": "ASIN showcase card 4",
+        "image_size": "362 x 453 px",
+        "links_to": "B0GHLBGCP3 (2.2L transparent fountain)",
+        "image_idea": "Clear fountain with the water line visible, kitten drinking.",
+        "card_text": "Easy-Care Cat Fountains"
+      }
+    ],
+    "rules": [
+      "No prices, no 'best' or '#1', no warranty or guarantee words, no competitor names, no health claims.",
+      "Cards link to products only, not outside websites."
+    ]
+  },
+  "priority": [
+    {
+      "rank": 1,
+      "product": "3.2L Stainless Steel Fountain B0DR7FCLZR",
+      "why": "Highest profit per sale ($13.86) and break-even ACOS (34.7%). Biggest keyword pool (1.32M monthly searches) with 'cat water fountain stainless steel' 79k + 70k. PT05 is empty. Price $39.99 vs $28-33 for steel rivals, so images must show what they lack together: 2 flow modes + LED + filter + dishwasher safe.",
+      "first_actions": [
+        "Fill PT05",
+        "New MAIN (faucet running)",
+        "PT01 hero",
+        "PT02 flow modes",
+        "video"
+      ]
+    },
+    {
+      "rank": 2,
+      "product": "3L Dual Feeder white B0GHLSQMJ9 + black B0GHMCG8Q9",
+      "why": "One shoot fixes 2 ASINs. $11.27 profit each, growth goal. Rank #62 for 'automatic cat feeder 2 cats' is close to page 1. Our gap (app + 2-way audio at $49.99) must be visible in images. Old black images may still say 'Cat Treat Dispenser'.",
+      "first_actions": [
+        "PT01 hero",
+        "PT02 two cats",
+        "PT03 app numbers",
+        "PT04 2-way audio"
+      ]
+    },
+    {
+      "rank": 3,
+      "product": "Camera Feeder B0GTCGYZDM",
+      "why": "$12.39 profit, cheapest camera feeder in the top 8. Must prove 1080p + 2-way audio with real app screens, and must NOT show night vision.",
+      "first_actions": [
+        "PT02 live view screen",
+        "PT01 hero",
+        "video with screen recording"
+      ]
+    },
+    {
+      "rank": 4,
+      "product": "5L WiFi Feeder B0GHH8L59K",
+      "why": "Launch item, only $2.58 profit at $45.99, so do it cheaply: reuse the feeder template, fill empty PT08, fix voice-call wording.",
+      "first_actions": [
+        "Fill PT08",
+        "PT04 voice call (recorded, not live)"
+      ]
+    },
+    {
+      "rank": 5,
+      "product": "$19.99 fountains B0GHKN9DBR, B0GHLBGCP3, B0GHKRYV6W",
+      "why": "Low profit ($2.37-$2.96). Batch all 3 in one template job. Main risk is compliance: old images may show filters (2L), red light (tray), 'heavy metals', 'chin acne'. Audit first, then redo PT01 + PT08 chart.",
+      "first_actions": [
+        "Audit old images for false claims",
+        "PT01 hero",
+        "PT08 own-brand chart"
+      ]
+    }
+  ],
+  "designer_brief": {
+    "deliverables_per_product": "1 MAIN + 8 secondary images (PT01-PT08) + 1 video (optional, separate quote) + A+ images (970x600 x1, 220x220 x4, 300x300 x4, 150x300 x1 chart thumb).",
+    "sizes": {
+      "listing images": "2000 x 2000 px square, JPEG, sRGB, under 10 MB. (Amazon minimum 1000 px for zoom; 2000 px gives sharp zoom.)",
+      "MAIN": "Pure white RGB 255,255,255. Product fills 85-90%. Real photo, no text, logo, badge, props, or kibble. Show only what is in the box.",
+      "A+ header": "970 x 600 px",
+      "A+ four image": "220 x 220 px each",
+      "A+ three images / single left": "300 x 300 px",
+      "A+ comparison chart": "150 x 300 px per product",
+      "Brand Story hero": "1464 x 625 px (or 3000 x 600 px)",
+      "Brand Story cards": "362 x 453 px",
+      "Logo": "600 x 180 px",
+      "Video": "1920 x 1080, MP4, 30-45 s, captions on, no music with lyrics"
+    },
+    "style": [
+      "Clean, bright, real homes (light wood, white walls). Real cats; one small dog where noted.",
+      "Mobile first: test every image at 375 px wide on a phone. If you cannot read it, make it bigger.",
+      "Headline max 6 words, bold sans-serif (Montserrat or Poppins Bold), at least 90 px tall on a 2000 px canvas.",
+      "Max 3 callouts, max 5 words each, at least 60 px tall. Use icons next to callouts.",
+      "Keep text in the top or left third; keep 100 px safe margin on every side.",
+      "Same layout, fonts, icon set and colors on all 8 products so the brand looks like one family."
+    ],
+    "colors": {
+      "text": "#1F2933 (charcoal)",
+      "background panels": "#F5F7FA (light gray) or white",
+      "feeder accent": "#F28C28 (warm orange)",
+      "fountain accent": "#1BA3C6 (water blue)",
+      "note": "If PETME2 already has logo colors, use those instead and keep the same 2 accents rule."
+    },
+    "rules": [
+      "Use ONLY the on-image text in this plan. Do not add claims, numbers, 'best', '#1', 'premium', 'luxury', 'vet approved', health claims, warranty badges, prices, or competitor names/products.",
+      "Do not show features the product does not have (see each product's 'do not show' list).",
+      "Phone screens must be real app screenshots from the owner (no fake UI, no app store badges).",
+      "Deliver layered PSD/Figma + JPG exports named ASIN.SLOT.jpg (e.g. B0DR7FCLZR.PT05.jpg) so they upload to the right slot."
+    ],
+    "what_owner_must_send": [
+      "1 sample unit of each product (or high-res photos)",
+      "Logo files",
+      "Real app screenshots (feeders)",
+      "A short phone video of each product running"
+    ]
+  },
+  "audit_current_images": [
+    "We cannot see the current images. Before upload, open each listing and check every slot for these old claims and remove them:",
+    "B0DR7FCLZR: 'Luxury', '2026', 'Premium', 'BPA-free', '304' (until confirmed), dB numbers, health words.",
+    "B0GHMCG8Q9: 'Cat Treat Dispenser'.",
+    "B0GTCGYZDM: night vision, dark-room live view, '2 cats' or dual-bowl text copied from the dual feeder.",
+    "B0GHH8L59K: 'talk to your pet' / 2-way audio (it only has a recorded call).",
+    "B0GHKN9DBR: any filter, 'heating', stainless steel.",
+    "B0GHKRYV6W: a red light, 'heavy metals', 'chin acne', 'stainless steel fountain'.",
+    "All: '#1', 'best', 'vet recommended', prices, discount stickers, competitor brands, Amazon logos/badges."
+  ],
+  "owner_to_confirm": [
+    "Stainless grade on B0DR7FCLZR (is it 304?) and measured dB for any product.",
+    "Number of filters in the box (B0GHKRYV6W, B0DR7FCLZR).",
+    "Does the 2L B0GHKN9DBR use a filter?",
+    "Camera feeder: night vision? meals per day? what is in the box?",
+    "5L feeder: meals per day and grams per portion; is the tank see-through; are the bowls dishwasher safe?",
+    "Battery type for each feeder; is WiFi 2.4GHz only?",
+    "3.2L stainless: anti-dry or low-water alert? (if yes, fill the '-' in the fountain chart)"
+  ],
+  "sources": [
+    {
+      "title": "Amazon Seller Central - Technical image file requirements (G9FUUH87RBNXGKB7)",
+      "url": "https://sellercentral.amazon.com/gp/help/external/G9FUUH87RBNXGKB7"
+    },
+    {
+      "title": "SellerSprite - Amazon Image Requirements & Optimization Tips 2026",
+      "url": "https://www.sellersprite.com/en/blog/Amazon-Image-Requirements-Optimization-Tips"
+    },
+    {
+      "title": "Seller Labs - Amazon Product Image Requirements 2026",
+      "url": "https://www.sellerlabs.com/blog/amazon-product-image-requirements-2026/"
+    },
+    {
+      "title": "Be Bold Digital - Amazon Image Requirements (2026 update)",
+      "url": "https://www.bebolddigital.com/blog/amazon-image-requirements"
+    },
+    {
+      "title": "SupplyKick - High-converting Amazon listing images 2026",
+      "url": "https://www.supplykick.com/blog/high-converting-amazon-listing-images-2026"
+    },
+    {
+      "title": "SellerSprite - Mobile Optimization for Amazon Listings",
+      "url": "https://www.sellersprite.com/en/blog/Mobile-Optimization-for-Amazon-Listings-Why-It-Matters"
+    },
+    {
+      "title": "GliaCloud - Amazon product video requirements 2026",
+      "url": "https://gliacloud.com/en/blog/amazon-product-video-requirements-compliance-conversion-guide-2026-edition"
+    },
+    {
+      "title": "Goat Consulting - Complete guide to Amazon video requirements 2026",
+      "url": "https://goatconsulting.com/merchandising/complete-guide-to-amazon-video-requirements-2024"
+    },
+    {
+      "title": "SellerSprite - How to create A+ Content 2025 (module sizes, 5 vs 7 modules)",
+      "url": "https://www.sellersprite.com/en/blog/how-to-create-amazon-a-plus-content-2025-guide"
+    },
+    {
+      "title": "Ecomclips - Sizes of modules in Amazon A+ Content",
+      "url": "https://ecomclips.com/blog/discuss-different-sizes-of-modules-in-amazon-a-content/"
+    },
+    {
+      "title": "Amazon - Standard A+ Module Templates (PDF)",
+      "url": "https://m.media-amazon.com/images/G/35/sp-marketing-toolkit/Sellerfacingguides/BO/Standard_A_Module_Templates.pdf"
+    },
+    {
+      "title": "Riverbend Consulting - Common A+ Content mistakes (prohibited content)",
+      "url": "https://riverbendconsulting.com/blog/amazon-a-plus-content/"
+    },
+    {
+      "title": "My Amazon Guy - A+ Content FAQs (no competitor comparisons, no pricing)",
+      "url": "https://myamazonguy.com/amazon/comprehensive-guide-amazon-aplus-content-faqs/"
+    },
+    {
+      "title": "Goat Consulting - Amazon Brand Story image sizes",
+      "url": "https://www.goatconsulting.com/blog/amazon-brand-story"
+    },
+    {
+      "title": "eStore Factory - Amazon Brand Story modules",
+      "url": "https://www.estorefactory.com/amazon-guide/what-are-the-amazon-brand-story-modules/"
+    },
+    {
+      "title": "Evolve AMZ - Brand Story module 2026 guide (3000 x 600 hero)",
+      "url": "https://evolveamz.com/amazon-brand-story-module-2026-guide/"
+    }
+  ]
+}

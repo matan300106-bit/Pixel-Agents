@@ -1,0 +1,76 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PETME2 Redesign Preview</title>
+<style>body{margin:0;font-family:Inter,system-ui,-apple-system,sans-serif;background:#fff} .lbl{background:#fff3c4;color:#5a4500;font:600 13px system-ui;padding:8px 16px;text-align:center;letter-spacing:.03em}
+.hero{background:#2b2b2b linear-gradient(135deg,#3a3a3a,#1c1c1c);color:#fff;padding:110px 40px;} .hero p{text-transform:uppercase;letter-spacing:.14em;font-size:12px;opacity:.8;margin:0 0 14px} .hero h1{font-weight:400;font-size:56px;line-height:1.05;margin:0 0 28px} .hero a{display:inline-block;padding:13px 26px;font-size:13px;margin-right:10px} .b1{background:#111;color:#fff;border:1px solid #111} .b2{background:#fff;color:#000}
+img{display:block} .pm2-cmp__img img{min-height:100px}
+
+  .pm2-trust { background: var(--pm2-bg); color: var(--pm2-fg); border-top: 1px solid rgba(0,0,0,.06); border-bottom: 1px solid rgba(0,0,0,.06); }
+  .pm2-trust__inner { max-width: 1240px; margin: 0 auto; padding: 22px 20px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .pm2-trust__item { display: flex; align-items: center; gap: 12px; font-size: 14px; line-height: 1.35; }
+  .pm2-trust__item strong { display: block; font-weight: 500; letter-spacing: .01em; }
+  .pm2-trust__item small { display: block; opacity: .65; font-size: 12.5px; margin-top: 2px; }
+  .pm2-trust__icon { width: 26px; height: 26px; flex: 0 0 26px; }
+  .pm2-trust__icon svg { width: 100%; height: 100%; }
+  @media (max-width: 899px) { .pm2-trust__inner { grid-template-columns: repeat(2, 1fr); padding: 18px 16px; gap: 16px; } }
+
+  .pm2-cmp { background: var(--pm2-bg); color: #111; padding: 96px 0; }
+  .pm2-cmp__inner { max-width: 1240px; margin: 0 auto; padding: 0 20px; }
+  .pm2-cmp__head { text-align: center; max-width: 640px; margin: 0 auto 44px; }
+  .pm2-cmp__eyebrow { text-transform: uppercase; letter-spacing: .14em; font-size: 12px; opacity: .6; margin: 0 0 10px; }
+  .pm2-cmp__head h2 { font-size: clamp(28px, 3.4vw, 40px); font-weight: 400; letter-spacing: -.01em; margin: 0 0 12px; }
+  .pm2-cmp__sub { opacity: .7; margin: 0; font-size: 15px; line-height: 1.6; }
+  .pm2-cmp__scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .pm2-cmp__table { width: 100%; border-collapse: collapse; min-width: 640px; background: #fff; }
+  .pm2-cmp__table th, .pm2-cmp__table td { padding: 16px 18px; text-align: center; border-bottom: 1px solid #e9e7e3; font-size: 14px; line-height: 1.45; vertical-align: middle; }
+  .pm2-cmp__table tbody th { text-align: left; font-weight: 500; white-space: nowrap; position: sticky; left: 0; background: #fff; z-index: 1; }
+  .pm2-cmp__table thead th { vertical-align: top; font-weight: 400; padding-top: 26px; position: relative; }
+  .pm2-cmp__corner { position: sticky; left: 0; background: #fff; z-index: 1; }
+  .pm2-cmp__img { display: block; aspect-ratio: 1; margin: 0 auto 12px; max-width: 150px; background: #f6f5f3; }
+  .pm2-cmp__img img { width: 100%; height: 100%; object-fit: contain; }
+  .pm2-cmp__name { display: block; color: #111; text-decoration: none; font-weight: 500; font-size: 15px; }
+  .pm2-cmp__price { display: block; margin-top: 4px; opacity: .7; }
+  .pm2-cmp__badge { position: absolute; top: 6px; left: 50%; transform: translateX(-50%); background: #111; color: #fff; font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; padding: 3px 8px; white-space: nowrap; }
+  .pm2-cmp__cta td { border-bottom: 0; padding-top: 22px; }
+  .pm2-btn { display: inline-block; background: #111; color: #fff; text-decoration: none; padding: 11px 22px; font-size: 13px; letter-spacing: .04em; transition: opacity .2s; }
+  .pm2-btn:hover { opacity: .8; }
+  @media (max-width: 749px) { .pm2-cmp { padding: 60px 0; } .pm2-cmp__table th, .pm2-cmp__table td { padding: 12px 10px; font-size: 13px; } }
+
+  .pm2-px { background: #fff; color: #111; padding: 72px 0; }
+  .pm2-px__inner { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+  .pm2-px__feats { list-style: none; margin: 0 0 56px; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: #e9e7e3; border: 1px solid #e9e7e3; }
+  .pm2-px__feats li { background: #f6f5f3; padding: 26px 22px; }
+  .pm2-px__feats strong { display: block; font-weight: 500; font-size: 15px; margin-top: 12px; }
+  .pm2-px__feats small { display: block; opacity: .65; font-size: 13px; line-height: 1.5; margin-top: 4px; }
+  .pm2-px__dot { display: block; width: 8px; height: 8px; background: #111; border-radius: 50%; }
+  .pm2-px__cols { display: grid; grid-template-columns: 1fr 1.6fr; gap: 56px; }
+  .pm2-px__cols h3 { font-weight: 400; font-size: 24px; margin: 0 0 18px; }
+  .pm2-px__box ul { margin: 0; padding: 0; list-style: none; }
+  .pm2-px__box li { padding: 10px 0; border-bottom: 1px solid #e9e7e3; font-size: 14.5px; }
+  .pm2-px__faq details { border-bottom: 1px solid #e9e7e3; }
+  .pm2-px__faq summary { cursor: pointer; padding: 16px 28px 16px 0; font-size: 15px; list-style: none; position: relative; }
+  .pm2-px__faq summary::-webkit-details-marker { display: none; }
+  .pm2-px__faq summary::after { content: '+'; position: absolute; right: 4px; top: 13px; font-size: 20px; font-weight: 300; }
+  .pm2-px__faq details[open] summary::after { content: '–'; }
+  .pm2-px__faq details div { padding: 0 0 18px; opacity: .75; font-size: 14px; line-height: 1.6; }
+  .pm2-px__pair { margin-top: 56px; display: grid; grid-template-columns: 110px 1fr auto; gap: 24px; align-items: center; background: #f6f5f3; padding: 20px 24px; }
+  .pm2-px__pairimg { display: block; aspect-ratio: 1; background: #fff; }
+  .pm2-px__pairimg img { width: 100%; height: 100%; object-fit: contain; }
+  .pm2-px__eyebrow { text-transform: uppercase; letter-spacing: .14em; font-size: 11.5px; opacity: .6; margin: 0 0 6px; }
+  .pm2-px__pairname { color: #111; text-decoration: none; font-weight: 500; }
+  .pm2-px__pairprice { margin: 4px 0 0; opacity: .7; font-size: 14px; }
+  .pm2-btn { display: inline-block; background: #111; color: #fff; text-decoration: none; padding: 11px 22px; font-size: 13px; letter-spacing: .04em; }
+  @media (max-width: 899px) {
+    .pm2-px { padding: 52px 0; }
+    .pm2-px__feats { grid-template-columns: repeat(2, 1fr); }
+    .pm2-px__cols { grid-template-columns: 1fr; gap: 40px; }
+    .pm2-px__pair { grid-template-columns: 80px 1fr; }
+    .pm2-px__pair .pm2-btn { grid-column: 1 / -1; text-align: center; }
+  }
+</style></head><body>
+<div class="lbl">HOMEPAGE — top (your real banner photo shows here)</div>
+<div class="hero"><p>Automatic feeders &amp; water fountains</p><h1>Better care,<br>better life.</h1><a class="b1">Shop feeders</a><a class="b2">Shop fountains</a></div>
+<div class="pm2-trust" style="--pm2-bg:#f6f5f3;--pm2-fg:#111"><div class="pm2-trust__inner"><div class="pm2-trust__item"><span class="pm2-trust__icon" style="font-size:20px">🚚</span><span><strong>Free U.S. shipping</strong><small>On orders $50+</small></span></div><div class="pm2-trust__item"><span class="pm2-trust__icon" style="font-size:20px">🔒</span><span><strong>Secure checkout</strong><small>Encrypted, safe payments</small></span></div><div class="pm2-trust__item"><span class="pm2-trust__icon" style="font-size:20px">💧</span><span><strong>Easy to clean</strong><small>Parts come apart for washing</small></span></div><div class="pm2-trust__item"><span class="pm2-trust__icon" style="font-size:20px">💬</span><span><strong>Real support</strong><small>Help from the PETME2 team</small></span></div></div></div>
+<div class="lbl">HOMEPAGE — NEW feeder comparison</div><section class="pm2-cmp" style="--pm2-bg:#f6f5f3"><div class="pm2-cmp__inner"><div class="pm2-cmp__head"><p class="pm2-cmp__eyebrow">Feeders</p><h2>Which feeder is right for you?</h2><p class="pm2-cmp__sub">All PETME2 feeders work with dry food, run on a schedule from the app, and are for cats and small dogs.</p></div><div class="pm2-cmp__scroll"><table class="pm2-cmp__table"><thead><tr><th class="pm2-cmp__corner"></th><th><span class="pm2-cmp__badge">Most popular</span><a class="pm2-cmp__img"><img src="https://cdn.shopify.com/s/files/1/0792/1716/4500/files/Dual-Bowl_Automatic_Feeder_Black.png?v=1786638140" alt=""></a><a class="pm2-cmp__name">3L Dual Bowl</a><span class="pm2-cmp__price">$65.99</span></th><th><a class="pm2-cmp__img"><img src="https://cdn.shopify.com/s/files/1/0792/1716/4500/files/Dual_Bowl_Automatic_Pet_Feeder_5L.png?v=1786638066" alt=""></a><a class="pm2-cmp__name">5L Elevated WiFi</a><span class="pm2-cmp__price">$54.99</span></th><th><a class="pm2-cmp__img"><img src="https://cdn.shopify.com/s/files/1/0792/1716/4500/files/Automatic_Cat_Feeder_with_Camera_App_Control_2-Way_Audio.png?v=1786637881" alt=""></a><a class="pm2-cmp__name">3L Camera Feeder</a><span class="pm2-cmp__price">$59.99</span></th></tr></thead><tbody><tr><th>Capacity</th><td>3L</td><td>5L</td><td>3L</td></tr><tr><th>Bowls</th><td>2 stainless steel</td><td>2 stainless steel</td><td>1 stainless steel</td></tr><tr><th>Control</th><td>App</td><td>WiFi app</td><td>WiFi app</td></tr><tr><th>Camera</th><td>—</td><td>—</td><td>1080P HD, live view</td></tr><tr><th>Audio</th><td>2-way audio</td><td>Voice recording</td><td>2-way audio</td></tr><tr class="pm2-cmp__cta"><th></th><td><a class="pm2-btn">View details</a></td><td><a class="pm2-btn">View details</a></td><td><a class="pm2-btn">View details</a></td></tr></tbody></table></div></div></section>
+<div class="lbl">HOMEPAGE — NEW fountain comparison</div><section class="pm2-cmp" style="--pm2-bg:#ffffff"><div class="pm2-cmp__inner"><div class="pm2-cmp__head"><p class="pm2-cmp__eyebrow">Water fountains</p><h2>Which fountain is right for you?</h2><p class="pm2-cmp__sub">Every PETME2 fountain has a quiet pump and comes apart for easy cleaning.</p></div><div class="pm2-cmp__scroll"><table class="pm2-cmp__table"><thead><tr><th class="pm2-cmp__corner"></th><th><span class="pm2-cmp__badge">Premium</span><a class="pm2-cmp__img"><img src="https://cdn.shopify.com/s/files/1/0792/1716/4500/files/Luxury_Stainless_Steel_Pet_Fountain-3l.png?v=1786637775" alt=""></a><a class="pm2-cmp__name">Stainless 3.2L</a><span class="pm2-cmp__price">$39.99</span></th><th><a class="pm2-cmp__img"><img src="https://cdn.shopify.com/s/files/1/0792/1716/4500/files/Steel-Tray_Cat_Water_Fountain_2.2L.png?v=1786638492" alt=""></a><a class="pm2-cmp__name">Steel Tray 2.2L</a><span class="pm2-cmp__price">$29.99</span></th><th><a class="pm2-cmp__img"><img src="https://cdn.shopify.com/s/files/1/0792/1716/4500/files/Clear_Cat_Water_Fountain_2L.png?v=1786637992" alt=""></a><a class="pm2-cmp__name">Transparent 2.2L</a><span class="pm2-cmp__price">$29.99</span></th><th><span class="pm2-cmp__badge">Best seller</span><a class="pm2-cmp__img"><img src="https://cdn.shopify.com/s/files/1/0792/1716/4500/files/Slim_Cat_Water_Fountain_2L.png?v=1786638434" alt=""></a><a class="pm2-cmp__name">Classic 2L</a><span class="pm2-cmp__price">$21.99</span></th></tr></thead><tbody><tr><th>Capacity</th><td>3.2L / 108oz</td><td>2.2L</td><td>2.2L</td><td>2L</td></tr><tr><th>Material</th><td>Stainless steel</td><td>Plastic + steel tray</td><td>Clear plastic</td><td>Plastic</td></tr><tr><th>Filter</th><td>4-layer filter</td><td>4-layer filter</td><td>Filter cartridge</td><td>—</td></tr><tr><th>Water level</th><td>LED light</td><td>Window + low-water light</td><td>See-through body</td><td>Window + low-water light</td></tr><tr><th>Best for</th><td>Big drinkers, cats & dogs</td><td>A steel drinking surface</td><td>Seeing water at a glance</td><td>Small spaces</td></tr><tr class="pm2-cmp__cta"><th></th><td><a class="pm2-btn">View details</a></td><td><a class="pm2-btn">View details</a></td><td><a class="pm2-btn">View details</a></td><td><a class="pm2-btn">View details</a></td></tr></tbody></table></div></div></section>
+<div class="lbl">PRODUCT PAGE — NEW section under the Add to cart area (example: 3L Dual Bowl feeder)</div><section class="pm2-px"><div class="pm2-px__inner"><ul class="pm2-px__feats"><li><span class="pm2-px__dot"></span><strong>Scheduled meals </strong><small> Set feeding times and portions in the app</small></li><li><span class="pm2-px__dot"></span><strong>Stainless steel bowls </strong><small> Food-safe steel that washes easily</small></li><li><span class="pm2-px__dot"></span><strong>Anti-jam design </strong><small> Helps kibble flow smoothly</small></li><li><span class="pm2-px__dot"></span><strong>Easy to clean </strong><small> Bowls and food container come apart</small></li></ul><div class="pm2-px__cols"><div class="pm2-px__box"><h3>What's in the box</h3><ul><li>Main unit</li><li>Dual bowl base</li><li>2 stainless steel bowls</li><li>3L food container</li><li>Desiccant box</li><li>Power adapter</li><li>User manual</li></ul></div><div class="pm2-px__faq"><h3>Questions</h3><details open><summary>Can I use wet food?</summary><div>No. PETME2 feeders are made for dry food (kibble).</div></details><details><summary>Can it feed two pets?</summary><div>Yes, the 3L Dual Bowl and the 5L Elevated feeders split food into two bowls. The 3L Camera Feeder has one bowl.</div></details><details><summary>Do I need WiFi?</summary><div>WiFi is needed for the app: schedules, portions and alerts. Setup steps are in the manual.</div></details><details><summary>How do I clean it?</summary><div>Take off the bowls and the food container and wash them. The manual shows which parts are dishwasher safe.</div></details><details><summary>Is PETME2 also on Amazon?</summary><div>Yes. PETME2 feeders are also sold on Amazon, where you can read buyer reviews.</div></details></div></div>
+<div class="pm2-px__pair"><a class="pm2-px__pairimg"><img src="https://cdn.shopify.com/s/files/1/0792/1716/4500/files/Luxury_Stainless_Steel_Pet_Fountain-3l.png?v=1786637775" alt=""></a><div><p class="pm2-px__eyebrow">Complete the setup</p><a class="pm2-px__pairname">PETME2 Stainless Steel Cat Water Fountain – 108oz/3.2L with LED Light &amp; Quiet Pump</a><p class="pm2-px__pairprice">$39.99</p></div><a class="pm2-btn">View</a></div></div></section>
+</body></html>

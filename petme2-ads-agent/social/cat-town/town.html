@@ -1,0 +1,310 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<!-- PETME2 Cat Town episode renderer. Reads episode.json (made by build_episode.py) and draws the town.
+     window.renderFrame(t) draws time t (seconds); render.js screenshots every frame. -->
+<style>
+  @font-face { font-family: Nunito; font-weight: 800; src: url(node_modules/@fontsource/nunito/files/nunito-latin-800-normal.woff2) format('woff2'); }
+  @font-face { font-family: Nunito; font-weight: 900; src: url(node_modules/@fontsource/nunito/files/nunito-latin-900-normal.woff2) format('woff2'); }
+  html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #BFE3FF; font-family: Nunito, sans-serif; }
+  canvas { position: absolute; inset: 0; }
+  .top { position: absolute; top: 110px; left: 0; right: 0; text-align: center; }
+  .brand { display: inline-flex; align-items: center; gap: 14px; background: rgba(255,255,255,.94); color: #2F5FE0; font-weight: 900; font-size: 40px; letter-spacing: .06em; padding: 14px 30px; border-radius: 999px; box-shadow: 0 10px 30px rgba(20,40,90,.15); }
+  .day { margin-top: 22px; font-weight: 900; font-size: 92px; line-height: 1; color: #fff; text-shadow: 0 6px 0 rgba(20,40,90,.25), 0 14px 40px rgba(20,40,90,.25); }
+  .stats { margin-top: 18px; display: inline-flex; gap: 14px; }
+  .stats div { background: rgba(27,35,51,.55); color: #fff; font-weight: 800; font-size: 34px; padding: 8px 20px; border-radius: 999px; }
+  .badge { position: absolute; top: 470px; left: 0; right: 0; text-align: center; }
+  .badge span { display: inline-block; background: #FFC93C; color: #1B2333; font-weight: 900; font-size: 52px; padding: 16px 32px; border-radius: 26px; box-shadow: 0 14px 40px rgba(20,40,90,.25); }
+  .sub { position: absolute; z-index: 5; left: 50px; right: 50px; top: 1180px; text-align: center; font-weight: 900; font-size: 96px; line-height: 1.12; text-transform: uppercase; letter-spacing: .01em; }
+  .sub .w { display: inline-block; margin: 0 12px; color: #fff; -webkit-text-stroke: 10px #1B2333; paint-order: stroke fill; text-shadow: 0 10px 24px rgba(20,40,90,.35); transition: none; }
+  .sub .w.on { color: #FFC93C; transform: scale(1.12) rotate(-2deg); }
+  .sub .w.key { color: #9FD3FF; }
+  .sub .w.key.on { color: #FFC93C; }
+  .end { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 330px; box-sizing: border-box; text-align: center; gap: 26px; }
+  .rule { background: #fff; color: #1B2333; font-weight: 900; font-size: 58px; line-height: 1.15; padding: 28px 40px; border-radius: 36px; max-width: 900px; box-shadow: 0 20px 60px rgba(20,40,90,.3); }
+  .rule b { color: #2F5FE0; }
+  .rule.blue { background: #2F5FE0; color: #fff; }
+  .rule.blue b { color: #FFC93C; }
+  .handle { color: #fff; font-weight: 900; font-size: 46px; text-shadow: 0 4px 20px rgba(20,40,90,.45); }
+  .paw { width: 40px; height: 40px; }
+  /* Instagram-style comments sheet (top comment reveal) */
+  .ig { position: absolute; left: 40px; right: 40px; bottom: -900px; height: 860px; z-index: 4; background: #fff; border-radius: 44px 44px 0 0; box-shadow: 0 -20px 60px rgba(20,40,90,.3); overflow: hidden; font-family: -apple-system, 'Segoe UI', Roboto, Nunito, sans-serif; }
+  .ig__bar { position: relative; z-index: 2; width: 90px; height: 10px; border-radius: 10px; background: #DADDE3; margin: 18px auto 6px; }
+  .ig__title { position: relative; z-index: 2; background: #fff; box-shadow: 0 -40px 0 #fff; text-align: center; font-weight: 800; font-size: 34px; color: #111; padding-bottom: 18px; border-bottom: 2px solid #EFEFF2; }
+  .ig__list { position: absolute; left: 0; right: 0; top: 120px; }
+  .ig__row { display: flex; align-items: flex-start; gap: 22px; padding: 22px 34px; border-radius: 26px; margin: 0 14px; }
+  .ig__av { flex: 0 0 74px; height: 74px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 900; font-size: 34px; }
+  .ig__body { flex: 1; min-width: 0; }
+  .ig__name { font-weight: 800; font-size: 28px; color: #111; }
+  .ig__name span { font-weight: 500; color: #8A8F98; margin-left: 10px; }
+  .ig__text { font-size: 34px; line-height: 1.25; color: #111; margin-top: 4px; }
+  .ig__meta { font-size: 24px; color: #8A8F98; margin-top: 8px; font-weight: 600; }
+  .ig__like { flex: 0 0 70px; text-align: center; color: #8A8F98; font-size: 24px; font-weight: 700; }
+  .ig__like svg { width: 40px; height: 40px; display: block; margin: 6px auto 4px; }
+  .ig__row.win { background: #FFF6D6; box-shadow: inset 0 0 0 4px #FFC93C; }
+  .ig__crown { display: inline-flex; align-items: center; gap: 8px; background: #FFC93C; color: #1B2333; font-weight: 900; font-size: 24px; padding: 6px 14px; border-radius: 999px; margin-bottom: 8px; }
+  .ig__row.win .ig__like { color: #ED4956; }
+
+</style>
+</head>
+<body>
+<div class="top" id="top">
+  <div class="brand"><svg class="paw" viewBox="0 0 64 64"><g fill="#2F5FE0"><ellipse cx="32" cy="42" rx="14" ry="12"/><ellipse cx="14" cy="26" rx="6" ry="8"/><ellipse cx="25" cy="15" rx="6" ry="8"/><ellipse cx="39" cy="15" rx="6" ry="8"/><ellipse cx="50" cy="26" rx="6" ry="8"/></g></svg>PETME2 CAT TOWN</div>
+  <div class="day" id="day">DAY 1</div>
+  <div class="stats"><div id="statCats">1 cat</div><div id="statHouses">1 house</div></div>
+</div>
+<div class="badge" id="badge" style="opacity:0"><span id="badgeText"></span></div>
+<div class="sub" id="sub"></div>
+<div class="ig" id="ig"><div class="ig__bar"></div><div class="ig__title">Comments</div><div class="ig__list" id="igList"></div></div>
+<div class="end" id="end" style="opacity:0">
+  <div class="rule">Every new follower =<br><b>a new cat + a house</b></div>
+  <div class="rule blue">Most-liked comment<br><b>builds anything!</b></div>
+  <div class="handle">Follow &amp; comment @petme2</div>
+</div>
+<script type="module">
+import * as THREE from './node_modules/three/build/three.module.js';
+const EP = await (await fetch('episode.json?' + Date.now())).json();
+
+const W = 1080, H = 1920;
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setSize(W, H); renderer.setPixelRatio(1);
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+document.body.prepend(renderer.domElement);
+const scene = new THREE.Scene();
+scene.background = new THREE.Color('#BFE3FF');
+const KS = Math.max(1, EP.islandRadius / 9);  // big towns: scale fog, far plane, signs
+scene.fog = new THREE.Fog('#BFE3FF', 60 * KS, 140 * KS);
+const camera = new THREE.PerspectiveCamera(38, W / H, 0.1, 300 * KS);
+scene.add(new THREE.HemisphereLight('#ffffff', '#9CC7A2', 1.1));
+const sun = new THREE.DirectionalLight('#fff4e0', 2.0);
+sun.position.set(14 * KS, 26 * KS, 12 * KS); Object.assign(sun.shadow.camera, { near: 1, far: 80 * KS }); sun.castShadow = true; sun.shadow.mapSize.set(4096, 4096);
+const R = EP.islandRadius;
+Object.assign(sun.shadow.camera, { left: -R - 4, right: R + 4, top: R + 4, bottom: -R - 4 });
+scene.add(sun);
+
+const mats = {};
+const flat = c => mats[c] || (mats[c] = new THREE.MeshStandardMaterial({ color: c, flatShading: true, roughness: .9 }));
+const mesh = (g, c, cast = true) => { const m = new THREE.Mesh(g, flat(c)); m.castShadow = cast; m.receiveShadow = true; return m; };
+const B = (w, h, d) => new THREE.BoxGeometry(w, h, d);
+const Cyl = (a, b, h, s = 12) => new THREE.CylinderGeometry(a, b, h, s);
+
+// ---------- island ----------
+const sea = mesh(Cyl(R * 5, R * 5, .4, 48), '#7CC4F2', false); sea.position.y = -1.4; scene.add(sea);
+const town = new THREE.Group(); scene.add(town);
+const grass = mesh(Cyl(R, R + .4, 1, 12), '#8FD07A'); grass.position.y = -.5; town.add(grass);
+const cliff = mesh(Cyl(R + .4, R * .82, 2.4, 12), '#C99A6B'); cliff.position.y = -2.2; town.add(cliff);
+const plaza = mesh(Cyl(2.6, 2.6, .12, 10), '#EDE4D3'); plaza.position.set(0, .02, 0); town.add(plaza);
+
+function tree(x, z, s) {
+  const g = new THREE.Group();
+  const trunk = mesh(Cyl(.15 * s, .2 * s, 1 * s, 6), '#8A5A3B'); trunk.position.y = .5 * s; g.add(trunk);
+  const top = mesh(new THREE.ConeGeometry(.8 * s, 1.8 * s, 7), '#4FA65A'); top.position.y = 1.7 * s; g.add(top);
+  g.position.set(x, 0, z); town.add(g);
+}
+EP.trees.forEach(t => tree(t.x, t.z, t.s));
+
+// ---------- text sign texture ----------
+function textSign(text, w = 2.4) {
+  const c = document.createElement('canvas'); c.width = 512; c.height = 128;
+  const g = c.getContext('2d'); g.fillStyle = '#FFFFFF'; g.fillRect(0, 0, 512, 128);
+  g.fillStyle = '#2F5FE0'; g.font = '900 54px Nunito'; g.textAlign = 'center'; g.textBaseline = 'middle';
+  let s = text.toUpperCase(); while (g.measureText(s).width > 480 && s.length > 4) s = s.slice(0, -2);
+  g.fillText(s, 256, 66);
+  const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace;
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(w, w / 4), new THREE.MeshBasicMaterial({ map: tex }));
+  return m;
+}
+
+// ---------- houses ----------
+function house(roof, wall) {
+  const h = new THREE.Group();
+  const body = mesh(B(1.8, 1.4, 1.6), wall); body.position.y = .7; h.add(body);
+  const r = mesh(new THREE.ConeGeometry(1.55, 1, 4), roof); r.position.y = 1.9; r.rotation.y = Math.PI / 4; h.add(r);
+  const door = mesh(B(.5, .75, .06), '#1B2333'); door.position.set(0, .38, .81); h.add(door);
+  [-.55, .55].forEach(x => { const w = mesh(B(.35, .35, .05), '#9FD3FF'); w.position.set(x, .95, .81); h.add(w); });
+  return h;
+}
+
+// ---------- special buildings (by kind) ----------
+function building(b) {
+  const g = new THREE.Group();
+  const k = b.kind;
+  if (k === 'fountain') {
+    const base = mesh(Cyl(1.1, 1.2, .35, 16), '#E7EDF7'); base.position.y = .18; g.add(base);
+    const water = mesh(Cyl(.95, .95, .06, 16), '#5AB3F0', false); water.position.y = .38; g.add(water);
+    const stem = mesh(Cyl(.18, .22, .8, 10), '#2F5FE0'); stem.position.y = .75; g.add(stem);
+    const bowl = mesh(Cyl(.55, .3, .25, 14), '#FFFFFF'); bowl.position.y = 1.2; g.add(bowl);
+    g.userData.drops = [];
+    for (let i = 0; i < 26; i++) { const d = mesh(new THREE.SphereGeometry(.06, 6, 6), '#7FD0FF', false); d.userData.phase = i / 26; g.add(d); g.userData.drops.push(d); }
+    return g;
+  }
+  if (k === 'cafe') {
+    const body = mesh(B(3, 1.8, 2.2), '#FFF4E6'); body.position.y = .9; g.add(body);
+    for (let i = 0; i < 6; i++) { const s = mesh(B(.5, .12, .9), i % 2 ? '#FFFFFF' : '#E85D5D'); s.position.set(-1.25 + i * .5, 1.65, 1.45); s.rotation.x = .45; g.add(s); }
+    const cup = mesh(Cyl(.3, .24, .45, 12), '#FFFFFF'); cup.position.set(0, 2.15, 0); g.add(cup);
+    [-.9, .9].forEach(x => { const t = mesh(Cyl(.35, .35, .08, 10), '#8A5A3B'); t.position.set(x, .55, 2); g.add(t); const l = mesh(Cyl(.06, .06, .5, 6), '#8A5A3B'); l.position.set(x, .27, 2); g.add(l); });
+  } else if (k === 'market') {
+    const stall = mesh(B(3, .9, 1.6), '#C98B5A'); stall.position.y = .45; g.add(stall);
+    const roof = mesh(B(3.3, .12, 2), '#2F5FE0'); roof.position.y = 2.1; roof.rotation.x = -.15; g.add(roof);
+    [[-1.4, .7], [1.4, .7], [-1.4, -.7], [1.4, -.7]].forEach(([x, z]) => { const p = mesh(Cyl(.06, .06, 1.6, 6), '#8A5A3B'); p.position.set(x, 1.2, z); g.add(p); });
+    for (let i = 0; i < 5; i++) { const f = mesh(new THREE.ConeGeometry(.16, .5, 6), '#7FB6E8'); f.rotation.z = Math.PI / 2; f.position.set(-1 + i * .5, 1.0, .3); g.add(f); }
+  } else if (k === 'cattree') {
+    const post = mesh(Cyl(.22, .26, 4.2, 8), '#D9C2A3'); post.position.y = 2.1; g.add(post);
+    [[.9, 1.2], [2.0, .9], [3.1, 1.1], [4.2, 1.3]].forEach(([y, r], i) => { const p = mesh(Cyl(r, r, .18, 10), i % 2 ? '#2F5FE0' : '#8FA9D9'); p.position.set(i % 2 ? .4 : -.4, y, 0); g.add(p); });
+  } else if (k === 'statue') {
+    const ped = mesh(B(1.4, 1, 1.4), '#E7EDF7'); ped.position.y = .5; g.add(ped);
+    const cat = makeCat('#FFC93C'); cat.scale.setScalar(2.2); cat.position.y = 1; g.add(cat);
+  } else if (k === 'pool') {
+    const rim = mesh(B(3.4, .3, 2.4), '#E7EDF7'); rim.position.y = .15; g.add(rim);
+    const w = mesh(B(3, .08, 2), '#5AB3F0', false); w.position.y = .32; g.add(w);
+  } else if (k === 'tower') {
+    const t = mesh(B(2, 6, 2), '#FFFFFF'); t.position.y = 3; g.add(t);
+    for (let y = 0; y < 5; y++) [-.5, .5].forEach(x => { const w = mesh(B(.4, .5, .05), '#9FD3FF'); w.position.set(x, 1 + y * 1.1, 1.01); g.add(w); });
+    const top = mesh(new THREE.ConeGeometry(1.5, 1.2, 4), '#2F5FE0'); top.position.y = 6.6; top.rotation.y = Math.PI / 4; g.add(top);
+  } else if (k === 'vet') {
+    const body = mesh(B(3, 2, 2.2), '#FFFFFF'); body.position.y = 1; g.add(body);
+    const c1 = mesh(B(.9, .28, .06), '#E85D5D'); c1.position.set(0, 1.4, 1.12); g.add(c1);
+    const c2 = mesh(B(.28, .9, .06), '#E85D5D'); c2.position.set(0, 1.4, 1.12); g.add(c2);
+  } else if (k === 'park') {
+    const lawn = mesh(Cyl(1.8, 1.8, .1, 14), '#6FC06A'); lawn.position.y = .06; g.add(lawn);
+    const ball = mesh(new THREE.IcosahedronGeometry(.35, 0), '#E85D5D'); ball.position.set(.6, .4, .4); g.add(ball);
+    const bench = mesh(B(1.4, .15, .4), '#8A5A3B'); bench.position.set(-.5, .45, -.6); g.add(bench);
+  } else {
+    // anything else: a bigger building in PETME2 colors
+    const body = mesh(B(3, 2.2, 2.4), '#FFFFFF'); body.position.y = 1.1; g.add(body);
+    const roof = mesh(new THREE.ConeGeometry(2.4, 1.3, 4), '#FFC93C'); roof.position.y = 2.85; roof.rotation.y = Math.PI / 4; g.add(roof);
+    const door = mesh(B(.7, 1, .06), '#1B2333'); door.position.set(0, .5, 1.21); g.add(door);
+  }
+  if (b.sign) { const s = textSign(b.sign); s.position.set(0, k === 'tower' ? 7.6 : 3.4, 0); s.scale.setScalar(Math.max(1, KS / 2.2)); s.position.y *= Math.max(1, KS / 4); g.add(s); g.userData.signMesh = s; }
+  return g;
+}
+
+// ---------- cats ----------
+function makeCat(color) {
+  const c = new THREE.Group();
+  const b = mesh(B(.5, .45, .9), color); b.position.y = .45; c.add(b);
+  const h = mesh(B(.48, .42, .42), color); h.position.set(0, .82, .5); c.add(h);
+  [-.15, .15].forEach(x => { const e = mesh(new THREE.ConeGeometry(.1, .2, 4), color); e.position.set(x, 1.12, .48); c.add(e); });
+  [-.1, .1].forEach(x => { const eye = mesh(B(.06, .08, .02), '#1B2333', false); eye.position.set(x, .86, .72); c.add(eye); });
+  const tail = mesh(B(.1, .1, .6), color); tail.position.set(0, .75, -.6); tail.rotation.x = -.7; c.add(tail); c.userData.tail = tail;
+  const legs = [];
+  [[-.16, .3], [.16, .3], [-.16, -.3], [.16, -.3]].forEach(([x, z]) => { const l = mesh(B(.12, .3, .12), color); l.position.set(x, .15, z); c.add(l); legs.push(l); });
+  c.userData.legs = legs; return c;
+}
+
+// ---------- place everything ----------
+const houses = EP.houses.map(hh => { const h = house(hh.roof, hh.wall); h.position.set(hh.x, 0, hh.z); h.rotation.y = hh.ry; h.userData = { ...hh }; town.add(h); return h; });
+const builds = EP.buildings.map(bb => { const g = building(bb); g.position.set(bb.x, 0, bb.z); g.rotation.y = bb.ry; g.userData = { ...g.userData, ...bb }; town.add(g); return g; });
+const cats = EP.cats.map(cc => { const c = makeCat(cc.color); c.userData = { ...c.userData, ...cc }; town.add(c); return c; });
+// big towns: only the ground and buildings cast shadows (keeps rendering fast)
+if (houses.length > 300) [...houses, ...cats].forEach(o => o.traverse(m => { if (m.isMesh) m.castShadow = false; }));
+
+const ease = t => t < 0 ? 0 : t > 1 ? 1 : 1 - Math.pow(1 - t, 3);
+const back = t => { if (t <= 0) return 0; if (t >= 1) return 1; const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2); };
+const lerp = (a, b, t) => a + (b - a) * t;
+const pop = (obj, t0, t) => { const s = back((t - t0) / .7); obj.visible = t >= t0; obj.scale.setScalar(Math.max(s, .001)); };
+
+const $ = id => document.getElementById(id);
+document.getElementById('day').textContent = 'DAY ' + EP.day;
+// subtitle chunks: max 3 words, new chunk on a new line or a pause
+const CHUNKS = [];
+EP.words.forEach((w, i) => {
+  const last = CHUNKS[CHUNKS.length - 1], prev = EP.words[i - 1];
+  if (!last || last.words.length >= 3 || w.line !== prev.line || w.s - prev.e > .3) CHUNKS.push({ i: CHUNKS.length, s: w.s, words: [w] });
+  else last.words.push(w);
+});
+CHUNKS.forEach((c, i) => { const lastW = c.words[c.words.length - 1]; const next = CHUNKS[i + 1]; c.until = next ? Math.min(next.s, lastW.e + .45) : lastW.e + .6; });
+
+// ---------- Instagram comments sheet ----------
+const HEART = (fill) => `<svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-9.6-9.1C.9 8.6 2.9 5 6.4 5c2 0 3.5 1.1 4.3 2.4h2.6C14.1 6.1 15.6 5 17.6 5c3.5 0 5.5 3.6 4 6.9C19.5 16.4 12 21 12 21z" fill="${fill ? '#ED4956' : 'none'}" stroke="${fill ? '#ED4956' : '#8A8F98'}" stroke-width="2"/></svg>`;
+const AV = ['#2F5FE0','#E85D5D','#5BB98C','#9B6FE0','#F2A65A','#1B2333','#4FA3D9'];
+const IG = EP.comments || null;
+const fmt = n => n >= 10000 ? (n/1000).toFixed(0) + 'K' : n >= 1000 ? (n/1000).toFixed(1).replace('.0','') + 'K' : String(n);
+if (IG) {
+  $('igList').innerHTML = IG.list.map((c, i) => `
+    <div class="ig__row${i === IG.win ? ' win-slot' : ''}" data-i="${i}">
+      <div class="ig__av" style="background:${AV[i % AV.length]}">${(c.by.replace('@','')[0] || '?').toUpperCase()}</div>
+      <div class="ig__body">${i === IG.win ? '<div class="ig__crown" data-crown style="opacity:0"><svg width="26" height="26" viewBox="0 0 24 24"><path d="M3 18h18l-1.5-10-5 4-2.5-6-2.5 6-5-4z" fill="#1B2333"/></svg>MOST LIKED</div>' : ''}
+        <div class="ig__name">${c.by}<span>${c.ago || '1h'}</span></div>
+        <div class="ig__text">${c.text}</div>
+        <div class="ig__meta">Reply</div></div>
+      <div class="ig__like"><span data-heart>${HEART(false)}</span><span data-likes>${fmt(c.likes)}</span></div>
+    </div>`).join('');
+}
+function renderIG(t) {
+  if (!IG) return;
+  const T = IG.t, el = $('ig');
+  const up = ease((t - T.up) / .45), down = ease((t - T.down) / .4);
+  el.style.bottom = (-900 + 900 * up - 900 * down) + 'px';
+  const list = $('igList'), rows = list.children, win = rows[IG.win];
+  const target = win ? win.offsetTop - 40 : 0;
+  list.style.transform = `translateY(${-target * ease((t - T.scroll) / (T.stop - T.scroll))}px)`;
+  const on = t >= T.stop;
+  if (win) {
+    win.classList.toggle('win', on);
+    const crown = win.querySelector('[data-crown]'); crown.style.opacity = on ? 1 : 0;
+    crown.style.transform = `scale(${on ? back((t - T.stop) / .35) : 0})`;
+    win.querySelector('[data-heart]').innerHTML = HEART(on);
+    const hs = on ? 1 + .45 * Math.max(0, 1 - (t - T.stop) / .3) : 1;
+    win.querySelector('[data-heart] svg').style.transform = `scale(${hs})`;
+    const final = IG.list[IG.win].likes, from = Math.round(final * .62);
+    const n = on ? Math.round(from + (final - from) * ease((t - T.stop) / 1.2)) : from;
+    win.querySelector('[data-likes]').textContent = fmt(n);
+  }
+}
+
+window.renderFrame = (t) => {
+  const T = EP.timeline;
+  const ang = lerp(EP.camera.angFrom, EP.camera.angTo, ease(t / EP.duration));
+  const r = lerp(EP.camera.rFrom, EP.camera.rTo, ease(t / (EP.duration * .7)));
+  const y = lerp(EP.camera.yFrom, EP.camera.yTo, ease(t / (EP.duration * .7)));
+  camera.position.set(Math.sin(ang) * r, y, Math.cos(ang) * r); camera.lookAt(0, -.6, 0);
+  town.position.y = Math.sin(t * 1.2) * .08;
+
+  houses.forEach(h => h.userData.appear == null ? (h.visible = true, h.scale.setScalar(1)) : pop(h, h.userData.appear, t));
+  builds.forEach(b => {
+    if (b.userData.appear == null) { b.visible = true; b.scale.setScalar(1); } else pop(b, b.userData.appear, t);
+    if (b.userData.drops) b.userData.drops.forEach(d => { const p = (t * .9 + d.userData.phase) % 1, a = d.userData.phase * Math.PI * 2, rr = .2 + p * .75; d.position.set(Math.cos(a) * rr, 1.35 + p * .5 - p * p * 1.3, Math.sin(a) * rr); });
+    if (b.userData.signMesh) b.userData.signMesh.lookAt(camera.position.x, b.userData.signMesh.getWorldPosition(new THREE.Vector3()).y, camera.position.z);
+  });
+  cats.forEach((c, i) => {
+    const u = c.userData;
+    const born = u.appear == null ? -1 : u.appear;
+    c.visible = t >= born;
+    // new cats walk from the dock to their house; old cats stroll around their home
+    let x, z, moving;
+    if (born >= 0 && t < born + 2.2) { const k = ease((t - born) / 2.2); x = lerp(u.fromX, u.x, k); z = lerp(u.fromZ, u.z, k); moving = true; c.rotation.y = Math.atan2(u.x - u.fromX, u.z - u.fromZ); }
+    else { const a = t * .5 + i * 1.7; x = u.x + Math.sin(a) * .6; z = u.z + Math.cos(a * .8) * .4; moving = true; c.rotation.y = Math.atan2(Math.cos(a) * .6, -Math.sin(a * .8) * .32); }
+    c.position.set(x, 0, z);
+    c.userData.legs.forEach((l, j) => l.rotation.x = moving ? Math.sin(t * 13 + (j % 2) * Math.PI + i) * .45 : 0);
+    c.userData.tail.rotation.z = Math.sin(t * 4 + i) * .3;
+  });
+  renderer.render(scene, camera);
+
+  // counters tick up as houses appear
+  const nCats = cats.filter(c => c.visible).length, nHouses = houses.filter(h => h.visible).length;
+  $('statCats').textContent = nCats.toLocaleString('en-US') + (nCats === 1 ? ' cat' : ' cats');
+  $('statHouses').textContent = nHouses.toLocaleString('en-US') + (nHouses === 1 ? ' house' : ' houses');
+  const ch = CHUNKS.find(c => t >= c.s && t < c.until);
+  const subEl = $('sub');
+  if (ch) {
+    if (subEl.dataset.k !== String(ch.i)) { subEl.innerHTML = ch.words.map((w, j) => `<span class="w${w.hl ? ' key' : ''}" data-j="${j}">${w.w}</span>`).join(' '); subEl.dataset.k = ch.i; }
+    const k = Math.min(1, (t - ch.s) / .12); subEl.style.opacity = 1; subEl.style.transform = `scale(${.86 + .14 * k})`;
+    subEl.querySelectorAll('.w').forEach((el, j) => { const w = ch.words[j]; el.classList.toggle('on', t >= w.s && t < Math.max(w.e, w.s + .12)); });
+  } else { subEl.style.opacity = 0; subEl.dataset.k = ''; }
+  // while the comments sheet is open, subtitles move up above it
+  const igOpen = IG ? ease((t - IG.t.up) / .45) - ease((t - IG.t.down) / .4) : 0;
+  subEl.style.top = lerp(1180, 600, igOpen) + 'px';
+  renderIG(t);
+  const bd = EP.badges.find(bb => t >= bb.from && t < bb.to);
+  if (bd) { $('badgeText').innerHTML = bd.html; $('badge').style.opacity = Math.min(1, (t - bd.from) / .25); } else $('badge').style.opacity = 0;
+  const e = ease((t - T.end) / .5);
+  $('end').style.opacity = e; $('end').style.background = `rgba(27,35,51,${.4 * e})`; $('end').style.transform = `scale(${.92 + .08 * e})`;
+  $('top').style.opacity = 1 - e;
+};
+await document.fonts.ready;
+window.ready = true;
+</script>
+</body>
+</html>

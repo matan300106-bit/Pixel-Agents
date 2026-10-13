@@ -1,0 +1,1447 @@
+
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/+esm';
+import { mergeGeometries } from 'https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/utils/BufferGeometryUtils.js/+esm';
+import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/controls/OrbitControls.js/+esm';
+try { await document.fonts.load('900 100px Nunito'); await document.fonts.load('800 100px Nunito'); } catch (e) {}   // sign canvases need the font before they draw
+const EP = window.CITY;
+if (EP.live) {   // live town: residents come from the page metafield (window.CITY_LIVE = { start: 'YYYY-MM-DD', residents: [{ name, ig, tt, day }], updated: ISO time })
+  const L = window.CITY_LIVE || {}, R = (Array.isArray(L.residents) ? L.residents : []).filter(r => r && (r.name || r.ig || r.tt));
+  const st = new Date((L.start || '') + 'T00:00:00'), dn = isNaN(st) ? 1 : Math.floor((Date.now() - st) / 864e5) + 1;
+  const CN = EP.counts || {}, HN = Math.max(R.length, +(L.followers ?? CN.followers) || 0), LK = +(L.likes ?? CN.likes) || 0;   // counts (metafield wins, else the theme's): followers = houses (more than the named residents is fine), likes = cats
+  EP.live.residents = R; EP.live.updated = L.updated || ''; EP.live.followers = HN; EP.live.day = Math.max(1, dn); EP.followersNew = Math.max(EP.followersNew || 0, HN);
+  if (LK > HN + 1) EP.strays = { n: LK - 1 - HN, at: [], crowd: Math.max(0, Math.min(60, LK - 1 - HN - 12)), crowdSpot: (EP.landmarks || []).length + 1, sign: 'No home yet', signAt: -1e9, always: true }; }
+const ROOT = document.querySelector('[data-cat-city]'); const $ = id => document.getElementById('pcc-' + id);
+const ease = t => t < 0 ? 0 : t > 1 ? 1 : 1 - Math.pow(1 - t, 3);
+const inout = t => t < 0 ? 0 : t > 1 ? 1 : t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+const back = t => { if (t <= 0) return 0; if (t >= 1) return 1; const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2); };
+let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+const hash01 = n => ((n * 2654435761) >>> 0) % 10000 / 10000;
+const V = (x, y, z) => new THREE.Vector3(x, y, z);
+const STILL = !!EP.still;
+const LITE = !!window.CAT_LITE, VIEWER = !!window.CAT_VIEWER;   // LITE: phones (no shadows, no antialias, fewer trees); VIEWER: interactive page (no preserved buffer)
+
+// ---------- renderer ----------
+const stage = $('stage'); let W = stage.clientWidth, H = stage.clientHeight;
+const renderer = new THREE.WebGLRenderer({ antialias: !LITE, preserveDrawingBuffer: !VIEWER, powerPreference: 'high-performance' });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, LITE ? 1.25 : 2)); renderer.setSize(W, H);
+renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
+renderer.shadowMap.enabled = !LITE; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+stage.appendChild(renderer.domElement);
+const scene = new THREE.Scene();
+{ const c = document.createElement('canvas'); c.width = 4; c.height = 512; const g = c.getContext('2d');
+  const gr = g.createLinearGradient(0, 0, 0, 512); gr.addColorStop(0, '#78B9EE'); gr.addColorStop(.62, '#CDE7F7'); gr.addColorStop(1, '#E8F3FA');
+  g.fillStyle = gr; g.fillRect(0, 0, 4, 512); const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; scene.background = tex; }
+scene.fog = new THREE.Fog('#DCEEF8', 320, 1150);
+const SKY = scene.background, SKYc = SKY.image, DAY_C = ['#78B9EE', '#CDE7F7', '#E8F3FA', '#DCEEF8'], DUSK_C = ['#2B2A6B', '#B4609A', '#FFB07A', '#8E6C9A'];
+let duskK = -1; const _c1 = new THREE.Color(), _c2 = new THREE.Color();
+const mixC = (a, b, k) => '#' + _c1.set(a).lerp(_c2.set(b), k).getHexString();
+function duskAt(k) { if (k === duskK) return; duskK = k; const g = SKYc.getContext('2d'), gr = g.createLinearGradient(0, 0, 0, 512);   // videos: day -> evening (sky, fog, sun, ambient)
+  gr.addColorStop(0, mixC(DAY_C[0], DUSK_C[0], k)); gr.addColorStop(.62, mixC(DAY_C[1], DUSK_C[1], k)); gr.addColorStop(1, mixC(DAY_C[2], DUSK_C[2], k)); g.fillStyle = gr; g.fillRect(0, 0, 4, 512); SKY.needsUpdate = true;
+  scene.fog.color.set(mixC(DAY_C[3], DUSK_C[3], k)); HEMI.intensity = 1.15 - .8 * k; HEMI.color.set(mixC('#FFFFFF', '#9C8CFF', k)); sun.intensity = 2.3 - 1.6 * k; sun.color.set(mixC('#FFF1DA', '#FF8A5A', k)); }
+const camera = new THREE.PerspectiveCamera(42, W / H, 0.5, 3000);
+const HEMI = new THREE.HemisphereLight('#FFFFFF', '#B5D48A', 1.15); scene.add(HEMI);
+const sun = new THREE.DirectionalLight('#FFF1DA', 2.3); sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048); sun.shadow.bias = -0.0004; sun.shadow.normalBias = .4;
+scene.add(sun); scene.add(sun.target);
+const mats = {};
+const mat = (c, extra = {}) => { const k = c + JSON.stringify(extra); return mats[k] || (mats[k] = new THREE.MeshStandardMaterial({ color: c, flatShading: true, roughness: .9, ...extra })); };
+const mesh = (g, c, cast = true) => { const m = new THREE.Mesh(g, mat(c)); m.castShadow = cast; m.receiveShadow = true; return m; };
+const B = (w, h, d) => new THREE.BoxGeometry(w, h, d);
+const Cyl = (a, b, h, s = 12) => new THREE.CylinderGeometry(a, b, h, s);
+const col = new THREE.Color();
+const LR = (x, y, z, rx = 0, ry = 0, rz = 0, s = 1) => new THREE.Matrix4().compose(V(x, y, z), new THREE.Quaternion().setFromEuler(new THREE.Euler(rx, ry, rz)), V(s, s, s));
+const IM = (geo, n, cast = true, m0 = null) => { const m = new THREE.InstancedMesh(geo, m0 || mat('#ffffff'), Math.max(1, n)); m.castShadow = cast; m.receiveShadow = true; m.count = n; scene.add(m); return m; };
+const merge = list => mergeGeometries(list.map(g => { g = g.index ? g.toNonIndexed() : g; if (g.attributes.uv) g.deleteAttribute('uv'); return g; }));
+const T = new THREE.Matrix4(), M2 = new THREE.Matrix4(), ZERO = new THREE.Matrix4().makeScale(0, 0, 0);
+
+// ---------- counts ----------
+const F0 = EP.followersBefore || 0, FN = EP.followersNew || 0; let F = F0 + FN;   // followers; Mango is cat #0
+const APPEAR = new Float32Array(F).fill(-1);
+const landmarks = [...(EP.landmarks || [])];
+const NEWB = EP.newBuild || null;
+// Halloween week: Oct 24-31 (visitor's date), or forced with EP.halloween / ?halloween=1 (previews, videos)
+const _today = new Date(), HW = !!(EP.halloween || /[?&]halloween=1/.test(location.search) || (_today.getMonth() === 9 && _today.getDate() >= 24));
+// Feeding time: kibble rains on the food bar (kind 'food') or the fountain gushes (kind 'water'); every cat in town runs to the square for FEED_DUR s
+const FEED = { t0: -1e9, kind: 'food' }, FEED_DUR = EP.feedDur || 14; let LAST_ANIM = 0;
+if (EP.feed) { FEED.t0 = EP.feed.at; FEED.kind = EP.feed.kind || 'food'; }
+window.feedTime = kind => { FEED.kind = kind; FEED.t0 = LAST_ANIM; };
+
+// ---------- street plan: a round cat city (rings + curvy avenues around Mango's square) ----------
+const COAST_X = 200;
+const coastAt = z => COAST_X + Math.sin(z * .012) * 14;
+const RING0 = 42, RGAP = 30, NR = 15;
+// Mango's square (2026-10-06 evening): a figure 8 of two "food & drink stops" side by side (fountain circle at -C, feeder circle at +C),
+// Mango hosting in the waist between them, inside an oval roundabout lane (laneX x laneZ) on a round plaza.
+const SQ = { plaza: 33, laneX: 29.8, laneZ: 18.4, C: 11.5, island: 12.8, lawn: 12, wall: 9.4 };
+const laneR = a => 1 / Math.hypot(Math.cos(a) / SQ.laneX, Math.sin(a) / SQ.laneZ);   // oval lane edge at angle a
+const ringR = (k, a) => (RING0 + RGAP * k) * (1 + .045 * Math.sin(3 * a + k * 1.7) + .02 * Math.sin(7 * a + k * .9));
+const spokes = [];
+for (let i = 0; i < 6; i++) spokes.push({ a0: i * Math.PI / 3 + .26, r0: Math.round(laneR(i * Math.PI / 3 + .26)) - 1, s: i * 1.3 });
+for (let i = 0; i < 6; i++) spokes.push({ a0: i * Math.PI / 3 + .26 + Math.PI / 6, r0: RING0 + RGAP, s: 7 + i });
+for (let i = 0; i < 12; i++) spokes.push({ a0: i * Math.PI / 6 + .26 + Math.PI / 12, r0: RING0 + RGAP * 4, s: 20 + i });
+for (let i = 0; i < 24; i++) spokes.push({ a0: i * Math.PI / 12 + .26 + Math.PI / 24, r0: RING0 + RGAP * 9, s: 40 + i });
+const spokeA = (sp, r) => sp.a0 + .1 * Math.sin(r / 45 + sp.s);
+const RMAX = RING0 + RGAP * (NR - 1) + 12;
+const ROADS = [];
+function addRoad(pts, kind) {
+  let cur = [];
+  const flush = () => { if (cur.length > 2) { const cum = [0]; for (let i = 1; i < cur.length; i++) cum.push(cum[i - 1] + Math.hypot(cur[i][0] - cur[i - 1][0], cur[i][1] - cur[i - 1][1])); ROADS.push({ pts: cur, cum, kind }); } cur = []; };
+  for (const p of pts) { if (p[0] > coastAt(p[1]) - 16) flush(); else cur.push(p); } flush();
+}
+for (let k = 0; k < NR; k++) { const n = Math.ceil(2 * Math.PI * (RING0 + RGAP * k) / 3), pts = [];
+  for (let i = 0; i <= n; i++) { const a = i / n * Math.PI * 2, r = ringR(k, a); pts.push([Math.cos(a) * r, Math.sin(a) * r]); } addRoad(pts, 'ring'); }
+for (const sp of spokes) { const pts = []; for (let r = sp.r0; r <= RMAX; r += 3) { const a = spokeA(sp, r); pts.push([Math.cos(a) * r, Math.sin(a) * r]); } addRoad(pts, 'spoke'); }
+function sampleRoad(rd, s) {
+  const c = rd.cum; s = Math.max(0, Math.min(c[c.length - 1] - 1e-3, s));
+  let lo = 0, hi = c.length - 1; while (hi - lo > 1) { const m = (lo + hi) >> 1; if (c[m] <= s) lo = m; else hi = m; }
+  const p = rd.pts[lo], q = rd.pts[hi], L = c[hi] - c[lo] || 1, u = (s - c[lo]) / L, dx = (q[0] - p[0]) / L, dz = (q[1] - p[1]) / L;
+  return [p[0] + (q[0] - p[0]) * u, p[1] + (q[1] - p[1]) * u, dx, dz, lo];
+}
+// spatial hash
+const G = 10;
+const hadd = (h, o) => { const k = Math.floor(o.x / G) + ',' + Math.floor(o.z / G); let a = h.get(k); if (!a) h.set(k, a = []); a.push(o); };
+const near = (h, x, z, r, fn) => { const r2 = r * r; for (let i = Math.floor((x - r) / G); i <= Math.floor((x + r) / G); i++) for (let j = Math.floor((z - r) / G); j <= Math.floor((z + r) / G); j++) { const a = h.get(i + ',' + j); if (a) for (const o of a) if ((o.x - x) ** 2 + (o.z - z) ** 2 < r2 && fn(o) === false) return true; } return false; };
+const any = (h, x, z, r) => near(h, x, z, r, () => false);
+const PIECES = [], roadHash = new Map();
+ROADS.forEach((rd, ri) => { for (let i = 1; i < rd.pts.length; i++) { const p = rd.pts[i - 1], q = rd.pts[i], dx = q[0] - p[0], dz = q[1] - p[1];
+  const o = { x: (p[0] + q[0]) / 2, z: (p[1] + q[1]) / 2, ang: Math.atan2(dz, dx), len: Math.hypot(dx, dz), ri, i, t: Infinity }; PIECES.push(o); hadd(roadHash, o); } });
+// landmark spots: just outside a ring road, between avenues
+const SPOTS = [], spotHash = new Map();
+for (let b = 0; b < 7; b++) for (let i = 0; i < 6; i++) { const a = i * Math.PI / 3 + .26 + Math.PI / 12 + (b % 2 ? Math.PI / 6 : 0) + b * .05, r = ringR(b, a) + 11;
+  const x = Math.cos(a) * r, z = Math.sin(a) * r; if (x > coastAt(z) - 30) continue;
+  if (near(roadHash, x, z, 8, o => (ROADS[o.ri].kind === 'ring' && Math.abs(Math.hypot(o.x, o.z) - (r - 11)) < 4) ? undefined : false)) continue;
+  if (SPOTS.some(s => Math.hypot(s.x - x, s.z - z) < 34)) continue;
+  SPOTS.push({ x, z, r, ry: Math.atan2(-x, -z) }); }
+SPOTS.sort((a, b) => a.r - b.r); SPOTS.forEach(s => hadd(spotHash, s)); window.__spots = SPOTS.map(s => [Math.round(s.x * 10) / 10, Math.round(s.z * 10) / 10, Math.round(s.ry * 100) / 100]);
+const usedSpots = landmarks.length + (NEWB ? 1 : 0);
+const BIGK = k => k === 'fishmarket' || k === 'arcade' || k === 'artstudio' || k === 'pizza' || k === 'toy';
+const BIG_SPOTS = [...landmarks.map((l, k) => BIGK(l.kind) ? SPOTS[k] : null), NEWB && BIGK(NEWB.kind) ? SPOTS[landmarks.length] : null].filter(Boolean);
+// house lots along every street, facing the street
+const DISTRICT = a => Math.floor((((a - .26) % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2) / (Math.PI / 3));
+const cand = [], lotHash = new Map();
+ROADS.forEach((rd, ri) => { const total = rd.cum[rd.cum.length - 1];
+  for (let s = 2.8; s < total - 2.8; s += 5.3) { const [x, z, dx, dz, idx] = sampleRoad(rd, s), nx = -dz, nz = dx;
+    for (const side of [1, -1]) { const lx = x + nx * 5.1 * side, lz = z + nz * 5.1 * side, r = Math.hypot(lx, lz);
+      if (r < SQ.plaza + 4 || lx > coastAt(lz) - 18) continue;   // houses stay off Mango's square
+      if (near(roadHash, lx, lz, 4.5, o => (o.ri === ri && Math.abs(o.i - 1 - idx) < 3) ? undefined : false)) continue;
+      if (any(lotHash, lx, lz, 4.4)) continue;
+      if (near(spotHash, lx, lz, 10.5, () => false)) continue;
+      if (BIG_SPOTS.some(q => Math.hypot(q.x - lx, q.z - lz) < 19)) continue;   // the big fish supermarket needs more room
+      const o = { x: lx, z: lz, ry: Math.atan2(-nx * side, -nz * side), r, ri, s, side, d: DISTRICT(Math.atan2(lz, lx)), key: r + (rd.kind === 'ring' ? 5 : 0) + hash01(cand.length) * 6 };
+      cand.push(o); hadd(lotHash, o); } } });
+cand.sort((a, b) => a.key - b.key);
+const houseLots = cand.slice(0, F);
+if (houseLots.length < F) console.warn('not enough lots', cand.length, F);
+window.__lots = cand.length;
+F = houseLots.length;
+const houseHash = new Map(); houseLots.forEach((l, n) => { l.n = n; hadd(houseHash, l); });
+
+// ---------- appear times ----------
+const GROW = EP.order === 'index';
+let NEWL = null;
+if (GROW) for (let k = F0; k < F; k++) APPEAR[k] = EP.newFrom + (EP.newTo - EP.newFrom) * Math.pow((k - F0 + .5) / FN, .8);
+else if (FN > 0) {
+  const ids = [...Array(FN).keys()].map(i => F0 + i);
+  NEWL = ids.map(k => houseLots[k]).reduce((b, l) => (l.z > b.z ? l : b));
+  const nr = ids.map(k => ({ k, d: Math.hypot(houseLots[k].x - NEWL.x, houseLots[k].z - NEWL.z) })).sort((a, b) => a.d - b.d);
+  const a = nr.filter(o => o.d < 48), b = nr.filter(o => o.d >= 48);
+  [a, b].forEach(L2 => L2.forEach((o, i) => APPEAR[o.k] = EP.newFrom + (EP.newTo - EP.newFrom) * (i + .5) / L2.length));
+}
+if (Array.isArray(EP.appear)) EP.appear.forEach((a, i) => { if (F0 + i < F) APPEAR[F0 + i] = a; });   // videos: exact pop time per new house
+window.__lots = houseLots.map(l => [Math.round(l.x * 10) / 10, Math.round(l.z * 10) / 10]);
+const timeNear = (x, z, r) => { let t = Infinity; near(houseHash, x, z, r, h => { t = Math.min(t, APPEAR[h.n]); }); return t; };
+const lmAt = k => (landmarks[k] && landmarks[k].at != null) ? landmarks[k].at : -1;
+PIECES.forEach(p => { p.t = Math.hypot(p.x, p.z) < SQ.plaza + 5 ? -1 : timeNear(p.x, p.z, 12); });
+SPOTS.forEach((s, k) => { s.t = k < landmarks.length ? Math.min(timeNear(s.x, s.z, 22), lmAt(k) < 0 ? Infinity : lmAt(k)) : timeNear(s.x, s.z, 22);
+  if (k < landmarks.length && lmAt(k) < 0 && s.t === Infinity) s.t = -1; });
+SPOTS.forEach((s, k) => { if (k < landmarks.length) PIECES.forEach(p => { if (Math.hypot(p.x - s.x, p.z - s.z) < 18) p.t = Math.min(p.t, s.t); }); });
+const CR = Math.max(36, ...houseLots.map(l => l.r), ...SPOTS.slice(0, usedSpots).map(s => s.r)) + 14;
+const SHR = Math.max(CR, 100); window.__CR = CR;
+scene.fog.near = Math.max(320, CR * 1.4); scene.fog.far = Math.max(1150, CR * 3.6);
+sun.position.set(SHR * .6, SHR * 1.4, SHR * .9); Object.assign(sun.shadow.camera, { left: -SHR - 30, right: SHR + 30, top: SHR + 30, bottom: -SHR - 30, near: 1, far: SHR * 4 }); sun.shadow.camera.updateProjectionMatrix();
+
+// ---------- ground, beach, sea, mountains ----------
+{ const g = new THREE.PlaneGeometry(1600, 1600, 160, 160); g.rotateX(-Math.PI / 2);
+  const pos = g.attributes.position, cl = [];
+  const cA = new THREE.Color('#A9D27A'), cB = new THREE.Color('#D3DFA0'), cC = new THREE.Color('#8CC56A'), sand = new THREE.Color('#EBD9A6'), tmp = new THREE.Color();
+  for (let i = 0; i < pos.count; i++) { const x = pos.getX(i), z = pos.getZ(i);
+    const n = Math.sin(x * .021) * Math.cos(z * .017) + .6 * Math.sin((x + z) * .043) + .35 * Math.cos(x * .09 - z * .07);
+    tmp.copy(cA).lerp(cB, THREE.MathUtils.clamp(.5 + n * .45, 0, 1)); if (n > 1.1) tmp.lerp(cC, .5);
+    const cx = coastAt(z); if (x > cx - 6) tmp.lerp(sand, THREE.MathUtils.clamp((x - cx + 6) / 8, 0, 1));
+    let y = 0; if (x > cx + 22) y = -(x - cx - 22) * .14; const r = Math.hypot(x, z); if (r > 720) y = Math.min(y, -(r - 720) * .1);
+    pos.setY(i, y); cl.push(tmp.r, tmp.g, tmp.b); }
+  g.setAttribute('color', new THREE.Float32BufferAttribute(cl, 3)); g.computeVertexNormals();
+  const ground = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 1 })); ground.receiveShadow = true; scene.add(ground);
+  const sea = new THREE.Mesh(new THREE.PlaneGeometry(8000, 8000), new THREE.MeshStandardMaterial({ color: '#4FA8E3', roughness: .35, metalness: .05 })); sea.rotation.x = -Math.PI / 2; sea.position.y = -1.6; scene.add(sea);
+  for (let k = 0; k < 40; k++) { const a = Math.PI * .58 + k / 39 * Math.PI * .95 + (rnd() - .5) * .06, r = 580 + rnd() * 110;
+    const h = 80 + rnd() * 130, cg = new THREE.ConeGeometry(60 + rnd() * 60, h, 7, 3); const p = cg.attributes.position;
+    for (let i = 0; i < p.count; i++) if (p.getY(i) < h / 2 - .1) { p.setX(i, p.getX(i) * (1 + (rnd() - .5) * .35)); p.setZ(i, p.getZ(i) * (1 + (rnd() - .5) * .35)); p.setY(i, p.getY(i) + (rnd() - .5) * h * .08); }
+    cg.computeVertexNormals(); const m = new THREE.Mesh(cg, mat(rnd() > .5 ? '#9DB895' : '#AFC4A2')); m.position.set(Math.cos(a) * r, h / 2 - 6, Math.sin(a) * r); scene.add(m); }
+  for (let k = 0; k < 7; k++) { const g2 = new THREE.Group(); const hull = mesh(B(2, 1, 6), '#FFFFFF'); hull.position.y = -.9; g2.add(hull);
+    const sail = mesh(new THREE.ConeGeometry(2, 6, 3), k % 2 ? '#FFFFFF' : '#FFC93C'); sail.position.y = 2.6; g2.add(sail);
+    g2.position.set(COAST_X + 80 + rnd() * 260, 0, -300 + rnd() * 600); g2.rotation.y = rnd() * 3; scene.add(g2); }
+}
+
+// ---------- streets: sidewalks, road, paw-print markings, fish street lamps ----------
+const GROWN = [];   // [instancedMesh, index, baseMatrix, time] for things that appear as the city grows
+const grown = (m, i, bm, t) => { GROWN.push([m, i, bm, t]); m.setMatrixAt(i, t === Infinity ? ZERO : bm); };
+{ const vis = PIECES.filter(p => p.t !== Infinity);
+  const walk = IM(B(1, .08, 1), vis.length, false, mat('#E9E3D3')), road = IM(B(1, .12, 1), vis.length, false, mat('#4A4F5C'));
+  const pawGeo = merge([Cyl(.55, .55, .03, 12).translate(.15, 0, 0), ...[[-.55, -.55], [-.85, -.2], [-.85, .2], [-.55, .55]].map(([x, z]) => Cyl(.2, .2, .03, 8).translate(x, 0, z))]);
+  const paws = vis.filter((p, i) => i % 4 === 0), paw = IM(pawGeo, paws.length, false, new THREE.MeshBasicMaterial({ color: '#FFFFFF' }));
+  const lamps = vis.filter((p, i) => i % 9 === 4), post = IM(Cyl(.12, .14, 4, 6), lamps.length, true, mat('#3B3B44'));
+  const fishM = new THREE.MeshStandardMaterial({ color: '#ffffff', emissive: '#FFB347', emissiveIntensity: .35, flatShading: true });
+  const fish = IM(merge([new THREE.SphereGeometry(.55, 10, 8).scale(1.5, .8, .45), new THREE.ConeGeometry(.5, .7, 3).rotateZ(Math.PI / 2).translate(-1.05, 0, 0)]), lamps.length, false, fishM);
+  vis.forEach((p, i) => { const q = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, -p.ang, 0));
+    grown(walk, i, new THREE.Matrix4().compose(V(p.x, .04, p.z), q, V(p.len + .8, 1, 8.4)), p.t);
+    grown(road, i, new THREE.Matrix4().compose(V(p.x, .08, p.z), q, V(p.len + .8, 1, 4.4)), p.t); });
+  paws.forEach((p, i) => grown(paw, i, new THREE.Matrix4().compose(V(p.x, .15, p.z), new THREE.Quaternion().setFromEuler(new THREE.Euler(0, -p.ang, 0)), V(.85, 1, .85)), p.t));
+  lamps.forEach((p, i) => { const side = i % 2 ? 1 : -1, nx = -Math.sin(p.ang) * side * 3.6, nz = Math.cos(p.ang) * side * 3.6;
+    grown(post, i, LR(p.x + nx, 2, p.z + nz), p.t); grown(fish, i, LR(p.x + nx, 4.3, p.z + nz, 0, -p.ang), p.t); fish.setColorAt(i, col.set(i % 2 ? '#FF9F43' : '#FFC93C')); });
+  if (fish.instanceColor) fish.instanceColor.needsUpdate = true;
+}
+
+// ---------- cat geometry ----------
+const CAT_GEO = (() => { const p = [];
+  const add = (g, x, y, z, rx = 0) => { if (rx) g.rotateX(rx); g.translate(x, y, z); p.push(g); };
+  add(B(.5, .45, .9), 0, .45, 0); add(B(.48, .42, .42), 0, .82, .5);
+  add(new THREE.ConeGeometry(.1, .22, 4), -.15, 1.13, .48); add(new THREE.ConeGeometry(.1, .22, 4), .15, 1.13, .48);
+  add(B(.1, .1, .6), 0, .78, -.62, -.7);
+  [[-.16, .3], [.16, .3], [-.16, -.3], [.16, -.3]].forEach(([x, z]) => add(B(.12, .3, .12), x, .15, z));
+  return merge(p); })();
+const CAT_COLORS = ['#8E8E9A', '#3B3B44', '#FFFFFF', '#D9A066', '#C47A4A', '#E8D5B5', '#2B2B30', '#B0B0B8', '#F2A65A'];
+
+// ---------- shared helpers for the extras (design-review.md section 2) ----------
+const TAU = Math.PI * 2, mod = (x, m) => ((x % m) + m) % m, frac = x => x - Math.floor(x);
+const smooth = (a, b, x) => { const k = Math.min(1, Math.max(0, (x - a) / (b - a))); return k * k * (3 - 2 * k); };
+const wrapA = a => Math.atan2(Math.sin(a), Math.cos(a));
+// time when follower n (1-based) moves in; -Infinity = already there; Infinity = not in this city
+const unlockT = n => n <= 0 ? -Infinity : n > F ? Infinity : (APPEAR[n - 1] < 0 ? -Infinity : APPEAR[n - 1]);
+// pop that FINISHES when follower n arrives (works in video and in the viewer)
+const popK = (t, n, d = .6) => { const t1 = unlockT(n); return t1 === -Infinity ? 1 : t1 === Infinity ? 0 : back((t - (t1 - d)) / d); };
+const UNLOCK = { hostBox: 5, busStop: 10, circles: 20, redDot: 500, mochi: 1000, balloonStep: 500 };
+const MOCHI_A = 3.7;   // Big Mochi's angle (review said 3.45; 3.7 keeps it fully inside both the p_1000 and p_5000 frames)
+const polar = (a, r) => [Math.cos(a) * r, Math.sin(a) * r];
+const yawTo = (dx, dz) => Math.atan2(dx, dz);              // engine convention: geometry faces +z
+const paint = (g, hex) => { g = g.index ? g.toNonIndexed() : g; if (g.attributes.uv) g.deleteAttribute('uv'); const c = new THREE.Color(hex), n = g.attributes.position.count, a = new Float32Array(n * 3);
+  for (let i = 0; i < n; i++) c.toArray(a, i * 3); g.setAttribute('color', new THREE.BufferAttribute(a, 3)); return g; };
+const XM = new THREE.Matrix4(), XM2 = new THREE.Matrix4(), XQ = new THREE.Quaternion(), QI = new THREE.Quaternion(), XE = new THREE.Euler(0, 0, 0, 'YXZ'), XV = new THREE.Vector3(), XS = new THREE.Vector3();
+const putCat = (m, i, x, y, z, yaw, s, pitch = 0, roll = 0, sy = 1) => { if (i < 0) return; if (!(s > 0)) { m.setMatrixAt(i, ZERO); return; }
+  XM.compose(XV.set(x, y, z), XQ.setFromEuler(XE.set(pitch, yaw, roll, 'YXZ')), XS.set(s, s * sy, s)); m.setMatrixAt(i, XM); };
+
+// ---------- pose kit: sit, loaf, drink, belly-up (all face +z, feet at y 0) + WALK (animated standing extras) ----------
+const poseGeo = parts => merge(parts.map(([g, x, y, z, rx = 0, ry = 0, rz = 0]) => { if (rx) g.rotateX(rx); if (ry) g.rotateY(ry); if (rz) g.rotateZ(rz); return g.translate(x, y, z); }));
+const EAR = () => new THREE.ConeGeometry(.1, .22, 4);
+const LEGS = (y = .15) => [[-.16, .3], [.16, .3], [-.16, -.3], [.16, -.3]].map(([x, z]) => [B(.12, .3, .12), x, y, z]);
+const CAT_SIT = poseGeo([[B(.55, .3, .5), 0, .15, -.15], [B(.5, .7, .5), 0, .5, -.02, -.35], [B(.48, .42, .42), 0, 1.0, .12], [EAR(), -.15, 1.31, .10], [EAR(), .15, 1.31, .10],
+  [B(.12, .45, .12), -.13, .22, .20], [B(.12, .45, .12), .13, .22, .20], [B(.1, .08, .7), .30, .04, .05, 0, .9]]);
+const CAT_LOAF = poseGeo([[B(.55, .4, .95), 0, .2, 0], [B(.48, .42, .42), 0, .45, .5], [EAR(), -.15, .76, .48], [EAR(), .15, .76, .48], [B(.1, .08, .7), .30, .04, -.05]]);
+const CAT_DRINK = poseGeo([[B(.5, .45, .9), 0, .42, 0, .12], [B(.48, .42, .42), 0, .40, .70, .6], [EAR(), -.15, .66, .88, .6], [EAR(), .15, .66, .88, .6], [B(.1, .1, .6), 0, .85, -.55, 1.2], ...LEGS()]);
+const CAT_BELLY = poseGeo([[B(.5, .45, .9), 0, .225, 0], [B(.48, .42, .42), 0, .21, .5, -.3], [EAR(), -.15, .15, .80, Math.PI / 2], [EAR(), .15, .15, .80, Math.PI / 2], ...LEGS(.60), [B(.1, .08, .6), 0, .04, -.62]]);
+const POSES = {};
+for (const [k, g] of [['sit', CAT_SIT], ['loaf', CAT_LOAF], ['drink', CAT_DRINK], ['belly', CAT_BELLY]]) { const m = IM(g, 800); m.frustumCulled = false; m.used = 0; for (let i = 0; i < 800; i++) m.setMatrixAt(i, ZERO); POSES[k] = m; }
+const WALK = IM(CAT_GEO, 104); WALK.frustumCulled = false; for (let i = 0; i < 104; i++) { WALK.setMatrixAt(i, ZERO); WALK.setColorAt(i, col.set('#F28C28')); }
+const slot = (pm, c) => { if (pm.used >= 800) return -1; const i = pm.used++; pm.setColorAt(i, col.set(c)); return i; };
+let TAPE = null, TAPE_H = 0, BOXM = null, FLAPM = null, BOX_H = 0, BOX_FL = null;   // filled by the gardens block (hero row/box use the last slots)
+
+// ---------- center: Mango's square with the PETME2 fountain ----------
+const signs = [];
+function textSign(text, w = 12, border = '#2F5FE0') {
+  const c = document.createElement('canvas'); c.width = 1024; c.height = 220;
+  const g = c.getContext('2d'); g.fillStyle = '#FFFFFF'; g.beginPath(); g.roundRect(6, 6, 1012, 208, 60); g.fill();
+  g.lineWidth = 12; g.strokeStyle = border; g.stroke();
+  g.fillStyle = '#1B2333'; g.textAlign = 'center'; g.textBaseline = 'middle';
+  let s = text.toUpperCase(), fs = 104; g.font = `900 ${fs}px Nunito`;
+  while (g.measureText(s).width > 940 && fs > 56) { fs -= 6; g.font = `900 ${fs}px Nunito`; }   // shrink to fit, don't cut letters
+  while (g.measureText(s).width > 940 && s.length > 4) s = s.slice(0, -1);
+  g.fillText(s, 512, 116);
+  const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 8;
+  return new THREE.Mesh(new THREE.PlaneGeometry(w, w * 220 / 1024), new THREE.MeshBasicMaterial({ map: tex, transparent: true }));
+}
+const FISH_BIG = EP.fishBig || 1.55, FISH_BACK = EP.fishBack != null ? EP.fishBack : -4;
+function landmark(kind, sign) {
+  const g = new THREE.Group();
+  const q = (geo, c, x, y, z) => { const m = mesh(geo, c); m.position.set(x, y, z); g.add(m); return m; };
+  const cat = (c, s, x, y, z) => { const m = new THREE.Mesh(CAT_GEO, mat(c)); m.scale.setScalar(s); m.position.set(x, y, z); m.castShadow = true; g.add(m); return m; };
+  let sy = 17;
+  if (kind === 'petshop') { q(B(13, 5.5, 9), '#FFFFFF', 0, 2.75, 0); q(B(14, .6, 10), '#2F5FE0', 0, 5.8, 0); for (let i = 0; i < 7; i++) { const s = q(B(2, .3, 2.6), i % 2 ? '#FFFFFF' : '#2F5FE0', -6 + i * 2, 4.6, 5.4); s.rotation.x = .5; }
+    q(B(8, 2.6, .2), '#9FD3FF', -1.5, 2.2, 4.55); q(B(1.8, 3.4, .2), '#1B2333', 4.5, 1.7, 4.55); q(Cyl(1.3, 1.1, 1, 12), '#2F5FE0', 0, 6.6, 0); [-1.4, 1.4].forEach(x => q(new THREE.ConeGeometry(.5, 1.1, 3), '#2F5FE0', x, 7.4, -.6)); sy = 11; }
+  else if (kind === 'cityhall') { q(B(20, 9, 13), '#FFFFFF', 0, 4.5, 0); q(B(22, 1, 15), '#E9E3CF', 0, .5, 0); for (let i = 0; i < 6; i++) q(Cyl(.6, .6, 8, 10), '#F4F5F7', -7.5 + i * 3, 4.5, 7.2);
+    q(B(22, 1.2, 15), '#E9E3CF', 0, 9.6, 0); q(new THREE.SphereGeometry(5, 16, 8, 0, Math.PI * 2, 0, Math.PI / 2), '#2F5FE0', 0, 10.2, 0); [-3, 3].forEach(x => q(new THREE.ConeGeometry(1.4, 3.4, 3), '#2F5FE0', x, 15, 1));
+    q(Cyl(.15, .15, 7, 6), '#8A8F98', 0, 18.5, 0); q(B(3.2, 2, .1), '#FFC93C', 1.6, 21, 0);
+    q(B(6, 2.4, 6), '#E7EDF7', 0, 1.2, 12); cat('#F28C28', 5, 0, 2.4, 12).rotation.y = 0; q(B(4.4, 1.6, .2), '#1B2333', 0, 5.6, 14.3); sy = 25; }
+  else if (kind === 'cafe') { q(B(16, 7, 12), '#FFF4E6', 0, 3.5, 0); for (let i = 0; i < 8; i++) { const s = q(B(2, .4, 3.4), i % 2 ? '#FFFFFF' : '#E85D5D', -7 + i * 2, 6.4, 7); s.rotation.x = .45; } q(Cyl(1.6, 1.2, 2.4, 14), '#FFFFFF', 0, 8.2, 0); }
+  else if (kind === 'market') { q(B(16, 3, 9), '#C98B5A', 0, 1.5, 0); const r = q(B(18, .5, 11), '#2F5FE0', 0, 7.6, 0); r.rotation.x = -.12; }
+  else if (kind === 'fishmarket') {   // Day 2 top comment: "add a fish supermarket"
+    q(B(21, .4, 17), '#E7EDF7', 0, .2, 1); q(B(18, 7, 11), '#EAF6FF', 0, 3.9, -1.5); q(B(18.6, .9, 11.6), '#1E6FD0', 0, 7.8, -1.5);
+    q(B(18.1, 1, 11.1), '#5AB3F0', 0, .9, -1.5);                                                            // wave-blue base band
+    [-5.6, 5.6].forEach(x => { q(B(5.4, 3.4, .2), '#9FD3FF', x, 3.7, 4.05); q(B(5.8, .35, .3), '#FFFFFF', x, 5.55, 4.1); q(B(5.8, .35, .3), '#FFFFFF', x, 1.85, 4.1); });
+    q(B(3.6, 4.6, .2), '#CFEFFF', 0, 2.7, 4.05); q(B(.12, 4.6, .3), '#7D8CA3', 0, 2.7, 4.12); q(B(4.2, .4, .3), '#1B2333', 0, 5.1, 4.12);   // sliding doors
+    for (let i = 0; i < 9; i++) { const a = q(B(2, .3, 2.6), i % 2 ? '#FFFFFF' : '#2F5FE0', -8 + i * 2, 6.6, 5.2); a.rotation.x = .5; }   // striped awning
+    const fish = (c, sx, x, y, z, ry = 0) => { const f = new THREE.Group(); const m = new THREE.Mesh(new THREE.SphereGeometry(1, 14, 10), mat(c)); m.scale.set(1.6, .8, .45); m.castShadow = true; f.add(m);
+      const tl = new THREE.Mesh(new THREE.ConeGeometry(.75, 1.1, 3).rotateZ(Math.PI / 2), mat(c)); tl.position.set(-1.9, 0, 0); f.add(tl);
+      [-.46, .46].forEach(zz => { const e = new THREE.Mesh(new THREE.SphereGeometry(.2, 8, 6), mat('#FFFFFF')); e.position.set(1, .2, zz); f.add(e); const p2 = new THREE.Mesh(new THREE.SphereGeometry(.11, 6, 5), mat('#1B2333')); p2.position.set(1.08, .22, zz * 1.1); f.add(p2); });
+      f.scale.setScalar(sx); f.position.set(x, y, z); f.rotation.y = ry; g.add(f); return f; };
+    const big = fish('#FF8A2A', 3.2, 0, 11.6, -1.5); big.rotation.z = .12; q(Cyl(.3, .3, 3.2, 8), '#8A8F98', 0, 9.6, -1.5);   // giant fish on the roof
+    [-6.2, 6.2].forEach((x, j) => { q(B(5.2, 1.5, 2.4), '#2F5FE0', x, .95, 7.3); q(B(5.2, .35, 2.4), '#F4FBFF', x, 1.85, 7.3);       // ice counters with fish
+      ['#FF9F43', '#C7D3E0', '#FF7A9A'].forEach((c, i) => { const f = fish(c, .42, x - 1.45 + i * 1.6, 2.2, 7.3 + (i % 2 ? .35 : -.35)); f.rotation.x = Math.PI / 2; }); });   // lying on the ice
+    const inner = new THREE.Group(); [...g.children].forEach(c => inner.add(c)); inner.scale.setScalar(FISH_BIG); inner.position.z = FISH_BACK; g.add(inner);   // owner: bigger
+    g.userData.parts = [...inner.children]; g.userData.parts.forEach(c => { c.userData.y0 = c.position.y; c.userData.s0 = c.scale.clone(); });   // slow build: pieces drop in one by one
+    sy = 17 * FISH_BIG + 1; }
+  else if (kind === 'arcade') {   // Day 3 top comment (francisco12321): "make a cat arcade!" Parts (slow build order): floor, walls, roof + cat head, claw machine, game cabinets, neon. Neon is dim until EP.newBuild.lightsAt.
+    const A = { neon: [], glow: [], lights: [], cats: [] }, P = [], part = () => { const pg = new THREE.Group(); g.add(pg); P.push(pg); return pg; };
+    const qp = (pg, geo, c, x, y, z) => { const m = mesh(geo, c); m.position.set(x, y, z); pg.add(m); return m; };
+    const neon = (pg, geo, on, x, y, z) => { const mt = new THREE.MeshBasicMaterial({ color: '#3A3350', toneMapped: false }); mt.userData.on = on; A.neon.push(mt); const m = new THREE.Mesh(geo, mt); m.position.set(x, y, z); pg.add(m); return m; };
+    const p0 = part(); qp(p0, B(23, .4, 21), '#2B2340', 0, .2, 2.5);                                                     // floor + checker walk-in
+    for (let i = 0; i < 6; i++) for (let j = 0; j < 4; j++) if ((i + j) % 2 === 0) qp(p0, B(1.6, .1, 1.6), '#FFFFFF', -4 + i * 1.6, .45, 5.6 + j * 1.6);
+    const p1 = part(); qp(p1, B(18, 7.5, 11), '#6C4BD8', 0, 4.15, -1.5); qp(p1, B(18.1, 1, 11.1), '#4A2FA0', 0, .9, -1.5);   // walls
+    qp(p1, B(4, 4.8, .2), '#1B2333', 0, 2.8, 4.05);
+    [-5.8, 5.8].forEach(x => neon(p1, B(4.6, 3, .2), '#7FE8FF', x, 4.1, 4.06));                                           // windows glow cyan
+    const p2 = part(); qp(p2, B(18.8, .9, 11.8), '#2B2340', 0, 8.3, -1.5);                                              // roof + giant cat head
+    const hd = neon(p2, new THREE.SphereGeometry(2.6, 14, 10), '#FF4FB0', 0, 11.6, -1.5); hd.scale.set(1.15, .95, .7);
+    [-1.6, 1.6].forEach(x => { const e = neon(p2, new THREE.ConeGeometry(1.1, 2.2, 4), '#FF4FB0', x, 14.1, -1.5); e.rotation.z = x > 0 ? -.3 : .3; });
+    [-.9, .9].forEach(x => qp(p2, new THREE.SphereGeometry(.42, 8, 6), '#1B2333', x, 12.1, .3)); qp(p2, B(.5, .3, .3), '#1B2333', 0, 11.2, .4);
+    qp(p2, Cyl(.25, .25, 2.6, 6), '#8A8F98', 0, 9.6, -1.5);
+    const p3 = part(), CX = -6.4, CZ = 7.4;                                                                            // claw machine
+    qp(p3, B(3.4, 2.6, 3.4), '#FF5FA2', CX, 1.3, CZ); qp(p3, B(3.6, .9, 3.6), '#FF5FA2', CX, 6.6, CZ);
+    const gl = new THREE.Mesh(B(3.2, 3.4, 3.2), new THREE.MeshStandardMaterial({ color: '#CFF6FF', transparent: true, opacity: .28, roughness: .1 })); gl.position.set(CX, 4.4, CZ); p3.add(gl);
+    [-1.6, 1.6].forEach(dx => [-1.6, 1.6].forEach(dz => qp(p3, B(.2, 3.4, .2), '#FFFFFF', CX + dx, 4.4, CZ + dz)));
+    ['#FFC93C', '#5BB98C', '#2F5FE0', '#FFFFFF', '#9B6FE0', '#E85D5D', '#FFC93C'].forEach((c, i) => qp(p3, new THREE.SphereGeometry(.42, 8, 6), c, CX - 1.1 + (i % 4) * .75, 2.95 + (i > 3 ? .45 : 0), CZ - .9 + (i % 3) * .8));
+    const prize = new THREE.Group(); { const m = new THREE.Mesh(new THREE.SphereGeometry(1, 12, 8), mat('#FF8A2A')); m.scale.set(.75, .4, .25); prize.add(m);
+      const tl = new THREE.Mesh(new THREE.ConeGeometry(.35, .5, 3).rotateZ(Math.PI / 2), mat('#FF8A2A')); tl.position.x = -.85; prize.add(tl); }
+    prize.position.set(CX + .2, 3.2, CZ + .5); p3.add(prize);
+    const claw = new THREE.Group(); claw.add(new THREE.Mesh(Cyl(.07, .07, 2.4, 6), mat('#C9CED6'))).position.y = 1.2;
+    const prongs = [0, 1, 2].map(i => { const pr = new THREE.Mesh(B(.12, .7, .12), mat('#C9CED6')); const pv = new THREE.Group(); pv.rotation.y = i * 2.094; pr.position.set(0, -.3, .3); pv.add(pr); claw.add(pv); return pr; });
+    claw.position.set(CX + .2, 5.6, CZ + .5); p3.add(claw);
+    neon(p3, B(3.7, .25, .25), '#FFE14F', CX, 7.1, CZ + 1.8);
+    const mc = new THREE.Mesh(CAT_SIT, mat('#F28C28')); mc.scale.setScalar(1.6); mc.position.set(CX + .2, .4, CZ + 3.2); mc.rotation.y = Math.PI; mc.castShadow = true; p3.add(mc);   // Mango at the claw machine
+    A.claw = { claw, prongs, prize, home: prize.position.clone(), cx: CX + .2, cz: CZ, mango: mc };
+    const p4 = part();                                                                                               // two game cabinets with cats playing
+    [[3.4, '#2F5FE0', '#5BFF9C'], [7.2, '#FFC93C', '#FF7AD9']].forEach(([x, c, sc], i) => { qp(p4, B(2.4, 4.4, 2), c, x, 2.6, 6.6); qp(p4, B(2.6, .5, 1.3), '#1B2333', x, 3.2, 7.9);
+      neon(p4, B(1.9, 1.5, .1), sc, x, 4.2, 7.65); qp(p4, Cyl(.08, .08, .6, 6), '#1B2333', x - .5, 3.7, 8.1); qp(p4, new THREE.SphereGeometry(.2, 8, 6), '#E85D5D', x - .5, 4.0, 8.1);
+      const ct = new THREE.Mesh(CAT_SIT, mat(['#3B3B44', '#FFFFFF'][i])); ct.scale.setScalar(1.5); ct.position.set(x, .4, 9.6); ct.rotation.y = Math.PI; ct.castShadow = true; p4.add(ct); });
+    const p5 = part();                                                                                               // neon strips + stars
+    neon(p5, B(18.9, .35, .35), '#FF4FB0', 0, 7.75, 4.2); neon(p5, B(18.9, .35, .35), '#4FE3FF', 0, 1.5, 4.2);
+    [-9.2, 9.2].forEach(x => neon(p5, B(.35, 6.6, .35), x < 0 ? '#4FE3FF' : '#FF4FB0', x, 4.6, 4.2));
+    neon(p5, B(5, .3, .3), '#FFE14F', 0, 5.6, 4.2);
+    [[-4.5, 10.3], [4.5, 10.3], [-8, 9.4], [8, 9.4]].forEach(([x, y]) => { const st = neon(p5, new THREE.OctahedronGeometry(.75, 0), '#FFE14F', x, y, 4.2); st.scale.z = .4; });
+    for (let i = 0; i < 10; i++) { const ct = new THREE.Mesh(CAT_GEO, mat(CAT_COLORS[(i * 4 + 1) % CAT_COLORS.length])); ct.scale.setScalar(0); ct.castShadow = true; g.add(ct); A.cats.push(ct); }   // cats run in when it opens
+    [['#FF4FB0', -6, 6], ['#4FE3FF', 6, 6], ['#B98CFF', 0, 9]].forEach(([c, x, z]) => { const L = new THREE.PointLight(c, 0, 32, 1.6); L.position.set(x, 5, z); g.add(L); A.lights.push(L); });
+    const inner = new THREE.Group(); [...g.children].forEach(c => inner.add(c)); inner.scale.setScalar(EP.arcadeBig || 1.45); inner.position.z = -4; g.add(inner);
+    g.userData.parts = P; P.forEach(c => { c.userData.y0 = c.position.y; c.userData.s0 = c.scale.clone(); }); g.userData.arc = A;
+    sy = 17 * (EP.arcadeBig || 1.45) + 2; }
+  else if (kind === 'artstudio') {   // Day 4 top comment (Tilly): "build an art studio and the cats at the studio build mango a statue". Parts (slow build order): yard, studio walls + big window, roof + giant palette, easels, pedestal.
+    // EP.newBuild.openAt: painter cats run in and sit at the easels; EP.statueAt: the Mango statue rises on the pedestal (2.4 s).
+    const S = { cats: [], seats: [] }, P = [], part = () => { const pg = new THREE.Group(); g.add(pg); P.push(pg); return pg; };
+    const qp = (pg, geo, c, x, y, z) => { const m = mesh(geo, c); m.position.set(x, y, z); pg.add(m); return m; };
+    const CZ = 7;                                                                                                    // the yard centre (statue)
+    const p0 = part(); qp(p0, B(24, .4, 22), '#F3E3C3', 0, .2, 3);                                                   // yard: warm wood floor + paint splats
+    [['#FF5FA2', -7, 11], ['#4FB3FF', 8, 12], ['#FFD23F', -3, 13.2], ['#5BB98C', 5, 9.6], ['#9B6FE0', -9, 6]].forEach(([c, x, z]) => { const sp = qp(p0, Cyl(1.1, 1.1, .08, 10), c, x, .45, z); sp.scale.z = .7; });
+    const p1 = part(); qp(p1, B(18, 7.5, 9), '#FFF7EC', 0, 4.15, -4); qp(p1, B(18.1, 1, 9.1), '#FF8FB8', 0, .9, -4);   // studio building
+    qp(p1, B(10, 4.6, .2), '#BFE6FF', -2.5, 4.2, .56); [-7.4, -2.5, 2.4].forEach(x => qp(p1, B(.3, 4.8, .3), '#FFFFFF', x, 4.2, .6)); qp(p1, B(10.2, .3, .3), '#FFFFFF', -2.5, 6.6, .6);
+    qp(p1, B(3, 4.8, .2), '#8A5A3B', 5.8, 2.8, .56);
+    const p2 = part(); qp(p2, B(19, .9, 10), '#9B6FE0', 0, 8.3, -4);                                                 // roof + giant palette + brush
+    const pal = qp(p2, Cyl(3.6, 3.6, .5, 20), '#F2D3A0', 0, 12.2, -4); pal.rotation.x = Math.PI / 2; pal.scale.z = .78;
+    [['#E85D5D', -1.8, 13.2], ['#FFD23F', 0, 14], ['#4FB3FF', 1.8, 13.2], ['#5BB98C', 2.1, 11.6], ['#FF5FA2', -2.1, 11.6]].forEach(([c, x, y]) => qp(p2, new THREE.SphereGeometry(.62, 10, 8), c, x, y, -3.6));
+    const br = qp(p2, Cyl(.22, .22, 6, 8), '#8A5A3B', 3.4, 12.6, -3.4); br.rotation.z = -.7; const tip = qp(p2, new THREE.ConeGeometry(.45, 1.2, 8), '#FF5FA2', 5.7, 14.6, -3.4); tip.rotation.z = -.7;
+    qp(p2, Cyl(.25, .25, 3, 6), '#8A8F98', 0, 9.6, -4);
+    const face = (bg) => { const c = document.createElement('canvas'); c.width = c.height = 128; const x = c.getContext('2d'); x.fillStyle = bg; x.fillRect(0, 0, 128, 128);   // a painting of Mango
+      x.fillStyle = '#F28C28'; x.beginPath(); x.arc(64, 72, 34, 0, 7); x.fill(); x.beginPath(); x.moveTo(34, 56); x.lineTo(40, 18); x.lineTo(60, 42); x.fill(); x.beginPath(); x.moveTo(94, 56); x.lineTo(88, 18); x.lineTo(68, 42); x.fill();
+      x.fillStyle = '#1B2333'; x.beginPath(); x.arc(52, 68, 5, 0, 7); x.arc(76, 68, 5, 0, 7); x.fill(); x.fillStyle = '#FF7A9A'; x.beginPath(); x.arc(64, 80, 4, 0, 7); x.fill();
+      x.lineWidth = 8; x.strokeStyle = '#C98B5A'; x.strokeRect(4, 4, 120, 120); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return new THREE.MeshStandardMaterial({ map: t, roughness: .9 }); };
+    const p3 = part(), BG = ['#BFE6FF', '#FFF1B8', '#FFD6E7', '#D9F7C9', '#E6DAFF', '#FFE2C2'];   // easels in a half ring around the statue, each with a cat painting Mango
+    [200, 235, 305, 340, 165, 15].forEach((deg, i) => { const a = deg * Math.PI / 180, ex = Math.cos(a) * 6.2, ez = CZ + Math.sin(a) * 6.2, yaw = Math.atan2(-Math.cos(a), -Math.sin(a));
+      const eg = new THREE.Group(); eg.position.set(ex, .4, ez); eg.rotation.y = yaw; p3.add(eg);
+      [-.6, .6].forEach(dx => { const l = mesh(B(.18, 3.6, .18), '#8A5A3B'); l.position.set(dx, 1.8, -.1); l.rotation.x = -.12; eg.add(l); });
+      const cv = new THREE.Mesh(B(2.2, 2.2, .12), [mat('#FFFFFF'), mat('#FFFFFF'), mat('#FFFFFF'), mat('#FFFFFF'), mat('#FFFFFF'), face(BG[i])]); cv.position.set(0, 2.9, .05); cv.rotation.x = -.12; cv.rotation.y = Math.PI; cv.castShadow = true; eg.add(cv);
+      S.seats.push({ x: Math.cos(a) * 8.1, z: CZ + Math.sin(a) * 8.1, yaw }); });
+    const p4 = part(); qp(p4, B(4.2, 2.6, 4.2), '#F4F5F7', 0, 1.7, CZ); qp(p4, B(4.8, .5, 4.8), '#DCE1EA', 0, .55, CZ); qp(p4, B(4.6, .4, 4.6), '#DCE1EA', 0, 3.2, CZ);   // pedestal
+    const sg = new THREE.Group(); sg.position.set(0, 3.4, CZ); g.add(sg);                                            // the Mango statue (gold), rises at EP.statueAt
+    const st = new THREE.Mesh(CAT_SIT, mat('#FFC93C', { metalness: .55, roughness: .35 })); st.scale.setScalar(4.2); st.rotation.y = 0; st.castShadow = true; sg.add(st); sg.scale.setScalar(0); S.statue = sg;
+    const mg = new THREE.Mesh(CAT_SIT, mat('#F28C28')); mg.scale.setScalar(1.7); mg.position.set(1.2, .4, CZ + 6.4); mg.rotation.y = Math.PI; mg.castShadow = true; g.add(mg); S.mango = mg;   // Mango looks up at his statue
+    for (let i = 0; i < 6; i++) { const w = new THREE.Mesh(CAT_GEO, mat(CAT_COLORS[(i * 4 + 2) % CAT_COLORS.length])), sit = new THREE.Mesh(CAT_SIT, w.material); [w, sit].forEach(m => { m.castShadow = true; m.scale.setScalar(0); g.add(m); }); S.cats.push({ w, sit }); }
+    const inner = new THREE.Group(); [...g.children].forEach(c => inner.add(c)); inner.scale.setScalar(EP.studioBig || 1.45); inner.position.z = -2; g.add(inner);
+    g.userData.parts = P; P.forEach(c => { c.userData.y0 = c.position.y; c.userData.s0 = c.scale.clone(); }); g.userData.studio = S;
+    sy = 17 * (EP.studioBig || 1.45) + 2; }
+  else if (kind === 'pizza') {   // Day 5 top comment (MrFireman): "a giant slice of pizza with every single piece of topping on it". Parts (slow build order): stand, crust, sauce, cheese, then one part per topping (pepperoni ... pineapple, fish on top).
+    // EP.newBuild.openAt: cats climb on the slice, one naps in the cheese; EP.pizza = { lookAt: [t0, t1] Mango faces the camera, walkAt: one cat walks off (pineapple), biteAt, turnAt: Mango turns to the camera with cheese on his face }.
+    const Z = { cats: [], climb: [] }, P = [], part = par => { const pg = new THREE.Group(); par.add(pg); P.push(pg); return pg; };
+    const qp = (pg, geo, c, x, y, z) => { const m = mesh(geo, c); m.position.set(x, y, z); pg.add(m); return m; };
+    const TIP = 10, LEN = 21, TILT = .42, TOP = 1.45;                                                                // slice lies tip-first toward the street, the crust end raised on a stand
+    const sl = new THREE.Group(); sl.position.set(0, 1.1, TIP); sl.rotation.x = TILT; g.add(sl);
+    const tri = (i0, w, l, arc) => { const s = new THREE.Shape(); s.moveTo(0, i0); s.lineTo(-w, l); s.quadraticCurveTo(0, l + arc, w, l); s.lineTo(0, i0); return s; };
+    const slab = (s, d) => new THREE.ExtrudeGeometry(s, { depth: d, bevelEnabled: false, curveSegments: 16 }).rotateX(-Math.PI / 2);   // shape y -> world -z, thickness along +y
+    const cY = Math.sin(TILT) * LEN + 1.1, cZ = TIP - Math.cos(TILT) * LEN;
+    const p0 = part(g); [-6.5, 6.5].forEach(x => qp(p0, Cyl(.55, .7, cY, 8), '#8A5A3B', x, cY / 2, cZ + 1.2)); qp(p0, B(15, .8, 1.4), '#8A5A3B', 0, cY - .6, cZ + 1.2);   // display stand
+    qp(p0, B(22, .3, 26), '#F4F5F7', 0, .15, 0); [-10.6, 10.6].forEach(x => qp(p0, B(.5, .5, 26), '#E85D5D', x, .4, 0));             // plate-white lot with red trim
+    const p1 = part(sl); qp(p1, slab(tri(0, 9, LEN, 2.5), .9), '#E9B96E', 0, 0, 0);                                   // crust
+    qp(p1, new THREE.TubeGeometry(new THREE.QuadraticBezierCurve3(new THREE.Vector3(-9.4, .9, -LEN - .1), new THREE.Vector3(0, .9, -LEN - 2.9), new THREE.Vector3(9.4, .9, -LEN - .1)), 24, 1.35, 8), '#D9984A', 0, 0, 0);
+    const p2 = part(sl); qp(p2, slab(tri(1.2, 8.2, LEN - .5, 2.2), .25), '#D7372A', 0, .9, 0);                       // sauce
+    const p3 = part(sl); qp(p3, slab(tri(1.9, 7.8, LEN - .9, 2.1), .35), '#FFD45C', 0, 1.1, 0);                       // cheese + drips over the edges
+    [.3, .55, .8].forEach(u => [-1, 1].forEach(sd => { const d = qp(p3, B(.9, 1.7 - u, .6), '#FFD45C', sd * (9 * u + .1), .55, -LEN * u); d.rotation.y = sd * .4; }));
+    let hs = 7; const rnd2 = () => (hs = (hs * 9301 + 49297) % 233280) / 233280;
+    const spot = () => { const u = .14 + .8 * Math.sqrt(rnd2()); return [(rnd2() * 2 - 1) * Math.max(.3, 7.6 * u - 1.4), -LEN * u]; };
+    const top = (n, make) => { const pg = part(sl); for (let i = 0; i < n; i++) { const [x, z] = spot(), m = make(pg, i); m.position.x += x; m.position.z += z; m.position.y += TOP; m.rotation.y = rnd2() * 6.28; } return pg; };
+    const grp = (pg, ...ms) => { const o = new THREE.Group(); ms.forEach(m => o.add(m)); pg.add(o); return o; };
+    const at = (m, x, y, z) => { m.position.set(x, y, z); return m; };
+    top(9, pg => grp(pg, at(mesh(Cyl(1.25, 1.25, .3, 14), '#B5282B'), 0, .15, 0), at(mesh(Cyl(.3, .3, .32, 6), '#8E1E21'), .4, .16, .3)));   // pepperoni
+    top(7, pg => grp(pg, at(mesh(new THREE.SphereGeometry(.8, 10, 6, 0, 6.29, 0, 1.6), '#D8C3A5'), 0, .35, 0), at(mesh(Cyl(.3, .35, .5, 6), '#F1E6D6'), 0, .2, 0)));   // mushrooms
+    top(10, pg => { const m = grp(pg, at(mesh(new THREE.TorusGeometry(.42, .2, 6, 12), '#2B2B30'), 0, .15, 0)); m.children[0].rotation.x = Math.PI / 2; return m; });   // olives
+    top(7, pg => { const m = grp(pg, at(mesh(new THREE.TorusGeometry(.75, .17, 5, 14), '#3DAA4D'), 0, .12, 0)); m.children[0].rotation.x = Math.PI / 2; m.children[0].scale.y = .7; return m; });   // green peppers
+    top(7, pg => { const m = grp(pg, at(mesh(new THREE.TorusGeometry(.8, .12, 5, 16), '#B07CC6'), 0, .1, 0)); m.children[0].rotation.x = Math.PI / 2; return m; });   // red onion rings
+    top(16, pg => grp(pg, at(mesh(new THREE.SphereGeometry(.28, 6, 5), '#FFE14F'), 0, .2, 0)));                         // corn
+    top(6, pg => grp(pg, at(mesh(B(2.4, .28, .75), '#B9473F'), 0, .14, 0), at(mesh(B(2.4, .3, .22), '#F4C7B0'), 0, .15, .1)));   // bacon
+    top(6, pg => grp(pg, at(mesh(Cyl(1.05, 1.05, .25, 14), '#E8432F'), 0, .13, 0), at(mesh(Cyl(.55, .55, .27, 10), '#F7907E'), 0, .14, 0)));   // tomato
+    top(8, pg => grp(pg, at(mesh(Cyl(.5, .5, .25, 10), '#2E8B3A'), 0, .13, 0), at(mesh(Cyl(.25, .25, .27, 6), '#CDE8A0'), 0, .14, 0)));   // jalape\u00f1o
+    top(7, pg => { const m = grp(pg, at(mesh(new THREE.SphereGeometry(.6, 8, 5), '#3E9E3E'), 0, .1, 0)); m.children[0].scale.set(1, .2, .55); return m; });   // basil
+    const pp = top(6, pg => grp(pg, at(mesh(B(.9, .6, .9), '#FFD93B'), 0, .3, 0)));                                     // pineapple: chunks + one giant ring
+    const ring = mesh(new THREE.TorusGeometry(2.2, .75, 8, 20), '#FFD93B'); ring.rotation.x = Math.PI / 2; ring.position.set(0, TOP + .5, -LEN * .48); pp.add(ring);
+    const fp = part(sl), fish = new THREE.Group(); { const m = mesh(new THREE.SphereGeometry(1, 14, 10), '#FF8A2A'); m.scale.set(1.6, .8, .45); fish.add(m);   // the fish on top (from the fish supermarket)
+      const tl = mesh(new THREE.ConeGeometry(.75, 1.1, 3).rotateZ(Math.PI / 2), '#FF8A2A'); tl.position.set(-1.9, 0, 0); fish.add(tl);
+      [-.46, .46].forEach(zz => { fish.add(at(mesh(new THREE.SphereGeometry(.2, 8, 6), '#FFFFFF'), 1, .2, zz)); fish.add(at(mesh(new THREE.SphereGeometry(.11, 6, 5), '#1B2333'), 1.08, .22, zz * 1.1)); }); }
+    fish.scale.setScalar(2.1); fish.rotation.set(Math.PI / 2, 0, .5); fish.position.set(1.2, TOP + 1.1, -LEN * .7); fp.add(fish);
+    const SEATS = [[-5.5, 14.5, .3], [-2.6, 16, .1], [2.6, 16, -.1], [5.5, 14.5, -.3], [-8, 12.5, .5], [8, 12.5, -.5]];   // spectators in front of the lot, looking at it
+    SEATS.forEach(([x, z, r], i) => { const c = new THREE.Mesh(CAT_SIT, mat(CAT_COLORS[(i * 4 + 3) % CAT_COLORS.length])); c.scale.setScalar(1.5); c.position.set(x, .4, z); c.rotation.y = Math.PI + r; c.castShadow = true; g.add(c); Z.cats.push({ m: c, x, z, r }); });
+    Z.walk = new THREE.Mesh(CAT_GEO, Z.cats[1].m.material); Z.walk.castShadow = true; Z.walk.scale.setScalar(0); g.add(Z.walk);
+    [[-3.5, .3], [3.8, .38], [-1.8, .62], [2.6, .78]].forEach(([x, u], i) => { const c = new THREE.Mesh(CAT_SIT, mat(CAT_COLORS[(i * 2 + 1) % CAT_COLORS.length])); c.castShadow = true; c.scale.setScalar(0); c.position.set(x, TOP + .3, -LEN * u); c.rotation.y = i % 2 ? .4 : -.4; sl.add(c); Z.climb.push(c); });
+    const nap = new THREE.Mesh(CAT_LOAF, mat('#FFFFFF')); nap.castShadow = true; nap.scale.setScalar(0); nap.position.set(-4.4, TOP + .2, -LEN * .55); nap.rotation.y = 2.2; sl.add(nap); Z.climb.push(nap);
+    const mg = new THREE.Group(); mg.position.set(0, .4, TIP + 2.9); mg.rotation.y = Math.PI; g.add(mg); Z.mango = mg;   // Mango at the tip of the slice
+    const mb = new THREE.Mesh(CAT_SIT, mat('#F28C28')); mb.scale.setScalar(1.7); mb.castShadow = true; mg.add(mb);
+    [-.17, .17].forEach(x => mg.add(at(mesh(new THREE.SphereGeometry(.075, 8, 6), '#1B2333'), x, 1.8, .57))); mg.add(at(mesh(new THREE.SphereGeometry(.05, 6, 5), '#FF7A9A'), 0, 1.68, .58));   // a little face for the close-ups
+    const blob = new THREE.Group(); blob.add(at(mesh(new THREE.SphereGeometry(.2, 10, 8), '#FFD45C'), .1, 1.56, .6)); blob.add(at(mesh(Cyl(.06, .04, .35, 6), '#FFD45C'), .16, 1.4, .62)); blob.children[0].scale.set(1.4, .7, .5); blob.visible = false; mg.add(blob); Z.blob = blob;
+    const str = mesh(Cyl(.07, .07, 1, 6), '#FFD45C'); str.rotation.x = Math.PI / 2; str.visible = false; mg.add(str); Z.str = str;
+    const dust = []; for (let i = 0; i < 18; i++) { const d = new THREE.Mesh(new THREE.SphereGeometry(1, 7, 5), mat('#FFF4E0')); d.scale.setScalar(0); g.add(d); dust.push({ m: d, a: i / 18 * 6.283 }); } Z.dust = dust; Z.dustC = [0, cZ * .4];
+    const inner = new THREE.Group(); [...g.children].forEach(c => inner.add(c)); inner.scale.setScalar(EP.pizzaBig || 1.45); inner.position.z = -2; g.add(inner);
+    g.userData.parts = P; P.forEach(c => { c.userData.y0 = c.position.y; c.userData.s0 = c.scale.clone(); }); g.userData.pizza = Z;
+    sy = cY * (EP.pizzaBig || 1.45) + 7; }
+  else if (kind === 'toy') {   // Day 6 top comment (bean): "can we get a huge cat toy statue for the cats to play with". Parts (slow build order): the box it came in, pedestal, giant yarn ball, feather wand, toy mouse on a string, jingle bells.
+    // EP.newBuild.openAt: cats run in and play (two bat at the mouse, two climb the yarn ball, one naps); EP.toy = { lookAt: [t0, t1] Mango faces the camera, boxAt: Mango walks over and hops into the box, turnAt: Mango turns to the camera from the box }.
+    const T = { cats: [], seats: [], climb: [] }, P = [], part = () => { const pg = new THREE.Group(); g.add(pg); P.push(pg); return pg; };
+    const qp = (pg, geo, c, x, y, z, ex) => { const m = ex ? new THREE.Mesh(geo, mat(c, ex)) : mesh(geo, c); if (ex) { m.castShadow = true; m.receiveShadow = true; } m.position.set(x, y, z); pg.add(m); return m; };
+    const BX = [-11, 8];                                                                                              // the cardboard box, front left of the lot
+    const p0 = part(); qp(p0, B(4.6, .3, 4.6), '#B98250', BX[0], .45, BX[1]);                                          // box: floor, 4 walls, flaps open
+    [[0, 2.3, 4.6, .3], [0, -2.3, 4.6, .3], [2.3, 0, .3, 4.6], [-2.3, 0, .3, 4.6]].forEach(([x, z, w, d]) => qp(p0, B(w, 2.3, d), '#C8935A', BX[0] + x, 1.45, BX[1] + z));
+    [[0, 2.75, 0, 1], [0, -2.75, 0, -1], [2.75, 0, 1, 0], [-2.75, 0, -1, 0]].forEach(([x, z, sx, sz]) => { const f = qp(p0, B(sx ? 1.4 : 4.6, .14, sz ? 1.4 : 4.6), '#D9A56B', BX[0] + x, 2.75, BX[1] + z); f.rotation.x = sz * .75; f.rotation.z = -sx * .75; });
+    qp(p0, B(4.62, .5, .05), '#E9D3A8', BX[0], 1.5, BX[1] + 2.47);                                                   // packing tape
+    const p1 = part(); qp(p1, Cyl(12.5, 12.5, .3, 40), '#EAF6FF', 0, .15, 0); qp(p1, new THREE.TorusGeometry(12.5, .35, 6, 48).rotateX(Math.PI / 2), '#FF6FA8', 0, .3, 0);   // round lot + pink trim
+    qp(p1, Cyl(4.3, 4.8, 2.4, 20), '#F4F5F7', 0, 1.5, 0); qp(p1, Cyl(4.7, 4.7, .45, 20), '#DCE1EA', 0, 2.9, 0);         // pedestal
+    const plq = (() => { const c = document.createElement('canvas'); c.width = 256; c.height = 64; const x = c.getContext('2d'); x.fillStyle = '#FFC93C'; x.fillRect(0, 0, 256, 64); x.fillStyle = '#1B2333'; x.font = '900 34px Nunito, sans-serif'; x.textAlign = 'center'; x.fillText('FOR THE CATS', 128, 45);
+      const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return new THREE.MeshStandardMaterial({ map: t, roughness: .6 }); })();
+    const pl = new THREE.Mesh(B(4.2, 1.05, .15), [mat('#FFC93C'), mat('#FFC93C'), mat('#FFC93C'), mat('#FFC93C'), plq, mat('#FFC93C')]); pl.position.set(0, 1.55, 4.62); pl.rotation.x = -.1; p1.add(pl);
+    const p2 = part(), YR = 5, YC = 3.1 + YR;                                                                         // giant yarn ball + a loose strand on the ground
+    const yb = new THREE.Group(); yb.position.set(0, YC, 0); p2.add(yb); T.ball = yb;
+    yb.add(mesh(new THREE.IcosahedronGeometry(YR, 2), '#FF6FA8'));
+    [[0, 0, 0], [1.2, 0, .3], [-.5, .9, 0], [.4, -.7, 1.1], [1.57, .5, 0], [.9, 1.3, .6]].forEach(([a, b, c], i) => { const w = mesh(new THREE.TorusGeometry(YR + .05, .2, 5, 40), i % 2 ? '#E2457F' : '#FF9AC4'); w.rotation.set(a, b, c); yb.add(w); });
+    const strand = new THREE.CatmullRomCurve3([[1.5, YC - 4.6, 4.2], [3.4, .5, 6.4], [1.5, .45, 9.5], [-2.5, .45, 10.5], [-4.5, .45, 13], [-1.5, .45, 14.6]].map(p => new THREE.Vector3(...p)));
+    qp(p2, new THREE.TubeGeometry(strand, 48, .28, 6), '#FF6FA8', 0, 0, 0);
+    const TIP = new THREE.Vector3(7, 21, 6.5);                                                                       // feather wand: a giant toy rod that arcs over the ball
+    const p3 = part(); qp(p3, B(2.6, 2.4, 2.6), '#1B2333', -7.5, 1.5, -5.5);
+    const rod = new THREE.QuadraticBezierCurve3(new THREE.Vector3(-7.5, 2.5, -5.5), new THREE.Vector3(-5, 29, -2), TIP);
+    qp(p3, new THREE.TubeGeometry(rod, 40, .55, 8), '#4FB3FF', 0, 0, 0); qp(p3, Cyl(.75, .75, 3.2, 10), '#2F5FE0', -7.5, 4, -5.5);
+    [['#FFD23F', 0, 0], ['#FF4FB0', 1.1, .9], ['#5BB98C', -1.1, .9], ['#9B6FE0', .9, -1], ['#FF8A2A', -.9, -1]].forEach(([c, dx, dz], i) => { const f = qp(p3, new THREE.SphereGeometry(1, 8, 6), c, TIP.x + dx * .9, TIP.y + .9 + (i ? 0 : .6), TIP.z + dz * .9); f.scale.set(.55, 2.3, .3); f.rotation.set(dz * .6, i * 1.2, -dx * .6); });
+    qp(p3, new THREE.SphereGeometry(.8, 10, 8), '#FFFFFF', TIP.x, TIP.y, TIP.z);
+    const p4 = part(), SL = 15.5;                                                                                    // toy mouse on a string, hangs from the wand tip and swings
+    const pv = new THREE.Group(); pv.position.copy(TIP); p4.add(pv); T.pv = pv;
+    const sr = mesh(Cyl(.08, .08, SL, 6), '#F4F5F7'); sr.position.y = -SL / 2; pv.add(sr);
+    const ms = new THREE.Group(); ms.position.y = -SL - 1.1; pv.add(ms);
+    const bd = mesh(new THREE.SphereGeometry(1, 12, 8), '#AEB6C2'); bd.scale.set(1.25, 1.1, 1.8); ms.add(bd);
+    [-.75, .75].forEach(x => { const e = mesh(Cyl(.65, .65, .15, 12), '#FF9AC4'); e.rotation.x = Math.PI / 2; e.position.set(x, .95, 1.1); ms.add(e); });
+    [-.4, .4].forEach(x => { const e = mesh(new THREE.SphereGeometry(.17, 6, 5), '#1B2333'); e.position.set(x, .35, 1.75); ms.add(e); });
+    const ns = mesh(new THREE.SphereGeometry(.22, 6, 5), '#FF7A9A'); ns.position.set(0, .05, 2.05); ms.add(ns);
+    const tl = mesh(new THREE.TubeGeometry(new THREE.QuadraticBezierCurve3(new THREE.Vector3(0, 0, -1.6), new THREE.Vector3(0, -1.5, -3), new THREE.Vector3(.8, -.4, -4)), 10, .12, 5), '#FF9AC4'); ms.add(tl);
+    ms.rotation.x = .25; T.mouse = ms;
+    const p5 = part();                                                                                               // jingle bells around the base
+    [[-7, 7, '#FFC93C'], [8.6, -.5, '#FFC93C'], [-8.4, -1.5, '#4FB3FF'], [-3, -9.5, '#FF4FB0']].forEach(([x, z, c], i) => { const b = qp(p5, new THREE.SphereGeometry(1.5, 14, 10), c, x, 1.85, z, { metalness: .55, roughness: .3, flatShading: true });
+      const s = qp(p5, B(2.2, .22, .4), '#1B2333', x, 1.6, z + 1.38); s.rotation.x = .6; qp(p5, new THREE.TorusGeometry(.4, .14, 5, 10), '#8A8F98', x, 3.45, z); });
+    const SEATS = [[4.5, 10.2, 2.7, 'hop'], [9.6, 4.6, 3.6, 'hop'], [-7, 9.5, .9, 'sit'], [7.4, -3, 2.3, 'sit'], [2.5, 14, 3.3, 'loaf'], [-3.5, 12.2, -2.4, 'sit']];   // where the players sit (x, z, yaw, pose)
+    SEATS.forEach(([x, z, yaw, pose], i) => { const c = ['#FFFFFF', '#3B3B44', '#B8BEC9', '#FFFFFF', '#6B5B4B', '#3B3B44'][i], w = new THREE.Mesh(CAT_GEO, mat(c)), s = new THREE.Mesh(pose === 'loaf' ? CAT_LOAF : CAT_SIT, mat(c)); [w, s].forEach(m => { m.castShadow = true; m.scale.setScalar(0); g.add(m); });
+      T.cats.push({ w, sit: s }); T.seats.push({ x, z, yaw, pose }); });
+    [[-1.6, YR - .15, .9, '#FFFFFF'], [2.3, YR - .7, -1.4, '#3B3B44']].forEach(([x, y, z, c]) => { const n = new THREE.Vector3(x, y, z).normalize().multiplyScalar(YR - .1); const k = new THREE.Mesh(CAT_SIT, mat(c)); k.castShadow = true; k.scale.setScalar(0); k.position.set(n.x, YC + n.y, n.z); k.rotation.y = Math.atan2(x, z) + .3; g.add(k); T.climb.push(k); });   // two cats on top of the yarn ball
+    const mg = new THREE.Group(); mg.position.set(-2.5, .4, 16.5); mg.rotation.y = Math.PI; g.add(mg); T.mango = mg;   // Mango in front of the lot
+    const mb = new THREE.Mesh(CAT_SIT, mat('#F28C28')); mb.scale.setScalar(1.7); mb.castShadow = true; mg.add(mb);
+    [-.17, .17].forEach(x => { const e = mesh(new THREE.SphereGeometry(.075, 8, 6), '#1B2333'); e.position.set(x, 1.8, .57); mg.add(e); }); { const n = mesh(new THREE.SphereGeometry(.05, 6, 5), '#FF7A9A'); n.position.set(0, 1.68, .58); mg.add(n); }
+    T.mw = new THREE.Mesh(CAT_GEO, mat('#F28C28')); T.mw.castShadow = true; T.mw.scale.setScalar(0); g.add(T.mw); T.box = BX;
+    const dust = []; for (let i = 0; i < 18; i++) { const d = new THREE.Mesh(new THREE.SphereGeometry(1, 7, 5), mat('#FFF4E0')); d.scale.setScalar(0); g.add(d); dust.push({ m: d, a: i / 18 * 6.283 }); } T.dust = dust;
+    const inner = new THREE.Group(); [...g.children].forEach(c => inner.add(c)); inner.scale.setScalar(EP.toyBig || 1.45); inner.position.z = -2; g.add(inner);
+    g.userData.parts = P; P.forEach(c => { c.userData.y0 = c.position.y; c.userData.s0 = c.scale.clone(); }); g.userData.toy = T;
+    sy = 31 * (EP.toyBig || 1.45) + 2; }
+  else if (kind === 'statue') { q(B(6, 4, 6), '#E7EDF7', 0, 2, 0); cat('#FFC93C', 7, 0, 4, 0); }
+  else if (kind === 'pool') { q(B(17, 1, 12), '#E7EDF7', 0, .5, 0); q(B(15, .3, 10), '#5AB3F0', 0, 1.05, 0); }
+  else if (kind === 'reserved') { const p = q(Cyl(.25, .25, 5, 6), '#8A5A3B', 0, 2.5, 0); for (let i = 0; i < 5; i++) q(new THREE.ConeGeometry(.5, 1.2, 8), '#FF8A2A', -6 + i * 3, .6, 8); sy = 6.5; }
+  else { q(B(15, 9, 12), '#FFFFFF', 0, 4.5, 0); q(new THREE.ConeGeometry(11, 5, 4).rotateY(Math.PI / 4), '#FFC93C', 0, 11.5, 0); q(B(3, 4.5, .3), '#1B2333', 0, 2.25, 6.1); [-4, 4].forEach(x => q(new THREE.ConeGeometry(1.4, 3.2, 3), '#FFC93C', x, 13, 4)); }
+  if (sign) { const s = textSign(sign, kind === 'reserved' ? 9 : 14, kind === 'reserved' ? '#FF8A2A' : kind === 'arcade' ? '#FF3EA5' : kind === 'artstudio' ? '#9B6FE0' : kind === 'pizza' ? '#E85D5D' : kind === 'toy' ? '#FF4FB0' : '#2F5FE0'); s.position.set(0, sy, 0); g.add(s); signs.push(s); g.userData.sign = s; }
+  return g;
+}
+
+// Day 6 toy statue: players run in and play, the mouse swings, Mango hops into the box. done = a finished statue (website): everyone already in place.
+const TOYS = [];
+function toyFrame(T, t, anim, done) { const TY = EP.toy || {}, NBT = done ? {} : NEWB, oa = done ? -1e9 : NBT.openAt ?? 1e9, MX = 7, MZ = 6.5;
+  T.cats.forEach((c, i) => { const st = T.seats[i], u = (t - oa - i * .2) / 1.4, sx = (i % 2 ? 1 : -1) * (2 + i * 1.5), sz = 26, hop = st.pose === 'hop';
+    const yaw = hop ? Math.atan2(MX - st.x, MZ - st.z) : st.pose === 'loaf' ? st.yaw : Math.atan2(-st.x, -st.z);
+    if (u <= 0) { c.w.scale.setScalar(0); c.sit.scale.setScalar(0); return; }
+    if (u < 1) { const e = ease(u); c.w.position.set(sx + (st.x - sx) * e, Math.abs(Math.sin(anim * 14 + i)) * .3, sz + (st.z - sz) * e); c.w.rotation.y = Math.atan2(st.x - sx, st.z - sz); c.w.scale.setScalar(2); c.sit.scale.setScalar(0); return; }
+    c.w.scale.setScalar(0); c.sit.scale.setScalar(2);
+    const jy = hop ? Math.max(0, Math.sin(anim * 5.5 + i * 2.1)) * 2.8 : 0;
+    c.sit.position.set(st.x, .4 + jy, st.z); c.sit.rotation.set(hop ? -jy * .12 : 0, yaw + (hop ? 0 : Math.sin(anim * 3 + i) * .15), 0); });
+  T.climb.forEach((k, i) => { const e = (t - oa - 1.7 - i * .35) / .45; k.scale.setScalar(Math.max(.001, 1.9 * back(e))); k.visible = e > 0; });
+  const play = t >= oa + 1.2, amp = play ? .3 : .1;
+  T.pv.rotation.z = Math.sin(anim * 2.1) * amp; T.pv.rotation.x = Math.sin(anim * 1.6 + 1) * amp * .5;
+  T.mouse.rotation.y = Math.sin(anim * 3) * .4;
+  T.ball.rotation.set(play ? Math.sin(anim * 1.8) * .05 : 0, 0, play ? Math.sin(anim * 2.3) * .06 : 0);
+  if (!done) { const pa = NBT.partsAt || [], land = (pa[0] ?? 1e9) + .45, dt = t - land;   // dust when the box lands
+    T.dust.forEach((d, i) => { if (dt < 0 || dt > 1.3) { d.m.scale.setScalar(0); return; } const r = 3 + 8 * ease(dt / 1.1); d.m.position.set(T.box[0] + Math.cos(d.a) * r, .8 + dt * 1.5, T.box[1] + Math.sin(d.a) * r * .8); d.m.scale.setScalar(Math.max(.001, 1.2 * (1 - dt / 1.3) + .15)); }); }
+  const M0 = [-2.5, 16.5], IN = [T.box[0], T.box[1]], lk = TY.lookAt || [1e9, 1e9], ba = done ? -1e9 : TY.boxAt ?? 1e9, ta = done ? -1e9 : TY.turnAt ?? 1e9;
+  let x = M0[0], z = M0[1], y = .4, ry = Math.PI, walk = false;
+  if (t >= lk[0] && t < lk[1]) ry = Math.PI - Math.PI * Math.min(1, (t - lk[0]) / .25) * Math.min(1, (lk[1] - t) / .25);
+  const wu = (t - ba) / 1.5;
+  if (wu > 0 && wu < 1) { walk = true; const e = ease(wu); x = M0[0] + (IN[0] + 1.5 - M0[0]) * e; z = M0[1] + (IN[1] + 3.6 - M0[1]) * e; }
+  else if (wu >= 1) { const h = Math.min(1, (t - ba - 1.5) / .45); x = IN[0] + 1.5 * (1 - h); z = IN[1] + 3.6 * (1 - h); y = .4 + Math.sin(Math.PI * h) * 3.2 + 1.1 * h; ry = Math.PI;
+    if (t >= ta) { const k = ease((t - ta) / .35); ry = Math.PI * (1 - k); y = 1.5 + (t - ta > .5 && t - ta < 1.3 ? Math.abs(Math.sin((t - ta - .5) * 9)) * .35 : 0); } }
+  T.mw.scale.setScalar(walk ? 1.7 : 0); if (walk) { T.mw.position.set(x, Math.abs(Math.sin(anim * 13)) * .3, z); T.mw.rotation.y = Math.atan2(IN[0] + 1.5 - M0[0], IN[1] + 3.6 - M0[1]); }
+  T.mango.visible = !walk; T.mango.position.set(x, y, z); T.mango.rotation.y = ry; }
+let FWATER = null; let RANGED = null;
+// ---------- Mango's square + the PETME2 Stainless Steel Cat Water Fountain (3.2L), giant, low-poly ----------
+// bowl: brushed steel, slightly wider at the top; flat top plate with ring grooves; pump cap; goose-neck spout; clear stream onto the plate;
+// front: dark oval water-level window with "PETME2" above it. The water-bar ring (wall/water/lip) is part of the same tap group.
+const FT = { g: new THREE.Group(), R0: 6.1, R1: 6.6, y0: .7, H: 6 }; FT.top = FT.y0 + FT.H;
+{ const plaza = mesh(Cyl(SQ.plaza, SQ.plaza, .14, 72), '#E9E3D3', false); plaza.position.y = .05; scene.add(plaza);   // top .12: below the avenue road (.14), no z-fighting
+  const ring = mesh(Cyl(1, 1, .16, 72).scale(SQ.laneX, 1, SQ.laneZ), '#4A4F5C', false); ring.position.y = .09; scene.add(ring);   // oval roundabout
+  for (const cx of [-SQ.C, SQ.C]) {   // the figure 8: two overlapping islands + lawns
+    const island = mesh(Cyl(SQ.island, SQ.island, .5, 40), '#F1E6CF'); island.position.set(cx, .25, 0); scene.add(island);
+    const lawn = mesh(Cyl(SQ.lawn, SQ.lawn, .54, 40), '#9FD47F', false); lawn.position.set(cx, .27, 0); scene.add(lawn); }
+  const g = FT.g; g.position.x = -SQ.C; scene.add(g);
+  const add = (geo, m, x, y, z, cast = true) => { const o = new THREE.Mesh(geo, m); o.position.set(x, y, z); o.castShadow = cast; o.receiveShadow = true; g.add(o); return o; };
+  // brushed steel: light grey, modest metalness (no env map, so it must not go dark), lighter vertical facets painted into the map
+  const sc = document.createElement('canvas'); sc.width = 512; sc.height = 4; const sg = sc.getContext('2d');
+  sg.fillStyle = '#C9CED6'; sg.fillRect(0, 0, 512, 4);
+  for (let i = 0; i < 512; i++) { const v = 200 + Math.round(22 * hash01(i * 7 + 1)) - 11; sg.fillStyle = `rgba(${v},${v + 4},${v + 10},.35)`; sg.fillRect(i, 0, 1, 4); }
+  for (let k = 0; k < 8; k++) { const x = k * 64 + 18, gr = sg.createLinearGradient(x, 0, x + 22, 0);
+    gr.addColorStop(0, 'rgba(244,247,250,0)'); gr.addColorStop(.5, 'rgba(244,247,250,.8)'); gr.addColorStop(1, 'rgba(244,247,250,0)'); sg.fillStyle = gr; sg.fillRect(x, 0, 22, 4); }
+  const stTex = new THREE.CanvasTexture(sc); stTex.colorSpace = THREE.SRGBColorSpace; stTex.wrapS = THREE.RepeatWrapping;
+  const STEEL = new THREE.MeshStandardMaterial({ color: '#FFFFFF', map: stTex, metalness: .3, roughness: .35 });
+  const STEEL2 = new THREE.MeshStandardMaterial({ color: '#C9CED6', metalness: .3, roughness: .35 });
+  FT.steel = STEEL; FT.steel2 = STEEL2;
+  add(new THREE.CylinderGeometry(FT.R1, FT.R0, FT.H, 64, 1, true), STEEL, 0, FT.y0 + FT.H / 2, 0);
+  add(new THREE.TorusGeometry(FT.R1 - .06, .16, 8, 64).rotateX(Math.PI / 2), STEEL2, 0, FT.top, 0);
+  // top plate with concentric ring grooves
+  const pc = document.createElement('canvas'); pc.width = pc.height = 512; const pg = pc.getContext('2d');
+  const rg = pg.createRadialGradient(256, 256, 20, 256, 256, 256); rg.addColorStop(0, '#E2E6EB'); rg.addColorStop(1, '#C3C9D1'); pg.fillStyle = rg; pg.fillRect(0, 0, 512, 512);
+  [.36, .52, .68, .84].forEach(f => { pg.lineWidth = 7; pg.strokeStyle = '#8E96A1'; pg.beginPath(); pg.arc(256, 256, f * 256, 0, TAU); pg.stroke();
+    pg.lineWidth = 3; pg.strokeStyle = '#F1F3F6'; pg.beginPath(); pg.arc(256, 256, f * 256 + 6, 0, TAU); pg.stroke(); });
+  const pTex = new THREE.CanvasTexture(pc); pTex.colorSpace = THREE.SRGBColorSpace;
+  add(new THREE.CircleGeometry(FT.R1 - .1, 64).rotateX(-Math.PI / 2), new THREE.MeshStandardMaterial({ map: pTex, metalness: .3, roughness: .35 }), 0, FT.top - .04, 0, false);
+  // pump cap + goose-neck spout
+  add(Cyl(1.5, 1.65, .7, 40), STEEL2, 0, FT.top + .3, 0); add(Cyl(1.1, 1.1, .1, 40), mat('#A9B0BA'), 0, FT.top + .68, 0, false);
+  const capT = FT.top + .7, SP = [[0, 0], [0, 3.2], [.15, 6.2], [1.0, 7.7], [2.3, 7.85], [3.15, 7.0], [3.3, 6.1]];
+  const curve = new THREE.CatmullRomCurve3(SP.map(([x, y]) => V(x, capT + y, 0)));
+  add(new THREE.TubeGeometry(curve, 56, .3, 12, false), STEEL2, 0, 0, 0);
+  add(Cyl(.4, .36, .45, 16), STEEL2, 3.3, capT + 6.15, 0);
+  FT.tip = V(3.3 - SQ.C, capT + 5.92, 0); FT.hit = V(3.3 - SQ.C, FT.top - .02, 0);   // world coordinates (the group sits at x -C)
+  // clear water stream (scrolling streaks) from the spout tip onto the top plate
+  const wc = document.createElement('canvas'); wc.width = 64; wc.height = 256; const wg = wc.getContext('2d');
+  wg.fillStyle = '#A8DCFF'; wg.fillRect(0, 0, 64, 256);
+  for (let i = 0; i < 26; i++) { wg.fillStyle = `rgba(255,255,255,${.35 + .5 * hash01(i * 13 + 3)})`; wg.fillRect(Math.floor(hash01(i * 5 + 1) * 60), Math.floor(hash01(i * 9 + 2) * 256), 3, 18 + 40 * hash01(i * 3 + 7)); }
+  const wTex = new THREE.CanvasTexture(wc); wTex.colorSpace = THREE.SRGBColorSpace; wTex.wrapS = wTex.wrapT = THREE.RepeatWrapping; wTex.repeat.set(2, 1.5);
+  const sL = FT.tip.y - FT.hit.y;
+  FT.stream = add(new THREE.CylinderGeometry(.2, .27, sL, 14, 1, true), new THREE.MeshStandardMaterial({ map: wTex, color: '#FFFFFF', transparent: true, opacity: .78, roughness: .1, depthWrite: false }), 3.3, FT.hit.y + sL / 2, 0, false);
+  FT.wTex = wTex; FWATER = FT.stream;
+  // front: dark vertical oval water-level window + "PETME2" in light grey small text above it (canvas on a patch hugging the bowl)
+  const lc = document.createElement('canvas'); lc.width = 320; lc.height = 512; const lg = lc.getContext('2d');
+  lg.font = '900 50px Nunito, sans-serif'; lg.textAlign = 'center'; lg.textBaseline = 'middle';
+  lg.fillStyle = 'rgba(110,118,130,.55)'; lg.fillText('PETME2', 161, 104); lg.fillStyle = '#EEF1F5'; lg.fillText('PETME2', 160, 102);
+  lg.save(); lg.beginPath(); lg.ellipse(160, 318, 50, 140, 0, 0, TAU); lg.fillStyle = '#1D232D'; lg.fill(); lg.clip();
+  lg.fillStyle = '#2E4A66'; lg.fillRect(0, 360, 320, 160);                      // water level
+  lg.fillStyle = 'rgba(255,255,255,.22)'; lg.fillRect(126, 190, 12, 250); lg.restore();
+  lg.lineWidth = 6; lg.strokeStyle = '#9AA2AD'; lg.beginPath(); lg.ellipse(160, 318, 50, 140, 0, 0, TAU); lg.stroke();
+  const lTex = new THREE.CanvasTexture(lc); lTex.colorSpace = THREE.SRGBColorSpace; lTex.anisotropy = 8;
+  const th = .62; add(new THREE.CylinderGeometry(FT.R1 + .03, FT.R0 + .03, FT.H, 10, 1, true, -th / 2, th), new THREE.MeshStandardMaterial({ map: lTex, transparent: true, metalness: .2, roughness: .4, depthWrite: false }), 0, FT.y0 + FT.H / 2, 0, false);
+  // Mango's Water Bar ring around the base: white wall, water, blue lip
+  add(Cyl(SQ.wall, SQ.wall, .26, 72), mat('#FFFFFF'), 0, .67, 0);
+  const ws = add(Cyl(SQ.wall - .18, SQ.wall - .18, .04, 72), new THREE.MeshStandardMaterial({ color: '#7FD0FF', roughness: .2 }), 0, .82, 0, false);
+  add(new THREE.TorusGeometry(SQ.wall - .08, .1, 6, 72).rotateX(Math.PI / 2), mat('#2F5FE0'), 0, .84, 0, false);
+}
+
+// ---------- the PETME2 Dual Bowl Automatic Cat Feeder, giant, in the middle of the right circle (its own "food bar" ring around it) ----------
+// white food tank (domed lid, accent clip, dark window strip), white base unit (LED dots + round button), 4 angled wooden legs, 2 steel bowls in front
+const FD = { g: new THREE.Group(), yaw: 0 };
+{ const g = FD.g, x = SQ.C, z = 0; g.position.set(x, .54, z); g.rotation.y = FD.yaw; scene.add(g);
+  const WHITE = new THREE.MeshStandardMaterial({ color: '#F6F7F9', roughness: .45 }), WOOD = mat('#A8784F');
+  const add = (geo, m, x, y, z, rx = 0, rz = 0, cast = true) => { const o = new THREE.Mesh(geo, m); o.position.set(x, y, z); o.rotation.set(rx, 0, rz); o.castShadow = cast; o.receiveShadow = true; g.add(o); return o; };
+  [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(([sx, sz]) => add(Cyl(.34, .26, 2.7, 8), WOOD, sx * 2.25, 1.2, sz * 1.7, -sz * .22, sx * .22));
+  add(new THREE.CylinderGeometry(3.3, 3.1, 3, 48).scale(1, 1, .8), WHITE, 0, 3.8, 0);                         // base unit
+  add(new THREE.TorusGeometry(2.95, .07, 6, 48).rotateX(Math.PI / 2), mat('#D5DAE1'), 0, 5.32, 0, 0, 0, false);  // seam
+  add(new THREE.CylinderGeometry(2.9, 2.9, 6.6, 48), WHITE, 0, 8.6, 0);                                         // food tank
+  add(Cyl(3.02, 3.02, .28, 48), WHITE, 0, 11.95, 0);
+  add(new THREE.SphereGeometry(3.0, 40, 10, 0, TAU, 0, Math.PI / 2).scale(1, .3, 1), WHITE, 0, 12.08, 0);        // slightly domed lid
+  add(B(.9, 1.1, .4), mat('#2F5FE0'), 0, 11.8, 2.98);                                                           // accent clip
+  add(B(.6, 4.6, .14), new THREE.MeshStandardMaterial({ color: '#232A33', roughness: .3 }), 0, 8.6, 2.88, 0, 0, false);   // window strip
+  add(B(.44, 1.9, .16), mat('#8A5A34'), 0, 7.25, 2.9, 0, 0, false);                                              // kibble in the window
+  const LED = new THREE.MeshStandardMaterial({ color: '#BFF2C8', emissive: '#7FE08A', emissiveIntensity: .6 });
+  for (let i = 0; i < 4; i++) add(new THREE.SphereGeometry(.13, 8, 6), LED, 1.55, 4.85 - i * .32, 2.24, 0, 0, false);
+  add(Cyl(.36, .36, .16, 20).rotateX(Math.PI / 2), mat('#D3D8DF'), 1.55, 3.25, 2.26, 0, 0, false);              // round button
+  [-1.55, 1.55].forEach(bx => { add(B(.6, .22, 2.4), WHITE, bx, 1.8, 3.25, .8);                                    // food chutes, slanting down into the bowls
+    add(new THREE.CylinderGeometry(1.45, 1.0, .6, 40, 1, true), FT.steel, bx, .32, 4.4, 0, 0);                    // shallow steel bowls
+    add(new THREE.CircleGeometry(1.0, 32).rotateX(-Math.PI / 2), FT.steel2, bx, .04, 4.4, 0, 0, false);
+    add(new THREE.TorusGeometry(1.43, .08, 6, 40).rotateX(Math.PI / 2), FT.steel2, bx, .62, 4.4, 0, 0, false);
+    add(Cyl(1.2, 1.2, .1, 24), mat('#A8703F'), bx, .42, 4.4, 0, 0, false); });                                    // kibble
+  FD.L = (lx, lz) => { const c = Math.cos(FD.yaw), s = Math.sin(FD.yaw); return [x + lx * c + lz * s, z - lx * s + lz * c]; };   // local -> world
+  // the food bar: white outer wall, kibble trough, white inner wall, blue lip (same height as the Water Bar ring, group y is the lawn top)
+  const RW = SQ.wall, RI = SQ.wall - 2.1, KIB = new THREE.MeshStandardMaterial({ color: '#A8703F', roughness: .9, flatShading: true });
+  add(new THREE.CylinderGeometry(RW, RW, .26, 72, 1, true), mat('#FFFFFF'), 0, .13, 0); add(new THREE.CylinderGeometry(RI, RI, .26, 72, 1, true), mat('#FFFFFF'), 0, .13, 0);
+  add(new THREE.RingGeometry(RI, RW, 72).rotateX(-Math.PI / 2), KIB, 0, .24, 0, 0, 0, false);
+  add(new THREE.TorusGeometry(RW - .08, .1, 6, 72).rotateX(Math.PI / 2), mat('#2F5FE0'), 0, .3, 0, 0, 0, false);
+  add(new THREE.TorusGeometry(RI + .08, .08, 6, 72).rotateX(Math.PI / 2), mat('#FFFFFF'), 0, .28, 0, 0, 0, false);
+  const kb = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(.17, 0), KIB, 260); kb.receiveShadow = true;
+  for (let i = 0; i < 260; i++) { const a = i / 260 * TAU + hash01(i * 3 + 1) * .05, r = RI + .3 + hash01(i * 7 + 2) * (RW - RI - .6);
+    kb.setMatrixAt(i, LR(Math.cos(a) * r, .27, Math.sin(a) * r, hash01(i) * 3, hash01(i * 5) * 3, 0, .8 + hash01(i * 11) * .5)); kb.setColorAt(i, col.set(HW && i % 4 === 0 ? ['#FF8A1F', '#9B6FE0', '#FFFFFF', '#5BB98C'][(i >> 2) % 4] : ['#A8703F', '#8A5A34', '#C08850'][i % 3])); }
+  g.add(kb);
+  if (HW) { const sg = textSign('Trick or treat!', 10, '#FF8A1F'); sg.position.set(x, 17.2, z); scene.add(sg); signs.push(sg); }
+}
+
+// ---------- cat houses: one per follower; 6 districts, each with its own style ----------
+const DSTYLE = [  // [cat-face, box, pod] weights + roof palette
+  [[.7, .15, .15], ['#2F5FE0', '#4F7BEA', '#1F3FA8', '#7FB6E8']],
+  [[.3, .55, .15], ['#F28C28', '#E85D5D', '#FFC93C', '#E2664E']],
+  [[.25, .15, .6], ['#F4A7B9', '#C9B6F2', '#9AD8C8', '#FFD8A8']],
+  [[.6, .2, .2], ['#5BB98C', '#3FA7A0', '#8CC56A', '#2F8A45']],
+  [[.55, .25, .2], ['#9B6FE0', '#7A5CC8', '#C9B6F2', '#E85D8A']],
+  [[.45, .25, .3], ['#3B3B44', '#8E8E9A', '#FFFFFF', '#FFC93C']],
+];
+const PASTEL = ['#FFFFFF', '#FFE8D6', '#E7F0FF', '#FDE2E8', '#E3F6EC', '#FFF4CC', '#EDE4FF'];
+const kindOf = n => { const w = DSTYLE[houseLots[n].d][0], h = hash01(n * 7 + 3); return h < w[0] ? 'A' : h < w[0] + w[1] ? 'B' : 'C'; };
+const cntK = { A: 0, B: 0, C: 0 }; houseLots.forEach((l, n) => { l.kind = kindOf(n); cntK[l.kind]++; });
+const NH = houseLots.length;
+const HP = {
+  body: IM(B(3.6, 2.4, 3.2), cntK.A), roof: IM(B(3.9, .35, 3.5), cntK.A),
+  ear: IM(new THREE.ConeGeometry(.6, 1.2, 3), cntK.A * 2 + cntK.C * 2),
+  eye: IM(Cyl(.36, .36, .08, 14).rotateX(Math.PI / 2), cntK.A * 2, false), pupil: IM(B(.1, .5, .1), cntK.A * 2, false),
+  nose: IM(new THREE.ConeGeometry(.16, .2, 3).rotateZ(Math.PI), cntK.A, false),
+  door: IM(Cyl(.5, .5, .1, 14).rotateX(Math.PI / 2), NH, false),
+  box: IM(B(3.3, 2.5, 3.1), cntK.B), flap: IM(B(3.3, .06, 1.1), cntK.B * 2), tape: IM(B(.5, .02, 3.12), cntK.B, false),
+  pod: IM(new THREE.SphereGeometry(1.9, 14, 8, 0, Math.PI * 2, 0, Math.PI / 2), cntK.C),
+};
+if (HW) { HP.pump = IM(new THREE.SphereGeometry(.46, 10, 7).scale(1, .78, 1), NH, true, new THREE.MeshStandardMaterial({ color: '#FFFFFF', emissive: '#FF6A00', emissiveIntensity: .28, flatShading: true, roughness: .8 }));
+  HP.stem = IM(Cyl(.05, .08, .22, 5), NH, false, mat('#3E7B3A')); }
+const houseParts = []; const hc = Object.fromEntries(Object.keys(HP).map(k => [k, 0]));
+houseLots.forEach((l, n) => { const h = hash01(n * 13 + 5), pal = DSTYLE[l.d][1];
+  const p = []; const put = (k, m, c) => { const i = hc[k]++; if (c) HP[k].setColorAt(i, col.set(c)); p.push([HP[k], i, m]); };
+  if (l.kind === 'A') { const wall = PASTEL[Math.floor(h * 71) % PASTEL.length], roof = pal[Math.floor(h * 53) % pal.length], eyeC = h < .5 ? '#B8E05A' : '#FFD23F';
+    put('body', LR(0, 1.2, 0), wall); put('roof', LR(0, 2.57, 0), roof); put('ear', LR(-1.2, 3.3, .6), roof); put('ear', LR(1.2, 3.3, .6), roof);
+    put('eye', LR(-.8, 1.62, 1.61), eyeC); put('eye', LR(.8, 1.62, 1.61), eyeC); put('pupil', LR(-.8, 1.62, 1.67), '#1B2333'); put('pupil', LR(.8, 1.62, 1.67), '#1B2333');
+    put('nose', LR(0, 1.2, 1.63), '#F28FA6'); put('door', LR(0, .46, 1.62, 0, 0, 0, .85), '#1B2333'); }
+  else if (l.kind === 'B') { put('box', LR(0, 1.25, 0), h < .5 ? '#C99A62' : '#D6AE76');
+    put('flap', LR(0, 2.62, 1.3, .55), '#BC8C55'); put('flap', LR(0, 2.62, -1.3, -.55), '#BC8C55'); put('tape', LR(0, 2.51, 0), '#E9D3A8'); put('door', LR(0, .7, 1.57), '#3A2A1C'); }
+  else { const c = pal[Math.floor(h * 61) % pal.length]; put('pod', LR(0, 0, 0), c); put('ear', LR(-.85, 2.05, 0), c); put('ear', LR(.85, 2.05, 0), c); put('door', LR(0, .7, 1.72, -.35), '#1B2333'); }
+  if (HW) { const px = h < .5 ? 1.3 : -1.3, pz = l.kind === 'C' ? 1.75 : l.kind === 'B' ? 1.95 : 2.0; put('pump', LR(px, .36, pz), '#FF8A1F'); put('stem', LR(px, .78, pz)); }
+  houseParts.push(p); });
+Object.values(HP).forEach(m => { if (m.instanceColor) m.instanceColor.needsUpdate = true; });
+function placeHouse(n, s) { const l = houseLots[n];
+  T.compose(V(l.x, 0, l.z), new THREE.Quaternion().setFromEuler(new THREE.Euler(0, l.ry, 0)), V(s, Math.max(s, .001), s));
+  for (const [m, i, lm] of houseParts[n]) { M2.multiplyMatrices(T, lm); m.setMatrixAt(i, M2); } }
+houseLots.forEach((l, n) => placeHouse(n, APPEAR[n] < 0 ? 1 : 0));
+
+// ---------- gardens between the streets: trees, fish ponds, yarn balls, cat trees, flower beds ----------
+{ const items = [], gHash = new Map();
+  for (let k = -1; k < NR - 1; k++) { const rmid = a => k < 0 ? SQ.plaza + 2.5 : (ringR(k, a) + ringR(k + 1, a)) / 2, circ = 2 * Math.PI * (k < 0 ? SQ.plaza + 2.5 : RING0 + RGAP * k + 15), n = Math.floor(circ / 9);
+    for (let i = 0; i < n; i++) { const a = (i + hash01(i * 31 + k) * .5) / n * Math.PI * 2, r = rmid(a), x = Math.cos(a) * r, z = Math.sin(a) * r;
+      if (x > coastAt(z) - 18 || any(roadHash, x, z, 6.5) || any(lotHash, x, z, 4.2) || any(spotHash, x, z, 12) || any(gHash, x, z, 5)) continue;
+      const t = timeNear(x, z, 18); if (t === Infinity) continue;
+      const kinds = ['tree', 'tree', 'tree', 'pond', 'yarn', 'cattree', 'flowers', 'tree'];
+      const o = { x, z, t, i, k, kind: kinds[Math.floor(hash01(i * 17 + k * 101) * kinds.length)] };
+      if (o.kind === 'tree') { const h = hash01(i * 53 + k * 7 + 1); if (h < .30) o.kind = h < .15 ? 'circle' : 'tinybox'; }   // cat circle traps + if-it-fits boxes
+      items.push(o); hadd(gHash, o); } }
+  const by = kd => items.filter(o => o.kind === kd);
+  const trees = by('tree'), ponds = by('pond'), yarns = by('yarn'), cts = by('cattree'), fl = by('flowers');
+  const tTrunk = IM(Cyl(.3, .4, 2.2, 6), trees.length, true, mat('#8A5A3B')), tTop = IM(new THREE.IcosahedronGeometry(2.1, 0), trees.length);
+  trees.forEach((o, i) => { grown(tTrunk, i, LR(o.x, 1.1, o.z), o.t); grown(tTop, i, LR(o.x, 3.2, o.z, 0, i), o.t); tTop.setColorAt(i, col.set(['#3E9B4F', '#4FA65A', '#5DB563'][i % 3])); });
+  const pRim = IM(Cyl(3.4, 3.6, .4, 16), ponds.length, false, mat('#D9D2C0')), pWater = IM(Cyl(3, 3, .45, 16), ponds.length, false, new THREE.MeshStandardMaterial({ color: '#4FB3EA', roughness: .2 }));
+  const pFish = IM(merge([new THREE.SphereGeometry(.35, 8, 6).scale(1.6, .6, .5), new THREE.ConeGeometry(.3, .4, 3).rotateZ(Math.PI / 2).translate(-.7, 0, 0)]), ponds.length * 2, false, mat('#FF8A2A'));
+  ponds.forEach((o, i) => { grown(pRim, i, LR(o.x, .2, o.z), o.t); grown(pWater, i, LR(o.x, .25, o.z), o.t); grown(pFish, i * 2, LR(o.x + 1, .5, o.z, 0, i), o.t); grown(pFish, i * 2 + 1, LR(o.x - 1, .5, o.z + .6, 0, i + 2), o.t); });
+  const yb = IM(new THREE.IcosahedronGeometry(1.1, 1), yarns.length);
+  yarns.forEach((o, i) => { grown(yb, i, LR(o.x, 1.1, o.z), o.t); yb.setColorAt(i, col.set(['#E85D5D', '#F4A7B9', '#7FB6E8', '#9B6FE0', '#FFC93C'][i % 5])); });
+  const ctPost = IM(Cyl(.4, .45, 5, 8), cts.length, true, mat('#D9C2A3')), ctPlat = IM(Cyl(1.3, 1.3, .3, 10), cts.length * 2);
+  cts.forEach((o, i) => { grown(ctPost, i, LR(o.x, 2.5, o.z), o.t); grown(ctPlat, i * 2, LR(o.x + .5, 2.6, o.z), o.t); grown(ctPlat, i * 2 + 1, LR(o.x - .4, 5, o.z), o.t); ctPlat.setColorAt(i * 2, col.set('#8FA9D9')); ctPlat.setColorAt(i * 2 + 1, col.set('#2F5FE0')); });
+  const fb = IM(new THREE.ConeGeometry(.35, .9, 5), fl.length * 6, false);
+  fl.forEach((o, i) => { for (let q = 0; q < 6; q++) { grown(fb, i * 6 + q, LR(o.x + Math.cos(q) * 1.4, .45, o.z + Math.sin(q) * 1.4), o.t); fb.setColorAt(i * 6 + q, col.set(['#E85D8A', '#FFC93C', '#9B6FE0', '#FFFFFF', '#F28C28', '#5DB563'][q])); } });
+  [tTop, yb, ctPlat, fb].forEach(m => { if (m.instanceColor) m.instanceColor.needsUpdate = true; });
+  // Build 2: cat circle traps (white tape + one sitting cat). Hero row on the plaza uses the last 4 tape slots (dark tape).
+  const circ = by('circle'), boxes = by('tinybox');
+  TAPE = IM(new THREE.TorusGeometry(.75, .05, 4, 24).rotateX(Math.PI / 2), circ.length + 4, false, new THREE.MeshBasicMaterial({ color: '#FFFFFF' })); TAPE.frustumCulled = false; TAPE_H = circ.length;
+  circ.forEach((o, i) => { grown(TAPE, i, new THREE.Matrix4().compose(V(o.x, .1, o.z), QI, V(1.27, 1, 1.27)), o.t); TAPE.setColorAt(i, col.set('#FFFFFF'));
+    const s = slot(POSES.sit, CAT_COLORS[(o.i * 5 + o.k * 3 + 3) % CAT_COLORS.length]); if (s >= 0) grown(POSES.sit, s, LR(o.x, 0, o.z, 0, hash01(o.i * 7 + o.k) * 6.28, 0, 1.15), o.t); });
+  for (let c = 0; c < 4; c++) { TAPE.setMatrixAt(TAPE_H + c, ZERO); TAPE.setColorAt(TAPE_H + c, col.set('#3B3B44')); }
+  TAPE.instanceColor.needsUpdate = true;
+  // Build 3: if it fits, I sits (tiny box, open flaps, oversized loaf cat). Hero box uses the last slot.
+  const FL = sx => new THREE.Matrix4().makeTranslation(sx * (.275 + .15 * Math.cos(.5)), .40 - .15 * Math.sin(.5), 0).multiply(new THREE.Matrix4().makeRotationZ(-sx * .5)).multiply(new THREE.Matrix4().makeRotationY(Math.PI / 2));
+  BOX_FL = [FL(1), FL(-1)];
+  BOXM = IM(B(.55, .40, .55), boxes.length + 1, true, mat('#C99A62')); FLAPM = IM(B(.55, .03, .30), boxes.length * 2 + 2, true, mat('#BC8C55')); BOX_H = boxes.length;
+  [BOXM, FLAPM].forEach(m => m.frustumCulled = false);
+  boxes.forEach((o, i) => { const bm = LR(o.x, 0, o.z, 0, hash01(o.i * 11 + o.k) * 6.28);
+    grown(BOXM, i, bm.clone().multiply(LR(0, .2, 0)), o.t); grown(FLAPM, i * 2, bm.clone().multiply(BOX_FL[0]), o.t); grown(FLAPM, i * 2 + 1, bm.clone().multiply(BOX_FL[1]), o.t);
+    const s = slot(POSES.loaf, CAT_COLORS[(o.i * 7 + o.k * 5 + 1) % CAT_COLORS.length]); if (s >= 0) grown(POSES.loaf, s, bm.clone().multiply(LR(0, .34, 0, 0, 0, 0, 1.3)), o.t); });
+  BOXM.setMatrixAt(BOX_H, ZERO); FLAPM.setMatrixAt(BOX_H * 2, ZERO); FLAPM.setMatrixAt(BOX_H * 2 + 1, ZERO);
+  window.__gHash = gHash;
+}
+
+// ---------- countryside trees + beach palms ----------
+{ const spots = [];
+  for (let k = 0; k < 14000 && spots.length < (LITE ? 1300 : 4200); k++) { const a = rnd() * Math.PI * 2, r = 20 + Math.pow(rnd(), .8) * 640; const x = Math.cos(a) * r, z = Math.sin(a) * r;
+    if (x > coastAt(z) - 12) continue; if (r < 20 + (houseLots.length ? 0 : 0)) continue;
+    if (near(roadHash, x, z, 9, o => o.t === Infinity ? undefined : false) || any(houseHash, x, z, 7) || any(window.__gHash, x, z, 4)) continue;
+    if (SPOTS.slice(0, usedSpots).some(s => Math.hypot(s.x - x, s.z - z) < 14)) continue;
+    spots.push([x, z, .7 + rnd() * .8, rnd() < .7]); }
+  for (let k = spots.length - 1; k >= 0; k--) if (Math.hypot(spots[k][0], spots[k][1]) < SQ.plaza + 4) spots.splice(k, 1);   // the bigger square stays clear (after the rnd() calls)
+  // in growth mode, trees standing where the city will be are removed when the city gets there
+  // Big Mochi (Build 4) lies at polar(MOCHI_A, 500): trees within 75 of it go when it starts to rise (checked after all rnd() calls)
+  const [mcx, mcz] = polar(MOCHI_A, 500), mochiT = unlockT(UNLOCK.mochi) - 2;
+  const treeT = ([x, z]) => { let tt = GROW ? timeNear(x, z, 9) : Infinity; if (Math.hypot(x - mcx, z - mcz) < 75) tt = Math.min(tt, mochiT); return tt; };
+  const round = spots.filter(t => t[3]), cone = spots.filter(t => !t[3]);
+  const trunk = IM(Cyl(.35, .45, 2.4, 6), spots.length, true, mat('#8A5A3B')), ball = IM(new THREE.IcosahedronGeometry(2.4, 0), round.length), cn = IM(new THREE.ConeGeometry(1.8, 5, 7), cone.length);
+  const greens = ['#3E9B4F', '#4FA65A', '#2F8A45', '#5DB563'];
+  const TREES = [];
+  spots.forEach((p, k) => TREES.push([trunk, k, LR(p[0], 1.2 * p[2], p[1], 0, 0, 0, p[2]), treeT(p)]));
+  round.forEach((p, k) => { TREES.push([ball, k, new THREE.Matrix4().compose(V(p[0], 3.6 * p[2], p[1]), new THREE.Quaternion().setFromEuler(new THREE.Euler(0, k, 0)), V(p[2], p[2] * .9, p[2])), treeT(p)]); ball.setColorAt(k, col.set(greens[k % 4])); });
+  cone.forEach((p, k) => { TREES.push([cn, k, LR(p[0], 4.4 * p[2], p[1], 0, 0, 0, p[2]), treeT(p)]); cn.setColorAt(k, col.set(greens[(k + 1) % 4])); });
+  TREES.forEach(([m, i, bm, tt]) => m.setMatrixAt(i, tt === -Infinity ? ZERO : bm)); [ball, cn].forEach(m => m.instanceColor.needsUpdate = true);
+  const NP = 70, pt = IM(Cyl(.25, .35, 6, 6), NP, true, mat('#A8784F')), pl = IM(new THREE.ConeGeometry(3, 1.2, 6), NP, true, mat('#3E9B4F'));
+  // Red Dot Beach (Build 5): palms near the lighthouse and in the dot's play area go when it unlocks (after the rnd() calls)
+  const LHX = coastAt(60) + 25, dotT = unlockT(UNLOCK.redDot) - .6;
+  for (let k = 0; k < NP; k++) { const z = -420 + k * 12 + rnd() * 5, x = coastAt(z) + 2 + rnd() * 10, b1 = LR(x, 3, z, .12, 0, .1), b2 = LR(x + .4, 6.2, z + .3);
+    const hide = Math.hypot(x - LHX, z - 60) < 10 || (z > 26 && z < 114);
+    if (hide) { TREES.push([pt, k, b1, dotT], [pl, k, b2, dotT]); }
+    pt.setMatrixAt(k, hide && dotT === -Infinity ? ZERO : b1); pl.setMatrixAt(k, hide && dotT === -Infinity ? ZERO : b2); }
+  window.__trees = TREES.filter(t => t[3] !== Infinity);
+}
+
+// ---------- landmarks ----------
+const LMG = [];
+landmarks.forEach((lm, k) => { const s = SPOTS[k]; if (!s) return; const g = landmark(lm.kind, lm.sign);
+  if (g.userData.arc) { g.userData.arc.neon.forEach(m => m.color.set(m.userData.on)); g.userData.arc.lights.forEach(L => L.intensity = 120); }   // a finished arcade (website): neon always on
+  if (g.userData.pizza) { const Z = g.userData.pizza; Z.climb.forEach((c, i) => c.scale.setScalar(i === 4 ? 1.3 : 1.4)); Z.blob.visible = true; }   // a finished pizza: cats on the slice, one naps in the cheese, cheese on Mango's face
+  if (g.userData.toy) TOYS.push(g.userData.toy);   // a finished toy statue: players in place, Mango in the box, the mouse keeps swinging
+  if (g.userData.studio) { const S = g.userData.studio; S.statue.scale.setScalar(1); S.cats.forEach((c, i) => { const st = S.seats[i]; c.sit.scale.setScalar(1.5); c.sit.position.set(st.x, .4, st.z); c.sit.rotation.y = st.yaw; }); }   // a finished studio: statue up, painters at the easels
+  g.scale.setScalar(.8); g.position.set(s.x, 0, s.z); g.rotation.y = s.ry; scene.add(g); LMG.push([g, s.t]); });
+if (!EP.noReserved) SPOTS.forEach((s, k) => { if (k < usedSpots || k > usedSpots + 1 || s.t === Infinity) return; const g = landmark('reserved', 'Your idea here?'); g.position.set(s.x, 0, s.z); g.rotation.y = s.ry; scene.add(g); LMG.push([g, s.t]); });
+let NB = null, NBpos = V(0, 0, 0), LOT = null;
+if (NEWB && SPOTS[landmarks.length]) { const s = SPOTS[landmarks.length]; NB = landmark(NEWB.kind, NEWB.sign); NB.scale.setScalar(.8); NBpos = V(s.x, 0, s.z); NB.position.copy(NBpos); NB.rotation.y = s.ry; NB.visible = false; scene.add(NB);
+  if (EP.lotSign) { LOT = landmark('reserved', EP.lotSign); LOT.position.copy(NBpos); LOT.rotation.y = s.ry; scene.add(LOT); } }   // videos: a sign on the empty lot until the build pops
+window.__NB = NB;
+if (EP.idea && SPOTS[EP.idea.spot]) { const s = SPOTS[EP.idea.spot], g = landmark('reserved', EP.idea.sign); g.position.set(s.x, 0, s.z); g.rotation.y = s.ry; scene.add(g); }   // videos: an extra empty lot with a sign (next day's idea)
+const CONF = new THREE.InstancedMesh(new THREE.PlaneGeometry(1, .6), new THREE.MeshBasicMaterial({ color: '#ffffff', side: THREE.DoubleSide }), 260);
+const confData = []; for (let k = 0; k < 260; k++) { confData.push({ vx: (rnd() - .5) * 30, vy: 10 + rnd() * 22, vz: (rnd() - .5) * 30, r: rnd() * 6 }); CONF.setColorAt(k, col.set(['#FFC93C', '#E85D5D', '#2F5FE0', '#5BB98C', '#FFFFFF', '#9B6FE0'][k % 6])); }
+CONF.instanceColor.needsUpdate = true; CONF.visible = false; scene.add(CONF);
+
+// ---------- cats: Mango + one per follower, walking the sidewalks from place to place ----------
+const catMesh = IM(CAT_GEO, F + 1);
+catMesh.setColorAt(0, col.set('#F28C28'));
+for (let n = 1; n <= F; n++) catMesh.setColorAt(n, col.set(CAT_COLORS[(n * 5 + 3) % CAT_COLORS.length]));
+catMesh.instanceColor.needsUpdate = true;
+const CATW = houseLots.map((l, k) => ({ rd: ROADS[l.ri], s0: l.s, L: 10 + hash01(k * 3 + 1) * 40, v: 1.4 + hash01(k * 5 + 2) * 1.6, ph: hash01(k * 11 + 7), side: hash01(k * 19) < .5 ? 1 : -1, nap: k % 5 === 0,
+  roofY: l.kind === 'A' ? 2.75 : l.kind === 'B' ? 2.55 : 1.85 }));
+// ---------- strays (videos): extra cats with no house of their own (likes > followers), sitting on roofs and streets; EP.strays = { n, at: [pop time per cat], near: [x, z] } ----------
+const STRAY = (() => { const S = EP.strays; if (!S || !S.n || !F) return null; const m = IM(CAT_SIT, S.n), P = [], nr = S.near || [0, 0]; m.frustumCulled = false;
+  const CN = S.crowd || 0, CS = SPOTS[S.crowdSpot ?? 1] || { x: 0, z: 60, ry: 0 }; let sign = null;
+  if (CN && S.sign) { sign = landmark('reserved', S.sign); sign.position.set(CS.x, 0, CS.z); sign.rotation.y = CS.ry || 0; sign.visible = false; scene.add(sign); }
+  const roofs = houseLots.map((l, k) => ({ k, d: Math.hypot(l.x - nr[0], l.z - nr[1]) })).filter(o => o.k % 5 !== 0).sort((a, b) => a.d - b.d).map(o => o.k);
+  for (let j = 0; j < S.n; j++) { m.setColorAt(j, col.set(CAT_COLORS[(j * 3 + 1) % CAT_COLORS.length])); m.setMatrixAt(j, ZERO);
+    if (j >= 12 && j < 12 + CN) { const i = j - 12, ring = Math.floor((Math.sqrt(8 * i / 6 + 1) - 1) / 2) + 1, first = 3 * ring * (ring - 1), a = (i - first) / (6 * ring) * 6.283 + ring * .4;   // the homeless crowd: hex rings around the spot
+      P.push({ x: CS.x + Math.cos(a) * 2.3 * ring, y: 0, z: CS.z + Math.sin(a) * 2.3 * ring, yaw: Math.atan2(CS.x + Math.cos(a) * 2.3 * ring - CS.x, CS.z + Math.sin(a) * 2.3 * ring - CS.z) + Math.PI + (hash01(j) - .5) * .8 }); }
+    else if (j < 12 || j % 2 === 0) { const k = j < 12 ? roofs[j % roofs.length] : roofs[(12 + j * 7) % roofs.length], l = houseLots[k]; P.push({ x: l.x, y: CATW[k].roofY, z: l.z, yaw: hash01(j * 13) * 6.28 }); }   // the nearest roofs first (crowded close-up)
+    else { const rd = ROADS[j % ROADS.length], tot = rd.cum[rd.cum.length - 1], [x, z, dx, dz] = sampleRoad(rd, 2 + hash01(j * 31 + 7) * Math.max(1, tot - 4)), sd = hash01(j * 17) < .5 ? 1.3 : -1.3;
+      P.push({ x: x - dz * sd, y: 0, z: z + dx * sd, yaw: hash01(j * 19) * 6.28 }); } }
+  m.instanceColor.needsUpdate = true; window.__crowd = [CS.x, CS.z]; return { m, P, at: S.at || [], always: !!S.always, sign, signAt: S.signAt ?? (S.at || [])[12] ?? 0, sc: S.scale || 1.15 }; })();
+
+// ---------- videos: one stray waits alone on an empty lot; a house pops, the cat runs in. EP.lone = { spot, at, houseAt, runAt, sign } ----------
+const LONE = (() => { const L = EP.lone; if (!L) return null; const s = SPOTS[L.spot ?? 4]; if (!s) return null; const g = new THREE.Group(); g.position.set(s.x, 0, s.z); g.rotation.y = s.ry; scene.add(g);
+  const h = new THREE.Group(); g.add(h); const hm = (geo, c, x, y, z) => { const m = mesh(geo, c); m.position.set(x, y, z); h.add(m); return m; };
+  hm(B(7, 4.6, 6), '#FFE3A3', 0, 2.3, -2); const rf = hm(new THREE.ConeGeometry(5.6, 3.4, 4).rotateY(Math.PI / 4), '#E85D5D', 0, 6.3, -2); rf.scale.z = .85;
+  hm(B(1.8, 2.8, .2), '#8A5A3B', 0, 1.4, 1.02); hm(B(1.6, 1.4, .2), '#BFE6FF', -2.2, 2.8, 1.02); hm(B(1.6, 1.4, .2), '#BFE6FF', 2.2, 2.8, 1.02); h.scale.setScalar(0);
+  const sign = L.sign ? textSign(L.sign, 9, '#FF8A2A') : null; if (sign) { sign.position.set(0, 9.6, -2); g.add(sign); signs.push(sign); sign.visible = false; }
+  const c = CAT_COLORS[0], sit = mesh(CAT_SIT, c), walk = mesh(CAT_GEO, c); [sit, walk].forEach(m => { m.scale.setScalar(0); g.add(m); });
+  window.__lone = [s.x, s.z, s.ry]; return { L, h, sign, sit, walk }; })();
+
+// ---------- cat taxis: a few humans pushing cats in strollers ----------
+const TAXIS = [];
+{ const nT = Math.min(26, Math.floor(F / 120) + (F > 0 ? 2 : 0));
+  const skin = ['#F1C7A5', '#D9A47E', '#A8754F', '#7A4E30'], shirt = ['#E85D5D', '#2F5FE0', '#5BB98C', '#9B6FE0', '#F28C28', '#3B3B44'];
+  for (let i = 0; i < nT; i++) { const lot = houseLots[Math.floor(hash01(i * 97 + 13) * houseLots.length)]; if (!lot) break;
+    const g = new THREE.Group();
+    const leg1 = mesh(B(.32, 1.3, .32), '#3B3B44'), leg2 = leg1.clone(); leg1.position.set(-.22, .65, 0); leg2.position.set(.22, .65, 0); g.add(leg1, leg2);
+    const body = mesh(B(.95, 1.3, .55), shirt[i % 6]); body.position.y = 1.95; g.add(body);
+    const head = mesh(new THREE.SphereGeometry(.38, 10, 8), skin[i % 4]); head.position.y = 2.95; g.add(head);
+    const hair = mesh(new THREE.SphereGeometry(.4, 10, 6, 0, Math.PI * 2, 0, Math.PI / 2), ['#2B2B30', '#8A5A3B', '#E9C46A'][i % 3]); hair.position.y = 3.02; g.add(hair);
+    [-.42, .42].forEach(x => { const arm = mesh(B(.22, .22, 1.0), shirt[i % 6]); arm.position.set(x, 2.1, .55); g.add(arm); });
+    // stroller in front: yellow 'cat taxi' canopy with a cat inside
+    const st = new THREE.Group(); st.position.z = 1.9;
+    const bodyS = mesh(B(1.1, .7, 1.6), '#FFC93C'); bodyS.position.y = 1.05; st.add(bodyS);
+    const check = mesh(B(1.12, .18, 1.62), '#1B2333'); check.position.y = 1.32; st.add(check);
+    const hood = mesh(new THREE.CylinderGeometry(.75, .75, 1.12, 12, 1, false, 0, Math.PI).rotateZ(Math.PI / 2), '#FFC93C'); hood.position.set(0, 1.45, -.35); st.add(hood);
+    const handle = mesh(B(1, .1, .1), '#3B3B44'); handle.position.set(0, 2.05, -1.25); st.add(handle);
+    [[-.5, .6], [.5, .6], [-.5, -.6], [.5, -.6]].forEach(([x, z]) => { const w = mesh(Cyl(.28, .28, .14, 10).rotateZ(Math.PI / 2), '#2B2B30'); w.position.set(x, .3, z); st.add(w); });
+    const kitty = new THREE.Mesh(CAT_GEO, mat(CAT_COLORS[i % CAT_COLORS.length])); kitty.scale.setScalar(.9); kitty.position.set(0, .95, .3); st.add(kitty);
+    const light = mesh(B(.6, .3, .25), '#FFFFFF'); light.position.set(0, 2.25, -.2); st.add(light);
+    g.add(st); g.scale.setScalar(.95); scene.add(g);
+    TAXIS.push({ g, leg1, leg2, rd: ROADS[lot.ri], s0: lot.s, L: 30 + hash01(i * 7) * 50, v: 2.6, ph: hash01(i * 3 + 1), side: i % 2 ? 1 : -1, n: lot.n });
+  } }
+
+// ================= Cat Town extras (design-review.md BUILD LIST) =================
+// ---------- Build 1: the two food & drink stops (figure 8). Cats walk in from the streets, drink around the fountain circle, eat around the feeder circle ----------
+// each stop: N spots on its ring (the side facing the other circle is Mango's), a straight walk in from the plaza edge along the ring's normal, a walk out beside it.
+// Loungers sit and loaf on each lawn so the square reads as the town's meeting point. WALK slots: 0 Mango, 30.. fountain drinkers, 56.. feeder eaters.
+const WB = { spots: [], lounge: [], P: 34, N: 26 };
+const inIsle = (x, z) => Math.min(...[-SQ.C, SQ.C].map(cx => Math.hypot(x - cx, z) - SQ.island));   // < 0 inside the figure 8
+const Hy = (x, z) => { const d = inIsle(x, z); return .16 + .37 * smooth(.6, 0, d) + .25 * Math.max(0, 1 - Math.abs(d - .3) / .4); };   // road -> hop onto the island -> lawn
+{ WB.drops = IM(new THREE.IcosahedronGeometry(.16, 0), 36, false, new THREE.MeshStandardMaterial({ color: '#BFE9FF', emissive: '#7FD0FF', emissiveIntensity: .3, flatShading: true }));
+  WB.rip = IM(new THREE.RingGeometry(.8, 1, 24).rotateX(-Math.PI / 2), 64, false, new THREE.MeshBasicMaterial({ color: '#FFFFFF', transparent: true, opacity: .8, depthWrite: false }));
+  WB.rip.receiveShadow = false;
+  [WB.drops, WB.rip].forEach(m => { m.frustumCulled = false; for (let i = 0; i < m.count; i++) m.setMatrixAt(i, ZERO); });
+  const path = pts => { const cum = [0]; for (let i = 1; i < pts.length; i++) cum.push(cum[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1])); return { pts, cum, len: cum[cum.length - 1] }; };
+  const RS = SQ.wall + .4, RN = SQ.wall - .65, END = SQ.plaza + 2;
+  [{ cx: -SQ.C, inner: 0, drink: true, w0: 30 }, { cx: SQ.C, inner: Math.PI, drink: false, w0: 56 }].forEach((st, si) => {
+    const list = [];
+    for (let j = 0; j < WB.N; j++) { const th = st.inner + .96 + j / (WB.N - 1) * (TAU - 1.92), c = Math.cos(th), sn = Math.sin(th);
+      const S = [st.cx + RS * c, RS * sn], b = S[0] * c + S[1] * sn, L = -b + Math.sqrt(b * b - (S[0] * S[0] + S[1] * S[1] - END * END));   // walk out along the normal to the plaza edge
+      const side = [-sn * .45, c * .45], F = [S[0] + c * L, S[1] + sn * L];
+      const pin = path([[F[0] + side[0], F[1] + side[1]], [S[0] + c * 2 + side[0] * .5, S[1] + sn * 2 + side[1] * .5], S]);
+      const pout = path([S, [S[0] + c * 2 - side[0] * .5, S[1] + sn * 2 - side[1] * .5], [F[0] - side[0], F[1] - side[1]]]);
+      const w = st.w0 + j, cc = CAT_COLORS[(j * 5 + si * 4 + 3) % CAT_COLORS.length]; WALK.setColorAt(w, col.set(cc));
+      list.push({ w, th, drink: st.drink, pin, pout, p: S, nose: [st.cx + RN * c, RN * sn], yawC: yawTo(-c, -sn), ph: hash01(j * 41 + si * 7 + 3) * WB.P,
+        ds: slot(POSES.drink, cc), off: Math.abs(wrapA(th - st.inner)) }); }
+    list.sort((p, q) => p.off - q.off).forEach((o, j) => { o.rank = 2 * j + 1 + si; o.m = j + 1; WB.spots.push(o); });   // the cats next to Mango come first; fountain and feeder take turns
+    for (let j = 0; j < 10; j++) { const th = st.inner + 1.1 + (j + .5) / 10 * (TAU - 2.2), r = SQ.lawn - .9, x = st.cx + Math.cos(th) * r, z = Math.sin(th) * r, loaf = j % 3 === 1;
+      const cc = CAT_COLORS[(j * 3 + si * 5 + 2) % CAT_COLORS.length];
+      WB.lounge.push({ x, z, yaw: yawTo(Math.cos(th), Math.sin(th)) + (hash01(j * 13 + si) - .5) * 1.4, pm: loaf ? POSES.loaf : POSES.sit, i: slot(loaf ? POSES.loaf : POSES.sit, cc), rank: 2 * WB.N + 1 + j * 2 + si }); } });
+  WB.mSit = slot(POSES.sit, '#F28C28'); WB.mDrink = slot(POSES.drink, '#F28C28');   // Mango, the host (WALK slot 0)
+}
+
+// ---------- Halloween: witch hats (street cats, loungers, parade, Mango) + a black-cat parade around the 8 (WALK 90-101) ----------
+const HWX = { hatL: LR(0, 1.06, .5, -.15), sitHatL: LR(0, 1.24, .12, -.1) };
+if (HW) { const g = merge([Cyl(.44, .44, .05, 12).translate(0, .025, 0), new THREE.ConeGeometry(.26, .62, 8).translate(0, .36, 0).rotateZ(.12), Cyl(.27, .27, .07, 10).translate(0, .1, 0)]);
+  HWX.n = Math.ceil(F / 2) + 12 + 1 + WB.lounge.length; HWX.hat = IM(g, HWX.n, true, mat('#FFFFFF')); HWX.hat.frustumCulled = false;
+  for (let i = 0; i < HWX.n; i++) { HWX.hat.setMatrixAt(i, ZERO); HWX.hat.setColorAt(i, col.set(i % 3 === 1 ? '#5B3B8C' : '#22202A')); } HWX.hat.instanceColor.needsUpdate = true;
+  HWX.P0 = Math.ceil(F / 2); HWX.M = HWX.P0 + 12; HWX.L0 = HWX.M + 1;
+  for (let j = 0; j < 12; j++) WALK.setColorAt(90 + j, col.set(j % 4 === 3 ? '#3B3B44' : '#1E1E24')); }
+// ---------- feeding time FX: 90 kibble bits (food) or water arcs (water) ----------
+const FX = IM(new THREE.IcosahedronGeometry(.2, 0), 90, false, new THREE.MeshStandardMaterial({ color: '#FFFFFF', flatShading: true, roughness: .6 })); FX.frustumCulled = false;
+// website feeding time FX: a splash burst out of the fountain (or a kibble pop out of the feeder) + ripple rings rolling out over the square
+const SPL = IM(new THREE.IcosahedronGeometry(.3, 0), 64, false, new THREE.MeshStandardMaterial({ color: '#CFEFFF', emissive: '#4FB3EA', emissiveIntensity: .35, flatShading: true, roughness: .3 })); SPL.frustumCulled = false; for (let i = 0; i < 64; i++) SPL.setMatrixAt(i, ZERO);
+const RINGS = [0, 1, 2, 3].map(() => { const m = new THREE.Mesh(new THREE.RingGeometry(.8, 1, 56).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: '#FFFFFF', transparent: true, opacity: 0, depthWrite: false, fog: false, toneMapped: false })); m.visible = false; scene.add(m); return m; });
+for (let i = 0; i < 90; i++) FX.setMatrixAt(i, ZERO);
+
+// ---------- Build 2 (hero row) + Build 3 (hero box) on the plaza ----------
+const ROW_A = [3.75, 3.83, 3.91, 3.99], ROW_YAW = yawTo(Math.cos(3.87), Math.sin(3.87));   // between avenues 3 and 4, outside the oval lane
+const ROW = ROW_A.map(a => polar(a, 27)), ROW_SIT = [0, 1, 2, 3].map(c => slot(POSES.sit, CAT_COLORS[(c * 7 + 2) % CAT_COLORS.length]));
+const C4 = ROW[3], S4 = [C4[0] - Math.sin(ROW_A[3]) * 6.5, C4[1] + Math.cos(ROW_A[3]) * 6.5];   // the 4th cat comes from avenue 2's sidewalk
+WALK.setColorAt(18, col.set(CAT_COLORS[(3 * 7 + 2) % CAT_COLORS.length]));
+const HB = polar(2.0, 27), HB_YAW = yawTo(Math.cos(2.0), Math.sin(2.0)) + 1.2, HB_M = LR(HB[0], .14, HB[1], 0, HB_YAW), HB_CAT = slot(POSES.loaf, '#8E8E9A');
+const HB_L = [LR(0, .2, 0), BOX_FL[0], BOX_FL[1]];
+
+// ---------- Build 4: Big Mochi, the sleeping mountain cat ----------
+const MO = {};
+{ const [mx, mz] = polar(MOCHI_A, 500), g = new THREE.Group(); g.position.set(mx, 0, mz); g.rotation.y = Math.atan2(-mx, -mz); scene.add(g); MO.g = g;
+  const M = c => new THREE.MeshStandardMaterial({ color: c, flatShading: true, roughness: .95, fog: false });
+  const add = (geo, c, x, y, z, parent = g) => { const m = new THREE.Mesh(geo, typeof c === 'string' ? M(c) : c); m.position.set(x, y, z); parent.add(m); return m; };
+  const bg = new THREE.IcosahedronGeometry(40, 2).toNonIndexed(), bp = bg.attributes.position, bc = new Float32Array(bp.count * 3), cS = new THREE.Color('#DDA06A'), cBd = new THREE.Color('#F2C9A0');
+  for (let f = 0; f < bp.count; f += 3) { const cx = (bp.getX(f) + bp.getX(f + 1) + bp.getX(f + 2)) / 3, cy = (bp.getY(f) + bp.getY(f + 1) + bp.getY(f + 2)) / 3;
+    const c = Math.sin(cx * .16) > .55 && cy > 0 ? cS : cBd; for (let q = 0; q < 3; q++) c.toArray(bc, (f + q) * 3); }
+  bg.setAttribute('color', new THREE.BufferAttribute(bc, 3));
+  MO.body = add(bg, new THREE.MeshStandardMaterial({ vertexColors: true, flatShading: true, roughness: .95, fog: false }), 0, 14, 0); MO.body.scale.set(1.35, .55, 1);
+  const hg = new THREE.Group(); g.add(hg); MO.head = hg;
+  add(new THREE.IcosahedronGeometry(17, 1), '#F2C9A0', 44, 16, 22, hg).scale.set(1, .9, .95);
+  add(new THREE.ConeGeometry(6, 10, 4), '#F2C9A0', 36, 31, 22, hg).rotation.z = .35;
+  MO.ear = add(new THREE.ConeGeometry(6, 10, 4), '#F2C9A0', 54, 26, 22, hg); MO.ear.rotation.z = -1.1;
+  add(B(5, .8, .8), '#7A5A48', 40, 17, 38.5, hg).rotation.z = .25; add(B(5, .8, .8), '#7A5A48', 50, 17, 37.5, hg).rotation.z = -.25;
+  add(new THREE.ConeGeometry(1.6, 2, 3).rotateX(Math.PI / 2), '#E58FA0', 45, 13, 39, hg);
+  add(new THREE.TorusGeometry(43, 5, 6, 24, Math.PI * 1.05).rotateX(Math.PI / 2), '#DDA06A', 0, 7, 0).scale.x = 1.26;
+  add(B(10, 6, 14), '#F2C9A0', 30, 3, 36);
+  const zg = merge([B(8, 1.2, 1.2).translate(0, 5, 0), B(8, 1.2, 1.2).translate(0, -5, 0), B(1.2, 12.8, 1.2).rotateZ(-.675)]);
+  MO.z = new THREE.InstancedMesh(zg, new THREE.MeshBasicMaterial({ color: '#FFFFFF', fog: false }), 3); MO.z.frustumCulled = false; g.add(MO.z);
+  g.visible = false;
+}
+
+// ---------- Build 5: Red Dot Beach (lighthouse + laser dot + chasers) ----------
+const RD = {};
+{ const cx = coastAt(60), lx = cx + 25; RD.cx = cx;
+  const tr = h => 3 - .8 * h / 18, parts = [paint(Cyl(4, 4.5, 2, 10).translate(0, .2, 0), '#B8B0A0'), paint(Cyl(2.2, 3.0, 18, 10).translate(0, 9, 0), '#FFFFFF')];
+  [4, 9, 14].forEach(h => parts.push(paint(Cyl(tr(h + .8) + .06, tr(h - .8) + .06, 1.6, 10).translate(0, h, 0), '#E85D5D')));
+  parts.push(paint(Cyl(3.2, 3.2, .4, 10).translate(0, 18.2, 0), '#3B3B44'), paint(B(3, 2.4, 3).translate(0, 19.6, 0), '#9FD3FF'));
+  RD.lh = new THREE.Mesh(merge(parts), new THREE.MeshStandardMaterial({ vertexColors: true, flatShading: true, roughness: .85 })); RD.lh.castShadow = true; RD.lh.receiveShadow = true;
+  RD.lh.position.set(lx, -.4, 60); scene.add(RD.lh);
+  RD.laser = new THREE.Group(); RD.laser.position.set(lx, 21.0, 60); scene.add(RD.laser);
+  RD.laser.add(mesh(Cyl(.6, .6, 4.5, 10).rotateX(Math.PI / 2), '#3B3B44'));
+  const tip = new THREE.Mesh(Cyl(.35, .35, .3, 10).rotateX(Math.PI / 2), new THREE.MeshStandardMaterial({ color: '#FF2A2A', emissive: '#FF2A2A', emissiveIntensity: 1 })); tip.position.z = 2.4; RD.laser.add(tip);
+  RD.beam = new THREE.Mesh(Cyl(.08, .08, 1, 6).rotateX(Math.PI / 2).translate(0, 0, .5), new THREE.MeshBasicMaterial({ color: '#FF2A2A', transparent: true, opacity: .35, depthWrite: false })); scene.add(RD.beam);
+  RD.dot = new THREE.Mesh(Cyl(1.3, 1.3, .04, 20), new THREE.MeshBasicMaterial({ color: '#FF2A2A', toneMapped: false })); scene.add(RD.dot);
+  RD.halo = new THREE.Mesh(Cyl(2.2, 2.2, .03, 20), new THREE.MeshBasicMaterial({ color: '#FF2A2A', transparent: true, opacity: .3, depthWrite: false, toneMapped: false })); scene.add(RD.halo);
+  for (let k = 0; k < 5; k++) WALK.setColorAt(19 + k, col.set(CAT_COLORS[(k * 4 + 1) % CAT_COLORS.length]));
+  RD.belly = slot(POSES.belly, '#FFFFFF');
+  RD.D = tau => { const z = 70 + 28 * Math.sin(.47 * tau) + 7 * Math.cos(1.7 * tau); return [coastAt(z) + 5 + 8 * Math.sin(.9 * tau) + 3 * Math.sin(2.3 * tau), z]; };
+}
+
+// ---------- Build 6: fish balloons (2 cats in each basket) ----------
+// placement chosen with a projection check: every balloon is inside the p_1000 / p_5000 frames, off Big Mochi, and never over the fountain in the opening shot
+const BAL = { ANG: [4.1, 3.0, 1.0, 0.7, 1.8], RF: [.6, .35, .5, .35, .35], COL: ['#FF9F43', '#7FB6E8', '#F4A7B9', '#FFC93C', '#5BB98C'] };
+{ const vm = new THREE.MeshStandardMaterial({ vertexColors: true, flatShading: true, roughness: .8 });
+  const shell = merge([paint(new THREE.SphereGeometry(6, 12, 8).scale(.9, 1, 1.6), '#FFFFFF'),
+    paint(new THREE.ConeGeometry(3, 4, 4).rotateX(Math.PI / 2).scale(.3, 1, 1).translate(0, 0, -11), '#FFFFFF'),   // tail fin
+    ...[3, -3].map(z => paint(new THREE.TorusGeometry(5.5, .4, 6, 24).scale(.93, 1.04, 1).translate(0, 0, z), '#BFBFBF'))]);
+  const parts = merge([...[-1, 1].flatMap(sx => [paint(new THREE.SphereGeometry(.9, 8, 6).translate(sx * 4.6, 1.5, 5.5), '#FFFFFF'), paint(new THREE.SphereGeometry(.45, 6, 4).translate(sx * 5.3, 1.5, 5.8), '#1B2333')]),
+    ...[[-1, -1], [1, -1], [-1, 1], [1, 1]].map(([x, z]) => paint(Cyl(.05, .05, 4, 4).translate(x, -8, z), '#3B3B44')), paint(B(2, 1.4, 2).translate(0, -10.7, 0), '#C98B5A')]);
+  BAL.shell = IM(shell, 5, true, vm); BAL.parts = IM(parts, 5, true, vm.clone());
+  [BAL.shell, BAL.parts].forEach(m => { m.frustumCulled = false; for (let k = 0; k < 5; k++) m.setMatrixAt(k, ZERO); });
+  BAL.COL.forEach((c, k) => BAL.shell.setColorAt(k, col.set(c))); BAL.shell.instanceColor.needsUpdate = true;
+  BAL.cats = [0, 1, 2, 3, 4].map(k => [slot(POSES.sit, CAT_COLORS[(k * 3 + 1) % CAT_COLORS.length]), slot(POSES.sit, CAT_COLORS[(k * 3 + 5) % CAT_COLORS.length])]);
+  BAL.catL = [LR(-.45, -10.65, 0), LR(.45, -10.65, 0)];   // heads clear the basket rim (review said -11.2: only ear tips showed)
+}
+
+// ---------- Build 7: one hero bus stop, "NEXT NAP / 5 MIN" ----------
+const BS = {};
+{ const BA = 5.0, [x, z] = polar(BA, 27), g = new THREE.Group(); g.position.set(x, .14, z); g.rotation.y = yawTo(Math.cos(BA), Math.sin(BA)); scene.add(g); BS.g = g; BS.yaw = g.rotation.y;   // moved from angle .85 (the feeder's sector now)
+  const parts = [paint(B(4, 2.4, .12).translate(0, 1.34, -.6), '#9FD3FF'), paint(B(4.4, .2, 1.6).translate(0, 2.64, 0), '#FFC93C'),
+    ...[[-1.9, -.6], [1.9, -.6], [-1.9, .6], [1.9, .6]].map(([px, pz]) => paint(Cyl(.08, .08, 2.5, 6).translate(px, 1.39, pz), '#3B3B44')),
+    paint(B(3.6, .15, .7).translate(0, .64, -.2), '#C98B5A'), ...[-1.6, 1.6].map(px => paint(B(.12, .5, .6).translate(px, .39, -.2), '#C98B5A')),
+    paint(Cyl(.06, .06, 3, 6).translate(2.7, 1.5, .33), '#3B3B44')];
+  const sh = new THREE.Mesh(merge(parts), new THREE.MeshStandardMaterial({ vertexColors: true, flatShading: true, roughness: .85 })); sh.castShadow = true; sh.receiveShadow = true; g.add(sh);
+  const c = document.createElement('canvas'); c.width = 1024; c.height = 384; const cx = c.getContext('2d');
+  cx.fillStyle = '#FFFFFF'; cx.beginPath(); cx.roundRect(7, 7, 1010, 370, 60); cx.fill(); cx.lineWidth = 14; cx.strokeStyle = '#1B2333'; cx.stroke();
+  cx.fillStyle = '#1B2333'; cx.textAlign = 'center'; cx.textBaseline = 'alphabetic';
+  [['NEXT NAP', 172], ['5 MIN', 332]].forEach(([s, y]) => { let fs = 150; cx.font = `900 ${fs}px Nunito`; while (cx.measureText(s).width > 900 && fs > 60) { fs -= 6; cx.font = `900 ${fs}px Nunito`; } cx.fillText(s, 512, y); });
+  const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 8;
+  const board = new THREE.Mesh(new THREE.PlaneGeometry(2.4, .9), new THREE.MeshBasicMaterial({ map: tex })); board.position.set(2.7, 2.9, .42); g.add(board);
+  BS.sl = [[slot(POSES.loaf, CAT_COLORS[4]), -1.1, 0, POSES.loaf], [slot(POSES.loaf, CAT_COLORS[6]), 0, .5, POSES.loaf], [slot(POSES.belly, CAT_COLORS[5]), 1.1, Math.PI / 2, POSES.belly]];
+  g.visible = false;
+}
+Object.values(POSES).forEach(m => { m.count = m.used; if (m.instanceColor) m.instanceColor.needsUpdate = true; });
+WALK.instanceColor.needsUpdate = true;
+
+// ---------- per-frame update of all extras (pure function of t and anim) ----------
+function updateExtras(t, anim) {
+  const D = POSES.drink, S = POSES.sit, R = WB.rip, P = 30, PW = WB.P, FW = EP.fountainWave, wave = FW != null && anim >= FW && anim < FW + 6;
+  // Build 1: drinkers (fountain circle) + eaters (feeder circle). 34 s loop: walk in 8 s, drink/eat 14 s, turn, walk out 8 s, gone 3.5 s
+  LAST_ANIM = anim;
+  const ff = anim - FEED.t0, feeding = ff >= 0 && ff < FEED_DUR, fDrink = FEED.kind === 'water';
+  for (const s of WB.spots) { const k = popK(t, s.rank), ri = (s.m - 1) * 2;
+    let mode = 0, x = s.p[0], z = s.p[1], y = .54, yaw = s.yawC, sc = 1.15 * k;
+    if (k > 0) {
+      if (feeding && s.drink === fDrink && ff < FEED_DUR - 1) {   // feeding time: everybody runs in at once and stays
+        const wIn = EP.feedWalk ? 4.5 + (s.m % 5) * .5 : 2.4, fw = ff;
+        if (fw < wIn) { const [px, pz, dx, dz] = sampleRoad(s.pin, (EP.feedWalk ? fw / wIn : ease(fw / wIn)) * s.pin.len); x = px; z = pz; yaw = Math.atan2(dx, dz); y = Hy(px, pz) + Math.abs(Math.sin(anim * (EP.feedWalk ? 11 : 16) + s.w)) * (EP.feedWalk ? .15 : .25); sc *= back(fw / .3); mode = 1; }
+        else mode = 2; }
+      else if (wave && s.drink) { const l0 = FW + 3 + (s.m - 1) * .1; mode = anim >= l0 && anim < l0 + .5 ? 1 : 2; }
+      else { const u = mod(anim + s.ph, PW);
+        if (u < 8) { const [px, pz, dx, dz] = sampleRoad(s.pin, u / 8 * s.pin.len); x = px; z = pz; yaw = Math.atan2(dx, dz); y = Hy(px, pz) + Math.abs(Math.sin(anim * 11 + s.w)) * .15; sc *= back(u / .3); mode = 1; }
+        else if (u < 22) { mode = 2;
+          if (s.m % 4 === 0 && u >= 15 && u < 15.8) { mode = 1; const e = Math.min(1, (u - 15) / .15, (15.8 - u) / .15), yc = Math.atan2(camera.position.x - x, camera.position.z - z);
+            yaw = s.yawC + e * Math.max(-.7, Math.min(.7, wrapA(yc - s.yawC))); } }   // deadpan glance at the camera
+        else if (u < 22.5) { mode = 1; yaw = s.yawC + ease((u - 22) / .5) * Math.PI; }
+        else if (u < 30.9) { const v = Math.min(u, 30.5) - 22.5, [px, pz, dx, dz] = sampleRoad(s.pout, v / 8 * s.pout.len); x = px; z = pz; yaw = Math.atan2(dx, dz);
+          y = Hy(px, pz) + Math.abs(Math.sin(anim * 11 + s.w)) * (v < 1.5 ? .22 : .15); if (u > 30.5) sc *= 1 - (u - 30.5) / .4; mode = 1; }
+      } }
+    if (mode === 1) putCat(WALK, s.w, x, y, z, yaw, sc); else WALK.setMatrixAt(s.w, ZERO);
+    if (mode === 2) { putCat(D, s.ds, x, .54, z, s.yawC, sc, (s.drink ? .05 : .09) * Math.sin(anim * (s.drink ? 14 : 9) + s.w));
+      if (s.drink) for (let q = 0; q < 2; q++) { const f = frac(anim * 1.6 + s.m * .37 + q * .5), r = .15 + .55 * f; if (f > .92) R.setMatrixAt(ri + q, ZERO); else { XM.compose(XV.set(s.nose[0], .85, s.nose[1]), QI, XS.set(r, 1, r)); R.setMatrixAt(ri + q, XM); } } }
+    else { D.setMatrixAt(s.ds, ZERO); if (s.drink) { R.setMatrixAt(ri, ZERO); R.setMatrixAt(ri + 1, ZERO); } } }
+  // loungers on the lawns (sit / loaf, a slow head-turn now and then)
+  WB.lounge.forEach((l, j) => putCat(l.pm, l.i, l.x, .54, l.z, l.yaw + .25 * Math.sin(anim * .3 + j), 1.15 * popK(t, l.rank), 0, 0, 1 + .03 * Math.sin(anim * 1.3 + j)));
+  // Mango, the host in the waist of the 8: sits facing the town, turns left to drink at the fountain, back, turns right to eat at the feeder, back
+  { const u = mod(anim, P + 6); let mode = 0, yaw = .35 * Math.sin(anim * .6), D0 = -1;
+    if (wave) { const l0 = FW + 3 + WB.N * .1; mode = anim >= l0 && anim < l0 + .5 ? 1 : 2; yaw = -Math.PI / 2; D0 = -1; }
+    else if (u >= 8 && u < 8.6) { mode = 1; yaw = -ease((u - 8) / .6) * Math.PI / 2; }
+    else if (u >= 8.6 && u < 13) { mode = 2; yaw = -Math.PI / 2; D0 = -1; }
+    else if (u >= 13 && u < 13.6) { mode = 1; yaw = -Math.PI / 2 + ease((u - 13) / .6) * Math.PI / 2; }
+    else if (u >= 19 && u < 19.6) { mode = 1; yaw = ease((u - 19) / .6) * Math.PI / 2; }
+    else if (u >= 19.6 && u < 24.4) { mode = 2; yaw = Math.PI / 2; D0 = 1; }
+    else if (u >= 24.4 && u < 25) { mode = 1; yaw = Math.PI / 2 - ease((u - 24.4) / .6) * Math.PI / 2; }
+    putCat(S, WB.mSit, 0, .52, 0, yaw, mode === 0 ? 2.6 : 0);
+    putCat(WALK, 0, 0, .52, 0, yaw, mode === 1 ? 2.6 : 0);
+    putCat(D, WB.mDrink, D0 * .3, .52, 0, yaw, mode === 2 ? 2.6 : 0, .15 + .05 * Math.sin(anim * 14));
+    for (let q = 0; q < 2; q++) { const f = frac(anim * 1.6 + q * .5), r = 2 * (.15 + .55 * f);
+      if (mode !== 2 || D0 > 0 || f > .92) R.setMatrixAt(2 * WB.N + q, ZERO); else { XM.compose(XV.set(-(SQ.C - SQ.wall) - 1.1, .86, 0), QI, XS.set(r, 1, r)); R.setMatrixAt(2 * WB.N + q, XM); } } }
+  // Build 1: the spout's stream (scrolling streaks), drops falling beside it, splash hops + ripples where it hits the top plate
+  { const hx = FT.hit.x, hy = FT.hit.y, hz = FT.hit.z, sL = FT.tip.y - hy;
+    for (let k = 0; k < 6; k++) { const aa = k * TAU / 6 + .3, ca = Math.cos(aa), sa = Math.sin(aa);
+      for (let i = 0; i < 6; i++) { const f = frac(anim * (i < 3 ? 1.5 : .9) + i / 6 + k * .13);
+        if (i < 3) { const r = .3 + 1.4 * f; XM.makeTranslation(hx + ca * r, hy + .1 + 1.3 * 4 * f * (1 - f), hz + sa * r); }      // splash hops
+        else XM.makeTranslation(hx + ca * .34, FT.tip.y - .2 - sL * f * f, hz + sa * .34);                                        // drops beside the stream
+        WB.drops.setMatrixAt(k * 6 + i, XM); }
+      const f = frac(anim * 1.3 + k / 6), r = .35 + 1.6 * f; if (f > .92) R.setMatrixAt(2 * WB.N + 2 + k, ZERO); else { XM.compose(XV.set(hx, hy + .04, hz), QI, XS.set(r, 1, r)); R.setMatrixAt(2 * WB.N + 2 + k, XM); } }
+    FT.wTex.offset.y = frac(anim * 1.4); const gush = ff >= 0 && ff < FEED_DUR && fDrink ? 2 : 1; FT.stream.scale.set(gush * (1 + .06 * Math.sin(anim * 9)), 1, gush * (1 + .06 * Math.sin(anim * 7 + 1))); }
+  // Halloween: hats on the loungers, Mango (when he sits), and the black-cat parade around the 8
+  if (HW) { const H = HWX.hat;
+    WB.lounge.forEach((l, j) => { const k = popK(t, l.rank); if (k <= 0 || l.pm !== POSES.sit) { H.setMatrixAt(HWX.L0 + j, ZERO); return; }
+      l.pm.getMatrixAt(l.i, XM2); H.setMatrixAt(HWX.L0 + j, XM.multiplyMatrices(XM2, HWX.sitHatL)); });
+    S.getMatrixAt(WB.mSit, XM2); H.setMatrixAt(HWX.M, XM.multiplyMatrices(XM2, HWX.sitHatL));
+    const kp = popK(t, 13);
+    for (let j = 0; j < 12; j++) { const a = -anim * .085 + j * .17, x = Math.cos(a) * 27, z = Math.sin(a) * 15.6, yaw = Math.atan2(Math.sin(a) * 27, -Math.cos(a) * 15.6);
+      putCat(WALK, 90 + j, x, .16 + Math.abs(Math.sin(anim * 9 + j)) * .1, z, yaw, 1.15 * kp);
+      if (kp > 0) { WALK.getMatrixAt(90 + j, XM2); H.setMatrixAt(HWX.P0 + j, XM.multiplyMatrices(XM2, HWX.hatL)); } else H.setMatrixAt(HWX.P0 + j, ZERO); }
+    H.instanceMatrix.needsUpdate = true; }
+  // Feeding time FX: kibble rains onto the food bar, or water arcs from the spout into the Water Bar ring
+  { if (!feeding) { for (let i = 0; i < 90; i++) FX.setMatrixAt(i, ZERO); FT.stream.scale.x = FT.stream.scale.z = 1; }
+    else { FX.material.color.set(fDrink ? '#9FDCFF' : '#A8703F'); FX.material.emissive.set(fDrink ? '#4FB3EA' : '#000000');
+      for (let i = 0; i < 90; i++) { const a = i / 90 * TAU * 3 + i * .7, d0 = (i % 30) / 30 * 3.2, u = (ff - d0) / 1.3;
+        if (fDrink) { const v = frac(ff * .7 + i / 90), rr = SQ.wall - .8 - (i % 3) * .5, tx = -SQ.C + Math.cos(a) * rr, tz = Math.sin(a) * rr;
+          const bx = FT.tip.x + (tx - FT.tip.x) * v, bz = FT.tip.z + (tz - FT.tip.z) * v, by = FT.tip.y + (1.2 - FT.tip.y) * v + 6 * v * (1 - v);
+          XM.compose(XV.set(bx, by, bz), QI, XS.setScalar(ff > FEED_DUR - 1.5 ? 0 : 1.2)); FX.setMatrixAt(i, XM); }
+        else { if (u < 0 || u > 1 || ff > 9) { FX.setMatrixAt(i, ZERO); continue; }
+          const rr = SQ.wall - 1.05 + Math.sin(i * 1.7) * .7, x = SQ.C + Math.cos(a) * rr, z = Math.sin(a) * rr;
+          XM.compose(XV.set(x, 18 - 17.2 * u * u, z), XQ.setFromEuler(XE.set(u * 5, i, 0)), XS.setScalar(1.1)); FX.setMatrixAt(i, XM); } }
+      if (fDrink) FT.stream.scale.x = FT.stream.scale.z = 2; }
+    FX.instanceMatrix.needsUpdate = true; }
+  if (EP.feedWalk) { const cx = fDrink ? -SQ.C : SQ.C, on = feeding;
+    for (let i = 0; i < 64; i++) { const u = ff - (i % 4) * .08;   // burst: drops (or kibble) fly up and out, bounce once on the square
+      if (!on || u < 0 || u > 1.9) { SPL.setMatrixAt(i, ZERO); continue; }
+      const a = i * 2.39996, vr = 3 + (i % 7) * .9, vy = 9 + (i % 5) * 1.6, x0 = fDrink ? FT.tip.x : cx, y0 = fDrink ? FT.tip.y : 6, z0 = fDrink ? FT.tip.z : 0, y = Math.max(.3, y0 + vy * u - 9.8 * u * u);
+      XM.compose(XV.set(x0 + Math.cos(a) * vr * u, y, z0 + Math.sin(a) * vr * u), XQ.setFromEuler(XE.set(u * 6, i, 0)), XS.setScalar((fDrink ? 1 : .8) * Math.min(1, (1.9 - u) * 3))); SPL.setMatrixAt(i, XM); }
+    SPL.material.color.set(fDrink ? '#CFEFFF' : '#A8703F'); SPL.material.emissive.set(fDrink ? '#4FB3EA' : '#000000'); SPL.instanceMatrix.needsUpdate = true;
+    RINGS.forEach((m, j) => { const u = on && ff < 7 ? ((ff - j * .45) % 1.8) / 1.8 : -1; m.visible = u >= 0 && ff >= j * .45; if (!m.visible) return;
+      m.position.set(cx, .9, 0); m.scale.setScalar(SQ.wall + 1 + u * 18); m.material.opacity = .7 * (1 - u) * (1 - u) * (1 - smooth(5, 7, ff)); m.material.color.set(fDrink ? '#3FA9F5' : '#F2A65A'); }); }
+  // Build 2: hero circle row (3 identical sitters + the one that walks in late)
+  { const kt = popK(t, UNLOCK.circles);
+    ROW.forEach(([x, z], c) => { if (kt <= 0) TAPE.setMatrixAt(TAPE_H + c, ZERO); else { XM.compose(XV.set(x, .16, z), QI, XS.set(kt, 1, kt)); TAPE.setMatrixAt(TAPE_H + c, XM); } });
+    for (let c = 0; c < 3; c++) putCat(S, ROW_SIT[c], ROW[c][0], .14, ROW[c][1], ROW_YAW, 1.15 * popK(t, UNLOCK.circles + c));
+    const k4 = popK(t, UNLOCK.circles + 3), u = mod(anim, 20), yIn = yawTo(C4[0] - S4[0], C4[1] - S4[1]), yOut = yIn + Math.PI;
+    let mode = 1, x = C4[0], z = C4[1], yaw = ROW_YAW, sc = 1.15 * k4, y = .14;
+    if (u < 4) { const f = u / 4; x = S4[0] + (C4[0] - S4[0]) * f; z = S4[1] + (C4[1] - S4[1]) * f; yaw = yIn; sc *= back(u / .3); y += Math.abs(Math.sin(anim * 10)) * .1; }
+    else if (u < 4.4) yaw = yIn + wrapA(ROW_YAW - yIn) * ease((u - 4) / .4);
+    else if (u < 16) mode = 2;
+    else if (u < 16.4) yaw = ROW_YAW + wrapA(yOut - ROW_YAW) * ease((u - 16) / .4);
+    else { const f = Math.min(1, (u - 16.4) / 3.2); x = C4[0] + (S4[0] - C4[0]) * f; z = C4[1] + (S4[1] - C4[1]) * f; yaw = yOut; y += Math.abs(Math.sin(anim * 10)) * .1; if (u > 19.6) sc *= 1 - (u - 19.6) / .4; }
+    putCat(WALK, 18, x, y, z, yaw, mode === 1 ? sc : 0); putCat(S, ROW_SIT[3], C4[0], .14, C4[1], ROW_YAW, mode === 2 ? sc : 0); }
+  // Build 3: hero box (the loaf shifts its weight every 9 s)
+  { const kb = popK(t, UNLOCK.hostBox);
+    if (kb <= 0) { BOXM.setMatrixAt(BOX_H, ZERO); FLAPM.setMatrixAt(BOX_H * 2, ZERO); FLAPM.setMatrixAt(BOX_H * 2 + 1, ZERO); }
+    else { XM2.copy(HB_M).multiply(XM.makeScale(kb, kb, kb)); BOXM.setMatrixAt(BOX_H, XM.multiplyMatrices(XM2, HB_L[0]));
+      FLAPM.setMatrixAt(BOX_H * 2, XM.multiplyMatrices(XM2, HB_L[1])); FLAPM.setMatrixAt(BOX_H * 2 + 1, XM.multiplyMatrices(XM2, HB_L[2])); }
+    const e = mod(anim, 9), sh = e < 1 ? .15 * Math.min(1, e / .15, (1 - e) / .15) : 0;
+    putCat(POSES.loaf, HB_CAT, HB[0], .14 + .36 * kb, HB[1], HB_YAW + sh, 1.6 * kb); }
+  // Build 4: Big Mochi rises at 1,000 followers, breathes, flicks an ear, snores Zzz
+  { const T1 = unlockT(UNLOCK.mochi), k = T1 === -Infinity ? 1 : T1 === Infinity ? 0 : ease((t - (T1 - 2)) / 2);
+    MO.g.visible = k > 0;
+    if (k > 0) { MO.g.position.y = -50 * (1 - k); const br = Math.sin(anim * 1.1); MO.body.scale.y = .55 * (1 + .03 * br); MO.head.position.y = .6 * br;
+      const e = mod(anim, 7); MO.ear.rotation.z = -1.1 + (e < .4 ? .5 * Math.sin(Math.PI * e / .4) : 0);
+      for (let q = 0; q < 3; q++) { const f = frac(anim * .25 + q / 3), s = 1.2 * Math.sin(Math.PI * f); XM.compose(XV.set(44 + 10 * f, 34 + 30 * f, 22), QI, XS.set(s, s, s)); MO.z.setMatrixAt(q, XM); }
+      MO.z.instanceMatrix.needsUpdate = true; } }
+  // Build 5: Red Dot Beach
+  { const k5 = popK(t, UNLOCK.redDot), on = k5 > 0;
+    [RD.lh, RD.laser, RD.beam, RD.dot, RD.halo].forEach(o => o.visible = on);
+    if (!on) { for (let c = 0; c < 5; c++) WALK.setMatrixAt(19 + c, ZERO); POSES.belly.setMatrixAt(RD.belly, ZERO); }
+    else { const [dx, dz] = RD.D(anim); RD.lh.scale.setScalar(k5); RD.laser.scale.setScalar(k5);
+      RD.dot.position.set(dx, .06, dz); RD.halo.position.set(dx, .05, dz); RD.dot.scale.setScalar(k5); RD.halo.scale.setScalar(k5);
+      RD.laser.lookAt(dx, .06, dz); RD.laser.updateMatrixWorld(); const tipP = RD.laser.localToWorld(XV.set(0, 0, 2.55)); RD.beam.position.copy(tipP);
+      RD.beam.lookAt(dx, .06, dz); RD.beam.scale.set(1, 1, Math.max(.01, tipP.distanceTo(XS.set(dx, .06, dz))));
+      for (let c = 0; c < 5; c++) { const tc = anim - .35 - .3 * c, [px, pz] = RD.D(tc), [qx, qz] = RD.D(tc - .05), L = Math.hypot(px - qx, pz - qz) || 1, off = (c % 2 ? 1 : -1) * .7 * c;
+        const x = px - (pz - qz) / L * off, z = pz + (px - qx) / L * off; let yaw = Math.atan2(dx - x, dz - z), y = Math.abs(Math.sin(anim * 12 + c)) * .1;
+        if (c === 0) { const q = mod(anim, 3) / .5; if (q <= 1) y = Math.sin(Math.PI * q); }          // pounce
+        if (c === 2 && Math.hypot(dx - x, dz - z) < 3) yaw += .12 * Math.sin(anim * 22);             // butt wiggle
+        putCat(WALK, 19 + c, x, y, z, yaw, 1.15 * k5); }
+      putCat(POSES.belly, RD.belly, RD.cx + 14, 0, 50, -.6, 1.15 * k5, 0, .08 * Math.sin(anim * 2)); } }   // the quitter
+  // Build 6: fish balloons
+  { for (let k = 0; k < 5; k++) { const kk = popK(t, UNLOCK.balloonStep * (k + 1));
+      if (kk <= 0) { BAL.shell.setMatrixAt(k, ZERO); BAL.parts.setMatrixAt(k, ZERO); S.setMatrixAt(BAL.cats[k][0], ZERO); S.setMatrixAt(BAL.cats[k][1], ZERO); continue; }
+      const a = BAL.ANG[k] + .06 * Math.sin(anim * .05 + k), r = Math.min(240, Math.max(60, CR * BAL.RF[k])) + 12 * Math.sin(2.1 * k), y = 56 + 8 * (k % 3) + 3 * Math.sin(anim * .5 + k);
+      XM2.compose(XV.set(Math.cos(a) * r, y, Math.sin(a) * r), XQ.setFromEuler(XE.set(0, yawTo(-Math.sin(a), Math.cos(a)) + .1 * Math.sin(anim * 1.5 + k), 0, 'YXZ')), XS.set(kk, kk, kk));
+      BAL.shell.setMatrixAt(k, XM2); BAL.parts.setMatrixAt(k, XM2); for (let q = 0; q < 2; q++) S.setMatrixAt(BAL.cats[k][q], XM.multiplyMatrices(XM2, BAL.catL[q])); } }
+  // Build 7: bus stop + 3 sleepers
+  { const kb = popK(t, UNLOCK.busStop); BS.g.visible = kb > 0; BS.g.scale.setScalar(Math.max(.001, kb));
+    const c0 = Math.cos(BS.yaw), s0 = Math.sin(BS.yaw);
+    BS.sl.forEach(([i, lx, ly, pm], c) => { const kc = popK(t, UNLOCK.busStop + c), lz = -.2, wx = BS.g.position.x + lx * c0 + lz * s0, wz = BS.g.position.z - lx * s0 + lz * c0;
+      const roll = pm === POSES.belly && mod(anim, 8) < 1 ? .05 * Math.sin(anim * 6) : 0;
+      putCat(pm, i, wx, .14 + .715 * kb, wz, BS.yaw + ly, 1.15 * kc, 0, roll, 1 + .04 * Math.sin(anim * 1.4 + c)); }); }
+  [WALK, WB.drops, WB.rip, TAPE, BOXM, FLAPM, BAL.shell, BAL.parts, ...Object.values(POSES)].forEach(m => m.instanceMatrix.needsUpdate = true);
+}
+
+// ---------- camera ----------
+const ST = EP.starts || [0, 0, 0, 0];
+const vv = a => V(...a);
+const NL = NEWL ? V(NEWL.x, 0, NEWL.z) : V(0, 0, CR), U = NL.clone().setY(0).normalize();
+const SH = STILL ? [] : EP.shots ? EP.shots.map(s => ({ t0: s.t0, t1: s.t1, p0: vv(s.p0), p1: vv(s.p1), l0: vv(s.l0), l1: vv(s.l1), f: s.inout ? inout : ease })) : [
+  { t0: 0, t1: ST[1], p0: V(14, 120, 150), p1: V(46, 74, 98), l0: V(0, 5, 0), l1: V(0, 6, 0) },
+  { t0: ST[1], t1: EP.milestone - .2, p0: NL.clone().addScaledVector(U, -95).setY(16), p1: NL.clone().addScaledVector(U, -52).setY(34), l0: NL.clone().addScaledVector(U, -20).setY(2), l1: NL.clone() },
+  { t0: EP.milestone - .2, t1: ST[2], p0: NL.clone().addScaledVector(U, -52).setY(34), p1: V(-CR * .55, CR * 1.25, CR * 1.45), l0: NL.clone(), l1: V(0, 0, -CR * .1), f: inout },
+  { t0: ST[2], t1: (NEWB ? NEWB.at : ST[3]) - .25, p0: V(-CR * .55, CR * 1.25, CR * 1.45), p1: V(CR * .9, CR * 1.1, CR * 1.3), l0: V(0, 0, -CR * .1), l1: NBpos.clone().multiplyScalar(.4), f: inout },
+  { t0: (NEWB ? NEWB.at : ST[3]) - .25, t1: ST[3], p0: NBpos.clone().add(V(40, 22, 52)), p1: NBpos.clone().add(V(32, 34, 42)), l0: NBpos.clone().add(V(0, 6, 0)), l1: NBpos.clone().add(V(0, 9, 0)) },
+  { t0: ST[3], t1: EP.duration, p0: NBpos.clone().add(V(60, 50, 110)), p1: V(CR * .5, CR * .95 + 40, CR * 1.55 + 60), l0: NBpos.clone().add(V(0, 10, 0)), l1: V(NBpos.x * .5, 10, NBpos.z * .5), f: inout },
+];
+
+// ---------- UI ----------
+const DAY = EP.day || 1;
+$('title').textContent = EP.title || ('DAY ' + DAY);
+const CHUNKS = [];
+(EP.words || []).forEach((w, i) => { const last = CHUNKS[CHUNKS.length - 1], prev = EP.words[i - 1];
+  if (!last || last.words.length >= 3 || w.line !== prev.line || w.s - prev.e > .3) CHUNKS.push({ i: CHUNKS.length, s: w.s, words: [w] }); else last.words.push(w); });
+CHUNKS.forEach((c, i) => { const lw = c.words[c.words.length - 1], nx = CHUNKS[i + 1]; c.until = nx ? Math.min(nx.s, lw.e + .45) : lw.e + .6; });
+const HEART = f => `<svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-9.6-9.1C.9 8.6 2.9 5 6.4 5c2 0 3.5 1.1 4.3 2.4h2.6C14.1 6.1 15.6 5 17.6 5c3.5 0 5.5 3.6 4 6.9C19.5 16.4 12 21 12 21z" fill="${f ? '#ED4956' : 'none'}" stroke="${f ? '#ED4956' : '#8A8F98'}" stroke-width="2"/></svg>`;
+const AV = ['#2F5FE0', '#E85D5D', '#5BB98C', '#9B6FE0', '#F2A65A', '#1B2333'];
+const fmt = n => n >= 1000 ? (n / 1000).toFixed(1).replace('.0', '') + 'K' : String(n);
+const CM = EP.comments;
+if (CM) $('cmList').innerHTML = CM.list.map((c, i) => `<div class="card"><div class="card__av" style="background:${AV[i % 6]}">${c.by[0].toUpperCase()}</div><div class="card__body"><div class="card__name">${c.name || '@' + c.by}</div><div class="card__text">${c.text}</div></div><div class="card__like"><span data-h>${HEART(false)}</span><span data-l>${c.likes == null ? '' : fmt(c.likes)}</span></div></div>`).join('');   // likes: null = heart only, no number
+const tagsEl = $('tags');
+const newTags = (EP.residents || []).map(r => { const d = document.createElement('div'); d.className = 'tag'; d.innerHTML = `@${r.by}<small>\ud83d\udc31 Cat #${r.n.toLocaleString('en-US')} moved in</small>`; tagsEl.appendChild(d); return { el: d, k: r.n - 1 }; });
+const buildTag = document.createElement('div'); buildTag.className = 'tag'; if (NEWB) buildTag.innerHTML = `${NEWB.byName || '@' + NEWB.by}<small>\ud83c\udfd7\ufe0f built the ${NEWB.name}</small>`; buildTag.style.display = 'none'; tagsEl.appendChild(buildTag);
+const proj = v => { const p = v.clone().project(camera); return { x: (p.x + 1) / 2 * W, y: (1 - p.y) / 2 * H, ok: p.z < 1 && p.x > -1 && p.x < 1 && p.y > -1 && p.y < 1 }; };
+if (EP.hideUI) ROOT.style.display = 'none';
+
+// ---------- frame ----------
+const cm = new THREE.Matrix4(), Q = new THREE.Quaternion(), EU = new THREE.Euler();
+const tri = u => { u = u - Math.floor(u); return u < .5 ? u * 2 : 2 - u * 2; };
+let lastT = null;
+function feedPath(w, k, fT) {   // website feeding time: a cat walks (not runs) from where it was, in toward the square, then to a spot around the fountain (water) or feeder (food); drinks; walks home
+  const cx = FEED.kind === 'water' ? -SQ.C : SQ.C, side = (o, a) => { const [x, z, dx, dz] = walkPos(w.rd, w.s0, w.L, w.v, w.ph, a); return [x - dz * 3 * w.side, z + dx * 3 * w.side]; };
+  const S = side(0, FEED.t0), E = side(0, FEED.t0 + FEED_DUR), ga = Math.atan2(S[1], S[0] - cx) + (hash01(k * 3 + 2) - .5) * .5, gr = SQ.wall + 1.6 + hash01(k * 5 + 1) * 3;
+  const G = [cx + Math.cos(ga) * gr, Math.sin(ga) * gr], mid = p => { const a = Math.atan2(p[1], p[0]), r = SQ.plaza + 4; return [Math.cos(a) * r, Math.sin(a) * r]; };
+  const path = p => { const M = mid(p), d1 = Math.hypot(M[0] - p[0], M[1] - p[1]), d2 = Math.hypot(G[0] - M[0], G[1] - M[1]); return { M, d1, d2, L: d1 + d2 }; };
+  const at = (p, P, s) => s <= P.d1 ? [p[0] + (P.M[0] - p[0]) * s / P.d1, p[1] + (P.M[1] - p[1]) * s / P.d1, P.M[0] - p[0], P.M[1] - p[1]] : [P.M[0] + (G[0] - P.M[0]) * Math.min(1, (s - P.d1) / P.d2), P.M[1] + (G[1] - P.M[1]) * Math.min(1, (s - P.d1) / P.d2), G[0] - P.M[0], G[1] - P.M[1]];
+  const v = 4.2 + hash01(k * 17) * 1.2, d = hash01(k * 13 + 5) * 3, A = path(S), B = path(E), tIn = A.L / v, tOut = B.L / v, back0 = FEED_DUR - tOut - .3;
+  if (d + tIn + 2 > back0) return null;   // too far to make it: stays home
+  const step = (t) => Math.abs(Math.sin(t * 11 + k)) * .16;
+  if (fT < d) return null;
+  if (fT < d + tIn) { const [x, z, dx, dz] = at(S, A, (fT - d) * v); return [x, z, Math.atan2(dx, dz), step(fT)]; }
+  if (fT < back0) { const sway = Math.sin(fT * 1.7 + k) * .25; return [G[0], G[1], Math.atan2(cx - G[0], -G[1]) + sway, .03 * Math.abs(Math.sin(fT * 9 + k))]; }   // at the bowl: head bobs while it drinks
+  const [x, z, dx, dz] = at(E, B, Math.max(0, B.L - (fT - back0) * v)); return [x, z, Math.atan2(-dx, -dz), step(fT)]; }
+function walkPos(rd, s0, L, v, ph, anim) {     // ping-pong along a street: from place A to place B and back
+  const total = rd.cum[rd.cum.length - 1], u = anim * v / (2 * L) + ph, f = tri(u), dir = (u - Math.floor(u)) < .5 ? 1 : -1;
+  const s = Math.max(1, Math.min(total - 1, s0 - L / 2 + f * L)); const [x, z, dx, dz] = sampleRoad(rd, s); return [x, z, dx * dir, dz * dir];
+}
+window.renderFrame = (t, anim = t) => {
+  if (!window.__noCam) {
+    if (STILL) { camera.position.set(...EP.still.pos); camera.lookAt(V(...EP.still.look)); }
+    else if (SH.length) { const sh = SH.find(s => t >= s.t0 && t < s.t1) || SH[SH.length - 1]; const k = (sh.f || ease)((t - sh.t0) / (sh.t1 - sh.t0));
+      camera.position.lerpVectors(sh.p0, sh.p1, k); camera.lookAt(new THREE.Vector3().lerpVectors(sh.l0, sh.l1, k)); }
+  }
+  camera.updateMatrixWorld();
+  const changed = t !== lastT; lastT = t;
+  let shown = 0;
+  for (let k = 0; k < F; k++) { const a = APPEAR[k]; if (a < 0 || t >= a) shown++; if (changed && a >= 0) placeHouse(k, back((t - a) / .55)); }
+  if (changed && (GROW || FN)) {
+    const dirty = new Set();
+    for (const [m, i, bm, t0] of GROWN) { if (t0 < 0) continue; dirty.add(m); const s = t0 === Infinity ? 0 : ease((t - t0) / .5); m.setMatrixAt(i, s <= 0 ? ZERO : s >= 1 ? bm : bm.clone().multiply(new THREE.Matrix4().makeScale(1, s, 1))); }
+    for (const [m, i, bm, t0] of (window.__trees || [])) { dirty.add(m); m.setMatrixAt(i, t >= t0 ? ZERO : bm); }
+    dirty.forEach(m => m.instanceMatrix.needsUpdate = true);
+    Object.values(HP).forEach(m => m.instanceMatrix.needsUpdate = true);
+    LMG.forEach(([g, a]) => { if (a < 0) { g.visible = true; return; } g.visible = t >= a; const k2 = back((t - a) / .7); g.scale.set(Math.max(.001, .8 * (.6 + .4 * k2)), Math.max(.001, .8 * k2), Math.max(.001, .8 * (.6 + .4 * k2))); });
+  }
+  // Mango strolls around the fountain
+  catMesh.setMatrixAt(0, ZERO);   // Mango now hosts the Water Bar (WALK / pose meshes), no more road patrol
+  const fT = anim - FEED.t0, feedOn = fT >= 0 && fT < FEED_DUR;
+  let kEnd = F;
+  for (let k = 0; k < F; k++) { const w = CATW[k], a0 = APPEAR[k] < 0 ? -1 : APPEAR[k] + .3, vis = a0 < 0 || t >= a0;
+    if (!vis) { kEnd = k; break; }   // cats appear in house order: stop at the first one not in town yet (catMesh.count below hides the rest)
+    const s = vis ? 1.15 * (a0 < 0 ? 1 : back((t - a0) / .4)) : 0, l = houseLots[k];
+    if (w.nap) { cm.compose(V(l.x, w.roofY, l.z), Q.setFromEuler(EU.set(0, l.ry + Math.sin(anim * .3 + k) * .4, 0)), V(s, s * .8, s)); catMesh.setMatrixAt(k + 1, cm); }
+    else { const [x, z, dx, dz] = walkPos(w.rd, w.s0, w.L, w.v, w.ph, anim);
+      let px = x - dz * 3 * w.side, pz = z + dx * 3 * w.side, yaw = Math.atan2(dx, dz), bob = .1;
+      const FWK = EP.feedWalk && feedOn && l.r < 70 && hash01(k * 7 + 3) < .35 ? feedPath(w, k, fT) : null;
+      if (FWK) { px = FWK[0]; pz = FWK[1]; yaw = FWK[2]; bob = FWK[3]; }
+      const gw = !EP.feedWalk && feedOn && l.r < 75 && hash01(k * 7 + 3) < .3 ? smooth(0, 2.2 + l.r / 60, fT) * (1 - smooth(FEED_DUR - 2.5, FEED_DUR, fT)) : 0;   // feeding time: a few nearby cats (about 1 in 3, close to the square) trot over, then go home
+      if (gw > 0) { const ga = Math.atan2(pz, px) + (hash01(k * 3 + 2) - .5) * .25, gr = SQ.plaza + 1 + hash01(k * 5 + 1) * 6, gx = Math.cos(ga) * gr, gz = Math.sin(ga) * gr;
+        px += (gx - px) * gw; pz += (gz - pz) * gw; yaw = fT < FEED_DUR - 2.5 ? Math.atan2(-px, -pz) : Math.atan2(px, pz); bob = gw < 1 ? .25 : .06; }
+      cm.compose(V(px, Math.abs(Math.sin(anim * (gw > 0 && gw < 1 ? 16 : 9) + k)) * bob, pz), Q.setFromEuler(EU.set(0, yaw, 0)), V(s, s, s)); catMesh.setMatrixAt(k + 1, cm); }
+    if (HW && k % 2 === 0) HWX.hat.setMatrixAt(k >> 1, s > 0 ? M2.multiplyMatrices(cm, HWX.hatL) : ZERO); }
+  if (HW) for (let k = kEnd + (kEnd & 1); k < F; k += 2) HWX.hat.setMatrixAt(k >> 1, ZERO);
+  catMesh.count = kEnd + 1; catMesh.instanceMatrix.needsUpdate = true;
+  TAXIS.forEach((tx, i) => { const a0 = APPEAR[tx.n]; tx.g.visible = a0 < 0 || t >= a0 + .5; if (!tx.g.visible) return;
+    const [x, z, dx, dz] = walkPos(tx.rd, tx.s0, tx.L, tx.v, tx.ph, anim);
+    tx.g.position.set(x - dz * 2.4 * tx.side, 0, z + dx * 2.4 * tx.side); tx.g.rotation.y = Math.atan2(dx, dz);
+    const sw = Math.sin(anim * 7 + i) * .45; tx.leg1.rotation.x = sw; tx.leg2.rotation.x = -sw; });
+  updateExtras(t, anim);
+  signs.forEach(s => { const wp = s.getWorldPosition(new THREE.Vector3()); s.lookAt(camera.position.x, wp.y, camera.position.z); });
+  let gk = 0;
+  if (LOT) LOT.visible = t < (EP.lotUntil ?? NEWB.at);
+  if (NB && NEWB.slow && NB.userData.parts) {   // slow build (videos): each piece drops in from above and pops, the sign + confetti come last
+    const bt = NEWB.at, dur = NEWB.slow, P = NB.userData.parts, N = P.length; NB.visible = t >= bt; NB.scale.setScalar(.8); gk = t >= bt + dur ? 1 : .001;
+    P.forEach((c, i) => { const e = Math.min(1, Math.max(0, (t - (NEWB.partsAt ? NEWB.partsAt[i] ?? bt : bt + i * (dur - .7) / N)) / .5)); c.visible = e > 0;
+      c.position.y = c.userData.y0 + (1 - ease(e)) * 16; const k = Math.max(.001, back(e)); c.scale.copy(c.userData.s0).multiplyScalar(k); });
+    if (NB.userData.sign) { const e = (t - bt - dur) / .4; NB.userData.sign.visible = e > 0; NB.userData.sign.scale.setScalar(Math.max(.001, back(e))); } }
+  const bEnd = NEWB ? NEWB.at + (NEWB.slow || 0) : 0;
+  if (NB) { const bt = NEWB.at; if (!NEWB.slow) { NB.visible = t >= bt; gk = back((t - bt) / .9); NB.scale.set(Math.max(.001, .8 * (.6 + .4 * gk)), Math.max(.001, .8 * gk), Math.max(.001, .8 * (.6 + .4 * gk))); }
+    CONF.visible = t >= bEnd + .4 && t < bEnd + 4.4;
+    if (CONF.visible) { const u = t - bEnd - .4; confData.forEach((d, i) => { cm.compose(V(NBpos.x + d.vx * u, 22 + d.vy * u - 8.8 * u * u, NBpos.z + d.vz * u), Q.setFromEuler(EU.set(d.r + u * 5, d.r * 2 + u * 3, 0)), V(1.4, 1.4, 1.4)); CONF.setMatrixAt(i, cm); }); CONF.instanceMatrix.needsUpdate = true; } }
+  if (STRAY) { let ns = 0; STRAY.P.forEach((p, j) => { const a = STRAY.at[j] ?? (STRAY.always ? -1e9 : 1e9), k = t >= a ? STRAY.sc * back((t - a) / .4) : 0; if (t >= a) ns++;
+      if (k <= 0) { STRAY.m.setMatrixAt(j, ZERO); return; } cm.compose(V(p.x, p.y, p.z), Q.setFromEuler(EU.set(0, p.yaw, 0)), V(k, k, k)); STRAY.m.setMatrixAt(j, cm); });
+    STRAY.m.instanceMatrix.needsUpdate = true; window.__strays = ns;
+    if (STRAY.sign) { const e = (t - STRAY.signAt) / .4; STRAY.sign.visible = e > 0; STRAY.sign.scale.setScalar(Math.max(.001, back(e))); } }
+  if (EP.dusk) duskAt(Math.min(1, Math.max(0, (t - EP.dusk.from) / (EP.dusk.to - EP.dusk.from))));
+  if (NB && NB.userData.arc) { const A = NB.userData.arc, la = NEWB.lightsAt ?? 1e9, on = t >= la, fl = on ? (t - la < .5 ? (Math.floor((t - la) * 16) % 2 ? .25 : 1) : 1) : 0;   // neon flickers on
+    A.neon.forEach(m => m.color.set(fl > .5 ? m.userData.on : '#3A3350')); A.lights.forEach(L => L.intensity = on ? 260 * fl : 0);
+    const oa = NEWB.openAt ?? 1e9; A.cats.forEach((c, i) => { const u = (t - oa - i * .22) / 1.3; if (u <= 0 || u >= 1) { c.scale.setScalar(0); return; }
+      const sx = (i % 2 ? 1 : -1) * (3 + (i % 5) * 1.6); c.position.set(sx * (1 - u), Math.abs(Math.sin(anim * 14 + i)) * .3, 22 - 18 * u); c.rotation.y = Math.atan2(-sx, -18) ; c.scale.setScalar(1.4 * Math.min(1, (1 - u) * 6)); });
+    const C = A.claw, ca = EP.clawAt ?? 1e9, u = t - ca; let cy = 5.6, grip = 0, held = false;
+    if (u > 0 && u < .7) cy = 5.6 - 2.1 * ease(u / .7); else if (u >= .7 && u < 1.0) { cy = 3.5; grip = (u - .7) / .3; } else if (u >= 1.0 && u < 1.8) { cy = 3.5 + 2.1 * ease((u - 1) / .8); grip = 1; held = true; } else if (u >= 1.8) { grip = 0; }
+    C.claw.position.y = cy; C.prongs.forEach(pr => { pr.rotation.x = -.5 + .5 * (u > 0 && u < 1.8 ? grip : 0); });
+    if (u < .9) C.prize.position.copy(C.home); else if (held) C.prize.position.set(C.cx, cy - .45, C.home.z);
+    else if (u >= 1.8) { const v = Math.min(1, (u - 1.8) / .6); C.prize.position.set(C.cx, 5.1 - 4.4 * v + 3.2 * Math.sin(Math.PI * v), C.home.z + 1.8 + 1.4 * v); C.prize.rotation.z = v * 6; }
+    C.mango.position.y = .4 + (u >= 2.4 && u < 3.4 ? Math.abs(Math.sin((u - 2.4) * 9)) * .9 : 0); }
+  if (NB && NB.userData.studio) { const S = NB.userData.studio, oa = NEWB.openAt ?? 1e9;   // painter cats run in and sit at the easels; the Mango statue rises
+    S.cats.forEach((c, i) => { const st = S.seats[i], u = (t - oa - i * .2) / 1.4, sx = (i % 2 ? 1 : -1) * (2 + i), sz = 24;
+      if (u <= 0) { c.w.scale.setScalar(0); c.sit.scale.setScalar(0); return; }
+      if (u < 1) { const e = ease(u); c.w.position.set(sx + (st.x - sx) * e, Math.abs(Math.sin(anim * 14 + i)) * .3, sz + (st.z - sz) * e); c.w.rotation.y = Math.atan2(st.x - sx, st.z - sz); c.w.scale.setScalar(1.5); c.sit.scale.setScalar(0); return; }
+      c.w.scale.setScalar(0); c.sit.scale.setScalar(1.5); c.sit.position.set(st.x, .4, st.z); c.sit.rotation.set(0, st.yaw + Math.sin(anim * 5 + i) * .12, Math.sin(anim * 7 + i * 2) * .06); });   // painting: a little sway
+    const sa = EP.statueAt ?? 1e9, e = (t - sa) / 2.4; S.statue.scale.set(Math.max(.001, back(Math.min(1, e * 1.4))), Math.max(.001, ease(e)), Math.max(.001, back(Math.min(1, e * 1.4)))); S.statue.visible = e > 0;
+    S.statue.rotation.y = e > 0 && e < 1 ? (1 - ease(e)) * 3.1 : 0;
+    S.mango.position.y = .4 + (t - sa > 2.4 && t - sa < 3.6 ? Math.abs(Math.sin((t - sa - 2.4) * 9)) * .9 : 0); }
+  if (NB && NB.userData.pizza) { const Z = NB.userData.pizza, PZ = EP.pizza || {}, pa = NEWB.partsAt || [], land = (pa[1] ?? 1e9) + .45, oa = NEWB.openAt ?? 1e9;   // spectators hop when the crust lands, one walks off at the pineapple, cats climb on, Mango bites
+    const wa = PZ.walkAt ?? 1e9;
+    Z.cats.forEach((c, i) => { const hop = t >= land && t < land + .7 ? Math.abs(Math.sin((t - land) * 9 + i)) * 1.1 : 0, cheer = t >= oa - .4 && t < oa + 1.4 ? Math.abs(Math.sin((t - oa) * 11 + i * 2)) * .8 : 0;
+      c.m.position.y = .4 + hop + cheer; c.m.visible = !(i === 1 && t >= wa); });
+    const u = (t - wa) / 2.2; if (u > 0 && u < 1) { const c = Z.cats[1]; Z.walk.scale.setScalar(1.5 * Math.min(1, (1 - u) * 5)); Z.walk.position.set(c.x + 2 * u, Math.abs(Math.sin(anim * 12)) * .25, c.z + 9 * u); Z.walk.rotation.y = .2; } else Z.walk.scale.setScalar(0);
+    Z.climb.forEach((c, i) => { const e = (t - oa - .3 - i * .28) / .45; c.scale.setScalar(Math.max(.001, (i === 4 ? 1.3 : 1.4) * back(e))); c.visible = e > 0; });
+    const dt = t - land; Z.dust.forEach((d, i) => { if (dt < 0 || dt > 1.4) { d.m.scale.setScalar(0); return; } const r = 6 + 12 * ease(dt / 1.2); d.m.position.set(Z.dustC[0] + Math.cos(d.a) * r, .8 + dt * 1.5, Z.dustC[1] + Math.sin(d.a) * r * .8); d.m.scale.setScalar(Math.max(.001, 1.6 * (1 - dt / 1.4) + .2)); });
+    const lk = PZ.lookAt || [1e9, 1e9], ba = PZ.biteAt ?? 1e9, ta = PZ.turnAt ?? 1e9;
+    let ry = Math.PI, z = 12.9, y = .4;
+    if (t >= lk[0] && t < lk[1]) ry = Math.PI - Math.PI * Math.min(1, (t - lk[0]) / .25) * Math.min(1, (lk[1] - t) / .25);
+    const bu = t - ba; if (bu > 0 && bu < 1.1) { z = 12.9 - 1.3 * Math.sin(Math.PI * Math.min(1, bu / .55)) * (bu < .55 ? 1 : 0); }
+    if (bu > .55 && bu < 1.05) { const k = Math.min(1, (bu - .55) / .45); Z.str.visible = true; Z.str.scale.set(1, .4 + 2.6 * k, 1); Z.str.position.set(0, 1.25, .6 + (.4 + 2.6 * k) / 2); } else Z.str.visible = false;   // cheese string stretches, then snaps
+    Z.blob.visible = bu > .55;
+    if (t >= ta) { const k = ease((t - ta) / .35); ry = Math.PI * (1 - k); y = .4 + (t - ta > .6 && t - ta < 1.6 ? Math.abs(Math.sin((t - ta - .6) * 9)) * .7 : 0); }
+    Z.mango.rotation.y = ry; Z.mango.position.set(0, y, z); }
+  if (NB && NB.userData.toy) toyFrame(NB.userData.toy, t, anim, false);
+  TOYS.forEach(T => toyFrame(T, t, anim, true));
+  if (LONE) { const L = LONE.L, a = L.at ?? -1e9, ha = L.houseAt ?? 1e9, ra = L.runAt ?? 1e9;
+    LONE.sit.scale.setScalar(t >= a && t < ra ? 1.6 * back((t - a) / .4) : 0); LONE.sit.position.set(0, 0, 5.5); LONE.sit.rotation.y = Math.sin(anim * 1.3) * .25;
+    LONE.h.scale.setScalar(Math.max(.001, back((t - ha) / .5))); LONE.h.visible = t >= ha;
+    if (LONE.sign) { const e = (t - ha - .3) / .4; LONE.sign.visible = e > 0; LONE.sign.scale.setScalar(Math.max(.001, back(e))); }
+    const u = (t - ra) / .9; if (u > 0 && u < 1) { LONE.walk.scale.setScalar(1.6 * Math.min(1, (1 - u) * 4)); LONE.walk.position.set(0, Math.abs(Math.sin(anim * 14)) * .3, 5.5 - 4.4 * ease(u)); LONE.walk.rotation.y = Math.PI; } else LONE.walk.scale.setScalar(0); }
+  // upload only the used part of each instanced mesh (pose meshes hold 800 slots but use a few dozen): big win on phones
+  if (!RANGED) { RANGED = []; scene.traverse(o => { if (o.isInstancedMesh) RANGED.push(o); }); }
+  for (const m of RANGED) if (m.count < m.instanceMatrix.count) { const a = m.instanceMatrix; a.clearUpdateRanges(); a.addUpdateRange(0, Math.max(1, m.count) * 16); }
+  renderer.render(scene, camera);
+
+  // ---- UI ----
+  const cats = shown + 1 + (STRAY && STRAY.always ? window.__strays || 0 : 0); window.__shown = shown + 1;   // website: likes beyond the houses are cats with no home yet
+  const dayNow = EP.live && EP.live.day ? EP.live.day : EP.dayRange ? Math.round(EP.dayRange[0] + (EP.dayRange[1] - EP.dayRange[0]) * Math.min(1, shown / Math.max(1, F))) : DAY;
+  $('countN').textContent = cats.toLocaleString('en-US'); $('countL').textContent = `${cats === 1 ? 'cat' : 'cats'} \u00b7 Day ${dayNow}`;
+  if (STILL || window.__noCam) { $('count').style.opacity = 1; $('sub').style.opacity = 0; return; }
+  const ms = EP.milestone ?? 1e9, pulse = t >= ms ? 1 + .25 * Math.max(0, 1 - (t - ms) / .35) : 1;
+  $('countN').style.transform = `scale(${pulse})`; $('countN').style.color = t >= ms && t < ms + 2.5 ? '#FFD23F' : '#fff';
+  const endK = ease((t - ST[3]) / .5);
+  const cf = EP.countFrom ?? ST[1]; $('count').style.opacity = (t < cf - .1 ? 0 : ease((t - cf + .1) / .3)) * (1 - endK);
+  $('brand').style.opacity = 1 - ease((t - ST[1]) / .3) + endK;
+  const ti = t < ST[1] ? back((t - .15) / .5) : 1 - ease((t - ST[1] + .2) / .3);
+  $('title').style.opacity = Math.min(1, Math.max(0, ti)); $('title').style.transform = `scale(${Math.max(0, ti)})`;
+  const ch = CHUNKS.find(c => t >= c.s && t < c.until), subEl = $('sub');
+  if (ch) { if (subEl.dataset.k !== String(ch.i)) { subEl.innerHTML = ch.words.map(w => `<span class="w">${w.w}</span>`).join(' '); subEl.dataset.k = ch.i; }
+    subEl.style.opacity = 1; subEl.style.transform = `scale(${.9 + .1 * Math.min(1, (t - ch.s) / .1)})`;
+    subEl.querySelectorAll('.w').forEach((el, j) => { const w = ch.words[j]; el.classList.toggle('on', t >= w.s && t < Math.max(w.e, w.s + .12)); });
+  } else { subEl.style.opacity = 0; subEl.dataset.k = ''; }
+  if (CM) { const C = CM.t, upK = ease((t - C.up) / .35), dnK = ease((t - C.down) / .3), el = $('cm');
+    el.style.opacity = upK * (1 - dnK); el.style.transform = `translateX(${(1 - upK) * 260 - dnK * 260}px) scale(${.9 + .1 * upK})`;
+    const rows = $('cmList').children, sc = inout((t - C.scroll) / (C.stop - C.scroll)); $('cmList').style.transform = `translateY(${-196 * CM.win * sc}px)`;
+    const on = t >= C.stop, win = rows[CM.win]; win.classList.toggle('win', on);
+    $('crown').style.opacity = on ? 1 : 0; $('crown').style.transform = `scale(${on ? back((t - C.stop) / .35) : 0})`;
+    win.querySelector('[data-h]').innerHTML = HEART(on); win.querySelector('[data-h] svg').style.transform = `scale(${on ? 1 + .5 * Math.max(0, 1 - (t - C.stop) / .3) : 1})`;
+    const fin = CM.list[CM.win].likes, from = Math.round(fin * .55); if (fin != null) win.querySelector('[data-l]').textContent = fmt(on ? Math.round(from + (fin - from) * ease((t - C.stop) / 1.2)) : from); }
+  newTags.forEach(tg => { const l = houseLots[tg.k]; if (!l) return; const a = APPEAR[tg.k] + .25;
+    const p = proj(V(l.x, 4.6, l.z)); const vis = APPEAR[tg.k] >= 0 && t >= a && t < ms - .25 && p.ok; tg.el.style.display = vis ? 'block' : 'none';
+    if (vis) { tg.el.style.left = Math.min(Math.max(p.x, 250), 830) + 'px'; tg.el.style.top = p.y + 'px'; tg.el.style.transform = `translate(-50%,-100%) scale(${back((t - a) / .35)})`; } });
+  if (NEWB) { const a = NEWB.at + (NEWB.slow || 0) + .8, p = proj(NBpos.clone().add(V(0, 22 * Math.max(.001, gk), 0))); const vis = t >= a && t < ST[3] && p.ok; buildTag.style.display = vis ? 'block' : 'none';
+    if (vis) { buildTag.style.left = Math.min(Math.max(p.x, 250), 830) + 'px'; buildTag.style.top = p.y + 'px'; buildTag.style.transform = `translate(-50%,-100%) scale(${back((t - a) / .35)})`; } }
+  $('end').style.opacity = endK; $('end').style.transform = `scale(${.9 + .1 * back((t - ST[3]) / .5)})`;
+};
+window.__noCam = true;
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.target.set(-10, 2, 0); if (innerWidth < 700) camera.position.set(150, 125, 165); else camera.position.set(190, 100, 150);
+controls.enableDamping = true; controls.dampingFactor = .14; controls.rotateSpeed = 1.1; controls.zoomSpeed = 1.2; controls.maxPolarAngle = Math.PI * .47; controls.minDistance = 12; controls.maxDistance = 900;
+controls.autoRotate = true; controls.autoRotateSpeed = .35; renderer.domElement.addEventListener('pointerdown', () => { controls.autoRotate = false; });
+const fit = () => { W = stage.clientWidth; H = stage.clientHeight; renderer.setSize(W, H); camera.aspect = W / H; camera.fov = W / H < .8 ? 55 : 42; camera.updateProjectionMatrix(); };
+addEventListener('resize', fit); fit();
+const slider = $('grow'), tOf = f => f <= 0 ? -1 : EP.newFrom + (EP.newTo - EP.newFrom) * Math.pow((f - .5) / FN, .8) + 1e-6;
+if (EP.live) {   // live page: the real town today (EP.live.followers cats besides Mango); no growth demo controls
+  slider.max = slider.value = EP.live.followers; [slider, $('play'), ...slider.parentElement.querySelectorAll('.row, .chips')].forEach(e => { e.hidden = true; e.style.display = 'none'; });
+  if (EP.live.followers < 100) { controls.autoRotate = true;
+    // newest real top-comment build (last landmark with at: 0) in view behind Mango's square on load
+    const nb = (EP.landmarks || []).reduce((m, l, k) => l.at === 0 && LMG[k] ? k : m, -1), lb = nb >= 0 ? LMG[nb][0].position : null, h = lb ? Math.hypot(lb.x, lb.z) : 1;
+    const d = lb ? new THREE.Vector3(-lb.x / h * .86, .5, -lb.z / h * .86) : new THREE.Vector3(.55, .5, .67), tg = lb ? new THREE.Vector3(lb.x * .3, 3, lb.z * .3) : new THREE.Vector3(0, 3, 0);
+    controls.target.copy(tg); camera.position.copy(tg).add(d.setLength(innerWidth < 700 ? 84 : 70)); } }
+const FMAX = +slider.max;
+let target = +slider.value, cur = target, playing = false, ANIM = 0, nextFeed = 7, feedKind = 'food';
+const setPlay = on => { playing = on; $('play').textContent = on ? 'Pause' : 'Play growth'; };
+slider.addEventListener('input', () => { target = +slider.value; setPlay(false); });
+ROOT.querySelectorAll('[data-f]').forEach(b => b.addEventListener('click', () => { target = +b.dataset.f; slider.value = target; setPlay(false);
+  const d = { 0: 62, 100: 115, 250: 170, 500: 220 }[target];   // small city: fly in close so Day 1 isn't a speck
+  if (d) { stopSpin(); const off = camera.position.clone().sub(controls.target).setLength(d); if (off.y < d * .45) off.setY(d * .45).setLength(d); flyTo(new THREE.Vector3(0, 3, 0), new THREE.Vector3(0, 3, 0).add(off), .9); } }));
+$('play').addEventListener('click', () => { if (playing) return setPlay(false); if (cur >= FMAX - 1) cur = 0; setPlay(true); });
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches; if (reduce) controls.autoRotate = false;
+let last = performance.now(), onScreen = true;
+// phones: draw at most 30 frames a second; everywhere: stop drawing while the city is scrolled off screen or the tab is hidden
+new IntersectionObserver(es => { onScreen = es[0].isIntersecting; }, { threshold: 0.01 }).observe(stage);
+// smooth: full frame rate on every device (the old 30 fps cap on phones made dragging feel stuck); if a phone can't keep up,
+// drop the render resolution a step instead (checked every 2 s), and go back up when it has headroom.
+let perfN = 0, perfT = 0, prMax = renderer.getPixelRatio(), prNow = prMax;
+const adapt = dt => { perfN++; perfT += dt; if (perfT < 2) return; const fps = perfN / perfT; perfN = 0; perfT = 0;
+  const next = fps < 40 ? Math.max(.75, prNow - .25) : fps > 56 ? Math.min(prMax, prNow + .25) : prNow;
+  if (next !== prNow) { prNow = next; renderer.setPixelRatio(prNow); renderer.setSize(W, H); } };
+function loop(now) { requestAnimationFrame(loop); if (!onScreen || document.hidden) { last = now; return; }
+  const dt = Math.min(.05, (now - last) / 1000); last = now; adapt(dt); ANIM += reduce ? 0 : dt;
+  if (playing) { cur = Math.min(FMAX, cur + Math.max(4, cur * .35) * dt * 2.2); target = cur; slider.value = Math.round(cur); if (cur >= FMAX) setPlay(false); }
+  else cur += (target - cur) * Math.min(1, dt * 8);
+  if (Math.abs(target - cur) < .5) cur = target;
+  slider.setAttribute('aria-valuetext', Math.round(cur) + ' followers');
+  if (ANIM >= nextFeed) { window.feedTime(feedKind); feedKind = feedKind === 'food' ? 'water' : 'food'; nextFeed += 45; }   // feeding time every 45 s (first one soon after load)
+  navStep(now, dt); controls.update(); window.renderFrame(tOf(Math.round(cur)), ANIM); }
+
+// ---------- move around like a game: D-pad, + / -, back to the center, arrow keys, double-tap to fly there ----------
+controls.touches = { ONE: THREE.TOUCH.ROTATE, TWO: THREE.TOUCH.DOLLY_PAN };
+const UP = new THREE.Vector3(0, 1, 0), GROUND = new THREE.Plane(UP, 0), NV = new THREE.Vector3(), NV2 = new THREE.Vector3();
+let FLY = null, HOLD = null;   // FLY: eased camera flight; HOLD: a D-pad button held down (continuous move)
+const tick = () => { try { navigator.vibrate?.(8); } catch (e) {} };
+const stopSpin = () => { controls.autoRotate = false; };
+const clampT = v => { const R = 1.3 * (window.__CR || 300), d = Math.hypot(v.x, v.z); if (d > R) { v.x *= R / d; v.z *= R / d; } return v; };
+const groundDir = (dx, dz, out) => { NV.subVectors(controls.target, camera.position).setY(0); if (NV.lengthSq() < 1e-6) NV.set(0, 0, -1); NV.normalize();   // dz: forward on screen, dx: right
+  NV2.crossVectors(NV, UP).normalize(); return out.set(0, 0, 0).addScaledVector(NV, dz).addScaledVector(NV2, dx); };
+function flyTo(tgt, pos, dur) { clampT(tgt); const off = pos.clone().sub(tgt), d = THREE.MathUtils.clamp(off.length(), controls.minDistance, controls.maxDistance); pos = tgt.clone().add(off.setLength(d));
+  if (reduce || !dur) { FLY = null; controls.target.copy(tgt); camera.position.copy(pos); return; }
+  FLY = { t0: performance.now(), dur: dur * 1000, a: controls.target.clone(), b: tgt, pa: camera.position.clone(), pb: pos }; }
+function panStep(dx, dz) { stopSpin(); const dist = camera.position.distanceTo(controls.target), m = groundDir(dx, dz, new THREE.Vector3()).multiplyScalar(dist * .25);
+  const base = FLY ? FLY.b : controls.target, basePos = FLY ? FLY.pb : camera.position;
+  const tgt = clampT(base.clone().add(m)); flyTo(tgt, basePos.clone().add(tgt.clone().sub(base)), .3); }
+function zoomStep(f) { stopSpin(); const base = FLY ? FLY.b : controls.target, basePos = FLY ? FLY.pb : camera.position; flyTo(base.clone(), base.clone().add(basePos.clone().sub(base).multiplyScalar(f)), .3); }
+function goHome() { stopSpin(); const off = camera.position.clone().sub(controls.target).setLength(75); if (off.y < 25) off.setY(25).setLength(75); flyTo(new THREE.Vector3(0, 4, 0), new THREE.Vector3(0, 4, 0).add(off), .8); }
+const MARK = new THREE.Mesh(new THREE.RingGeometry(.75, 1, 40).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: '#FFC93C', transparent: true, opacity: 0, depthWrite: false })); MARK.visible = false; MARK.renderOrder = 2; scene.add(MARK);
+let markT = -1;
+function navStep(now, dt) {
+  if (HOLD && now - HOLD.t0 > 300) { FLY = null; const dist = camera.position.distanceTo(controls.target), sp = Math.min(1, (now - HOLD.t0 - 300) / 400) * dist * .85 * dt;   // held: keep moving, ramping up
+    if (HOLD.zoom) { const f = Math.pow(HOLD.zoom, dt * 3.3), off = camera.position.clone().sub(controls.target).multiplyScalar(f); off.setLength(THREE.MathUtils.clamp(off.length(), controls.minDistance, controls.maxDistance)); camera.position.copy(controls.target).add(off); }
+    else { const m = groundDir(HOLD.dx, HOLD.dz, NV.clone()).multiplyScalar(sp), before = controls.target.clone(); clampT(controls.target.add(m)); camera.position.add(controls.target.clone().sub(before)); } }
+  if (FLY) { const k = Math.min(1, (now - FLY.t0) / FLY.dur), e = k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+    controls.target.lerpVectors(FLY.a, FLY.b, e); camera.position.lerpVectors(FLY.pa, FLY.pb, e); if (k >= 1) FLY = null; }
+  if (markT >= 0) { const k = (now - markT) / 800; if (k >= 1) { MARK.visible = false; markT = -1; } else { const sc = 1 + 5 * k; MARK.scale.set(sc, 1, sc); MARK.material.opacity = .9 * (1 - k); } } }
+const PAD = { up: [0, 1], down: [0, -1], left: [-1, 0], right: [1, 0] };
+ROOT.querySelectorAll('[data-nav]').forEach(b => {
+  const act = b.dataset.nav, mv = PAD[act], zf = act === 'in' ? .7 : act === 'out' ? 1 / .7 : 0;
+  const end = () => { HOLD = null; b.classList.remove('is-down'); };
+  b.addEventListener('pointerdown', e => { e.preventDefault(); b.classList.add('is-down'); tick();
+    if (mv) { panStep(mv[0], mv[1]); HOLD = { t0: performance.now(), dx: mv[0], dz: mv[1] }; }
+    else if (zf) { zoomStep(zf); HOLD = { t0: performance.now(), zoom: zf }; }
+    else goHome();
+    try { b.setPointerCapture(e.pointerId); } catch (er) {} });
+  ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(ev => b.addEventListener(ev, end));
+  b.addEventListener('click', e => { if (e.detail === 0) { if (mv) panStep(mv[0], mv[1]); else if (zf) zoomStep(zf); else goHome(); } });   // keyboard Enter / Space
+});
+addEventListener('keydown', e => { const tg = e.target; if (tg && (tg.tagName === 'INPUT' || tg.tagName === 'TEXTAREA' || tg.isContentEditable)) return;
+  if (!pcBox.hidden) return;
+  const k = e.key, mv = { ArrowUp: [0, 1], ArrowDown: [0, -1], ArrowLeft: [-1, 0], ArrowRight: [1, 0] }[k];
+  if (mv) { e.preventDefault(); panStep(mv[0], mv[1]); } else if (k === '+' || k === '=') { e.preventDefault(); zoomStep(.7); } else if (k === '-' || k === '_') { e.preventDefault(); zoomStep(1 / .7); } });
+renderer.domElement.addEventListener('dblclick', e => e.preventDefault());
+const syncDock = () => { const d = ROOT.querySelector('.dock'); if (d) stage.parentElement.style.setProperty('--dockH', d.offsetHeight + 'px'); };
+addEventListener('resize', syncDock); syncDock();
+{ const hint = $('hint'); let seen = false; try { seen = localStorage.getItem('pm2CatTownHintSeen') === '1'; } catch (e) {}
+  if (hint && !seen) { hint.hidden = false; requestAnimationFrame(() => hint.classList.add('is-on'));
+    setTimeout(() => { hint.classList.remove('is-on'); setTimeout(() => { hint.hidden = true; }, 500); }, 4000); try { localStorage.setItem('pm2CatTownHintSeen', '1'); } catch (e) {} } }
+window.__screenOf = (x, y, z) => { const v = new THREE.Vector3(x, y, z).project(camera), r = renderer.domElement.getBoundingClientRect(); return [r.left + (v.x + 1) / 2 * r.width, r.top + (1 - v.y) / 2 * r.height]; };   // test helper
+window.__ffPos = () => [FT.g.position.toArray(), FD.g.position.toArray()];
+window.__cam = () => ({ pos: camera.position.toArray().map(v => +v.toFixed(2)), target: controls.target.toArray().map(v => +v.toFixed(2)) });
+
+// ---------- tap a house or a building: who lives there / what it is ----------
+const PICK = new Map();   // instanced mesh -> (instance index -> house number)
+Object.values(HP).forEach(m => PICK.set(m, new Int32Array(Math.max(1, m.count)).fill(-1)));
+houseParts.forEach((p, n) => p.forEach(([m, i]) => { const a = PICK.get(m); if (a) a[i] = n; }));
+const HA = ['whisker', 'mochi', 'purr', 'biscuit', 'tuna', 'nap', 'beans', 'meow', 'sushi', 'luna', 'ziggy', 'socks', 'paws', 'zoomie', 'loaf', 'noodle'], HB2 = ['lover', 'queen', 'king', 'club', 'squad', 'daily', 'world', 'fan', 'life', 'mom', 'dad', 'bestie'];
+const handleOf = n => (EP.handles && EP.handles[n]) || ('demo.' + HA[Math.floor(hash01(n * 37 + 11) * HA.length)] + '_' + HB2[Math.floor(hash01(n * 53 + 7) * HB2.length)] + ((n * 7) % 97));
+const KIND = { A: 'Cat-face house', B: 'Cardboard box house', C: 'Cat-cave pod' };
+const DIST = ['Blue Whisker', 'Box Town', 'Pastel Pods', 'Catnip Green', 'Purple Purr', 'Tuxedo Row'];
+const LM_UNLOCK = (EP.landmarks || []).map(l => l.unlock);
+const LM_TXT = { petshop: 'Toys, treats and fresh water for every cat in town.', cityhall: 'Mayor Mango works here (mostly naps).', cafe: 'Built by the most-liked comment.', statue: 'A golden Mango. He posed for 3 seconds.', market: 'Yarn, boxes and squeaky mice.', fishmarket: 'Fresh fish for every cat in town. Mango is first in line.', arcade: 'Claw machine, games and neon. Mango won a fish here.', artstudio: 'The cats paint here. They made Mango a gold statue.', pizza: 'Every single topping. Yes, even pineapple. And a fish.', toy: 'A giant yarn ball, a feather wand and a toy mouse. Mango likes the box.', pool: 'Nobody swims. Everyone watches.', custom: 'Built by the most-liked comment.' };
+landmarks.forEach((lm, k) => { if (LMG[k]) LMG[k][0].userData.info = { icon: lm.kind === 'fishmarket' ? '\ud83d\udc1f' : lm.kind === 'arcade' ? '\ud83d\udd79\ufe0f' : lm.kind === 'artstudio' ? '\ud83c\udfa8' : lm.kind === 'pizza' ? '\ud83c\udf55' : lm.kind === 'toy' ? '\ud83e\uddf6' : '\ud83c\udfdb\ufe0f', title: lm.sign, line: LM_TXT[lm.kind] || 'Built by the most-liked comment.', note: lm.note ? lm.note : LM_UNLOCK[k] ? 'Unlocked at ' + LM_UNLOCK[k].toLocaleString('en-US') + ' cats' : '' }; });
+if (typeof MO !== 'undefined' && MO.g) MO.g.userData.info = { icon: '\ud83d\ude34', title: 'Big Mochi', line: 'The sleeping mountain cat. Please do not wake her.', note: 'Unlocked at 1,000 cats' };
+if (typeof FT !== 'undefined' && FT.g) FT.g.userData.info = { icon: '\ud83d\udca7', title: 'PETME2 Stainless Steel Fountain', line: 'Mango\u2019s favorite drinking spot. The water keeps moving, so Mango keeps coming back for more.', note: 'Tap again for water time: the cats nearby come to drink.', pinY: 18, shop: 'https://www.petme2.com/products/water-fountain', feed: 'water' };
+if (typeof FD !== 'undefined' && FD.g) FD.g.userData.info = { icon: '\ud83c\udf7d\ufe0f', title: 'PETME2 Dual Bowl Feeder', line: 'Mango\u2019s dinner table. Meals come right on time, so Mango never has to beg.', note: 'Feeding time! The cats nearby are coming to eat.', pinY: 15.5, shop: 'https://www.petme2.com/products/2-in-1-feeder-1', feed: 'food' };
+if (typeof BS !== 'undefined' && BS.g) BS.g.userData.info = { icon: '\ud83d\ude8f', title: 'Nap Bus Stop', line: 'NEXT NAP: 5 MIN. The bus has never come. Nobody minds.', note: '' };
+const infoBox = $('info'), infoBody = $('infoBody');
+const PIN = new THREE.Mesh(new THREE.ConeGeometry(.9, 1.8, 4).rotateX(Math.PI), new THREE.MeshBasicMaterial({ color: '#FFC93C' })); PIN.visible = false; scene.add(PIN);
+let pinY = 0;
+const showInfo = (html, pos, y) => { infoBody.innerHTML = html; infoBox.hidden = false; { const h = $('hint'); if (h) h.hidden = true; } if (pos) { PIN.position.set(pos.x, y, pos.z); pinY = y; PIN.visible = true; } else PIN.visible = false; controls.autoRotate = false; };
+const hideInfo = () => { infoBox.hidden = true; PIN.visible = false; };
+// ---------- live town: real residents (page metafield) + "Find your cat house" ----------
+const RES = EP.live ? EP.live.residents : null;
+const clean = v => String(v || '').trim().replace(/^@+/, '').toLowerCase();
+const esc = v => String(v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+function resCard(n) { if (!RES[n]) return `<div class="info__icon">\ud83c\udfe0</div><div><b class="info__title">New neighbor</b><span class="info__line">Cat #${(n + 1).toLocaleString('en-US')} \u00b7 name coming soon</span><span class="info__line">${KIND[houseLots[n].kind]} \u00b7 ${DIST[houseLots[n].d]} district</span></div>`;
+  const r = RES[n], ig = clean(r.ig), tt = clean(r.tt), title = ig ? '@' + ig : tt ? '@' + tt : r.name, l = houseLots[n];
+  const more = [ig && r.name ? r.name : '', ig && tt ? 'TikTok @' + tt : ''].filter(Boolean).join(' \u00b7 ');
+  return `<div class="info__icon">\ud83c\udfe0</div><div><b class="info__title">${esc(title)}</b><span class="info__line">Cat #${(n + 1).toLocaleString('en-US')} \u00b7 moved in on day ${esc(r.day || 1)}</span>${more ? `<span class="info__line">${esc(more)}</span>` : ''}<span class="info__line">${KIND[l.kind]} \u00b7 ${DIST[l.d]} district</span></div>`; }
+if (EP.pad === false) { const pd = $('pad'); if (pd) { pd.hidden = true; pd.style.display = 'none'; } }   // owner 2026-10-07: hide the arrow pad for now (set "pad": true in build_viewer.py to bring it back)
+if (RES) { const form = $('find'), q = $('findQ'); form.hidden = false;
+  { const u = new Date(EP.live.updated), el = $('upd');   // "Updated <date, time> \u00b7 Next update in a few hours" (very small, under the counter)
+    if (el && !isNaN(u)) { el.textContent = 'Updated ' + u.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' }) + ' \u00b7 Next update in a few hours'; el.hidden = false; } } const topEl = $('countN').parentElement, placeLow = () => { const op = infoBox.offsetParent || topEl.offsetParent, base = op && getComputedStyle(infoBox).position !== 'fixed' ? op.getBoundingClientRect().top : 0, y = Math.round(topEl.getBoundingClientRect().bottom - base + 10) + 'px';
+    const h = $('hint'); if (h) h.style.top = y; };   // info card sits low, just above the dock (CSS); only the hint goes under the top block
+  placeLow(); addEventListener('resize', placeLow); requestAnimationFrame(placeLow); syncDock(); requestAnimationFrame(syncDock);
+  form.addEventListener('submit', e => { e.preventDefault(); const w = clean(q.value); if (!w) return; q.blur();
+    let n = RES.findIndex(r => clean(r.ig) === w || clean(r.tt) === w || clean(r.name) === w);
+    if (n < 0 && w.length >= 3) n = RES.findIndex(r => clean(r.name).includes(w) || clean(r.ig).includes(w) || clean(r.tt).includes(w));
+    if (n < 0 || !houseLots[n]) { showInfo('<div class="info__icon">\ud83d\udc3e</div><div><b class="info__title">Not in Cat Town yet</b><span class="info__line">Follow @petme2 to move in!</span></div>', null); return; }
+    const l = houseLots[n], tgt = new THREE.Vector3(l.x, 0, l.z), off = camera.position.clone().sub(controls.target).setY(0);
+    if (off.lengthSq() < 1) off.set(0, 0, 1); off.setLength(42).setY(36);
+    stopSpin(); flyTo(tgt, tgt.clone().add(off), 1.1); showInfo(resCard(n), l, l.kind === 'C' ? 3.4 : 4.4);
+    MARK.position.set(l.x, .3, l.z); MARK.visible = true; markT = performance.now(); }); }
+$('infoClose').addEventListener('click', hideInfo);
+const ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
+let downX = 0, downY = 0, lastTap = { t: 0, x: 0, y: 0 }, tapTimer = 0;
+renderer.domElement.addEventListener('pointerdown', e => { downX = e.clientX; downY = e.clientY; });
+renderer.domElement.addEventListener('pointerup', e => {
+  if (Math.hypot(e.clientX - downX, e.clientY - downY) > 6) return;          // a drag, not a tap
+  const r = renderer.domElement.getBoundingClientRect(), nx = (e.clientX - r.left) / r.width * 2 - 1, ny = -((e.clientY - r.top) / r.height) * 2 + 1;
+  const now = e.timeStamp, dbl = now - lastTap.t < 320 && Math.hypot(e.clientX - lastTap.x, e.clientY - lastTap.y) < 25;
+  lastTap = dbl ? { t: 0, x: 0, y: 0 } : { t: now, x: e.clientX, y: e.clientY };
+  clearTimeout(tapTimer);
+  if (dbl) {   // double-tap / double-click: fly there (ground plane y = 0, not the heavy scene); the pending single tap is cancelled, so the card does not change
+    ndc.set(nx, ny); ray.setFromCamera(ndc, camera);
+    const gp = ray.ray.intersectPlane(GROUND, new THREE.Vector3()); if (!gp) return; stopSpin(); tick(); clampT(gp);
+    flyTo(gp.clone(), gp.clone().add(camera.position.clone().sub(controls.target).multiplyScalar(.6)), .8);
+    MARK.position.set(gp.x, .3, gp.z); MARK.visible = true; markT = performance.now(); return; }
+  tapTimer = setTimeout(() => tapAt(nx, ny), 250);   // single tap: wait a moment so a double tap can cancel it (and the scene raycast doesn't block the 2nd tap)
+});
+let toastEl = null, toastT = 0;
+function feedToast(kind) {   // a small pill under the counter: what is happening
+  if (!toastEl) { toastEl = document.createElement('div'); toastEl.style.cssText = 'position:absolute;left:50%;top:150px;transform:translateX(-50%);z-index:6;background:#fff;color:#1B2333;font:800 15px Nunito,sans-serif;padding:9px 16px;border-radius:999px;box-shadow:0 8px 24px rgba(20,40,90,.18);pointer-events:none;transition:opacity .4s;white-space:nowrap'; renderer.domElement.parentElement.appendChild(toastEl); }
+  toastEl.textContent = kind === 'water' ? '\ud83d\udca7 Water time! The cats are walking over' : '\ud83c\udf7d\ufe0f Dinner time! The cats are walking over'; toastEl.style.opacity = 1;
+  clearTimeout(toastT); toastT = setTimeout(() => { toastEl.style.opacity = 0; }, 4500); }
+function tapAt(nx, ny) {
+  ndc.set(nx, ny); ray.setFromCamera(ndc, camera);
+  const tNow = tOf(Math.round(cur));
+  for (const h of ray.intersectObjects(scene.children.filter(o => !o.isInstancedMesh || PICK.has(o)), true)) {
+    const map = PICK.get(h.object);
+    if (map && h.instanceId != null && map[h.instanceId] >= 0) { const n = map[h.instanceId], l = houseLots[n];
+      if (APPEAR[n] >= 0 && tNow < APPEAR[n]) continue;
+      const day = Math.max(1, Math.round(EP.dayRange[0] + (EP.dayRange[1] - EP.dayRange[0]) * (n + 1) / Math.max(1, F)));
+      if (RES) { showInfo(resCard(n), l, l.kind === 'C' ? 3.4 : 4.4); return; }
+      showInfo(`<div class="info__icon">\ud83c\udfe0</div><div><b class="info__title">@${handleOf(n)}</b><span class="info__line">Cat #${(n + 1).toLocaleString('en-US')} \u00b7 moved in on day ${day}</span><span class="info__line">${KIND[l.kind]} \u00b7 ${DIST[l.d]} district</span>${EP.handles ? '' : '<span class="info__note">Example name. Real followers\u2019 Instagram names show here.</span>'}</div>`, l, l.kind === 'C' ? 3.4 : 4.4);
+      return; }
+    let o = h.object; while (o && !o.userData.info) o = o.parent;
+    if (o && o.visible) { const I = o.userData.info, p = new THREE.Vector3(); o.getWorldPosition(p);
+      if (I.feed) { window.feedTime(I.feed); feedToast(I.feed);
+        const tg = new THREE.Vector3(I.feed === 'water' ? -11.5 : 11.5, 2, 0), off = camera.position.clone().sub(controls.target).setY(0).setLength(80); off.y = 85;   // pull back so you can see the cats walking over
+        if (typeof stopSpin === 'function') stopSpin(); flyTo(tg, tg.clone().add(off), 1.6);
+        if (EP.shopCards === false) { hideInfo(); return; } }   // owner 2026-10-07: no fountain/feeder pop-up for now (set "shopCards": True in build_viewer.py to bring it back)
+      showInfo(`<div class="info__icon">${I.icon}</div><div><b class="info__title">${I.title}</b><span class="info__line">${I.line}</span>${I.note ? `<span class="info__note">${I.note}</span>` : ''}${I.shop ? `<a class="info__shop" href="${I.shop}">See it in our shop</a>` : ''}</div>`, p, I.pinY || (o === (typeof MO !== 'undefined' && MO.g) ? 60 : 16)); return; }
+    const pt = h.point;
+    if (pt.y > 25 && Math.hypot(pt.x, pt.z) < 450) { showInfo(`<div class="info__icon">\ud83d\udc1f</div><div><b class="info__title">Fish balloon</b><span class="info__line">Sky tours for cats. Two passengers, zero pilots.</span></div>`, null); return; }
+    if (pt.x > COAST_X - 10 && pt.y > 1) { showInfo(`<div class="info__icon">\ud83d\udd34</div><div><b class="info__title">Red Dot Lighthouse</b><span class="info__line">Cats have chased this dot since day 1. Nobody has caught it.</span><span class="info__note">Unlocked at 500 cats</span></div>`, null); return; }
+    if (h.object.isInstancedMesh || h.object.isMesh) break;
+  }
+  hideInfo();
+}
+const _render = window.renderFrame;
+window.renderFrame = (t, a) => { if (PIN.visible) { PIN.position.y = pinY + Math.abs(Math.sin(a * 3)) * .8; PIN.rotation.y = a * 2; } _render(t, a); };
+requestAnimationFrame(loop);
+ROOT.classList.add('ready');
+// "Save postcard": render the current view into a 1080x1350 card and show it as an image (the page sandbox blocks scripted downloads,
+// so the visitor long-presses / right-clicks the image to save it).
+const pcBox = $('pcBox'), pcBtn = $('postcard');
+pcBtn.hidden = true; pcBtn.style.display = 'none';   // owner 2026-10-06: no "Save postcard" on the website
+const closePC = () => { pcBox.hidden = true; pcBtn.focus(); };
+pcBtn.addEventListener('click', async () => {
+  controls.update(); window.renderFrame(tOf(Math.round(cur)), ANIM);
+  const src = renderer.domElement, c = document.createElement('canvas'); c.width = 1080; c.height = 1350; const g = c.getContext('2d');
+  const sw = src.width, sh = src.height, ar = 1080 / 1220; let cw = sw, ch = sw / ar; if (ch > sh) { ch = sh; cw = sh * ar; }
+  g.drawImage(src, (sw - cw) / 2, (sh - ch) / 2, cw, ch, 0, 0, 1080, 1220);
+  g.fillStyle = '#FFFFFF'; g.fillRect(0, 1220, 1080, 130);
+  try { await document.fonts.load('900 40px Nunito'); await document.fonts.load('800 30px Nunito'); } catch (e) {}
+  g.textBaseline = 'middle'; g.fillStyle = '#1B2333'; g.font = '900 40px Nunito, sans-serif'; g.textAlign = 'left';
+  g.fillText('Cat Town \u00b7 ' + $('countN').textContent + ' ' + $('countL').textContent, 48, 1285);
+  g.fillStyle = '#2F5FE0'; g.font = '800 30px Nunito, sans-serif'; g.textAlign = 'right'; g.fillText('@petme2', 1032, 1285);
+  $('pcImg').src = c.toDataURL('image/png'); pcBox.hidden = false; $('pcClose').focus();
+});
+$('pcClose').addEventListener('click', closePC);
+pcBox.addEventListener('click', e => { if (e.target === pcBox) closePC(); });
+addEventListener('keydown', e => { if (e.key === 'Escape' && !pcBox.hidden) closePC(); });
+

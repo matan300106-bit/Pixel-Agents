@@ -1,0 +1,556 @@
+{
+ "Dual Feeders": [
+  {
+   "kw": "dual cat feeder",
+   "type": "head"
+  },
+  {
+   "kw": "dual pet feeder",
+   "type": "head"
+  },
+  {
+   "kw": "automatic cat feeders",
+   "type": "head"
+  },
+  {
+   "kw": "auto cat feeder",
+   "type": "head"
+  },
+  {
+   "kw": "cat food dispenser",
+   "type": "head"
+  },
+  {
+   "kw": "automatic dog feeder",
+   "type": "head"
+  },
+  {
+   "kw": "timed pet feeder",
+   "type": "head"
+  },
+  {
+   "kw": "automatic cat feeder for 2 cats",
+   "type": "long"
+  },
+  {
+   "kw": "cat feeder for 2 cats",
+   "type": "long"
+  },
+  {
+   "kw": "automatic cat feeder 2 cats",
+   "type": "long"
+  },
+  {
+   "kw": "automatic cat feeder for two cats",
+   "type": "long"
+  },
+  {
+   "kw": "automatic feeder for 2 cats",
+   "type": "long"
+  },
+  {
+   "kw": "dual automatic cat feeder",
+   "type": "long"
+  },
+  {
+   "kw": "dual bowl automatic cat feeder",
+   "type": "long"
+  },
+  {
+   "kw": "automatic cat feeder with 2 bowls",
+   "type": "long"
+  },
+  {
+   "kw": "automatic cat feeder with stainless steel bowls",
+   "type": "long"
+  },
+  {
+   "kw": "cat food dispenser for 2 cats",
+   "type": "long"
+  },
+  {
+   "kw": "automatic pet feeder for 2 cats",
+   "type": "long"
+  },
+  {
+   "kw": "automatic cat food dispenser",
+   "type": "long"
+  },
+  {
+   "kw": "automatic cat feeder dry food",
+   "type": "long"
+  },
+  {
+   "kw": "automatic cat feeder with timer",
+   "type": "long"
+  },
+  {
+   "kw": "cat feeder with timer",
+   "type": "long"
+  },
+  {
+   "kw": "automatic cat feeder 2 way audio",
+   "type": "long"
+  },
+  {
+   "kw": "quiet automatic cat feeder",
+   "type": "long"
+  },
+  {
+   "kw": "automatic cat feeder with battery backup",
+   "type": "long"
+  },
+  {
+   "kw": "automatic dog feeder for small dogs",
+   "type": "long"
+  },
+  {
+   "kw": "pet food dispenser automatic",
+   "type": "long"
+  },
+  {
+   "kw": "3l automatic cat feeder",
+   "type": "long"
+  }
+ ],
+ "WiFi Feeder": [
+  {
+   "kw": "wifi pet feeder",
+   "type": "head"
+  },
+  {
+   "kw": "smart pet feeder",
+   "type": "head"
+  },
+  {
+   "kw": "smart cat feeder",
+   "type": "head"
+  },
+  {
+   "kw": "wifi dog feeder",
+   "type": "head"
+  },
+  {
+   "kw": "smart dog feeder",
+   "type": "head"
+  },
+  {
+   "kw": "wifi automatic cat feeder",
+   "type": "long"
+  },
+  {
+   "kw": "automatic cat feeder wifi",
+   "type": "long"
+  },
+  {
+   "kw": "smart automatic cat feeder",
+   "type": "long"
+  },
+  {
+   "kw": "wifi cat feeder for 2 cats",
+   "type": "long"
+  },
+  {
+   "kw": "smart cat feeder for 2 cats",
+   "type": "long"
+  },
+  {
+   "kw": "wifi automatic dog feeder",
+   "type": "long"
+  },
+  {
+   "kw": "automatic pet feeder wifi",
+   "type": "long"
+  },
+  {
+   "kw": "automatic cat feeder with app control",
+   "type": "long"
+  },
+  {
+   "kw": "cat feeder app control",
+   "type": "long"
+  },
+  {
+   "kw": "pet feeder with app",
+   "type": "long"
+  },
+  {
+   "kw": "automatic cat feeder with voice recorder",
+   "type": "long"
+  },
+  {
+   "kw": "cat feeder with voice recorder",
+   "type": "long"
+  },
+  {
+   "kw": "automatic cat feeder with voice recording",
+   "type": "long"
+  },
+  {
+   "kw": "5l automatic cat feeder",
+   "type": "long"
+  },
+  {
+   "kw": "automatic cat feeder 5l",
+   "type": "long"
+  },
+  {
+   "kw": "large capacity automatic cat feeder",
+   "type": "long"
+  },
+  {
+   "kw": "elevated automatic cat feeder",
+   "type": "long"
+  },
+  {
+   "kw": "wifi cat food dispenser",
+   "type": "long"
+  },
+  {
+   "kw": "smart cat food dispenser",
+   "type": "long"
+  },
+  {
+   "kw": "automatic dog feeder wifi",
+   "type": "long"
+  },
+  {
+   "kw": "wifi automatic pet feeder for 2 cats",
+   "type": "long"
+  },
+  {
+   "kw": "smart dual bowl cat feeder",
+   "type": "long"
+  }
+ ],
+ "Camera Feeder": [
+  {
+   "kw": "camera cat feeder",
+   "type": "head"
+  },
+  {
+   "kw": "camera pet feeder",
+   "type": "head"
+  },
+  {
+   "kw": "camera dog feeder",
+   "type": "head"
+  },
+  {
+   "kw": "pet camera feeder",
+   "type": "head"
+  },
+  {
+   "kw": "dog feeder with camera",
+   "type": "long"
+  },
+  {
+   "kw": "automatic dog feeder with camera",
+   "type": "long"
+  },
+  {
+   "kw": "automatic pet feeder with camera",
+   "type": "long"
+  },
+  {
+   "kw": "cat food dispenser with camera",
+   "type": "long"
+  },
+  {
+   "kw": "dog food dispenser with camera",
+   "type": "long"
+  },
+  {
+   "kw": "wifi cat feeder with camera",
+   "type": "long"
+  },
+  {
+   "kw": "wifi dog feeder with camera",
+   "type": "long"
+  },
+  {
+   "kw": "smart pet feeder with camera",
+   "type": "long"
+  },
+  {
+   "kw": "smart cat feeder with camera",
+   "type": "long"
+  },
+  {
+   "kw": "automatic feeder with camera",
+   "type": "long"
+  },
+  {
+   "kw": "auto cat feeder with camera",
+   "type": "long"
+  },
+  {
+   "kw": "auto dog feeder with camera",
+   "type": "long"
+  },
+  {
+   "kw": "automatic cat feeder with camera and audio",
+   "type": "long"
+  },
+  {
+   "kw": "cat feeder with camera 2 way audio",
+   "type": "long"
+  },
+  {
+   "kw": "pet feeder camera 2 way audio",
+   "type": "long"
+  },
+  {
+   "kw": "pet feeder with camera and app",
+   "type": "long"
+  },
+  {
+   "kw": "automatic cat feeder 1080p camera",
+   "type": "long"
+  },
+  {
+   "kw": "cat feeder with hd camera",
+   "type": "long"
+  },
+  {
+   "kw": "automatic cat feeder with video",
+   "type": "long"
+  },
+  {
+   "kw": "camera feeder for cats",
+   "type": "long"
+  },
+  {
+   "kw": "automatic cat feeder with camera wifi",
+   "type": "long"
+  },
+  {
+   "kw": "cat feeder with camera for small dogs",
+   "type": "long"
+  }
+ ],
+ "Stainless Fountain": [
+  {
+   "kw": "dog water fountain",
+   "type": "head"
+  },
+  {
+   "kw": "metal pet fountain",
+   "type": "head"
+  },
+  {
+   "kw": "metal dog fountain",
+   "type": "head"
+  },
+  {
+   "kw": "steel cat fountain",
+   "type": "head"
+  },
+  {
+   "kw": "dog fountain",
+   "type": "head"
+  },
+  {
+   "kw": "stainless steel dog water fountain",
+   "type": "long"
+  },
+  {
+   "kw": "stainless steel pet water fountain",
+   "type": "long"
+  },
+  {
+   "kw": "stainless steel pet fountain",
+   "type": "long"
+  },
+  {
+   "kw": "stainless steel cat fountain",
+   "type": "long"
+  },
+  {
+   "kw": "dog water fountain stainless steel",
+   "type": "long"
+  },
+  {
+   "kw": "pet water fountain stainless steel",
+   "type": "long"
+  },
+  {
+   "kw": "stainless steel water fountain for cats",
+   "type": "long"
+  },
+  {
+   "kw": "stainless steel water fountain for dogs",
+   "type": "long"
+  },
+  {
+   "kw": "metal dog water fountain",
+   "type": "long"
+  },
+  {
+   "kw": "metal pet water fountain",
+   "type": "long"
+  },
+  {
+   "kw": "108oz cat water fountain",
+   "type": "long"
+  },
+  {
+   "kw": "3.2l cat water fountain",
+   "type": "long"
+  },
+  {
+   "kw": "108 oz pet water fountain",
+   "type": "long"
+  },
+  {
+   "kw": "large cat water fountain stainless steel",
+   "type": "long"
+  },
+  {
+   "kw": "cat water fountain with led light",
+   "type": "long"
+  },
+  {
+   "kw": "pet water fountain with led light",
+   "type": "long"
+  },
+  {
+   "kw": "faucet cat water fountain",
+   "type": "long"
+  },
+  {
+   "kw": "cat water fountain dishwasher safe",
+   "type": "long"
+  },
+  {
+   "kw": "cat water fountain for multiple cats",
+   "type": "long"
+  },
+  {
+   "kw": "quiet stainless steel cat water fountain",
+   "type": "long"
+  },
+  {
+   "kw": "large capacity cat water fountain",
+   "type": "long"
+  },
+  {
+   "kw": "dog water fountain for small dogs",
+   "type": "long"
+  }
+ ],
+ "Basic Fountains": [
+  {
+   "kw": "cat fountain",
+   "type": "head"
+  },
+  {
+   "kw": "pet fountain",
+   "type": "head"
+  },
+  {
+   "kw": "cat water dispenser",
+   "type": "head"
+  },
+  {
+   "kw": "cat drinking fountain",
+   "type": "head"
+  },
+  {
+   "kw": "pet water dispenser",
+   "type": "head"
+  },
+  {
+   "kw": "kitty water fountain",
+   "type": "head"
+  },
+  {
+   "kw": "pet drinking fountain",
+   "type": "head"
+  },
+  {
+   "kw": "dog water dispenser",
+   "type": "head"
+  },
+  {
+   "kw": "quiet cat water fountain",
+   "type": "long"
+  },
+  {
+   "kw": "cat water fountain quiet",
+   "type": "long"
+  },
+  {
+   "kw": "silent cat water fountain",
+   "type": "long"
+  },
+  {
+   "kw": "pet water fountain for cats",
+   "type": "long"
+  },
+  {
+   "kw": "automatic water dispenser for cats",
+   "type": "long"
+  },
+  {
+   "kw": "cat water fountain for indoor cats",
+   "type": "long"
+  },
+  {
+   "kw": "water fountain for cats indoor",
+   "type": "long"
+  },
+  {
+   "kw": "2l cat water fountain",
+   "type": "long"
+  },
+  {
+   "kw": "cat water fountain 2l",
+   "type": "long"
+  },
+  {
+   "kw": "plastic cat water fountain",
+   "type": "long"
+  },
+  {
+   "kw": "transparent cat water fountain",
+   "type": "long"
+  },
+  {
+   "kw": "cat water fountain with water level window",
+   "type": "long"
+  },
+  {
+   "kw": "cat water fountain with low water alert",
+   "type": "long"
+  },
+  {
+   "kw": "usb cat water fountain",
+   "type": "long"
+  },
+  {
+   "kw": "cat water fountain with filters included",
+   "type": "long"
+  },
+  {
+   "kw": "pet water fountain for small dogs",
+   "type": "long"
+  },
+  {
+   "kw": "kitten water fountain",
+   "type": "head"
+  },
+  {
+   "kw": "water bowl fountain for cats",
+   "type": "long"
+  },
+  {
+   "kw": "cat water fountain with stainless steel tray",
+   "type": "long"
+  },
+  {
+   "kw": "small dog water fountain",
+   "type": "long"
+  }
+ ]
+}
