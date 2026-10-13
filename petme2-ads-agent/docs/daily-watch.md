@@ -13,13 +13,19 @@ Read only. The watch never changes Amazon, Shopify or ads. Changes still go thro
 ## Agent 2: Listing checker (SP-API, read only)
 - Live price per SKU vs `products.yaml` and the price plan.
 - Buy Box: do we own it? Any other seller or lower offer?
-- BSR per ASIN vs the last report (flag if more than 30% worse over 3 days).
+- Run `python -m sp_api.bsr_log` (appends today's BSR to `reports/rank-history.csv`). Compare with yesterday and with the organic-plan start (Oct 12: stainless dog #249 / cat #721, dual #346-352, 5L #670, camera #909, 2L #1,611, clear #2,185, tray #2,431). Flag if more than 30% worse over 3 days.
 - FBA stock and days of cover (units/day over the last 14 days).
 
 ## Agent 3: Ads checker (files in `inbox/`)
 - If new ads reports or a Chrome reply arrived since the last run: spend, clicks, orders, CPC, ACOS per campaign; waste (≥ $8 spend, 0 orders); winners (orders and ACOS under break-even).
 - Check that the last Chrome prompt was done as written (bids within caps, total budget ≤ $120/day, no surprises).
 - If nothing new arrived: say "no ads data" and what to ask the owner for.
+
+## Organic rank watch (owner 2026-10-13: "check all the listing ranking, and remember in the next days")
+- Every day: BSR table for all 8 products in the daily report (from `reports/rank-history.csv`), with arrows vs yesterday and vs Oct 12.
+- Listing edits of Oct 13 (5L, 2L, clear, tray; camera attributes only): check 24–48 h after the edit that the new title shows and the listing is not suppressed (SP-API catalog summaries).
+- Every Monday until Nov 9 (Oct 19, Oct 26, Nov 2, Nov 9): ask the owner for the 2 Helium 10 Cerebro exports (fountains: B0GHKRYV6W, B0GHKN9DBR, B0GHLBGCP3, B0DR7FCLZR; feeders: B0GHH8L59K, B0GTCGYZDM, B0GHLSQMJ9) and compare with `research/organic-2026-10-12/baseline-2026-10-12.md`.
+- Oct 26: 2L filter keywords (owner confirmed it has a filter), camera 5% coupon test, 2L full edit review.
 
 ## Guardian (after the 3 agents)
 Raise an ALERT when:

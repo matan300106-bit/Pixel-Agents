@@ -236,6 +236,7 @@ report_email: TBD
 
 - 2026-10-06, owner: "always do whatever is needed, don't ask me." Do the work directly (Shopify store data, theme copies, content, SEO, Search Console, review requests, reports). Only hand the owner the steps no tool can do (publishing a theme, installing apps, logins/2FA, Seller Central and Ads console clicks via Chrome prompts).
 - 2026-10-12, owner: "Do not pause any of the products! Keep ads on everything, I need to build reviews." Never pause a product, campaign, ad group or ad for performance. Cut losers with lower bids and negatives instead. (Stock under 10 days is the only exception: tell the owner first.)
+- 2026-10-13, owner: "check all the listing ranking, and remember in the next days." Organic rank of every product is tracked daily (docs/daily-watch.md, reports/rank-history.csv) and weekly with Helium 10 (plan: research/organic-2026-10-12/plan.md).
 - 2026-10-12, owner: "Sites - ONLY Amazon." Every campaign shows ads only on Amazon. No third-party / off-Amazon sites.
 - Still log every change in `changes-log.csv` with the old value so it can be undone. Never delete what can't be restored, never invent claims, keep supplement wording compliant.
 
