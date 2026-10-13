@@ -3,6 +3,9 @@
 Paste this whole file into Claude in Chrome. You are logged in to Seller Central (US). Edit 5 SKUs, one at a time.
 Text was checked with Python (check table at the end of each SKU). Source data: Helium 10 Cerebro Oct 12, live SP-API text Oct 13, owner facts Oct 12.
 
+
+**IMPORTANT (yesterday's run did not save):** After pasting the new text on each tab, you MUST click **"Save and finish"** (bottom right) and wait for the green "Submitted"/success message. If Chrome shows a "Leave site? Changes you made may not be saved" box, click **Cancel**, then click **Save and finish**. A SKU is only done when the edit page, reloaded, shows the NEW title in the box.
+
 ## RULES (read first)
 
 1. **Backup first.** Before you change anything on a SKU, open Inventory > Manage All Inventory > search the SKU > Edit (Edit product details). Copy the CURRENT Title (Item Name), all 5 Bullet Points, Product Description and Search Terms word for word into your report. Do this BEFORE you type anything.
