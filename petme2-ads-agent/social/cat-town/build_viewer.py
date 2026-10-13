@@ -28,8 +28,10 @@ data = {"live": {"followers": 0}, "pad": False, "shopCards": False, "day": 1, "f
         "counts": {"followers": 261, "likes": 479}, "feedWalk": True, "feedDur": 30}   # owner 2026-10-09: on a fountain/feeder tap the cats walk over slowly   # Day 4 (Oct 10, Matan): 261 followers = houses, 479 likes = cats
 # Real top-comment builds (always there, first spots = right in front of Mango), same as the videos. Day 2: "add a fish supermarket" by PIKA. Day 3: "make a cat arcade!" by francisco12321.
 # Day 4: Tilly, art studio where the cats build Mango a statue. Day 5: MrFireman, a giant slice of pizza with every topping.
+# Day 6: bean, a huge cat toy statue for the cats to play with.
 for k, sg, note in [("fishmarket", "Fish Supermarket", "Top comment on Day 2, idea by PIKA"), ("arcade", "Cat Arcade", "Top comment on Day 3, idea by francisco12321"),
-                    ("artstudio", "Art Studio", "Top comment on Day 4, idea by Tilly"), ("pizza", "Giant Pizza", "Top comment on Day 5, idea by MrFireman")]:
+                    ("artstudio", "Art Studio", "Top comment on Day 4, idea by Tilly"), ("pizza", "Giant Pizza", "Top comment on Day 5, idea by MrFireman"),
+                    ("toy", "Cat Toy Statue", "Top comment on Day 6, idea by bean")]:
     data["landmarks"].append({"kind": k, "sign": sg, "at": 0, "note": note})
 # Owner 2026-10-09: no example stores in town, only what the most-liked comments chose.
 head = re.sub(r"<script>window.CAT_VIEWER.*?</script>|<script>window.CITY = .*?</script>", lambda m: "<script>window.CAT_VIEWER = true; window.CAT_LITE = matchMedia('(pointer: coarse)').matches || innerWidth < 820; window.CITY = " + json.dumps(data, ensure_ascii=False) + ";</script>", head, flags=re.S)
