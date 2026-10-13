@@ -209,7 +209,8 @@
     "schedule": "HOLD the title: Oct 12 baseline shows the Oct 4 title working (camera keywords up 5-116 places, e.g. 'automatic pet feeder with camera' #151->#35, 'cat food dispenser with camera' #86->#42). Oct 14-15: fix attributes only (special_feature, included_components). Re-check title Oct 26. Coupon Oct 26.",
     "owner_confirmed_2026_10_12": [
       "Tap to feed from the app: YES (owner) -> allowed in bullets/special_feature",
-      "WiFi band: answer unclear ('yes') -> do not state 2.4/5 GHz"
+      "WiFi band: answer unclear ('yes') -> do not state 2.4/5 GHz",
+      "2026-10-13 owner: camera has backup batteries -> 'Dual Power' stays."
     ]
   },
   "B0GHKN9DBR": {
@@ -255,7 +256,8 @@
     "schedule": "Whole listing edit moved to Oct 26 (title only live since ~Oct 5-11; price changes Oct 12 and Oct 20).",
     "owner_confirmed_2026_10_12": [
       "LED low-water light: YES (owner 2026-10-12) -> use title_new_if_led_confirmed",
-      "Filter: answer unclear ('Yes, LED light') -> do NOT use 'filterless'/'no filter' until owner says clearly"
+      "Filter: answer unclear ('Yes, LED light') -> do NOT use 'filterless'/'no filter' until owner says clearly",
+      "2026-10-13 owner: the 2L HAS a filter -> never use 'filterless'/'no filter'. Oct 26 idea: add filter wording/keywords (e.g. 'cat water fountain with filter') after the Oct 13 edit settles."
     ]
   },
   "B0GHLBGCP3": {
