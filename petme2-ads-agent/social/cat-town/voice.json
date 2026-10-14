@@ -1,0 +1,16 @@
+{
+ "day": 1,
+ "duration": 24.1,
+ "starts": [
+  0.2,
+  3.98,
+  10.592,
+  19.124
+ ],
+ "lines": [
+  "I'm building a town for cats... and you decide what we build.",
+  "Every new follower adds a new cat and a house. Meet Mango, our very first resident!",
+  "And every day, the most liked comment builds anything it wants. Mango was thirsty, so day one: a fresh water fountain!",
+  "Follow to move your cat in, and comment what we build tomorrow!"
+ ]
+}

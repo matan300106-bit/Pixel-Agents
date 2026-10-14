@@ -1,0 +1,67 @@
+{
+  "_meta": {
+    "namespace": "custom",
+    "key": "story",
+    "type": "multi_line_text_field",
+    "format": "<media position, 1-based> :: <Title> :: <Short text>",
+    "note": "Image positions follow the topic order of the owner's original Horizon info boxes. cdn.shopify.com was blocked in the build sandbox, so the images could not be viewed: check each chapter against its photo and change the number if needed (Admin > Products > Metafields > Story)."
+  },
+  "products": {
+    "2-in-1-smart-feeder": {
+      "id": "gid://shopify/Product/9235795214548",
+      "title": "Dual Bowl Automatic Cat Feeder – 3L, Black",
+      "type": "Automatic Pet Feeders",
+      "media_count": 7,
+      "story": "2 :: Two bowls, two happy cats :: The food splits into 2 stainless steel bowls, so each pet gets a share.\n3 :: Meals on your schedule :: Set meal times and portions in the app. The feeder does the rest.\n4 :: Call them to dinner :: 2-way audio lets you talk to your pet through the app.\n5 :: Dry food stays fresh :: A sealed food container and a desiccant box help keep kibble dry.\n6 :: Made not to jam :: The anti-jam design helps dry food flow out smoothly.\n7 :: For cats and small dogs :: Made for dry food. 3L holds plenty between refills."
+    },
+    "2-in-1-smart-feeder-white": {
+      "id": "gid://shopify/Product/9235795738836",
+      "title": "Dual Bowl Automatic Cat Feeder – 3L, White",
+      "type": "Automatic Pet Feeders",
+      "media_count": 8,
+      "story": "2 :: Two bowls, two happy cats :: The food splits into 2 stainless steel bowls, so each pet gets a share.\n3 :: Meals on your schedule :: Set meal times and portions in the app. The feeder does the rest.\n4 :: Call them to dinner :: 2-way audio lets you talk to your pet through the app.\n5 :: Dry food stays fresh :: A sealed food container and a desiccant box help keep kibble dry.\n6 :: Made not to jam :: The anti-jam design helps dry food flow out smoothly.\n7 :: For cats and small dogs :: Made for dry food. 3L holds plenty between refills."
+    },
+    "2-in-1-feeder-1": {
+      "id": "gid://shopify/Product/9235796525268",
+      "title": "Elevated WiFi Cat Feeder for 2 Cats – 5L",
+      "type": "Automatic Pet Feeders",
+      "media_count": 6,
+      "story": "2 :: 5L of dry food :: A big 5L container means fewer refills.\n3 :: Two stainless steel bowls :: One feeder for two pets. The bowls wipe clean.\n4 :: Plan meals from your phone :: Connect to WiFi and set meal times and portions in the app.\n5 :: Your voice at mealtime :: Record a short message to call your pets to eat.\n6 :: Raised bowls :: The elevated design lifts the bowls up off the floor."
+    },
+    "smart-feeder": {
+      "id": "gid://shopify/Product/9235794395348",
+      "title": "Automatic Cat Feeder with 1080P Camera – 3L",
+      "type": "Automatic Pet Feeders",
+      "media_count": 8,
+      "story": "2 :: See your cat in 1080P :: Watch live HD video in the app, right from your phone.\n3 :: Talk and listen :: 2-way audio lets you hear your cat and call them to eat.\n4 :: Meals on your schedule :: Set meal times and portions in the WiFi app.\n5 :: One stainless steel bowl :: Easy to wipe clean after meals.\n6 :: 3L of dry food :: Holds plenty of kibble between refills."
+    },
+    "water-fountain": {
+      "id": "gid://shopify/Product/9235788792020",
+      "title": "Stainless Steel Cat Water Fountain – 3.2L",
+      "type": "Pet Water Fountains",
+      "media_count": 6,
+      "story": "2 :: 3.2L of fresh water :: 108 oz in a stainless steel fountain means fewer refills.\n3 :: 4-layer filter :: Water runs through a 4-layer filter as it flows.\n4 :: LED light :: A blue LED lights the water-level window, so you can check it at a glance.\n5 :: Quiet pump :: Made to run quietly inside your home.\n6 :: Comes apart to clean :: Take it apart, rinse, put it back together."
+    },
+    "water-fountain-4": {
+      "id": "gid://shopify/Product/9235792494804",
+      "title": "Cat Water Fountain with Stainless Steel Tray – 2.2L",
+      "type": "Pet Water Fountains",
+      "media_count": 8,
+      "story": "2 :: Stainless steel tray :: Your cat drinks from a stainless steel tray that wipes clean.\n3 :: 4-layer filter :: Water runs through a 4-layer filter as it flows.\n4 :: Low-water light :: A light tells you when it is time to add water.\n5 :: Quiet pump :: Made to run quietly inside your home.\n6 :: Comes apart to clean :: Take it apart, rinse, put it back together.\n7 :: 2.2L of water :: Holds 2.2L of water in a compact fountain."
+    },
+    "water-fountain-2": {
+      "id": "gid://shopify/Product/9235790463188",
+      "title": "Transparent Cat Water Fountain – 2.2L",
+      "type": "Pet Water Fountains",
+      "media_count": 7,
+      "story": "2 :: Fresh, moving water :: A quiet pump keeps the water moving.\n3 :: Filter cartridge :: Water flows through a filter cartridge inside.\n4 :: See the water level :: The see-through body shows how much water is left.\n5 :: Comes apart to clean :: Take it apart, rinse, put it back together.\n6 :: 2.2L size :: Holds 2.2L of water in a compact fountain."
+    },
+    "water-fountain-simple": {
+      "id": "gid://shopify/Product/9235791642836",
+      "title": "Quiet Cat Water Fountain with Low-Water Light – 2L",
+      "type": "Pet Water Fountains",
+      "media_count": 8,
+      "story": "2 :: Fresh, moving water :: The pump keeps 2L of water moving.\n3 :: Quiet enough for any room :: A quiet pump, made for use inside the home.\n4 :: Red light when water is low :: The low-water light turns red, so you know when to refill.\n5 :: Anti-dry design :: Made to protect the pump when water runs low.\n6 :: Comes apart to clean :: Take it apart, rinse, put it back together."
+    }
+  }
+}

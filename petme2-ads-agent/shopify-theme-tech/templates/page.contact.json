@@ -1,0 +1,92 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "padding_top": 48,
+        "padding_bottom": 16
+      }
+    },
+    "form": {
+      "type": "contact-form",
+      "settings": {
+        "heading": "Send us a message",
+        "heading_size": "h2",
+        "color_scheme": "scheme-3",
+        "padding_top": 16,
+        "padding_bottom": 64
+      }
+    },
+    "faq": {
+      "type": "collapsible-content",
+      "settings": {
+        "caption": "BEFORE YOU WRITE",
+        "heading": "Quick answers",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "layout": "row",
+        "container_color_scheme": "scheme-3",
+        "color_scheme": "scheme-4",
+        "open_first_collapsible_row": true,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 64,
+        "padding_bottom": 72
+      },
+      "blocks": {
+        "row_1": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What if my pet doesn't like it?",
+            "icon": "heart",
+            "row_content": "<p>No worries. Every order comes with a 30-day money-back guarantee. If it's not a fit, contact us within 30 days and we'll give you your money back.</p>"
+          }
+        },
+        "row_2": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How fast is shipping?",
+            "icon": "truck",
+            "row_content": "<p>Shipping is free on every U.S. order. Orders are fulfilled by Amazon.</p>"
+          }
+        },
+        "row_3": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Do the feeders work with wet food?",
+            "icon": "serving_dish",
+            "row_content": "<p>No. PETME2 feeders are made for dry food (kibble).</p>"
+          }
+        },
+        "row_4": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Do I need WiFi?",
+            "icon": "lightning_bolt",
+            "row_content": "<p>WiFi is needed for the app: schedules and portions.</p>"
+          }
+        },
+        "row_5": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Is PETME2 on Amazon?",
+            "icon": "chat_bubble",
+            "row_content": "<p>Yes. All PETME2 products are also sold on Amazon, where you can read buyer reviews.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "row_1",
+        "row_2",
+        "row_3",
+        "row_4",
+        "row_5"
+      ]
+    }
+  },
+  "order": [
+    "main",
+    "form",
+    "faq"
+  ]
+}

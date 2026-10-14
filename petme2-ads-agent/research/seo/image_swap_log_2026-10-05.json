@@ -1,0 +1,322 @@
+{
+ "status": "DONE - 73 product PNGs replaced with JPEG; 16 article covers + 1 collection image converted to JPEG; old product PNGs detached (still in Content > Files)",
+ "swaps": {
+  "water-fountain-4": {
+   "product_id": "gid://shopify/Product/9235792494804",
+   "old_bytes": 12415897,
+   "new_bytes": 1088598,
+   "map": {
+    "39173548212436": "46338839970004",
+    "39393606893780": "46338880078036",
+    "39393606828244": "46338880110804",
+    "39393606795476": "46338880143572",
+    "39393606729940": "46338880176340",
+    "39393606861012": "46338880209108",
+    "39393606762708": "46338880241876",
+    "39393606926548": "46338880274644"
+   }
+  },
+  "water-fountain-simple": {
+   "product_id": "gid://shopify/Product/9235791642836",
+   "old_bytes": 11457565,
+   "new_bytes": 866686,
+   "map": {
+    "39173532975316": "46338892660948",
+    "39392571850964": "46338892693716",
+    "39392571785428": "46338892726484",
+    "38644547813588": "46338892759252",
+    "38644548010196": "46338892792020",
+    "39392571883732": "46338892824788",
+    "39392571818196": "46338892857556",
+    "39392571752660": "46338892890324"
+   }
+  },
+  "water-fountain-2": {
+   "product_id": "gid://shopify/Product/9235790463188",
+   "old_bytes": 11141341,
+   "new_bytes": 874364,
+   "map": {
+    "39173505351892": "46338898821332",
+    "39391674859732": "46338898854100",
+    "39391674761428": "46338898886868",
+    "39391674925268": "46338898919636",
+    "39391674958036": "46338898952404",
+    "39391674892500": "46338898985172",
+    "39391674794196": "46338899017940"
+   }
+  },
+  "water-fountain": {
+   "product_id": "gid://shopify/Product/9235788792020",
+   "old_bytes": 8582674,
+   "new_bytes": 851475,
+   "map": {
+    "39173490639060": "46338899476692",
+    "39391242387668": "46338899509460",
+    "39391242584276": "46338899542228",
+    "39391168659668": "46338899574996",
+    "39391187435732": "46338899607764",
+    "39391213355220": "46338899640532"
+   }
+  },
+  "2-in-1-smart-feeder": {
+   "product_id": "gid://shopify/Product/9235795214548",
+   "old_bytes": 11090321,
+   "new_bytes": 1025650,
+   "map": {
+    "39173513052372": "46338907865300",
+    "39391779160276": "46338907898068",
+    "39391779520724": "46338907930836",
+    "39391779455188": "46338907963604",
+    "39391779553492": "46338907996372",
+    "39391779422420": "46338908029140",
+    "39391779487956": "46338908061908"
+   }
+  },
+  "2-in-1-smart-feeder-white": {
+   "product_id": "gid://shopify/Product/9235795738836",
+   "old_bytes": 9336337,
+   "new_bytes": 628880,
+   "map": {
+    "39173519835348": "46338913239252",
+    "39391284068564": "46338913272020",
+    "39391284166868": "46338913304788",
+    "39391284035796": "46338913337556",
+    "39391284134100": "46338913370324",
+    "39391284199636": "46338913403092",
+    "39391284101332": "46338913435860"
+   }
+  },
+  "smart-feeder": {
+   "product_id": "gid://shopify/Product/9235794395348",
+   "old_bytes": 6990114,
+   "new_bytes": 670379,
+   "map": {
+    "39173495455956": "46338913730772",
+    "39213403242708": "46338913763540",
+    "39213337280724": "46338913796308",
+    "38644563902676": "46338913829076",
+    "38644564099284": "46338913861844"
+   }
+  },
+  "2-in-1-feeder-1": {
+   "product_id": "gid://shopify/Product/9235796525268",
+   "old_bytes": 289205,
+   "new_bytes": 41372,
+   "map": {
+    "39173509316820": "46338914058452"
+   }
+  },
+  "skin-coat-soft-chews-for-cats": {
+   "product_id": "gid://shopify/Product/15404662882516",
+   "old_bytes": 17727967,
+   "new_bytes": 1802215,
+   "map": {
+    "46335505989844": "46338925166804",
+    "46335506022612": "46338925199572",
+    "46335506055380": "46338925232340"
+   }
+  },
+  "hip-joint-soft-chews-for-dogs": {
+   "product_id": "gid://shopify/Product/15404662948052",
+   "old_bytes": 17129474,
+   "new_bytes": 1729209,
+   "map": {
+    "46335506120916": "46338925396180",
+    "46335506153684": "46338925428948",
+    "46335506186452": "46338925461716"
+   }
+  },
+  "cat-grass-soft-chews-digestion-hairball": {
+   "product_id": "gid://shopify/Product/15404663013588",
+   "old_bytes": 14548982,
+   "new_bytes": 1486705,
+   "map": {
+    "46335506251988": "46338925822164",
+    "46335506284756": "46338925854932",
+    "46335506317524": "46338925887700"
+   }
+  },
+  "tear-stain-soft-chews-for-dogs": {
+   "product_id": "gid://shopify/Product/15404663079124",
+   "old_bytes": 14559245,
+   "new_bytes": 1450679,
+   "map": {
+    "46335506415828": "46338926149844",
+    "46335506448596": "46338926182612",
+    "46335506481364": "46338926215380"
+   }
+  },
+  "immune-support-soft-chews-for-cats": {
+   "product_id": "gid://shopify/Product/15404839960788",
+   "old_bytes": 10663120,
+   "new_bytes": 1153745,
+   "map": {
+    "46335874203860": "46338930278612",
+    "46335874236628": "46338930311380",
+    "46335874269396": "46338930344148"
+   }
+  },
+  "l-lysine-soft-chews-for-cats": {
+   "product_id": "gid://shopify/Product/15404840026324",
+   "old_bytes": 11002015,
+   "new_bytes": 1184639,
+   "map": {
+    "46335874302164": "46338930606292",
+    "46335874334932": "46338930639060",
+    "46335874367700": "46338930671828"
+   }
+  },
+  "probiotic-soft-chews-for-dogs": {
+   "product_id": "gid://shopify/Product/15404840091860",
+   "old_bytes": 10402031,
+   "new_bytes": 1119187,
+   "map": {
+    "46335874466004": "46338930933972",
+    "46335874498772": "46338930966740",
+    "46335874531540": "46338930999508"
+   }
+  },
+  "multivitamin-25-in-1-soft-chews-for-dogs": {
+   "product_id": "gid://shopify/Product/15404840157396",
+   "old_bytes": 10988948,
+   "new_bytes": 1162372,
+   "map": {
+    "46335874564308": "46338931261652",
+    "46335874597076": "46338931294420",
+    "46335874629844": "46338931327188"
+   }
+  }
+ },
+ "test_product": {
+  "handle": "water-fountain-4",
+  "product_id": "gid://shopify/Product/9235792494804",
+  "old_media_tested": "gid://shopify/MediaImage/39173548212436",
+  "attempts": [
+   {
+    "source_suffix": "?v=1786638492&width=1254&format=pjpg",
+    "new_media": "gid://shopify/MediaImage/46338823651540",
+    "result_mime": "image/png",
+    "fileSize": 321509
+   },
+   {
+    "source_suffix": "?v=1786638492&width=1254&format=jpg",
+    "new_media": "gid://shopify/MediaImage/46338824405204",
+    "result_mime": "image/png",
+    "fileSize": 321509
+   },
+   {
+    "source_suffix": "_1254x.progressive.png.jpg (legacy path)",
+    "new_media": "gid://shopify/MediaImage/46338824437972",
+    "result_mime": "image/png",
+    "fileSize": 321509
+   }
+  ],
+  "cleanup": "3 test PNG media detached, then deleted from Files with fileDelete (only those 3 ids)",
+  "verified_after_cleanup": {
+   "mediaCount": 8,
+   "order_unchanged": true,
+   "featured": "gid://shopify/MediaImage/39173548212436"
+  }
+ },
+ "articles": {
+  "gid://shopify/Article/600180621524": {
+   "new_image": "af9d3e5e8162b702d741b77c5c4723eec2bd1a07.jpg",
+   "old_bytes": 441977,
+   "new_bytes": 56710
+  },
+  "gid://shopify/Article/600180654292": {
+   "new_image": "0f68cd69b858cdeddd403a9dd2aebee2f2233b9a.jpg",
+   "old_bytes": 2103070,
+   "new_bytes": 165750
+  },
+  "gid://shopify/Article/634919026900": {
+   "new_image": "Homepage-Water-Fountains.jpg",
+   "old_bytes": 1964165,
+   "new_bytes": 170252
+  },
+  "gid://shopify/Article/634919092436": {
+   "new_image": "Cleaner_water_filtered_before_every_return.jpg",
+   "old_bytes": 950590,
+   "new_bytes": 92905
+  },
+  "gid://shopify/Article/634919125204": {
+   "new_image": "Luxury_Stainless_Steel_Pet_Fountain-03-article.jpg",
+   "old_bytes": 2266525,
+   "new_bytes": 192636
+  },
+  "gid://shopify/Article/634919157972": {
+   "new_image": "Fresh_water_that_keeps_moving_1b07d4db...jpg",
+   "old_bytes": 1784835,
+   "new_bytes": 171793
+  },
+  "gid://shopify/Article/634920403156": {
+   "new_image": "Homepage-Water-Fountains-v2*.jpg",
+   "old_bytes": 2042693,
+   "new_bytes": 189296
+  },
+  "gid://shopify/Article/634920501460": {
+   "new_image": "Homepage-Water-Fountains-v2*.jpg",
+   "old_bytes": 2042693,
+   "new_bytes": 189296
+  },
+  "gid://shopify/Article/634920534228": {
+   "new_image": "Homepage-Water-Fountains-v2*.jpg",
+   "old_bytes": 2042693,
+   "new_bytes": 189296
+  },
+  "gid://shopify/Article/634920829140": {
+   "new_image": "Homepage-Water-Fountains-v2*.jpg",
+   "old_bytes": 2042693,
+   "new_bytes": 189296
+  },
+  "gid://shopify/Article/634920894676": {
+   "new_image": "Homepage-Water-Fountains-v2*.jpg",
+   "old_bytes": 2042693,
+   "new_bytes": 189296
+  },
+  "gid://shopify/Article/634920927444": {
+   "new_image": "Homepage-Water-Fountains-v2*.jpg",
+   "old_bytes": 2042693,
+   "new_bytes": 189296
+  },
+  "gid://shopify/Article/634920468692": {
+   "new_image": "petme2-supplements-banner*.jpg",
+   "old_bytes": 5343349,
+   "new_bytes": 263168
+  },
+  "gid://shopify/Article/634920566996": {
+   "new_image": "petme2-supplements-banner*.jpg",
+   "old_bytes": 5343349,
+   "new_bytes": 263168
+  },
+  "gid://shopify/Article/634920599764": {
+   "new_image": "petme2-supplements-banner*.jpg",
+   "old_bytes": 5343349,
+   "new_bytes": 263168
+  },
+  "gid://shopify/Article/634920861908": {
+   "new_image": "Dual-Bowl_Automatic_Feeder_Black-article.jpg",
+   "old_bytes": 720619,
+   "new_bytes": 79213
+  }
+ },
+ "collections": {
+  "supplements (gid://shopify/Collection/512068026580)": {
+   "new_image": "collections/petme2-supplements-collection.jpg",
+   "old_bytes": 5343349,
+   "new_bytes": 389727
+  }
+ },
+ "files_created_for_articles": [
+  "46338946007252",
+  "46338946040020",
+  "46338946072788",
+  "46338946105556",
+  "46338946138324",
+  "46338946171092",
+  "46338946203860",
+  "46338946236628",
+  "46338946269396",
+  "46338946302164"
+ ]
+}

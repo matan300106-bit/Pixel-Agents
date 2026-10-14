@@ -1,0 +1,155 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@800&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--font-heading-family:Nunito,sans-serif}
+*{box-sizing:border-box} body{margin:0;font-family:'Nunito Sans',sans-serif;background:#fff;overflow-x:clip}
+.color-scheme-1{--color-foreground:27,37,64;--color-background:255,255,255;--color-button:47,95,224;--color-button-text:255,255,255;background:#fff}
+.page-width{max-width:1300px;margin:0 auto;padding:0 1.5rem} @media (min-width:750px){.page-width{padding:0 5rem}}
+.button{display:inline-flex;align-items:center;justify-content:center;background:rgb(47,95,224);color:#fff;text-decoration:none;border:0}
+header{height:64px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid #eee;font:800 20px Nunito;color:#1B2540}
+
+  .pm2-ent { position: relative; overflow: hidden; color: rgb(var(--color-foreground)); }
+  .pm2-ent__inner { display: grid; grid-template-columns: minmax(0, 1fr); }
+
+  /* ---------- media ---------- */
+  .pm2-ent__media { position: relative; overflow: hidden; background: #e9e4dc; }
+  .pm2-ent__video { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
+  .pm2-ent__ph { background: rgba(var(--color-foreground), .06); }
+  .pm2-ent__badge {
+    position: absolute; z-index: 2; top: 14px; left: 14px;
+    display: inline-flex; align-items: center; gap: 7px; padding: 7px 13px 7px 10px; border-radius: 999px;
+    font-size: 13px; font-weight: 700; line-height: 1.2; color: #1B2540;
+    background: rgba(255, 255, 255, .9); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+    box-shadow: 0 8px 24px -14px rgba(0, 0, 0, .45);
+  }
+  .pm2-ent__badge svg { color: rgb(var(--color-button)); }
+  .pm2-ent__toggle {
+    position: absolute; z-index: 3; top: 12px; right: 12px; width: 44px; height: 44px; padding: 0;
+    display: inline-flex; align-items: center; justify-content: center; border: 0; border-radius: 50%; cursor: pointer;
+    color: #fff; background: rgba(16, 22, 38, .42); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  }
+  .pm2-ent__toggle:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+  .pm2-ent__i-play, .pm2-ent__toggle[aria-pressed="true"] .pm2-ent__i-pause { display: none; }
+  .pm2-ent__toggle[aria-pressed="true"] .pm2-ent__i-play { display: block; }
+
+  .pm2-ent__chip { display: none; }
+
+  /* ---------- copy ---------- */
+  .pm2-ent__eyebrow {
+    display: inline-flex; align-items: center; gap: 8px; max-width: 100%; margin: 0 0 14px;
+    padding: 4px 12px 4px 4px; border-radius: 999px; font-size: 13px; font-weight: 600; line-height: 1.3;
+  }
+  .pm2-ent__eyebrow > span:last-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .pm2-ent__tag { flex: none; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; color: rgb(var(--color-button-text)); background: rgb(var(--color-button)); }
+  .pm2-ent__title { margin: 0; font-family: var(--font-heading-family); font-weight: 800; letter-spacing: -.03em; line-height: 1.04; text-wrap: balance; overflow-wrap: break-word; }
+  .pm2-ent__title > span { display: block; }
+  .pm2-ent__sub { margin: 12px 0 0; font-size: 16px; line-height: 1.55; max-width: 46ch; }
+  .pm2-ent__ctas { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 22px; margin-top: 20px; }
+  .pm2-ent .pm2-ent__btn { gap: 10px; min-height: 56px; padding: 0 34px; font-size: 17px; font-weight: 700; border-radius: 999px; box-shadow: 0 12px 28px -14px rgba(var(--color-button), .9); }
+  .pm2-ent .pm2-ent__btn::before, .pm2-ent .pm2-ent__btn::after { border-radius: 999px; }
+  .pm2-ent__link { display: inline-flex; align-items: center; min-height: 44px; font-size: 16px; font-weight: 700; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1.5px; color: inherit; }
+
+  /* ---------- trust row ---------- */
+  .pm2-ent__trust { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .pm2-ent__trust li { display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; font-size: 13px; font-weight: 600; line-height: 1.3; color: rgba(var(--color-foreground), .82); }
+  .pm2-ent__trust svg { flex: none; color: rgb(var(--color-button)); }
+
+  /* ---------- phones: video is the first screen, copy on top of it ---------- */
+  @media screen and (max-width: 749px) {
+    .pm2-ent { padding: 0 0 20px; }
+    .pm2-ent__inner { padding: 0; grid-template-areas: "stage" "trust"; }
+    .pm2-ent__media, .pm2-ent__copy { grid-area: stage; }
+    .pm2-ent__media { height: min(78svh, 135vw); min-height: 460px; border-radius: 0 0 28px 28px; }
+    .pm2-ent__shade { position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background: linear-gradient(180deg, rgba(10, 16, 30, 0) 52%, rgba(10, 16, 30, .6) 74%, rgba(10, 16, 30, .85) 100%); }
+    .pm2-ent__copy { position: relative; z-index: 2; align-self: end; padding: 0 20px 24px; color: #fff; }
+    /* keep the cats' faces clear: short copy block at the bottom only */
+    .pm2-ent__eyebrow, .pm2-ent__link { display: none; }
+    .pm2-ent__title { font-size: clamp(32px, 9.4vw, 42px); color: #fff; }
+    .pm2-ent__accent { color: #BFD0FF; }
+    .pm2-ent__sub { font-size: 15px; margin-top: 8px; color: rgba(255, 255, 255, .92); }
+    .pm2-ent__ctas { margin-top: 16px; }
+    .pm2-ent .pm2-ent__btn { flex: 1 1 100%; width: 100%; }
+    .pm2-ent__trust { grid-area: trust; padding: 18px 16px 0; }
+  }
+
+  /* ---------- tablet + desktop: split ---------- */
+  @media screen and (min-width: 750px) {
+    .pm2-ent { padding: clamp(28px, calc(var(--pm2-pt) * .6), 72px) 0 clamp(32px, calc(var(--pm2-pb) * .6), 72px); }
+    .pm2-ent__inner { grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); grid-template-areas: "copy media" "trust media"; column-gap: clamp(32px, 5vw, 72px); row-gap: 28px; align-items: center; }
+    .pm2-ent__copy { grid-area: copy; align-self: end; }
+    .pm2-ent__media { grid-area: media; aspect-ratio: 4 / 5; max-height: min(78vh, 720px); width: 100%; justify-self: end; border-radius: 32px; box-shadow: 0 40px 80px -48px rgba(16, 24, 48, .45); }
+    .pm2-ent__trust { grid-area: trust; align-self: start; max-width: 520px; grid-template-columns: repeat(3, auto); justify-content: start; gap: 22px; }
+    .pm2-ent__trust li { flex-direction: row; text-align: left; font-size: 14px; }
+    .pm2-ent__eyebrow { background: rgba(var(--color-foreground), .05); border: 1px solid rgba(var(--color-foreground), .08); color: rgba(var(--color-foreground), .82); }
+    .pm2-ent__title { font-size: clamp(44px, 5.6vw, 76px); }
+    .pm2-ent__accent { color: rgb(var(--color-button)); }
+    .pm2-ent__sub { font-size: 18px; color: rgba(var(--color-foreground), .72); margin-top: 18px; }
+    .pm2-ent__ctas { margin-top: 28px; }
+    .pm2-ent__chip {
+      position: absolute; z-index: 2; left: 16px; right: 16px; bottom: 16px;
+      display: flex; align-items: center; gap: 12px; padding: 8px 14px 8px 8px; border-radius: 20px;
+      color: #1B2540; text-decoration: none; background: rgba(255, 255, 255, .92);
+      -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); box-shadow: 0 16px 36px -20px rgba(0, 0, 0, .5);
+      transition: transform .25s ease;
+    }
+    .pm2-ent__chip:hover { transform: translateY(-2px); }
+    .pm2-ent__chip-img { width: 56px; height: 56px; border-radius: 14px; object-fit: contain; background: #F4F6FA; flex: none; }
+    .pm2-ent__chip-text { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+    .pm2-ent__chip-title { font-size: 14px; font-weight: 700; line-height: 1.3; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .pm2-ent__chip-price { font-size: 14px; font-weight: 600; color: rgb(var(--color-button)); }
+    .pm2-ent__chip-price s { color: rgba(27, 37, 64, .5); font-weight: 400; margin-left: 4px; }
+    .pm2-ent__chip-arrow { flex: none; }
+  }
+  @media screen and (min-width: 990px) {
+    .pm2-ent__inner { grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .pm2-ent__copy > *, .pm2-ent__trust { animation: pm2-ent-in .7s cubic-bezier(.2, .7, .2, 1) both; }
+    .pm2-ent__copy > :nth-child(2) { animation-delay: .06s; }
+    .pm2-ent__copy > :nth-child(3) { animation-delay: .12s; }
+    .pm2-ent__copy > :nth-child(4) { animation-delay: .18s; }
+    .pm2-ent__trust { animation-delay: .24s; }
+  }
+  @keyframes pm2-ent-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+</style></head><body><header>PETME2</header>
+<section class="pm2-ent color-scheme-1 gradient" style="--pm2-pt:64px;--pm2-pb:64px">
+<div class="page-width pm2-ent__inner">
+<div class="pm2-ent__media"><video class="pm2-ent__video" autoplay muted loop playsinline poster="hero-poster.jpg"><source src="hero-4x5.mp4" type="video/mp4"></video>
+<span class="pm2-ent__shade"></span><span class="pm2-ent__badge"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M12 21s-7-4.4-9.3-9A5.2 5.2 0 0 1 12 6.3 5.2 5.2 0 0 1 21.3 12C19 16.6 12 21 12 21z" fill="currentColor"/></svg>Feeds 2 cats at once</span>
+<button class="pm2-ent__toggle" aria-pressed="false" data-pm2-ent-toggle><svg class="pm2-ent__i-pause" width="14" height="14" viewBox="0 0 14 14"><rect x="2" y="1" width="3.5" height="12" rx="1" fill="currentColor"/><rect x="8.5" y="1" width="3.5" height="12" rx="1" fill="currentColor"/></svg><svg class="pm2-ent__i-play" width="14" height="14" viewBox="0 0 14 14"><path d="M3 1.5v11l9.5-5.5z" fill="currentColor"/></svg></button>
+<a class="pm2-ent__chip" href="#"><img class="pm2-ent__chip-img" src="hero-poster.jpg"><span class="pm2-ent__chip-text"><span class="pm2-ent__chip-title">Dual Bowl Automatic Cat Feeder – 3L, White</span><span class="pm2-ent__chip-price">$49.99 <s>$65.99</s></span></span><svg class="pm2-ent__chip-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8"/></svg></a></div>
+<div class="pm2-ent__copy"><p class="pm2-ent__eyebrow"><span class="pm2-ent__tag">Sale</span><span>Save up to 33% · for cats &amp; small dogs</span></p>
+<h1 class="pm2-ent__title"><span>Easy everyday</span><span class="pm2-ent__accent">pet care.</span></h1>
+<p class="pm2-ent__sub">Meals on time and fresh water all day. Set it up once, enjoy more time together.</p>
+<div class="pm2-ent__ctas"><a class="button pm2-ent__btn" href="#">Shop now →</a><a class="pm2-ent__link" href="#">Find the right feeder</a></div></div>
+<ul class="pm2-ent__trust"><li><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7" stroke="currentColor" stroke-width="1.7"/></svg><span>Free U.S. shipping</span></li><li><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6z" stroke="currentColor" stroke-width="1.7"/></svg><span>30-day money back</span></li><li><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5" stroke="currentColor" stroke-width="1.7"/></svg><span>Easy app control</span></li></ul>
+</div></section><div style="height:600px;background:#F4F6FA"></div>
+<script>(function(){ var s=document.createElement('script'); })();</script>
+<script>
+  (function () {
+    var root = document.querySelector('.pm2-ent');
+    while (root && !(root.classList && root.classList.contains('pm2-ent'))) root = root.previousElementSibling;
+    if (!root) return;
+    var video = root.querySelector('video');
+    var btn = root.querySelector('[data-pm2-ent-toggle]');
+    if (!video) { if (btn) btn.hidden = true; return; }
+    video.muted = true;
+    function set(paused) {
+      if (!btn) return;
+      btn.setAttribute('aria-pressed', paused ? 'true' : 'false');
+      btn.setAttribute('aria-label', paused ? 'Play video' : 'Pause video');
+    }
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      video.removeAttribute('autoplay'); video.pause(); set(true);
+    }
+    if (btn) btn.addEventListener('click', function () {
+      if (video.paused) { var p = video.play(); if (p && p.catch) p.catch(function () {}); set(false); }
+      else { video.pause(); set(true); }
+    });
+    video.addEventListener('pause', function () { set(true); });
+    video.addEventListener('play', function () { set(false); });
+  })();
+</script>
+</body></html>

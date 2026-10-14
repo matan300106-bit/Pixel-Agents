@@ -1,0 +1,15 @@
+Product                    | indexed volume OLD→NEW | exact in TITLE OLD→NEW | exact title+bullets OLD→NEW
+3.2L stainless fountain    |   96% →   99%          |   12% →   49%          |   12% →   71%
+3L dual feeder BLACK       |  100% →  100%          |   53% →   58%          |   56% →   71%
+3L dual feeder WHITE       |  100% →  100%          |   11% →   58%          |   18% →   71%
+camera feeder              |   93% →  100%          |    2% →   64%          |   23% →   77%
+5L WiFi feeder             |   98% →  100%          |   50% →   58%          |   56% →   71%
+$19.99 fountain 2L         |   82% →  100%          |   47% →   46%          |   47% →   81%
+2.2L transparent fountain  |   97% →   99%          |   40% →   43%          |   49% →   81%
+fountain stainless tray    |   92% →   99%          |   32% →   33%          |   35% →   65%
+
+Still not indexed (top, by volume):
+  3.2L stainless fountain [('filtered dog water fountain', 2944), ('304 stainless steel cat fountain', 2859), ('filtered dog water bowl', 2176), ('animal water fountain', 2172)]
+  $19.99 fountain 2L [('animal water fountain', 2172), ('best cat water fountain', 1598)]
+  2.2L transparent fountain [('animal water fountain', 2172), ('best cat water fountain', 1598), ('dog water fountain with filtration system', 1246)]
+  fountain stainless tray [('filtered dog water fountain', 2944), ('filtered dog water bowl', 2176), ('animal water fountain', 2172), ('dog filtered water bowl', 1759)]

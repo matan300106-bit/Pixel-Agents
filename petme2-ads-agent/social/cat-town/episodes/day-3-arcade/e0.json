@@ -1,0 +1,1 @@
+{"day": 1, "followersBefore": 0, "followersNew": 0, "landmarks": [], "noReserved": true, "duration": 32.3, "starts": [0, 0, 0, 99], "milestone": 1000000000.0, "shots": [{"t0": 0, "t1": 99, "p0": [9, 16, 34], "p1": [7, 13, 28], "l0": [0, 4, 0], "l1": [0, 4, 0], "inout": false}]}
