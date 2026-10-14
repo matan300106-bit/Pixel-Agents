@@ -206,7 +206,9 @@ SPOTS.forEach((s, k) => { s.t = k < landmarks.length ? Math.min(timeNear(s.x, s.
   if (k < landmarks.length && lmAt(k) < 0 && s.t === Infinity) s.t = -1; });
 SPOTS.forEach((s, k) => { if (k < landmarks.length) PIECES.forEach(p => { if (Math.hypot(p.x - s.x, p.z - s.z) < 18) p.t = Math.min(p.t, s.t); }); });
 const CR = Math.max(36, ...houseLots.map(l => l.r), ...SPOTS.slice(0, usedSpots).map(s => s.r)) + 14;
-const SHR = Math.max(CR, 100); window.__CR = CR;
+// Day 8 war (videos): EP.war.ang = direction from the town centre to the battlefield, EP.war.r = distance of the cats' front line (local frame origin)
+const WARF = EP.war ? { ux: Math.cos(EP.war.ang ?? Math.PI), uz: Math.sin(EP.war.ang ?? Math.PI), R0: EP.war.r ?? CR + 22 } : null;
+const SHR = Math.max(CR, 100, WARF ? WARF.R0 + 95 : 0); window.__CR = CR;
 scene.fog.near = Math.max(320, CR * 1.4); scene.fog.far = Math.max(1150, CR * 3.6);
 sun.position.set(SHR * .6, SHR * 1.4, SHR * .9); Object.assign(sun.shadow.camera, { left: -SHR - 30, right: SHR + 30, top: SHR + 30, bottom: -SHR - 30, near: 1, far: SHR * 4 }); sun.shadow.camera.updateProjectionMatrix();
 
@@ -819,7 +821,9 @@ houseLots.forEach((l, n) => placeHouse(n, APPEAR[n] < 0 ? 1 : 0));
     if (near(roadHash, x, z, 9, o => o.t === Infinity ? undefined : false) || any(houseHash, x, z, 7) || any(window.__gHash, x, z, 4)) continue;
     if (SPOTS.slice(0, usedSpots).some(s => Math.hypot(s.x - x, s.z - z) < 14)) continue;
     spots.push([x, z, .7 + rnd() * .8, rnd() < .7]); }
-  for (let k = spots.length - 1; k >= 0; k--) if (Math.hypot(spots[k][0], spots[k][1]) < SQ.plaza + 4) spots.splice(k, 1);   // the bigger square stays clear (after the rnd() calls)
+  for (let k = spots.length - 1; k >= 0; k--) if (Math.hypot(spots[k][0], spots[k][1]) < SQ.plaza + 4) spots.splice(k, 1);
+  if (WARF) for (let k = spots.length - 1; k >= 0; k--) { const dx = spots[k][0] - WARF.ux * WARF.R0, dz = spots[k][1] - WARF.uz * WARF.R0, lz = dx * WARF.ux + dz * WARF.uz, lx = dx * WARF.uz - dz * WARF.ux;   // Day 8: the battlefield stays clear
+    if (lz > -40 && lz < 520 && Math.abs(lx) < 70 + Math.max(0, lz) * .25) spots.splice(k, 1); }   // the bigger square stays clear (after the rnd() calls)
   // in growth mode, trees standing where the city will be are removed when the city gets there
   // Big Mochi (Build 4) lies at polar(MOCHI_A, 500): trees within 75 of it go when it starts to rise (checked after all rnd() calls)
   const [mcx, mcz] = polar(MOCHI_A, 500), mochiT = unlockT(UNLOCK.mochi) - 2;
@@ -861,6 +865,117 @@ const CONF = new THREE.InstancedMesh(new THREE.PlaneGeometry(1, .6), new THREE.M
 const confData = []; for (let k = 0; k < 260; k++) { confData.push({ vx: (rnd() - .5) * 30, vy: 10 + rnd() * 22, vz: (rnd() - .5) * 30, r: rnd() * 6 }); CONF.setColorAt(k, col.set(['#FFC93C', '#E85D5D', '#2F5FE0', '#5BB98C', '#FFFFFF', '#9B6FE0'][k % 6])); }
 CONF.instanceColor.needsUpdate = true; CONF.visible = false; scene.add(CONF);
 
+// ---------- Day 8 (Matan, Oct 14): the dog army marches on Cat Town. Mango calls every cat, they build a box wall + yarn cannons, helmets on, flags up, face-off, cliffhanger. ----------
+// EP.war = { ang, r, cats, dogs: [[t, z], ...] front-row distance keyframes, gatherAt, meowAt, wallAt, cannonAt, helmetAt, flagAt, stepAt, mangoAt, meetZ, jawAt, dusk: [[t, k], ...], shake: [[t0, t1, amp], ...] }
+// Local frame (group WAR.g): origin on the field in front of the town, +z = away from town (toward the dogs). Cats face +z, dogs face -z.
+const kfr = (K, t) => { if (t <= K[0][0]) return K[0][1]; for (let i = 1; i < K.length; i++) if (t < K[i][0]) { const [a, va] = K[i - 1], [b, vb] = K[i]; return va + (vb - va) * (t - a) / (b - a); } return K[K.length - 1][1]; };
+const HIPS = [[-.2, .52, .42, 0], [.2, .52, .42, 1], [-.2, .52, -.42, 1], [.2, .52, -.42, 0]], CCOL_W = 33, WCS = 1.6;   // dog hips (x, y, z, step phase); cats per row in the army
+const WAR = (() => { if (!WARF) return null; const WR = EP.war, g = new THREE.Group(); g.position.set(WARF.ux * WARF.R0, 0, WARF.uz * WARF.R0); g.rotation.y = Math.atan2(WARF.ux, WARF.uz); scene.add(g);
+  window.__war = [Math.round(g.position.x * 100) / 100, Math.round(g.position.z * 100) / 100, Math.round(g.rotation.y * 10000) / 10000];
+  const LIM = (geo, n, m0) => { const m = new THREE.InstancedMesh(geo, m0 || mat('#ffffff'), n); m.castShadow = true; m.receiveShadow = true; m.frustumCulled = false; for (let i = 0; i < n; i++) m.setMatrixAt(i, ZERO); g.add(m); return m; };
+  const flagTex = (bg, draw) => { const c = document.createElement('canvas'); c.width = 256; c.height = 160; const x = c.getContext('2d'); x.fillStyle = bg; x.fillRect(0, 0, 256, 160); x.fillStyle = '#FFFFFF'; draw(x); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return new THREE.MeshStandardMaterial({ map: t, side: THREE.DoubleSide, roughness: .8 }); };
+  const paw = x => { x.beginPath(); x.ellipse(128, 98, 34, 28, 0, 0, TAU); x.fill(); [[86, 62], [110, 44], [146, 44], [170, 62]].forEach(([a, b]) => { x.beginPath(); x.ellipse(a, b, 13, 16, 0, 0, TAU); x.fill(); }); };
+  const bone = x => { x.fillRect(84, 68, 88, 24); [[84, 66], [84, 94], [172, 66], [172, 94]].forEach(([a, b]) => { x.beginPath(); x.arc(a, b, 17, 0, TAU); x.fill(); }); };
+  // dog soldiers: body / dark face bits / army helmet share one matrix; 4 legs each swing from the hip
+  const DOG = poseGeo([[B(.6, .55, 1.2), 0, .75, 0], [B(.46, .5, .4), 0, 1.05, .55], [B(.56, .5, .55), 0, 1.38, .78], [B(.34, .26, .4), 0, 1.25, 1.2], [B(.14, .42, .26), -.33, 1.3, .72, 0, 0, -.25], [B(.14, .42, .26), .33, 1.3, .72, 0, 0, .25], [B(.1, .1, .55), 0, 1.15, -.78, .9]]);
+  const FACE = poseGeo([[new THREE.SphereGeometry(.065, 6, 5), -.14, 1.47, 1.06], [new THREE.SphereGeometry(.065, 6, 5), .14, 1.47, 1.06], [new THREE.SphereGeometry(.08, 6, 5), 0, 1.34, 1.41], [B(.2, .05, .05), -.14, 1.57, 1.06, 0, 0, -.4], [B(.2, .05, .05), .14, 1.57, 1.06, 0, 0, .4]]);
+  const HELM = poseGeo([[new THREE.SphereGeometry(.36, 10, 6, 0, TAU, 0, Math.PI / 2).scale(1, .75, 1.05), 0, 1.6, .78], [Cyl(.44, .44, .05, 12), 0, 1.6, .78]]);
+  const LEG = B(.17, .52, .17).translate(0, -.26, 0);
+  const NC = 15, NRW = 10, ND = NC * NRW, DS = 1.5, DOGC = ['#8B5A2B', '#2B2B30', '#F4F1EA', '#C89B6A', '#6E6E78', '#A0522D', '#D9B48A', '#5A3A22'];
+  const dBody = LIM(DOG, ND), dFace = LIM(FACE, ND, mat('#1B1B20')), dHelm = LIM(HELM, ND, mat('#55663F')), dLeg = LIM(LEG, ND * 4);
+  const DOGS = []; for (let i = 0; i < ND; i++) { const c = i % NC, r = Math.floor(i / NC), cc = DOGC[(i * 5 + r) % DOGC.length];
+    DOGS.push({ x: (c - (NC - 1) / 2) * 3.3 + (hash01(i * 7 + 1) - .5) * .5, dz: r * 3.4 + (hash01(i * 3 + 2) - .5) * .5, s: DS * (.92 + hash01(i * 11) * .16) }); dBody.setColorAt(i, col.set(cc)); for (let k = 0; k < 4; k++) dLeg.setColorAt(i * 4 + k, col.set(cc)); }
+  dBody.instanceColor.needsUpdate = true; dLeg.instanceColor.needsUpdate = true;
+  const BAN = [17, 21, 25, 29].map(i => { const b = new THREE.Group(); const pole = mesh(Cyl(.09, .09, 8, 6), '#5A3A22'); pole.position.y = 4; b.add(pole);
+    const fl = new THREE.Mesh(new THREE.PlaneGeometry(3.2, 2), flagTex('#B3261E', bone)); fl.position.set(1.65, 6.9, 0); b.add(fl); g.add(b); return { i, b, fl }; });
+  // the dog general: big, angry brows, spiked helmet, red cape, a jaw that opens (the cliffhanger)
+  const GEN = new THREE.Group(), gp = (geo, c, x, y, z, p = GEN) => { const m = mesh(geo, c); m.position.set(x, y, z); p.add(m); return m; }, GC = '#875530';
+  gp(B(.62, .58, 1.25), GC, 0, .77, 0); gp(B(.48, .52, .42), GC, 0, 1.07, .56); gp(B(.58, .52, .57), GC, 0, 1.4, .8); gp(B(.36, .17, .42), GC, 0, 1.33, 1.22);
+  [-.34, .34].forEach(x => { const e = gp(B(.15, .44, .27), '#3B2414', x, 1.32, .74); e.rotation.z = x < 0 ? -.25 : .25; });
+  const tl = gp(B(.1, .1, .55), GC, 0, 1.17, -.8); tl.rotation.x = .9;
+  [-.15, .15].forEach(x => { gp(new THREE.SphereGeometry(.07, 8, 6), '#1B1B20', x, 1.5, 1.09); const br = gp(B(.24, .06, .06), '#1B1B20', x, 1.61, 1.09); br.rotation.z = x < 0 ? -.45 : .45; });
+  gp(new THREE.SphereGeometry(.085, 8, 6), '#1B1B20', 0, 1.42, 1.44); [-.1, .1].forEach(x => { const f = gp(new THREE.ConeGeometry(.035, .09, 4), '#FFFFFF', x, 1.21, 1.38); f.rotation.x = Math.PI; });
+  const JAW = new THREE.Group(); JAW.position.set(0, 1.21, 1.02); GEN.add(JAW); gp(B(.33, .09, .4), GC, 0, -.04, .2, JAW); gp(B(.24, .03, .3), '#E85D7A', 0, .02, .18, JAW);
+  gp(new THREE.SphereGeometry(.38, 12, 6, 0, TAU, 0, Math.PI / 2).scale(1, .78, 1.05), '#2E3A24', 0, 1.62, .8); gp(Cyl(.47, .47, .05, 14), '#2E3A24', 0, 1.62, .8); gp(new THREE.ConeGeometry(.07, .4, 6), '#FFC93C', 0, 2.08, .8);
+  gp(B(.86, .05, 1.15), '#C0392B', 0, 1.06, -.1); [-.42, .42].forEach(x => gp(B(.05, .5, 1.1), '#C0392B', x, .84, -.12));
+  gp(new THREE.TorusGeometry(.2, .05, 5, 12), '#FFC93C', 0, 1.02, .78);   // gold collar badge
+  const GLEG = HIPS.map(([x, y, z, ph]) => { const p = new THREE.Group(); p.position.set(x, y, z); GEN.add(p); gp(B(.18, .54, .18), GC, 0, -.27, 0, p); return { p, ph }; });
+  const GS = 2.6; GEN.scale.setScalar(GS); g.add(GEN);
+  // Mango: sits in front (red cape), walks out for the face-off
+  const MG = new THREE.Group(); g.add(MG); const ms = new THREE.Mesh(CAT_SIT, mat('#F28C28')); ms.scale.setScalar(1.7); ms.castShadow = true; MG.add(ms);
+  [-.17, .17].forEach(x => { const e = mesh(new THREE.SphereGeometry(.075, 8, 6), '#1B2333'); e.position.set(x, 1.8, .57); MG.add(e); }); { const n = mesh(new THREE.SphereGeometry(.05, 6, 5), '#FF7A9A'); n.position.set(0, 1.68, .58); MG.add(n); }
+  const MOUTH = mesh(new THREE.SphereGeometry(.13, 10, 8).scale(1, .8, .4), '#5A1A1A', false); MOUTH.position.set(0, 1.56, .57); MOUTH.visible = false; MG.add(MOUTH);   // open for the battle cry
+  { const cp = mesh(B(1.0, 1.15, .06), '#D63A3A'); cp.position.set(0, .95, -.52); cp.rotation.x = -.18; MG.add(cp); const cl = mesh(B(.86, .1, .12), '#FFC93C'); cl.position.set(0, 1.45, -.3); MG.add(cl); }
+  const MW = new THREE.Group(); g.add(MW); { const w = new THREE.Mesh(CAT_GEO, mat('#F28C28')); w.scale.setScalar(1.7); w.castShadow = true; MW.add(w);
+    [-.15, .15].forEach(x => { const e = mesh(new THREE.SphereGeometry(.075, 8, 6), '#1B2333'); e.position.set(x, 1.5, 1.22); MW.add(e); }); const cp = mesh(B(.9, .06, 1.2), '#D63A3A'); cp.position.set(0, 1.18, -.15); MW.add(cp); }
+  // the cat army: one cat per follower, they run in from town to their spot in the rows; helmets (pots, bowls) pop on
+  const NCAT = WR.cats ?? 321, CCOL = CCOL_W, CS = WCS, cRun = LIM(CAT_GEO, NCAT), cHelm = LIM(new THREE.SphereGeometry(.3, 9, 5, 0, TAU, 0, Math.PI / 2).scale(1.08, .85, 1.12).translate(0, .99, .5), NCAT);
+  const CATS = []; for (let i = 0; i < NCAT; i++) { const c = i % CCOL, r = Math.floor(i / CCOL), tx = (c - (CCOL - 1) / 2) * 2.75 + (hash01(i * 13 + 5) - .5) * .7, tz = -7 - r * 3 + (hash01(i * 17 + 3) - .5) * .8;
+    const sx = (hash01(i * 23 + 9) - .5) * 210, sz = -55 - hash01(i * 29 + 4) * 150, st = hash01(i * 31 + 2) * 1.1, du = 1.6 + hash01(i * 37 + 8) * .7;
+    CATS.push({ tx, tz, sx, sz, st, du, ph: hash01(i * 41) * 6.28 }); cRun.setColorAt(i, col.set(CAT_COLORS[(i * 5 + 3) % CAT_COLORS.length])); cHelm.setColorAt(i, col.set(['#8A96A6', '#E85D5D', '#8A96A6', '#4FB3FF', '#FFC93C', '#5BB98C'][i % 6])); }
+  cRun.instanceColor.needsUpdate = true; cHelm.instanceColor.needsUpdate = true;
+  // the box wall (one row + some stacked), with a gate in the middle for Mango
+  const WB = []; for (let x = -45; x <= 45.1; x += 3.6) if (Math.abs(x) > 3.5) WB.push({ x, y: 1.7, k: Math.abs(x) }); WB.filter((b, i) => i % 3 === 1).map(b => ({ x: b.x, y: 5.1, k: b.k + 2 })).forEach(b => WB.push(b));
+  const wBox = LIM(B(3.4, 3.4, 3.4), WB.length), wTape = LIM(B(3.44, .06, .8).translate(0, 1.71, 0), WB.length, mat('#E9D3A8'));
+  WB.forEach((b, i) => wBox.setColorAt(i, col.set(i % 2 ? '#C8935A' : '#B98250'))); wBox.instanceColor.needsUpdate = true;
+  // yarn cannons (catapults) behind the wall
+  const CAN = [-9.5, 9.5].map(x => { const c = new THREE.Group(); c.position.set(x, 0, 9); g.add(c); const cq = (geo, col2, a, b2, d) => { const m = mesh(geo, col2); m.position.set(a, b2, d); c.add(m); return m; };
+    cq(B(3.2, .8, 4.4), '#8A5A3B', 0, .9, 0); [[-1.7, 1.4], [1.7, 1.4], [-1.7, -1.4], [1.7, -1.4]].forEach(([a, d]) => { const w = cq(Cyl(.75, .75, .3, 12), '#5A3A22', a, .75, d); w.rotation.z = Math.PI / 2; });
+    [-1, 1].forEach(a => cq(B(.35, 3.2, .35), '#8A5A3B', a, 2.6, .4)); cq(B(2.4, .35, .35), '#8A5A3B', 0, 4.1, .4);
+    const arm = new THREE.Group(); arm.position.set(0, 1.4, .2); arm.rotation.x = .95; c.add(arm); const am = mesh(B(.35, .35, 5.6), '#A87444'); am.position.z = -2.6; arm.add(am);
+    const cup = mesh(Cyl(.8, .5, .5, 10), '#5A3A22'); cup.position.set(0, .3, -5.3); arm.add(cup);
+    const yb = new THREE.Group(); yb.position.set(0, 1.25, -5.3); arm.add(yb); const ym = mesh(new THREE.SphereGeometry(1.05, 12, 10), x < 0 ? '#FF6FA8' : '#4FB3FF'); yb.add(ym);
+    [0, 1, 2].forEach(k => { const tr = mesh(new THREE.TorusGeometry(1.06, .07, 5, 18), x < 0 ? '#E0458A' : '#2F8CE0', false); tr.rotation.set(k * 1.05, k * .7, 0); yb.add(tr); });
+    c.scale.setScalar(.001); c.visible = false; return c; });
+  // cat flags (blue, white paw) among the rows
+  const FLG = [-34, -12, 12, 34].map((x, k) => { const f = new THREE.Group(); f.position.set(x, 0, -13 - (k % 2) * 6); g.add(f); const pole = mesh(Cyl(.12, .12, 11, 6), '#3B3B44'); pole.position.y = 5.5; f.add(pole);
+    const ball = mesh(new THREE.SphereGeometry(.3, 8, 6), '#FFC93C'); ball.position.y = 11.1; f.add(ball);
+    const fl = new THREE.Mesh(new THREE.PlaneGeometry(4.2, 2.6), flagTex('#2F5FE0', paw)); fl.position.set(2.15, 9.5, 0); f.add(fl); f.scale.set(1, .001, 1); f.visible = false; return { f, fl }; });
+  // dust behind the marching army
+  const DUST = []; for (let i = 0; i < 46; i++) { const d = mesh(new THREE.SphereGeometry(1, 7, 5), '#E3D3AE', false); d.material = mat('#E8DCC0', { transparent: true, opacity: .22, depthWrite: false }); d.scale.setScalar(0); g.add(d); DUST.push({ m: d, x: (hash01(i * 3) - .5) * 60, z: hash01(i * 5 + 1) * 40, s: 2 + hash01(i * 7 + 2) * 3.5, ph: hash01(i * 9) * 6.28 }); }
+  return { WR, g, MOUTH, dBody, dFace, dHelm, dLeg, DOGS, BAN, GEN, JAW, GLEG, GS, MG, MW, cRun, cHelm, CATS, WB, wBox, wTape, CAN, FLG, DUST, NRW };
+})();
+const _wm = new THREE.Matrix4(), _wq = new THREE.Quaternion(), _we = new THREE.Euler(), _wv = new THREE.Vector3(), _ws = new THREE.Vector3(), _wl = new THREE.Matrix4();
+function warFrame(t, anim) { const A = WAR, WR = A.WR;
+  if (WR.dusk) duskAt(Math.min(1, Math.max(0, kfr(WR.dusk, t))));
+  (WR.shake || []).forEach(([a, b, amp]) => { if (t >= a && t < b) { const k = amp * (1 - (t - a) / (b - a) * .6); camera.position.x += Math.sin(anim * 61) * k; camera.position.y += Math.sin(anim * 47 + 1) * k; camera.position.z += Math.sin(anim * 53 + 2) * k; camera.updateMatrixWorld(); } });
+  // dogs march: front row at kfr(dogs, t); legs swing only while they move; all in step (a march)
+  const Z = kfr(WR.dogs, t), mv = Math.abs(kfr(WR.dogs, t + .05) - Z) > .01 ? 1 : 0, SP = 9;
+  A.DOGS.forEach((d, i) => { const ph = anim * SP, bob = mv * Math.abs(Math.sin(ph)) * .14, z = Z + d.dz;
+    _wm.compose(_wv.set(d.x, bob, z), _wq.setFromEuler(_we.set(0, Math.PI, 0)), _ws.set(d.s, d.s, d.s)); A.dBody.setMatrixAt(i, _wm); A.dFace.setMatrixAt(i, _wm); A.dHelm.setMatrixAt(i, _wm);
+    HIPS.forEach(([hx, hy, hz, p], k) => { _wl.makeRotationX(mv * Math.sin(ph + p * Math.PI) * .6).setPosition(hx, hy, hz); A.dLeg.setMatrixAt(i * 4 + k, _wm.clone().multiply(_wl)); }); });
+  [A.dBody, A.dFace, A.dHelm, A.dLeg].forEach(m => m.instanceMatrix.needsUpdate = true);
+  A.BAN.forEach((b, k) => { const d = A.DOGS[b.i]; b.b.position.set(d.x + .9, mv * Math.abs(Math.sin(anim * SP)) * .14, Z + d.dz); b.fl.rotation.y = Math.sin(anim * 3 + k) * .25; b.fl.position.x = 1.65 * Math.cos(b.fl.rotation.y); });
+  A.DUST.forEach((d, i) => { const k = mv ? 1 : 0, u = frac(anim * .25 + d.ph / 6.28); d.m.scale.set(Math.max(.001, k * d.s * (1 + 1.5 * u)), Math.max(.001, k * d.s * (.6 + .8 * u)), Math.max(.001, k * d.s * (1 + 1.5 * u))); d.m.position.set(d.x * 1.2 + Math.sin(anim * .7 + d.ph) * 2, .5 + u * 3, Z + A.NRW * 3.4 + d.z * .6 - 4 + u * 6); });
+  // the general: leads the army, then walks out alone (heavy steps), opens his mouth
+  const sa = WR.stepAt ?? 1e9, gz0 = Z - 6, mz = WR.meetZ ?? 20, gzM = mz + 5.3, gu = Math.min(1, Math.max(0, (t - sa) / 2.4)), gz = t < sa ? gz0 : gz0 + (gzM - gz0) * inout(gu), gmv = t < sa ? mv : gu > 0 && gu < 1 ? 1 : 0;
+  A.GEN.position.set(0, gmv * Math.abs(Math.sin(anim * (t < sa ? SP : 5))) * .25, gz); A.GEN.rotation.y = Math.PI;
+  A.GLEG.forEach(L => L.p.rotation.x = gmv * Math.sin(anim * (t < sa ? SP : 5) + L.ph * Math.PI) * .6);
+  const ja = WR.jawAt ?? 1e9; A.JAW.rotation.x = .6 * ease((t - ja) / .45);
+  // Mango: sits in front of the gate; MEOW = he rears up; walks out to meet the general, looks up
+  const ma = WR.mangoAt ?? 1e9, me = WR.meowAt ?? 1e9, mu = (t - ma) / 2.0, M0 = 6; let mx = 0, my = 0, mzz = M0, mp = 0, walk = false;
+  if (mu > 0 && mu < 1) { walk = true; mzz = M0 + (mz - M0) * ease(mu); } else if (mu >= 1) { mzz = mz; mp = -.28 * ease((t - ma - 2.0) / .4); }
+  const mk = t - me; if (mk > 0 && mk < 1.5) { const k = Math.sin(Math.PI * Math.min(1, mk / 1.2)); my = k * 1.2; mp = -.45 * k; } A.MOUTH.visible = mk > 0 && mk < 1.1;
+  A.MW.visible = walk; A.MG.visible = !walk;
+  if (walk) { A.MW.position.set(mx, Math.abs(Math.sin(anim * 13)) * .3, mzz); A.MW.rotation.y = 0; }
+  A.MG.position.set(mx, my, mzz); A.MG.rotation.set(mp, 0, 0); { const pk = mk > 0 && mk < .5 ? 1 + .25 * Math.sin(Math.PI * mk / .5) : 1; A.MG.scale.set(pk, pk, pk); }
+  // the cats run in from town and line up behind the wall
+  const ga = WR.gatherAt ?? 1e9, ha = WR.helmetAt ?? 1e9;
+  A.CATS.forEach((c, i) => { const u = (t - ga - c.st) / c.du; let x, z, y = 0, yaw = 0, s = WCS;
+    if (u <= 0) { A.cRun.setMatrixAt(i, ZERO); A.cHelm.setMatrixAt(i, ZERO); return; }
+    if (u < 1) { const e = ease(u); x = c.sx + (c.tx - c.sx) * e; z = c.sz + (c.tz - c.sz) * e; y = Math.abs(Math.sin(anim * 16 + c.ph)) * .35; yaw = Math.atan2(c.tx - c.sx, c.tz - c.sz); s = WCS * Math.min(1, u * 8); }
+    else { x = c.tx; z = c.tz; yaw = Math.sin(anim * 1.3 + c.ph) * .12; y = Math.max(0, Math.sin(anim * 3 + c.ph)) * .06; }
+    _wm.compose(_wv.set(x, y, z), _wq.setFromEuler(_we.set(0, yaw, 0)), _ws.set(s, s, s)); A.cRun.setMatrixAt(i, _wm);
+    const he = (t - ha - (i % CCOL_W) * .012 - Math.floor(i / CCOL_W) * .05) / .3;
+    if (he > 0) { const k = Math.max(.001, back(he)); _wm.multiply(_wl.compose(_wv.set(0, (1 - Math.min(1, he)) * 1.5, 0), QI, _ws.set(k, k, k))); A.cHelm.setMatrixAt(i, _wm); } else A.cHelm.setMatrixAt(i, ZERO); });
+  A.cRun.instanceMatrix.needsUpdate = true; A.cHelm.instanceMatrix.needsUpdate = true;
+  // the box wall drops in from the middle out; cannons + flags pop
+  const wa = WR.wallAt ?? 1e9; A.WB.forEach((b, i) => { const e = (t - wa - b.k * .014) / .4; if (e <= 0) { A.wBox.setMatrixAt(i, ZERO); A.wTape.setMatrixAt(i, ZERO); return; }
+    _wm.compose(_wv.set(b.x, b.y + (1 - ease(Math.min(1, e))) * 14, 2.5), _wq.setFromEuler(_we.set(0, (hash01(i) - .5) * .12, 0)), _ws.set(1, 1, 1)); A.wBox.setMatrixAt(i, _wm); A.wTape.setMatrixAt(i, _wm); });
+  A.wBox.instanceMatrix.needsUpdate = true; A.wTape.instanceMatrix.needsUpdate = true;
+  const ca = WR.cannonAt ?? 1e9; A.CAN.forEach((c, k) => { const e = (t - ca - k * .2) / .45; c.visible = e > 0; c.scale.setScalar(Math.max(.001, back(e))); });
+  const fa = WR.flagAt ?? 1e9; A.FLG.forEach((f, k) => { const e = (t - fa - k * .12) / .4; f.f.visible = e > 0; f.f.scale.set(1, Math.max(.001, back(e)), 1); f.fl.rotation.y = Math.sin(anim * 2.6 + k) * .3; f.fl.position.x = 2.15 * Math.cos(f.fl.rotation.y); });
+}
 // ---------- cats: Mango + one per follower, walking the sidewalks from place to place ----------
 const catMesh = IM(CAT_GEO, F + 1);
 catMesh.setColorAt(0, col.set('#F28C28'));
@@ -1185,7 +1300,7 @@ function updateExtras(t, anim) {
 const ST = EP.starts || [0, 0, 0, 0];
 const vv = a => V(...a);
 const NL = NEWL ? V(NEWL.x, 0, NEWL.z) : V(0, 0, CR), U = NL.clone().setY(0).normalize();
-const SH = STILL ? [] : EP.shots ? EP.shots.map(s => ({ t0: s.t0, t1: s.t1, p0: vv(s.p0), p1: vv(s.p1), l0: vv(s.l0), l1: vv(s.l1), f: s.inout ? inout : ease })) : [
+const SH = STILL ? [] : EP.shots ? EP.shots.map(s => ({ fov: s.fov, t0: s.t0, t1: s.t1, p0: vv(s.p0), p1: vv(s.p1), l0: vv(s.l0), l1: vv(s.l1), f: s.inout ? inout : ease })) : [
   { t0: 0, t1: ST[1], p0: V(14, 120, 150), p1: V(46, 74, 98), l0: V(0, 5, 0), l1: V(0, 6, 0) },
   { t0: ST[1], t1: EP.milestone - .2, p0: NL.clone().addScaledVector(U, -95).setY(16), p1: NL.clone().addScaledVector(U, -52).setY(34), l0: NL.clone().addScaledVector(U, -20).setY(2), l1: NL.clone() },
   { t0: EP.milestone - .2, t1: ST[2], p0: NL.clone().addScaledVector(U, -52).setY(34), p1: V(-CR * .55, CR * 1.25, CR * 1.45), l0: NL.clone(), l1: V(0, 0, -CR * .1), f: inout },
@@ -1237,7 +1352,8 @@ window.renderFrame = (t, anim = t) => {
   if (!window.__noCam) {
     if (STILL) { camera.position.set(...EP.still.pos); camera.lookAt(V(...EP.still.look)); }
     else if (SH.length) { const sh = SH.find(s => t >= s.t0 && t < s.t1) || SH[SH.length - 1]; const k = (sh.f || ease)((t - sh.t0) / (sh.t1 - sh.t0));
-      camera.position.lerpVectors(sh.p0, sh.p1, k); camera.lookAt(new THREE.Vector3().lerpVectors(sh.l0, sh.l1, k)); }
+      camera.position.lerpVectors(sh.p0, sh.p1, k); camera.lookAt(new THREE.Vector3().lerpVectors(sh.l0, sh.l1, k));
+      const fv = sh.fov ? sh.fov[0] + (sh.fov[1] - sh.fov[0]) * k : 42; if (camera.fov !== fv) { camera.fov = fv; camera.updateProjectionMatrix(); } }   // shots[].fov = [from, to] (Day 8 zooms)
   }
   camera.updateMatrixWorld();
   const changed = t !== lastT; lastT = t;
@@ -1334,6 +1450,7 @@ window.renderFrame = (t, anim = t) => {
     LONE.h.scale.setScalar(Math.max(.001, back((t - ha) / .5))); LONE.h.visible = t >= ha;
     if (LONE.sign) { const e = (t - ha - .3) / .4; LONE.sign.visible = e > 0; LONE.sign.scale.setScalar(Math.max(.001, back(e))); }
     const u = (t - ra) / .9; if (u > 0 && u < 1) { LONE.walk.scale.setScalar(1.6 * Math.min(1, (1 - u) * 4)); LONE.walk.position.set(0, Math.abs(Math.sin(anim * 14)) * .3, 5.5 - 4.4 * ease(u)); LONE.walk.rotation.y = Math.PI; } else LONE.walk.scale.setScalar(0); }
+  if (WAR) warFrame(t, anim);
   // upload only the used part of each instanced mesh (pose meshes hold 800 slots but use a few dozen): big win on phones
   if (!RANGED) { RANGED = []; scene.traverse(o => { if (o.isInstancedMesh) RANGED.push(o); }); }
   for (const m of RANGED) if (m.count < m.instanceMatrix.count) { const a = m.instanceMatrix; a.clearUpdateRanges(); a.addUpdateRange(0, Math.max(1, m.count) * 16); }
