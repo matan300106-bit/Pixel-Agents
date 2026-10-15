@@ -680,3 +680,4 @@ date,item,before,after,reason,agent
 2026-10-14,Daily watch,none,"new titles LIVE (5L, 2L, clear, tray); BSR up: camera 925->326, 5L 672->399, 2L 1631->1042, tray 2462->1521, stainless dog 221",daily routine,guardian
 2026-10-14,ALERT no orders 21h,~5 orders/day,0 orders Oct 14 by 17:41 PT,listings healthy in SP-API; checking ads + product page via Chrome,guardian
 2026-10-15,ALERT no orders 34h,~5/day,"Oct 14 = 0 orders (Sales API), Oct 15 0 so far; all products incl. untouched stainless",account-wide check needed via Chrome,guardian
+2026-10-15,Thu ramp check-in,none,"NO change: emergency hold (0 orders since Oct 13 8:26 PM PT); waiting for Chrome account/ads check",ramp routine,guardian
