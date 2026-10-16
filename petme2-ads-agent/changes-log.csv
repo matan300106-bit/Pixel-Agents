@@ -681,3 +681,5 @@ date,item,before,after,reason,agent
 2026-10-14,ALERT no orders 21h,~5 orders/day,0 orders Oct 14 by 17:41 PT,listings healthy in SP-API; checking ads + product page via Chrome,guardian
 2026-10-15,ALERT no orders 34h,~5/day,"Oct 14 = 0 orders (Sales API), Oct 15 0 so far; all products incl. untouched stainless",account-wide check needed via Chrome,guardian
 2026-10-15,Thu ramp check-in,none,"NO change: emergency hold (0 orders since Oct 13 8:26 PM PT); waiting for Chrome account/ads check",ramp routine,guardian
+2026-10-16,settings daily_spend_cap,120,140,restore ad traffic (clicks 60->24/day; sales 13->0-4/day); owner standing "do whatever is needed",guardian
+2026-10-16,Restore traffic Chrome prompt (planned),"Auto paused; some campaigns out of budget; Keyword Test maybe $14","Auto on $10 (bids <=0.55); +20% budget on out-of-budget campaigns with orders; Keyword Test $16; total <=140",3-day sales drop,manager
