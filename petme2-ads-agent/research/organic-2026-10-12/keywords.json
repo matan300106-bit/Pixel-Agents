@@ -1,0 +1,888 @@
+{
+ "_meta": {
+  "generated": "2026-10-12",
+  "ranks_from": "Helium 10 Cerebro export 2026-10-03/04 (before rewrite); null = not ranked (worse than ~#306) or no data",
+  "ads_from": "search_term_L7D 2026-09-30..10-06 and 2026-10-05..10-10",
+  "live_from": "SP-API catalog 2026-10-12",
+  "tracker_note": "Add top15 of each ASIN to Helium 10 Keyword Tracker on that ASIN"
+ },
+ "B0GHH8L59K": {
+  "product": "5L WiFi dual-bowl elevated feeder (QO-7VBS-CVT4)",
+  "top15": [
+   {
+    "keyword": "automatic cat feeder for 2 cats",
+    "sv": 1059,
+    "competing": 2000.0,
+    "title_density": 24.0,
+    "rank_oct4": 49,
+    "sister_ranks": null,
+    "live_placement": "TITLE<=80",
+    "ads": "-",
+    "note": "Best Oct 4 rank (#49), exact phrase leads the title. Protect; do not reword."
+   },
+   {
+    "keyword": "automatic cat feeder 2 cats",
+    "sv": 4741,
+    "competing": 2000.0,
+    "title_density": 6.0,
+    "rank_oct4": 64,
+    "sister_ranks": null,
+    "live_placement": "BULLETS",
+    "ads": "-",
+    "note": "Highest-SV \"2 cats\" phrase, page 2 (#64). Already indexed via title words."
+   },
+   {
+    "keyword": "elevated automatic cat feeder",
+    "sv": 576,
+    "competing": 963.0,
+    "title_density": 0.0,
+    "rank_oct4": 20,
+    "sister_ranks": null,
+    "live_placement": "words only",
+    "ads": "-",
+    "note": "Rank #20 (page 1) with low competition (963) but the exact phrase is nowhere. Easiest win: put it in bullet 4 header/first sentence."
+   },
+   {
+    "keyword": "cat feeder automatic for 2 cats",
+    "sv": 525,
+    "competing": 2000.0,
+    "title_density": 0.0,
+    "rank_oct4": 40,
+    "sister_ranks": null,
+    "live_placement": "words only",
+    "ads": "-",
+    "note": "Rank #40 on page 1. Indexed by words only; keep \"for 2 cats\" next to \"automatic\"."
+   },
+   {
+    "keyword": "cat feeder for 2 cats",
+    "sv": 476,
+    "competing": 9000.0,
+    "title_density": 22.0,
+    "rank_oct4": 41,
+    "sister_ranks": null,
+    "live_placement": "TITLE<=80",
+    "ads": "-",
+    "note": "Rank #41. Exact in title. Protect."
+   },
+   {
+    "keyword": "dual automatic cat feeder",
+    "sv": 1159,
+    "competing": 759.0,
+    "title_density": 1.0,
+    "rank_oct4": 64,
+    "sister_ranks": null,
+    "live_placement": "BULLETS",
+    "ads": "-",
+    "note": "Rank #64, competition 759. True feature (2 bowls)."
+   },
+   {
+    "keyword": "dual cat feeder automatic",
+    "sv": 1246,
+    "competing": 741.0,
+    "title_density": 0.0,
+    "rank_oct4": 87,
+    "sister_ranks": null,
+    "live_placement": "words only",
+    "ads": "-",
+    "note": "Rank #87, competition 741; words only. Same root as above."
+   },
+   {
+    "keyword": "double cat feeder",
+    "sv": 1156,
+    "competing": 3000.0,
+    "title_density": 0.0,
+    "rank_oct4": null,
+    "sister_ranks": null,
+    "live_placement": "BULLETS",
+    "ads": "3clk/1ord",
+    "note": "Only search term with an ad order for this ASIN (3 clicks, 1 order). In bullets."
+   },
+   {
+    "keyword": "multi cat feeder",
+    "sv": 882,
+    "competing": 4000.0,
+    "title_density": 3.0,
+    "rank_oct4": 133,
+    "sister_ranks": null,
+    "live_placement": "NOT PRESENT (missing: multi)",
+    "ads": "-",
+    "note": "Rank #133 but the word \"multi\" is missing everywhere. 2 bowls = true for 2 pets only; use \"multi-cat homes\" wording."
+   },
+   {
+    "keyword": "elevated cat feeding station",
+    "sv": 2101,
+    "competing": 2000.0,
+    "title_density": 3.0,
+    "rank_oct4": 204,
+    "sister_ranks": null,
+    "live_placement": "BULLETS",
+    "ads": "-",
+    "note": "Feature term (raised bowls). Rank #204. Bullet header has it; title has \"Elevated Feeding Station\" (missing \"cat\")."
+   },
+   {
+    "keyword": "wifi automatic cat feeder app control",
+    "sv": 1244,
+    "competing": 501.0,
+    "title_density": 0.0,
+    "rank_oct4": 158,
+    "sister_ranks": null,
+    "live_placement": "BULLETS",
+    "ads": "-",
+    "note": "Rank #158, competition 501. In bullet 2."
+   },
+   {
+    "keyword": "automatic cat feeder with app",
+    "sv": 1768,
+    "competing": 495.0,
+    "title_density": 5.0,
+    "rank_oct4": 186,
+    "sister_ranks": null,
+    "live_placement": "BULLETS",
+    "ads": "-",
+    "note": "Rank #186, competition 495. App is true."
+   },
+   {
+    "keyword": "timed cat feeder",
+    "sv": 3330,
+    "competing": 582.0,
+    "title_density": 1.0,
+    "rank_oct4": 270,
+    "sister_ranks": null,
+    "live_placement": "BULLETS",
+    "ads": "-",
+    "note": "Low competition (582) for 3.3k SV. Rank #270, only in bullets."
+   },
+   {
+    "keyword": "cat food dispenser",
+    "sv": 23065,
+    "competing": 5000.0,
+    "title_density": 10.0,
+    "rank_oct4": null,
+    "sister_ranks": null,
+    "live_placement": "BULLETS",
+    "ads": "4clk/0ord",
+    "note": "23k SV, only 10 title density. Not in title (title has \"Pet Food Dispenser\", SV 1.6k). Ad clicks but no orders."
+   },
+   {
+    "keyword": "automatic cat feeder",
+    "sv": 187032,
+    "competing": 4000.0,
+    "title_density": 42.0,
+    "rank_oct4": 268,
+    "sister_ranks": null,
+    "live_placement": "TITLE<=80",
+    "ads": "2clk/0ord",
+    "note": "Head term (187k). Rank #268, so it is a long-term target only. Keep at the front of the title."
+   }
+  ]
+ },
+ "B0GTCGYZDM": {
+  "product": "3L camera feeder (2H-2T1T-CJC3)",
+  "top15": [
+   {
+    "keyword": "automatic cat feeder with camera",
+    "sv": 6417,
+    "competing": 521.0,
+    "title_density": 30.0,
+    "rank_oct4": 121,
+    "sister_ranks": null,
+    "live_placement": "TITLE<=80",
+    "ads": "3clk/0ord",
+    "note": "Main feature term (6.4k SV, competition 521). Rank #121, exact in title. Ads: 3 clicks, 0 orders on this exact search term."
+   },
+   {
+    "keyword": "cat feeder with camera",
+    "sv": 2519,
+    "competing": 527.0,
+    "title_density": 31.0,
+    "rank_oct4": 127,
+    "sister_ranks": null,
+    "live_placement": "TITLE<=80",
+    "ads": "-",
+    "note": "Rank #127. Exact in title."
+   },
+   {
+    "keyword": "automatic dog feeder with camera",
+    "sv": 977,
+    "competing": 419.0,
+    "title_density": 4.0,
+    "rank_oct4": 102,
+    "sister_ranks": null,
+    "live_placement": "BULLETS",
+    "ads": "2clk/0ord",
+    "note": "Rank #102. In bullet 1. Exact ad: 2 clicks, 0 orders."
+   },
+   {
+    "keyword": "cat food dispenser with camera",
+    "sv": 605,
+    "competing": 438.0,
+    "title_density": 0.0,
+    "rank_oct4": 86,
+    "sister_ranks": null,
+    "live_placement": "words only",
+    "ads": "1clk/0ord",
+    "note": "Rank #86, competition 438. Words only: the title says \"Cat Food Dispenser with 1080P HD Video\". Writing \"with Camera\" there gives the exact phrase."
+   },
+   {
+    "keyword": "automatic cat feeder with camera 1080p",
+    "sv": 564,
+    "competing": 441.0,
+    "title_density": 0.0,
+    "rank_oct4": 86,
+    "sister_ranks": null,
+    "live_placement": "words only",
+    "ads": "-",
+    "note": "Rank #86. The 1080p fact is true; words only now."
+   },
+   {
+    "keyword": "wifi cat feeder with camera",
+    "sv": 250,
+    "competing": 446.0,
+    "title_density": 0.0,
+    "rank_oct4": 95,
+    "sister_ranks": null,
+    "live_placement": "words only",
+    "ads": "-",
+    "note": "Rank #95, competition 446. Words only."
+   },
+   {
+    "keyword": "dog feeder with camera",
+    "sv": 574,
+    "competing": 438.0,
+    "title_density": 5.0,
+    "rank_oct4": 119,
+    "sister_ranks": null,
+    "live_placement": "BULLETS",
+    "ads": "-",
+    "note": "Rank #119. In bullets (\"automatic dog feeder with camera\")."
+   },
+   {
+    "keyword": "pet feeder with camera",
+    "sv": 782,
+    "competing": 720.0,
+    "title_density": 0.0,
+    "rank_oct4": 140,
+    "sister_ranks": null,
+    "live_placement": "words only",
+    "ads": "1clk/0ord",
+    "note": "Rank #140. Words only (the Oct 4 draft had it; the published version dropped the exact phrase). 1 ad click."
+   },
+   {
+    "keyword": "automatic cat feeder camera",
+    "sv": 612,
+    "competing": 509.0,
+    "title_density": 0.0,
+    "rank_oct4": 124,
+    "sister_ranks": null,
+    "live_placement": "words only",
+    "ads": "-",
+    "note": "Rank #124. Close variant, covered by the title words."
+   },
+   {
+    "keyword": "auto cat feeder with camera",
+    "sv": 586,
+    "competing": 478.0,
+    "title_density": 0.0,
+    "rank_oct4": 132,
+    "sister_ranks": null,
+    "live_placement": "words only",
+    "ads": "-",
+    "note": "Rank #132. Words only. Add \"auto\" next to camera once in a bullet."
+   },
+   {
+    "keyword": "automatic pet feeder with camera",
+    "sv": 615,
+    "competing": 723.0,
+    "title_density": 0.0,
+    "rank_oct4": 151,
+    "sister_ranks": null,
+    "live_placement": "words only",
+    "ads": "-",
+    "note": "Rank #151. Words only."
+   },
+   {
+    "keyword": "auto cat feeder",
+    "sv": 8838,
+    "competing": 1000.0,
+    "title_density": 1.0,
+    "rank_oct4": 160,
+    "sister_ranks": null,
+    "live_placement": "BULLETS",
+    "ads": "-",
+    "note": "Best generic rank (#160) with lower competition (1,000)."
+   },
+   {
+    "keyword": "cat food dispenser",
+    "sv": 23065,
+    "competing": 5000.0,
+    "title_density": 10.0,
+    "rank_oct4": null,
+    "sister_ranks": null,
+    "live_placement": "TITLE<=80",
+    "ads": "1clk/0ord",
+    "note": "23k SV, in the title. No rank. 1 ad click."
+   },
+   {
+    "keyword": "timed cat feeder",
+    "sv": 3330,
+    "competing": 582.0,
+    "title_density": 1.0,
+    "rank_oct4": 242,
+    "sister_ranks": null,
+    "live_placement": "BULLETS",
+    "ads": "-",
+    "note": "Competition 582, rank #242."
+   },
+   {
+    "keyword": "automatic cat feeder",
+    "sv": 187032,
+    "competing": 4000.0,
+    "title_density": 42.0,
+    "rank_oct4": 271,
+    "sister_ranks": null,
+    "live_placement": "TITLE<=80",
+    "ads": "2clk/0ord",
+    "note": "Head term; rank #271. Keep at the front of the title."
+   }
+  ]
+ },
+ "B0GHKN9DBR": {
+  "product": "2L cat water fountain (L6-L3S1-I7Q6)",
+  "top15": [
+   {
+    "keyword": "plastic cat water fountain",
+    "sv": 1883,
+    "competing": 2000.0,
+    "title_density": 0.0,
+    "rank_oct4": 29,
+    "sister_ranks": null,
+    "live_placement": "BULLETS",
+    "ads": "-",
+    "note": "Our best fountain rank (#29). True (plastic). In bullet 4. Protect it."
+   },
+   {
+    "keyword": "cat water fountain plastic",
+    "sv": 518,
+    "competing": 2000.0,
+    "title_density": 0.0,
+    "rank_oct4": 31,
+    "sister_ranks": null,
+    "live_placement": "words only",
+    "ads": "-",
+    "note": "Rank #31. Indexed by words. Protect."
+   },
+   {
+    "keyword": "water fountains for cats indoor quiet",
+    "sv": 357,
+    "competing": 4000.0,
+    "title_density": 0.0,
+    "rank_oct4": 52,
+    "sister_ranks": null,
+    "live_placement": "words only",
+    "ads": "-",
+    "note": "Rank #52 on long tail. Title words cover it; keep \"Quiet\" next to \"Water Fountains for Cats Indoor\"."
+   },
+   {
+    "keyword": "compact cat water fountain",
+    "sv": 213,
+    "competing": 1000.0,
+    "title_density": 0.0,
+    "rank_oct4": 83,
+    "sister_ranks": null,
+    "live_placement": "words only",
+    "ads": "-",
+    "note": "Rank #83, low SV. True (slim/compact)."
+   },
+   {
+    "keyword": "pet water fountains for cats and dogs",
+    "sv": 335,
+    "competing": 4000.0,
+    "title_density": 0.0,
+    "rank_oct4": 87,
+    "sister_ranks": null,
+    "live_placement": "words only",
+    "ads": "-",
+    "note": "Rank #87. Words only."
+   },
+   {
+    "keyword": "cat water fountain with led indicator",
+    "sv": 1246,
+    "competing": 786.0,
+    "title_density": 0.0,
+    "rank_oct4": 112,
+    "sister_ranks": null,
+    "live_placement": "NOT PRESENT (missing: led)",
+    "ads": "-",
+    "note": "Rank #112, competition 786. The red low-water light is true; ask the owner whether it is an LED. If yes, write \"LED low water indicator\"."
+   },
+   {
+    "keyword": "small cat water fountain",
+    "sv": 1768,
+    "competing": 5000.0,
+    "title_density": 0.0,
+    "rank_oct4": 128,
+    "sister_ranks": null,
+    "live_placement": "BULLETS",
+    "ads": "1clk/1ord",
+    "note": "Rank #128, and it had an ad order (1 click, 1 order). In bullet 4."
+   },
+   {
+    "keyword": "quiet cat water fountain",
+    "sv": 1594,
+    "competing": 2000.0,
+    "title_density": 0.0,
+    "rank_oct4": 143,
+    "sister_ranks": null,
+    "live_placement": "BULLETS",
+    "ads": "1clk/0ord",
+    "note": "Rank #143. In bullet 4. The same term sold the tray fountain via ads."
+   },
+   {
+    "keyword": "running water bowl for cats",
+    "sv": 1159,
+    "competing": 1000.0,
+    "title_density": 0.0,
+    "rank_oct4": 158,
+    "sister_ranks": null,
+    "live_placement": "BULLETS",
+    "ads": "-",
+    "note": "Rank #158, competition 1,000. In bullet 1."
+   },
+   {
+    "keyword": "water fountains for cats indoor",
+    "sv": 49512,
+    "competing": 2000.0,
+    "title_density": 2.0,
+    "rank_oct4": 236,
+    "sister_ranks": null,
+    "live_placement": "TITLE<=80",
+    "ads": "-",
+    "note": "49.5k SV, title density only 2. Rank #236. Exact in title (first 80 chars)."
+   },
+   {
+    "keyword": "cat water dispenser",
+    "sv": 17542,
+    "competing": 6000.0,
+    "title_density": 8.0,
+    "rank_oct4": 254,
+    "sister_ranks": null,
+    "live_placement": "BULLETS",
+    "ads": "3clk/1ord; shared 1clk/0ord",
+    "note": "Ad proven: 3 clicks, 1 order (old campaign). Rank #254."
+   },
+   {
+    "keyword": "cat water bowl",
+    "sv": 27400,
+    "competing": 10000.0,
+    "title_density": 5.0,
+    "rank_oct4": null,
+    "sister_ranks": null,
+    "live_placement": "BULLETS",
+    "ads": "14clk/1ord",
+    "note": "Ad proven: 14 clicks, 1 order. It is a broad term, so bullets only."
+   },
+   {
+    "keyword": "kitten water fountain",
+    "sv": 2502,
+    "competing": 1000.0,
+    "title_density": 0.0,
+    "rank_oct4": 277,
+    "sister_ranks": null,
+    "live_placement": "BULLETS",
+    "ads": "-",
+    "note": "Competition 1,000, rank #277. In bullet 1."
+   },
+   {
+    "keyword": "cat water fountain",
+    "sv": 319141,
+    "competing": 5000.0,
+    "title_density": 46.0,
+    "rank_oct4": null,
+    "sister_ranks": null,
+    "live_placement": "TITLE<=80",
+    "ads": "4clk/0ord",
+    "note": "Head term (319k), first in the title. Not ranked. 4 ad clicks, 0 orders."
+   },
+   {
+    "keyword": "dog water fountain",
+    "sv": 97595,
+    "competing": 4000.0,
+    "title_density": 31.0,
+    "rank_oct4": null,
+    "sister_ranks": null,
+    "live_placement": "BULLETS",
+    "ads": "shared 1clk/0ord",
+    "note": "97.6k SV. Only in bullet 4 (as \"small dog water fountain\"/\"for small dogs\"), not in the title. No rank."
+   }
+  ]
+ },
+ "B0GHLBGCP3": {
+  "product": "2.2L transparent fountain (SD-85ET-IOZ3)",
+  "top15": [
+   {
+    "keyword": "plastic cat water fountain",
+    "sv": 1883,
+    "competing": 2000.0,
+    "title_density": 0.0,
+    "rank_oct4": 92,
+    "sister_ranks": null,
+    "live_placement": "BULLETS",
+    "ads": "-",
+    "note": "Rank #92. In bullet 1 (\"clear plastic cat water fountain\"). True."
+   },
+   {
+    "keyword": "dog water fountain small size dog",
+    "sv": 561,
+    "competing": 3000.0,
+    "title_density": 0.0,
+    "rank_oct4": 87,
+    "sister_ranks": null,
+    "live_placement": "NOT PRESENT (missing: size)",
+    "ads": "-",
+    "note": "Rank #87, but the word \"size\" is missing. Low SV."
+   },
+   {
+    "keyword": "dog water fountain for small dogs",
+    "sv": 1870,
+    "competing": 3000.0,
+    "title_density": 0.0,
+    "rank_oct4": 110,
+    "sister_ranks": null,
+    "live_placement": "BULLETS",
+    "ads": "-",
+    "note": "Rank #110, competition 3,000. In bullet 1."
+   },
+   {
+    "keyword": "dog water bowl fountain small breed",
+    "sv": 418,
+    "competing": 786.0,
+    "title_density": 0.0,
+    "rank_oct4": 111,
+    "sister_ranks": null,
+    "live_placement": "NOT PRESENT (missing: breed)",
+    "ads": "-",
+    "note": "Rank #111, competition only 786. The word \"breed\" is missing."
+   },
+   {
+    "keyword": "flowing cat water bowl",
+    "sv": 557,
+    "competing": 1000.0,
+    "title_density": 0.0,
+    "rank_oct4": 129,
+    "sister_ranks": null,
+    "live_placement": "words only",
+    "ads": "-",
+    "note": "Rank #129. Words only."
+   },
+   {
+    "keyword": "running water bowl for cats",
+    "sv": 1159,
+    "competing": 1000.0,
+    "title_density": 0.0,
+    "rank_oct4": 145,
+    "sister_ranks": null,
+    "live_placement": "BULLETS",
+    "ads": "-",
+    "note": "Rank #145. In bullet 3."
+   },
+   {
+    "keyword": "kitten water fountain",
+    "sv": 2502,
+    "competing": 1000.0,
+    "title_density": 0.0,
+    "rank_oct4": 228,
+    "sister_ranks": null,
+    "live_placement": "BULLETS",
+    "ads": "-",
+    "note": "Rank #228, competition 1,000. In bullet 1."
+   },
+   {
+    "keyword": "automatic water dispenser for cats",
+    "sv": 8819,
+    "competing": 3000.0,
+    "title_density": 2.0,
+    "rank_oct4": 249,
+    "sister_ranks": null,
+    "live_placement": "BULLETS",
+    "ads": "2clk/1ord",
+    "note": "Rank #249. Ad proven: 1 order (old campaign)."
+   },
+   {
+    "keyword": "cat water dispenser",
+    "sv": 17542,
+    "competing": 6000.0,
+    "title_density": 8.0,
+    "rank_oct4": 266,
+    "sister_ranks": null,
+    "live_placement": "TITLE",
+    "ads": "9clk/0ord; shared 1clk/0ord",
+    "note": "Rank #266, exact in title. 10 ad clicks, 0 orders."
+   },
+   {
+    "keyword": "cat water fountain",
+    "sv": 319141,
+    "competing": 5000.0,
+    "title_density": 46.0,
+    "rank_oct4": 293,
+    "sister_ranks": null,
+    "live_placement": "TITLE<=80",
+    "ads": "6clk/1ord",
+    "note": "Rank #293, exact in the first 80 chars. Old campaign: 1 order from 6 clicks."
+   },
+   {
+    "keyword": "dog water fountain",
+    "sv": 97595,
+    "competing": 4000.0,
+    "title_density": 31.0,
+    "rank_oct4": 269,
+    "sister_ranks": null,
+    "live_placement": "BULLETS",
+    "ads": "1clk/0ord; shared 1clk/0ord",
+    "note": "Rank #269. Not in the title as an exact phrase."
+   },
+   {
+    "keyword": "water fountains for cats indoor",
+    "sv": 49512,
+    "competing": 2000.0,
+    "title_density": 2.0,
+    "rank_oct4": 285,
+    "sister_ranks": null,
+    "live_placement": "BULLETS",
+    "ads": "-",
+    "note": "Rank #285. Bullet 3 only."
+   },
+   {
+    "keyword": "cat water fountain with filtration",
+    "sv": 4522,
+    "competing": 3000.0,
+    "title_density": 0.0,
+    "rank_oct4": 302,
+    "sister_ranks": null,
+    "live_placement": "BULLETS",
+    "ads": "-",
+    "note": "Filter is true (cartridge included). Rank #302. Bullet 2."
+   },
+   {
+    "keyword": "filtered dog water fountain",
+    "sv": 2944,
+    "competing": 3000.0,
+    "title_density": 0.0,
+    "rank_oct4": null,
+    "sister_ranks": null,
+    "live_placement": "BULLETS",
+    "ads": "-",
+    "note": "Filter is true. Not ranked. Bullet 2."
+   },
+   {
+    "keyword": "small dog water fountain",
+    "sv": 2529,
+    "competing": 5000.0,
+    "title_density": 1.0,
+    "rank_oct4": null,
+    "sister_ranks": null,
+    "live_placement": "BULLETS",
+    "ads": "2clk/0ord",
+    "note": "Not ranked. Bullet 1. 2 ad clicks, 0 orders."
+   }
+  ]
+ },
+ "B0GHKRYV6W": {
+  "product": "2.2L fountain with stainless tray + filters (JE-LQEW-9EHL)",
+  "top15": [
+   {
+    "keyword": "quiet cat water fountain",
+    "sv": 1594,
+    "competing": 2000.0,
+    "title_density": 0.0,
+    "rank_oct4": null,
+    "sister_ranks": {
+     "B0GHKN9DBR": 143,
+     "B0GHLBGCP3": 299
+    },
+    "live_placement": "words only",
+    "ads": "2clk/1ord",
+    "note": "The ONLY ad order for this ASIN (2 clicks, 1 order). The exact phrase is missing (\"quiet cat fountain\", \"Quiet Pump\"). Put it in the title."
+   },
+   {
+    "keyword": "cat water fountain with led indicator",
+    "sv": 1246,
+    "competing": 786.0,
+    "title_density": 0.0,
+    "rank_oct4": null,
+    "sister_ranks": {
+     "B0GHKN9DBR": 112,
+     "B0GHLBGCP3": 187
+    },
+    "live_placement": "NOT PRESENT (missing: led indicator)",
+    "ads": "1clk/0ord",
+    "note": "The old ad group was built on it (1 click). The red light alert is true per the old listing; confirm it is an LED. Sister 2L is #112."
+   },
+   {
+    "keyword": "small cat water fountain",
+    "sv": 1768,
+    "competing": 5000.0,
+    "title_density": 0.0,
+    "rank_oct4": null,
+    "sister_ranks": {
+     "B0GHKN9DBR": 128
+    },
+    "live_placement": "BULLETS",
+    "ads": "-",
+    "note": "Sister 2L ranks #128. In bullet 5."
+   },
+   {
+    "keyword": "kitten water fountain",
+    "sv": 2502,
+    "competing": 1000.0,
+    "title_density": 0.0,
+    "rank_oct4": null,
+    "sister_ranks": {
+     "B0GHKN9DBR": 277,
+     "B0GHLBGCP3": 228
+    },
+    "live_placement": "BULLETS",
+    "ads": "1clk/0ord",
+    "note": "Competition 1,000. Bullet 5. 1 ad click."
+   },
+   {
+    "keyword": "dog water fountain for small dogs",
+    "sv": 1870,
+    "competing": 3000.0,
+    "title_density": 0.0,
+    "rank_oct4": null,
+    "sister_ranks": {
+     "B0GHKN9DBR": 211,
+     "B0GHLBGCP3": 110
+    },
+    "live_placement": "BULLETS",
+    "ads": "-",
+    "note": "Sister clear fountain ranks #110. Bullet 5."
+   },
+   {
+    "keyword": "cat water fountain with filtration",
+    "sv": 4522,
+    "competing": 3000.0,
+    "title_density": 0.0,
+    "rank_oct4": null,
+    "sister_ranks": {
+     "B0GHLBGCP3": 302
+    },
+    "live_placement": "BULLETS",
+    "ads": "-",
+    "note": "4-layer filter is true. Bullet 2."
+   },
+   {
+    "keyword": "filtered dog water fountain",
+    "sv": 2944,
+    "competing": 3000.0,
+    "title_density": 0.0,
+    "rank_oct4": null,
+    "sister_ranks": null,
+    "live_placement": "BULLETS",
+    "ads": "-",
+    "note": "Bullet 2. Competition 3,000."
+   },
+   {
+    "keyword": "water fountains for cats indoor",
+    "sv": 49512,
+    "competing": 2000.0,
+    "title_density": 2.0,
+    "rank_oct4": null,
+    "sister_ranks": {
+     "B0GHKN9DBR": 236,
+     "B0GHLBGCP3": 285
+    },
+    "live_placement": "BULLETS",
+    "ads": "4clk/0ord",
+    "note": "49.5k SV, title density 2. Bullet 5 only. 4 ad clicks, 0 orders."
+   },
+   {
+    "keyword": "cat water dispenser",
+    "sv": 17542,
+    "competing": 6000.0,
+    "title_density": 8.0,
+    "rank_oct4": null,
+    "sister_ranks": {
+     "B0GHKN9DBR": 254,
+     "B0GHLBGCP3": 266
+    },
+    "live_placement": "BULLETS",
+    "ads": "shared 1clk/0ord",
+    "note": "Bullet 2. Sisters rank #254/#266."
+   },
+   {
+    "keyword": "automatic water dispenser for cats",
+    "sv": 8819,
+    "competing": 3000.0,
+    "title_density": 2.0,
+    "rank_oct4": null,
+    "sister_ranks": {
+     "B0GHKN9DBR": 257,
+     "B0GHLBGCP3": 249
+    },
+    "live_placement": "BULLETS",
+    "ads": "-",
+    "note": "Bullet 3."
+   },
+   {
+    "keyword": "pet water fountain",
+    "sv": 42109,
+    "competing": 7000.0,
+    "title_density": 10.0,
+    "rank_oct4": null,
+    "sister_ranks": null,
+    "live_placement": "DESC only",
+    "ads": "1clk/0ord",
+    "note": "42k SV. Description only; the title says \"Automatic Pet Fountain\" (SV 36)."
+   },
+   {
+    "keyword": "cat fountain",
+    "sv": 83521,
+    "competing": 6000.0,
+    "title_density": 13.0,
+    "rank_oct4": null,
+    "sister_ranks": null,
+    "live_placement": "BULLETS",
+    "ads": "4clk/0ord",
+    "note": "83.5k SV, title density 13. Bullet 1. 4 ad clicks, 0 orders."
+   },
+   {
+    "keyword": "dog water fountain",
+    "sv": 97595,
+    "competing": 4000.0,
+    "title_density": 31.0,
+    "rank_oct4": null,
+    "sister_ranks": {
+     "B0GHLBGCP3": 269
+    },
+    "live_placement": "BULLETS",
+    "ads": "shared 1clk/0ord",
+    "note": "97.6k SV. Bullet 5 (\"dog water fountain for small dogs\"). Not in the title."
+   },
+   {
+    "keyword": "cat water fountain",
+    "sv": 319141,
+    "competing": 5000.0,
+    "title_density": 46.0,
+    "rank_oct4": null,
+    "sister_ranks": {
+     "B0GHLBGCP3": 293
+    },
+    "live_placement": "TITLE<=80",
+    "ads": "1clk/0ord",
+    "note": "Head term, exact at the front of the title. 1 ad click."
+   },
+   {
+    "keyword": "cat water fountain stainless steel",
+    "sv": 79303,
+    "competing": 2000.0,
+    "title_density": 21.0,
+    "rank_oct4": null,
+    "sister_ranks": null,
+    "live_placement": "BULLETS",
+    "ads": "1clk/0ord",
+    "note": "Big SV, but only the TRAY is steel. Only use it as \"with stainless steel tray\" wording. Ads: about 10 clicks on stainless searches, 0 orders. Low priority."
+   }
+  ]
+ }
+}

@@ -1,0 +1,1337 @@
+{
+ "dual": [
+  {
+   "kw": "automatic cat feeder",
+   "sv": 187032,
+   "h10_bid": 1.39,
+   "h10_min": 1.19,
+   "start_bid": 0.68,
+   "existing": "PETME2-SP-Feeders/Feeders-Exact (exact); PETME2-SP-Feeders/Feeders-Broad (broad)"
+  },
+  {
+   "kw": "automatic dog feeder",
+   "sv": 32356,
+   "h10_bid": 1.34,
+   "h10_min": 1.02,
+   "start_bid": 0.68,
+   "existing": "PETME2-SP-KeywordTest/Test-DualFeeders (phrase)"
+  },
+  {
+   "kw": "cat food dispenser",
+   "sv": 23065,
+   "h10_bid": 0.79,
+   "h10_min": 0.63,
+   "start_bid": 0.63,
+   "existing": "PETME2-SP-KeywordTest/Test-DualFeeders (phrase)"
+  },
+  {
+   "kw": "cat feeder automatic",
+   "sv": 20495,
+   "h10_bid": 0.97,
+   "h10_min": 0.89,
+   "start_bid": 0.68,
+   "existing": null
+  },
+  {
+   "kw": "cat automatic feeders",
+   "sv": 14453,
+   "h10_bid": 0.92,
+   "h10_min": 0.8,
+   "start_bid": 0.68,
+   "existing": null
+  },
+  {
+   "kw": "auto cat feeder",
+   "sv": 8838,
+   "h10_bid": 1.52,
+   "h10_min": 1.17,
+   "start_bid": 0.68,
+   "existing": "PETME2-SP-KeywordTest/Test-DualFeeders (phrase)"
+  },
+  {
+   "kw": "automatic cat feeder 2 cats",
+   "sv": 4741,
+   "h10_bid": 1.46,
+   "h10_min": 1.13,
+   "start_bid": 0.68,
+   "existing": "PETME2-SP-KeywordTest/Test-DualFeeders (phrase)"
+  },
+  {
+   "kw": "dog feeder automatic",
+   "sv": 4515,
+   "h10_bid": 1.44,
+   "h10_min": 1.13,
+   "start_bid": 0.68,
+   "existing": null
+  },
+  {
+   "kw": "automatic pet feeder",
+   "sv": 4241,
+   "h10_bid": 1.48,
+   "h10_min": 1.29,
+   "start_bid": 0.68,
+   "existing": "PETME2-SP-Feeders/Feeders-Exact (exact)"
+  },
+  {
+   "kw": "dog automatic feeders",
+   "sv": 3335,
+   "h10_bid": 1.84,
+   "h10_min": 1.42,
+   "start_bid": 0.68,
+   "existing": null
+  },
+  {
+   "kw": "auto dog feeder",
+   "sv": 3335,
+   "h10_bid": 1.57,
+   "h10_min": 1.11,
+   "start_bid": 0.68,
+   "existing": null
+  },
+  {
+   "kw": "automatic feeder cat dry food",
+   "sv": 3330,
+   "h10_bid": 1.67,
+   "h10_min": 1.51,
+   "start_bid": 0.68,
+   "existing": null
+  },
+  {
+   "kw": "timed cat feeder",
+   "sv": 3330,
+   "h10_bid": 1.55,
+   "h10_min": 1.34,
+   "start_bid": 0.68,
+   "existing": "PETME2-SP-Feeders/Feeders-Exact (exact)"
+  },
+  {
+   "kw": "auto feeder cat food",
+   "sv": 2859,
+   "h10_bid": 1.66,
+   "h10_min": 1.41,
+   "start_bid": 0.68,
+   "existing": null
+  },
+  {
+   "kw": "cat auto feeder",
+   "sv": 2842,
+   "h10_bid": 1.66,
+   "h10_min": 1.49,
+   "start_bid": 0.68,
+   "existing": null
+  },
+  {
+   "kw": "dog food dispenser automatic",
+   "sv": 2509,
+   "h10_bid": 1.54,
+   "h10_min": 1.26,
+   "start_bid": 0.68,
+   "existing": null
+  },
+  {
+   "kw": "pet feeder automatic",
+   "sv": 2502,
+   "h10_bid": 1.56,
+   "h10_min": 1.15,
+   "start_bid": 0.68,
+   "existing": null
+  },
+  {
+   "kw": "automatic dog food dispenser",
+   "sv": 2414,
+   "h10_bid": 1.72,
+   "h10_min": 1.49,
+   "start_bid": 0.68,
+   "existing": null
+  },
+  {
+   "kw": "automatic food dispenser for cats",
+   "sv": 1766,
+   "h10_bid": 1.7,
+   "h10_min": 1.38,
+   "start_bid": 0.68,
+   "existing": null
+  },
+  {
+   "kw": "timed cat feeders for dry food",
+   "sv": 1766,
+   "h10_bid": 1.75,
+   "h10_min": 1.57,
+   "start_bid": 0.68,
+   "existing": null
+  },
+  {
+   "kw": "cat food automatic feeder",
+   "sv": 1759,
+   "h10_bid": 1.93,
+   "h10_min": 1.6,
+   "start_bid": 0.68,
+   "existing": null
+  },
+  {
+   "kw": "auto cat feeder dry food",
+   "sv": 1509,
+   "h10_bid": 1.72,
+   "h10_min": 1.46,
+   "start_bid": 0.68,
+   "existing": null
+  },
+  {
+   "kw": "timed dog feeder",
+   "sv": 1246,
+   "h10_bid": 1.75,
+   "h10_min": 1.49,
+   "start_bid": 0.68,
+   "existing": null
+  },
+  {
+   "kw": "dual cat feeder automatic",
+   "sv": 1246,
+   "h10_bid": 1.62,
+   "h10_min": 1.28,
+   "start_bid": 0.68,
+   "existing": null
+  },
+  {
+   "kw": "double cat feeder",
+   "sv": 1156,
+   "h10_bid": 1.75,
+   "h10_min": 1.45,
+   "start_bid": 0.68,
+   "existing": null
+  },
+  {
+   "kw": "auto pet feeder",
+   "sv": 1059,
+   "h10_bid": 1.82,
+   "h10_min": 1.45,
+   "start_bid": 0.68,
+   "existing": null
+  },
+  {
+   "kw": "automatic dog feeder with timer",
+   "sv": 979,
+   "h10_bid": 1.85,
+   "h10_min": 1.61,
+   "start_bid": 0.68,
+   "existing": null
+  },
+  {
+   "kw": "auto feeder dog food",
+   "sv": 977,
+   "h10_bid": 1.83,
+   "h10_min": 1.58,
+   "start_bid": 0.68,
+   "existing": null
+  },
+  {
+   "kw": "automatic cat feeder programmable",
+   "sv": 977,
+   "h10_bid": 1.91,
+   "h10_min": 1.68,
+   "start_bid": 0.68,
+   "existing": null
+  },
+  {
+   "kw": "automatic feeder dog dry food",
+   "sv": 977,
+   "h10_bid": 1.84,
+   "h10_min": 1.71,
+   "start_bid": 0.68,
+   "existing": null
+  },
+  {
+   "kw": "double automatic cat feeder",
+   "sv": 977,
+   "h10_bid": 1.74,
+   "h10_min": 1.43,
+   "start_bid": 0.68,
+   "existing": null
+  },
+  {
+   "kw": "dual cat feeder",
+   "sv": 882,
+   "h10_bid": 1.86,
+   "h10_min": 1.47,
+   "start_bid": 0.68,
+   "existing": "PETME2-SP-KeywordTest/Test-DualFeeders (phrase)"
+  },
+  {
+   "kw": "dog food automatic feeder",
+   "sv": 785,
+   "h10_bid": 1.8,
+   "h10_min": 1.56,
+   "start_bid": 0.68,
+   "existing": null
+  },
+  {
+   "kw": "automatic food dispenser for dogs",
+   "sv": 782,
+   "h10_bid": 1.91,
+   "h10_min": 1.64,
+   "start_bid": 0.68,
+   "existing": null
+  },
+  {
+   "kw": "timed feeder for cats",
+   "sv": 663,
+   "h10_bid": 1.66,
+   "h10_min": 1.6,
+   "start_bid": 0.68,
+   "existing": null
+  },
+  {
+   "kw": "automatic pet feeder for dogs",
+   "sv": 663,
+   "h10_bid": 2.11,
+   "h10_min": 1.82,
+   "start_bid": 0.68,
+   "existing": null
+  },
+  {
+   "kw": "2 cat automatic feeder",
+   "sv": 663,
+   "h10_bid": 1.97,
+   "h10_min": 1.61,
+   "start_bid": 0.68,
+   "existing": null
+  },
+  {
+   "kw": "two cat automatic feeder",
+   "sv": 644,
+   "h10_bid": 1.95,
+   "h10_min": 1.65,
+   "start_bid": 0.68,
+   "existing": null
+  },
+  {
+   "kw": "timed dog food dispenser",
+   "sv": 642,
+   "h10_bid": 1.31,
+   "h10_min": 1.28,
+   "start_bid": 0.68,
+   "existing": null
+  },
+  {
+   "kw": "autofeeder cat food",
+   "sv": 639,
+   "h10_bid": 1.86,
+   "h10_min": 1.59,
+   "start_bid": 0.68,
+   "existing": null
+  }
+ ],
+ "camera": [
+  {
+   "kw": "automatic cat feeder with camera",
+   "sv": 6417,
+   "h10_bid": 1.66,
+   "h10_min": 1.32,
+   "start_bid": 0.74,
+   "existing": "PETME2-SP-Feeders/CameraFeeder-Exact (exact)"
+  },
+  {
+   "kw": "cat feeder with camera",
+   "sv": 2519,
+   "h10_bid": 2.21,
+   "h10_min": 1.45,
+   "start_bid": 0.74,
+   "existing": "PETME2-SP-Feeders/CameraFeeder-Exact (exact)"
+  },
+  {
+   "kw": "wifi automatic cat feeder app control",
+   "sv": 1244,
+   "h10_bid": 1.76,
+   "h10_min": 1.45,
+   "start_bid": 0.74,
+   "existing": null,
+   "also_in": "wifi"
+  },
+  {
+   "kw": "automatic dog feeder with camera",
+   "sv": 977,
+   "h10_bid": 1.91,
+   "h10_min": 1.36,
+   "start_bid": 0.74,
+   "existing": null
+  },
+  {
+   "kw": "smart cat feeder",
+   "sv": 882,
+   "h10_bid": 1.79,
+   "h10_min": 1.55,
+   "start_bid": 0.74,
+   "existing": "PETME2-SP-KeywordTest/Test-WiFiFeeder (phrase)",
+   "also_in": "wifi"
+  },
+  {
+   "kw": "smart pet feeder",
+   "sv": 880,
+   "h10_bid": 1.79,
+   "h10_min": 1.37,
+   "start_bid": 0.74,
+   "existing": "PETME2-SP-KeywordTest/Test-WiFiFeeder (phrase)",
+   "also_in": "wifi"
+  },
+  {
+   "kw": "pet feeder with camera",
+   "sv": 782,
+   "h10_bid": 1.88,
+   "h10_min": 1.46,
+   "start_bid": 0.74,
+   "existing": "PETME2-SP-Feeders/CameraFeeder-Exact (exact)"
+  },
+  {
+   "kw": "wifi cat feeder",
+   "sv": 666,
+   "h10_bid": 1.7,
+   "h10_min": 1.33,
+   "start_bid": 0.74,
+   "existing": "PETME2-SP-Feeders/Feeders-Exact (exact)",
+   "also_in": "wifi"
+  },
+  {
+   "kw": "automatic feeder with camera",
+   "sv": 639,
+   "h10_bid": 2.07,
+   "h10_min": 1.7,
+   "start_bid": 0.74,
+   "existing": "PETME2-SP-KeywordTest/Test-CameraFeeder (phrase)"
+  },
+  {
+   "kw": "smart automatic dog feeder wifi app control",
+   "sv": 632,
+   "h10_bid": 1.79,
+   "h10_min": 1.7,
+   "start_bid": 0.74,
+   "existing": null,
+   "also_in": "wifi"
+  },
+  {
+   "kw": "cat food dispenser with camera",
+   "sv": 605,
+   "h10_bid": 1.92,
+   "h10_min": 1.65,
+   "start_bid": 0.74,
+   "existing": "PETME2-SP-KeywordTest/Test-CameraFeeder (phrase)"
+  },
+  {
+   "kw": "automatic cat feeder wifi",
+   "sv": 603,
+   "h10_bid": 1.95,
+   "h10_min": 1.68,
+   "start_bid": 0.74,
+   "existing": "PETME2-SP-KeywordTest/Test-WiFiFeeder (phrase)",
+   "also_in": "wifi"
+  },
+  {
+   "kw": "smart feeder for cats",
+   "sv": 593,
+   "h10_bid": 1.71,
+   "h10_min": 1.26,
+   "start_bid": 0.74,
+   "existing": null,
+   "also_in": "wifi"
+  },
+  {
+   "kw": "smart dog feeder",
+   "sv": 578,
+   "h10_bid": 1.38,
+   "h10_min": 1.08,
+   "start_bid": 0.74,
+   "existing": "PETME2-SP-KeywordTest/Test-WiFiFeeder (phrase)",
+   "also_in": "wifi"
+  },
+  {
+   "kw": "dog feeder with camera",
+   "sv": 574,
+   "h10_bid": 1.99,
+   "h10_min": 1.57,
+   "start_bid": 0.74,
+   "existing": "PETME2-SP-KeywordTest/Test-CameraFeeder (phrase)"
+  },
+  {
+   "kw": "wifi dog feeder",
+   "sv": 574,
+   "h10_bid": 1.28,
+   "h10_min": 1.06,
+   "start_bid": 0.74,
+   "existing": "PETME2-SP-KeywordTest/Test-WiFiFeeder (phrase)",
+   "also_in": "wifi"
+  },
+  {
+   "kw": "automatic cat feeder with camera 1080p",
+   "sv": 564,
+   "h10_bid": 2.01,
+   "h10_min": 1.71,
+   "start_bid": 0.74,
+   "existing": null
+  },
+  {
+   "kw": "wifi cat feeder app control",
+   "sv": 542,
+   "h10_bid": null,
+   "h10_min": null,
+   "start_bid": 0.35,
+   "existing": null,
+   "also_in": "wifi"
+  },
+  {
+   "kw": "automatic cat feeder battery backup",
+   "sv": 415,
+   "h10_bid": null,
+   "h10_min": null,
+   "start_bid": 0.35,
+   "existing": null
+  },
+  {
+   "kw": "wi-fi enabled automatic cat feeder with app control",
+   "sv": 381,
+   "h10_bid": null,
+   "h10_min": null,
+   "start_bid": 0.35,
+   "existing": null,
+   "also_in": "wifi"
+  },
+  {
+   "kw": "smart wifi cat feeder app control",
+   "sv": 375,
+   "h10_bid": null,
+   "h10_min": null,
+   "start_bid": 0.35,
+   "existing": null,
+   "also_in": "wifi"
+  },
+  {
+   "kw": "animal feeder with camera",
+   "sv": 362,
+   "h10_bid": null,
+   "h10_min": null,
+   "start_bid": 0.35,
+   "existing": null
+  },
+  {
+   "kw": "automatic dog feeder with wifi",
+   "sv": 334,
+   "h10_bid": null,
+   "h10_min": null,
+   "start_bid": 0.35,
+   "existing": null,
+   "also_in": "wifi"
+  },
+  {
+   "kw": "wifi pet feeder",
+   "sv": 305,
+   "h10_bid": 1.76,
+   "h10_min": 1.54,
+   "start_bid": 0.74,
+   "existing": "PETME2-SP-KeywordTest/Test-WiFiFeeder (phrase)",
+   "also_in": "wifi"
+  },
+  {
+   "kw": "smart feeder with camera",
+   "sv": 293,
+   "h10_bid": 2.59,
+   "h10_min": 1.57,
+   "start_bid": 0.74,
+   "existing": null
+  },
+  {
+   "kw": "smart cat food dispensers",
+   "sv": 293,
+   "h10_bid": null,
+   "h10_min": null,
+   "start_bid": 0.35,
+   "existing": null,
+   "also_in": "wifi"
+  },
+  {
+   "kw": "smart cam feeder",
+   "sv": 287,
+   "h10_bid": null,
+   "h10_min": null,
+   "start_bid": 0.35,
+   "existing": null,
+   "also_in": "wifi"
+  },
+  {
+   "kw": "wifi enabled automatic cat feeder",
+   "sv": 272,
+   "h10_bid": 1.82,
+   "h10_min": 1.58,
+   "start_bid": 0.74,
+   "existing": null,
+   "also_in": "wifi"
+  },
+  {
+   "kw": "smart petfeeder",
+   "sv": 241,
+   "h10_bid": null,
+   "h10_min": null,
+   "start_bid": 0.35,
+   "existing": null,
+   "also_in": "wifi"
+  },
+  {
+   "kw": "smart feeder",
+   "sv": 233,
+   "h10_bid": 2.09,
+   "h10_min": 1.24,
+   "start_bid": 0.74,
+   "existing": null,
+   "also_in": "wifi"
+  },
+  {
+   "kw": "wifi cat food dispenser",
+   "sv": 219,
+   "h10_bid": null,
+   "h10_min": null,
+   "start_bid": 0.35,
+   "existing": "PETME2-SP-KeywordTest/Test-WiFiFeeder (phrase)",
+   "also_in": "wifi"
+  },
+  {
+   "kw": "smart dog food dispenser",
+   "sv": 219,
+   "h10_bid": null,
+   "h10_min": null,
+   "start_bid": 0.35,
+   "existing": null,
+   "also_in": "wifi"
+  },
+  {
+   "kw": "camera cat feeder",
+   "sv": 166,
+   "h10_bid": null,
+   "h10_min": null,
+   "start_bid": 0.35,
+   "existing": "PETME2-SP-KeywordTest/Test-CameraFeeder (phrase)"
+  }
+ ],
+ "wifi": [
+  {
+   "kw": "automatic cat feeder with app",
+   "sv": 1768,
+   "h10_bid": 1.5,
+   "h10_min": 1.3,
+   "start_bid": 0.2,
+   "existing": null
+  },
+  {
+   "kw": "wifi automatic cat feeder app control",
+   "sv": 1244,
+   "h10_bid": 1.76,
+   "h10_min": 1.45,
+   "start_bid": 0.2,
+   "existing": null
+  },
+  {
+   "kw": "smart cat feeder",
+   "sv": 882,
+   "h10_bid": 1.79,
+   "h10_min": 1.55,
+   "start_bid": 0.2,
+   "existing": "PETME2-SP-KeywordTest/Test-WiFiFeeder (phrase)"
+  },
+  {
+   "kw": "smart pet feeder",
+   "sv": 880,
+   "h10_bid": 1.79,
+   "h10_min": 1.37,
+   "start_bid": 0.2,
+   "existing": "PETME2-SP-KeywordTest/Test-WiFiFeeder (phrase)"
+  },
+  {
+   "kw": "large capacity automatic dog feeder",
+   "sv": 880,
+   "h10_bid": 1.57,
+   "h10_min": 1.22,
+   "start_bid": 0.2,
+   "existing": null
+  },
+  {
+   "kw": "wifi cat feeder",
+   "sv": 666,
+   "h10_bid": 1.7,
+   "h10_min": 1.33,
+   "start_bid": 0.2,
+   "existing": "PETME2-SP-Feeders/Feeders-Exact (exact)"
+  },
+  {
+   "kw": "smart automatic dog feeder wifi app control",
+   "sv": 632,
+   "h10_bid": 1.79,
+   "h10_min": 1.7,
+   "start_bid": 0.2,
+   "existing": null
+  },
+  {
+   "kw": "automatic cat feeder wifi",
+   "sv": 603,
+   "h10_bid": 1.95,
+   "h10_min": 1.68,
+   "start_bid": 0.2,
+   "existing": "PETME2-SP-KeywordTest/Test-WiFiFeeder (phrase)"
+  },
+  {
+   "kw": "smart feeder for cats",
+   "sv": 593,
+   "h10_bid": 1.71,
+   "h10_min": 1.26,
+   "start_bid": 0.2,
+   "existing": null
+  },
+  {
+   "kw": "elevated cat feeder",
+   "sv": 593,
+   "h10_bid": 0.81,
+   "h10_min": 0.53,
+   "start_bid": 0.2,
+   "existing": null
+  },
+  {
+   "kw": "smart dog feeder",
+   "sv": 578,
+   "h10_bid": 1.38,
+   "h10_min": 1.08,
+   "start_bid": 0.2,
+   "existing": "PETME2-SP-KeywordTest/Test-WiFiFeeder (phrase)"
+  },
+  {
+   "kw": "elevated automatic cat feeder",
+   "sv": 576,
+   "h10_bid": 1.49,
+   "h10_min": 1.29,
+   "start_bid": 0.2,
+   "existing": "PETME2-SP-KeywordTest/Test-WiFiFeeder (phrase)"
+  },
+  {
+   "kw": "wifi dog feeder",
+   "sv": 574,
+   "h10_bid": 1.28,
+   "h10_min": 1.06,
+   "start_bid": 0.2,
+   "existing": "PETME2-SP-KeywordTest/Test-WiFiFeeder (phrase)"
+  },
+  {
+   "kw": "wifi cat feeder app control",
+   "sv": 542,
+   "h10_bid": null,
+   "h10_min": null,
+   "start_bid": 0.2,
+   "existing": null
+  },
+  {
+   "kw": "elevated pet feeder",
+   "sv": 540,
+   "h10_bid": 1.35,
+   "h10_min": 0.88,
+   "start_bid": 0.2,
+   "existing": null
+  },
+  {
+   "kw": "raised cat feeder",
+   "sv": 537,
+   "h10_bid": 1.14,
+   "h10_min": 0.95,
+   "start_bid": 0.2,
+   "existing": null
+  },
+  {
+   "kw": "wi-fi enabled automatic cat feeder with app control",
+   "sv": 381,
+   "h10_bid": null,
+   "h10_min": null,
+   "start_bid": 0.2,
+   "existing": null
+  },
+  {
+   "kw": "smart wifi cat feeder app control",
+   "sv": 375,
+   "h10_bid": null,
+   "h10_min": null,
+   "start_bid": 0.2,
+   "existing": null
+  },
+  {
+   "kw": "automatic dog feeder with wifi",
+   "sv": 334,
+   "h10_bid": null,
+   "h10_min": null,
+   "start_bid": 0.2,
+   "existing": null
+  },
+  {
+   "kw": "wifi pet feeder",
+   "sv": 305,
+   "h10_bid": 1.76,
+   "h10_min": 1.54,
+   "start_bid": 0.2,
+   "existing": "PETME2-SP-KeywordTest/Test-WiFiFeeder (phrase)"
+  },
+  {
+   "kw": "large capacity automatic cat feeder 4l 5l",
+   "sv": 300,
+   "h10_bid": 1.81,
+   "h10_min": 1.55,
+   "start_bid": 0.2,
+   "existing": null
+  },
+  {
+   "kw": "smart cat food dispensers",
+   "sv": 293,
+   "h10_bid": null,
+   "h10_min": null,
+   "start_bid": 0.2,
+   "existing": null
+  },
+  {
+   "kw": "cat feeder with app",
+   "sv": 285,
+   "h10_bid": null,
+   "h10_min": null,
+   "start_bid": 0.2,
+   "existing": null
+  },
+  {
+   "kw": "wifi enabled automatic cat feeder",
+   "sv": 272,
+   "h10_bid": 1.82,
+   "h10_min": 1.58,
+   "start_bid": 0.2,
+   "existing": null
+  },
+  {
+   "kw": "elevated automatic dog feeder",
+   "sv": 259,
+   "h10_bid": null,
+   "h10_min": null,
+   "start_bid": 0.2,
+   "existing": null
+  }
+ ],
+ "stainless": [
+  {
+   "kw": "cat water fountain",
+   "sv": 319141,
+   "h10_bid": 0.86,
+   "h10_min": 0.68,
+   "start_bid": 0.68,
+   "existing": "PETME2-SP-Fountains/Fountains-Exact (exact); PETME2-SP-Fountains/Fountains-Broad (broad)"
+  },
+  {
+   "kw": "dog water fountain",
+   "sv": 97595,
+   "h10_bid": 0.88,
+   "h10_min": 0.64,
+   "start_bid": 0.64,
+   "existing": "PETME2-SP-KeywordTest/Test-StainlessFountain (phrase)"
+  },
+  {
+   "kw": "cat water fountain stainless steel",
+   "sv": 79303,
+   "h10_bid": 0.88,
+   "h10_min": 0.78,
+   "start_bid": 0.78,
+   "existing": "PETME2-SP-Fountains/Stainless-Exact (exact)"
+  },
+  {
+   "kw": "stainless steel cat water fountain",
+   "sv": 70227,
+   "h10_bid": 1.05,
+   "h10_min": 0.81,
+   "start_bid": 0.81,
+   "existing": "PETME2-SP-Fountains/Stainless-Exact (exact)"
+  },
+  {
+   "kw": "water fountains for cats indoor",
+   "sv": 49512,
+   "h10_bid": 0.87,
+   "h10_min": 0.71,
+   "start_bid": 0.71,
+   "existing": null
+  },
+  {
+   "kw": "pet water fountain",
+   "sv": 42109,
+   "h10_bid": 0.81,
+   "h10_min": 0.61,
+   "start_bid": 0.61,
+   "existing": "PETME2-SP-Fountains/Fountains-Exact (exact); PETME2-SP-Fountains/Fountains-Broad (broad)"
+  },
+  {
+   "kw": "cat fountain stainless steel",
+   "sv": 15361,
+   "h10_bid": 1.27,
+   "h10_min": 0.86,
+   "start_bid": 0.83,
+   "existing": null
+  },
+  {
+   "kw": "water fountain for dogs inside",
+   "sv": 14057,
+   "h10_bid": 0.97,
+   "h10_min": 0.7,
+   "start_bid": 0.7,
+   "existing": null
+  },
+  {
+   "kw": "stainless steel water fountain for cats",
+   "sv": 8816,
+   "h10_bid": 1.23,
+   "h10_min": 1.08,
+   "start_bid": 0.83,
+   "existing": "PETME2-SP-KeywordTest/Test-StainlessFountain (phrase)"
+  },
+  {
+   "kw": "stainless steel dog water fountain",
+   "sv": 8814,
+   "h10_bid": 0.97,
+   "h10_min": 0.8,
+   "start_bid": 0.8,
+   "existing": "PETME2-SP-KeywordTest/Test-StainlessFountain (phrase)"
+  },
+  {
+   "kw": "water fountain for cats",
+   "sv": 7835,
+   "h10_bid": 1.05,
+   "h10_min": 0.85,
+   "start_bid": 0.83,
+   "existing": "PETME2-SP-Fountains/Fountains-Exact (exact)"
+  },
+  {
+   "kw": "dog water fountain stainless steel",
+   "sv": 6419,
+   "h10_bid": 0.87,
+   "h10_min": 0.77,
+   "start_bid": 0.77,
+   "existing": "PETME2-SP-KeywordTest/Test-StainlessFountain (phrase)"
+  },
+  {
+   "kw": "cat fountains",
+   "sv": 5946,
+   "h10_bid": 0.93,
+   "h10_min": 0.71,
+   "start_bid": 0.71,
+   "existing": null
+  },
+  {
+   "kw": "dog fountain",
+   "sv": 4741,
+   "h10_bid": 0.93,
+   "h10_min": 0.8,
+   "start_bid": 0.8,
+   "existing": "PETME2-SP-KeywordTest/Test-StainlessFountain (phrase)"
+  },
+  {
+   "kw": "stainless steel cat fountain",
+   "sv": 4542,
+   "h10_bid": 1.27,
+   "h10_min": 0.94,
+   "start_bid": 0.83,
+   "existing": "PETME2-SP-KeywordTest/Test-StainlessFountain (phrase)"
+  },
+  {
+   "kw": "metal cat water fountain",
+   "sv": 3337,
+   "h10_bid": 1.51,
+   "h10_min": 1.17,
+   "start_bid": 0.83,
+   "existing": "PETME2-SP-Fountains/Stainless-Exact (exact)"
+  },
+  {
+   "kw": "stainless steel pet water fountain",
+   "sv": 3335,
+   "h10_bid": 1.18,
+   "h10_min": 0.87,
+   "start_bid": 0.83,
+   "existing": "PETME2-SP-KeywordTest/Test-StainlessFountain (phrase)"
+  },
+  {
+   "kw": "water fountain for dogs",
+   "sv": 3175,
+   "h10_bid": 0.99,
+   "h10_min": 0.63,
+   "start_bid": 0.63,
+   "existing": null
+  },
+  {
+   "kw": "304 stainless steel cat fountain",
+   "sv": 2859,
+   "h10_bid": 1.37,
+   "h10_min": 1.09,
+   "start_bid": 0.83,
+   "existing": null
+  },
+  {
+   "kw": "dog fountain stainless steel",
+   "sv": 2859,
+   "h10_bid": 1.23,
+   "h10_min": 0.88,
+   "start_bid": 0.83,
+   "existing": null
+  },
+  {
+   "kw": "pet water fountain stainless steel",
+   "sv": 2521,
+   "h10_bid": 1.35,
+   "h10_min": 0.9,
+   "start_bid": 0.83,
+   "existing": "PETME2-SP-KeywordTest/Test-StainlessFountain (phrase)"
+  },
+  {
+   "kw": "cat stainless steel water fountain",
+   "sv": 2512,
+   "h10_bid": 1.5,
+   "h10_min": 0.98,
+   "start_bid": 0.83,
+   "existing": null
+  },
+  {
+   "kw": "stainless steel water fountain for dogs",
+   "sv": 2417,
+   "h10_bid": 1.2,
+   "h10_min": 1.15,
+   "start_bid": 0.83,
+   "existing": "PETME2-SP-KeywordTest/Test-StainlessFountain (phrase)"
+  },
+  {
+   "kw": "dog drinking fountain",
+   "sv": 2169,
+   "h10_bid": 1.14,
+   "h10_min": 0.9,
+   "start_bid": 0.83,
+   "existing": null
+  },
+  {
+   "kw": "cat drinking fountain stainless steel",
+   "sv": 1885,
+   "h10_bid": 1.43,
+   "h10_min": 0.95,
+   "start_bid": 0.83,
+   "existing": null
+  },
+  {
+   "kw": "dog waterer",
+   "sv": 1873,
+   "h10_bid": 0.89,
+   "h10_min": 0.78,
+   "start_bid": 0.78,
+   "existing": null
+  },
+  {
+   "kw": "stainless cat water fountain",
+   "sv": 1873,
+   "h10_bid": 1.43,
+   "h10_min": 1.11,
+   "start_bid": 0.83,
+   "existing": null
+  },
+  {
+   "kw": "metal water fountain for cats",
+   "sv": 1870,
+   "h10_bid": 1.46,
+   "h10_min": 1.07,
+   "start_bid": 0.83,
+   "existing": null
+  },
+  {
+   "kw": "dog water fountain for small dogs",
+   "sv": 1870,
+   "h10_bid": 1.52,
+   "h10_min": 1.07,
+   "start_bid": 0.83,
+   "existing": "PETME2-SP-KeywordTest/Test-StainlessFountain (phrase)"
+  },
+  {
+   "kw": "metal cat fountain",
+   "sv": 1768,
+   "h10_bid": 1.55,
+   "h10_min": 1.17,
+   "start_bid": 0.83,
+   "existing": null
+  },
+  {
+   "kw": "large capacity dog water fountain",
+   "sv": 1659,
+   "h10_bid": 0.75,
+   "h10_min": 0.56,
+   "start_bid": 0.56,
+   "existing": null
+  },
+  {
+   "kw": "large capacity pet water fountain",
+   "sv": 1596,
+   "h10_bid": 0.8,
+   "h10_min": 0.74,
+   "start_bid": 0.74,
+   "existing": null
+  },
+  {
+   "kw": "cat water fountain with led indicator",
+   "sv": 1246,
+   "h10_bid": 1.32,
+   "h10_min": 1.2,
+   "start_bid": 0.83,
+   "existing": null
+  },
+  {
+   "kw": "cat waterer",
+   "sv": 1246,
+   "h10_bid": 1.05,
+   "h10_min": 0.95,
+   "start_bid": 0.83,
+   "existing": null
+  },
+  {
+   "kw": "large pet water fountain",
+   "sv": 1161,
+   "h10_bid": 0.76,
+   "h10_min": 0.64,
+   "start_bid": 0.64,
+   "existing": null
+  },
+  {
+   "kw": "easy to clean cat water fountain",
+   "sv": 1059,
+   "h10_bid": 1.41,
+   "h10_min": 1.05,
+   "start_bid": 0.83,
+   "existing": null
+  },
+  {
+   "kw": "stainless steel pet fountain",
+   "sv": 979,
+   "h10_bid": 1.26,
+   "h10_min": 0.99,
+   "start_bid": 0.83,
+   "existing": "PETME2-SP-KeywordTest/Test-StainlessFountain (phrase)"
+  },
+  {
+   "kw": "dishwasher safe cat water fountain",
+   "sv": 979,
+   "h10_bid": 1.39,
+   "h10_min": 1.13,
+   "start_bid": 0.83,
+   "existing": null
+  },
+  {
+   "kw": "large capacity stainless steel cat fountain",
+   "sv": 977,
+   "h10_bid": 1.4,
+   "h10_min": 1.34,
+   "start_bid": 0.83,
+   "existing": null
+  },
+  {
+   "kw": "steel cat water fountain",
+   "sv": 977,
+   "h10_bid": 1.59,
+   "h10_min": 1.06,
+   "start_bid": 0.83,
+   "existing": null
+  }
+ ],
+ "basic": [
+  {
+   "kw": "cat fountain",
+   "sv": 83521,
+   "h10_bid": 0.91,
+   "h10_min": 0.73,
+   "start_bid": 0.2,
+   "existing": "PETME2-SP-KeywordTest/Test-BasicFountains (phrase)"
+  },
+  {
+   "kw": "cat water dispenser",
+   "sv": 17542,
+   "h10_bid": 0.78,
+   "h10_min": 0.66,
+   "start_bid": 0.2,
+   "existing": "PETME2-SP-KeywordTest/Test-BasicFountains (phrase)"
+  },
+  {
+   "kw": "pet fountain",
+   "sv": 11094,
+   "h10_bid": 0.97,
+   "h10_min": 0.76,
+   "start_bid": 0.2,
+   "existing": "PETME2-SP-KeywordTest/Test-BasicFountains (phrase)"
+  },
+  {
+   "kw": "pet water dispenser",
+   "sv": 8821,
+   "h10_bid": 0.87,
+   "h10_min": 0.78,
+   "start_bid": 0.2,
+   "existing": "PETME2-SP-KeywordTest/Test-BasicFountains (phrase)"
+  },
+  {
+   "kw": "cat drinking fountain",
+   "sv": 5948,
+   "h10_bid": 1.14,
+   "h10_min": 0.87,
+   "start_bid": 0.2,
+   "existing": "PETME2-SP-KeywordTest/Test-BasicFountains (phrase)"
+  },
+  {
+   "kw": "water dispenser for cats",
+   "sv": 4736,
+   "h10_bid": 0.71,
+   "h10_min": 0.66,
+   "start_bid": 0.2,
+   "existing": null
+  },
+  {
+   "kw": "kitten water fountain",
+   "sv": 2502,
+   "h10_bid": 1.12,
+   "h10_min": 0.83,
+   "start_bid": 0.2,
+   "existing": "PETME2-SP-KeywordTest/Test-BasicFountains (phrase)"
+  },
+  {
+   "kw": "plastic cat water fountain",
+   "sv": 1883,
+   "h10_bid": 1.23,
+   "h10_min": 1.1,
+   "start_bid": 0.2,
+   "existing": "PETME2-SP-KeywordTest/Test-BasicFountains (phrase)"
+  },
+  {
+   "kw": "kitty water fountain",
+   "sv": 1870,
+   "h10_bid": 1.31,
+   "h10_min": 1.2,
+   "start_bid": 0.2,
+   "existing": "PETME2-SP-KeywordTest/Test-BasicFountains (phrase)"
+  },
+  {
+   "kw": "small cat water fountain",
+   "sv": 1768,
+   "h10_bid": 1.22,
+   "h10_min": 0.85,
+   "start_bid": 0.2,
+   "existing": "PETME2-SP-AllProducts/More-Fountains22 (exact)"
+  },
+  {
+   "kw": "kitty fountain",
+   "sv": 1596,
+   "h10_bid": 1.47,
+   "h10_min": 1.14,
+   "start_bid": 0.2,
+   "existing": null
+  },
+  {
+   "kw": "quiet cat water fountain",
+   "sv": 1594,
+   "h10_bid": 1.28,
+   "h10_min": 0.95,
+   "start_bid": 0.2,
+   "existing": "PETME2-SP-KeywordTest/Test-BasicFountains (phrase)"
+  },
+  {
+   "kw": "water fountain for cats indoor",
+   "sv": 1244,
+   "h10_bid": 1.47,
+   "h10_min": 1.1,
+   "start_bid": 0.2,
+   "existing": "PETME2-SP-KeywordTest/Test-BasicFountains (phrase)"
+  },
+  {
+   "kw": "pet drinking fountain",
+   "sv": 1103,
+   "h10_bid": 1.42,
+   "h10_min": 1.03,
+   "start_bid": 0.2,
+   "existing": "PETME2-SP-KeywordTest/Test-BasicFountains (phrase)"
+  },
+  {
+   "kw": "small cat fountain",
+   "sv": 787,
+   "h10_bid": 1.29,
+   "h10_min": 1.2,
+   "start_bid": 0.2,
+   "existing": null
+  },
+  {
+   "kw": "quiet pet water fountain",
+   "sv": 659,
+   "h10_bid": 1.25,
+   "h10_min": 1.02,
+   "start_bid": 0.2,
+   "existing": null
+  },
+  {
+   "kw": "small pet water fountain",
+   "sv": 612,
+   "h10_bid": 1.38,
+   "h10_min": 1.24,
+   "start_bid": 0.2,
+   "existing": null
+  },
+  {
+   "kw": "small water fountain for cats",
+   "sv": 608,
+   "h10_bid": 1.56,
+   "h10_min": 1.41,
+   "start_bid": 0.2,
+   "existing": null
+  },
+  {
+   "kw": "water fountain for small dogs inside",
+   "sv": 583,
+   "h10_bid": 1.46,
+   "h10_min": 1.19,
+   "start_bid": 0.2,
+   "existing": null
+  },
+  {
+   "kw": "ultra quiet cat water fountain",
+   "sv": 569,
+   "h10_bid": null,
+   "h10_min": null,
+   "start_bid": 0.2,
+   "existing": null
+  },
+  {
+   "kw": "silent cat water fountain",
+   "sv": 542,
+   "h10_bid": 2.05,
+   "h10_min": 1.39,
+   "start_bid": 0.2,
+   "existing": "PETME2-SP-KeywordTest/Test-BasicFountains (phrase)"
+  },
+  {
+   "kw": "kitten fountain",
+   "sv": 532,
+   "h10_bid": null,
+   "h10_min": null,
+   "start_bid": 0.2,
+   "existing": null
+  },
+  {
+   "kw": "small cat water dispenser",
+   "sv": 530,
+   "h10_bid": 1.32,
+   "h10_min": 1.13,
+   "start_bid": 0.2,
+   "existing": null
+  },
+  {
+   "kw": "water fountain for small dogs",
+   "sv": 513,
+   "h10_bid": 1.44,
+   "h10_min": 1.17,
+   "start_bid": 0.2,
+   "existing": null
+  },
+  {
+   "kw": "small pet water dispenser",
+   "sv": 469,
+   "h10_bid": 1.6,
+   "h10_min": 1.3,
+   "start_bid": 0.2,
+   "existing": null
+  }
+ ]
+}

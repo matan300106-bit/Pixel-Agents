@@ -1,0 +1,15 @@
+You are working in my Amazon Seller Central (sellercentral.amazon.com), US marketplace.
+GOAL: Update the listing text of ONE product. Do NOT click Submit/Save until I say "submit".
+RULES: Change only the fields below. Do not change price, images, variations, stock, or any other product. If asked to log in, enter a code, or solve a captcha: stop and tell me. If a field is locked or shows an error, stop and tell me exactly what it says.
+
+Product: PARENT listing ASIN B0H3L6VXV6 (the variation family of the white and black 3L dual feeders). Change ONLY the parent TITLE (Item Name). Do not change the child listings, variations, or anything else.
+
+TITLE (Item Name):
+PETME2 Automatic Cat Feeder for 2 Cats, 3L Dual Bowl Automatic Dog Feeder with App Control, Timed Pet Food Dispenser for Dry Food, 304 Stainless Steel Bowls, 2-Way Audio, Dual Power
+
+STEPS:
+1. Catalog -> Manage All Inventory -> search ASIN B0H3L6VXV6 (or open the white feeder B0GHLSQMJ9 and go to its parent / variation family) -> Edit the parent.
+2. FIRST: copy the CURRENT values of these fields into your reply, so I have a backup.
+3. Replace the fields with the text above EXACTLY (copy, do not rewrite).
+4. STOP before saving. Show me a short summary of what you changed and wait for me to say "submit".
+5. After I say "submit": Save and finish, then tell me if Amazon shows any error or warning.

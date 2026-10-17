@@ -1,0 +1,38 @@
+{
+ "day": 1,
+ "houses": [
+  {
+   "x": -5.2,
+   "z": 0.48,
+   "ry": 1.66,
+   "roof": "#9B6FE0",
+   "wall": "#FFFFFF",
+   "appear": 6.03,
+   "day": 1
+  }
+ ],
+ "buildings": [
+  {
+   "kind": "fountain",
+   "x": 0.0,
+   "z": 0.0,
+   "ry": 0,
+   "sign": "",
+   "appear": 16.98,
+   "day": 1,
+   "by": "",
+   "request": ""
+  }
+ ],
+ "cats": [
+  {
+   "x": -4.2,
+   "z": 0.39,
+   "color": "#F2A65A",
+   "appear": 5.75,
+   "fromX": -11.17,
+   "fromZ": 1.03
+  }
+ ],
+ "followers": 1
+}

@@ -1,0 +1,56 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#F4F6FA;overflow-x:clip}.page-width{max-width:1300px;margin:0 auto;padding:0 1.5rem}@media(min-width:750px){.page-width{padding:0 5rem}}
+.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .pm2-soon-h { --g: #2A3B33; --g2: #22302A; --gold: #E9C46A; --gold2: #F3DFA2; padding: 24px 0 32px; }
+  @media screen and (min-width: 750px) { .pm2-soon-h { padding: var(--pm2-pt, 56px) 0 var(--pm2-pb, 56px); } }
+  .pm2-soon-h__card { display: grid; grid-template-columns: minmax(0, 1fr); overflow: hidden; border-radius: 28px; color: #fff;
+    background: radial-gradient(120% 90% at 100% 0%, rgba(233, 196, 106, .14), transparent 55%), linear-gradient(160deg, var(--g) 0%, var(--g2) 100%);
+    box-shadow: 0 30px 60px -40px rgba(16, 28, 22, .7); }
+  .pm2-soon-h__media { position: relative; aspect-ratio: 16 / 10; background: #1d2924; }
+  .pm2-soon-h__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .pm2-soon-h__ribbon { position: absolute; top: 14px; left: 14px; padding: 6px 12px; border-radius: 999px; font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #22302A; background: linear-gradient(90deg, var(--gold), var(--gold2)); box-shadow: 0 8px 20px -10px rgba(0, 0, 0, .6); }
+  .pm2-soon-h__body { padding: 24px 20px 26px; }
+  .pm2-soon-h__eyebrow { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 10px; font-size: 13px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); }
+  .pm2-soon-h__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 0 rgba(233, 196, 106, .6); }
+  @media (prefers-reduced-motion: no-preference) { .pm2-soon-h__dot { animation: pm2-soon-pulse 2s ease-out infinite; } }
+  @keyframes pm2-soon-pulse { 0% { box-shadow: 0 0 0 0 rgba(233, 196, 106, .6); } 80%, 100% { box-shadow: 0 0 0 10px rgba(233, 196, 106, 0); } }
+  .pm2-soon-h__title { margin: 0; color: #fff; font-size: clamp(28px, 7.4vw, 44px); line-height: 1.08; letter-spacing: -.02em; text-wrap: balance; }
+  .pm2-soon-h__text { margin: 10px 0 0; font-size: 15.5px; line-height: 1.55; color: rgba(255, 255, 255, .82); max-width: 50ch; }
+  .pm2-soon-h__lists { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 18px; }
+  .pm2-soon-h__list { padding: 14px; border-radius: 18px; background: rgba(255, 255, 255, .06); border: 1px solid rgba(233, 196, 106, .22); }
+  .pm2-soon-h__who { display: flex; align-items: center; gap: 6px; margin: 0 0 8px; font-weight: 800; font-size: 14px; color: var(--gold); }
+  .pm2-soon-h__list ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+  .pm2-soon-h__list li { font-size: 14px; line-height: 1.3; color: rgba(255, 255, 255, .92); padding-left: 14px; position: relative; }
+  .pm2-soon-h__list li::before { content: ""; position: absolute; left: 0; top: .5em; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
+  .pm2-soon-h__signup { margin-top: 20px; }
+  .pm2-soon-h__signup-title { margin: 0 0 8px; font-weight: 800; font-size: 15px; }
+  .pm2-soon-h__form { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pm2-soon-h__input { flex: 1 1 200px; min-width: 0; min-height: 50px; padding: 0 18px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, .28); background: rgba(255, 255, 255, .08); color: #fff; font-size: 16px; }
+  .pm2-soon-h__input::placeholder { color: rgba(255, 255, 255, .6); }
+  .pm2-soon-h__input:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+  .pm2-soon-h__btn { flex: 0 0 auto; min-height: 50px; padding: 0 24px; border: 0; border-radius: 999px; cursor: pointer; font: inherit; font-weight: 800; font-size: 16px; color: #22302A; background: linear-gradient(90deg, var(--gold), var(--gold2)); }
+  .pm2-soon-h__btn:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+  .pm2-soon-h__ok { margin: 0; font-weight: 700; color: var(--gold); }
+  .pm2-soon-h__err { flex-basis: 100%; margin: 0; font-size: 14px; color: #FFB4A9; }
+  .pm2-soon-h__link { display: inline-flex; align-items: center; min-height: 44px; margin-top: 4px; font-weight: 700; font-size: 15px; color: #fff; text-decoration: underline; text-underline-offset: 4px; }
+  .pm2-soon-h__trust { list-style: none; margin: 14px 0 0; padding: 14px 0 0; border-top: 1px solid rgba(255, 255, 255, .12); display: grid; grid-template-columns: 1fr; gap: 8px; }
+  .pm2-soon-h__trust li { display: flex; align-items: center; gap: 8px; font-size: 14px; color: rgba(255, 255, 255, .86); }
+  .pm2-soon-h__trust svg { flex: none; color: var(--gold); }
+  @media screen and (max-width: 749px) { .pm2-soon-h__btn { flex: 1 1 100%; } }
+  @media screen and (min-width: 750px) {
+    .pm2-soon-h__trust { grid-template-columns: 1fr 1fr; }
+    .pm2-soon-h__body { padding: 34px 36px; }
+  }
+  @media screen and (min-width: 990px) {
+    .pm2-soon-h__card { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); border-radius: 32px; }
+    .pm2-soon-h__media { aspect-ratio: auto; min-height: 100%; }
+    .pm2-soon-h__body { padding: 44px 48px; align-self: center; }
+    .pm2-soon-h__ribbon { top: 20px; left: 20px; }
+  }
+</style></head><body>
+<section class="pm2-soon-h" style="--pm2-pt:56px;--pm2-pb:56px"><div class="page-width"><div class="pm2-soon-h__card"><div class="pm2-soon-h__media"><img class="pm2-soon-h__img" src="img.jpg"><span class="pm2-soon-h__ribbon">Coming soon</span></div>
+<div class="pm2-soon-h__body"><p class="pm2-soon-h__eyebrow"><span class="pm2-soon-h__dot"></span>New from PETME2</p><h2 class="pm2-soon-h__title">Daily supplements for cats &amp; dogs</h2>
+<p class="pm2-soon-h__text">8 tasty soft chews for everyday care, from the team behind PETME2 feeders and fountains. Launching soon.</p>
+<div class="pm2-soon-h__lists"><div class="pm2-soon-h__list"><p class="pm2-soon-h__who">For cats</p><ul><li>Skin & Coat Support</li><li>Immune Support (probiotic)</li><li>Advanced L-Lysine</li><li>Cat Grass Digestive</li></ul></div><div class="pm2-soon-h__list"><p class="pm2-soon-h__who">For dogs</p><ul><li>Advanced Hip & Joint</li><li>Advanced Probiotic</li><li>Multivitamin 25-in-1</li><li>Tear Stain Support</li></ul></div></div>
+<div class="pm2-soon-h__signup"><p class="pm2-soon-h__signup-title">Be first to know when they launch</p><form class="pm2-soon-h__form"><input class="pm2-soon-h__input" placeholder="Your email"><button class="pm2-soon-h__btn">Notify me</button></form><a class="pm2-soon-h__link" href="#">See the line-up →</a></div>
+<ul class="pm2-soon-h__trust"><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="2.2"/></svg>Full ingredient list on every jar</li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="2.2"/></svg>Clear daily dose by weight</li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="2.2"/></svg>Chicken-flavored soft chews, no pills</li><li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="2.2"/></svg>30-day money-back guarantee</li></ul></div></div></div></section></body></html>

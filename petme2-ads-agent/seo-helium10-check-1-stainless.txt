@@ -1,0 +1,33 @@
+Use Helium 10 (already logged in). READ ONLY in Amazon: do not change anything on Amazon. Inside Helium 10 you may create a DRAFT in Listing Builder (that is safe). Do not buy or upgrade anything. If asked to log in, pay, or solve a captcha, stop and tell me.
+
+GOAL: Score my NEW listing text vs my CURRENT listing and vs the top competitors, for ASIN B0DR7FCLZR (PETME2 3.2L stainless steel cat water fountain), marketplace Amazon.com (US).
+
+STEP 1 - Keywords: Open Listing Builder -> New listing (marketplace US). Import keywords with Cerebro for these ASINs:
+B0DR7FCLZR, B0FPFZ3C5K, B0FDKQGRCK, B0GDCZCXMY, B0C8MHHVPC, B0G6ZMT8T3
+(use the default filters; keep the top keywords by search volume).
+
+STEP 2 - Score the CURRENT listing: use "Import from Amazon" / ASIN B0DR7FCLZR (or Listing Analyzer) and write down: Listing Score, % of search volume indexed, and which of the top 10 keywords are missing.
+
+STEP 3 - Score the NEW listing: in the Listing Builder draft, paste exactly:
+
+TITLE:
+PETME2 Stainless Steel Cat Water Fountain 108oz/3.2L, Dog Water Fountain for Cats & Dogs Indoor, LED Light, Quiet Pump, Faucet & Bubbling Dual Flow Modes, 4-Layer Filter, Dishwasher Safe
+
+BULLETS:
+TWO FLOW MODES FOR PICKY DRINKERS: Switch between a running faucet stream and a gentle bubbling flow to match how your pet likes to drink. Many cats and dogs prefer moving water to a still bowl, so this automatic cat water fountain and cat drinking fountain suits every drinking style. For dogs it is a dog drinking fountain and dog water bowl fountain, an automatic dog water bowl for small to medium breeds, and for cats a kitty water fountain and moving water cat fountain.
+STAINLESS STEEL, NOT PLASTIC: This stainless steel cat water fountain gives pets a durable, rust-resistant drinking surface instead of a plastic bowl, with a sleek silver look. If you want a cat water fountain stainless steel build or a metal cat water fountain, the steel base wipes clean easily. It is also a stainless steel dog water fountain and stainless steel pet water fountain, so one cat fountain stainless steel design serves cats and dogs.
+4-LAYER FILTER PLUS SPONGE: Cotton mesh, activated carbon, ion-exchange resin and a fine filter pad, backed by a high-density sponge, trap hair and debris and reduce odors. That makes it a cat water fountain with filtration, a filtered dog water fountain and a filtered dog water bowl, so this cat water dispenser and pet water dispenser serves fresher water. Replace the filter every 2 to 3 weeks to keep water fresh.
+QUIET PUMP AND LED LIGHT: Made for water fountains for cats indoor, the low-voltage DC 5V pump runs quietly day and night on the included AC adapter and USB cable. The LED light shows the water level in a dark room, and a switch on the cable turns it off. It works as an automatic water dispenser for cats and an automatic cat water dispenser, a water dispenser for cats that keeps water moving all day.
+108OZ CAPACITY, EASY TO CLEAN: The 3.2L reservoir holds plenty of water for multi-pet homes, so you refill less often. For small to medium dogs it is a dog water dispenser, automatic dog water dispenser and automatic water dispenser for dogs, a dog waterer and water fountain for dogs inside the house. A 360-degree raised rim helps stop splashes, and the detachable parts are dishwasher safe.
+
+DESCRIPTION:
+Give your cats and dogs fresh, moving water all day with the PETME2 Stainless Steel Cat Water Fountain. It holds 108oz (3.2L), enough for multi-pet homes, and doubles as a water fountain for dogs and a dog fountain water bowl. Choose between two flow modes: a running faucet stream for pets that like to drink from the tap, or a gentle bubbling flow for pets that prefer a calm surface. This stainless steel water fountain for cats also works as a stainless steel water fountain for dogs. For dogs, it is a dog water fountain, stainless steel at the base, that holds plenty of water. The rust-resistant stainless steel base wipes clean easily and has a modern silver look. Among stainless steel cat water fountains, this stainless cat water fountain adds two flow modes and an LED light. As a stainless steel cat fountain and a metal water fountain for cats, it also suits small to medium dogs. Compared with plastic cat fountains, cat water fountains and dog fountains, this metal cat fountain keeps a steel drinking surface. Inside, a 4-layer filter (cotton mesh, activated carbon, ion-exchange resin and a fine pad) plus a high-density sponge catches hair and debris and reduces odors, so it works as a dog filtered water bowl too. Replace the filter every 2 to 3 weeks. The low-voltage DC 5V pump runs quietly, powered by the included AC adapter and USB cable, and is suitable for indoor or outdoor use. An LED light lets you see the water level at night, and a switch on the cable turns it off. A 360-degree raised rim helps keep floors dry, and the detachable parts are dishwasher safe. It is a quiet cat water fountain, stainless steel where your pet drinks. A water fountain cat and dog owners can share, it is one pet fountain and animal water fountain for the house. In the box: stainless steel fountain base, pump, 4-layer filter cartridge with sponge, LED light module, power adapter, USB cable and instruction manual. Covered by a 1-year limited warranty.
+
+SEARCH TERMS (backend):
+pet dispenser automatic drinking waterer bowl kitty kitten metal filtration large capacity running flowing circulating inside multi hydration drinker spill proof silver fuente agua gatos bebedero perros acero inoxidable filtered animal
+
+Write down: Listing Score, % search volume indexed (title / bullets / backend), and the top 10 keywords by search volume that are still MISSING or only partly used.
+
+STEP 4 - Competitors: in Listing Analyzer, check B0FPFZ3C5K (Veken) and B0FDKQGRCK (PETLIBRO) and write down their Listing Score.
+
+FINAL: Show me a table: CURRENT vs NEW vs Veken vs PETLIBRO (Listing Score, % volume indexed), plus the list of missing keywords with their search volume. Do not change my Amazon listing.
