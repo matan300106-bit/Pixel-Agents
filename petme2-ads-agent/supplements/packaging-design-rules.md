@@ -34,3 +34,10 @@ Gallery # = index + 1. Box = 16:9, Label = 3:4.
 7 box / 8 label: cat licking paw (recraft_v4_1): 506b2a42-5d2e-41b7-b18c-404a5e12db21 / a6bbb46b-fc4f-4b01-b37f-b7e91dc1b9af
 9 box / 10 label: grooming back, flax (recraft VECTOR .svg, best for print): d6424f51-182e-435d-b168-cba08b51f5ab / 2e5ee140-7392-4188-86f5-ac3298973406
 11 box / 12 label: Maine Coon, honeysuckle (recraft): 17f934cb-9673-467f-9644-ab41e5a0c9b0 / abe7a985-48cf-460f-887c-6ebb28675a97
+
+### Round 3 (owner photo as reference, media f5a35042-5bc9-411b-b6d2-d5d70bbe2314; gpt_image_2_5 xhigh 4k)
+Idea 1 exact recreate: box 1e143d5c-3498-446d-8633-6f6643237b8d / label c19e07a1-9ed6-4f6f-896a-4749e22a1df5 / mockup 3fe89cbe-af32-4310-a34b-caa2e02086f3
+Idea 2 taller cat + flax: box b8e17dd7-8a32-4f5e-86aa-34b6623955f3 / label f588c61a-dc12-4737-b25e-a2cc2905861d / mockup 77a8e9b9-9fe1-46a9-8eff-5d276e269d44
+Idea 3 Maine Coon + honeysuckle: box 22b8226b-c215-462d-a1bd-35d115e1cdc6 / label dddf577e-d7f5-4677-b15d-965965c0baa6
+Owner 2026-10-18: do the edits in Higgsfield (use credits), only 3 samples max.
+`for-higgsfield/` = renders of the real Skin & Coat label (p1) and box (p1) for the owner to upload.
