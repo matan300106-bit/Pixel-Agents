@@ -47,3 +47,4 @@ S1 exact cat: 1ed8781c-554a-45da-b5ce-5ae20a8743e0
 S2 taller cat + flax: 379dd459-97fd-4bfd-bc74-b62a7dca698c
 S3 Maine Coon + honeysuckle: 669a7b3b-795e-4e47-84b5-06e4d242a2c7
 Label (long strip, ~5.5:1) to be done for the picked sample only.
+Owner picked S1 (box 1ed8781c). Label with cat 1: f4015671-3ada-476c-991b-66f0e464ef8b (7 credits, approved).
