@@ -245,3 +245,5 @@ report_email: TBD
 ## 16. Side project: Cat Town (Instagram + web page)
 
 Cat Town work moved to its own session (owner, 2026-10-06: keep this session for ADS). Everything needed is in `social/cat-town/HANDOFF.md` (state, files, links, how to render/upload). In this ADS session, don't start Cat Town work; point the owner to the Cat Town session.
+
+**Higgsfield credits (owner 2026-10-18):** ask the owner BEFORE every Higgsfield generation or edit. Say what it is, how many images (max 3 samples per round), and the cost (top quality ≈ 7 credits/image, normal high ≈ 2.75). Wait for a yes. No Recraft unless asked.
