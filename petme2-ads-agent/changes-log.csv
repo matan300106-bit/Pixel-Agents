@@ -685,3 +685,4 @@ date,item,before,after,reason,agent
 2026-10-16,Restore traffic Chrome prompt (planned),"Auto paused; some campaigns out of budget; Keyword Test maybe $14","Auto on $10 (bids <=0.55); +20% budget on out-of-budget campaigns with orders; Keyword Test $16; total <=140",3-day sales drop,manager
 2026-10-17,Daily watch,none,"sales 4/day Oct 15-16 (was 6-13); BSR falling; restore-traffic prompt not confirmed",daily routine,guardian
 2026-10-17,Small fountain sale end date,"ends 2026-10-20 (confirmed via Listings API)",extend to 2026-12-31 (Chrome prompt),else price jumps to $27.99 on Oct 20,manager
+2026-10-18,Daily watch,none,"sales 5 Oct 17 (4-5/day); dual feeder BSR 420->595 in 3 days (ALERT); restore-traffic + sale extension still not confirmed",daily routine,guardian
