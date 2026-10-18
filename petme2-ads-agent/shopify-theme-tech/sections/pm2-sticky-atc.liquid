@@ -1,0 +1,275 @@
+{%- comment -%}
+  PETME2 sticky add-to-cart bar (product template).
+  Appears once Dawn's main Buy button (product-info .product-form__submit) leaves the viewport.
+  "Add to cart" clicks Dawn's own submit button, so the selected variant and cart drawer behave as normal.
+  Falls back to its own product form (single-variant products) if Dawn's form is not found.
+  Hidden while the footer is visible, the cart drawer / notification / menu drawer is open, or the Shopify
+  cookie banner is showing; leaves room for a chat bubble on phones; respects the iOS safe area.
+{%- endcomment -%}
+{%- if product != blank -%}
+  {%- liquid
+    assign sid = section.id
+    assign variant = product.selected_or_first_available_variant
+    assign on_sale = false
+    if variant.compare_at_price > variant.price
+      assign on_sale = true
+    endif
+  -%}
+  <div
+    class="pm2-satc color-{{ section.settings.color_scheme }}{% if section.settings.hide_on_desktop %} pm2-satc--mobile-only{% endif %}"
+    id="pm2-satc-{{ sid }}"
+    aria-hidden="true"
+    data-pm2-satc
+  >
+    <div class="pm2-satc__inner">
+      {%- if section.settings.show_thumbnail and product.featured_media -%}
+        <div class="pm2-satc__thumb">
+          {{
+            product.featured_media
+            | image_url: width: 160
+            | image_tag: loading: 'lazy', width: 48, height: 48, alt: '', class: 'pm2-satc__img'
+          }}
+        </div>
+      {%- endif -%}
+      <div class="pm2-satc__info">
+        <p class="pm2-satc__title">{{ product.title | escape }}</p>
+        <div class="pm2-satc__price" data-pm2-satc-price>
+          <span class="pm2-satc__now">{{ variant.price | money }}</span>
+          {%- if on_sale -%}
+            <s class="pm2-satc__was">{{ variant.compare_at_price | money }}</s>
+          {%- endif -%}
+        </div>
+      </div>
+
+      {%- if product.has_only_default_variant -%}
+        {%- form 'product', product, class: 'pm2-satc__form', data-pm2-satc-form: '' -%}
+          <input type="hidden" name="id" value="{{ variant.id }}">
+          <button
+            type="submit"
+            name="add"
+            class="button button--primary pm2-satc__btn"
+            data-pm2-satc-btn
+            tabindex="-1"
+            {% unless variant.available %}disabled{% endunless %}
+          >
+            <span data-pm2-satc-label>
+              {%- if variant.available -%}{{ 'products.product.add_to_cart' | t }}{%- else -%}{% if product.tags contains 'coming-soon' %}Coming soon{% else %}{{ 'products.product.sold_out' | t }}{% endif %}{%- endif -%}
+            </span>
+          </button>
+        {%- endform -%}
+      {%- else -%}
+        <button
+          type="button"
+          class="button button--primary pm2-satc__btn"
+          data-pm2-satc-btn
+          tabindex="-1"
+          {% unless variant.available %}disabled{% endunless %}
+        >
+          <span data-pm2-satc-label>
+            {%- if variant.available -%}{{ 'products.product.add_to_cart' | t }}{%- else -%}{% if product.tags contains 'coming-soon' %}Coming soon{% else %}{{ 'products.product.sold_out' | t }}{% endif %}{%- endif -%}
+          </span>
+        </button>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <style>
+    /* z-index 30: above page content, below Dawn's cart drawer / notification (z 1000+), Shopify cookie banner and chat. */
+    .pm2-satc { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; padding: 0 12px calc(10px + env(safe-area-inset-bottom, 0px)); pointer-events: none; background: transparent; transform: translateY(calc(100% + 16px)); opacity: 0; visibility: hidden; transition: transform .4s cubic-bezier(.2,.7,.2,1), opacity .3s ease, visibility 0s linear .4s; }
+    .pm2-satc.is-visible { transform: none; opacity: 1; visibility: visible; transition: transform .4s cubic-bezier(.2,.7,.2,1), opacity .3s ease, visibility 0s; }
+    /* CSS safety net: never sit on top of an open cart drawer, cart notification or menu/search drawer. */
+    body.overflow-hidden .pm2-satc, body.overflow-hidden-mobile .pm2-satc, body.overflow-hidden-tablet .pm2-satc,
+    body:has(cart-drawer.active) .pm2-satc, body:has(.cart-notification.active) .pm2-satc { transform: translateY(calc(100% + 16px)); opacity: 0; visibility: hidden; }
+    .pm2-satc__inner { pointer-events: auto; max-width: 880px; margin: 0 auto; display: flex; align-items: center; gap: 12px; padding: 8px 8px 8px 8px; border-radius: 22px; color: rgb(var(--color-foreground)); background: rgba(var(--color-background), .94); -webkit-backdrop-filter: saturate(160%) blur(16px); backdrop-filter: saturate(160%) blur(16px); border: 1px solid rgba(var(--color-foreground), .08); box-shadow: 0 14px 36px -18px rgba(var(--color-shadow, 0, 0, 0), .35); }
+    .pm2-satc__thumb { flex: 0 0 auto; width: 48px; height: 48px; border-radius: 14px; overflow: hidden; background: linear-gradient(160deg, #F8FAFD, #EDF2F8); }
+    .pm2-satc__img { width: 100%; height: 100%; object-fit: contain; padding: 4px; }
+    .pm2-satc__info { flex: 1 1 auto; min-width: 0; }
+    .pm2-satc__title { margin: 0; font-size: 14px; font-weight: 600; line-height: 1.25; letter-spacing: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .pm2-satc__price { display: flex; align-items: baseline; gap: 8px; margin-top: 2px; font-size: 16px; line-height: 1.2; }
+    .pm2-satc__price .price { font-size: 16px; letter-spacing: 0; }
+    .pm2-satc__price .price__badge-sale, .pm2-satc__price .price__badge-sold-out, .pm2-satc__price .unit-price { display: none; }
+    .pm2-satc__now { font-weight: 700; }
+    .pm2-satc__was { color: rgba(var(--color-foreground), .5); font-size: 13px; }
+    .pm2-satc__form { margin: 0; flex: 0 0 auto; }
+    .pm2-satc .pm2-satc__btn { flex: 0 0 auto; min-height: 48px; min-width: 0; padding: 0 24px; border-radius: 999px; font-size: 15px; font-weight: 600; letter-spacing: .01em; white-space: nowrap; }
+    .pm2-satc .pm2-satc__btn::before, .pm2-satc .pm2-satc__btn::after { border-radius: 999px; }
+    @media (min-width: 990px) { .pm2-satc { padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px)); } .pm2-satc--mobile-only { display: none; } }
+    @media (max-width: 749px) {
+      /* leave the bottom-right corner free for Shopify Inbox / chat bubbles */
+      .pm2-satc--chat { padding-right: 84px; }
+    }
+    @media (max-width: 420px) { .pm2-satc__inner { gap: 10px; } .pm2-satc .pm2-satc__btn { padding: 0 18px; } }
+    @media (max-width: 359px) { .pm2-satc__thumb { display: none; } }
+    body.pm2-satc-on { padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px)); }
+    @media (min-width: 990px) { body.pm2-satc-on.pm2-satc-mobile-only { padding-bottom: 0; } }
+    @media (prefers-reduced-motion: reduce) { .pm2-satc, .pm2-satc.is-visible { transition: none; transform: none; } }
+  </style>
+
+  <script>
+    (function () {
+      function init() {
+      var bar = document.getElementById('pm2-satc-{{ sid }}');
+      if (!bar || bar.dataset.pm2Ready) return;
+      bar.dataset.pm2Ready = '1';
+      var btn = bar.querySelector('[data-pm2-satc-btn]');
+      var label = bar.querySelector('[data-pm2-satc-label]');
+      var priceBox = bar.querySelector('[data-pm2-satc-price]');
+      var ownForm = bar.querySelector('[data-pm2-satc-form]');
+      var mobileOnly = bar.classList.contains('pm2-satc--mobile-only');
+      if (mobileOnly) document.body.classList.add('pm2-satc-mobile-only');
+      var observer = null;
+      var watched = null;
+      var pastButton = false;
+      var footerVisible = false;
+
+      // Dawn 15: main-product renders <product-info> > ... <product-form> > form#product-form-{section.id} > .product-form__submit
+      function mainButton() {
+        return document.querySelector('product-info .product-form__submit[name="add"]') ||
+          document.querySelector('product-form .product-form__submit') ||
+          document.querySelector('form[action*="/cart/add"]:not([data-pm2-satc-form]):not(.pm2-card__form) [type="submit"][name="add"]');
+      }
+      function mainPrice() {
+        return document.querySelector('product-info [id^="price-"] .price');
+      }
+      function shown(el) {
+        if (!el) return false;
+        var r = el.getBoundingClientRect();
+        return r.width > 0 && r.height > 0 && getComputedStyle(el).visibility !== 'hidden';
+      }
+      // Anything that the bar must never cover or compete with.
+      function blocked() {
+        var b = document.body.classList;
+        if (b.contains('overflow-hidden') || b.contains('overflow-hidden-mobile') || b.contains('overflow-hidden-tablet')) return true;
+        if (document.querySelector('cart-drawer.active, cart-drawer.is-empty.active, .cart-notification.active, .drawer.active, details[open] > .menu-drawer, .search-modal[open]')) return true;
+        if (shown(document.getElementById('shopify-pc__banner'))) return true; // Shopify cookie banner
+        return footerVisible;
+      }
+      function chatPresent() {
+        return !!document.querySelector('inbox-online-store-chat, #ShopifyChat, #shopify-chat, [data-pm2-chat]');
+      }
+
+      function update() {
+        var on = pastButton && !blocked();
+        bar.classList.toggle('pm2-satc--chat', chatPresent());
+        bar.classList.toggle('is-visible', on);
+        bar.setAttribute('aria-hidden', on ? 'false' : 'true');
+        if (btn) btn.tabIndex = on ? 0 : -1;
+        document.body.classList.toggle('pm2-satc-on', on);
+      }
+
+      function sync() {
+        var main = mainButton();
+        if (main && btn) {
+          btn.disabled = main.disabled;
+          var span = main.querySelector('span');
+          var txt = (span ? span.textContent : main.textContent).trim();
+          if (txt && label) label.textContent = txt;
+        }
+        var p = mainPrice();
+        if (p && priceBox) priceBox.innerHTML = p.outerHTML;
+      }
+
+      function watch() {
+        var main = mainButton();
+        var target = main ? (main.closest('product-form') || main) : null;
+        if (target === watched) return;
+        if (observer) observer.disconnect();
+        watched = target;
+        if (!target) { pastButton = false; update(); return; }
+        if ('IntersectionObserver' in window) {
+          observer = new IntersectionObserver(function (entries) {
+            var e = entries[0];
+            // Show only once the buy button has scrolled ABOVE the viewport.
+            pastButton = !e.isIntersecting && e.boundingClientRect.bottom < 0;
+            update();
+          });
+          observer.observe(target);
+        }
+        check();
+      }
+
+      // Hide while the footer is on screen (the bar would cover footer links).
+      var footer = document.querySelector('.shopify-section-group-footer-group, footer.footer, .footer');
+      if (footer && 'IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries) {
+          footerVisible = entries[0].isIntersecting;
+          update();
+        }, { rootMargin: '0px 0px -40px 0px' }).observe(footer);
+      }
+
+      // Scroll fallback: IntersectionObserver does not fire when a jump (anchor, scroll restore)
+      // skips straight past the button without it ever intersecting.
+      var ticking = false;
+      function check() {
+        ticking = false;
+        if (watched && watched.isConnected) pastButton = watched.getBoundingClientRect().bottom < 0;
+        update();
+      }
+      window.addEventListener('scroll', function () {
+        if (!ticking) { ticking = true; requestAnimationFrame(check); }
+      }, { passive: true });
+
+      if (btn) {
+        btn.addEventListener('click', function (e) {
+          var main = mainButton();
+          if (main && !main.disabled) {
+            e.preventDefault();
+            main.click();
+            return;
+          }
+          if (!main && ownForm) return; // let our own product form submit (single-variant fallback)
+          e.preventDefault();
+          if (main) main.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+      }
+
+      watch();
+      sync();
+
+      // Cart drawer / notification / menu drawer / cookie banner open-close: re-evaluate.
+      if ('MutationObserver' in window) {
+        var mt;
+        var onMut = function () { clearTimeout(mt); mt = setTimeout(update, 30); };
+        var mo = new MutationObserver(onMut);
+        mo.observe(document.body, { attributes: true, attributeFilter: ['class'], childList: true });
+        document.querySelectorAll('cart-drawer, .cart-notification, #shopify-pc__banner').forEach(function (el) {
+          mo.observe(el, { attributes: true, attributeFilter: ['class', 'style', 'open'] });
+        });
+      }
+      document.addEventListener('keyup', function (e) { if (e.key === 'Escape') update(); });
+      setTimeout(update, 2500); // chat widgets / cookie banner load late
+
+      // Re-sync after Dawn variant changes (Dawn may re-render the product info / swap the button).
+      if (typeof subscribe === 'function' && typeof PUB_SUB_EVENTS !== 'undefined') {
+        subscribe(PUB_SUB_EVENTS.variantChange, function () { setTimeout(function () { watch(); sync(); }, 0); });
+      }
+      var info = document.querySelector('product-info');
+      if (info && 'MutationObserver' in window) {
+        var t;
+        new MutationObserver(function () {
+          clearTimeout(t);
+          t = setTimeout(function () { watch(); sync(); }, 60);
+        }).observe(info, { subtree: true, childList: true, attributes: true, attributeFilter: ['disabled'] });
+      }
+      }
+      // Dawn's pubsub/constants scripts are deferred: wait for them on first load.
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+      else init();
+    })();
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "PETME2 sticky add to cart",
+  "tag": "section",
+  "class": "pm2-satc-section",
+  "enabled_on": { "templates": ["product"] },
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-3" },
+    { "type": "checkbox", "id": "show_thumbnail", "label": "Show product image", "default": true },
+    { "type": "checkbox", "id": "hide_on_desktop", "label": "Hide on desktop", "default": false }
+  ],
+  "presets": [{ "name": "PETME2 sticky add to cart" }]
+}
+{% endschema %}

@@ -1,0 +1,235 @@
+{%- comment -%}
+  PETME2 – Order confirmation email (Shopify admin → Settings → Notifications → Customer notifications → Order confirmation → Edit code).
+  Paste this whole file into the "Email body (HTML)" box. Subject line suggestion is in README.md.
+  Uses only standard Shopify notification variables. Email-safe: tables + inline styles, no web fonts required.
+{%- endcomment -%}
+{%- assign brand_blue = '#2F5FE0' -%}
+{%- assign ink = '#1B2333' -%}
+{%- assign muted = '#5B6475' -%}
+{%- assign soft = '#F3F6FD' -%}
+{%- assign line_color = '#E4E9F2' -%}
+
+{%- assign has_fountain = false -%}
+{%- assign has_feeder = false -%}
+{%- for line in line_items -%}
+  {%- assign t = line.title | downcase -%}
+  {%- if t contains 'fountain' -%}{%- assign has_fountain = true -%}{%- endif -%}
+  {%- if t contains 'feeder' -%}{%- assign has_feeder = true -%}{%- endif -%}
+{%- endfor -%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Thanks for your order {{ order_name }}</title>
+  <style>
+    @media (max-width: 600px) {
+      .pm-wrap { width: 100% !important; }
+      .pm-pad { padding-left: 20px !important; padding-right: 20px !important; }
+      .pm-h1 { font-size: 26px !important; }
+      .pm-col { display: block !important; width: 100% !important; }
+    }
+  </style>
+</head>
+<body style="margin:0; padding:0; background:#EEF2F9;">
+  <div style="display:none; max-height:0; overflow:hidden; opacity:0;">
+    Order {{ order_name }} is confirmed. It ships in 1–2 business days with free U.S. shipping.
+  </div>
+
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#EEF2F9;">
+    <tr>
+      <td align="center" style="padding:24px 12px;">
+        <table role="presentation" class="pm-wrap" width="600" cellpadding="0" cellspacing="0" style="width:600px; max-width:600px; background:#FFFFFF; border-radius:20px; overflow:hidden; font-family:'Nunito Sans', 'Segoe UI', Arial, Helvetica, sans-serif; color:{{ ink }};">
+
+          <!-- Logo -->
+          <tr>
+            <td class="pm-pad" align="center" style="padding:28px 40px 8px;">
+              <a href="{{ shop.url }}" style="text-decoration:none;">
+                {%- if shop.email_logo_url -%}
+                  <img src="{{ shop.email_logo_url }}" alt="{{ shop.name }}" width="{{ shop.email_logo_width | default: 140 }}" style="display:block; border:0; height:auto; max-width:180px;">
+                {%- else -%}
+                  <span style="font-size:24px; font-weight:800; letter-spacing:.04em; color:{{ brand_blue }};">PETME2</span>
+                {%- endif -%}
+              </a>
+            </td>
+          </tr>
+
+          <!-- Hero -->
+          <tr>
+            <td class="pm-pad" align="center" style="padding:16px 40px 8px;">
+              <div style="display:inline-block; padding:6px 14px; border-radius:999px; background:{{ soft }}; color:{{ brand_blue }}; font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase;">Order {{ order_name }} confirmed</div>
+              <h1 class="pm-h1" style="margin:16px 0 8px; font-family:'Nunito', 'Segoe UI', Arial, sans-serif; font-size:30px; line-height:1.2; font-weight:800; color:{{ ink }};">
+                Thank you{% if customer.first_name %}, {{ customer.first_name }}{% endif %}!
+              </h1>
+              <p style="margin:0; font-size:16px; line-height:1.6; color:{{ muted }};">
+                Your pet is going to love this. We're getting your order ready now, and we'll email you a tracking link as soon as it ships.
+              </p>
+            </td>
+          </tr>
+
+          <!-- Button -->
+          <tr>
+            <td align="center" style="padding:22px 40px 8px;">
+              <a href="{{ order_status_url }}" style="display:inline-block; background:{{ brand_blue }}; color:#FFFFFF; text-decoration:none; font-weight:800; font-size:16px; padding:14px 30px; border-radius:999px;">View your order</a>
+            </td>
+          </tr>
+
+          <!-- What happens next -->
+          <tr>
+            <td class="pm-pad" style="padding:26px 40px 4px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:{{ soft }}; border-radius:16px;">
+                <tr>
+                  <td style="padding:20px 22px;">
+                    <div style="font-size:13px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:{{ brand_blue }}; margin-bottom:12px;">What happens next</div>
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td width="34" valign="top" style="padding:0 0 12px;"><div style="width:24px; height:24px; line-height:24px; border-radius:50%; background:{{ brand_blue }}; color:#fff; font-size:13px; font-weight:800; text-align:center;">1</div></td>
+                        <td valign="top" style="padding:2px 0 12px; font-size:15px; line-height:1.5;"><strong>We pack it</strong> – within 1–2 business days.</td>
+                      </tr>
+                      <tr>
+                        <td width="34" valign="top" style="padding:0 0 12px;"><div style="width:24px; height:24px; line-height:24px; border-radius:50%; background:{{ brand_blue }}; color:#fff; font-size:13px; font-weight:800; text-align:center;">2</div></td>
+                        <td valign="top" style="padding:2px 0 12px; font-size:15px; line-height:1.5;"><strong>It ships for free</strong> – you get a tracking link by email. Most U.S. orders arrive in 3–5 business days.</td>
+                      </tr>
+                      <tr>
+                        <td width="34" valign="top"><div style="width:24px; height:24px; line-height:24px; border-radius:50%; background:{{ brand_blue }}; color:#fff; font-size:13px; font-weight:800; text-align:center;">3</div></td>
+                        <td valign="top" style="padding:2px 0 0; font-size:15px; line-height:1.5;"><strong>Your pet tries it</strong> – and if it's not right, you have 30 days for a full refund.</td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Items -->
+          <tr>
+            <td class="pm-pad" style="padding:26px 40px 0;">
+              <div style="font-size:13px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:{{ muted }}; padding-bottom:10px; border-bottom:1px solid {{ line_color }};">Your order</div>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                {%- for line in line_items -%}
+                <tr>
+                  <td width="76" valign="top" style="padding:14px 0; border-bottom:1px solid {{ line_color }};">
+                    {%- if line.image -%}
+                      <img src="{{ line | img_url: 'compact_cropped' }}" alt="{{ line.title | escape }}" width="64" height="64" style="display:block; border-radius:12px; border:1px solid {{ line_color }};">
+                    {%- endif -%}
+                  </td>
+                  <td valign="top" style="padding:14px 10px; border-bottom:1px solid {{ line_color }}; font-size:15px; line-height:1.4;">
+                    <strong>{{ line.product.title | default: line.title }}</strong>
+                    {%- if line.variant.title != 'Default Title' and line.variant.title != blank -%}<br><span style="color:{{ muted }}; font-size:13px;">{{ line.variant.title }}</span>{%- endif -%}
+                    <br><span style="color:{{ muted }}; font-size:13px;">Qty {{ line.quantity }}</span>
+                  </td>
+                  <td align="right" valign="top" style="padding:14px 0; border-bottom:1px solid {{ line_color }}; font-size:15px; font-weight:700; white-space:nowrap;">
+                    {%- if line.original_line_price != line.final_line_price -%}
+                      <span style="color:{{ muted }}; text-decoration:line-through; font-weight:400; font-size:13px;">{{ line.original_line_price | money }}</span><br>
+                    {%- endif -%}
+                    {{ line.final_line_price | money }}
+                  </td>
+                </tr>
+                {%- endfor -%}
+              </table>
+
+              <!-- Totals -->
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:8px; font-size:15px;">
+                <tr><td style="padding:6px 0; color:{{ muted }};">Subtotal</td><td align="right" style="padding:6px 0;">{{ subtotal_price | money }}</td></tr>
+                {%- for discount_application in discount_applications -%}
+                  {%- if discount_application.target_selection == 'all' -%}
+                <tr><td style="padding:6px 0; color:{{ muted }};">Discount{% if discount_application.title %} ({{ discount_application.title }}){% endif %}</td><td align="right" style="padding:6px 0; color:#1E7B4F;">-{{ discount_application.total_allocated_amount | money }}</td></tr>
+                  {%- endif -%}
+                {%- endfor -%}
+                <tr><td style="padding:6px 0; color:{{ muted }};">Shipping</td><td align="right" style="padding:6px 0;">{% if shipping_price == 0 %}<strong style="color:#1E7B4F;">Free</strong>{% else %}{{ shipping_price | money }}{% endif %}</td></tr>
+                {%- if tax_price > 0 -%}
+                <tr><td style="padding:6px 0; color:{{ muted }};">Taxes</td><td align="right" style="padding:6px 0;">{{ tax_price | money }}</td></tr>
+                {%- endif -%}
+                <tr><td style="padding:12px 0 0; font-size:17px; font-weight:800; border-top:1px solid {{ line_color }};">Total</td><td align="right" style="padding:12px 0 0; font-size:17px; font-weight:800; border-top:1px solid {{ line_color }};">{{ total_price | money_with_currency }}</td></tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Getting started tips (only for what they bought) -->
+          {%- if has_fountain or has_feeder -%}
+          <tr>
+            <td class="pm-pad" style="padding:30px 40px 0;">
+              <div style="font-size:13px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:{{ brand_blue }}; margin-bottom:12px;">Getting started</div>
+              {%- if has_fountain -%}
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid {{ line_color }}; border-radius:16px; margin-bottom:12px;">
+                <tr><td style="padding:16px 18px; font-size:15px; line-height:1.55;">
+                  <strong>💧 Your water fountain</strong><br>
+                  Rinse the parts, fill to the MAX line, and keep your old bowl nearby for a few days while your cat gets used to it. Clean it every 1–2 weeks.<br>
+                  <a href="{{ shop.url }}/blogs/news/how-often-to-clean-cat-water-fountain" style="color:{{ brand_blue }}; font-weight:700;">Easy fountain cleaning guide →</a>
+                </td></tr>
+              </table>
+              {%- endif -%}
+              {%- if has_feeder -%}
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid {{ line_color }}; border-radius:16px; margin-bottom:12px;">
+                <tr><td style="padding:16px 18px; font-size:15px; line-height:1.55;">
+                  <strong>🍽️ Your automatic feeder</strong><br>
+                  Use dry kibble only. Set your meal times, then run one test meal while you watch. If your feeder takes backup batteries, keep them in for power cuts.<br>
+                  <a href="{{ shop.url }}/blogs/news/how-much-should-a-cat-eat" style="color:{{ brand_blue }}; font-weight:700;">How much should my cat eat? →</a>
+                </td></tr>
+              </table>
+              {%- endif -%}
+            </td>
+          </tr>
+          {%- endif -%}
+
+          <!-- Shipping address -->
+          {%- if shipping_address -%}
+          <tr>
+            <td class="pm-pad" style="padding:22px 40px 0;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td class="pm-col" width="50%" valign="top" style="padding:0 10px 12px 0; font-size:14px; line-height:1.55; color:{{ muted }};">
+                    <div style="font-size:13px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:{{ ink }}; margin-bottom:6px;">Shipping to</div>
+                    {{ shipping_address.name }}<br>
+                    {{ shipping_address.address1 }}{% if shipping_address.address2 != blank %}, {{ shipping_address.address2 }}{% endif %}<br>
+                    {{ shipping_address.city }}, {{ shipping_address.province_code }} {{ shipping_address.zip }}
+                  </td>
+                  <td class="pm-col" width="50%" valign="top" style="padding:0 0 12px 0; font-size:14px; line-height:1.55; color:{{ muted }};">
+                    <div style="font-size:13px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:{{ ink }}; margin-bottom:6px;">Delivery</div>
+                    {{ shipping_method.title | default: 'Standard shipping' }}<br>
+                    Free U.S. shipping
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          {%- endif -%}
+
+          <!-- Trust row -->
+          <tr>
+            <td class="pm-pad" style="padding:20px 40px 0;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:{{ soft }}; border-radius:16px;">
+                <tr>
+                  <td align="center" width="33%" style="padding:16px 6px; font-size:13px; line-height:1.4; color:{{ ink }};"><strong>🚚 Free</strong><br>U.S. shipping</td>
+                  <td align="center" width="34%" style="padding:16px 6px; font-size:13px; line-height:1.4; color:{{ ink }};"><strong>↩️ 30-day</strong><br>money-back guarantee</td>
+                  <td align="center" width="33%" style="padding:16px 6px; font-size:13px; line-height:1.4; color:{{ ink }};"><strong>💬 Real help</strong><br>reply to this email</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Help -->
+          <tr>
+            <td class="pm-pad" align="center" style="padding:26px 40px 8px; font-size:15px; line-height:1.6; color:{{ muted }};">
+              Questions about setup or your order? Just reply to this email or write to
+              <a href="mailto:{{ shop.email }}" style="color:{{ brand_blue }}; font-weight:700;">{{ shop.email }}</a>. A real person will help you.
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td align="center" style="padding:22px 40px 30px; font-size:12px; line-height:1.6; color:#8A93A5;">
+              <a href="{{ shop.url }}" style="color:#8A93A5; text-decoration:none; font-weight:700;">petme2.com</a> ·
+              <a href="{{ shop.url }}/blogs/news" style="color:#8A93A5; text-decoration:none;">Pet care tips</a> ·
+              <a href="{{ shop.url }}/pages/contact" style="color:#8A93A5; text-decoration:none;">Contact</a><br>
+              You're getting this email because you placed an order at {{ shop.name }}.
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

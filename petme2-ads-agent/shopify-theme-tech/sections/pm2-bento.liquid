@@ -1,0 +1,424 @@
+{%- comment -%}
+  PETME2 bento grid. 4 columns desktop, 2 tablet, stacked on phone.
+  Tile sizes per block: small 1x1, wide 2x1, tall 1x2, large 2x2.
+  CSS below contains no Liquid on purpose (per-instance values go through inline CSS vars).
+{%- endcomment -%}
+{%- liquid
+  assign anim = ''
+  if settings.animations_reveal_on_scroll
+    assign anim = ' scroll-trigger animate--slide-in'
+  endif
+-%}
+<div
+  class="color-{{ section.settings.color_scheme }} gradient pm2-bento"
+  style="--pm2-pt: {{ section.settings.padding_top }}px; --pm2-pb: {{ section.settings.padding_bottom }}px;"
+>
+  <span class="pm2-bento__glow" aria-hidden="true"></span>
+  <div class="page-width pm2-bento__inner">
+    {%- if section.settings.eyebrow != blank or section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="pm2-bento__head{{ anim }}">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="pm2-bento__eyebrow"><span class="pm2-bento__dot" aria-hidden="true"></span>{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="pm2-bento__heading">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <div class="pm2-bento__sub">{{ section.settings.subheading }}</div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="pm2-bento__grid">
+      {%- for block in section.blocks -%}
+        {%- assign size = block.settings.size | default: 'small' -%}
+        {%- case block.type -%}
+          {%- when 'image_tile' -%}
+            {%- assign tag = 'div' -%}
+            {%- if block.settings.link != blank and block.settings.link_label == blank -%}
+              {%- assign tag = 'a' -%}
+            {%- endif -%}
+            <{{ tag }}
+              class="pm2-bento__tile pm2-bento__tile--image pm2-bento__tile--{{ size }}{{ anim }}"
+              {% if tag == 'a' %}href="{{ block.settings.link }}"{% endif %}
+              data-cascade
+              style="--animation-order: {{ forloop.index }};"
+              {{ block.shopify_attributes }}
+            >
+              <div class="pm2-bento__media">
+                {%- if block.settings.image != blank -%}
+                  {%- liquid
+                    case size
+                      when 'large'
+                        assign sizes = '(min-width: 990px) 640px, (min-width: 750px) 100vw, 100vw'
+                      when 'wide'
+                        assign sizes = '(min-width: 990px) 640px, (min-width: 750px) 100vw, 100vw'
+                      else
+                        assign sizes = '(min-width: 990px) 320px, (min-width: 750px) 50vw, 100vw'
+                    endcase
+                  -%}
+                  {{
+                    block.settings.image
+                    | image_url: width: 1400
+                    | image_tag:
+                      loading: 'lazy',
+                      sizes: sizes,
+                      widths: '375, 550, 750, 1000, 1400',
+                      class: 'pm2-bento__img',
+                      alt: block.settings.image.alt
+                  }}
+                {%- else -%}
+                  {{ 'lifestyle-1' | placeholder_svg_tag: 'pm2-bento__img pm2-bento__ph' }}
+                {%- endif -%}
+              </div>
+              <span class="pm2-bento__shade" aria-hidden="true"></span>
+              <div class="pm2-bento__overlay">
+                {%- if block.settings.eyebrow != blank -%}
+                  <p class="pm2-bento__chip">{{ block.settings.eyebrow | escape }}</p>
+                {%- endif -%}
+                {%- if block.settings.title != blank -%}
+                  <h3 class="pm2-bento__title">{{ block.settings.title | escape }}</h3>
+                {%- endif -%}
+                {%- if block.settings.text != blank -%}
+                  <p class="pm2-bento__text">{{ block.settings.text | escape }}</p>
+                {%- endif -%}
+                {%- if block.settings.link != blank and block.settings.link_label != blank -%}
+                  <a class="pm2-bento__link" href="{{ block.settings.link }}">
+                    {{- block.settings.link_label | escape -}}
+                    <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true" focusable="false"><path d="M5 10h10m-4-4 4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </a>
+                {%- endif -%}
+              </div>
+            </{{ tag }}>
+
+          {%- when 'stat_tile' -%}
+            <div
+              class="pm2-bento__tile pm2-bento__tile--stat pm2-bento__tile--{{ size }}{{ anim }}"
+              data-cascade
+              style="--animation-order: {{ forloop.index }};"
+              {{ block.shopify_attributes }}
+            >
+              <span class="pm2-bento__orb" aria-hidden="true"></span>
+              {%- if block.settings.value != blank -%}
+                <p class="pm2-bento__value">{{ block.settings.value | escape }}</p>
+              {%- endif -%}
+              <div class="pm2-bento__stat-copy">
+                {%- if block.settings.label != blank -%}
+                  <p class="pm2-bento__label">{{ block.settings.label | escape }}</p>
+                {%- endif -%}
+                {%- if block.settings.text != blank -%}
+                  <p class="pm2-bento__small">{{ block.settings.text | escape }}</p>
+                {%- endif -%}
+              </div>
+            </div>
+
+          {%- when 'text_tile' -%}
+            <div
+              class="pm2-bento__tile pm2-bento__tile--text pm2-bento__tile--{{ size }}{{ anim }}"
+              data-cascade
+              style="--animation-order: {{ forloop.index }};"
+              {{ block.shopify_attributes }}
+            >
+              <span class="pm2-bento__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+                  {%- case block.settings.icon -%}
+                    {%- when 'wifi' -%}<path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><path d="M12 20h.01"/>
+                    {%- when 'camera' -%}<path d="m16 13 5.2 3.5a.5.5 0 0 0 .8-.4V7.9a.5.5 0 0 0-.8-.4L16 11"/><rect x="2" y="6" width="14" height="12" rx="3"/>
+                    {%- when 'bowl' -%}<path d="M3 11h18"/><path d="M4 11a8 8 0 0 0 16 0"/><path d="M8 20h8"/><path d="M9 4c0 1.5 1 1.5 1 3M14 4c0 1.5 1 1.5 1 3"/>
+                    {%- when 'drop' -%}<path d="M12 2.7s-6 6.6-6 11.3a6 6 0 0 0 12 0c0-4.7-6-11.3-6-11.3z"/><path d="M9.5 14.5a2.5 2.5 0 0 0 2.5 2.5"/>
+                    {%- when 'filter' -%}<path d="m12 2 10 5-10 5L2 7l10-5z"/><path d="m2 12 10 5 10-5"/><path d="m2 17 10 5 10-5"/>
+                    {%- when 'shield' -%}<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/>
+                    {%- when 'truck' -%}<path d="M2 5h12v11H2z"/><path d="M14 9h4l3 3.5V16h-7"/><circle cx="6.5" cy="17.5" r="2"/><circle cx="17.5" cy="17.5" r="2"/>
+                    {%- when 'phone' -%}<rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/>
+                    {%- when 'mic' -%}<rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v4"/>
+                    {%- else -%}<path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 3v4M17 5h4"/>
+                  {%- endcase -%}
+                </svg>
+              </span>
+              <div class="pm2-bento__text-copy">
+                {%- if block.settings.title != blank -%}
+                  <h3 class="pm2-bento__title">{{ block.settings.title | escape }}</h3>
+                {%- endif -%}
+                {%- if block.settings.text != blank -%}
+                  <p class="pm2-bento__text">{{ block.settings.text | escape }}</p>
+                {%- endif -%}
+              </div>
+            </div>
+
+          {%- when 'product_tile' -%}
+            {%- assign p = block.settings.product -%}
+            <a
+              class="pm2-bento__tile pm2-bento__tile--product pm2-bento__tile--{{ size }}{{ anim }}"
+              href="{% if p != blank %}{{ p.url }}{% else %}#{% endif %}"
+              data-cascade
+              style="--animation-order: {{ forloop.index }};"
+              {{ block.shopify_attributes }}
+            >
+              <div class="pm2-bento__pmedia">
+                <span class="pm2-bento__halo" aria-hidden="true"></span>
+                {%- if p != blank and p.featured_media != blank -%}
+                  {%- assign p_alt = p.featured_media.alt | default: p.title | escape -%}
+                  {{
+                    p.featured_media
+                    | image_url: width: 900
+                    | image_tag:
+                      loading: 'lazy',
+                      sizes: '(min-width: 990px) 420px, (min-width: 750px) 50vw, 90vw',
+                      widths: '300, 450, 600, 900',
+                      class: 'pm2-bento__pimg',
+                      alt: p_alt
+                  }}
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag: 'pm2-bento__pimg pm2-bento__ph' }}
+                {%- endif -%}
+              </div>
+              <div class="pm2-bento__pinfo">
+                <div>
+                  {%- if block.settings.eyebrow != blank -%}
+                    <p class="pm2-bento__label">{{ block.settings.eyebrow | escape }}</p>
+                  {%- endif -%}
+                  <h3 class="pm2-bento__title">{% if p != blank %}{{ p.title | escape }}{% else %}Product title{% endif %}</h3>
+                  <p class="pm2-bento__price">
+                    {%- if p != blank -%}
+                      {%- if p.compare_at_price > p.price -%}
+                        <span class="visually-hidden">Sale price</span>{{ p.price | money }}
+                        <s class="pm2-bento__compare"><span class="visually-hidden">Regular price</span>{{ p.compare_at_price | money }}</s>
+                      {%- else -%}
+                        {%- if p.price_varies -%}From {% endif -%}{{ p.price | money }}
+                      {%- endif -%}
+                    {%- else -%}
+                      {{ 9999 | money }}
+                    {%- endif -%}
+                  </p>
+                </div>
+                <span class="pm2-bento__go" aria-hidden="true">
+                  <svg viewBox="0 0 20 20" width="18" height="18" focusable="false"><path d="M5 10h10m-4-4 4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+              </div>
+              {%- if block.settings.link_label != blank -%}
+                <span class="visually-hidden">{{ block.settings.link_label | escape }}</span>
+              {%- endif -%}
+            </a>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+<style>
+  .pm2-bento { position: relative; overflow: hidden; padding-top: clamp(36px, calc(var(--pm2-pt, 96px) * .55), 64px); padding-bottom: clamp(36px, calc(var(--pm2-pb, 96px) * .55), 64px); }
+  @media (min-width: 750px) { .pm2-bento { padding-top: var(--pm2-pt, 96px); padding-bottom: var(--pm2-pb, 96px); } }
+  .pm2-bento__glow { display: block; position: absolute; inset: -20% -10% auto; height: 60%; pointer-events: none;
+    background: radial-gradient(50% 60% at 50% 0%, rgba(var(--color-button), .12), transparent 70%); }
+  .pm2-bento__inner { position: relative; }
+
+  .pm2-bento__head { max-width: 760px; margin: 0 auto 28px; text-align: center; }
+  @media (min-width: 750px) { .pm2-bento__head { margin-bottom: 48px; } }
+  .pm2-bento__eyebrow { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 14px; padding: 6px 14px 6px 10px;
+    border-radius: 999px; border: 1px solid rgba(var(--color-foreground), .08); background: rgba(var(--color-foreground), .04);
+    font-size: 13px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: rgba(var(--color-foreground), .78); }
+  .pm2-bento__dot { flex: none; width: 7px; height: 7px; border-radius: 50%; background: rgb(var(--color-button)); box-shadow: 0 0 0 4px rgba(var(--color-button), .16); }
+  .pm2-bento__heading { margin: 0; font-family: var(--font-heading-family); font-weight: 700; font-size: clamp(30px, 5.2vw, 60px);
+    line-height: 1.08; letter-spacing: -.03em; color: rgb(var(--color-foreground)); text-wrap: balance; }
+  .pm2-bento__sub { margin-top: 14px; font-size: clamp(16px, 1.4vw, 19px); line-height: 1.6; color: rgba(var(--color-foreground), .7); text-wrap: pretty; }
+  .pm2-bento__sub p { margin: 0; }
+
+  .pm2-bento__grid { display: grid; grid-template-columns: 1fr; gap: 12px; grid-auto-flow: dense; }
+  @media (min-width: 750px) { .pm2-bento__grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: minmax(250px, auto); gap: 16px; } }
+  @media (min-width: 990px) { .pm2-bento__grid { grid-template-columns: repeat(4, 1fr); grid-auto-rows: minmax(270px, auto); gap: 20px; } }
+
+  /* Phones: single column, except small stat tiles which pair up 2-up (same row = same height). */
+  @media (max-width: 749px) {
+    .pm2-bento__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .pm2-bento__tile { grid-column: span 2; }
+    .pm2-bento__tile--stat.pm2-bento__tile--small { grid-column: span 1; }
+    /* a small stat with no small-stat neighbour would sit alone at half width: give it the full row */
+    .pm2-bento__tile--stat.pm2-bento__tile--small:not(.pm2-bento__tile--stat.pm2-bento__tile--small + .pm2-bento__tile--stat.pm2-bento__tile--small):not(:has(+ .pm2-bento__tile--stat.pm2-bento__tile--small)) { grid-column: span 2; }
+    /* height grows with the copy (no clipping); photo fills the rest */
+    .pm2-bento__tile--image { min-height: min(72vw, 300px); }
+    .pm2-bento__tile--image.pm2-bento__tile--large, .pm2-bento__tile--image.pm2-bento__tile--tall { min-height: min(108vw, 62vh, 460px); }
+  }
+  @media (min-width: 750px) {
+    .pm2-bento__tile--wide { grid-column: span 2; }
+    .pm2-bento__tile--tall { grid-row: span 2; }
+    .pm2-bento__tile--large { grid-column: span 2; grid-row: span 2; }
+  }
+
+  .pm2-bento__tile { position: relative; display: flex; flex-direction: column; min-width: 0; overflow: hidden; isolation: isolate;
+    border-radius: 24px; padding: 28px; text-decoration: none; color: rgb(var(--color-foreground));
+    background: rgba(var(--color-foreground), .035); border: 1px solid rgba(var(--color-foreground), .07);
+    transition: transform .45s cubic-bezier(.2, .7, .2, 1), box-shadow .45s ease, border-color .45s ease; }
+  @media (max-width: 749px) { .pm2-bento__tile { padding: 22px; border-radius: 22px; } }
+  @media (hover: hover) {
+    .pm2-bento__tile:hover { transform: translateY(-3px); border-color: rgba(var(--color-foreground), .12);
+      box-shadow: 0 22px 48px -30px rgba(var(--color-shadow, 0, 0, 0), .35); }
+  }
+  a.pm2-bento__tile:focus-visible, .pm2-bento__link:focus-visible { outline: 2px solid rgb(var(--color-button)); outline-offset: 3px; }
+
+  .pm2-bento__title { margin: 0; font-family: var(--font-heading-family); font-weight: 650; font-size: 20px; line-height: 1.25; letter-spacing: -.015em; color: inherit; overflow-wrap: break-word; }
+  .pm2-bento__text { margin: 8px 0 0; font-size: 16px; line-height: 1.55; color: rgba(var(--color-foreground), .7); }
+  .pm2-bento__label { margin: 0; font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: rgba(var(--color-foreground), .62); }
+  .pm2-bento__ph { background: rgba(var(--color-foreground), .08); fill: rgba(var(--color-foreground), .3); }
+
+  /* image tile: photo + dark shade, text is always white on the photo (independent of scheme) */
+  .pm2-bento__tile--image { padding: 0; justify-content: flex-end; min-height: 270px; border-color: transparent; color: #fff; background: #1B2436; }
+  .pm2-bento__media { position: absolute; inset: 0; z-index: -2; }
+  .pm2-bento__img { width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.001); transition: transform 1s cubic-bezier(.2, .7, .2, 1); }
+  @media (hover: hover) { .pm2-bento__tile:hover .pm2-bento__img { transform: scale(1.04); } }
+  .pm2-bento__shade { display: block; position: absolute; inset: 0; z-index: -1;
+    background: linear-gradient(180deg, rgba(11, 18, 32, 0) 30%, rgba(11, 18, 32, .5) 60%, rgba(11, 18, 32, .86) 100%); }
+  .pm2-bento__overlay { padding: 28px; }
+  @media (max-width: 749px) { .pm2-bento__overlay, .pm2-bento__tile--large .pm2-bento__overlay { padding: 20px; } }
+  .pm2-bento__tile--large .pm2-bento__overlay { padding: 36px; }
+  .pm2-bento__tile--image .pm2-bento__title { font-size: clamp(22px, 2vw, 26px); text-shadow: 0 1px 12px rgba(0, 0, 0, .25); }
+  .pm2-bento__tile--large.pm2-bento__tile--image .pm2-bento__title { font-size: clamp(24px, 3vw, 38px); letter-spacing: -.025em; max-width: 18ch; }
+  .pm2-bento__tile--image .pm2-bento__text { color: rgba(255, 255, 255, .86); max-width: 46ch; }
+  .pm2-bento__chip { display: inline-block; margin: 0 0 10px; padding: 5px 11px; border-radius: 999px; font-size: 12px; font-weight: 600;
+    letter-spacing: .08em; text-transform: uppercase; color: #fff; background: rgba(255, 255, 255, .16); border: 1px solid rgba(255, 255, 255, .22);
+    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+  .pm2-bento__link { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; margin-top: 8px; padding: 0 18px; border-radius: 999px;
+    font-size: 16px; font-weight: 600; color: #0B1220; background: #fff; text-decoration: none; }
+  .pm2-bento__link svg { transition: transform .3s ease; }
+  .pm2-bento__link:hover svg { transform: translateX(3px); }
+
+  /* stat tile: soft accent wash + hairline accent border */
+  .pm2-bento__tile--stat { justify-content: space-between; gap: 20px; border: 1px solid rgba(var(--color-button), .22);
+    background: linear-gradient(160deg, rgba(var(--color-button), .1), rgba(var(--color-button), .02) 60%), rgb(var(--color-background)); }
+  .pm2-bento__orb { position: absolute; z-index: -1; width: 200px; height: 200px; right: -70px; top: -90px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(var(--color-button), .22), transparent 65%); transition: opacity .45s ease, transform .6s ease; }
+  @media (hover: hover) { .pm2-bento__tile--stat:hover .pm2-bento__orb { transform: scale(1.1); } }
+  .pm2-bento__value { margin: 0; font-family: var(--font-heading-family); font-weight: 700; font-size: clamp(40px, 4vw, 60px); line-height: 1; letter-spacing: -.04em; padding-bottom: .04em;
+    color: rgb(var(--color-foreground)); overflow-wrap: anywhere; }
+  .pm2-bento__tile--wide .pm2-bento__value { font-size: clamp(48px, 6vw, 84px); }
+  .pm2-bento__tile--large .pm2-bento__value, .pm2-bento__tile--tall .pm2-bento__value { font-size: clamp(56px, 7vw, 112px); }
+  .pm2-bento__tile--stat .pm2-bento__label { color: rgb(var(--color-button)); font-size: 13px; }
+  .pm2-bento__small { margin: 6px 0 0; font-size: 16px; line-height: 1.5; color: rgba(var(--color-foreground), .68); }
+  @media (max-width: 749px) {
+    .pm2-bento__tile--stat.pm2-bento__tile--small { padding: 20px 16px; min-height: 170px; }
+    .pm2-bento__tile--stat.pm2-bento__tile--small .pm2-bento__value { font-size: clamp(32px, 10vw, 42px); }
+    .pm2-bento__tile--stat.pm2-bento__tile--small .pm2-bento__label { font-size: 12px; letter-spacing: .06em; }
+  }
+
+  /* text tile */
+  .pm2-bento__tile--text { justify-content: space-between; gap: 24px; }
+  @media (max-width: 749px) { .pm2-bento__tile--text { flex-direction: row; align-items: flex-start; gap: 16px; justify-content: flex-start; } }
+  .pm2-bento__icon { flex: none; display: grid; place-items: center; width: 52px; height: 52px; border-radius: 16px; color: rgb(var(--color-button));
+    background: rgba(var(--color-button), .1); }
+  @media (max-width: 749px) { .pm2-bento__icon { width: 46px; height: 46px; border-radius: 14px; } }
+  .pm2-bento__tile--text.pm2-bento__tile--large .pm2-bento__title, .pm2-bento__tile--text.pm2-bento__tile--wide .pm2-bento__title { font-size: clamp(20px, 2.2vw, 30px); max-width: 22ch; }
+
+  /* product tile */
+  .pm2-bento__tile--product { padding: 0; }
+  .pm2-bento__pmedia { position: relative; flex: 1; display: grid; place-items: center; padding: 24px 24px 0; min-height: 200px; }
+  .pm2-bento__halo { position: absolute; z-index: -1; left: 50%; top: 55%; width: 70%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%;
+    background: radial-gradient(circle, rgba(var(--color-button), .2), transparent 70%); transition: transform .6s ease; }
+  .pm2-bento__pimg { width: 100%; max-width: 380px; max-height: 340px; height: auto; object-fit: contain; display: block;
+    filter: drop-shadow(0 18px 24px rgba(var(--color-shadow, 0, 0, 0), .16)); transition: transform .8s cubic-bezier(.2, .7, .2, 1); }
+  @media (max-width: 749px) { .pm2-bento__pimg { max-height: 240px; } }
+  .pm2-bento__pimg.pm2-bento__ph { aspect-ratio: 1; border-radius: 20px; background: rgba(var(--color-foreground), .06); }
+  @media (hover: hover) {
+    .pm2-bento__tile--product:hover .pm2-bento__pimg { transform: scale(1.04) translateY(-3px); }
+    .pm2-bento__tile--product:hover .pm2-bento__halo { transform: translate(-50%, -50%) scale(1.08); }
+    .pm2-bento__tile--product:hover .pm2-bento__go { transform: translateX(3px); }
+  }
+  .pm2-bento__pinfo { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; padding: 20px 24px 24px; }
+  .pm2-bento__pinfo > div { min-width: 0; }
+  .pm2-bento__pinfo .pm2-bento__label { margin-bottom: 6px; }
+  .pm2-bento__price { margin: 6px 0 0; font-size: 18px; font-weight: 700; color: rgb(var(--color-foreground)); }
+  .pm2-bento__compare { margin-left: 8px; font-weight: 400; font-size: 15px; color: rgba(var(--color-foreground), .5); }
+  .pm2-bento__go { flex: none; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%;
+    background: rgb(var(--color-button)); color: rgb(var(--color-button-text)); transition: transform .35s ease; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pm2-bento__tile, .pm2-bento__img, .pm2-bento__pimg, .pm2-bento__orb, .pm2-bento__halo, .pm2-bento__go, .pm2-bento__link svg { transition: none !important; }
+    .pm2-bento__tile:hover, .pm2-bento__tile:hover .pm2-bento__img, .pm2-bento__tile--product:hover .pm2-bento__pimg, .pm2-bento__tile--product:hover .pm2-bento__go { transform: none; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "PETME2 bento grid",
+  "tag": "section",
+  "class": "section pm2-bento-section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Smart pet tech" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Everything your pet needs. Nothing they don't." },
+    { "type": "richtext", "id": "subheading", "label": "Subheading", "default": "<p>Automatic feeders and quiet fountains, managed from one app.</p>" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 96 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 96 }
+  ],
+  "blocks": [
+    {
+      "type": "image_tile",
+      "name": "Image tile",
+      "settings": [
+        { "type": "select", "id": "size", "label": "Tile size", "default": "large", "options": [
+          { "value": "small", "label": "Small (1x1)" }, { "value": "wide", "label": "Wide (2x1)" },
+          { "value": "tall", "label": "Tall (1x2)" }, { "value": "large", "label": "Large (2x2)" } ] },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Smart feeding" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Meals on schedule, even when you're out" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Set portions and times from the app." },
+        { "type": "url", "id": "link", "label": "Link" },
+        { "type": "text", "id": "link_label", "label": "Link label", "default": "Shop feeders", "info": "Leave empty to make the whole tile clickable." }
+      ]
+    },
+    {
+      "type": "stat_tile",
+      "name": "Stat tile",
+      "settings": [
+        { "type": "select", "id": "size", "label": "Tile size", "default": "small", "options": [
+          { "value": "small", "label": "Small (1x1)" }, { "value": "wide", "label": "Wide (2x1)" },
+          { "value": "tall", "label": "Tall (1x2)" }, { "value": "large", "label": "Large (2x2)" } ] },
+        { "type": "text", "id": "value", "label": "Value", "default": "1080P" },
+        { "type": "text", "id": "label", "label": "Label", "default": "HD live view" },
+        { "type": "text", "id": "text", "label": "Small text", "default": "Check in from the app, any time." }
+      ]
+    },
+    {
+      "type": "text_tile",
+      "name": "Text tile",
+      "settings": [
+        { "type": "select", "id": "size", "label": "Tile size", "default": "small", "options": [
+          { "value": "small", "label": "Small (1x1)" }, { "value": "wide", "label": "Wide (2x1)" },
+          { "value": "tall", "label": "Tall (1x2)" }, { "value": "large", "label": "Large (2x2)" } ] },
+        { "type": "select", "id": "icon", "label": "Icon", "default": "wifi", "options": [
+          { "value": "wifi", "label": "WiFi" }, { "value": "camera", "label": "Camera" }, { "value": "bowl", "label": "Bowl" },
+          { "value": "drop", "label": "Water drop" }, { "value": "filter", "label": "Filter layers" }, { "value": "shield", "label": "Shield" },
+          { "value": "truck", "label": "Truck" }, { "value": "sparkle", "label": "Sparkle" }, { "value": "phone", "label": "Phone" },
+          { "value": "mic", "label": "Microphone" } ] },
+        { "type": "text", "id": "title", "label": "Title", "default": "App control" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Schedule meals and portions over WiFi." }
+      ]
+    },
+    {
+      "type": "product_tile",
+      "name": "Product tile",
+      "settings": [
+        { "type": "select", "id": "size", "label": "Tile size", "default": "tall", "options": [
+          { "value": "small", "label": "Small (1x1)" }, { "value": "wide", "label": "Wide (2x1)" },
+          { "value": "tall", "label": "Tall (1x2)" }, { "value": "large", "label": "Large (2x2)" } ] },
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Featured" },
+        { "type": "text", "id": "link_label", "label": "Link label (screen readers)", "default": "Shop now" }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "PETME2 bento grid",
+      "blocks": [
+        { "type": "image_tile", "settings": { "size": "large" } },
+        { "type": "stat_tile", "settings": { "value": "1080P", "label": "HD live view" } },
+        { "type": "text_tile", "settings": { "icon": "wifi" } },
+        { "type": "stat_tile", "settings": { "size": "small", "value": "5L", "label": "Elevated feeder", "text": "Two stainless steel bowls." } },
+        { "type": "text_tile", "settings": { "icon": "drop", "title": "Quiet pump", "text": "Fresh, flowing water without the hum." } }
+      ]
+    }
+  ],
+  "disabled_on": { "groups": ["header", "footer"] }
+}
+{% endschema %}

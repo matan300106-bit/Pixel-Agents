@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "town": {
+      "type": "pm2-cat-town",
+      "settings": {
+        "heading": "Build the town with us",
+        "instagram_handle": "@petme2",
+        "instagram_url": ""
+      }
+    }
+  },
+  "order": ["town"]
+}
