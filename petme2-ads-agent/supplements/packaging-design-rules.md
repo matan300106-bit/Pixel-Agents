@@ -41,3 +41,9 @@ Idea 2 taller cat + flax: box b8e17dd7-8a32-4f5e-86aa-34b6623955f3 / label f588c
 Idea 3 Maine Coon + honeysuckle: box 22b8226b-c215-462d-a1bd-35d115e1cdc6 / label dddf577e-d7f5-4677-b15d-965965c0baa6
 Owner 2026-10-18: do the edits in Higgsfield (use credits), only 3 samples max.
 `for-higgsfield/` = renders of the real Skin & Coat label (p1) and box (p1) for the owner to upload.
+
+### Round 4: 3 samples on the real box (owner uploads: box 3616f970-7635-4e54-b0ab-b8986ae0198d, label 4b872e13-2923-4b8b-ade2-ac5020b1447f)
+S1 exact cat: 1ed8781c-554a-45da-b5ce-5ae20a8743e0
+S2 taller cat + flax: 379dd459-97fd-4bfd-bc74-b62a7dca698c
+S3 Maine Coon + honeysuckle: 669a7b3b-795e-4e47-84b5-06e4d242a2c7
+Label (long strip, ~5.5:1) to be done for the picked sample only.
