@@ -5,3 +5,5 @@ d7/
 package.json
 package-lock.json
 d8/
+node_modules/
+d[0-9]*/
