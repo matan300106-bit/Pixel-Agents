@@ -689,3 +689,4 @@ date,item,before,after,reason,agent
 2026-10-18,Price step 2,see report,HOLD all (no change),sales down 50% last 14d; traffic not restored,manager
 2026-10-19,Daily watch,none,"sale ends tonight (urgent); sales 5/day; dual BSR 632; restore-traffic not confirmed",daily routine,guardian
 2026-10-19,Mon ramp check-in,none,"NO change: no new ads data since Oct 11; waiting on Oct 16 restore-traffic Chrome reply",ramp routine,guardian
+2026-10-20,Sale prices (7 SKUs),expired Oct 20 00:00 PT,restore same sale prices to Dec 31 (Chrome prompt),regular prices went live (+4% to +27%),guardian
