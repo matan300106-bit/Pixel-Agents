@@ -690,3 +690,5 @@ date,item,before,after,reason,agent
 2026-10-19,Daily watch,none,"sale ends tonight (urgent); sales 5/day; dual BSR 632; restore-traffic not confirmed",daily routine,guardian
 2026-10-19,Mon ramp check-in,none,"NO change: no new ads data since Oct 11; waiting on Oct 16 restore-traffic Chrome reply",ramp routine,guardian
 2026-10-20,Sale prices (7 SKUs),expired Oct 20 00:00 PT,restore same sale prices to Dec 31 (Chrome prompt),regular prices went live (+4% to +27%),guardian
+2026-10-21,settings daily_spend_cap,140,170,owner: push ads for more sales,manager
+2026-10-21,Ads PUSH Chrome prompt (planned),"Auto paused; budgets as Oct 16","Auto on $15 (bids<=0.60); +25% budget on campaigns with orders; +15% bid on winners ACOS<30%; stainless TOS +25%; all 8 ASINs live; total<=170",owner asked to push sales,manager
