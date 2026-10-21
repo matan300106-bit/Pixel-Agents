@@ -958,16 +958,37 @@ const WAR = (() => { if (!WARF) return null; const WR = EP.war, g = new THREE.Gr
   const GEYE = [-.15, .15].map(x => { const e = new THREE.Group(); e.position.set(x, 1.5, 1.13); GIANT.add(e); e.add(new THREE.Mesh(new THREE.SphereGeometry(.085, 10, 8), GLOW('#FF2A2A')));
     e.add(new THREE.Mesh(new THREE.SphereGeometry(.2, 10, 8), GLOW('#FF3A3A', .28))); return e; });
   GEN.rotation.order = 'YXZ';
-  return { WR, g, MOUTH, dBody, dFace, dHelm, dLeg, DOGS, BAN, GEN, JAW, GLEG, GS, MG, MW, cRun, cHelm, CATS, WB, wBox, wTape, CAN, FLG, DUST, NRW, cEye, CAMP, FIRES, SKYD, SPY, GIANT, GEYE, GW };
+  // ---------- Day 10 (Part 3): the giant wakes and walks; the cats climb on each other and become MEGA MANGO (one cat per follower) ----------
+  // EP.war extras: wakeAt (dogs stand up), bark: [t0, t1]; spyLook: [[t0, t1], ...] too; spyJump: [t0, t1, h]; mangoZ (Mango's spot); panic: [t0, t1] (cats hop + spin); eyesOff;
+  // giant.walk: [[t, z], ...], giant.lean: [[t, pitch], ...], giant.glow: [[t, k], ...]; mega: { at, dur, x, z, s, fullAt, standAt, roar: [t0, t1], mangoTop }
+  const GIL = GLEG.map(L => GIANT.children[GEN.children.indexOf(L.p)]);
+  const MEGA = MG.clone(true); MEGA.visible = false; MEGA.rotation.order = 'YXZ'; g.add(MEGA); const MMOUTH = MEGA.children[MG.children.indexOf(MOUTH)];
+  MEGA.children.forEach(o => { if (o.isMesh && o.geometry.type === 'SphereGeometry' && o !== MMOUTH) { o.scale.multiplyScalar(1.6); o.position.z += .08; } }); MMOUTH.scale.multiplyScalar(1.6); MMOUTH.position.z += .08;   // bigger face, reads from far
+  const MPTS = []; if (WR.mega) { const P = CAT_SIT.attributes.position.array, tri = [], _a = V(0, 0, 0), _b = V(0, 0, 0), _c = V(0, 0, 0), _n = V(0, 0, 0); let tot = 0;
+    for (let i = 0; i < P.length; i += 9) { _a.fromArray(P, i); _b.fromArray(P, i + 3); _c.fromArray(P, i + 6); _n.subVectors(_b, _a).cross(V(0, 0, 0).subVectors(_c, _a)); const ar = _n.length() / 2; _n.normalize();
+      if (_n.y < -.5 || ar < 1e-5) continue; tot += ar; tri.push([tot, _a.clone(), _b.clone(), _c.clone(), _n.clone()]); }
+    for (let i = 0, n = 0; i < NCAT; n++) { const r = hash01(n * 71 + 5) * tot, T = tri.find(q => q[0] >= r) || tri[tri.length - 1]; let u = hash01(n * 73 + 1), v = hash01(n * 79 + 3); if (u + v > 1) { u = 1 - u; v = 1 - v; }
+      if (T[4].z > .6 && T[1].y > .8 && n < NCAT * 20) continue; i++;   // keep Mega Mango's face clear of cats
+      const q = T[1].clone().addScaledVector(V(0, 0, 0).subVectors(T[2], T[1]), u).addScaledVector(V(0, 0, 0).subVectors(T[3], T[1]), v).addScaledVector(T[4], .03).multiplyScalar(1.7);
+      MPTS.push({ p: q, yaw: T[4].y > .6 ? hash01(n * 83) * TAU : Math.atan2(T[4].x, T[4].z) + (hash01(n * 89) - .5) * .6 }); }
+    MPTS.sort((a, b) => a.p.y - b.p.y); }
+  return { WR, g, GIL, MEGA, MMOUTH, MPTS, MOUTH, dBody, dFace, dHelm, dLeg, DOGS, BAN, GEN, JAW, GLEG, GS, MG, MW, cRun, cHelm, CATS, WB, wBox, wTape, CAN, FLG, DUST, NRW, cEye, CAMP, FIRES, SKYD, SPY, GIANT, GEYE, GW };
 })();
 const _wm = new THREE.Matrix4(), _wq = new THREE.Quaternion(), _we = new THREE.Euler(), _wv = new THREE.Vector3(), _ws = new THREE.Vector3(), _wl = new THREE.Matrix4();
 function warFrame(t, anim) { const A = WAR, WR = A.WR;
   if (WR.dusk) duskAt(Math.min(2, Math.max(0, kfr(WR.dusk, t))));
   (WR.shake || []).forEach(([a, b, amp]) => { if (t >= a && t < b) { const k = amp * (1 - (t - a) / (b - a) * .6); camera.position.x += Math.sin(anim * 61) * k; camera.position.y += Math.sin(anim * 47 + 1) * k; camera.position.z += Math.sin(anim * 53 + 2) * k; camera.updateMatrixWorld(); } });
+  const MW2 = WR.mega, MG2 = { on: !!MW2 };   // Day 10: Mega Mango
+  if (MW2) { const S = MW2.s ?? 14, k = S / 1.7, full = t >= (MW2.fullAt ?? 1e9), su = ease((t - (MW2.standAt ?? 1e9)) / 1.1), br = 1 + .01 * Math.sin(anim * 1.8);
+    Object.assign(MG2, { at: MW2.at, dur: MW2.dur ?? 6, cs: MW2.cs ?? 2.2, k });
+    A.MEGA.visible = full; A.MEGA.position.set(MW2.x ?? 0, su * .12 * S, MW2.z ?? -20); A.MEGA.rotation.set(-.3 * su, 0, 0); const pp = full ? 1 + .06 * (1 - back((t - MW2.fullAt) / .45)) : 1; A.MEGA.scale.set(k * pp, k * pp * br, k * pp);
+    A.MMOUTH.visible = !!MW2.roar && t >= MW2.roar[0] && t < MW2.roar[1]; A.MEGA.updateMatrix();
+    // cats sit at their full scale before Mega's matrix is applied; pp/br squash them with the body, which is fine
+  }
   // dogs march: front row at kfr(dogs, t); legs swing only while they move; all in step (a march)
   const Z = kfr(WR.dogs, t), mv = Math.abs(kfr(WR.dogs, t + .05) - Z) > .01 ? 1 : 0, SP = 9;
-  const HW2 = WR.howl, howlK = dl => HW2 ? Math.max(0, Math.min(1, (t - HW2[0] - dl) / .3, (HW2[1] - t - dl * .5) / .35)) : 0, slp = t >= (WR.sleepAt ?? 1e9);   // Day 9: howl (heads up), then lie down for the night
-  A.DOGS.forEach((d, i) => { const ph = anim * SP, bob = mv * Math.abs(Math.sin(ph)) * .14, z = Z + d.dz, hk = howlK(hash01(i * 19 + 4) * .35);
+  const HW2 = WR.howl, howlK = dl => HW2 ? Math.max(0, Math.min(1, (t - HW2[0] - dl) / .3, (HW2[1] - t - dl * .5) / .35)) : 0, slp = t >= (WR.sleepAt ?? 1e9) && t < (WR.wakeAt ?? 1e9), BK = WR.bark && t >= WR.bark[0] && t < WR.bark[1];   // Day 9: howl (heads up), then lie down for the night
+  A.DOGS.forEach((d, i) => { const ph = anim * SP, bob = mv * Math.abs(Math.sin(ph)) * .14, z = Z + d.dz, hk = Math.max(howlK(hash01(i * 19 + 4) * .35), BK ? .5 * Math.max(0, Math.sin(anim * 11 + i * 1.7)) : 0);   // Day 10: barking = quick head jerks
     if (slp) { _wm.compose(_wv.set(d.x, -.28 * d.s, z), _wq.setFromEuler(_we.set(0, Math.PI + (hash01(i * 5) - .5) * .5, 0)), _ws.set(d.s, d.s * .62, d.s)); A.dBody.setMatrixAt(i, _wm); A.dFace.setMatrixAt(i, _wm); A.dHelm.setMatrixAt(i, _wm);
       for (let k = 0; k < 4; k++) A.dLeg.setMatrixAt(i * 4 + k, ZERO); return; }
     _wm.compose(_wv.set(d.x, bob, z), _wq.setFromEuler(_we.set(-.85 * hk, Math.PI, 0, 'YXZ')), _ws.set(d.s, d.s, d.s)); _we.order = 'XYZ'; A.dBody.setMatrixAt(i, _wm); A.dFace.setMatrixAt(i, _wm); A.dHelm.setMatrixAt(i, _wm);
@@ -986,22 +1007,29 @@ function warFrame(t, anim) { const A = WAR, WR = A.WR;
   if (WR.talk) { const tk = WR.talk.find(([a, b]) => t >= a && t < b); if (tk) jw = .1 + .42 * Math.abs(Math.sin((t - tk[0]) * 12)); else if (t >= WR.talk[0][0]) jw = .04; }
   A.JAW.rotation.x = Math.max(jw, .75 * hkG);
   // Mango: sits in front of the gate; MEOW = he rears up; walks out to meet the general, looks up
-  const ma = WR.mangoAt ?? 1e9, me = WR.meowAt ?? 1e9, mu = (t - ma) / 2.0, M0 = 6; let mx = 0, my = 0, mzz = M0, mp = 0, walk = false;
+  const ma = WR.mangoAt ?? 1e9, me = WR.meowAt ?? 1e9, mu = (t - ma) / 2.0, M0 = WR.mangoZ ?? 6; let mx = 0, my = 0, mzz = M0, mp = 0, walk = false;
   if (mu > 0 && mu < 1) { walk = true; mzz = M0 + (mz - M0) * ease(mu); } else if (mu >= 1) { mzz = mz; mp = -.28 * ease((t - ma - 2.0) / .4); }
   const mbk = WR.mangoBack ?? 1e9, mbu = (t - mbk) / 2.4; let mback = false;   // Day 9: walks back to the gate
   if (mbu > 0 && mbu < 1) { walk = true; mback = true; mzz = mz + (M0 - mz) * inout(mbu); } else if (mbu >= 1) { mzz = M0; mp = 0; }
   const mk = t - me; if (mk > 0 && mk < 1.5) { const k = Math.sin(Math.PI * Math.min(1, mk / 1.2)); my = k * 1.2; mp = -.45 * k; } A.MOUTH.visible = (mk > 0 && mk < 1.1) || (WR.mangoTalk || []).some(([a, b]) => t >= a && t < b && Math.sin((t - a) * 24) > -.3);
   A.MW.visible = walk; A.MG.visible = !walk;
   if (walk) { A.MW.position.set(mx, Math.abs(Math.sin(anim * 13)) * .3, mzz); A.MW.rotation.y = mback ? Math.PI : 0; }
-  A.MG.position.set(mx, my, mzz); A.MG.rotation.set(mp, 0, 0); { const pk = mk > 0 && mk < .5 ? 1 + .25 * Math.sin(Math.PI * mk / .5) : 1; A.MG.scale.set(pk, pk, pk); }
+  A.MG.position.set(mx, my, mzz); A.MG.rotation.set(mp, 0, 0);
+  if (MW2 && t >= (MW2.mangoTop ?? 1e9)) { A.MG.visible = true; A.MW.visible = false; A.MG.position.set(0, 2.12, .05).applyMatrix4(A.MEGA.matrix); A.MG.rotation.set(A.MEGA.rotation.x, 0, 0); }   // Day 10: Mango rides on top { const pk = mk > 0 && mk < .5 ? 1 + .25 * Math.sin(Math.PI * mk / .5) : 1; A.MG.scale.set(pk, pk, pk); }
   // the cats run in from town and line up behind the wall
   const ga = WR.gatherAt ?? 1e9, ha = WR.helmetAt ?? 1e9;
   A.CATS.forEach((c, i) => { const u = (t - ga - c.st) / c.du; let x, z, y = 0, yaw = 0, s = WCS;
     if (u <= 0) { A.cRun.setMatrixAt(i, ZERO); A.cHelm.setMatrixAt(i, ZERO); A.cEye.setMatrixAt(i, ZERO); return; }
     if (u < 1) { const e = ease(u); x = c.sx + (c.tx - c.sx) * e; z = c.sz + (c.tz - c.sz) * e; y = Math.abs(Math.sin(anim * 16 + c.ph)) * .35; yaw = Math.atan2(c.tx - c.sx, c.tz - c.sz); s = WCS * Math.min(1, u * 8); }
-    else { x = c.tx; z = c.tz; yaw = Math.sin(anim * 1.3 + c.ph) * .12; y = Math.max(0, Math.sin(anim * 3 + c.ph)) * .06; }
-    _wm.compose(_wv.set(x, y, z), _wq.setFromEuler(_we.set(0, yaw, 0)), _ws.set(s, s, s)); A.cRun.setMatrixAt(i, _wm);
-    const ee = t - (WR.eyesAt ?? 1e9) - hash01(i * 43 + 7) * 1.6; A.cEye.setMatrixAt(i, ee > 0 && frac(anim * .21 + c.ph) > .035 ? _wm : ZERO);   // Day 9: eyes in the dark (they blink)
+    else { x = c.tx; z = c.tz; yaw = Math.sin(anim * 1.3 + c.ph) * .12; y = Math.max(0, Math.sin(anim * 3 + c.ph)) * .06;
+      if (WR.panic && t >= WR.panic[0] && t < WR.panic[1]) { const pk = Math.min(1, (t - WR.panic[0]) / .3, (WR.panic[1] - t) / .4); y = pk * Math.abs(Math.sin(anim * (7 + c.ph) + c.ph)) * 1.3; yaw = pk * Math.sin(anim * 3.5 + c.ph * 5) * 2.6; x += pk * Math.sin(anim * 5 + c.ph * 3) * .7; } }
+    _wm.compose(_wv.set(x, y, z), _wq.setFromEuler(_we.set(0, yaw, 0)), _ws.set(s, s, s));
+    if (MG2.on) { const M = A.MPTS[i], tc = MG2.at + i / A.CATS.length * MG2.dur + hash01(i * 97) * .25, fu = (t - tc) / .85;   // Day 10: climb onto Mega Mango (bottom first)
+      if (fu > 0) { _wl.compose(M.p, _wq.setFromEuler(_we.set(0, M.yaw, 0)), _ws.setScalar(MG2.cs / MG2.k)).premultiply(A.MEGA.matrix);
+        if (fu < 1) { _wv.setFromMatrixPosition(_wl); const e = inout(fu), h = 4 + _wv.y * .35; _wl.setPosition(x + (_wv.x - x) * e, (_wv.y) * e + h * Math.sin(Math.PI * fu), z + (_wv.z - z) * e); }
+        _wm.copy(_wl); } }
+    A.cRun.setMatrixAt(i, _wm);
+    const ee = t - (WR.eyesAt ?? 1e9) - hash01(i * 43 + 7) * 1.6; A.cEye.setMatrixAt(i, ee > 0 && t < (WR.eyesOff ?? 1e9) && frac(anim * .21 + c.ph) > .035 ? _wm : ZERO);   // Day 9: eyes in the dark (they blink)
     const he = (t - ha - (i % CCOL_W) * .012 - Math.floor(i / CCOL_W) * .05) / .3;
     if (he > 0) { const k = Math.max(.001, back(he)); _wm.multiply(_wl.compose(_wv.set(0, (1 - Math.min(1, he)) * 1.5, 0), QI, _ws.set(k, k, k))); A.cHelm.setMatrixAt(i, _wm); } else A.cHelm.setMatrixAt(i, ZERO); });
   A.cRun.instanceMatrix.needsUpdate = true; A.cHelm.instanceMatrix.needsUpdate = true; A.cEye.instanceMatrix.needsUpdate = true;
@@ -1009,10 +1037,13 @@ function warFrame(t, anim) { const A = WAR, WR = A.WR;
   A.CAMP.visible = t >= (WR.campAt ?? 1e9); A.FIRES.forEach((f, k) => { const fl = 1 + .18 * Math.sin(anim * 17 + k * 2) + .1 * Math.sin(anim * 29 + k); f.fo.scale.set(1, fl, 1); f.fi.scale.set(1, 2 - fl, 1); f.L.intensity = A.CAMP.visible ? 110 * fl : 0; });
   A.SKYD.visible = duskK > 1.05; A.SKYD.children[2].material.opacity = Math.min(1, Math.max(0, (duskK - 1.15) / .6));
   if (WR.spy) { const P = WR.spy, at = tt => { if (tt <= P[0][0]) return [P[0][1], P[0][2]]; for (let i = 1; i < P.length; i++) if (tt < P[i][0]) { const [a, xa, za] = P[i - 1], [b, xb, zb] = P[i], k = (tt - a) / (b - a); return [xa + (xb - xa) * k, za + (zb - za) * k]; } const l = P[P.length - 1]; return [l[1], l[2]]; };
-    const [sx, sz] = at(t), [nx, nz] = at(t + .08), smv = Math.hypot(nx - sx, nz - sz) > .01; A.SPY.visible = t >= P[0][0] - 1; if (smv) A.SPY.userData.yaw = Math.atan2(nx - sx, nz - sz);
-    const lk = ease((t - (WR.spyLook ?? 1e9)) / .5); A.SPY.position.set(sx, smv ? Math.abs(Math.sin(anim * 12)) * .12 : 0, sz); A.SPY.rotation.set(-.55 * lk, A.SPY.userData.yaw ?? 0, 0); A.SPY.scale.set(1.6, smv ? 1.6 * .82 : 1.6, 1.6); }
-  if (WR.giant) { const G = A.GW, on = t >= G.at; A.GIANT.visible = on; A.GIANT.position.set(G.x ?? 0, 0, G.z ?? 150); A.GIANT.scale.set(G.s ?? 16, (G.s ?? 16) * (1 + .012 * Math.sin(anim * 1.6)), G.s ?? 16); A.GIANT.rotation.set(.16, Math.PI, 0);
-    const eu = ease((t - (G.eyesAt ?? 1e9)) / .45); A.GEYE.forEach(e => { e.visible = eu > .02; e.scale.set(1, Math.max(.001, eu), 1); }); }
+    const [sx, sz] = at(t), [nx, nz] = at(t + .08), smv = Math.hypot(nx - sx, nz - sz) > .01; A.SPY.visible = t >= P[0][0] - 1; if (smv) A.SPY.userData.yaw = Math.atan2(nx - sx, nz - sz); else { A.SPY.userData.yaw = A.SPY.userData.yaw0 ?? 0; for (let k = 1; k < 400; k++) { const [px, pz] = at(t - k * .05); if (Math.hypot(sx - px, sz - pz) > .01) { A.SPY.userData.yaw = Math.atan2(sx - px, sz - pz); break; } } }   // Day 10: standing still = keep facing the way he came (works from any start frame)
+    const SL = WR.spyLook, lk = Array.isArray(SL) ? Math.max(0, ...SL.map(([a, b]) => Math.min(ease((t - a) / .5), 1 - ease((t - b) / .3)))) : ease((t - (SL ?? 1e9)) / .5), SJ = WR.spyJump, jy = SJ && t > SJ[0] && t < SJ[1] ? SJ[2] * Math.sin(Math.PI * (t - SJ[0]) / (SJ[1] - SJ[0])) : 0;
+    A.SPY.position.set(sx, jy + (smv && !jy ? Math.abs(Math.sin(anim * 16)) * .16 : 0), sz); A.SPY.rotation.set(-.55 * lk, A.SPY.userData.yaw ?? 0, 0); A.SPY.scale.set(1.6, smv ? 1.6 * .82 : 1.6, 1.6); }
+  if (WR.giant) { const G = A.GW, on = t >= G.at; A.GIANT.visible = on; const gz = G.walk ? kfr(G.walk, t) : G.z ?? 150, gm = G.walk && Math.abs(kfr(G.walk, t + .05) - gz) > .01, gph = (t - (G.walk ? G.walk[0][0] : 0)) * Math.PI;
+    A.GIANT.position.set(G.x ?? 0, gm ? Math.abs(Math.sin(gph)) * .04 * (G.s ?? 16) : 0, gz); A.GIANT.scale.set(G.s ?? 16, (G.s ?? 16) * (1 + .012 * Math.sin(anim * 1.6)), G.s ?? 16); A.GIANT.rotation.set(G.lean ? kfr(G.lean, t) : .16, Math.PI, 0);
+    A.GIL.forEach((L, k) => L.rotation.x = gm ? Math.sin(gph + HIPS[k][3] * Math.PI) * .5 : 0);
+    const eu = ease((t - (G.eyesAt ?? 1e9)) / .45); const gk = G.glow ? kfr(G.glow, t) : 1; A.GEYE.forEach(e => { e.visible = eu > .02; e.scale.set(gk, Math.max(.001, eu) * gk, gk); }); }
   // the box wall drops in from the middle out; cannons + flags pop
   const wa = WR.wallAt ?? 1e9; A.WB.forEach((b, i) => { const e = (t - wa - b.k * .014) / .4; if (e <= 0) { A.wBox.setMatrixAt(i, ZERO); A.wTape.setMatrixAt(i, ZERO); return; }
     _wm.compose(_wv.set(b.x, b.y + (1 - ease(Math.min(1, e))) * 14, 2.5), _wq.setFromEuler(_we.set(0, (hash01(i) - .5) * .12, 0)), _ws.set(1, 1, 1)); A.wBox.setMatrixAt(i, _wm); A.wTape.setMatrixAt(i, _wm); });
