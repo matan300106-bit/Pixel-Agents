@@ -131,3 +131,6 @@ Check-ins: **Monday and Thursday**. Other days: a 2-minute look at spend only, n
 4. **Budget flexibility:** if Campaign Manager → Settings shows a budget rollover / flexibility option, set it to **25%** (stops a $92 day from spending up to $184). If you do not see it, skip.
 5. Approve or say NO to: pausing the small fountain ads (§1.2), and tests 1–3. Pausing is not in our standing rules, so it needs your OK: **pasting `chrome-oct8.md` with Step 5 in it = OK.** If you say NO, delete Step 5 before you paste (the small fountains then stay at their rollback bids, max $0.50, and lose a little on every sale).
 6. Tests 1–3 touch whole campaigns, which is more than the 15% test budget in `settings.yaml`. Only the changed half counts as test money (tests 1+2 ≈ $16/day ≈ 17%). Say OK, or we run test 2 only on Oct 12 and test 1 after it.
+
+## Ramp end (Oct 22)
+No ads data came in after Oct 11, so the ramp could not be measured. Next phase = the Oct 21 PUSH plan (`outbox/2026-10-21/chrome-ads-push.md`, cap $170), then a weekly profit check per campaign from the downloaded reports (cut cost per order above product profit, raise winners).
