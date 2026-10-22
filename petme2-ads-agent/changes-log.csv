@@ -693,3 +693,4 @@ date,item,before,after,reason,agent
 2026-10-21,settings daily_spend_cap,140,170,owner: push ads for more sales,manager
 2026-10-21,Ads PUSH Chrome prompt (planned),"Auto paused; budgets as Oct 16","Auto on $15 (bids<=0.60); +25% budget on campaigns with orders; +15% bid on winners ACOS<30%; stainless TOS +25%; all 8 ASINs live; total<=170",owner asked to push sales,manager
 2026-10-21,Daily watch,none,"sale prices restored (verified); sales 1 on Oct 20; ads push not run yet",daily routine,guardian
+2026-10-22,Daily watch,none,"sales 5 on Oct 21; all BSR slipping; ads push not run yet",daily routine,guardian
