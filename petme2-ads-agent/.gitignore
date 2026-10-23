@@ -1,0 +1,13 @@
+# Secrets: never commit
+.env
+
+# Private daily data (sales, stock, ads files)
+data/
+inbox/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Raw Helium 10 exports (paid data, keep local)
+research/helium10/*.csv

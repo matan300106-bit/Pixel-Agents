@@ -1,0 +1,274 @@
+{%- comment -%}
+  PETME2 entrance: real product video (muted loop) + one clear action.
+  Phones: the video fills the first screen and the headline + button sit on it (bottom gradient),
+  trust row underneath. Desktop: copy left, tall rounded video card right with a product chip.
+  Plays only when allowed: paused for prefers-reduced-motion, pause/play button for everyone.
+{%- endcomment -%}
+{%- liquid
+  assign s = section.settings
+  assign p = s.product
+  assign video_src = s.video_url | strip
+-%}
+<section
+  class="pm2-ent color-{{ s.color_scheme }} gradient"
+  style="--pm2-pt: {{ s.padding_top }}px; --pm2-pb: {{ s.padding_bottom }}px;"
+  aria-labelledby="Pm2EntTitle-{{ section.id }}"
+>
+  <div class="page-width pm2-ent__inner">
+    <div class="pm2-ent__media">
+      {%- if s.video != blank -%}
+        {{ s.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true, preload: 'metadata', class: 'pm2-ent__video', image_size: '900x' }}
+      {%- elsif video_src != blank -%}
+        <video class="pm2-ent__video" autoplay muted loop playsinline preload="metadata"
+          {% if s.poster != blank %}poster="{{ s.poster | image_url: width: 900 }}"{% endif %}
+          aria-label="{{ s.video_alt | escape }}">
+          <source src="{{ video_src }}" type="video/mp4">
+        </video>
+      {%- elsif s.poster != blank -%}
+        {{ s.poster | image_url: width: 1200 | image_tag: class: 'pm2-ent__video', loading: 'eager', fetchpriority: 'high', widths: '450, 720, 900, 1200', sizes: '(min-width: 990px) 44vw, 100vw' }}
+      {%- else -%}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'pm2-ent__video pm2-ent__ph' }}
+      {%- endif -%}
+      <span class="pm2-ent__shade" aria-hidden="true"></span>
+
+      {%- if s.badge != blank -%}
+        <span class="pm2-ent__badge">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 21s-7-4.4-9.3-9A5.2 5.2 0 0 1 12 6.3 5.2 5.2 0 0 1 21.3 12C19 16.6 12 21 12 21z" fill="currentColor"/></svg>
+          {{ s.badge | escape }}
+        </span>
+      {%- endif -%}
+
+      {%- if video_src != blank or s.video != blank -%}
+        <button type="button" class="pm2-ent__toggle" aria-pressed="false" aria-label="Pause video" data-pm2-ent-toggle>
+          <svg class="pm2-ent__i-pause" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" focusable="false"><rect x="2" y="1" width="3.5" height="12" rx="1" fill="currentColor"/><rect x="8.5" y="1" width="3.5" height="12" rx="1" fill="currentColor"/></svg>
+          <svg class="pm2-ent__i-play" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path d="M3 1.5v11l9.5-5.5z" fill="currentColor"/></svg>
+        </button>
+      {%- endif -%}
+
+      {%- if p != blank -%}
+        <a class="pm2-ent__chip" href="{{ p.url }}">
+          {%- if p.featured_image -%}
+            {{ p.featured_image | image_url: width: 120 | image_tag: class: 'pm2-ent__chip-img', loading: 'lazy', width: 56, height: 56, alt: '' }}
+          {%- endif -%}
+          <span class="pm2-ent__chip-text">
+            <span class="pm2-ent__chip-title">{{ s.chip_title | default: p.title | escape }}</span>
+            <span class="pm2-ent__chip-price">{{ p.price | money }}{% if p.compare_at_price > p.price %} <s>{{ p.compare_at_price | money }}</s>{% endif %}</span>
+          </span>
+          <svg class="pm2-ent__chip-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" focusable="false"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      {%- endif -%}
+    </div>
+
+    <div class="pm2-ent__copy">
+      {%- if s.eyebrow != blank -%}
+        <p class="pm2-ent__eyebrow">
+          {%- if s.eyebrow_tag != blank -%}<span class="pm2-ent__tag">{{ s.eyebrow_tag | escape }}</span>{%- endif -%}
+          <span>{{ s.eyebrow | escape }}</span>
+        </p>
+      {%- endif -%}
+      <h1 id="Pm2EntTitle-{{ section.id }}" class="pm2-ent__title">
+        {%- if s.heading_1 != blank -%}<span>{{ s.heading_1 | escape }}</span>{%- endif -%}
+        {%- if s.heading_2 != blank -%}<span class="pm2-ent__accent">{{ s.heading_2 | escape }}</span>{%- endif -%}
+      </h1>
+      {%- if s.subtext != blank -%}<p class="pm2-ent__sub">{{ s.subtext | escape }}</p>{%- endif -%}
+      <div class="pm2-ent__ctas">
+        {%- if s.button_label != blank -%}
+          <a class="button pm2-ent__btn" href="{{ s.button_link | default: routes.all_products_collection_url }}">
+            {{ s.button_label | escape }}
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" focusable="false"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        {%- endif -%}
+        {%- if s.link_label != blank -%}
+          <a class="pm2-ent__link" href="{{ s.link_url | default: '#' }}">{{ s.link_label | escape }}</a>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- if s.trust_1 != blank or s.trust_2 != blank or s.trust_3 != blank -%}
+      <ul class="pm2-ent__trust" role="list">
+        {%- if s.trust_1 != blank -%}
+          <li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="7" cy="17.5" r="1.7" fill="currentColor"/><circle cx="17" cy="17.5" r="1.7" fill="currentColor"/></svg><span>{{ s.trust_1 | escape }}</span></li>
+        {%- endif -%}
+        {%- if s.trust_2 != blank -%}
+          <li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8.5 12l2.4 2.4L15.5 9.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>{{ s.trust_2 | escape }}</span></li>
+        {%- endif -%}
+        {%- if s.trust_3 != blank -%}
+          <li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5" stroke="currentColor" stroke-width="1.7"/><path d="M10.5 18h3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><span>{{ s.trust_3 | escape }}</span></li>
+        {%- endif -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  .pm2-ent { position: relative; overflow: hidden; color: rgb(var(--color-foreground)); }
+  .pm2-ent__inner { display: grid; grid-template-columns: minmax(0, 1fr); }
+
+  /* ---------- media ---------- */
+  .pm2-ent__media { position: relative; overflow: hidden; background: #e9e4dc; }
+  .pm2-ent__video { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
+  .pm2-ent__ph { background: rgba(var(--color-foreground), .06); }
+  .pm2-ent__badge {
+    position: absolute; z-index: 2; top: 14px; left: 14px;
+    display: inline-flex; align-items: center; gap: 7px; padding: 7px 13px 7px 10px; border-radius: 999px;
+    font-size: 13px; font-weight: 700; line-height: 1.2; color: #1B2540;
+    background: rgba(255, 255, 255, .9); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+    box-shadow: 0 8px 24px -14px rgba(0, 0, 0, .45);
+  }
+  .pm2-ent__badge svg { color: rgb(var(--color-button)); }
+  .pm2-ent__toggle {
+    position: absolute; z-index: 3; top: 12px; right: 12px; width: 44px; height: 44px; padding: 0;
+    display: inline-flex; align-items: center; justify-content: center; border: 0; border-radius: 50%; cursor: pointer;
+    color: #fff; background: rgba(16, 22, 38, .42); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  }
+  .pm2-ent__toggle:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+  .pm2-ent__i-play, .pm2-ent__toggle[aria-pressed="true"] .pm2-ent__i-pause { display: none; }
+  .pm2-ent__toggle[aria-pressed="true"] .pm2-ent__i-play { display: block; }
+
+  .pm2-ent__chip { display: none; }
+
+  /* ---------- copy ---------- */
+  .pm2-ent__eyebrow {
+    display: inline-flex; align-items: center; gap: 8px; max-width: 100%; margin: 0 0 14px;
+    padding: 4px 12px 4px 4px; border-radius: 999px; font-size: 13px; font-weight: 600; line-height: 1.3;
+  }
+  .pm2-ent__eyebrow > span:last-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .pm2-ent__tag { flex: none; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; color: rgb(var(--color-button-text)); background: rgb(var(--color-button)); }
+  .pm2-ent__title { margin: 0; font-family: var(--font-heading-family); font-weight: 800; letter-spacing: -.03em; line-height: 1.04; text-wrap: balance; overflow-wrap: break-word; }
+  .pm2-ent__title > span { display: block; }
+  .pm2-ent__sub { margin: 12px 0 0; font-size: 16px; line-height: 1.55; max-width: 46ch; }
+  .pm2-ent__ctas { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 22px; margin-top: 20px; }
+  .pm2-ent .pm2-ent__btn { gap: 10px; min-height: 56px; padding: 0 34px; font-size: 17px; font-weight: 700; border-radius: 999px; box-shadow: 0 12px 28px -14px rgba(var(--color-button), .9); }
+  .pm2-ent .pm2-ent__btn::before, .pm2-ent .pm2-ent__btn::after { border-radius: 999px; }
+  .pm2-ent__link { display: inline-flex; align-items: center; min-height: 44px; font-size: 16px; font-weight: 700; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1.5px; color: inherit; }
+
+  /* ---------- trust row ---------- */
+  .pm2-ent__trust { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .pm2-ent__trust li { display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; font-size: 13px; font-weight: 600; line-height: 1.3; color: rgba(var(--color-foreground), .82); }
+  .pm2-ent__trust svg { flex: none; color: rgb(var(--color-button)); }
+
+  /* ---------- phones: video is the first screen, copy on top of it ---------- */
+  @media screen and (max-width: 749px) {
+    .pm2-ent { padding: 0 0 20px; }
+    .pm2-ent__inner { padding: 0; grid-template-areas: "stage" "trust"; }
+    .pm2-ent__media, .pm2-ent__copy { grid-area: stage; }
+    .pm2-ent__media { height: min(78svh, 135vw); min-height: 460px; border-radius: 0 0 28px 28px; }
+    .pm2-ent__shade { position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background: linear-gradient(180deg, rgba(10, 16, 30, 0) 52%, rgba(10, 16, 30, .6) 74%, rgba(10, 16, 30, .85) 100%); }
+    .pm2-ent__copy { position: relative; z-index: 2; align-self: end; padding: 0 20px 24px; color: #fff; }
+    .pm2-ent__title, .pm2-ent__sub { text-shadow: 0 2px 18px rgba(8, 12, 24, .45); }
+    /* keep the cats' faces clear: short copy block at the bottom only */
+    .pm2-ent__eyebrow, .pm2-ent__link { display: none; }
+    .pm2-ent__title { font-size: clamp(32px, 9.4vw, 42px); color: #fff; }
+    .pm2-ent__accent { color: #BFD0FF; }
+    .pm2-ent__sub { font-size: 15px; margin-top: 8px; color: rgba(255, 255, 255, .92); }
+    .pm2-ent__ctas { margin-top: 16px; }
+    .pm2-ent .pm2-ent__btn { flex: 1 1 100%; width: 100%; }
+    .pm2-ent__trust { grid-area: trust; padding: 18px 16px 0; }
+  }
+
+  /* ---------- tablet + desktop: split ---------- */
+  @media screen and (min-width: 750px) {
+    .pm2-ent { padding: clamp(28px, calc(var(--pm2-pt) * .6), 72px) 0 clamp(32px, calc(var(--pm2-pb) * .6), 72px); }
+    .pm2-ent__inner { grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); grid-template-areas: "copy media" "trust media"; column-gap: clamp(32px, 5vw, 72px); row-gap: 28px; align-items: center; }
+    .pm2-ent__copy { grid-area: copy; align-self: end; }
+    .pm2-ent__media { grid-area: media; aspect-ratio: 4 / 5; max-height: min(78vh, 720px); width: 100%; justify-self: end; border-radius: 32px; box-shadow: 0 40px 80px -48px rgba(16, 24, 48, .45); }
+    .pm2-ent__trust { grid-area: trust; align-self: start; max-width: 520px; grid-template-columns: repeat(3, auto); justify-content: start; gap: 22px; }
+    .pm2-ent__trust li { flex-direction: row; text-align: left; font-size: 14px; }
+    .pm2-ent__eyebrow { background: rgba(var(--color-foreground), .05); border: 1px solid rgba(var(--color-foreground), .08); color: rgba(var(--color-foreground), .82); }
+    .pm2-ent__title { font-size: clamp(44px, 5.6vw, 76px); }
+    .pm2-ent__accent { color: rgb(var(--color-button)); }
+    .pm2-ent__sub { font-size: 18px; color: rgba(var(--color-foreground), .72); margin-top: 18px; }
+    .pm2-ent__ctas { margin-top: 28px; }
+    .pm2-ent__chip {
+      position: absolute; z-index: 2; left: 16px; right: 16px; bottom: 16px;
+      display: flex; align-items: center; gap: 12px; padding: 8px 14px 8px 8px; border-radius: 20px;
+      color: #1B2540; text-decoration: none; background: rgba(255, 255, 255, .92);
+      -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); box-shadow: 0 16px 36px -20px rgba(0, 0, 0, .5);
+      transition: transform .25s ease;
+    }
+    .pm2-ent__chip:hover { transform: translateY(-2px); }
+    .pm2-ent__chip-img { width: 56px; height: 56px; border-radius: 14px; object-fit: contain; background: #F4F6FA; flex: none; }
+    .pm2-ent__chip-text { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+    .pm2-ent__chip-title { font-size: 14px; font-weight: 700; line-height: 1.3; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .pm2-ent__chip-price { font-size: 14px; font-weight: 600; color: rgb(var(--color-button)); }
+    .pm2-ent__chip-price s { color: rgba(27, 37, 64, .5); font-weight: 400; margin-left: 4px; }
+    .pm2-ent__chip-arrow { flex: none; }
+  }
+  @media screen and (min-width: 990px) {
+    .pm2-ent__inner { grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .pm2-ent__copy > *, .pm2-ent__trust { animation: pm2-ent-in .7s cubic-bezier(.2, .7, .2, 1) both; }
+    .pm2-ent__copy > :nth-child(2) { animation-delay: .06s; }
+    .pm2-ent__copy > :nth-child(3) { animation-delay: .12s; }
+    .pm2-ent__copy > :nth-child(4) { animation-delay: .18s; }
+    .pm2-ent__trust { animation-delay: .24s; }
+  }
+  @keyframes pm2-ent-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+</style>
+
+<script>
+  (function () {
+    var root = document.currentScript && document.currentScript.previousElementSibling;
+    while (root && !(root.classList && root.classList.contains('pm2-ent'))) root = root.previousElementSibling;
+    if (!root) return;
+    var video = root.querySelector('video');
+    var btn = root.querySelector('[data-pm2-ent-toggle]');
+    if (!video) { if (btn) btn.hidden = true; return; }
+    video.muted = true;
+    function set(paused) {
+      if (!btn) return;
+      btn.setAttribute('aria-pressed', paused ? 'true' : 'false');
+      btn.setAttribute('aria-label', paused ? 'Play video' : 'Pause video');
+    }
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      video.removeAttribute('autoplay'); video.pause(); set(true);
+    }
+    if (btn) btn.addEventListener('click', function () {
+      if (video.paused) { var p = video.play(); if (p && p.catch) p.catch(function () {}); set(false); }
+      else { video.pause(); set(true); }
+    });
+    video.addEventListener('pause', function () { set(true); });
+    video.addEventListener('play', function () { set(false); });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "PETME2 entrance",
+  "tag": "div",
+  "class": "pm2-entrance-section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "header", "content": "Media" },
+    { "type": "video", "id": "video", "label": "Video (Shopify file)" },
+    { "type": "text", "id": "video_url", "label": "Video URL (mp4)", "info": "Used when no video file is picked. Muted loop." },
+    { "type": "image_picker", "id": "poster", "label": "Poster / fallback image" },
+    { "type": "text", "id": "video_alt", "label": "Video description", "default": "Two cats eating from a PETME2 feeder" },
+    { "type": "text", "id": "badge", "label": "Badge on media", "default": "Feeds 2 cats at once" },
+    { "type": "product", "id": "product", "label": "Product chip (desktop)" },
+    { "type": "text", "id": "chip_title", "label": "Product chip title" },
+    { "type": "header", "content": "Text" },
+    { "type": "text", "id": "eyebrow_tag", "label": "Eyebrow tag", "default": "Sale" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Free U.S. shipping" },
+    { "type": "text", "id": "heading_1", "label": "Heading line 1", "default": "Easy everyday" },
+    { "type": "text", "id": "heading_2", "label": "Heading line 2 (accent)", "default": "pet care." },
+    { "type": "textarea", "id": "subtext", "label": "Subtext" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop now" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "text", "id": "link_label", "label": "Text link label" },
+    { "type": "url", "id": "link_url", "label": "Text link" },
+    { "type": "header", "content": "Trust row" },
+    { "type": "text", "id": "trust_1", "label": "Trust 1 (truck)", "default": "Free U.S. shipping" },
+    { "type": "text", "id": "trust_2", "label": "Trust 2 (shield)", "default": "30-day money back" },
+    { "type": "text", "id": "trust_3", "label": "Trust 3 (phone)", "default": "Easy app control" },
+    { "type": "header", "content": "Spacing (desktop)" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 64 }
+  ],
+  "presets": [{ "name": "PETME2 entrance" }]
+}
+{% endschema %}

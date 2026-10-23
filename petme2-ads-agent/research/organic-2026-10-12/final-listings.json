@@ -1,0 +1,1321 @@
+{
+  "_meta": {
+    "date": "2026-10-13",
+    "by": "listing editor (read only on Amazon; nothing changed)",
+    "sources": [
+      "research/helium10/2026-10-12/cerebro_B0GHH8L59K.csv",
+      "research/helium10/2026-10-12/cerebro_B0GHKRYV6W.csv",
+      "research/organic-2026-10-12/baseline-2026-10-12.md",
+      "research/organic-2026-10-12/plan.md",
+      "research/organic-2026-10-12/listing-drafts.json",
+      "research/organic-2026-10-12/live-seller-central-2026-10-13.md",
+      "SP-API catalog 2022-04-01 summaries,attributes pulled 2026-10-13"
+    ],
+    "owner_facts_2026_10_12": [
+      "2L: LED low-water light; filter unclear -> no filter words at all",
+      "clear 2.2L: 4-layer filter; USB cable + wall adapter",
+      "tray 2.2L: power adapter and filters included, count unknown",
+      "5L: battery backup, type unknown",
+      "camera: tap-to-feed in app; WiFi band unknown; never night vision"
+    ],
+    "rank_note": "rank_oct12 = Cerebro organic position Oct 12 (null = not ranked / worse than ~#306). sv_oct12 = Cerebro search volume Oct 12.",
+    "chrome_prompt": "outbox/2026-10-13/chrome-listings.md"
+  },
+  "B0GHH8L59K": {
+    "sku": "QO-7VBS-CVT4",
+    "product": "5L WiFi dual-bowl elevated feeder",
+    "title": {
+      "old": "PETME2 Automatic Cat Feeder for 2 Cats, 5L Elevated Feeding Station with WiFi App and Voice Recording, Automatic Dog Feeder, Stainless Steel Dual Bowls, Timed Pet Food Dispenser, Dual Power",
+      "new": "PETME2 Elevated Automatic Cat Feeder for 2 Cats, 5L WiFi App Control, Double Bowl Cat Food Dispenser with Voice Recording, Dual Power Battery Backup, Stainless Steel Bowls, Automatic Dog Feeder",
+      "changed": true,
+      "reason": "Keeps 'automatic cat feeder for 2 cats' word for word in the first 80 chars (fell #49->#69) and adds the exact 'elevated automatic cat feeder' (fell #20->#54, competition 936). Adds 'double' (double cat feeder #96, double automatic cat feeder #101), 'cat food dispenser' (23.6k SV, not ranked) and the owner-confirmed 'Dual Power Battery Backup' (dual power automatic cat feeder battery backup 1,084 SV, #77, only 262 competing products). Drops 'Timed Pet Food Dispenser' (low SV; 'timed' stays in bullet 3) and 'Feeding Station' (rank #305; stays in bullet 4 header).",
+      "keyword_evidence": [
+        {
+          "keyword": "automatic cat feeder for 2 cats",
+          "sv_oct12": 1000,
+          "rank_oct12": 69,
+          "competing_products": "2000"
+        },
+        {
+          "keyword": "automatic cat feeder 2 cats",
+          "sv_oct12": 4626,
+          "rank_oct12": 65,
+          "competing_products": "2000"
+        },
+        {
+          "keyword": "elevated automatic cat feeder",
+          "sv_oct12": 580,
+          "rank_oct12": 54,
+          "competing_products": "936"
+        },
+        {
+          "keyword": "dual power automatic cat feeder battery backup",
+          "sv_oct12": 1084,
+          "rank_oct12": 77,
+          "competing_products": "262"
+        },
+        {
+          "keyword": "dual power cat feeder battery backup",
+          "sv_oct12": 532,
+          "rank_oct12": 82,
+          "competing_products": "238"
+        },
+        {
+          "keyword": "double cat feeder",
+          "sv_oct12": 1084,
+          "rank_oct12": 96,
+          "competing_products": "3000"
+        },
+        {
+          "keyword": "double automatic cat feeder",
+          "sv_oct12": 1000,
+          "rank_oct12": 101,
+          "competing_products": "648"
+        },
+        {
+          "keyword": "cat food dispenser",
+          "sv_oct12": 23607,
+          "rank_oct12": null,
+          "competing_products": "5000"
+        },
+        {
+          "keyword": "wifi cat feeder",
+          "sv_oct12": 1000,
+          "rank_oct12": 126,
+          "competing_products": "558"
+        },
+        {
+          "keyword": "voice recording automatic cat feeder",
+          "sv_oct12": 424,
+          "rank_oct12": 95,
+          "competing_products": "340"
+        }
+      ]
+    },
+    "bullets": [
+      {
+        "n": 1,
+        "changed": true,
+        "old": "FEEDS 2 CATS EQUALLY: This automatic cat feeder for 2 cats splits every meal evenly between two stainless steel bowls, so each pet gets a fair share and food stealing stops. It is an automatic cat feeder 2 cats can share, a dual automatic cat feeder and double cat feeder in one. Many cat automatic feeders have a single bowl, while this automatic pet feeder for cats serves both pets at once, including a cat and a small dog.",
+        "new": "FEEDS 2 CATS EQUALLY: This automatic cat feeder for 2 cats splits every meal evenly between two stainless steel bowls, so each pet gets a fair share and food stealing stops. It is an automatic cat feeder 2 cats can share, a dual automatic cat feeder and double cat feeder in one, made for multi-cat homes. Many cat automatic feeders have a single bowl, while this automatic pet feeder for cats serves both pets at once, including a cat and a small dog.",
+        "reason": "adds 'multi' (multi cat feeder 900 SV #133; automatic cat feeder multiple cats #117); every ranked '2 cats'/'dual'/'double' phrase is kept word for word",
+        "keyword_evidence": [
+          {
+            "keyword": "multi cat feeder",
+            "sv_oct12": 900,
+            "rank_oct12": 133,
+            "competing_products": "4000"
+          },
+          {
+            "keyword": "automatic cat feeder 2 cats",
+            "sv_oct12": 4626,
+            "rank_oct12": 65,
+            "competing_products": "2000"
+          },
+          {
+            "keyword": "dual automatic cat feeder",
+            "sv_oct12": 1084,
+            "rank_oct12": 82,
+            "competing_products": "717"
+          },
+          {
+            "keyword": "double cat feeder",
+            "sv_oct12": 1084,
+            "rank_oct12": 96,
+            "competing_products": "3000"
+          }
+        ]
+      },
+      {
+        "n": 2,
+        "changed": false,
+        "old": "WIFI APP SCHEDULING: Plan meal times and custom portions from your phone in the companion smart app. With WiFi automatic cat feeder app control, you can adjust meals from the office or on vacation. Once set, the cat feeder automatic schedule runs every day. This automatic cat feeder with app scheduling is an auto cat feeder and cat food dispenser that keeps a steady routine while you work or travel.",
+        "new": "WIFI APP SCHEDULING: Plan meal times and custom portions from your phone in the companion smart app. With WiFi automatic cat feeder app control, you can adjust meals from the office or on vacation. Once set, the cat feeder automatic schedule runs every day. This automatic cat feeder with app scheduling is an auto cat feeder and cat food dispenser that keeps a steady routine while you work or travel."
+      },
+      {
+        "n": 3,
+        "changed": true,
+        "old": "VOICE RECORDING AT MEALTIME: Record your own short message and the feeder plays it to call your pets to every meal, so they hear a familiar voice while you are away. It is a recorded mealtime call, not live 2-way audio. This timed cat feeder also suits small dogs as a timed dog feeder or an automatic dog feeder with timer. Set a dog feeder automatic schedule once, and a small breed gets the same portion at the same times every day.",
+        "new": "VOICE RECORDING AT MEALTIME: Record your own short message and this voice recording automatic cat feeder plays it to call your pets to every meal, so they hear a familiar voice while you are away. It is a one-way recorded message, not a live call. This timed cat feeder also suits small dogs as a timed dog feeder or an automatic dog feeder with timer. Set a dog feeder automatic schedule once, and a small breed gets the same portion at the same times every day.",
+        "reason": "adds the exact 'voice recording automatic cat feeder' (424 SV, #95, 340 competing) and stops indexing '2-way audio', a feature this unit does not have",
+        "keyword_evidence": [
+          {
+            "keyword": "voice recording automatic cat feeder",
+            "sv_oct12": 424,
+            "rank_oct12": 95,
+            "competing_products": "340"
+          },
+          {
+            "keyword": "timed cat feeder",
+            "sv_oct12": 3197,
+            "rank_oct12": 242,
+            "competing_products": "561"
+          }
+        ]
+      },
+      {
+        "n": 4,
+        "changed": false,
+        "old": "5L ELEVATED CAT FEEDING STATION: The 5L container means fewer refills, and the raised bowls give cats a comfortable eating height. An anti-jam chute and motor help dry kibble dispense smoothly to both bowls. Like other timed cat feeders for dry food, it keeps portions consistent, and it doubles as a cat dry food dispenser and a dog food dispenser for small breeds. It also works as a dog feeding station or pet feeding station for a cat and a small dog.",
+        "new": "5L ELEVATED CAT FEEDING STATION: The 5L container means fewer refills, and the raised bowls give cats a comfortable eating height. An anti-jam chute and motor help dry kibble dispense smoothly to both bowls. Like other timed cat feeders for dry food, it keeps portions consistent, and it doubles as a cat dry food dispenser and a dog food dispenser for small breeds. It also works as a dog feeding station or pet feeding station for a cat and a small dog."
+      },
+      {
+        "n": 5,
+        "changed": true,
+        "old": "DUAL POWER, EASY TO CLEAN: Run it on the power adapter, with backup batteries for outages (batteries not included), so this self feeding cat food dispenser keeps meals on schedule. The stainless steel bowls wipe clean easily, and the bowls and food container detach for washing. One unit serves as a cat food feeder and dog food feeder, a cat automatic feeder and dog automatic feeder in one.",
+        "new": "DUAL POWER, BATTERY BACKUP, EASY TO CLEAN: This dual power automatic cat feeder runs on the included power adapter, and its battery backup keeps meals on schedule during a power outage (batteries not included). The stainless steel bowls wipe clean easily, and the bowls and food container detach for washing. One unit serves as a cat food feeder and dog food feeder, a cat automatic feeder and dog automatic feeder in one.",
+        "reason": "owner confirmed battery backup (type unknown, so no battery type is named); adds the exact 'dual power automatic cat feeder ... battery backup' wording (1,084 SV #77; 532 SV #82)",
+        "keyword_evidence": [
+          {
+            "keyword": "dual power automatic cat feeder battery backup",
+            "sv_oct12": 1084,
+            "rank_oct12": 77,
+            "competing_products": "262"
+          },
+          {
+            "keyword": "automatic cat feeder battery backup",
+            "sv_oct12": 324,
+            "rank_oct12": 154,
+            "competing_products": "321"
+          },
+          {
+            "keyword": "automatic cat feeder battery powered",
+            "sv_oct12": 632,
+            "rank_oct12": 136,
+            "competing_products": "620"
+          }
+        ]
+      }
+    ],
+    "description_changes": [
+      {
+        "find": "It is a recorded call, not live 2-way audio.",
+        "replace": "It is a one-way recorded message, not a live call.",
+        "why": "stop indexing a feature we do not have"
+      },
+      {
+        "find": "Made from food-grade materials, the feeder has stainless steel bowls",
+        "replace": "The feeder has stainless steel bowls",
+        "why": "'food-grade' is not a verified fact"
+      }
+    ],
+    "search_terms": {
+      "old": "auto self double two timer schedule programmable smart large capacity kibble dry kitty kitten puppy multiple meal portion control raised tall backup battery remote electric comedero automatico gatos dispensador comida perros alimentador",
+      "new": "programmable multicat multiple large kitty kitten puppy tall capacity remote electric autofeeder dispensor comedero automatico gatos alimentador dispensador comida perros mascotas perro",
+      "changed": true,
+      "bytes": 170,
+      "reason": "Removes 'double', 'backup', 'battery' (now in the title) and words already in the bullets (auto, self, two, timer, schedule, smart, large, kibble, dry, multiple, meal, portion, control). Keeps 'tall' ('raised' is already in bullet 4: raised automatic cat feeder #297) and the Spanish terms; adds 'multicat', 'autofeeder', 'dispensor' (misspelling), 'mascotas', 'perro'."
+    },
+    "attributes": [
+      {
+        "seller_central_field": "Special Features",
+        "attribute": "special_feature",
+        "old": [
+          "2-in-1 Dual Automatic Cat Feeder - Feed two cats or small dogs at the same time with balanced portions",
+          "Smart App Control - Schedule meals and manage feeding remotely",
+          "Voice Recording Feature - Record a custom voice message to call pets at mealtime for comfort and routine.",
+          "Large 5L Capacity Storage - Spacious food container reduces refill frequency and supports daily automatic feeding.",
+          "Easy-to-Clean Design - Removable bowls and detachable food container allow quick, hassle-free cleaning."
+        ],
+        "new": [
+          "Elevated Feeding Station",
+          "Dual Bowls for 2 Pets",
+          "WiFi App Scheduling",
+          "Voice Recording Meal Call",
+          "Dual Power with Battery Backup"
+        ],
+        "reason": "5 long supplier sentences -> short facts; adds elevated and battery backup (owner confirmed)"
+      },
+      {
+        "seller_central_field": "Included Components",
+        "attribute": "included_components",
+        "old": [
+          "Automatic Cat Feeder Main Unit - The primary feeding device that dispenses food automatically according to your scheduled settings.",
+          "Dual Feeding Bowls - Two bowls designed for feeding two cats or small dogs at the same time.",
+          "Food Storage Container - Holds dry pet food securely and helps maintain freshness between meals.",
+          "Power Adapter - Provides stable power for daily operation of the automatic feeder.",
+          "User Manual - Step-by-step instructions for setup, programming, and maintenance."
+        ],
+        "new": [
+          "Feeder main unit",
+          "2 stainless steel bowls",
+          "Food storage container",
+          "Power adapter",
+          "User manual"
+        ],
+        "reason": "same 5 items, short names instead of sentences"
+      }
+    ],
+    "do_not_change": "Do not change Recommended Uses (owner kept Wet Food/Outdoor on Oct 4), Material, price, images or variations.",
+    "checks": [
+      {
+        "check": "title length <= 200",
+        "pass": true,
+        "detail": "193 chars"
+      },
+      {
+        "check": "primary keyword in first 80",
+        "pass": true,
+        "detail": "'automatic cat feeder' at char 16"
+      },
+      {
+        "check": "no word > 2x (stopwords exempt)",
+        "pass": true,
+        "detail": "max: (2, 'feeder'); stopwords >2: none"
+      },
+      {
+        "check": "only , - / & special chars (decimal point allowed)",
+        "pass": true,
+        "detail": "bad: none"
+      },
+      {
+        "check": "no brands / promo / unproven words",
+        "pass": true,
+        "detail": "none"
+      },
+      {
+        "check": "bullet 1 <= 500 chars (changed)",
+        "pass": true,
+        "detail": "452 chars; banned none; non-ASCII none"
+      },
+      {
+        "check": "bullet 2 <= 500 chars",
+        "pass": true,
+        "detail": "402 chars; banned none; non-ASCII none"
+      },
+      {
+        "check": "bullet 3 <= 500 chars (changed)",
+        "pass": true,
+        "detail": "463 chars; banned none; non-ASCII none"
+      },
+      {
+        "check": "bullet 4 <= 500 chars",
+        "pass": true,
+        "detail": "455 chars; banned none; non-ASCII none"
+      },
+      {
+        "check": "bullet 5 <= 500 chars (changed)",
+        "pass": true,
+        "detail": "422 chars; banned none; non-ASCII none"
+      },
+      {
+        "check": "search terms <= 249 bytes",
+        "pass": true,
+        "detail": "170 bytes"
+      },
+      {
+        "check": "no title words in search terms",
+        "pass": true,
+        "detail": "none"
+      },
+      {
+        "check": "no repeated words in search terms",
+        "pass": true,
+        "detail": "none"
+      },
+      {
+        "check": "search terms words also in bullets (info)",
+        "pass": true,
+        "detail": "none"
+      },
+      {
+        "check": "no brands / ASINs / promo words",
+        "pass": true,
+        "detail": "none"
+      },
+      {
+        "check": "no punctuation in search terms",
+        "pass": true,
+        "detail": "lowercase, spaces only"
+      },
+      {
+        "check": "5L: no battery type named",
+        "pass": true,
+        "detail": "ok"
+      },
+      {
+        "check": "no 2-way audio claim on non-camera",
+        "pass": true,
+        "detail": "ok"
+      },
+      {
+        "check": "description text found: 'It is a recorded call, not live 2-way au...'",
+        "pass": true,
+        "detail": "exact match in live description"
+      },
+      {
+        "check": "description text found: 'Made from food-grade materials, the feed...'",
+        "pass": true,
+        "detail": "exact match in live description"
+      }
+    ]
+  },
+  "B0GTCGYZDM": {
+    "sku": "2H-2T1T-CJC3",
+    "product": "3L camera feeder",
+    "title": {
+      "old": "PETME2 Automatic Cat Feeder with Camera, 3L WiFi Cat Food Dispenser with 1080P HD Video and 2-Way Audio, App Control, Automatic Dog Feeder for Small Dogs, Timed Portions, Anti-Jam, Dual Power",
+      "new": "PETME2 Automatic Cat Feeder with Camera, 3L WiFi Cat Food Dispenser with 1080P HD Video and 2-Way Audio, App Control, Automatic Dog Feeder for Small Dogs, Timed Portions, Anti-Jam, Dual Power",
+      "changed": false,
+      "reason": "NO CHANGE. Oct 4 title is working: automatic pet feeder with camera #151->#35, automatic dog feeder with camera #102->#36, cat food dispenser with camera #86->#42, cat feeder with camera #127->#57. A title edit now would reset that climb.",
+      "keyword_evidence": [
+        {
+          "keyword": "automatic cat feeder with camera",
+          "sv_oct12": 6093,
+          "rank_oct12": 116,
+          "competing_products": "487"
+        },
+        {
+          "keyword": "cat feeder with camera",
+          "sv_oct12": 2571,
+          "rank_oct12": 57,
+          "competing_products": "522"
+        },
+        {
+          "keyword": "automatic dog feeder with camera",
+          "sv_oct12": 1084,
+          "rank_oct12": 36,
+          "competing_products": "419"
+        },
+        {
+          "keyword": "cat food dispenser with camera",
+          "sv_oct12": 642,
+          "rank_oct12": 42,
+          "competing_products": "427"
+        },
+        {
+          "keyword": "automatic pet feeder with camera",
+          "sv_oct12": 532,
+          "rank_oct12": 35,
+          "competing_products": "696"
+        },
+        {
+          "keyword": "automatic cat feeder with camera 1080p",
+          "sv_oct12": 679,
+          "rank_oct12": 72,
+          "competing_products": "420"
+        }
+      ]
+    },
+    "bullets": [
+      {
+        "n": 1,
+        "changed": false,
+        "old": "WATCH EVERY MEAL IN 1080P: This automatic cat feeder with camera streams live 1080p HD video to your phone, so you can see when and how much your pet eats. Many cat automatic feeders have no camera. This cat feeder with camera also works as an automatic dog feeder with camera for small dogs. A smart cat feeder and electric cat feeder in one compact unit, it makes a tidy cat feeding station in any corner.",
+        "new": "WATCH EVERY MEAL IN 1080P: This automatic cat feeder with camera streams live 1080p HD video to your phone, so you can see when and how much your pet eats. Many cat automatic feeders have no camera. This cat feeder with camera also works as an automatic dog feeder with camera for small dogs. A smart cat feeder and electric cat feeder in one compact unit, it makes a tidy cat feeding station in any corner."
+      },
+      {
+        "n": 2,
+        "changed": false,
+        "old": "TALK WITH 2-WAY AUDIO: Hear your pet and talk back through the app to calm an anxious kitty or call your dog to dinner, so you stay close while you work or travel. With WiFi automatic cat feeder app control, live view and meal settings sit in one app. It is an automatic cat feeder with app control for busy owners, an auto cat feeder and automatic pet feeder for cats and small dogs.",
+        "new": "TALK WITH 2-WAY AUDIO: Hear your pet and talk back through the app to calm an anxious kitty or call your dog to dinner, so you stay close while you work or travel. With WiFi automatic cat feeder app control, live view and meal settings sit in one app. It is an automatic cat feeder with app control for busy owners, an auto cat feeder and automatic pet feeder for cats and small dogs."
+      },
+      {
+        "n": 3,
+        "changed": false,
+        "old": "APP SCHEDULING, PORTION CONTROL: Set meal times and portions in the companion smart app over WiFi, or tap once to serve a meal on demand. Once set, the cat feeder automatic schedule runs every day, and this automatic cat feeder programmable from your phone keeps a steady routine. A timed cat feeder and timed dog feeder in one, it is also an automatic dog feeder with timer, and like other timed cat feeders for dry food it keeps portions consistent.",
+        "new": "APP SCHEDULING, PORTION CONTROL: Set meal times and portions in the companion smart app over WiFi, or tap once to serve a meal on demand. Once set, the cat feeder automatic schedule runs every day, and this automatic cat feeder programmable from your phone keeps a steady routine. A timed cat feeder and timed dog feeder in one, it is also an automatic dog feeder with timer, and like other timed cat feeders for dry food it keeps portions consistent."
+      },
+      {
+        "n": 4,
+        "changed": false,
+        "old": "ANTI-JAM 3L STORAGE, FRESH FOOD: The 3L container holds dry kibble for fewer refills. The anti-jam system detects and reverses kibble blockages, so food keeps flowing. Moisture seals with a desiccant box help keep food fresh, making this a cat dry food dispenser and self feeding cat food dispenser you refill less often. For a small dog, it works as a dog food dispenser, and a dog feeder automatic schedule keeps meals on time.",
+        "new": "ANTI-JAM 3L STORAGE, FRESH FOOD: The 3L container holds dry kibble for fewer refills. The anti-jam system detects and reverses kibble blockages, so food keeps flowing. Moisture seals with a desiccant box help keep food fresh, making this a cat dry food dispenser and self feeding cat food dispenser you refill less often. For a small dog, it works as a dog food dispenser, and a dog feeder automatic schedule keeps meals on time."
+      },
+      {
+        "n": 5,
+        "changed": false,
+        "old": "DUAL POWER, EASY CLEAN: Runs on the power adapter and switches to backup batteries during a power outage (batteries not included). The stainless steel bowl is dishwasher safe. It fits a small dog feeding station or pet feeding station too, and serves as a cat food feeder, dog food feeder and puppy feeder for small breeds. Like other cat and dog automatic feeders, it is a cat automatic feeder and dog automatic feeder in one.",
+        "new": "DUAL POWER, EASY CLEAN: Runs on the power adapter and switches to backup batteries during a power outage (batteries not included). The stainless steel bowl is dishwasher safe. It fits a small dog feeding station or pet feeding station too, and serves as a cat food feeder, dog food feeder and puppy feeder for small breeds. Like other cat and dog automatic feeders, it is a cat automatic feeder and dog automatic feeder in one."
+      }
+    ],
+    "description_changes": [],
+    "search_terms": {
+      "old": "pet auto self monitor cam live view talk two schedule timer programmable smart electric kitty kitten puppy dry kibble meal feeding station backup battery remote phone comedero automatico gatos dispensador comida perros alimentador",
+      "new": "pet auto self monitor cam live view talk two schedule timer programmable smart electric kitty kitten puppy dry kibble meal feeding station backup battery remote phone comedero automatico gatos dispensador comida perros alimentador",
+      "changed": false,
+      "bytes": 230,
+      "reason": "NO CHANGE (camera keywords are rising; do not disturb indexing)."
+    },
+    "attributes": [
+      {
+        "seller_central_field": "Special Features",
+        "attribute": "special_feature",
+        "old": [
+          "Automatic Cat Feeder - Feed your cat or small dog at the same time with balanced portions"
+        ],
+        "new": [
+          "1080P HD Camera with Live View",
+          "2-Way Audio",
+          "Tap to Feed in the App",
+          "WiFi App Scheduling and Portion Control",
+          "Anti-Jam Detect and Reverse"
+        ],
+        "reason": "live value is copied from the dual feeder ('feed your cat or small dog at the same time') and is wrong for a 1-bowl camera feeder; adds owner-confirmed tap-to-feed. No night vision, no GHz."
+      },
+      {
+        "seller_central_field": "Included Components",
+        "attribute": "included_components",
+        "old": [
+          "Automatic Cat Feeder Main Unit - The primary feeding device that dispenses food automatically according to your scheduled settings."
+        ],
+        "new": [
+          "Feeder main unit",
+          "Stainless steel bowl",
+          "Desiccant box"
+        ],
+        "reason": "live value is one long sentence; only items stated in our own copy are listed (adapter/manual not confirmed for this SKU)"
+      }
+    ],
+    "do_not_change": "Title, bullets, description and Search Terms stay exactly as they are.",
+    "checks": [
+      {
+        "check": "title length <= 200",
+        "pass": true,
+        "detail": "191 chars"
+      },
+      {
+        "check": "primary keyword in first 80",
+        "pass": true,
+        "detail": "'automatic cat feeder with camera' at char 7"
+      },
+      {
+        "check": "no word > 2x (stopwords exempt)",
+        "pass": true,
+        "detail": "max: (2, 'feeder'); stopwords >2: none"
+      },
+      {
+        "check": "only , - / & special chars (decimal point allowed)",
+        "pass": true,
+        "detail": "bad: none"
+      },
+      {
+        "check": "no brands / promo / unproven words",
+        "pass": true,
+        "detail": "none"
+      },
+      {
+        "check": "bullet 1 <= 500 chars",
+        "pass": true,
+        "detail": "407 chars; banned none; non-ASCII none"
+      },
+      {
+        "check": "bullet 2 <= 500 chars",
+        "pass": true,
+        "detail": "384 chars; banned none; non-ASCII none"
+      },
+      {
+        "check": "bullet 3 <= 500 chars",
+        "pass": true,
+        "detail": "451 chars; banned none; non-ASCII none"
+      },
+      {
+        "check": "bullet 4 <= 500 chars",
+        "pass": true,
+        "detail": "429 chars; banned none; non-ASCII none"
+      },
+      {
+        "check": "bullet 5 <= 500 chars",
+        "pass": true,
+        "detail": "427 chars; banned none; non-ASCII none"
+      },
+      {
+        "check": "search terms",
+        "pass": true,
+        "detail": "unchanged"
+      },
+      {
+        "check": "camera: no night vision, no GHz",
+        "pass": true,
+        "detail": "ok"
+      },
+      {
+        "check": "2-way audio (camera has it)",
+        "pass": true,
+        "detail": "ok"
+      }
+    ]
+  },
+  "B0GHKN9DBR": {
+    "sku": "L6-L3S1-I7Q6",
+    "product": "2L plastic fountain",
+    "title": {
+      "old": "PETME2 Cat Water Fountain, 68oz/2L Quiet Water Fountains for Cats Indoor, Red Light Low Level Alert, Visible Window, Anti-Dry Pump Shut-Off, Small Pet Dispenser for Kitten and Dog",
+      "new": "PETME2 Cat Water Fountain, 68oz/2L Quiet Water Fountains for Cats Indoor, LED Low Level Indicator, Visible Window, Anti-Dry Pump Shut-Off, Compact White Plastic Design for Kittens and Small Dogs",
+      "changed": true,
+      "reason": "First 73 chars unchanged (protects 'quiet water fountains for cats indoor' #73 and 'water fountains for cats indoor quiet' #77). 'Red Light' -> owner-confirmed 'LED' + 'Indicator' (cat water fountain with led indicator 1,000 SV, #27 -> push to top 10). Weak tail 'Small Pet Dispenser for Kitten and Dog' (no SV) -> 'Compact White Plastic Design for Kittens and Small Dogs': puts 'plastic' in the title (plastic cat water fountain 1,641 SV fell #29->#45; cat water fountain plastic #45), plus compact (#35), white (cat water fountain white #22) and small (small cat water fountain 1,890 SV #60). No filter wording at all.",
+      "keyword_evidence": [
+        {
+          "keyword": "plastic cat water fountain",
+          "sv_oct12": 1641,
+          "rank_oct12": 45,
+          "competing_products": "2000"
+        },
+        {
+          "keyword": "cat water fountain plastic",
+          "sv_oct12": 468,
+          "rank_oct12": 45,
+          "competing_products": "2000"
+        },
+        {
+          "keyword": "cat water fountain with led indicator",
+          "sv_oct12": 1000,
+          "rank_oct12": 27,
+          "competing_products": "776"
+        },
+        {
+          "keyword": "small cat water fountain",
+          "sv_oct12": 1890,
+          "rank_oct12": 60,
+          "competing_products": "5000"
+        },
+        {
+          "keyword": "compact cat water fountain",
+          "sv_oct12": 211,
+          "rank_oct12": 35,
+          "competing_products": "1000"
+        },
+        {
+          "keyword": "cat water fountain white",
+          "sv_oct12": 307,
+          "rank_oct12": 22,
+          "competing_products": "1000"
+        },
+        {
+          "keyword": "quiet water fountains for cats indoor",
+          "sv_oct12": 319,
+          "rank_oct12": 73,
+          "competing_products": "3000"
+        },
+        {
+          "keyword": "quiet cat water fountain",
+          "sv_oct12": 1803,
+          "rank_oct12": 94,
+          "competing_products": "1000"
+        },
+        {
+          "keyword": "small dog water fountain",
+          "sv_oct12": 2906,
+          "rank_oct12": 125,
+          "competing_products": "5000"
+        }
+      ]
+    },
+    "bullets": [
+      {
+        "n": 1,
+        "changed": false,
+        "old": "FRESH MOVING WATER CATS WANT TO DRINK: Many cats ignore a still bowl. This automatic cat water fountain keeps water gently moving to invite more sips through the day, an easy upgrade from a plain dish. It works as a cat water dispenser and kitten water fountain for indoor cats, and as a cat drinking fountain small dogs can share. Think of it as a cat water bowl fountain, a running water bowl for cats that keeps water flowing.",
+        "new": "FRESH MOVING WATER CATS WANT TO DRINK: Many cats ignore a still bowl. This automatic cat water fountain keeps water gently moving to invite more sips through the day, an easy upgrade from a plain dish. It works as a cat water dispenser and kitten water fountain for indoor cats, and as a cat drinking fountain small dogs can share. Think of it as a cat water bowl fountain, a running water bowl for cats that keeps water flowing."
+      },
+      {
+        "n": 2,
+        "changed": true,
+        "old": "RED LIGHT LOW WATER ALERT: Stop guessing when to refill. A red indicator light warns you when the water runs low, and the clear water level window lets you check the 68oz/2L reservoir at a glance. This automatic water dispenser for cats and automatic cat water dispenser tells you when it needs a refill, so it is a simple pet water dispenser and water dispenser for cats for busy homes.",
+        "new": "LED LOW WATER ALERT: Stop guessing when to refill. A red LED indicator light warns you when the water runs low, and the clear water level window lets you check the 68oz/2L reservoir at a glance. This cat water fountain with LED indicator is an automatic water dispenser for cats and automatic cat water dispenser that tells you when it needs a refill, a simple pet water dispenser and water dispenser for cats for busy homes.",
+        "reason": "owner confirmed the low-water light is an LED; adds the exact 'cat water fountain with led indicator' (1,000 SV, #27, 776 competing)",
+        "keyword_evidence": [
+          {
+            "keyword": "cat water fountain with led indicator",
+            "sv_oct12": 1000,
+            "rank_oct12": 27,
+            "competing_products": "776"
+          },
+          {
+            "keyword": "automatic water dispenser for cats",
+            "sv_oct12": 7925,
+            "rank_oct12": 245,
+            "competing_products": "3000"
+          }
+        ]
+      },
+      {
+        "n": 3,
+        "changed": false,
+        "old": "ANTI-DRY PUMP PROTECTION: When the water level gets too low, the pump automatically powers off to help protect it from running dry. That means more peace of mind on busy days, whether it serves your cat or a small dog. For dogs it works as a dog water dispenser and automatic dog water dispenser, an automatic water dispenser for dogs and a water dispenser for dogs that will not run the pump empty, a cat or dog automatic water dispenser in one.",
+        "new": "ANTI-DRY PUMP PROTECTION: When the water level gets too low, the pump automatically powers off to help protect it from running dry. That means more peace of mind on busy days, whether it serves your cat or a small dog. For dogs it works as a dog water dispenser and automatic dog water dispenser, an automatic water dispenser for dogs and a water dispenser for dogs that will not run the pump empty, a cat or dog automatic water dispenser in one."
+      },
+      {
+        "n": 4,
+        "changed": true,
+        "old": "QUIET AND COMPACT FOR SMALL SPACES: Made for water fountains for cats indoor, this slim, quiet cat water fountain keeps bedrooms and apartments calm. It is a small cat water fountain and kitty water fountain that is light and easy to move, and it also works as a small dog water fountain or a dog water fountain for small dogs. The light plastic cat water fountain body fits a water fountain for cats indoor corner or a water fountain for dogs inside.",
+        "new": "QUIET AND COMPACT FOR SMALL SPACES: Made for water fountains for cats indoor, this slim, quiet cat water fountain keeps bedrooms and apartments calm. It is a small cat water fountain and kitty water fountain with a slim white plug-in design, and it also works as a small dog water fountain or a dog water fountain for small dogs. The light plastic cat water fountain body fits a water fountain for cats indoor corner or a water fountain for dogs inside.",
+        "reason": "'light and easy to move' read as cordless (ads got cordless/wireless clicks); 'plastic cat water fountain' and every ranked phrase stay word for word; adds 'white'",
+        "keyword_evidence": [
+          {
+            "keyword": "plastic cat water fountain",
+            "sv_oct12": 1641,
+            "rank_oct12": 45,
+            "competing_products": "2000"
+          },
+          {
+            "keyword": "small cat water fountain",
+            "sv_oct12": 1890,
+            "rank_oct12": 60,
+            "competing_products": "5000"
+          },
+          {
+            "keyword": "quiet cat water fountain",
+            "sv_oct12": 1803,
+            "rank_oct12": 94,
+            "competing_products": "1000"
+          },
+          {
+            "keyword": "small dog water fountain",
+            "sv_oct12": 2906,
+            "rank_oct12": 125,
+            "competing_products": "5000"
+          }
+        ]
+      },
+      {
+        "n": 5,
+        "changed": false,
+        "old": "EASY TO CLEAN, SIMPLE TO SET UP: The simple structure comes apart quickly for routine washing, an easy to clean cat water fountain. Connect the power cable, fill the reservoir and it is ready. A pet water fountain and pet fountain for single or multi-pet homes, it doubles as an automatic dog water bowl or auto dog water bowl, and as a circulating water bowl for dogs or flowing water bowl for dogs.",
+        "new": "EASY TO CLEAN, SIMPLE TO SET UP: The simple structure comes apart quickly for routine washing, an easy to clean cat water fountain. Connect the power cable, fill the reservoir and it is ready. A pet water fountain and pet fountain for single or multi-pet homes, it doubles as an automatic dog water bowl or auto dog water bowl, and as a circulating water bowl for dogs or flowing water bowl for dogs."
+      }
+    ],
+    "description_changes": [
+      {
+        "find": "the slim, portable white body fits",
+        "replace": "the slim white body fits",
+        "why": "not cordless"
+      }
+    ],
+    "search_terms": {
+      "old": "plastic kitty drinking waterer bowl automatic auto flowing running circulating fresh inside easy clean mini compact portable slim white refill indicator hydration drinker bedroom bebedero gatos fuente agua perros dispensador animal",
+      "new": "mini size breed puppy drinker hydration silent pets waterer bebedero gatos fuente agua perros dispensador fonte gato bebedouro",
+      "changed": true,
+      "bytes": 126,
+      "reason": "Drops 'plastic', 'white', 'compact', 'indicator' (now in title) and words already in bullets (kitty, bowl, automatic, auto, flowing, running, fresh, inside, easy, clean, slim, refill). 'portable' removed (not cordless). Adds size/breed (dog water bowl fountain small breed #131), puppy (puppy water fountain #158), silent, pets, fonte/bebedouro (Portuguese ad order). No filter words."
+    },
+    "attributes": [
+      {
+        "seller_central_field": "Special Features",
+        "attribute": "special_feature",
+        "old": [
+          "2L Portable Water Capacity - Compact size with reliable daily hydration",
+          "Visible Water Level Window - Easy monitoring at a glance",
+          "Low Water Red Light Alert - Notifies when water needs refilling",
+          "Anti-Dry Protection - Automatically shuts off when water runs low",
+          "Quiet Indoor Design - Suitable for calm home environments"
+        ],
+        "new": [
+          "2L Compact Water Capacity - Slim size for small spaces",
+          "Visible Water Level Window - Easy monitoring at a glance",
+          "LED Low Water Alert - Red LED light shows when water needs refilling",
+          "Anti-Dry Protection - Automatically shuts off when water runs low",
+          "Quiet Indoor Design - Suitable for calm home environments"
+        ],
+        "reason": "value 1: 'Portable' suggests cordless; value 3: owner-confirmed LED. Values 2, 4, 5 unchanged."
+      }
+    ],
+    "do_not_change": "Never add filter / filterless / no filter wording (owner answer unclear). Do not change model name, price, images.",
+    "checks": [
+      {
+        "check": "title length <= 200",
+        "pass": true,
+        "detail": "194 chars"
+      },
+      {
+        "check": "primary keyword in first 80",
+        "pass": true,
+        "detail": "'cat water fountain' at char 7"
+      },
+      {
+        "check": "no word > 2x (stopwords exempt)",
+        "pass": true,
+        "detail": "max: (2, 'water'); stopwords >2: none"
+      },
+      {
+        "check": "only , - / & special chars (decimal point allowed)",
+        "pass": true,
+        "detail": "bad: none"
+      },
+      {
+        "check": "no brands / promo / unproven words",
+        "pass": true,
+        "detail": "none"
+      },
+      {
+        "check": "bullet 1 <= 500 chars",
+        "pass": true,
+        "detail": "429 chars; banned none; non-ASCII none"
+      },
+      {
+        "check": "bullet 2 <= 500 chars (changed)",
+        "pass": true,
+        "detail": "425 chars; banned none; non-ASCII none"
+      },
+      {
+        "check": "bullet 3 <= 500 chars",
+        "pass": true,
+        "detail": "446 chars; banned none; non-ASCII none"
+      },
+      {
+        "check": "bullet 4 <= 500 chars (changed)",
+        "pass": true,
+        "detail": "453 chars; banned none; non-ASCII none"
+      },
+      {
+        "check": "bullet 5 <= 500 chars",
+        "pass": true,
+        "detail": "400 chars; banned none; non-ASCII none"
+      },
+      {
+        "check": "search terms <= 249 bytes",
+        "pass": true,
+        "detail": "126 bytes"
+      },
+      {
+        "check": "no title words in search terms",
+        "pass": true,
+        "detail": "none"
+      },
+      {
+        "check": "no repeated words in search terms",
+        "pass": true,
+        "detail": "none"
+      },
+      {
+        "check": "search terms words also in bullets (info)",
+        "pass": true,
+        "detail": "none"
+      },
+      {
+        "check": "no brands / ASINs / promo words",
+        "pass": true,
+        "detail": "none"
+      },
+      {
+        "check": "no punctuation in search terms",
+        "pass": true,
+        "detail": "lowercase, spaces only"
+      },
+      {
+        "check": "2L: no filter / filterless claims",
+        "pass": true,
+        "detail": "no 'filter' anywhere in new text"
+      },
+      {
+        "check": "no 2-way audio claim on non-camera",
+        "pass": true,
+        "detail": "ok"
+      },
+      {
+        "check": "description text found: 'the slim, portable white body fits...'",
+        "pass": true,
+        "detail": "exact match in live description"
+      }
+    ]
+  },
+  "B0GHLBGCP3": {
+    "sku": "SD-85ET-IOZ3",
+    "product": "2.2L transparent fountain with 4-layer filter",
+    "title": {
+      "old": "PETME2 Transparent Cat Water Fountain 74oz/2.2L, 4-Layer Filtered Cat Water Dispenser with Quiet Pump, Clear Tank Shows Level, Anti-Dry Protection, Automatic Pet Fountain for Small Dogs Indoor",
+      "new": "PETME2 Transparent Cat Water Fountain 74oz/2.2L with 4-Layer Filter, Quiet Pump, Anti-Dry Protection, USB Powered, Filtered Dog Water Fountain for Small Dogs and Kittens, See-Through Plastic Tank",
+      "changed": true,
+      "reason": "No phrase ranks better than #92 here, so the title can move. Keeps 'Transparent Cat Water Fountain 74oz/2.2L' and the owner-confirmed 4-layer filter at the front. Adds the exact 'filtered dog water fountain' (3,254 SV, not ranked) and 'dog water fountain for small dogs' (1,276 SV, #110), plus small dog water fountain (2,906 SV #156), kitten (kitten water fountain 2,571 SV #223) and plastic (plastic cat water fountain 1,641 SV #92). 'USB Powered' is owner-confirmed. Drops 'Clear Tank Shows Level' (no SV, repeats Transparent) and 'Automatic Pet Fountain' (SV 36). 'cat water dispenser' stays in bullets 2 and 4.",
+      "keyword_evidence": [
+        {
+          "keyword": "filtered dog water fountain",
+          "sv_oct12": 3254,
+          "rank_oct12": null,
+          "competing_products": "3000"
+        },
+        {
+          "keyword": "dog water fountain for small dogs",
+          "sv_oct12": 1276,
+          "rank_oct12": 110,
+          "competing_products": "5000"
+        },
+        {
+          "keyword": "small dog water fountain",
+          "sv_oct12": 2906,
+          "rank_oct12": 156,
+          "competing_products": "5000"
+        },
+        {
+          "keyword": "dog water fountain small size dog",
+          "sv_oct12": 547,
+          "rank_oct12": 97,
+          "competing_products": "4000"
+        },
+        {
+          "keyword": "plastic cat water fountain",
+          "sv_oct12": 1641,
+          "rank_oct12": 92,
+          "competing_products": "2000"
+        },
+        {
+          "keyword": "kitten water fountain",
+          "sv_oct12": 2571,
+          "rank_oct12": 223,
+          "competing_products": "2000"
+        },
+        {
+          "keyword": "dog water fountain with filter",
+          "sv_oct12": 903,
+          "rank_oct12": 248,
+          "competing_products": "3000"
+        },
+        {
+          "keyword": "cat water fountain with filter",
+          "sv_oct12": 751,
+          "rank_oct12": null,
+          "competing_products": "4000"
+        }
+      ]
+    },
+    "bullets": [
+      {
+        "n": 1,
+        "changed": false,
+        "old": "SEE THE WATER LEVEL AT A GLANCE: The transparent body shows exactly how much water is left, so you refill on time instead of guessing. The 74oz/2.2L reservoir means fewer refills than a standard bowl and suits a busy home with a cat or a small dog. This clear plastic cat water fountain is a small cat water fountain and kitten water fountain, and it doubles as a small dog water fountain or a dog water fountain for small dogs.",
+        "new": "SEE THE WATER LEVEL AT A GLANCE: The transparent body shows exactly how much water is left, so you refill on time instead of guessing. The 74oz/2.2L reservoir means fewer refills than a standard bowl and suits a busy home with a cat or a small dog. This clear plastic cat water fountain is a small cat water fountain and kitten water fountain, and it doubles as a small dog water fountain or a dog water fountain for small dogs."
+      },
+      {
+        "n": 2,
+        "changed": false,
+        "old": "4-LAYER FILTERED WATER: The built-in 4-layer filter cartridge, included in the box, helps catch hair, debris and odors as water circulates, so this cat water dispenser serves cleaner tasting water all day. It is a cat water fountain with filtration and a filtered dog water fountain, a dog water fountain with filtration system that works as a filtered dog water bowl. Replace the filter regularly to keep the water fresh.",
+        "new": "4-LAYER FILTERED WATER: The built-in 4-layer filter cartridge, included in the box, helps catch hair, debris and odors as water circulates, so this cat water dispenser serves cleaner tasting water all day. It is a cat water fountain with filtration and a filtered dog water fountain, a dog water fountain with filtration system that works as a filtered dog water bowl. Replace the filter regularly to keep the water fresh."
+      },
+      {
+        "n": 3,
+        "changed": false,
+        "old": "FLOWING WATER ENCOURAGES DRINKING: Cats naturally prefer moving water over a still dish. This automatic cat water fountain and pet water fountain keeps water gently circulating to invite more sips, a compact choice among water fountains for cats indoor. As a running water bowl for cats and cat water bowl fountain, it is a cat drinking fountain and kitty water fountain that also suits kittens and small dogs.",
+        "new": "FLOWING WATER ENCOURAGES DRINKING: Cats naturally prefer moving water over a still dish. This automatic cat water fountain and pet water fountain keeps water gently circulating to invite more sips, a compact choice among water fountains for cats indoor. As a running water bowl for cats and cat water bowl fountain, it is a cat drinking fountain and kitty water fountain that also suits kittens and small dogs."
+      },
+      {
+        "n": 4,
+        "changed": false,
+        "old": "QUIET PUMP FOR CALM HOMES: This quiet cat water fountain runs in the background without disturbing naps, bedtime or work calls, so it fits a bedroom or living room. Anti-dry protection is built in to help guard the pump when the water level gets low. It is an automatic water dispenser for cats and an automatic cat water dispenser, a water dispenser for cats and pet water dispenser in one.",
+        "new": "QUIET PUMP FOR CALM HOMES: This quiet cat water fountain runs in the background without disturbing naps, bedtime or work calls, so it fits a bedroom or living room. Anti-dry protection is built in to help guard the pump when the water level gets low. It is an automatic water dispenser for cats and an automatic cat water dispenser, a water dispenser for cats and pet water dispenser in one."
+      },
+      {
+        "n": 5,
+        "changed": true,
+        "old": "EASY SETUP AND CLEANING: Assembles in minutes and comes apart just as quickly for washing. USB powered with no batteries needed. For a small dog it is a dog water dispenser and automatic dog water dispenser, a water fountain for dogs inside the home. It also works as an automatic water dispenser for dogs, a water dispenser for dogs, an automatic dog water bowl or an automatic water bowl for dogs, a cat or dog automatic water dispenser in one.",
+        "new": "EASY SETUP AND CLEANING: Assembles in minutes and comes apart just as quickly for washing. It is USB powered: plug the USB cable into a wall adapter. It is not cordless and needs no batteries. For a small dog it is a dog water dispenser and automatic dog water dispenser, a water fountain for dogs inside the home. It also works as an automatic water dispenser for dogs, an automatic dog water bowl or an automatic water bowl for dogs, a cat or dog water dispenser in one.",
+        "reason": "owner confirmed USB cable + wall adapter; 'not cordless' answers the 'not wireless' review and cuts cordless clicks. Trims one repeated chain to stay under 500 chars.",
+        "keyword_evidence": [
+          {
+            "keyword": "automatic water dispenser for dogs",
+            "sv_oct12": null,
+            "rank_oct12": null,
+            "note": "not in Oct 12 Cerebro"
+          },
+          {
+            "keyword": "dog water dispenser",
+            "sv_oct12": 12079,
+            "rank_oct12": null,
+            "competing_products": "7000"
+          }
+        ]
+      }
+    ],
+    "description_changes": [],
+    "search_terms": {
+      "old": "see through plastic filtration kitty kitten waterer drinking bowl flowing running circulating auto easy clean dish hydration inside multi drinker bedroom fresh bebedero gatos fuente agua perros dispensador animal system",
+      "new": "size breed puppy hydration drinker pets multi waterer bebedero gatos fuente agua perros dispensador transparente filtro gato fonte",
+      "changed": true,
+      "bytes": 130,
+      "reason": "Drops 'see', 'through', 'plastic' (now in title) and bullet words (kitty, kitten, bowl, flowing, running, auto, easy, clean, inside, fresh). Adds size/breed (dog water fountain small size dog #97, dog water bowl fountain small breed #111), puppy, pets, transparente/filtro/gato/fonte."
+    },
+    "attributes": [
+      {
+        "seller_central_field": "Special Features",
+        "attribute": "special_feature",
+        "old": [
+          "2.2L Large Capacity : Provides ample water supply for daily hydration while reducing the need for frequent refills. ",
+          "Automatic Circulating Water Flow:  Encourages pets to drink more naturally by offering continuously moving water.",
+          "Built-In Filter Cartridge:  Helps remove impurities and odors to deliver cleaner, fresher-tasting water.",
+          "Clear Visible Water Level:  Allows quick and easy monitoring of water levels at a glance.",
+          "Quiet Indoor Operation: Designed for peaceful home environments without disturbing pets or daily activities."
+        ],
+        "new": [
+          "Transparent Body Shows Water Level",
+          "4-Layer Filter Cartridge Included",
+          "Quiet Pump",
+          "Anti-Dry Protection",
+          "USB Powered"
+        ],
+        "reason": "old values contain hidden U+2028 line-break characters; replace with clean short facts (4-layer and USB owner-confirmed)"
+      },
+      {
+        "seller_central_field": "Dog Breed Size",
+        "attribute": "dog_breed_size",
+        "old": [
+          "extra_small"
+        ],
+        "new": [
+          "extra_small",
+          "small"
+        ],
+        "reason": "title and bullets say small dogs"
+      }
+    ],
+    "do_not_change": "Description stays as is (its '4-layer' and 'USB powered' are now owner-confirmed).",
+    "checks": [
+      {
+        "check": "title length <= 200",
+        "pass": true,
+        "detail": "195 chars"
+      },
+      {
+        "check": "primary keyword in first 80",
+        "pass": true,
+        "detail": "'cat water fountain' at char 19"
+      },
+      {
+        "check": "no word > 2x (stopwords exempt)",
+        "pass": true,
+        "detail": "max: (2, 'water'); stopwords >2: none"
+      },
+      {
+        "check": "only , - / & special chars (decimal point allowed)",
+        "pass": true,
+        "detail": "bad: none"
+      },
+      {
+        "check": "no brands / promo / unproven words",
+        "pass": true,
+        "detail": "none"
+      },
+      {
+        "check": "bullet 1 <= 500 chars",
+        "pass": true,
+        "detail": "428 chars; banned none; non-ASCII none"
+      },
+      {
+        "check": "bullet 2 <= 500 chars",
+        "pass": true,
+        "detail": "422 chars; banned none; non-ASCII none"
+      },
+      {
+        "check": "bullet 3 <= 500 chars",
+        "pass": true,
+        "detail": "410 chars; banned none; non-ASCII none"
+      },
+      {
+        "check": "bullet 4 <= 500 chars",
+        "pass": true,
+        "detail": "391 chars; banned none; non-ASCII none"
+      },
+      {
+        "check": "bullet 5 <= 500 chars (changed)",
+        "pass": true,
+        "detail": "472 chars; banned none; non-ASCII none"
+      },
+      {
+        "check": "search terms <= 249 bytes",
+        "pass": true,
+        "detail": "130 bytes"
+      },
+      {
+        "check": "no title words in search terms",
+        "pass": true,
+        "detail": "none"
+      },
+      {
+        "check": "no repeated words in search terms",
+        "pass": true,
+        "detail": "none"
+      },
+      {
+        "check": "search terms words also in bullets (info)",
+        "pass": true,
+        "detail": "none"
+      },
+      {
+        "check": "no brands / ASINs / promo words",
+        "pass": true,
+        "detail": "none"
+      },
+      {
+        "check": "no punctuation in search terms",
+        "pass": true,
+        "detail": "lowercase, spaces only"
+      },
+      {
+        "check": "no 2-way audio claim on non-camera",
+        "pass": true,
+        "detail": "ok"
+      }
+    ]
+  },
+  "B0GHKRYV6W": {
+    "sku": "JE-LQEW-9EHL",
+    "product": "2.2L fountain with stainless steel tray + filters",
+    "title": {
+      "old": "PETME2 Cat Water Fountain with Stainless Steel Tray, 74oz/2.2L Automatic Pet Fountain for Cats and Dogs, 4-Layer Filtration, Filters Included, Low Water Alert, Quiet Pump",
+      "new": "PETME2 Quiet Cat Water Fountain with Stainless Steel Tray, 74oz/2.2L Pet Water Fountain for Cats and Small Dogs, 4-Layer Filtration, Filters Included, Low Level Alert, Anti-Dry Pump Shut-Off",
+      "changed": true,
+      "reason": "Puts the exact 'quiet cat water fountain' (1,803 SV, #140; the only search that ever sold this ASIN in ads) first, which also covers 'quiet cat water fountain stainless steel' (2,265 SV, #163) honestly since the tray is steel. 'Pet water fountain' (42k) replaces 'Automatic Pet Fountain' (SV 36). 'Small Dogs' pushes dog water fountain for small dogs (#130) and dog water bowl fountain small breed (#20). 'Filters Included' kept (owner confirmed, no count). 'Low Level Alert' keeps 'water' at 2.",
+      "keyword_evidence": [
+        {
+          "keyword": "quiet cat water fountain",
+          "sv_oct12": 1803,
+          "rank_oct12": 140,
+          "competing_products": "1000"
+        },
+        {
+          "keyword": "quiet cat water fountain stainless steel",
+          "sv_oct12": 2265,
+          "rank_oct12": 163,
+          "competing_products": "1000"
+        },
+        {
+          "keyword": "dog water bowl fountain small breed",
+          "sv_oct12": 316,
+          "rank_oct12": 20,
+          "competing_products": "1000"
+        },
+        {
+          "keyword": "dog water fountain for small dogs",
+          "sv_oct12": 1276,
+          "rank_oct12": 130,
+          "competing_products": "5000"
+        },
+        {
+          "keyword": "dog water fountain small size dog",
+          "sv_oct12": 547,
+          "rank_oct12": 125,
+          "competing_products": "4000"
+        },
+        {
+          "keyword": "compact cat water fountain",
+          "sv_oct12": 211,
+          "rank_oct12": 114,
+          "competing_products": "1000"
+        }
+      ]
+    },
+    "bullets": [
+      {
+        "n": 1,
+        "changed": true,
+        "old": "STAINLESS STEEL DRINKING TRAY: Your pet drinks from a stainless steel tray that wipes clean easily between washes, while the fountain body is light plastic that is easy to move. It is a cat water fountain, stainless steel tray included, and a cat fountain, stainless steel tray and all, that cats and small dogs can share. The fully detachable design makes the tray simple to wash.",
+        "new": "STAINLESS STEEL DRINKING TRAY: Your pet drinks from a stainless steel tray that wipes clean easily between washes, while the fountain body is light plastic. Cats and small dogs can share it. Only the drinking tray is stainless steel, so you know what you get. The fully detachable design makes the tray simple to wash.",
+        "reason": "removes keyword stuffing ('stainless steel tray and all') that pulled all-steel shoppers (about 10 clicks, 0 orders) and 'easy to move' (cordless hint)",
+        "keyword_evidence": []
+      },
+      {
+        "n": 2,
+        "changed": false,
+        "old": "4-LAYER FILTRATION, FILTERS INCLUDED: The 4-layer filter helps trap fur, debris and odors as water circulates, so your cat or dog gets fresher tasting water from this cat water dispenser and pet water dispenser. It is a cat water fountain with filtration and a filtered dog water fountain that works as a filtered dog water bowl or dog filtered water bowl. Filters come in the box, so it is ready to use on day one.",
+        "new": "4-LAYER FILTRATION, FILTERS INCLUDED: The 4-layer filter helps trap fur, debris and odors as water circulates, so your cat or dog gets fresher tasting water from this cat water dispenser and pet water dispenser. It is a cat water fountain with filtration and a filtered dog water fountain that works as a filtered dog water bowl or dog filtered water bowl. Filters come in the box, so it is ready to use on day one."
+      },
+      {
+        "n": 3,
+        "changed": false,
+        "old": "74OZ/2.2L WITH VISIBLE LEVEL WINDOW: The 2.2L reservoir holds about 7 to 10 days of water, depending on your pets, so you refill less often. The visible level window shows how much is left at a glance, handy for a water fountain for dogs inside or a cat room. It is an automatic cat water fountain and automatic cat water dispenser, an automatic water dispenser for cats and a water dispenser for cats in one.",
+        "new": "74OZ/2.2L WITH VISIBLE LEVEL WINDOW: The 2.2L reservoir holds about 7 to 10 days of water, depending on your pets, so you refill less often. The visible level window shows how much is left at a glance, handy for a water fountain for dogs inside or a cat room. It is an automatic cat water fountain and automatic cat water dispenser, an automatic water dispenser for cats and a water dispenser for cats in one."
+      },
+      {
+        "n": 4,
+        "changed": false,
+        "old": "ANTI-DRY SHUT-OFF AND LOW WATER ALERT: When the water runs low, the low water alert tells you it is time to refill and the pump shuts off to help protect it from running dry. More peace of mind overnight, whether it serves cats or a small dog. For dogs it is a dog water dispenser and automatic dog water dispenser, an automatic water dispenser for dogs and a water dispenser for dogs.",
+        "new": "ANTI-DRY SHUT-OFF AND LOW WATER ALERT: When the water runs low, the low water alert tells you it is time to refill and the pump shuts off to help protect it from running dry. More peace of mind overnight, whether it serves cats or a small dog. For dogs it is a dog water dispenser and automatic dog water dispenser, an automatic water dispenser for dogs and a water dispenser for dogs."
+      },
+      {
+        "n": 5,
+        "changed": true,
+        "old": "QUIET PUMP, FULLY DETACHABLE: The submerged pump runs with low noise that will not startle timid cats, and the fully detachable design makes cleaning simple. Sized for water fountains for cats indoor, it is a small cat water fountain and kitten water fountain. It also works as a dog water fountain for small dogs or a small dog water fountain, and the light plastic cat water fountain body is easy to carry from room to room.",
+        "new": "QUIET PUMP, FULLY DETACHABLE: The submerged pump runs with low noise that will not startle timid cats, and the fully detachable design makes cleaning simple. Sized for water fountains for cats indoor, it is a small cat water fountain and kitten water fountain. It also works as a dog water fountain for small dogs or a small dog water fountain, and it plugs into the wall with the included power adapter.",
+        "reason": "owner confirmed the power adapter is in the box; replaces 'easy to carry from room to room' (cordless hint: tray ranks #132 for 'cordless dog fountain water bowl')",
+        "keyword_evidence": [
+          {
+            "keyword": "dog water fountain for small dogs",
+            "sv_oct12": 1276,
+            "rank_oct12": 130,
+            "competing_products": "5000"
+          },
+          {
+            "keyword": "small cat water fountain",
+            "sv_oct12": 1890,
+            "rank_oct12": null,
+            "competing_products": "5000"
+          },
+          {
+            "keyword": "kitten water fountain",
+            "sv_oct12": 2571,
+            "rank_oct12": null,
+            "competing_products": "2000"
+          }
+        ]
+      }
+    ],
+    "description_changes": [
+      {
+        "find": "pairs a light plastic body made from food-grade materials with a stainless steel drinking tray",
+        "replace": "pairs a light plastic body with a stainless steel drinking tray",
+        "why": "'food-grade' not verified"
+      },
+      {
+        "find": "For dogs, it is a dog water fountain, stainless steel tray included. ",
+        "replace": "",
+        "why": "keyword stuffing"
+      }
+    ],
+    "search_terms": {
+      "old": "plastic metal dish bowl kitty kitten waterer drinking flowing running circulating auto easy clean small inside indoor level window refill shutoff dispenser hydration bebedero gatos fuente agua perros acero inoxidable filtered animal",
+      "new": "dish size breed puppy hydration drinker silent compact auto waterer circulating flowing kitty bebedero gatos fuente agua perros acero inoxidable fonte filtro gato",
+      "changed": true,
+      "bytes": 148,
+      "reason": "Drops 'plastic' and 'metal' (body is plastic; avoids all-steel/metal shoppers), 'small'/'filtered' (now in title) and bullet words. Adds size/breed (#20/#125 small-dog phrases), puppy, silent, compact (#114), fonte/filtro/gato."
+    },
+    "attributes": [
+      {
+        "seller_central_field": "Included Components",
+        "attribute": "included_components",
+        "old": [
+          "2.2L Portable Water Capacity - Compact size with reliable daily hydration ",
+          "Visible Water Level Window - Easy monitoring at a glance",
+          "Low Water Red Light Alert - Notifies when water needs refilling ",
+          "Anti-Dry Protection - Automatically shuts off when water runs low",
+          "Quiet Indoor Design - Suitable for calm home environments"
+        ],
+        "new": [
+          "Fountain main unit",
+          "Stainless steel drinking tray",
+          "Filters",
+          "Power adapter"
+        ],
+        "reason": "live value is feature text copied from the 2L (incl. a 'Red Light Alert'); owner confirmed filters + power adapter in the box (no count)"
+      },
+      {
+        "seller_central_field": "Special Features",
+        "attribute": "special_feature",
+        "old": [
+          "Stainless Steel Tray Design"
+        ],
+        "new": [
+          "Stainless Steel Drinking Tray",
+          "4-Layer Filtration",
+          "Low Water Alert",
+          "Anti-Dry Pump Shut-Off",
+          "Visible Water Level Window"
+        ],
+        "reason": "only 1 value today; adds true features"
+      },
+      {
+        "seller_central_field": "Material",
+        "attribute": "material",
+        "old": [
+          "Stainless Steel",
+          "Plastic"
+        ],
+        "new": [
+          "Plastic",
+          "Stainless Steel"
+        ],
+        "reason": "the body is plastic, so it goes first (only the tray is steel)"
+      }
+    ],
+    "do_not_change": "Do not add a filter number anywhere. Do not add 'LED' (not confirmed for this model).",
+    "checks": [
+      {
+        "check": "title length <= 200",
+        "pass": true,
+        "detail": "190 chars"
+      },
+      {
+        "check": "primary keyword in first 80",
+        "pass": true,
+        "detail": "'cat water fountain' at char 13"
+      },
+      {
+        "check": "no word > 2x (stopwords exempt)",
+        "pass": true,
+        "detail": "max: (2, 'water'); stopwords >2: none"
+      },
+      {
+        "check": "only , - / & special chars (decimal point allowed)",
+        "pass": true,
+        "detail": "bad: none"
+      },
+      {
+        "check": "no brands / promo / unproven words",
+        "pass": true,
+        "detail": "none"
+      },
+      {
+        "check": "bullet 1 <= 500 chars (changed)",
+        "pass": true,
+        "detail": "318 chars; banned none; non-ASCII none"
+      },
+      {
+        "check": "bullet 2 <= 500 chars",
+        "pass": true,
+        "detail": "415 chars; banned none; non-ASCII none"
+      },
+      {
+        "check": "bullet 3 <= 500 chars",
+        "pass": true,
+        "detail": "409 chars; banned none; non-ASCII none"
+      },
+      {
+        "check": "bullet 4 <= 500 chars",
+        "pass": true,
+        "detail": "385 chars; banned none; non-ASCII none"
+      },
+      {
+        "check": "bullet 5 <= 500 chars (changed)",
+        "pass": true,
+        "detail": "404 chars; banned none; non-ASCII none"
+      },
+      {
+        "check": "search terms <= 249 bytes",
+        "pass": true,
+        "detail": "148 bytes"
+      },
+      {
+        "check": "no title words in search terms",
+        "pass": true,
+        "detail": "none"
+      },
+      {
+        "check": "no repeated words in search terms",
+        "pass": true,
+        "detail": "none"
+      },
+      {
+        "check": "search terms words also in bullets (info)",
+        "pass": true,
+        "detail": "none"
+      },
+      {
+        "check": "no brands / ASINs / promo words",
+        "pass": true,
+        "detail": "none"
+      },
+      {
+        "check": "no punctuation in search terms",
+        "pass": true,
+        "detail": "lowercase, spaces only"
+      },
+      {
+        "check": "tray: no filter number",
+        "pass": true,
+        "detail": "ok"
+      },
+      {
+        "check": "no 2-way audio claim on non-camera",
+        "pass": true,
+        "detail": "ok"
+      },
+      {
+        "check": "description text found: 'pairs a light plastic body made from foo...'",
+        "pass": true,
+        "detail": "exact match in live description"
+      },
+      {
+        "check": "description text found: 'For dogs, it is a dog water fountain, st...'",
+        "pass": true,
+        "detail": "exact match in live description"
+      }
+    ]
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "name": "t:sections.header.name",
+  "type": "header",
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "settings": {
+        "color_scheme": "scheme-5",
+        "show_line_separator": false,
+        "show_social": false,
+        "auto_rotate": true,
+        "change_slides_speed": 5,
+        "enable_country_selector": false,
+        "enable_language_selector": false
+      },
+      "blocks": {
+        "a1": {
+          "type": "announcement",
+          "settings": {
+            "text": "Free U.S. shipping on every order",
+            "link": ""
+          }
+        },
+        "a2": {
+          "type": "announcement",
+          "settings": {
+            "text": "30-day money-back guarantee",
+            "link": ""
+          }
+        },
+        "a3": {
+          "type": "announcement",
+          "settings": {
+            "text": "10% off your first order when you join our emails",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "a1",
+        "a2",
+        "a3"
+      ]
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "color_scheme": "scheme-3",
+        "menu_color_scheme": "scheme-3",
+        "logo_position": "middle-left",
+        "menu": "main-menu",
+        "menu_type_desktop": "dropdown",
+        "sticky_header_type": "always",
+        "show_line_separator": true,
+        "enable_country_selector": false,
+        "enable_language_selector": false,
+        "mobile_logo_position": "center",
+        "margin_bottom": 0,
+        "padding_top": 12,
+        "padding_bottom": 12
+      }
+    },
+    "pm2-global-style": {
+      "type": "pm2-global-style",
+      "settings": {
+        "action_color": "#2F5FE0",
+        "action_label": "#FFFFFF",
+        "check_color": "#1E7B4F",
+        "enable_sell": true,
+        "enable_glass_header": true,
+        "glass_tint": "light",
+        "glass_opacity": 80,
+        "enable_buttons": true,
+        "enable_cards": true,
+        "enable_image_zoom": true,
+        "enable_typography": true,
+        "enable_eyebrow": true,
+        "enable_focus": true,
+        "enable_selection": true,
+        "enable_smooth_scroll": true
+      }
+    },
+    "pm2-popup": {
+      "type": "pm2-popup",
+      "settings": {
+        "enabled": true,
+        "code": "WELCOME10",
+        "delay_seconds": 12,
+        "scroll_percent": 40,
+        "desktop_delay_seconds": 20,
+        "cap_days": 14,
+        "show_on_mobile": true,
+        "auto_apply": true,
+        "show_code_without_email": false,
+        "color_scheme": "scheme-3"
+      }
+    },
+    "pm2-ahrefs": {
+      "type": "pm2-ahrefs-analytics",
+      "settings": {
+        "enabled": true,
+        "data_key": "/T5c1ngTg1eI29SYFzuY5g"
+      }
+    }
+  },
+  "order": [
+    "pm2-ahrefs",
+    "announcement-bar",
+    "header",
+    "pm2-global-style",
+    "pm2-popup"
+  ]
+}

@@ -1,0 +1,1237 @@
+{
+ "generated": "2026-10-12",
+ "source": "SP-API catalog 2022-04-01 (summaries, attributes, salesRanks, images) + products/pricing/v0 item offers (New), pulled 2026-10-12. Read only. Competitor text stored for analysis only - do not copy.",
+ "notes": [
+  "BSR is shared across a parent variation family.",
+  "Offers API does not return coupons or Lightning Deals; check those by eye on Amazon.",
+  "image_count = image variants in catalog (MAIN + PTxx); videos not counted."
+ ],
+ "products": {
+  "B0GHH8L59K": {
+   "ours": {
+    "asin": "B0GHH8L59K",
+    "brand": "PETME2",
+    "title": "PETME2 Automatic Cat Feeder for 2 Cats, 5L Elevated Feeding Station with WiFi App and Voice Recording, Automatic Dog Feeder, Stainless Steel Dual Bowls, Timed Pet Food Dispenser, Dual Power",
+    "title_chars": 189,
+    "price_buybox_new": 54.99,
+    "list_price": 99.99,
+    "offer_count": 1,
+    "buybox_prime": true,
+    "bsr": {
+     "Automatic Cat Feeders": 670,
+     "Pet Supplies": 191056
+    },
+    "image_count": 8,
+    "capacity": [
+     "5.0 liters"
+    ],
+    "material": null,
+    "special_feature": [
+     "2-in-1 Dual Automatic Cat Feeder - Feed two cats or small dogs at the same time with balanced portions",
+     "Smart App Control - Schedule meals and manage feeding remotely",
+     "Voice Recording Feature - Record a custom voice message to call pets at mealtime for comfort and routine.",
+     "Large 5L Capacity Storage - Spacious food container reduces refill frequency and supports daily automatic feeding.",
+     "Easy-to-Clean Design - Removable bowls and detachable food container allow quick, hassle-free cleaning."
+    ]
+   },
+   "competitors": [
+    {
+     "asin": "B0C5X4N132",
+     "brand": "oneisall",
+     "title": "oneisall 5G WiFi Automatic Cat Feeder for 2 Cats, App Control, 20 Cups/5L",
+     "title_chars": 73,
+     "price_buybox_new": 69.99,
+     "list_price": 84.99,
+     "offer_count": 3,
+     "buybox_prime": true,
+     "bsr": {
+      "Automatic Cat Feeders": 3,
+      "Pet Supplies": 1110
+     },
+     "image_count": 9,
+     "capacity": [
+      "5.0 liters"
+     ],
+     "material": [
+      "Stainless Steel"
+     ],
+     "special_feature": [
+      "Smart App",
+      "Feeding Schedule",
+      "Android Compatible",
+      "iOS Compatible",
+      "Voice Recording"
+     ]
+    },
+    {
+     "asin": "B09S8WMJY9",
+     "brand": "PETLIBRO",
+     "title": "PETLIBRO Automatic Cat Feeder, 5G WiFi Automatic Dog Food Dispenser with Freshness Preservation, 5L Timed Pet Feeder with Low Food Sensor, Up to 10 Meals Per Day, Granary Black",
+     "title_chars": 176,
+     "price_buybox_new": 71.99,
+     "list_price": 99.99,
+     "offer_count": 5,
+     "buybox_prime": true,
+     "bsr": {
+      "Automatic Cat Feeders": 2,
+      "Pet Supplies": 754
+     },
+     "image_count": 9,
+     "capacity": [
+      "5.0 liters"
+     ],
+     "material": [
+      "Stainless Steel"
+     ],
+     "special_feature": [
+      "Supports 2.4G & 5G Wi-Fi Network"
+     ]
+    },
+    {
+     "asin": "B09VGDGR4B",
+     "brand": "PETLIBRO",
+     "title": "PETLIBRO 5L Automatic Cat Feeder for 2 Cats, 5G&2.4G Wi-Fi Programmable Cat Food Dispenser with Dual Stainless Steel Bowls, Airtight Lock Fresh Technology, Low Food Sensor",
+     "title_chars": 171,
+     "price_buybox_new": 79.99,
+     "list_price": 99.99,
+     "offer_count": 2,
+     "buybox_prime": true,
+     "bsr": {
+      "Automatic Cat Feeders": 9,
+      "Pet Supplies": 3653
+     },
+     "image_count": 6,
+     "capacity": [
+      "5.0 liters"
+     ],
+     "material": [
+      "Stainless Steel",
+      "/"
+     ],
+     "special_feature": [
+      "Adjustable",
+      "Pet daily feeding for two pets",
+      "Slide Food Outlet",
+      "Voice Recording",
+      "Detachable for Easy Cleaning"
+     ]
+    },
+    {
+     "asin": "B0D44QYZ7Z",
+     "brand": "PETLIBRO",
+     "title": "PETLIBRO Automatic Cat Feeder for 2 Cats, 5G&2.4G WiFi Pet Feeders, 5L Programmable Cat Food Dispenser with Airtight Lock-Fresh Technology, Dual Stainless Steel Bowls, Low Food Sensor",
+     "title_chars": 183,
+     "price_buybox_new": 99.99,
+     "list_price": 99.99,
+     "offer_count": 4,
+     "buybox_prime": true,
+     "bsr": {
+      "Automatic Cat Feeders": 9,
+      "Pet Supplies": 3653
+     },
+     "image_count": 9,
+     "capacity": [
+      "5.0 liters"
+     ],
+     "material": [
+      "Stainless Steel",
+      "/"
+     ],
+     "special_feature": [
+      "Adjustable",
+      "Pet daily feeding for two pets",
+      "Slide Food Outlet",
+      "Voice Recording",
+      "Detachable for Easy Cleaning"
+     ]
+    },
+    {
+     "asin": "B0GR69G44J",
+     "brand": "MUBBI",
+     "title": "MUBBI Automatic Dog Feeder with Elevated Stand - 7L Cat Food Dispenser with Large Food Tray, Timed Auto Cat Feeder for Dry Food, 6 Meals Per Day, No-Jam, Freshness Design, Detachable for Easy Clean",
+     "title_chars": 197,
+     "price_buybox_new": 44.99,
+     "list_price": 49.99,
+     "offer_count": 2,
+     "buybox_prime": true,
+     "bsr": {
+      "Automatic Cat Feeders": 17,
+      "Pet Supplies": 5649
+     },
+     "image_count": 8,
+     "capacity": [
+      "7.0 liters"
+     ],
+     "material": [
+      "Acrylonitrile Butadiene Styrene",
+      "Stainless Steel"
+     ],
+     "special_feature": [
+      "Feeding Schedule",
+      "Elevated",
+      "Large Food Tray",
+      "Anti-Clog Design",
+      "Easy to Assemble and Disassemble"
+     ]
+    },
+    {
+     "asin": "B0GXYJTFKB",
+     "brand": "KATALICLAB",
+     "title": "Automatic Cat Feeders WiFi for Two Cats, 5L/20 Cups Double Automatic Cat Food Dispenser with APP Control, 2 Stainless Bowls, Timer Setting 20 Portions 10 Meals Per Day",
+     "title_chars": 167,
+     "price_buybox_new": 49.99,
+     "list_price": 69.99,
+     "offer_count": 2,
+     "buybox_prime": true,
+     "bsr": {
+      "Automatic Cat Feeders": 19,
+      "Pet Supplies": 6876
+     },
+     "image_count": 7,
+     "capacity": [
+      "5.0 liters"
+     ],
+     "material": null,
+     "special_feature": [
+      "Timer",
+      "Smart App"
+     ]
+    },
+    {
+     "asin": "B0GTXN5MJK",
+     "brand": "HoneyGuaridan",
+     "title": "HoneyGuaridan 5L Automatic Cat Feeder for Two Cats, 2.4/5G WiFi Smart Feed Pet Feeder with Stainless Steel Bowl,APP Control Dispenser, Dual Power Supply,Desiccant Bag,10s Meal Call Black",
+     "title_chars": 186,
+     "price_buybox_new": 69.99,
+     "list_price": 79.99,
+     "offer_count": 2,
+     "buybox_prime": true,
+     "bsr": {
+      "Automatic Cat Feeders": 25,
+      "Pet Supplies": 8095
+     },
+     "image_count": 6,
+     "capacity": [
+      "5.0 liters"
+     ],
+     "material": [
+      "Stainless Steel"
+     ],
+     "special_feature": [
+      "cat feeder"
+     ]
+    },
+    {
+     "asin": "B0GY4P3DHN",
+     "brand": "MRSDAYU",
+     "title": "6L Automatic Cat Feeder for 2 Cats, APP Control, Precise Portion Control",
+     "title_chars": 72,
+     "price_buybox_new": 42.99,
+     "list_price": 59.99,
+     "offer_count": 1,
+     "buybox_prime": true,
+     "bsr": {
+      "Automatic Cat Feeders": 50,
+      "Pet Supplies": 14205
+     },
+     "image_count": 8,
+     "capacity": [
+      "6.0 liters"
+     ],
+     "material": [
+      "Acrylonitrile Butadiene Styrene",
+      "Polypropylene"
+     ],
+     "special_feature": [
+      "Automatic",
+      "Feeding Schedule",
+      "Smart App",
+      "Android Compatible",
+      "iOS Compatible"
+     ]
+    },
+    {
+     "asin": "B0DCFW2LQT",
+     "brand": "ANDOLL HOME",
+     "title": "ANDOLL HOME Automatic Cat Feeder,4L Timed Cat＆Dog Dry Food Dispenser",
+     "title_chars": 68,
+     "price_buybox_new": 42.99,
+     "list_price": 69.99,
+     "offer_count": 4,
+     "buybox_prime": true,
+     "bsr": {
+      "Automatic Cat Feeders": 1,
+      "Pet Supplies": 630
+     },
+     "image_count": 9,
+     "capacity": [
+      "4.0 liters"
+     ],
+     "material": [
+      "Stainless Steel"
+     ],
+     "special_feature": [
+      "Adjustable",
+      "Ant Proof",
+      "Automatic",
+      "Programmable",
+      "Timer"
+     ]
+    },
+    {
+     "asin": "B0C5X2G933",
+     "brand": "oneisall",
+     "title": "oneisall Automatic Cat Feeder for 2 Cats Pets, Timed Cat Food Dispenser",
+     "title_chars": 71,
+     "price_buybox_new": 49.99,
+     "list_price": 69.99,
+     "offer_count": 3,
+     "buybox_prime": true,
+     "bsr": {
+      "Automatic Cat Feeders": 3,
+      "Pet Supplies": 1110
+     },
+     "image_count": 9,
+     "capacity": [
+      "11.0 pounds"
+     ],
+     "material": [
+      "Stainless Steel"
+     ],
+     "special_feature": [
+      "Timer",
+      "Feeding Schedule",
+      "Portion Control",
+      "Voice Recording",
+      "Prevent Fights"
+     ]
+    }
+   ]
+  },
+  "B0GTCGYZDM": {
+   "ours": {
+    "asin": "B0GTCGYZDM",
+    "brand": "PETME2",
+    "title": "PETME2 Automatic Cat Feeder with Camera, 3L WiFi Cat Food Dispenser with 1080P HD Video and 2-Way Audio, App Control, Automatic Dog Feeder for Small Dogs, Timed Portions, Anti-Jam, Dual Power",
+    "title_chars": 191,
+    "price_buybox_new": 52.99,
+    "list_price": 89.99,
+    "offer_count": 1,
+    "buybox_prime": true,
+    "bsr": {
+     "Automatic Cat Feeders": 909,
+     "Pet Supplies": 246097
+    },
+    "image_count": 9,
+    "capacity": [
+     "3.0 liters"
+    ],
+    "material": null,
+    "special_feature": [
+     "Automatic Cat Feeder - Feed your cat or small dog at the same time with balanced portions"
+    ]
+   },
+   "competitors": [
+    {
+     "asin": "B0CNNNJ3FQ",
+     "brand": "Yuposl",
+     "title": "Automatic Cat Feeder with Camera - 5G WiFi Auto Cat Food Dispenser, 1080P HD Video with Night Vision, 1-15 Meals, 1-99 Portions, 2-Way Audio, Keeps Food Fresh, Timed Pet Feeder Also for Dogs",
+     "title_chars": 190,
+     "price_buybox_new": 59.99,
+     "list_price": 66.99,
+     "offer_count": 3,
+     "buybox_prime": true,
+     "bsr": {
+      "Automatic Cat Feeders": 4,
+      "Pet Supplies": 1782
+     },
+     "image_count": 8,
+     "capacity": [
+      "2.0 liters"
+     ],
+     "material": [
+      "Stainless Steel",
+      "Plastic",
+      "Acrylonitrile Butadiene Styrene"
+     ],
+     "special_feature": [
+      "Easy to Clean",
+      "Easy to Use",
+      "Lightweight",
+      "Adjustable",
+      "Nonslip"
+     ]
+    },
+    {
+     "asin": "B0B5ZGGWBQ",
+     "brand": "PETLIBRO",
+     "title": "PETLIBRO Automatic Cat Feeder with Camera, 1080P HD Video & Night Vision",
+     "title_chars": 72,
+     "price_buybox_new": 125.99,
+     "list_price": 139.99,
+     "offer_count": 2,
+     "buybox_prime": true,
+     "bsr": {
+      "Automatic Cat Feeders": 8,
+      "Pet Supplies": 2153
+     },
+     "image_count": 9,
+     "capacity": [
+      "5.0 liters"
+     ],
+     "material": [
+      "Stainless Steel",
+      "Plastic",
+      "Silicone"
+     ],
+     "special_feature": [
+      "1080P HD Camera with Night Vision",
+      "2-Way Audio & Personalized Meal Call",
+      "Smart APP Control (5GHz/2.4GHz WiFi)",
+      "Food Blockage Detection Alerts",
+      "Airtight Food Storage with Desiccant"
+     ]
+    },
+    {
+     "asin": "B0DCNNN5FC",
+     "brand": "Frienhund",
+     "title": "Frienhund Automatic Cat Feeder with 2K Camera: 5G WiFi Automatic Dog Feeder with Night Vision,Cat Food Dispenser with 7L Large Food Storage Container for Multiple Pet,Detachable for Easy Clean -29 Cup",
+     "title_chars": 200,
+     "price_buybox_new": 59.99,
+     "list_price": 69.99,
+     "offer_count": 1,
+     "buybox_prime": true,
+     "bsr": {
+      "Automatic Cat Feeders": 10,
+      "Dog Automatic Feeders": 11,
+      "Pet Supplies": 3999
+     },
+     "image_count": 9,
+     "capacity": [
+      "7.0 liters"
+     ],
+     "material": [
+      "Stainless Steel",
+      "Acrylonitrile Butadiene Styrene"
+     ],
+     "special_feature": [
+      "Camera",
+      "Feeding Schedule",
+      "Portion Control",
+      "Smart App",
+      "Two Way Audio"
+     ]
+    },
+    {
+     "asin": "B0GSR1GTHW",
+     "brand": "MUBBI",
+     "title": "Automatic Cat Feeder with Camera - 7L/29 Cups Auto Dog Feeder with Large Food Tray & 1080P Night Vision, Elevated Bowl, 2-Way Audio, 10s Voice Recording, 5G WiFi Timed Cat Food Dispenser, 1-15 Meals",
+     "title_chars": 198,
+     "price_buybox_new": 59.99,
+     "list_price": 69.99,
+     "offer_count": 1,
+     "buybox_prime": true,
+     "bsr": {
+      "Automatic Cat Feeders": 17,
+      "Pet Supplies": 5654
+     },
+     "image_count": 9,
+     "capacity": [
+      "7.0 liters"
+     ],
+     "material": [
+      "Acrylonitrile Butadiene Styrene",
+      "Stainless Steel"
+     ],
+     "special_feature": [
+      "Smart App",
+      "Adjustable",
+      "Jam-Free",
+      "1080P Camera",
+      "Two Way Audio"
+     ]
+    },
+    {
+     "asin": "B0H7WS6PX9",
+     "brand": "Minikey",
+     "title": "Automatic Cat Feeder with 2K Camera, 6.5L Smart App Control 5G/2.4WiFi",
+     "title_chars": 70,
+     "price_buybox_new": 48.29,
+     "list_price": 69.99,
+     "offer_count": 2,
+     "buybox_prime": true,
+     "bsr": {
+      "Automatic Cat Feeders": 33,
+      "Pet Supplies": 8805
+     },
+     "image_count": 8,
+     "capacity": [
+      "6.5 liters"
+     ],
+     "material": [
+      "Abs Plastic"
+     ],
+     "special_feature": [
+      "2k Camera, 5g Wifi, 2.4g Wifi, Night Vision, 2-way Audio, Motion Detection, Feeding Schedule, Auto Feeder, Remote App Control, Fhd Video Recording, Voice Message Recording, Manual Feed Button, Reset Function, Transparent Food Storage Tank, Stainless Steel Bowl, Portion Control"
+     ]
+    },
+    {
+     "asin": "B0FR4Z89KT",
+     "brand": "faroro",
+     "title": "Faroro Automatic Cat Feeder with Camera, 1080P HD Video with Night Vision, 5G WiFi Automatic Dog Feeder with APP Control, 2-Way Audio, Blockage Sensor for Cats or Small Dogs, 4L (Black)",
+     "title_chars": 185,
+     "price_buybox_new": 59.99,
+     "list_price": 129.99,
+     "offer_count": 1,
+     "buybox_prime": true,
+     "bsr": {
+      "Automatic Cat Feeders": 37,
+      "Pet Supplies": 10210
+     },
+     "image_count": 9,
+     "capacity": [
+      "4.0 liters"
+     ],
+     "material": [
+      "Acrylonitrile Butadiene Styrene"
+     ],
+     "special_feature": [
+      "Camera",
+      "Feeding Schedule",
+      "Portion Control",
+      "Smart App",
+      "Two Way Audio"
+     ]
+    },
+    {
+     "asin": "B0GFDH3WD5",
+     "brand": "oneisall",
+     "title": "oneisall Automatic Cat Feeder with Camera for 2 Cats Pets, 20 Cups/5L",
+     "title_chars": 69,
+     "price_buybox_new": 99.99,
+     "list_price": 124.99,
+     "offer_count": 1,
+     "buybox_prime": true,
+     "bsr": {
+      "Automatic Cat Feeders": 35,
+      "Pet Supplies": 9125
+     },
+     "image_count": 9,
+     "capacity": [
+      "5.0 liters"
+     ],
+     "material": [
+      "Stainless Steel"
+     ],
+     "special_feature": [
+      "2 1080P HD Cameras",
+      "Night Vision",
+      "Camera",
+      "Smart Event Alerts",
+      "Two Way Audio"
+     ]
+    },
+    {
+     "asin": "B0FJM41MLT",
+     "brand": "PETLIBRO",
+     "title": "PETLIBRO Automatic Dog Feeder with Camera, Auto Cat Food Dispenser Slow Feeders Dogs Bowl, 1080P HD Video with Night Vision, 5G WiFi with 2-Way Audio, Stainless Steel Slow Food Tray for Small Dogs",
+     "title_chars": 196,
+     "price_buybox_new": 149.99,
+     "list_price": 149.99,
+     "offer_count": 2,
+     "buybox_prime": true,
+     "bsr": {
+      "Automatic Cat Feeders": 2,
+      "Pet Supplies": 754
+     },
+     "image_count": 8,
+     "capacity": [
+      "5.0 liters"
+     ],
+     "material": [
+      "Stainless Steel"
+     ],
+     "special_feature": [
+      "Camera",
+      "Slow"
+     ]
+    }
+   ]
+  },
+  "B0GHKN9DBR": {
+   "ours": {
+    "asin": "B0GHKN9DBR",
+    "brand": "PETME2",
+    "title": "PETME2 Cat Water Fountain, 68oz/2L Quiet Water Fountains for Cats Indoor, Red Light Low Level Alert, Visible Window, Anti-Dry Pump Shut-Off, Small Pet Dispenser for Kitten and Dog",
+    "title_chars": 179,
+    "price_buybox_new": 21.99,
+    "list_price": null,
+    "offer_count": 1,
+    "buybox_prime": true,
+    "bsr": {
+     "Cat Fountains": 1611,
+     "Pet Supplies": 134888
+    },
+    "image_count": 9,
+    "capacity": [
+     "2.0 liters"
+    ],
+    "material": [
+     "Plastic"
+    ],
+    "special_feature": [
+     "2L Portable Water Capacity - Compact size with reliable daily hydration",
+     "Visible Water Level Window - Easy monitoring at a glance",
+     "Low Water Red Light Alert - Notifies when water needs refilling",
+     "Anti-Dry Protection - Automatically shuts off when water runs low",
+     "Quiet Indoor Design - Suitable for calm home environments"
+    ]
+   },
+   "competitors": [
+    {
+     "asin": "B08NCDBT7Q",
+     "brand": "Veken",
+     "title": "Veken Innovation Award Winner 95oz/2.8L Cat Water Fountain, C1 Classic",
+     "title_chars": 70,
+     "price_buybox_new": 21.99,
+     "list_price": 21.99,
+     "offer_count": 10,
+     "buybox_prime": true,
+     "bsr": {
+      "Dog Fountains": 1,
+      "Cat Fountains": 3,
+      "Pet Supplies": 269
+     },
+     "image_count": 9,
+     "capacity": [
+      "95.0 ounces"
+     ],
+     "material": [
+      "Plastic"
+     ],
+     "special_feature": [
+      "Automatic,Durable,Led Light"
+     ]
+    },
+    {
+     "asin": "B0FJMF2T4J",
+     "brand": "Neareal",
+     "title": "Cat Water Fountain Stainless Steel: 74oz/2.2L Cat Fountain for Drinking",
+     "title_chars": 71,
+     "price_buybox_new": 24.99,
+     "list_price": 24.99,
+     "offer_count": 2,
+     "buybox_prime": true,
+     "bsr": {
+      "Cat Fountains": 4,
+      "Pet Supplies": 422
+     },
+     "image_count": 9,
+     "capacity": [
+      "2.2 liters"
+     ],
+     "material": [
+      "Stainless Steel"
+     ],
+     "special_feature": [
+      "Ultra-quiet water pump",
+      "BPA-free stainless steel bowl",
+      "Multi-layer filtration system",
+      "Easy to disassemble and clean"
+     ]
+    },
+    {
+     "asin": "B0DDPYHHFX",
+     "brand": "GIOTOHUN",
+     "title": "Cat Water Fountain Stainless Steel: 74oz/2.2L Cat Fountain for Drinking",
+     "title_chars": 71,
+     "price_buybox_new": 19.94,
+     "list_price": 24.99,
+     "offer_count": 1,
+     "buybox_prime": true,
+     "bsr": {
+      "Cat Fountains": 5,
+      "Pet Supplies": 596
+     },
+     "image_count": 9,
+     "capacity": [
+      "2.2 liters"
+     ],
+     "material": [
+      "Stainless Steel"
+     ],
+     "special_feature": null
+    },
+    {
+     "asin": "B0FBS5L5BY",
+     "brand": "BalimoPet",
+     "title": "Cat Water Fountain Stainless Steel - 74oz/2.2L Automatic Large Pet Watering Bowl Dispenser for Indoor Dogs - Drinking Fountains with 3 Filter, Gifts for Cats and Kitty - Dog Waterer Bowls No Spill",
+     "title_chars": 196,
+     "price_buybox_new": 18.99,
+     "list_price": 22.99,
+     "offer_count": 2,
+     "buybox_prime": true,
+     "bsr": {
+      "Cat Fountains": 6,
+      "Pet Supplies": 677
+     },
+     "image_count": 9,
+     "capacity": [
+      "2.2 liters"
+     ],
+     "material": [
+      "Stainless Steel"
+     ],
+     "special_feature": [
+      "Stainless Steel",
+      "Ultra Quiet",
+      "Easy to Clean",
+      "Water Level Window"
+     ]
+    },
+    {
+     "asin": "B0GGM2KHL5",
+     "brand": "PETUNO",
+     "title": "PETUNO Cordless Cat Water Fountain, Battery Operated, Black, 78oz/2.3L",
+     "title_chars": 70,
+     "price_buybox_new": 23.99,
+     "list_price": 29.99,
+     "offer_count": 1,
+     "buybox_prime": true,
+     "bsr": {
+      "Cat Fountains": 33,
+      "Pet Supplies": 3371
+     },
+     "image_count": 9,
+     "capacity": [
+      "2.3 liters"
+     ],
+     "material": [
+      "Polypropylene (PP)"
+     ],
+     "special_feature": [
+      "Cordless",
+      "Battery Operated",
+      "Motion Sensor"
+     ]
+    },
+    {
+     "asin": "B07SBXDMZQ",
+     "brand": "Wonder Creature",
+     "title": "Wonder Creature Cat Water Fountain Stainless Steel Lid 81oz/2.4L-3 Filters",
+     "title_chars": 74,
+     "price_buybox_new": 22.99,
+     "list_price": 22.99,
+     "offer_count": 2,
+     "buybox_prime": true,
+     "bsr": {
+      "Cat Fountains": 39,
+      "Pet Supplies": 3499
+     },
+     "image_count": 7,
+     "capacity": [
+      "2.4 liters"
+     ],
+     "material": [
+      "Stainless Steel",
+      "Plastic"
+     ],
+     "special_feature": [
+      "Easy to Clean"
+     ]
+    },
+    {
+     "asin": "B0DCVXBSYS",
+     "brand": "KOOGMOON",
+     "title": "Cat Water Fountain Stainless Steel: 2.2 L Cat Fountain for Drinking - Automatic Pet Water Fountain for Cats Inside - Metal Cat Dog Water Dispenser Bowl with Faucet Water Level Window Ultra Quiet Pump",
+     "title_chars": 199,
+     "price_buybox_new": 19.99,
+     "list_price": 29.99,
+     "offer_count": 1,
+     "buybox_prime": true,
+     "bsr": {
+      "Cat Fountains": 43,
+      "Pet Supplies": 3664
+     },
+     "image_count": 9,
+     "capacity": [
+      "2.2 liters"
+     ],
+     "material": [
+      "Stainless Steel",
+      "Metal"
+     ],
+     "special_feature": [
+      "Stainless Steel"
+     ]
+    },
+    {
+     "asin": "B0BF5CQMKX",
+     "brand": "PETKIT",
+     "title": "PETKIT Eversweet Solo SE Cat Water Fountain 65oz/1.85L Wireless Pump",
+     "title_chars": 68,
+     "price_buybox_new": 25.99,
+     "list_price": 29.99,
+     "offer_count": 1,
+     "buybox_prime": true,
+     "bsr": {
+      "Cat Fountains": 55,
+      "Pet Supplies": 4345
+     },
+     "image_count": 8,
+     "capacity": [
+      "1.8 liters"
+     ],
+     "material": [
+      "ABS Plastic"
+     ],
+     "special_feature": [
+      "Ultra quiet",
+      "Wireless Pump",
+      "USB Cable",
+      "2L"
+     ]
+    }
+   ]
+  },
+  "B0GHLBGCP3": {
+   "ours": {
+    "asin": "B0GHLBGCP3",
+    "brand": "PETME2",
+    "title": "PETME2 Transparent Cat Water Fountain 74oz/2.2L, 4-Layer Filtered Cat Water Dispenser with Quiet Pump, Clear Tank Shows Level, Anti-Dry Protection, Automatic Pet Fountain for Small Dogs Indoor",
+    "title_chars": 192,
+    "price_buybox_new": 21.99,
+    "list_price": 65.99,
+    "offer_count": 1,
+    "buybox_prime": true,
+    "bsr": {
+     "Cat Fountains": 2185,
+     "Pet Supplies": 190092
+    },
+    "image_count": 9,
+    "capacity": [
+     "2.2 liters"
+    ],
+    "material": [
+     "Plastic"
+    ],
+    "special_feature": [
+     "2.2L Large Capacity : Provides ample water supply for daily hydration while reducing the need for frequent refills. ",
+     "Automatic Circulating Water Flow:  Encourages pets to drink more naturally by offering continuously moving water.",
+     "Built-In Filter Cartridge:  Helps remove impurities and odors to deliver cleaner, fresher-tasting water.",
+     "Clear Visible Water Level:  Allows quick and easy monitoring of water levels at a glance.",
+     "Quiet Indoor Operation: Designed for peaceful home environments without disturbing pets or daily activities."
+    ]
+   },
+   "competitors": [
+    {
+     "asin": "B08NCDBT7Q",
+     "brand": "Veken",
+     "title": "Veken Innovation Award Winner 95oz/2.8L Cat Water Fountain, C1 Classic",
+     "title_chars": 70,
+     "price_buybox_new": 21.99,
+     "list_price": 21.99,
+     "offer_count": 10,
+     "buybox_prime": true,
+     "bsr": {
+      "Dog Fountains": 1,
+      "Cat Fountains": 3,
+      "Pet Supplies": 269
+     },
+     "image_count": 9,
+     "capacity": [
+      "95.0 ounces"
+     ],
+     "material": [
+      "Plastic"
+     ],
+     "special_feature": [
+      "Automatic,Durable,Led Light"
+     ]
+    },
+    {
+     "asin": "B0BF5CQMKX",
+     "brand": "PETKIT",
+     "title": "PETKIT Eversweet Solo SE Cat Water Fountain 65oz/1.85L Wireless Pump",
+     "title_chars": 68,
+     "price_buybox_new": 25.99,
+     "list_price": 29.99,
+     "offer_count": 1,
+     "buybox_prime": true,
+     "bsr": {
+      "Cat Fountains": 55,
+      "Pet Supplies": 4345
+     },
+     "image_count": 8,
+     "capacity": [
+      "1.8 liters"
+     ],
+     "material": [
+      "ABS Plastic"
+     ],
+     "special_feature": [
+      "Ultra quiet",
+      "Wireless Pump",
+      "USB Cable",
+      "2L"
+     ]
+    },
+    {
+     "asin": "B0FN7FQ7RJ",
+     "brand": "oneisall",
+     "title": "oneisall 2.2L/74oz Wireless Cat Water Fountain",
+     "title_chars": 46,
+     "price_buybox_new": 29.99,
+     "list_price": 29.99,
+     "offer_count": 1,
+     "buybox_prime": true,
+     "bsr": {
+      "Cat Fountains": 57,
+      "Pet Supplies": 4495
+     },
+     "image_count": 9,
+     "capacity": [
+      "2.2 liters"
+     ],
+     "material": [
+      "Polypropylene (PP)",
+      "BPA FREE",
+      "Food-grade"
+     ],
+     "special_feature": [
+      "20dB Ultra-quiet Integrated SilentFlow™ Pump, 1 Sec Disassembly, Easy to Clean, Motion Sensor (3 Flow Modes) with LED Indicator, 45 Days Rechargeable Battery,"
+     ]
+    },
+    {
+     "asin": "B08XB56DKP",
+     "brand": "HAPUP",
+     "title": "HAPUP Cat Water Fountain Animal Water Dispenser 61OZ/1.8L Automatic Pet Drinking Fountain Clear Upgrade with 2 Filter Replacement 1 Adjustable Silent 1 Water Pump for Cats Kitty Indoor",
+     "title_chars": 184,
+     "price_buybox_new": 20.99,
+     "list_price": 28.99,
+     "offer_count": 1,
+     "buybox_prime": true,
+     "bsr": {
+      "Cat Fountains": 328,
+      "Pet Supplies": 19676
+     },
+     "image_count": 7,
+     "capacity": [
+      "2.0 liters"
+     ],
+     "material": [
+      "Plastic"
+     ],
+     "special_feature": null
+    },
+    {
+     "asin": "B07ZVHMRPS",
+     "brand": "PETNF",
+     "title": "PETNF Transparent 3L/101oz Pet Water Fountain - Automatic Cat & Dog Dispenser with LED Light, Ultra Quiet Pump, 3 Flow Modes & 2 Filters",
+     "title_chars": 136,
+     "price_buybox_new": 18.99,
+     "list_price": 21.99,
+     "offer_count": 1,
+     "buybox_prime": true,
+     "bsr": {
+      "Cat Fountains": 345,
+      "Pet Supplies": 20427
+     },
+     "image_count": 9,
+     "capacity": [
+      "3.0 liters"
+     ],
+     "material": [
+      "ABS Plastic"
+     ],
+     "special_feature": [
+      "Ultra quiet automatic cat drinking fountains",
+      "2 different flow disign",
+      "2 replacement filters",
+      "3L/101oz large capacity",
+      "300ml emergency water storage area"
+     ]
+    },
+    {
+     "asin": "B09PDZ2GFR",
+     "brand": "NPET",
+     "title": "NPET WF100 Cat Foutain, 54oz/1.6L Automatic Pet Water Fountain Dog Water Dispenser with 2 Flow Modes, Bottom Suction LED Light Quiet Pump for for Cats & Small Dogs",
+     "title_chars": 163,
+     "price_buybox_new": 19.99,
+     "list_price": 30.99,
+     "offer_count": 1,
+     "buybox_prime": true,
+     "bsr": {
+      "Cat Fountains": 684,
+      "Pet Supplies": 44138
+     },
+     "image_count": 8,
+     "capacity": [
+      "1.6 liters"
+     ],
+     "material": [
+      "Acrylonitrile Butadiene Styrene (ABS)"
+     ],
+     "special_feature": [
+      "Automatic",
+      "Easy to Clean",
+      "Easy to Use",
+      "Durable",
+      "Inbuilt Filter"
+     ]
+    },
+    {
+     "asin": "B0H8RFKYN8",
+     "brand": "ATADD",
+     "title": "ATADD Cat Water Fountain 304 Stainless Steel Tray with Food-Grade Clear Plastic Tank, 68oz/2L Automatic Pet Water Dispenser, Ultra Quiet Pump, Multi-Layer Filters for Indoor Cats & Small Dogs",
+     "title_chars": 191,
+     "price_buybox_new": 32.99,
+     "list_price": 34.99,
+     "offer_count": 1,
+     "buybox_prime": true,
+     "bsr": {
+      "Cat Fountains": 1489,
+      "Pet Supplies": 121878
+     },
+     "image_count": 6,
+     "capacity": [
+      "2.0 liters"
+     ],
+     "material": [
+      "Stainless Steel"
+     ],
+     "special_feature": [
+      "Dishwasher Safe"
+     ]
+    }
+   ]
+  },
+  "B0GHKRYV6W": {
+   "ours": {
+    "asin": "B0GHKRYV6W",
+    "brand": "PETME2",
+    "title": "PETME2 Cat Water Fountain with Stainless Steel Tray, 74oz/2.2L Automatic Pet Fountain for Cats and Dogs, 4-Layer Filtration, Filters Included, Low Water Alert, Quiet Pump",
+    "title_chars": 170,
+    "price_buybox_new": 21.99,
+    "list_price": 65.99,
+    "offer_count": 1,
+    "buybox_prime": true,
+    "bsr": {
+     "Cat Fountains": 2431,
+     "Pet Supplies": 211957
+    },
+    "image_count": 9,
+    "capacity": [
+     "2.2 liters"
+    ],
+    "material": [
+     "Stainless Steel",
+     "Plastic"
+    ],
+    "special_feature": [
+     "Stainless Steel Tray Design"
+    ]
+   },
+   "competitors": [
+    {
+     "asin": "B0FJMF2T4J",
+     "brand": "Neareal",
+     "title": "Cat Water Fountain Stainless Steel: 74oz/2.2L Cat Fountain for Drinking",
+     "title_chars": 71,
+     "price_buybox_new": 24.99,
+     "list_price": 24.99,
+     "offer_count": 2,
+     "buybox_prime": true,
+     "bsr": {
+      "Cat Fountains": 4,
+      "Pet Supplies": 422
+     },
+     "image_count": 9,
+     "capacity": [
+      "2.2 liters"
+     ],
+     "material": [
+      "Stainless Steel"
+     ],
+     "special_feature": [
+      "Ultra-quiet water pump",
+      "BPA-free stainless steel bowl",
+      "Multi-layer filtration system",
+      "Easy to disassemble and clean"
+     ]
+    },
+    {
+     "asin": "B0DDPYHHFX",
+     "brand": "GIOTOHUN",
+     "title": "Cat Water Fountain Stainless Steel: 74oz/2.2L Cat Fountain for Drinking",
+     "title_chars": 71,
+     "price_buybox_new": 19.94,
+     "list_price": 24.99,
+     "offer_count": 1,
+     "buybox_prime": true,
+     "bsr": {
+      "Cat Fountains": 5,
+      "Pet Supplies": 596
+     },
+     "image_count": 9,
+     "capacity": [
+      "2.2 liters"
+     ],
+     "material": [
+      "Stainless Steel"
+     ],
+     "special_feature": null
+    },
+    {
+     "asin": "B0FBS5L5BY",
+     "brand": "BalimoPet",
+     "title": "Cat Water Fountain Stainless Steel - 74oz/2.2L Automatic Large Pet Watering Bowl Dispenser for Indoor Dogs - Drinking Fountains with 3 Filter, Gifts for Cats and Kitty - Dog Waterer Bowls No Spill",
+     "title_chars": 196,
+     "price_buybox_new": 18.99,
+     "list_price": 22.99,
+     "offer_count": 2,
+     "buybox_prime": true,
+     "bsr": {
+      "Cat Fountains": 6,
+      "Pet Supplies": 677
+     },
+     "image_count": 9,
+     "capacity": [
+      "2.2 liters"
+     ],
+     "material": [
+      "Stainless Steel"
+     ],
+     "special_feature": [
+      "Stainless Steel",
+      "Ultra Quiet",
+      "Easy to Clean",
+      "Water Level Window"
+     ]
+    },
+    {
+     "asin": "B0G6ZMT8T3",
+     "brand": "PETLIBRO",
+     "title": "PETLIBRO Cat Water Fountain Stainless Steel Tray, Wireless Pump Cat Fountain, Ultra Quiet Pet Water Fountain, 2.5L Automatic Water Dispenser for Cats, Dual Flow Cat Water Dispenser Easy to Clean",
+     "title_chars": 194,
+     "price_buybox_new": 45.58,
+     "list_price": 49.99,
+     "offer_count": 10,
+     "buybox_prime": true,
+     "bsr": {
+      "Cat Fountains": 11,
+      "Pet Supplies": 1482
+     },
+     "image_count": 7,
+     "capacity": [
+      "2.49 liters"
+     ],
+     "material": [
+      "Stainless Steel"
+     ],
+     "special_feature": null
+    },
+    {
+     "asin": "B07SBXDMZQ",
+     "brand": "Wonder Creature",
+     "title": "Wonder Creature Cat Water Fountain Stainless Steel Lid 81oz/2.4L-3 Filters",
+     "title_chars": 74,
+     "price_buybox_new": 22.99,
+     "list_price": 22.99,
+     "offer_count": 2,
+     "buybox_prime": true,
+     "bsr": {
+      "Cat Fountains": 39,
+      "Pet Supplies": 3499
+     },
+     "image_count": 7,
+     "capacity": [
+      "2.4 liters"
+     ],
+     "material": [
+      "Stainless Steel",
+      "Plastic"
+     ],
+     "special_feature": [
+      "Easy to Clean"
+     ]
+    },
+    {
+     "asin": "B0H74TPPHS",
+     "brand": "Cheerble",
+     "title": "Cheerble Elfin E1S Pumpless Cat Water Fountain, 2L/67oz, 304 Food-Grade Stainless Steel Tray, 3-Layer Filter, BPA-Free Automatic Pet Water Dispenser for Indoor Cats",
+     "title_chars": 164,
+     "price_buybox_new": 44.99,
+     "list_price": 49.99,
+     "offer_count": 1,
+     "buybox_prime": true,
+     "bsr": {
+      "Cat Fountains": 272,
+      "Pet Supplies": 16052
+     },
+     "image_count": 8,
+     "capacity": [
+      "2.0 liters"
+     ],
+     "material": [
+      "Acrylonitrile Butadiene Styrene (ABS)",
+      "Polypropylene (PP)"
+     ],
+     "special_feature": [
+      "MagDrive™ Technology",
+      "No Electrical Leakage"
+     ]
+    },
+    {
+     "asin": "B0GX4XR23M",
+     "brand": "HomeRunPet",
+     "title": "HomeRunPet Cat Water Fountain Stainless Steel Tray with Cordless Pump, 68oz",
+     "title_chars": 75,
+     "price_buybox_new": 29.99,
+     "list_price": 45.99,
+     "offer_count": 3,
+     "buybox_prime": true,
+     "bsr": {
+      "Cat Fountains": 613,
+      "Pet Supplies": 37012
+     },
+     "image_count": 7,
+     "capacity": [
+      "2.0 liters"
+     ],
+     "material": [
+      "Acrylonitrile Butadiene Styrene (ABS)",
+      "Stainless Steel"
+     ],
+     "special_feature": [
+      "Wireless Pump"
+     ]
+    },
+    {
+     "asin": "B0H8RFKYN8",
+     "brand": "ATADD",
+     "title": "ATADD Cat Water Fountain 304 Stainless Steel Tray with Food-Grade Clear Plastic Tank, 68oz/2L Automatic Pet Water Dispenser, Ultra Quiet Pump, Multi-Layer Filters for Indoor Cats & Small Dogs",
+     "title_chars": 191,
+     "price_buybox_new": 32.99,
+     "list_price": 34.99,
+     "offer_count": 1,
+     "buybox_prime": true,
+     "bsr": {
+      "Cat Fountains": 1489,
+      "Pet Supplies": 121878
+     },
+     "image_count": 6,
+     "capacity": [
+      "2.0 liters"
+     ],
+     "material": [
+      "Stainless Steel"
+     ],
+     "special_feature": [
+      "Dishwasher Safe"
+     ]
+    }
+   ]
+  }
+ }
+}
